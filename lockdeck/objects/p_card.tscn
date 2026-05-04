@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://4ohymd5witgt"]
+
+[ext_resource type="Texture2D" uid="uid://3pixjo7icdyx" path="res://assets/card_face.png" id="1_x1w0v"]
+[ext_resource type="Texture2D" uid="uid://co26f1y7c2gqo" path="res://assets/card_face_pressed.png" id="2_qv0yu"]
+
+[node name="PCard" type="TextureButton"]
+anchors_preset = -1
+offset_right = 150.0
+offset_bottom = 225.0
+texture_normal = ExtResource("1_x1w0v")
+texture_pressed = ExtResource("2_qv0yu")
+
+[node name="VLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 150.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardArtSpace" type="ReferenceRect" parent="VLayout"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VLayout"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Description" type="Label" parent="VLayout/MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Let's get some uhhhhhhhhhhhhhhhhhhhhhh motherfucking lipsum in here
+aeiou aeiou john madden john madden"
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 4
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VLayout/MarginContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
