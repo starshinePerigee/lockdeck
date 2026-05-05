@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkcikxm7qtgka"]
+
+[ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/pin/pin.gd" id="1_sibiv"]
+[ext_resource type="Texture2D" uid="uid://ihms8cruc4m" path="res://assets/icons/pin/pin_top.png" id="2_p0s7i"]
+[ext_resource type="Texture2D" uid="uid://b28h0rl80yl7f" path="res://assets/icons/pin/pin_bottom.png" id="3_kade0"]
+
+[node name="Pin" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_sibiv")
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="Top" type="TextureRect" parent="Stack"]
+layout_mode = 2
+texture = ExtResource("2_p0s7i")
+
+[node name="Depths" type="VBoxContainer" parent="Stack"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Bottom" type="TextureRect" parent="Stack"]
+layout_mode = 2
+texture = ExtResource("3_kade0")

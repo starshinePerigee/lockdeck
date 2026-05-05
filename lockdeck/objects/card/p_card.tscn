@@ -1,14 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://4ohymd5witgt"]
 
-[ext_resource type="Texture2D" uid="uid://3pixjo7icdyx" path="res://assets/card_face.png" id="1_x1w0v"]
-[ext_resource type="Texture2D" uid="uid://co26f1y7c2gqo" path="res://assets/card_face_pressed.png" id="2_qv0yu"]
+[ext_resource type="Texture2D" uid="uid://3pixjo7icdyx" path="res://assets/card_face.png" id="1_nllqv"]
+[ext_resource type="Texture2D" uid="uid://co26f1y7c2gqo" path="res://assets/card_face_pressed.png" id="2_jbdp2"]
 
 [node name="PCard" type="TextureButton"]
-anchors_preset = -1
 offset_right = 150.0
 offset_bottom = 225.0
-texture_normal = ExtResource("1_x1w0v")
-texture_pressed = ExtResource("2_qv0yu")
+texture_normal = ExtResource("1_nllqv")
+texture_pressed = ExtResource("2_jbdp2")
 
 [node name="VLayout" type="VBoxContainer" parent="."]
 layout_mode = 2
