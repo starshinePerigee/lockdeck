@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5v5mrviocut3"]
+
+[ext_resource type="Script" uid="uid://bu2xdb30bmltd" path="res://objects/card/effect_stack.gd" id="1_ptp6r"]
+
+[node name="EffectStack" type="VBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -10
+script = ExtResource("1_ptp6r")
