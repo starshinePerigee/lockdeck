@@ -1,0 +1,21 @@
+Sound:
+- bgm is fireplace ambience, random strums
+- effects are tied to signals
+
+Art
+- 2 color dithering
+- icons are 2 color non-dither
+- highlights are random noise 2px boxes (animated?)
+- sprites are contrasting colors (ie: a different two colors)
+- highlight effects use pallet swapping
+- card art is fullbody, with the handle of the lockpick going down under the textbox
+
+Cool:
+- can broken picks pop off the card and accumulate at the bottom of the screen?
+- can you click and drag broken picks?
+- also gems and coins are rewards for each level, can roll and bounce around
+-- keys
+
+Animations
+- Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
+- hints: character by character, wipe out

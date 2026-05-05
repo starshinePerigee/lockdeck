@@ -1,0 +1,23 @@
+Signals:
+- keyway - hover (hover both shows on the card itself, which manages its own hover effect, as well as the
+top level layout which handles additional effects)
+- keyway - unhover (all unhover calls the same method, which resets everything to the default state)
+- keyway - activate (the big one, triggers the entire game loop)
+- hand - rearrange
+- hand - discard
+- deck - hover / unhover (need a deck display scene to show/hide)
+- discard - hover / unhover (need a discard display scene to show/hide)
+- discard - reload (needs a confirmation but managed via the discard scene)
+- pin - break pick
+- pin - reveal nothing
+- pin - reveal target
+- pin - depth effect
+- pin - hint reveal
+- pin - hint removal
+
+
+Keyway Activate
+- activate the pick's ability
+- apply force + jam
+- activate the depth effect
+- draw card from deck (if present)
