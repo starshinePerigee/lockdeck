@@ -4,11 +4,11 @@ extends Object
 #region base class
 class DepthDef:
 	static func _get_texture(n: String) -> Resource:
-		var res_str = "res://assets/icons/depths/%s.png" % [n]
+		var res_str = "res://assets/depths/%s.png" % [n]
 		if FileAccess.file_exists(res_str):
 			return load(res_str)
 		else:
-			return load("res://assets/icons/depths/debug.png")
+			return load("res://assets/depths/debug.png")
 	
 	var depth_name:String
 	var mod_color:Color

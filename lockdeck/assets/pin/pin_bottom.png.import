@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhmstwsvckxgu"
-path="res://.godot/imported/template.png-77a75520e3ec667f97ffbf849ee9a773.ctex"
+uid="uid://b28h0rl80yl7f"
+path="res://.godot/imported/pin_bottom.png-01137b488d9f36f4c018d42201b3bb28.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/depths/template.png"
-dest_files=["res://.godot/imported/template.png-77a75520e3ec667f97ffbf849ee9a773.ctex"]
+source_file="res://assets/pin/pin_bottom.png"
+dest_files=["res://.godot/imported/pin_bottom.png-01137b488d9f36f4c018d42201b3bb28.ctex"]
 
 [params]
 

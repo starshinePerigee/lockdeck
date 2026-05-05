@@ -2,7 +2,7 @@ extends TextureRect
 class_name Depth
 
 @export var revealed: bool = false
-const TEXTURE_HIDDEN = preload("res://assets/icons/depths/hidden.png")
+const TEXTURE_HIDDEN = preload("res://assets/depths/hidden.png")
 
 @export var flavor: DepthData.DepthFlavors = DepthData.DepthFlavors.DEBUG:
 	set(value):
