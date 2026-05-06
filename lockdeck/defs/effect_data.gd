@@ -24,7 +24,7 @@ class EffectDef:
 
 #region global instances
 # the order must match the order of the declaration, below
-enum EffectFlavors {DEBUG, FORCE, JAM, BUMP}
+enum EffectFlavors {DEBUG, EMPTY, FORCE, JAM, BUMP}
 
 static var _defs: Array[EffectDef] = []
 
@@ -32,6 +32,7 @@ static func _get_def() -> Array[EffectDef]:
 	if _defs.is_empty():
 		_defs = [
 			EffectDef.new("debug"),
+			EffectDef.new("empty"),
 			EffectDef.new("force"),
 			EffectDef.new("jam"),
 			EffectDef.new("bump")

@@ -19,3 +19,8 @@ Cool:
 Animations
 - Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
 - hints: character by character, wipe out
+
+Meta
+- pick modification
+- permanent pick effects (downgrade / upgrade)
+- randomly generated picks

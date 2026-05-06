@@ -1,0 +1,76 @@
+[gd_scene load_steps=13 format=3 uid="uid://3tt7yy0bstia"]
+
+[ext_resource type="Texture2D" uid="uid://ccu8pbuomtii5" path="res://assets/card/card_bg.png" id="1_ofssw"]
+[ext_resource type="Texture2D" uid="uid://bpsxs0mru7jx4" path="res://assets/card/card_pressed.png" id="2_0je1g"]
+[ext_resource type="Texture2D" uid="uid://b5dn5ykp4p7iq" path="res://assets/card/card_hover.png" id="3_n5c2q"]
+[ext_resource type="Texture2D" uid="uid://ygcfctkmd5ch" path="res://assets/card/card_back.png" id="4_0dxge"]
+[ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
+[ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://objects/card/effect_spec.gd" id="6_ll2st"]
+[ext_resource type="Texture2D" uid="uid://c443j6tu3k6hv" path="res://assets/picks/demo_pick.png" id="7_v2bqt"]
+[ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets/card/card_text_box.png" id="8_xpvy4"]
+
+[sub_resource type="Resource" id="Resource_jlvwl"]
+script = ExtResource("6_ll2st")
+flavor = 3
+value = 3
+
+[sub_resource type="Resource" id="Resource_v2bqt"]
+script = ExtResource("6_ll2st")
+flavor = 0
+value = 0
+
+[sub_resource type="Resource" id="Resource_g4nul"]
+script = ExtResource("6_ll2st")
+flavor = 2
+value = 1
+
+[sub_resource type="Resource" id="Resource_ll2st"]
+script = ExtResource("6_ll2st")
+flavor = 4
+value = 1
+
+[node name="PickCard" type="TextureButton"]
+offset_right = 150.0
+offset_bottom = 225.0
+texture_normal = ExtResource("1_ofssw")
+texture_pressed = ExtResource("2_0je1g")
+texture_hover = ExtResource("3_n5c2q")
+texture_disabled = ExtResource("4_0dxge")
+
+[node name="EffectBar" parent="." instance=ExtResource("5_0je1g")]
+z_index = 50
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = -150.0
+mouse_filter = 1
+effect_stacks = Dictionary[int, Array]({
+-1: Array[ExtResource("6_ll2st")]([SubResource("Resource_ll2st")]),
+1: Array[ExtResource("6_ll2st")]([SubResource("Resource_g4nul")]),
+2: Array[ExtResource("6_ll2st")]([SubResource("Resource_jlvwl"), SubResource("Resource_v2bqt")])
+})
+refrect_visible = false
+
+[node name="PickArt" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_v2bqt")
+
+[node name="TextBox" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_xpvy4")
+
+[node name="Info" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 112.0
+offset_right = 140.0
+offset_bottom = 209.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Let's get some uhhhhhhhhhhhhhhhhhhhhhh motherfucking lipsum up in here
+aeiou aeiou john madden john madden"
+autowrap_mode = 2

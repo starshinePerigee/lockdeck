@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://bu2xdb30bmltd" path="res://objects/card/effect_stack.gd" id="1_ptp6r"]
 
 [node name="EffectStack" type="VBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-anchors_preset = 15
-anchor_right = 1.0
+custom_minimum_size = Vector2(50, 30)
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -15.0
+offset_right = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -10
+theme_override_constants/separation = -19
 script = ExtResource("1_ptp6r")

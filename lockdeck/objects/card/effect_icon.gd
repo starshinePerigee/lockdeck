@@ -17,9 +17,30 @@ class_name EffectIcon
 		value = v
 		_redraw()
 
+@export var show_text: bool = false:
+	set(v):
+		show_text = v
+		if not is_node_ready():
+			await ready
+		$ValueLabel.visible = v and not hide_all
+
+@export var hide_all: bool = false:
+	set(v):
+		hide_all = v
+		if not is_node_ready():
+			await ready
+		$ValueLabel.visible = v and not hide_all
+		$Icon.visible = not hide_all
+		if v:
+			$ReferenceRect.border_color = Color(0, 255, 0)
+		else:
+			$ReferenceRect.border_color = Color(255, 0, 0)
+
 @export var refrect_visible: bool = true:
 	set(v):
 		refrect_visible = v
+		if not is_node_ready():
+			await ready
 		$ReferenceRect.visible = v
 
 func _redraw():
