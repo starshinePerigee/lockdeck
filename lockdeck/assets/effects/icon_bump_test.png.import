@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c30rmivy4fjc"
-path="res://.godot/imported/icon_bump.png-7d1d6ed195b57888007d9d4d5a544010.ctex"
+uid="uid://l3t28l8np4u6"
+path="res://.godot/imported/icon_bump_test.png-d8f0f43464f559840e784317378804ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_bump.png"
-dest_files=["res://.godot/imported/icon_bump.png-7d1d6ed195b57888007d9d4d5a544010.ctex"]
+source_file="res://assets/effects/icon_bump_test.png"
+dest_files=["res://.godot/imported/icon_bump_test.png-d8f0f43464f559840e784317378804ee.ctex"]
 
 [params]
 

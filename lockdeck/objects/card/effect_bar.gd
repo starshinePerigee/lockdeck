@@ -1,9 +1,8 @@
 @tool
 extends Control
-class_name EffectBar
 
 const EFFECT_STACK = preload("res://objects/card/effect_stack.tscn")
-const SIZE_SCALE = [0, -10, -25, -35, -50]
+const SIZE_SCALE = [0, -15, -25, -30, -30, -30, -30, -30]
 
 @export var effect_stacks: Dictionary[int, Array] = {}:
 	set(v):
@@ -51,12 +50,10 @@ func _redraw() -> void:
 	var lowest: int = min(0, effect_stacks.keys().min())
 	var highest: int = max(0, effect_stacks.keys().max())
 	var dist = max(-lowest, highest)
-	print("l: %s, h: %s, d: %s" % [lowest, highest, dist])
 	
 	for k in range(-dist, dist + 1):
 		var stack = EFFECT_STACK.instantiate()
 		if k in effect_stacks:
-			print("found %s" % k)
 			stack.effects = effect_stacks[k]
 		
 		if k == 0:

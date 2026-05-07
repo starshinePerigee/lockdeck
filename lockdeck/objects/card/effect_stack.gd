@@ -1,13 +1,12 @@
 @tool
 extends Control
-class_name EffectStack
 
 const EFFECT_ICON = preload("res://objects/card/effect_icon.tscn")
 
-
 const SIZE_SCALE = {
+	# these start at 1; the 5th element is the space if you have five values
 	true: [0, -8, -12, -16, -18, -19, -20],  # small
-	false: [0, -15, -22, -25, -28, -30, -32, -33, -34, -35]  # big
+	false: [-5, -20, -30, -35, -38, -40, -41, -42, -43, -43, -44, -44, -44, -45]  # big
 }
 
 @export var effects: Array[EffectSpec] = []:
@@ -50,7 +49,7 @@ func _redraw() -> void:
 		child.queue_free()
 	
 	for s in effects.size():
-		var spec: EffectSpec = effects[s]
+		var spec: EffectSpec = effects[-s - 1]
 		var count: int = max(1, spec.value)
 		
 		for j in count:
@@ -71,12 +70,12 @@ func _redraw() -> void:
 		add_child(spacer)
 	
 	if effects.size() == 0 and fill:
-		var fill := EFFECT_ICON.instantiate()
-		fill.effect = EffectData.EffectFlavors.EMPTY
-		fill.small = small
-		fill.refrect_visible = refrect_visible
-		fill.show_text = false
-		add_child(fill)
+		var fill_icon := EFFECT_ICON.instantiate()
+		fill_icon.effect = EffectData.EffectFlavors.EMPTY
+		fill_icon.small = small
+		fill_icon.refrect_visible = refrect_visible
+		fill_icon.show_text = false
+		add_child(fill_icon)
 
 	var child_count = get_child_count() - 1  # -1 for refrect
 	var spacing: Array = SIZE_SCALE[small]

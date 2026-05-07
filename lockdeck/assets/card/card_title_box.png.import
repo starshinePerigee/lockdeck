@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd6xr1tqkx7en"
-path="res://.godot/imported/icon_bump_small.png-bfd2b939d4b92e32088038da692dc5f2.ctex"
+uid="uid://twixcvnpm3x4"
+path="res://.godot/imported/card_title_box.png-e0b2e92f48a7934b97b3812300a78741.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_bump_small.png"
-dest_files=["res://.godot/imported/icon_bump_small.png-bfd2b939d4b92e32088038da692dc5f2.ctex"]
+source_file="res://assets/card/card_title_box.png"
+dest_files=["res://.godot/imported/card_title_box.png-e0b2e92f48a7934b97b3812300a78741.ctex"]
 
 [params]
 

@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqn5rdh63x6lm"]
+
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="1_deswr"]
+[ext_resource type="Script" uid="uid://clev5s2v3b1ox" path="res://defs/tests/pick_template_test.gd" id="1_hgsmu"]
+
+[node name="PickTemplateTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hgsmu")
+
+[node name="PickCard" parent="." instance=ExtResource("1_deswr")]
+z_index = 100
+layout_mode = 0
+
+[node name="TemplateSelector" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 256.0
+offset_right = 48.0
+offset_bottom = 276.0
+selected = 0
+item_count = 6
+popup/item_0/text = "DEBUG"
+popup/item_0/id = 0
+popup/item_1/text = "DIAMOND"
+popup/item_1/id = 1
+popup/item_2/text = "HOOK"
+popup/item_2/id = 2
+popup/item_3/text = "BALL"
+popup/item_3/id = 3
+popup/item_4/text = "RAKE"
+popup/item_4/id = 4
+popup/item_5/text = "SNAKE"
+popup/item_5/id = 5
