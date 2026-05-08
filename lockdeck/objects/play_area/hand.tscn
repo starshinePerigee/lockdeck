@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://e4dbfc26npte"]
+
+[ext_resource type="Script" uid="uid://cjwj4e0xc35gk" path="res://objects/play_area/hand.gd" id="1_u4npq"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/play_area/card_space.tscn" id="1_w745v"]
+
+[node name="Hand" type="Control"]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 300.0
+script = ExtResource("1_u4npq")
+
+[node name="CardSpace1" parent="." instance=ExtResource("1_w745v")]
+layout_mode = 0
+offset_left = 346.0
+offset_top = 27.0
+offset_right = 496.0
+offset_bottom = 252.0
+rotation = 0.174533
+
+[node name="CardSpace2" parent="." instance=ExtResource("1_w745v")]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 26.0
+offset_right = 325.0
+offset_bottom = 251.0
+
+[node name="CardSpace3" parent="." instance=ExtResource("1_w745v")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 53.0
+offset_right = 155.0
+offset_bottom = 278.0
+rotation = -0.174533

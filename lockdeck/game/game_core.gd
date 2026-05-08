@@ -1,16 +1,23 @@
 extends Control
 
 const CYLINDER_COUNT = 4
+const DECK_COUNT = 10
 const REVEAL_ALL := true
 
+var draw_cards: Array[CardSpec] = []
+var discard_cards: Array[CardSpec] = []
+var hand_cards: Dictionary[int, CardSpec] = {}
 var keyway_cards: Dictionary[int, CardSpec] = {}
 var cyl_pins: Dictionary[int, PinSpec] = {}
 
-static func check_array_dict(d: Dictionary[int, Array]) -> int:
+static func sort_reverse_dict_keys(d: Dictionary) -> Array:
 	var keys = d.keys()
 	keys.sort()
 	keys.reverse()
-	for k in keys:
+	return keys
+
+static func check_array_dict(d: Dictionary[int, Array]) -> int:
+	for k in sort_reverse_dict_keys(d):
 		if not d[k].is_empty():
 			return k
 		else:
@@ -37,7 +44,7 @@ func execute_pick(card_index: int, card_spec: CardSpec):
 			pending_effects[pin_index].append(e)
 			
 	var iterations = 0
-	while true:
+	while iterations < 1000:
 		iterations += 1
 		var k = check_array_dict(pending_effects)
 		if k == -383:
@@ -47,8 +54,11 @@ func execute_pick(card_index: int, card_spec: CardSpec):
 			push_error("Popped a null evaluating %s?" % card_spec.pick_name)
 			break
 		evaluate_pin(k, next_effect)
+	if iterations == 1000:
+		push_error("Execution loop overflow!")
 	
 	check_solve()
+	spend_pick(card_index)
 	#print("evaluated pick after %s iterations" % iterations)
 	refresh_objects()
 
@@ -115,12 +125,44 @@ func check_solve() -> bool:
 	$Notifications.notify(NotificationData.NotificationFlavors.UNLOCK)
 	return true
 
+func spend_pick(card_index: int):
+	keyway_cards.erase(card_index)
+	fill_cards()
+
+func fill_cards():
+	var played_cards: Array[CardSpec] = []
+	for k in sort_reverse_dict_keys(keyway_cards):
+		played_cards.append(keyway_cards[k])
+	for k in sort_reverse_dict_keys(hand_cards):
+		played_cards.append(hand_cards[k])
+	draw_cards.shuffle()
+	played_cards.append_array(draw_cards)
+	for i in range(CYLINDER_COUNT + 3):
+		if i < CYLINDER_COUNT:
+			var cyl_index = CYLINDER_COUNT - i - 1
+			if played_cards.is_empty():
+				keyway_cards.erase(cyl_index)
+			else:
+				# THIS HAS A BUG
+				keyway_cards[cyl_index] = played_cards.pop_front()
+		elif i >= CYLINDER_COUNT and i < CYLINDER_COUNT + 3:
+			if played_cards.is_empty():
+				hand_cards.erase(i - CYLINDER_COUNT)
+			else:
+				hand_cards[i - CYLINDER_COUNT] = played_cards.pop_front()
+		else:
+			break
+	draw_cards = played_cards
+
 func refresh_objects():
 	if REVEAL_ALL:
 		for i in cyl_pins:
 			for j in range(Pin.DEPTH_SIZE):
 				cyl_pins[i].reveals[j] = true
-		
+	
+	$Hand.card_specs = hand_cards
+	$DrawPile.count = len(draw_cards)
+	$DiscardPile.count = len(discard_cards)
 	$LockBody/Cylinders.pins = cyl_pins
 	$LockBody/Keyway.cards = keyway_cards
 
@@ -133,6 +175,9 @@ func _ready() -> void:
 	
 	for i in range(CYLINDER_COUNT):
 		cyl_pins[i] = PinGenerator.get_random_base_pin()
-		keyway_cards[i] = PickGenerator.get_random_base_card()
 	
+	for i in range(DECK_COUNT):
+		draw_cards.append(PickGenerator.get_random_base_card())
+	
+	fill_cards()
 	refresh_objects()

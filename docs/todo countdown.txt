@@ -3,18 +3,18 @@ X keyway proto
 X pin proto redux
 X basic pin movement logic
 X pin logic (key and mock break only)
-- basic deck logic (no refils)
-- bolt together
+X basic deck logic (no refils)
+X bolt together
 
 BASIC FEATURE SET:
-- hand proto
-- deck proto
-- discard proto
+X hand proto
+X deck proto
+X discard proto
 - trash proto
 - what happened bar proto
 - hint proto
 - lockpick break logic (game over at n-1 lockpicks)
-- shuffle
+- reshuffle
 - full card flow (deck > hand > keyway > discard / break)
 - pin reset logic
 
