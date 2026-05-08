@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://3tt7yy0bstia"]
+[gd_scene load_steps=18 format=3 uid="uid://3tt7yy0bstia"]
 
 [ext_resource type="Texture2D" uid="uid://ccu8pbuomtii5" path="res://assets/card/card_bg.png" id="1_ofssw"]
 [ext_resource type="Texture2D" uid="uid://bpsxs0mru7jx4" path="res://assets/card/card_pressed.png" id="2_0je1g"]
@@ -7,8 +7,44 @@
 [ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
 [ext_resource type="Script" uid="uid://ddxbcyvqdaxxg" path="res://objects/card/pick_card.gd" id="5_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets/picks/pick_debug.png" id="7_v2bqt"]
+[ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://twixcvnpm3x4" path="res://assets/card/card_title_box.png" id="8_v2bqt"]
 [ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets/card/card_text_box.png" id="8_xpvy4"]
+
+[sub_resource type="Resource" id="Resource_jlvwl"]
+script = ExtResource("7_xpvy4")
+flavor = 4
+value = 3
+
+[sub_resource type="Resource" id="Resource_g4nul"]
+script = ExtResource("7_xpvy4")
+flavor = 2
+value = 6
+
+[sub_resource type="Resource" id="Resource_bielf"]
+script = ExtResource("7_xpvy4")
+flavor = 5
+value = 3
+
+[sub_resource type="Resource" id="Resource_tvmft"]
+script = ExtResource("7_xpvy4")
+flavor = 4
+value = 1
+
+[sub_resource type="Resource" id="Resource_e4eoc"]
+script = ExtResource("7_xpvy4")
+flavor = 0
+value = 11
+
+[sub_resource type="Resource" id="Resource_eh24l"]
+script = ExtResource("7_xpvy4")
+flavor = 3
+value = 3
+
+[sub_resource type="Resource" id="Resource_8xrg5"]
+script = ExtResource("7_xpvy4")
+flavor = 0
+value = 0
 
 [node name="PickCard" type="TextureButton"]
 offset_right = 150.0
@@ -25,6 +61,12 @@ layout_mode = 1
 offset_right = 0.0
 offset_bottom = -150.0
 mouse_filter = 1
+effect_stacks = Dictionary[int, Array]({
+-1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_jlvwl")]),
+0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_g4nul"), SubResource("Resource_bielf"), SubResource("Resource_tvmft")]),
+2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_e4eoc")]),
+3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_eh24l"), SubResource("Resource_8xrg5")])
+})
 refrect_visible = false
 
 [node name="PickArt" type="TextureRect" parent="."]

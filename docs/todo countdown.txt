@@ -1,0 +1,46 @@
+ROAD TO FIRST PLAYTEST:
+X keyway proto
+- pin proto redux
+- pin logic (key only)
+- what just happened proto
+- basic deck logic (no refils)
+- bolt together
+
+BASIC FEATURE SET:
+- hand proto
+- deck proto
+- discard proto
+- trash proto
+- lockpick break logic (game over at n-1 lockpicks)
+- shuffle
+- full card flow (deck > hand > keyway > discard / break)
+
+META:
+- level generator
+- lockpick generator
+- lockpick modifier
+- level - deck loop
+
+EXPAND:
+- full depth set
+- full what just happened overlay
+- lockpick modifiers
+- improvised lockpicks
+
+UI NICETIES:
+- Card activation highlight
+- deck and trash contents
+- draggable marks
+- reveal logic (if no other options)
+- card hovertext
+- menu
+- tutorial
+
+ART AND ANIMATIONS:
+- clean up pick card
+- new picks
+- depths
+- keyway and playing field
+- pin motion
+- broken pick flicks
+- success and playing field open

@@ -56,14 +56,12 @@ func _redraw() -> void:
 		if k in effect_stacks:
 			stack.effects = effect_stacks[k]
 		
-		if k == 0:
+		if k > lowest and k < highest:
+			stack.fill = true
+		
+		if len(effect_stacks) == 1:
 			stack.small = false
-			stack.fill = true
-		elif k < 0 and k > lowest:
-			stack.fill = true
-		elif k > 0 and k < highest:
-			stack.fill = true
-			
+		
 		stack.refrect_visible = refrect_visible
 		$StackHBox.add_child(stack)
 	

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://slpfrt15iygb"]
+
+[ext_resource type="Texture2D" uid="uid://ccylg6db80ch4" path="res://assets/card/card_space.png" id="1_88gnn"]
+[ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/play_area/card_space.gd" id="2_nyvl3"]
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_ss3r8"]
+
+[node name="CardSpace" type="TextureRect"]
+offset_right = 150.0
+offset_bottom = 225.0
+texture = ExtResource("1_88gnn")
+stretch_mode = 2
+script = ExtResource("2_nyvl3")
+
+[node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
+visible = false
+layout_mode = 0

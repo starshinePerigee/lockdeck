@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dshnrwms2tgt6"]
+
+[ext_resource type="Script" uid="uid://kagnrja42sbv" path="res://objects/play_area/keyway.gd" id="1_6vmxt"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/play_area/card_space.tscn" id="2_bey5w"]
+[ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="2_bn7tf"]
+
+[sub_resource type="Resource" id="Resource_j6m45"]
+script = ExtResource("2_bn7tf")
+effects = Dictionary[int, Array]({})
+pick_name = ""
+description = ""
+metadata/_custom_type_script = "uid://ctkr5pia2bqsk"
+
+[node name="Keyway" type="HBoxContainer"]
+offset_right = 304.0
+offset_bottom = 225.0
+theme_override_constants/separation = 20
+script = ExtResource("1_6vmxt")
+
+[node name="CardSpace1" parent="." instance=ExtResource("2_bey5w")]
+layout_mode = 2
+
+[node name="CardSpace2" parent="." instance=ExtResource("2_bey5w")]
+layout_mode = 2
+
+[node name="CardSpace3" parent="." instance=ExtResource("2_bey5w")]
+layout_mode = 2
+card_spec = SubResource("Resource_j6m45")
+
+[node name="CardSpace4" parent="." instance=ExtResource("2_bey5w")]
+layout_mode = 2
+
+[node name="CardSpace5" parent="." instance=ExtResource("2_bey5w")]
+layout_mode = 2
