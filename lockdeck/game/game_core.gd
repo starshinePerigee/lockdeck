@@ -2,7 +2,7 @@ extends Control
 
 const CYLINDER_COUNT = 4
 const DECK_COUNT = 10
-const REVEAL_ALL := true
+const REVEAL_ALL := false
 
 var draw_cards: Array[CardSpec] = []
 var discard_cards: Array[CardSpec] = []
@@ -90,6 +90,8 @@ func evaluate_pin(pin_index: int, effect: EffectSpec) -> void:
 			execute_jump(pin_index, effect)
 		EffectData.EffectFlavors.JAM:
 			execute_jam(pin_index, effect)
+		EffectData.EffectFlavors.TEST:
+			execute_test(pin_index, effect)
 		EffectData.EffectFlavors.BOUNCE:
 			execute_bounce(pin_index)
 		EffectData.EffectFlavors.OUT_OF_BOUNDS:
@@ -138,6 +140,7 @@ func advance_pin(pin_index: int, advance_by: int) -> bool:
 		pin_index,
 		EffectSpec.new(DepthData.get_def(p.depths[depth_index]).effect, 1)
 	)
+	p.reveals[p.pin_position] = true
 	return false
 
 func execute_force(pin_index: int, effect: EffectSpec):
@@ -151,6 +154,12 @@ func execute_jump(pin_index: int, effect: EffectSpec):
 func execute_jam(pin_index: int, effect: EffectSpec):
 	cyl_pins[pin_index].jam_count += effect.value
 	cyl_pins[pin_index].pin_set = true
+
+func execute_test(pin_index: int, effect: EffectSpec):
+	for i in range(effect.value):
+		var test_depth = cyl_pins[pin_index].pin_position + i
+		if test_depth > 0 and test_depth < Pin.DEPTH_SIZE:
+			cyl_pins[pin_index].reveals[test_depth] = true
 
 func execute_bounce(pin_index: int):
 	cyl_pins[pin_index].pin_set = false

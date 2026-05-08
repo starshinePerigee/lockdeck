@@ -19,6 +19,8 @@ X jump
 - reveal logic
 - test
 X pin reset logic
+- hand rearranging
+- card discarding
 
 META:
 - level generator
