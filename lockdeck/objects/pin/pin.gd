@@ -29,14 +29,14 @@ const DEPTH_VHEIGHT = 35
 		
 		$Stack.position = Vector2(0, DEPTH_VHEIGHT * DEPTH_SIZE - DEPTH_VHEIGHT * v)
 
-@export var hide: bool = false:
+@export var visible_: bool = false:
 	set(v):
-		hide = v
+		visible_ = v
 		
 		if not is_node_ready():
 			await ready
 		
-		$Stack.visible = not hide
+		$Stack.visible = visible_
 
 func _redraw():
 	if depth_refs.is_empty():

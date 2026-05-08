@@ -1,6 +1,8 @@
 @tool
 extends HBoxContainer
 
+signal card_activated(card_index: int, card_spec: CardSpec)
+
 const SPACE_COUNT = 5
 
 var space_refs: Array[CardSpace] = []
@@ -23,6 +25,9 @@ var space_refs: Array[CardSpace] = []
 			
 		redraw()
 
+func handle_click(card_index: int):
+	card_activated.emit(card_index, space_refs[card_index].card_spec)
+
 func redraw():
 	if len(space_refs) == 0:
 			return
@@ -43,5 +48,10 @@ func _ready() -> void:
 		$CardSpace4,
 		$CardSpace5
 	]
+	
+	for i in range(len(space_refs)):
+		var bound_click = handle_click.bind(i)  # owo
+		space_refs[i].card_pressed.connect(bound_click)
+	
 	space_count = SPACE_COUNT
 	redraw()

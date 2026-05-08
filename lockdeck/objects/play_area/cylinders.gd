@@ -29,12 +29,12 @@ func redraw():
 	
 	for i in range(CYLINDER_COUNT):
 		if i in pins and i < cylinder_count:
-			pin_refs[i].hide = false
+			pin_refs[i].visible_ = true
 			pin_refs[i].depths = pins[i].depths
 			pin_refs[i].revealed = pins[i].reveals
 			pin_refs[i].pin_position = pins[i].pin_position
 		else:
-			pin_refs[i].hide = true
+			pin_refs[i].visible_ = false
 
 func _ready() -> void:
 	pin_refs = [

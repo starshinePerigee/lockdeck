@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=5 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/play_area/cylinders.tscn" id="1_wt0dc"]
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/play_area/card_space.tscn" id="4_l83s3"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -10,9 +11,9 @@ anchors_preset = 0
 script = ExtResource("1_db5vk")
 
 [node name="LockBody" type="Control" parent="."]
-custom_minimum_size = Vector2(840, 860)
+custom_minimum_size = Vector2(800, 860)
 anchors_preset = 0
-offset_left = 400.0
+offset_left = 440.0
 offset_right = 1240.0
 offset_bottom = 860.0
 
@@ -28,3 +29,42 @@ offset_left = 5.0
 offset_top = 624.0
 offset_right = 835.0
 offset_bottom = 849.0
+
+[node name="CardSpace" parent="." instance=ExtResource("4_l83s3")]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 627.0
+offset_right = 175.0
+offset_bottom = 852.0
+rotation = -0.226893
+
+[node name="CardSpace2" parent="." instance=ExtResource("4_l83s3")]
+offset_left = 159.0
+offset_top = 601.0
+offset_right = 309.0
+offset_bottom = 826.0
+
+[node name="CardSpace3" parent="." instance=ExtResource("4_l83s3")]
+offset_left = 281.0
+offset_top = 607.0
+offset_right = 431.0
+offset_bottom = 832.0
+rotation = 0.144862
+
+[node name="CardSpace4" parent="." instance=ExtResource("4_l83s3")]
+offset_left = 1256.0
+offset_top = 494.0
+offset_right = 1406.0
+offset_bottom = 719.0
+
+[node name="CardSpace5" parent="." instance=ExtResource("4_l83s3")]
+offset_left = 73.0
+offset_top = 294.0
+offset_right = 223.0
+offset_bottom = 519.0
+
+[node name="CardSpace6" parent="." instance=ExtResource("4_l83s3")]
+offset_left = 1279.0
+offset_top = 756.0
+offset_right = 1429.0
+offset_bottom = 981.0

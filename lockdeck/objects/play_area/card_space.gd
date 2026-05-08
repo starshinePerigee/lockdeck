@@ -2,6 +2,8 @@
 extends TextureRect
 class_name CardSpace
 
+signal card_pressed
+
 const TEXTURE_OPEN = preload("res://assets/card/card_space.png")
 const TEXTURE_CLOSED = preload("res://assets/card/card_space_blocked.png")
 const CARD_SCENE = preload("res://objects/card/pick_card.tscn")
@@ -35,3 +37,10 @@ const CARD_SCENE = preload("res://objects/card/pick_card.tscn")
 			await ready
 		
 		$PickCard.card_spec = v
+
+func handle_click():
+	if has_card:
+		card_pressed.emit()
+
+func _ready():
+	$PickCard.pressed.connect(handle_click)

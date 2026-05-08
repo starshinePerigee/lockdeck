@@ -5,6 +5,9 @@ class_name PinSpec
 @export var reveals: Array[bool]
 @export var pin_position: int
 
+func current_depth() -> DepthData.DepthFlavors:
+	return depths[pin_position]
+
 func _init():
 	depths = [
 		DepthData.DepthFlavors.BASE,

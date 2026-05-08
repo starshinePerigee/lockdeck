@@ -58,7 +58,7 @@ pins = Dictionary[int, ExtResource("2_tk5p0")]({
 layout_mode = 0
 offset_left = -40.0
 offset_top = 347.5
-offset_right = 840.0
+offset_right = 800.0
 offset_bottom = 367.5
 color = Color(0.937255, 0.894118, 0.690196, 1)
 
@@ -66,28 +66,28 @@ color = Color(0.937255, 0.894118, 0.690196, 1)
 layout_mode = 0
 offset_right = 680.0
 offset_bottom = 700.0
-theme_override_constants/separation = 50
+theme_override_constants/separation = 40
 
 [node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
-hide = false
+visible_ = true
 
 [node name="Pin2" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 2
-hide = false
+visible_ = true
 
 [node name="Pin3" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 3
-hide = false
+visible_ = true
 
 [node name="Pin4" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 4
-hide = false
+visible_ = true
 
 [node name="Pin5" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 8
-hide = false
+visible_ = true

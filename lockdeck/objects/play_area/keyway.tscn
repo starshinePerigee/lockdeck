@@ -21,7 +21,7 @@ metadata/_custom_type_script = "uid://ctkr5pia2bqsk"
 [node name="Keyway" type="HBoxContainer"]
 offset_right = 304.0
 offset_bottom = 225.0
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 script = ExtResource("1_6vmxt")
 
 [node name="CardSpace1" parent="." instance=ExtResource("2_bey5w")]

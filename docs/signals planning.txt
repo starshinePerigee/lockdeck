@@ -2,7 +2,7 @@ Signals:
 - keyway - hover (hover both shows on the card itself, which manages its own hover effect, as well as the
 top level layout which handles additional effects)
 - keyway - unhover (all unhover calls the same method, which resets everything to the default state)
-- keyway - activate (the big one, triggers the entire game loop)
+X keyway - activate (the big one, triggers the entire game loop)
 - hand - rearrange
 - hand - discard
 - deck - hover / unhover (need a deck display scene to show/hide)

@@ -1,6 +1,7 @@
 ROAD TO FIRST PLAYTEST:
 X keyway proto
 X pin proto redux
+X basic pin movement logic
 - pin logic (key and mock break only)
 - what just happened proto
 - basic deck logic (no refils)
@@ -42,6 +43,7 @@ ART AND ANIMATIONS:
 - depths
 - keyway and playing field
 - what is holding the pins up
+- hand is splayed a little
 - pin motion
 - broken pick flicks
 - success and playing field open
