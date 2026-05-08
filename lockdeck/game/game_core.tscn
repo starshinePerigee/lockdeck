@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://6n5hdt0ihpyn"]
+
+[ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
+[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/play_area/cylinders.tscn" id="1_wt0dc"]
+[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
+
+[node name="GameCore" type="Control"]
+custom_minimum_size = Vector2(840, 860)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -600.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_db5vk")
+
+[node name="Cylinders" parent="." instance=ExtResource("1_wt0dc")]
+offset_left = 19.0
+offset_top = -50.0
+offset_right = 699.0
+offset_bottom = 650.0
+
+[node name="Keyway" parent="." instance=ExtResource("2_db5vk")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 624.0
+offset_right = 835.0
+offset_bottom = 849.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn5hvhnpe704t"
-path="res://.godot/imported/debug.png-ad08a2e02a3470159631075b50a38875.ctex"
+uid="uid://dab52l7sxrudf"
+path="res://.godot/imported/depth_break.png-34cf8e1986af60e0a131fffd220ebbae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/depths/debug.png"
-dest_files=["res://.godot/imported/debug.png-ad08a2e02a3470159631075b50a38875.ctex"]
+source_file="res://assets/depths/depth_break.png"
+dest_files=["res://.godot/imported/depth_break.png-34cf8e1986af60e0a131fffd220ebbae.ctex"]
 
 [params]
 

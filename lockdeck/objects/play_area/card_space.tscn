@@ -1,8 +1,64 @@
-[gd_scene load_steps=4 format=3 uid="uid://slpfrt15iygb"]
+[gd_scene load_steps=15 format=3 uid="uid://slpfrt15iygb"]
 
 [ext_resource type="Texture2D" uid="uid://ccylg6db80ch4" path="res://assets/card/card_space.png" id="1_88gnn"]
 [ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/play_area/card_space.gd" id="2_nyvl3"]
 [ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_ss3r8"]
+[ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="4_ss3r8"]
+[ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="5_jpxej"]
+[ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets/picks/pick_debug.png" id="6_fetno"]
+
+[sub_resource type="Resource" id="Resource_4ppwd"]
+script = ExtResource("4_ss3r8")
+flavor = 4
+value = 3
+
+[sub_resource type="Resource" id="Resource_67nnt"]
+script = ExtResource("4_ss3r8")
+flavor = 2
+value = 6
+
+[sub_resource type="Resource" id="Resource_ccj8k"]
+script = ExtResource("4_ss3r8")
+flavor = 5
+value = 3
+
+[sub_resource type="Resource" id="Resource_twmxx"]
+script = ExtResource("4_ss3r8")
+flavor = 4
+value = 1
+
+[sub_resource type="Resource" id="Resource_ryg1q"]
+script = ExtResource("4_ss3r8")
+flavor = 0
+value = 11
+
+[sub_resource type="Resource" id="Resource_p2nja"]
+script = ExtResource("4_ss3r8")
+flavor = 3
+value = 3
+
+[sub_resource type="Resource" id="Resource_8bb45"]
+script = ExtResource("4_ss3r8")
+flavor = 0
+value = 0
+
+[sub_resource type="Resource" id="Resource_fio48"]
+script = ExtResource("5_jpxej")
+effects = Dictionary[int, Array]({
+-1: Array[ExtResource("4_ss3r8")]([SubResource("Resource_4ppwd")]),
+0: Array[ExtResource("4_ss3r8")]([SubResource("Resource_67nnt"), SubResource("Resource_ccj8k"), SubResource("Resource_twmxx")]),
+2: Array[ExtResource("4_ss3r8")]([SubResource("Resource_ryg1q")]),
+3: Array[ExtResource("4_ss3r8")]([SubResource("Resource_p2nja"), SubResource("Resource_8bb45")])
+})
+pick_name = "debug"
+description = "DEBUG DEBUG DEBUG DEBUG
+
+				DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG
+
+				DEBUG
+
+				DEBUG"
+texture = ExtResource("6_fetno")
 
 [node name="CardSpace" type="TextureRect"]
 offset_right = 150.0
@@ -14,3 +70,4 @@ script = ExtResource("2_nyvl3")
 [node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
 visible = false
 layout_mode = 0
+card_spec = SubResource("Resource_fio48")

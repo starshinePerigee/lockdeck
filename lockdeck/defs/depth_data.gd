@@ -4,33 +4,36 @@ extends Object
 #region base class
 class DepthDef:
 	static func _get_texture(n: String) -> Resource:
-		var res_str = "res://assets/depths/%s.png" % [n]
+		var res_str = "res://assets/depths/depth_%s.png" % [n]
 		if FileAccess.file_exists(res_str):
 			return load(res_str)
 		else:
-			return load("res://assets/depths/debug.png")
+			return load("res://assets/depths/depth_debug.png")
 	
 	var depth_name:String
-	var mod_color:Color
 	var texture:Resource
 	
-	func _init(name: String, mut: Color):
+	func _init(name: String):
 		self.depth_name = name
-		self.mod_color = mut
 		self.texture = _get_texture(name)
 #endregion
 
 #region global instances
 # the order must match the order of the declaration, below
-enum DepthFlavors {DEBUG, TEMPLATE}
+enum DepthFlavors {DEBUG, HIDDEN, EMPTY, KEY, BREAK, BASE, BOUNCE}
 
 static var _defs: Array[DepthDef] = []
 
 static func _get_def() -> Array[DepthDef]:
 	if _defs.is_empty():
 		_defs = [
-			DepthDef.new("debug", Color("d63384")),
-			DepthDef.new("template", Color("dddddd"))
+			DepthDef.new("debug"),
+			DepthDef.new("hidden"),
+			DepthDef.new("empty"),
+			DepthDef.new("key"),
+			DepthDef.new("break"),
+			DepthDef.new("base"),
+			DepthDef.new("bounce"),
 		]
 		assert(len(_defs) == len(DepthFlavors), "Hey dipshit update the enum")
 		print("Loaded %s depths" % len(_defs))

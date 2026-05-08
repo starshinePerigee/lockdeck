@@ -1,0 +1,45 @@
+@tool
+extends Control
+
+const CYLINDER_COUNT = 5
+
+var pin_refs: Array[Pin] = []
+
+@export var cylinder_count: int = CYLINDER_COUNT:
+	set(v):
+		cylinder_count = v
+		
+		if not is_node_ready():
+			await ready
+		
+		if len(pin_refs) == 0:
+			return
+		
+		for i in range(CYLINDER_COUNT):
+			pin_refs[i].visible = i >= cylinder_count
+
+@export var pins: Dictionary[int, PinSpec] = {}:
+	set(v):
+		pins = v
+		
+		if not is_node_ready():
+			await ready
+		
+		for i in range(cylinder_count):
+			if i in pins:
+				pin_refs[i].visible = true
+				pin_refs[i].depths = pins[i].depths
+				pin_refs[i].revealed = pins[i].reveals
+				pin_refs[i].pin_position = pins[i].pin_position
+			else:
+				pin_refs[i].visible = false
+
+func _ready() -> void:
+	pin_refs = [
+		$CylinderHBox/Pin1,
+		$CylinderHBox/Pin2,
+		$CylinderHBox/Pin3,
+		$CylinderHBox/Pin4,
+		$CylinderHBox/Pin5,
+	]
+	cylinder_count = CYLINDER_COUNT

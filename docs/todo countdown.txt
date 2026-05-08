@@ -1,7 +1,7 @@
 ROAD TO FIRST PLAYTEST:
 X keyway proto
-- pin proto redux
-- pin logic (key only)
+X pin proto redux
+- pin logic (key and mock break only)
 - what just happened proto
 - basic deck logic (no refils)
 - bolt together

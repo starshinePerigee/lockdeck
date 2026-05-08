@@ -3,7 +3,7 @@ extends HBoxContainer
 
 const SPACE_COUNT = 5
 
-var spaces: Array[CardSpace] = []
+var space_refs: Array[CardSpace] = []
 
 @export var space_count: int = SPACE_COUNT:
 	set(v):
@@ -12,27 +12,24 @@ var spaces: Array[CardSpace] = []
 		if not is_node_ready():
 			await ready
 		
-		if len(spaces) == 0:
+		if len(space_refs) == 0:
 			return
 		
 		for i in range(SPACE_COUNT):
-			spaces[i].closed = i >= space_count
+			space_refs[i].closed = i >= space_count
 
 @export var cards: Dictionary[int, CardSpec] = {}:
 	set(v):
 		cards = v
 		for i in range(SPACE_COUNT):
 			if i in cards:
-				spaces[i].card_spec = cards[i]
-				spaces[i].has_card = true
+				space_refs[i].card_spec = cards[i]
+				space_refs[i].has_card = true
 			else:
-				spaces[i].has_card = false
+				space_refs[i].has_card = false
 
 func _ready() -> void:
-	if not is_node_ready():
-		await ready
-	
-	spaces = [
+	space_refs = [
 		$CardSpace1,
 		$CardSpace2,
 		$CardSpace3,
