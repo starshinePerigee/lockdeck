@@ -24,7 +24,9 @@ class EffectDef:
 
 #region global instances
 # the order must match the order of the declaration, below
-enum EffectFlavors {DEBUG, EMPTY, FORCE, JAM, TEST, JUMP}
+enum EffectFlavors {
+	DEBUG, EMPTY, FORCE, JAM, TEST, JUMP, KEY, BREAK, BOUNCE, OUT_OF_BOUNDS,
+}
 
 static var _defs: Array[EffectDef] = []
 
@@ -36,7 +38,11 @@ static func _get_def() -> Array[EffectDef]:
 			EffectDef.new("force"),
 			EffectDef.new("jam"),
 			EffectDef.new("test"),
-			EffectDef.new("jump")
+			EffectDef.new("jump"),
+			EffectDef.new("key"),
+			EffectDef.new("break"),
+			EffectDef.new("bounce"),
+			EffectDef.new("out_of_bounds"),
 		]
 		assert(len(_defs) == len(EffectFlavors), "Hey dipshit update the enum")
 		print("Loaded %s effects" % len(_defs))

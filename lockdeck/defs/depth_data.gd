@@ -12,10 +12,12 @@ class DepthDef:
 	
 	var depth_name:String
 	var texture:Resource
+	var effect:EffectData.EffectFlavors
 	
-	func _init(name: String):
-		self.depth_name = name
-		self.texture = _get_texture(name)
+	func _init(name_: String, effect_: EffectData.EffectFlavors):
+		self.depth_name = name_
+		self.texture = _get_texture(name_)
+		self.effect = effect_
 #endregion
 
 #region global instances
@@ -27,13 +29,13 @@ static var _defs: Array[DepthDef] = []
 static func _get_def() -> Array[DepthDef]:
 	if _defs.is_empty():
 		_defs = [
-			DepthDef.new("debug"),
-			DepthDef.new("hidden"),
-			DepthDef.new("empty"),
-			DepthDef.new("key"),
-			DepthDef.new("break"),
-			DepthDef.new("base"),
-			DepthDef.new("bounce"),
+			DepthDef.new("debug", EffectData.EffectFlavors.DEBUG),
+			DepthDef.new("hidden", EffectData.EffectFlavors.DEBUG),
+			DepthDef.new("empty", EffectData.EffectFlavors.EMPTY),
+			DepthDef.new("key", EffectData.EffectFlavors.KEY),
+			DepthDef.new("break", EffectData.EffectFlavors.BREAK),
+			DepthDef.new("base", EffectData.EffectFlavors.EMPTY),
+			DepthDef.new("bounce", EffectData.EffectFlavors.BOUNCE),
 		]
 		assert(len(_defs) == len(DepthFlavors), "Hey dipshit update the enum")
 		print("Loaded %s depths" % len(_defs))

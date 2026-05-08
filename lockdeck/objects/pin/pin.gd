@@ -20,6 +20,14 @@ const DEPTH_VHEIGHT = 35
 		
 		_redraw()
 
+@export var pin_set: bool = false:
+	set(v):
+		pin_set = v
+		if pin_set:
+			modulate = Color("848484")
+		else:
+			modulate = Color("ffffff")
+
 @export var pin_position: int = 0:
 	set(v):
 		pin_position = v

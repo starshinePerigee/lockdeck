@@ -2,8 +2,7 @@ ROAD TO FIRST PLAYTEST:
 X keyway proto
 X pin proto redux
 X basic pin movement logic
-- pin logic (key and mock break only)
-- what just happened proto
+X pin logic (key and mock break only)
 - basic deck logic (no refils)
 - bolt together
 
@@ -12,9 +11,12 @@ BASIC FEATURE SET:
 - deck proto
 - discard proto
 - trash proto
+- what happened bar proto
+- hint proto
 - lockpick break logic (game over at n-1 lockpicks)
 - shuffle
 - full card flow (deck > hand > keyway > discard / break)
+- pin reset logic
 
 META:
 - level generator
@@ -38,6 +40,10 @@ UI NICETIES:
 - tutorial
 
 ART AND ANIMATIONS:
+- lock background
+- fist holding cards art
+- background in general
+- font
 - clean up pick card
 - new picks
 - depths

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://8g06i7q85pmo"]
+
+[ext_resource type="Script" uid="uid://crsy2s45oln02" path="res://objects/interface/notifications.gd" id="1_o2ke4"]
+
+[node name="Notifications" type="VBoxContainer"]
+offset_right = 1000.0
+offset_bottom = 150.0
+script = ExtResource("1_o2ke4")

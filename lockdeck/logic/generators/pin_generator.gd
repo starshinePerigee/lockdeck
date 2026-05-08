@@ -14,4 +14,5 @@ static func get_random_base_pin() -> PinSpec:
 	var spec = PinSpec.new()
 	for i in range(len(pin_core)):
 		spec.depths[i + 1] = pin_core[i]
+	spec.pin_set = false
 	return spec
