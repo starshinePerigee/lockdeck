@@ -18,7 +18,7 @@ class NotificationDef:
 
 #region global instances
 # the order must match the order of the declaration, below
-enum NotificationFlavors {DEBUG, BREAK, UNLOCK}
+enum NotificationFlavors {DEBUG, BREAK, UNLOCK, FAILURE, RELOAD}
 
 static var _defs: Array[NotificationDef] = []
 
@@ -28,6 +28,8 @@ static func _get_def() -> Array[NotificationDef]:
 			NotificationDef.new("debug"),
 			NotificationDef.new("break"),
 			NotificationDef.new("unlock"),
+			NotificationDef.new("failure"),
+			NotificationDef.new("reload"),
 		]
 		assert(len(_defs) == len(NotificationFlavors), "Hey dipshit update the enum")
 		print("Loaded %s depths" % len(_defs))

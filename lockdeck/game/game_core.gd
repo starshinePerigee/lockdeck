@@ -6,6 +6,7 @@ const REVEAL_ALL := true
 
 var draw_cards: Array[CardSpec] = []
 var discard_cards: Array[CardSpec] = []
+var trash_cards: Array[CardSpec] = []
 var hand_cards: Dictionary[int, CardSpec] = {}
 var keyway_cards: Dictionary[int, CardSpec] = {}
 var cyl_pins: Dictionary[int, PinSpec] = {}
@@ -126,8 +127,27 @@ func check_solve() -> bool:
 	return true
 
 func spend_pick(card_index: int):
+	var spent_pick = keyway_cards[card_index]
 	keyway_cards.erase(card_index)
+	if pick_broke:
+		trash_cards.append(spent_pick)
+	else:
+		discard_cards.append(spent_pick)
 	fill_cards()
+
+func reload():
+	if len(discard_cards) == 0:
+		return
+	
+	_reset_globals()
+	discard_cards.shuffle()
+	var trashed_pick = discard_cards.pop_front()
+	trash_cards.append(trashed_pick)
+	draw_cards.append_array(discard_cards)
+	discard_cards.clear()
+	$Notifications.notify(NotificationData.NotificationFlavors.RELOAD)
+	fill_cards()
+	refresh_objects()
 
 func fill_cards():
 	var played_cards: Array[CardSpec] = []
@@ -137,6 +157,11 @@ func fill_cards():
 		played_cards.append(hand_cards[k])
 	draw_cards.shuffle()
 	played_cards.append_array(draw_cards)
+	
+	if len(played_cards) == 0 and len(discard_cards) == 0:
+		$Notifications.notify(NotificationData.NotificationFlavors.FAILURE)
+		return
+	
 	for i in range(CYLINDER_COUNT + 3):
 		if i < CYLINDER_COUNT:
 			var cyl_index = CYLINDER_COUNT - i - 1
@@ -163,6 +188,7 @@ func refresh_objects():
 	$Hand.card_specs = hand_cards
 	$DrawPile.count = len(draw_cards)
 	$DiscardPile.count = len(discard_cards)
+	$TrashPile.count = len(trash_cards)
 	$LockBody/Cylinders.pins = cyl_pins
 	$LockBody/Keyway.cards = keyway_cards
 
@@ -172,6 +198,7 @@ func _ready() -> void:
 	$LockBody/Keyway.space_count = CYLINDER_COUNT
 	
 	$LockBody/Keyway.card_activated.connect(execute_pick)
+	$DiscardPile.pile_pressed.connect(reload)
 	
 	for i in range(CYLINDER_COUNT):
 		cyl_pins[i] = PinGenerator.get_random_base_pin()

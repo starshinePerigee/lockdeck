@@ -10,13 +10,16 @@ BASIC FEATURE SET:
 X hand proto
 X deck proto
 X discard proto
-- trash proto
-- what happened bar proto
+X lockpick break logic (game over at n-1 lockpicks)
+X trash proto
+X reshuffle
+X full card flow (deck > hand > keyway > discard / break)
+- jam
+- jump
 - hint proto
-- lockpick break logic (game over at n-1 lockpicks)
-- reshuffle
-- full card flow (deck > hand > keyway > discard / break)
+- test
 - pin reset logic
+- what happened bar proto
 
 META:
 - level generator
