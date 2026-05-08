@@ -70,19 +70,24 @@ theme_override_constants/separation = 50
 
 [node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+hide = false
 
 [node name="Pin2" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 2
+hide = false
 
 [node name="Pin3" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 3
+hide = false
 
 [node name="Pin4" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 4
+hide = false
 
 [node name="Pin5" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 pin_position = 8
+hide = false

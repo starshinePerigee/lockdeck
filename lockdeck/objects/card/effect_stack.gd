@@ -11,18 +11,10 @@ const SIZE_SCALE = {
 
 @export var effects: Array[EffectSpec] = []:
 	set(v):
-		for spec in effects:
-			if spec.changed.is_connected(_redraw):
-				spec.changed.disconnect(_redraw)
-
 		effects = v
 		for i in range(len(effects)):
 			if effects[i] == null:
 				effects[i] = EffectSpec.new()
-
-		for spec in effects:
-			if not spec.changed.is_connected(_redraw):
-				spec.changed.connect(_redraw)
 		_redraw()
 
 @export var small := true:

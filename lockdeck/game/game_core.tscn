@@ -5,24 +5,24 @@
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
 
 [node name="GameCore" type="Control"]
-custom_minimum_size = Vector2(840, 860)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -600.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("1_db5vk")
 
-[node name="Cylinders" parent="." instance=ExtResource("1_wt0dc")]
+[node name="LockBody" type="Control" parent="."]
+custom_minimum_size = Vector2(840, 860)
+anchors_preset = 0
+offset_left = 400.0
+offset_right = 1240.0
+offset_bottom = 860.0
+
+[node name="Cylinders" parent="LockBody" instance=ExtResource("1_wt0dc")]
 offset_left = 19.0
 offset_top = -50.0
 offset_right = 699.0
 offset_bottom = 650.0
 
-[node name="Keyway" parent="." instance=ExtResource("2_db5vk")]
+[node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 624.0

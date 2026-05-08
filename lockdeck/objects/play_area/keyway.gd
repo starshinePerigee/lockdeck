@@ -12,21 +12,28 @@ var space_refs: Array[CardSpace] = []
 		if not is_node_ready():
 			await ready
 		
-		if len(space_refs) == 0:
-			return
-		
-		for i in range(SPACE_COUNT):
-			space_refs[i].closed = i >= space_count
+		redraw()
 
 @export var cards: Dictionary[int, CardSpec] = {}:
 	set(v):
 		cards = v
-		for i in range(SPACE_COUNT):
-			if i in cards:
-				space_refs[i].card_spec = cards[i]
-				space_refs[i].has_card = true
-			else:
-				space_refs[i].has_card = false
+		
+		if not is_node_ready():
+			await ready
+			
+		redraw()
+
+func redraw():
+	if len(space_refs) == 0:
+			return
+			
+	for i in range(SPACE_COUNT):
+		space_refs[i].closed = i >= space_count
+		if i in cards:
+			space_refs[i].card_spec = cards[i]
+			space_refs[i].has_card = true
+		else:
+			space_refs[i].has_card = false
 
 func _ready() -> void:
 	space_refs = [
@@ -37,3 +44,4 @@ func _ready() -> void:
 		$CardSpace5
 	]
 	space_count = SPACE_COUNT
+	redraw()

@@ -41,6 +41,7 @@ ART AND ANIMATIONS:
 - new picks
 - depths
 - keyway and playing field
+- what is holding the pins up
 - pin motion
 - broken pick flicks
 - success and playing field open

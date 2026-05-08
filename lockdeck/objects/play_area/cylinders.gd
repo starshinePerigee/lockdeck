@@ -12,11 +12,7 @@ var pin_refs: Array[Pin] = []
 		if not is_node_ready():
 			await ready
 		
-		if len(pin_refs) == 0:
-			return
-		
-		for i in range(CYLINDER_COUNT):
-			pin_refs[i].visible = i >= cylinder_count
+		redraw()
 
 @export var pins: Dictionary[int, PinSpec] = {}:
 	set(v):
@@ -24,15 +20,21 @@ var pin_refs: Array[Pin] = []
 		
 		if not is_node_ready():
 			await ready
-		
-		for i in range(cylinder_count):
-			if i in pins:
-				pin_refs[i].visible = true
-				pin_refs[i].depths = pins[i].depths
-				pin_refs[i].revealed = pins[i].reveals
-				pin_refs[i].pin_position = pins[i].pin_position
-			else:
-				pin_refs[i].visible = false
+
+		redraw()
+
+func redraw():
+	if len(pin_refs) == 0:
+		return
+	
+	for i in range(CYLINDER_COUNT):
+		if i in pins and i < cylinder_count:
+			pin_refs[i].hide = false
+			pin_refs[i].depths = pins[i].depths
+			pin_refs[i].revealed = pins[i].reveals
+			pin_refs[i].pin_position = pins[i].pin_position
+		else:
+			pin_refs[i].hide = true
 
 func _ready() -> void:
 	pin_refs = [
@@ -43,3 +45,4 @@ func _ready() -> void:
 		$CylinderHBox/Pin5,
 	]
 	cylinder_count = CYLINDER_COUNT
+	redraw()

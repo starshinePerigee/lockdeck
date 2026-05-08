@@ -31,6 +31,14 @@ class PickTemplateDef:
 # the order must match the order of the declaration, below
 enum PickTemplateFlavors {DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE}
 
+static var ValidPicks = [
+	PickTemplateFlavors.DIAMOND,
+	PickTemplateFlavors.HOOK,
+	PickTemplateFlavors.BALL,
+	PickTemplateFlavors.RAKE,
+	PickTemplateFlavors.SNAKE
+]
+
 static var _defs: Array[PickTemplateDef] = []
 
 static func _get_def() -> Array[PickTemplateDef]:
