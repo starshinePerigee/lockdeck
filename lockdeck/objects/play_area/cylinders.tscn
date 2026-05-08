@@ -9,6 +9,9 @@ script = ExtResource("2_tk5p0")
 depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
 reveals = Array[bool]([true, false, false, false, false, false, false, false, true])
 pin_position = 0
+pin_set = false
+key_set = false
+jam_count = 0
 metadata/_custom_type_script = "uid://basq0phattky"
 
 [sub_resource type="Resource" id="Resource_iid8n"]
@@ -16,6 +19,9 @@ script = ExtResource("2_tk5p0")
 depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
 reveals = Array[bool]([true, false, false, false, false, false, false, false, true])
 pin_position = 2
+pin_set = false
+key_set = false
+jam_count = 0
 metadata/_custom_type_script = "uid://basq0phattky"
 
 [sub_resource type="Resource" id="Resource_iyxke"]
@@ -23,6 +29,9 @@ script = ExtResource("2_tk5p0")
 depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
 reveals = Array[bool]([true, false, false, false, false, false, false, false, true])
 pin_position = 3
+pin_set = false
+key_set = false
+jam_count = 0
 metadata/_custom_type_script = "uid://basq0phattky"
 
 [sub_resource type="Resource" id="Resource_2utfr"]
@@ -30,6 +39,9 @@ script = ExtResource("2_tk5p0")
 depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
 reveals = Array[bool]([true, false, false, false, false, false, false, false, true])
 pin_position = 4
+pin_set = false
+key_set = false
+jam_count = 0
 metadata/_custom_type_script = "uid://basq0phattky"
 
 [sub_resource type="Resource" id="Resource_emdgi"]
@@ -37,6 +49,9 @@ script = ExtResource("2_tk5p0")
 depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
 reveals = Array[bool]([true, false, false, false, false, false, false, false, true])
 pin_position = 8
+pin_set = false
+key_set = false
+jam_count = 0
 metadata/_custom_type_script = "uid://basq0phattky"
 
 [node name="Cylinders" type="Control"]

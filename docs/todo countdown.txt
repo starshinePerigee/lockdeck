@@ -14,12 +14,11 @@ X lockpick break logic (game over at n-1 lockpicks)
 X trash proto
 X reshuffle
 X full card flow (deck > hand > keyway > discard / break)
-- jam
-- jump
-- hint proto
+X jam
+X jump
+- reveal logic
 - test
-- pin reset logic
-- what happened bar proto
+X pin reset logic
 
 META:
 - level generator

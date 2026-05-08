@@ -24,9 +24,9 @@ const DEPTH_VHEIGHT = 35
 	set(v):
 		pin_set = v
 		if pin_set:
-			modulate = Color("848484")
+			$Stack.modulate = Color("848484")
 		else:
-			modulate = Color("ffffff")
+			$Stack.modulate = Color("ffffff")
 
 @export var pin_position: int = 0:
 	set(v):
@@ -45,6 +45,25 @@ const DEPTH_VHEIGHT = 35
 			await ready
 		
 		$Stack.visible = visible_
+
+@export var jam_count: int = 0:
+	set(v):
+		jam_count = v
+		
+		if not is_node_ready():
+			await ready
+		
+		$JamIndicator.visible = jam_count > 0
+		$JamIndicator/JamCount.text = str(jam_count)
+
+@export var key_set: bool = false:
+	set(v):
+		key_set = v
+		
+		if not is_node_ready():
+			await ready
+		
+		$KeyIndicator.visible = key_set
 
 func _redraw():
 	if depth_refs.is_empty():

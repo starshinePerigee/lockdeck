@@ -32,7 +32,7 @@ static func _get_def() -> Array[NotificationDef]:
 			NotificationDef.new("reload"),
 		]
 		assert(len(_defs) == len(NotificationFlavors), "Hey dipshit update the enum")
-		print("Loaded %s depths" % len(_defs))
+		print("Loaded %s notifications" % len(_defs))
 	return _defs
 
 static func get_def(notification_: NotificationFlavors) -> NotificationDef:

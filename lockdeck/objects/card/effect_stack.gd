@@ -41,7 +41,7 @@ func _redraw() -> void:
 		child.queue_free()
 	
 	for s in effects.size():
-		var spec: EffectSpec = effects[-s - 1]
+		var spec: EffectSpec = effects[s]
 		var count: int = max(1, spec.value)
 		
 		for j in count:

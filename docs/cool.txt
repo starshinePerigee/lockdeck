@@ -15,6 +15,7 @@ Cool:
 - can you click and drag broken picks?
 - also gems and coins are rewards for each level, can roll and bounce around
 -- keys
+- when you take a loot, the popup dialogue is random from like "take!", "yoink!", "don't mind if I do!"
 
 Animations
 - Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements

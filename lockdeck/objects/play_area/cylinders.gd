@@ -33,7 +33,9 @@ func redraw():
 			pin_refs[i].depths = pins[i].depths
 			pin_refs[i].revealed = pins[i].reveals
 			pin_refs[i].pin_position = pins[i].pin_position
+			pin_refs[i].jam_count = pins[i].jam_count
 			pin_refs[i].pin_set = pins[i].pin_set
+			pin_refs[i].key_set = pins[i].key_set
 		else:
 			pin_refs[i].visible_ = false
 			pin_refs[i].pin_set = true
