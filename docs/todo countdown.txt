@@ -16,8 +16,8 @@ X reshuffle
 X full card flow (deck > hand > keyway > discard / break)
 X jam
 X jump
-- reveal logic
-- test
+X reveal logic
+X test
 X pin reset logic
 - hand rearranging
 - card discarding

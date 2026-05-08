@@ -29,14 +29,15 @@ class PickTemplateDef:
 
 #region global instances
 # the order must match the order of the declaration, below
-enum PickTemplateFlavors {DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE}
+enum PickTemplateFlavors {DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE, FORK}
 
 static var ValidPicks = [
 	PickTemplateFlavors.DIAMOND,
 	PickTemplateFlavors.HOOK,
 	PickTemplateFlavors.BALL,
 	PickTemplateFlavors.RAKE,
-	PickTemplateFlavors.SNAKE
+	PickTemplateFlavors.SNAKE,
+	PickTemplateFlavors.FORK
 ]
 
 static var _defs: Array[PickTemplateDef] = []
@@ -62,8 +63,7 @@ static func _get_def() -> Array[PickTemplateDef]:
 				"[i]The standard.[/i]",
 				{
 					-1: [EffectSpec.new("force", 1)],
-					0: [EffectSpec.new("force", 3)],
-					1: [EffectSpec.new("force", 1)]
+					0: [EffectSpec.new("force", 3)]
 				}
 			),
 			PickTemplateDef.new(
@@ -97,6 +97,15 @@ static func _get_def() -> Array[PickTemplateDef]:
 				{
 					-1: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)],
 					0: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)]
+				}
+			),
+			PickTemplateDef.new(
+				"fork",
+				"[i]They're done.[/i]",
+				{
+					-1: [EffectSpec.new("force", 2)],
+					0: [EffectSpec.new("jam", 1)],
+					1: [EffectSpec.new("force", 2)]
 				}
 			)
 		]
