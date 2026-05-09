@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxgnjemw65rvl"]
+
+[ext_resource type="PackedScene" uid="uid://e4dbfc26npte" path="res://objects/hand/hand.tscn" id="1_70s8e"]
+[ext_resource type="Script" uid="uid://ceeo3ml8yr6m5" path="res://objects/hand/test_hand.gd" id="1_cxjto"]
+
+[node name="TestHand" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cxjto")
+
+[node name="Hand" parent="." instance=ExtResource("1_70s8e")]
+offset_left = 168.0
+offset_top = 334.0
+offset_right = 668.0
+offset_bottom = 634.0

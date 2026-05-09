@@ -3,8 +3,8 @@ Signals:
 top level layout which handles additional effects)
 - keyway - unhover (all unhover calls the same method, which resets everything to the default state)
 X keyway - activate (the big one, triggers the entire game loop)
-- hand - rearrange
-- hand - discard
+X hand - rearrange
+X hand - discard
 - deck - hover / unhover (need a deck display scene to show/hide)
 - discard - hover / unhover (need a discard display scene to show/hide)
 - discard - reload (needs a confirmation but managed via the discard scene)

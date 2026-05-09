@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="4_0wo06"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
-[ext_resource type="PackedScene" uid="uid://e4dbfc26npte" path="res://objects/play_area/hand.tscn" id="5_1moii"]
+[ext_resource type="PackedScene" uid="uid://e4dbfc26npte" path="res://objects/hand/hand.tscn" id="5_1moii"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -13,10 +13,10 @@ anchors_preset = 0
 script = ExtResource("1_db5vk")
 
 [node name="Hand" parent="." instance=ExtResource("5_1moii")]
-offset_left = 93.0
-offset_top = 669.0
-offset_right = 593.0
-offset_bottom = 969.0
+offset_left = 60.0
+offset_top = 550.0
+offset_right = 560.0
+offset_bottom = 850.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(880, 860)
@@ -41,10 +41,10 @@ offset_bottom = 849.0
 
 [node name="DrawPile" parent="." instance=ExtResource("4_0wo06")]
 layout_mode = 0
-offset_left = 106.0
-offset_top = 366.0
-offset_right = 256.0
-offset_bottom = 591.0
+offset_left = 109.0
+offset_top = 175.0
+offset_right = 259.0
+offset_bottom = 400.0
 count = 5
 
 [node name="DiscardPile" parent="." instance=ExtResource("4_0wo06")]
@@ -64,8 +64,8 @@ rotation = 1.5708
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 318.0
-offset_right = 1121.0
-offset_bottom = 468.0
+offset_left = 251.0
+offset_top = 269.0
+offset_right = 1251.0
+offset_bottom = 419.0
 rotation = -0.261799

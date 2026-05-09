@@ -124,6 +124,8 @@ func advance_pin(pin_index: int, advance_by: int) -> bool:
 	
 	if p.jam_count > 0:
 		p.jam_count -= 1
+		if p.jam_count == 0:
+			p.pin_set = false
 		return false
 	
 	p.pin_set = false
@@ -221,6 +223,31 @@ func check_unlock() -> bool:
 	$Notifications.notify(NotificationData.NotificationFlavors.UNLOCK)
 	return true
 
+func rearrange_hand(card_index: int, new_position: int) -> void:
+	# this is scuffed but my brain is melted
+	var card_array: Array[CardSpec]
+	# if you change the hand size death will come
+	for i in range(3):
+		card_array.append(hand_cards[i])
+	card_array.insert(new_position, hand_cards[card_index])
+	if new_position < card_index:
+		card_array.pop_at(card_index + 1)
+	else:
+		card_array.pop_at(card_index)
+	for i in range(3):
+		hand_cards[i] = card_array[i]
+	refresh_objects()
+
+func discard_from_hand(card_index: int) -> void:
+	var discarded_pick = hand_cards[card_index]
+	hand_cards.erase(card_index)
+	discard_cards.append(discarded_pick)
+	
+	_reset_globals()
+	handle_falling()
+	fill_cards()
+	refresh_objects()
+
 func fill_cards():
 	var played_cards: Array[CardSpec] = []
 	for k in sort_reverse_dict_keys(keyway_cards):
@@ -271,6 +298,8 @@ func _ready() -> void:
 	
 	$LockBody/Keyway.card_activated.connect(execute_pick)
 	$DiscardPile.pile_pressed.connect(reload)
+	$Hand.card_discarded.connect(discard_from_hand)
+	$Hand.card_rearranged.connect(rearrange_hand)
 	
 	for i in range(CYLINDER_COUNT):
 		cyl_pins[i] = PinGenerator.get_random_base_pin()

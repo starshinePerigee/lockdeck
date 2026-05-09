@@ -8,7 +8,7 @@ static func get_random_base_pin() -> PinSpec:
 	var key_loc = randi_range(1, 7)
 	spec.depths[key_loc] = DepthData.DepthFlavors.KEY
 	
-	if key_loc < 8:
+	if key_loc < 7:
 		spec.depths[randi_range(key_loc + 1, 7)] = DepthData.DepthFlavors.BREAK
 	
 	spec.pin_set = false

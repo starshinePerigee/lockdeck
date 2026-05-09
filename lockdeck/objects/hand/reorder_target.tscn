@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwive47t7u5f7"]
+
+[ext_resource type="Texture2D" uid="uid://cx3bcdo6w8idr" path="res://assets/hand/insertion_deselected.png" id="1_as7x7"]
+[ext_resource type="Script" uid="uid://cmlhyuo4tt5gf" path="res://objects/hand/reorder_target.gd" id="2_v6chj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_11h6y"]
+size = Vector2(10, 140)
+
+[node name="ReorderTarget" type="TextureRect"]
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("1_as7x7")
+script = ExtResource("2_v6chj")
+
+[node name="ReorderArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReorderArea"]
+position = Vector2(50, 60)
+shape = SubResource("RectangleShape2D_11h6y")

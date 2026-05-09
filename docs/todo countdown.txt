@@ -20,7 +20,7 @@ X reveal logic
 X test
 X pin reset logic
 - hand rearranging
-- card discarding
+X card discarding
 
 META:
 - level generator
@@ -30,7 +30,6 @@ META:
 
 EXPAND:
 - full depth set
-- full what just happened overlay
 - lockpick modifiers
 - improvised lockpicks
 
@@ -38,7 +37,6 @@ UI NICETIES:
 - Card activation highlight
 - deck and trash contents
 - draggable marks
-- reveal logic (if no other options)
 - card hovertext
 - menu
 - tutorial
@@ -52,8 +50,6 @@ ART AND ANIMATIONS:
 - new picks
 - depths
 - keyway and playing field
-- what is holding the pins up
-- hand is splayed a little
 - pin motion
 - broken pick flicks
 - success and playing field open
