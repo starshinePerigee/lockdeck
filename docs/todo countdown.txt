@@ -19,8 +19,17 @@ X jump
 X reveal logic
 X test
 X pin reset logic
-- hand rearranging
+X hand rearranging
 X card discarding
+
+LAST MINUTE:
+- why is hand feeding backwards
+- rearrange is broke at limited
+X update card art
+- splash
+- top menu
+- tutorial
+- cylinders +
 
 META:
 - level generator

@@ -1,8 +1,11 @@
 extends Control
 
-const CYLINDER_COUNT = 4
-const DECK_COUNT = 10
-const REVEAL_ALL := false
+signal game_fail
+signal game_win
+
+@export var CYLINDER_COUNT := 1
+@export var DECK_COUNT := 10
+@export var REVEAL_ALL := false
 
 var draw_cards: Array[CardSpec] = []
 var discard_cards: Array[CardSpec] = []
@@ -181,6 +184,7 @@ func check_solve() -> bool:
 		if not cyl_pins[k].key_set:
 			return false
 	$Notifications.notify(NotificationData.NotificationFlavors.UNLOCK)
+	game_win.emit()
 	return true
 
 func handle_falling():
@@ -228,13 +232,14 @@ func rearrange_hand(card_index: int, new_position: int) -> void:
 	var card_array: Array[CardSpec]
 	# if you change the hand size death will come
 	for i in range(3):
-		card_array.append(hand_cards[i])
+		if i in hand_cards.keys():
+			card_array.append(hand_cards[i])
 	card_array.insert(new_position, hand_cards[card_index])
 	if new_position < card_index:
 		card_array.pop_at(card_index + 1)
 	else:
 		card_array.pop_at(card_index)
-	for i in range(3):
+	for i in range(len(card_array)):
 		hand_cards[i] = card_array[i]
 	refresh_objects()
 
@@ -259,6 +264,7 @@ func fill_cards():
 	
 	if len(played_cards) == 0 and len(discard_cards) == 0:
 		$Notifications.notify(NotificationData.NotificationFlavors.FAILURE)
+		game_fail.emit()
 		return
 	
 	for i in range(CYLINDER_COUNT + 3):
@@ -290,6 +296,27 @@ func refresh_objects():
 	$TrashPile.count = len(trash_cards)
 	$LockBody/Cylinders.pins = cyl_pins
 	$LockBody/Keyway.cards = keyway_cards
+
+func reset():
+	$Notifications.clear()
+	$LockBody/Cylinders.cylinder_count = CYLINDER_COUNT
+	$LockBody/Keyway.space_count = CYLINDER_COUNT
+
+	draw_cards.clear()
+	discard_cards.clear()
+	trash_cards.clear()
+	hand_cards.clear()
+	keyway_cards.clear()
+	
+	for i in range(CYLINDER_COUNT):
+		cyl_pins[i] = PinGenerator.get_random_base_pin()
+	
+	for i in range(DECK_COUNT):
+		draw_cards.append(PickGenerator.get_random_base_card())
+	
+	fill_cards()
+	refresh_objects()
+	
 
 func _ready() -> void:
 	$Notifications.clear()

@@ -11,14 +11,16 @@ config_version=5
 [application]
 
 config/name="lockdeck"
+run/main_scene="uid://csinn0yt64xam"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://bohaaqsg55ub4"
 config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [editor]
 

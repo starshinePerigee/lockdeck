@@ -7,7 +7,7 @@ class EffectDef:
 	static func _get_texture(name: String, small: bool) -> Resource:
 		var suffix = "_small" if small else ""
 		var res_str = "res://assets/effects/icon_%s%s.png" % [name, suffix]
-		if FileAccess.file_exists(res_str):
+		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
 			return load("res://assets/effects/icon_debug_small.png")

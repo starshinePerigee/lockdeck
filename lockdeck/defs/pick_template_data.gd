@@ -6,7 +6,7 @@ extends Object
 class PickTemplateDef:
 	static func _get_texture(name: String) -> Resource:
 		var res_str = "res://assets/picks/pick_%s.png" % [name]
-		if FileAccess.file_exists(res_str):
+		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
 			return load("res://assets/effects/pick_debug.png")

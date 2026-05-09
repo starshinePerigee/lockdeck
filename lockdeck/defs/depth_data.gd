@@ -5,7 +5,7 @@ extends Object
 class DepthDef:
 	static func _get_texture(n: String) -> Resource:
 		var res_str = "res://assets/depths/depth_%s.png" % [n]
-		if FileAccess.file_exists(res_str):
+		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
 			return load("res://assets/depths/depth_debug.png")

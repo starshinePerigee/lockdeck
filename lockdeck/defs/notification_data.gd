@@ -5,7 +5,7 @@ extends Object
 class NotificationDef:
 	static func _get_texture(n: String) -> Resource:
 		var res_str = "res://assets/notifications/notif_%s.png" % [n]
-		if FileAccess.file_exists(res_str):
+		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
 			return load("res://assets/notifications/notif_debug.png")
