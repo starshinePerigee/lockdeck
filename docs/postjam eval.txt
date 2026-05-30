@@ -5,6 +5,7 @@ STATIC KEYWAYECTOMY
 
 QUICK POLISH
 - new placeholder lockpick icons
+- evaluate new card layout (name, icons, more square)
 - drop textboxes when no text
 
 CORE EXPLORATION
@@ -40,6 +41,7 @@ SOUND
 - other effects
 
 ANIMATION
+- hand effects
 - cylinder slides
 - shuffle
 - effects on depths

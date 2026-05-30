@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://slpfrt15iygb"]
+[gd_scene load_steps=16 format=3 uid="uid://slpfrt15iygb"]
 
 [ext_resource type="Texture2D" uid="uid://ccylg6db80ch4" path="res://assets/card/card_space.png" id="1_88gnn"]
-[ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/play_area/card_space.gd" id="2_nyvl3"]
+[ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/card/card_space.gd" id="2_nyvl3"]
+[ext_resource type="Texture2D" uid="uid://dq3q8lhotl6tp" path="res://assets/card/card_highlight.png" id="3_edh6n"]
 [ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_ss3r8"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="4_ss3r8"]
 [ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="5_jpxej"]
@@ -66,8 +67,18 @@ offset_bottom = 225.0
 texture = ExtResource("1_88gnn")
 stretch_mode = 2
 script = ExtResource("2_nyvl3")
+has_card = true
+
+[node name="HighlightRect" type="TextureRect" parent="."]
+visible = false
+z_index = -10
+layout_mode = 0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 155.0
+offset_bottom = 230.0
+texture = ExtResource("3_edh6n")
 
 [node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
-visible = false
 layout_mode = 0
 card_spec = SubResource("Resource_fio48")
