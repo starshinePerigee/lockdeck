@@ -17,6 +17,8 @@ Cool:
 -- keys
 - when you take a loot, the popup dialogue is random from like "take!", "yoink!", "don't mind if I do!"
 
+- can you show the pick in the keyway when you're hovering a card?
+
 Animations
 - Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
 - hints: character by character, wipe out

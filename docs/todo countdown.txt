@@ -26,7 +26,7 @@ LAST MINUTE:
 - why is hand feeding backwards
 - rearrange is broke at limited
 X update card art
-- splash
+X splash
 - top menu
 - tutorial
 - cylinders +

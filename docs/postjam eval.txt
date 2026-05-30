@@ -1,0 +1,64 @@
+STATIC KEYWAYECTOMY
+- Full bottom hand
+- Hand reorder mechanics
+- New game loop
+
+QUICK POLISH
+- new placeholder lockpick icons
+- drop textboxes when no text
+
+CORE EXPLORATION
+- draft depth effects
+- draft lockpick effects
+
+OUTER LOOP
+- updated level generator
+- lockpick generator
+- lockpick modifier
+- lockpick builder / improvisor
+- level - deck loop
+
+INDICATORS
+- lockpick preview highlights
+- deck and trash contents
+
+ASSETS
+- new new lockpick icons
+- new pick art
+- new card bg
+- background
+- container
+- new splash
+
+TUTORIALIZATION
+- summonable symbol reference
+- tutorial
+
+SOUND
+- looping ambient bg
+- depth sounds
+- other effects
+
+ANIMATION
+- cylinder slides
+- shuffle
+- effects on depths
+- effects on picks
+- TBR
+
+POLISH AND COOL THINGS
+- opening animation
+- TBR
+
+NEW DEPTHS / PICKS
+- TBR
+
+BALANCE
+- pick balance
+- level gen balance
+
+MENUS
+- start menu
+- options
+- sound setting
+- input setting
