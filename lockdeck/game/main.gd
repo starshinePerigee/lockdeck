@@ -1,11 +1,6 @@
 extends Control
 
 var current_cylinders = 1
-var tutorial := true
-
-func do_tutorial():
-	tutorial = not tutorial
-	$Tutorial.visible = tutorial
 
 func restart_level():
 	current_cylinders = 1
@@ -23,6 +18,5 @@ func next_level():
 
 func _ready():
 	$RestartButton.pressed.connect(restart_level)
-	$TutorialButton.pressed.connect(do_tutorial)
 	$GameCore.game_win.connect(clear_level)
 	$NextLevelButton.pressed.connect(next_level)
