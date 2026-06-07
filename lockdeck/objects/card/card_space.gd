@@ -42,14 +42,22 @@ const DRAG_DISTANCE = 50
 			$HighlightRect.z_index = 90
 			$HighlightRect.position = Vector2(-5, -30)
 			$HighlightRect.visible = true
-			$PickCard.z_index = 100
 			$PickCard.position = Vector2(0, -25)
+			z_boost = true
 		else:
 			$HighlightRect.z_index = -10
 			$HighlightRect.position = Vector2(-5, -5)
 			$HighlightRect.visible = false
-			$PickCard.z_index = 0
 			$PickCard.position = Vector2(0, 0)
+			z_boost = false
+
+@export var z_boost: bool:
+	set(v):
+		z_boost = v
+		if z_boost:
+			z_index = 100
+		else:
+			z_index = 0
 
 @export var card_spec: CardSpec: 
 	set(v):

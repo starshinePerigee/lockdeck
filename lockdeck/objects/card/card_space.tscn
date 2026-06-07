@@ -12,6 +12,7 @@ height = 158.0
 [node name="CardSpace" type="TextureRect"]
 offset_right = 150.0
 offset_bottom = 225.0
+mouse_filter = 0
 texture = ExtResource("1_88gnn")
 stretch_mode = 2
 script = ExtResource("2_nyvl3")

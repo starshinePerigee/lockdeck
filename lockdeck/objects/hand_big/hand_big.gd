@@ -22,11 +22,8 @@ const SIZE_SCALE = [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
 
 @export var current_card: int = -1
 
-func highlight(card_index: int) -> void:
-	$Hand.get_children()[card_index].highlighted = true
-
-func clear_highlight() -> void:
-	$Hand.get_children()[current_card].highlighted = false
+func get_space() -> CardSpace:
+	return $Hand.get_children()[current_card]
 
 func card_select(card_index: int) -> void:
 	if current_card != card_index:
@@ -36,16 +33,17 @@ func card_select(card_index: int) -> void:
 
 func card_deselect() -> void:
 	if current_card >= 0:
-		clear_highlight()
+		get_space().highlighted = false
 		card_deselected.emit(current_card)
 		current_card = -1
 
 func card_tap(card_index: int) -> void:
 	card_select(card_index)
-	highlight(card_index)
+	get_space().highlighted = true
 
 func card_pick_up(card_index: int) -> void:
 	card_select(card_index)
+	get_space().z_boost = true
 
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(cards[card_index], card_area, card_index)
