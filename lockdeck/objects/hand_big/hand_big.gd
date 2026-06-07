@@ -25,6 +25,18 @@ const SIZE_SCALE = [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
 func get_space() -> CardSpace:
 	return $Hand.get_children()[current_card]
 
+func _disable_others(card_index: int) -> void:
+	for i in len($Hand.get_children()):
+		if i != card_index:
+			var space := $Hand.get_child(i)
+			space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func _enable_all() -> void:
+	for space in $Hand.get_children():
+		space.mouse_filter = Control.MOUSE_FILTER_STOP
+		space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_STOP
+
 func card_select(card_index: int) -> void:
 	if current_card != card_index:
 		card_deselect()
@@ -44,10 +56,12 @@ func card_tap(card_index: int) -> void:
 func card_pick_up(card_index: int) -> void:
 	card_select(card_index)
 	get_space().z_boost = true
+	_disable_others(card_index)
 
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(cards[card_index], card_area, card_index)
 	card_deselect()
+	_enable_all()
 
 func _redraw() -> void:
 	"""Force a full redraw"""

@@ -17,7 +17,7 @@ const TEXTURE_CLOSED = preload("res://assets/card/card_space_blocked.png")
 const TEXTURE_EMPTY = preload("res://assets/card/card_space_empty.png")
 const CARD_SCENE = preload("res://objects/card/pick_card.tscn")
 
-const DRAG_DISTANCE = 50
+const DRAG_DISTANCE = 25
 @export var draggable: bool = false
 
 @export var closed: bool = false:
@@ -87,7 +87,7 @@ func _end_click():
 	_dragging = false
 
 func snapback():
-	set_global_position(start_position)
+	$PickCard.set_global_position(start_position)
 
 func _set_texture():
 	if has_card and false:  # trying leaving the outline out
@@ -105,7 +105,9 @@ func _process(_delta: float) -> void:
 				_dragging = true
 				card_picked_up.emit()
 		if _dragging:
-			set_global_position(start_position + get_global_mouse_position() - mouse_start_position)
+			$PickCard.set_global_position(
+				start_position + get_global_mouse_position() - mouse_start_position
+			)
 
 func _ready():
 	$PickCard.button_down.connect(_start_click)

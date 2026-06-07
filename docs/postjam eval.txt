@@ -7,7 +7,7 @@ QUICK POLISH
 - new placeholder lockpick icons
 - evaluate new card layout (name, icons, more square)
 - drop textboxes when no text
-- why does dragging a card highlight later cards
+x why does dragging a card highlight later cards
 
 CORE EXPLORATION
 - draft depth effects
