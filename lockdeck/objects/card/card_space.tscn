@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://slpfrt15iygb"]
+[gd_scene load_steps=17 format=3 uid="uid://slpfrt15iygb"]
 
 [ext_resource type="Texture2D" uid="uid://ccylg6db80ch4" path="res://assets/card/card_space.png" id="1_88gnn"]
 [ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/card/card_space.gd" id="2_nyvl3"]
@@ -61,6 +61,10 @@ description = "DEBUG DEBUG DEBUG DEBUG
 				DEBUG"
 texture = ExtResource("6_fetno")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_edh6n"]
+radius = 40.0
+height = 158.0
+
 [node name="CardSpace" type="TextureRect"]
 offset_right = 150.0
 offset_bottom = 225.0
@@ -82,3 +86,10 @@ texture = ExtResource("3_edh6n")
 [node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
 layout_mode = 0
 card_spec = SubResource("Resource_fio48")
+
+[node name="Area2D" type="Area2D" parent="PickCard"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickCard/Area2D"]
+position = Vector2(75, 115)
+shape = SubResource("CapsuleShape2D_edh6n")

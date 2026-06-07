@@ -1,8 +1,6 @@
 @tool
 extends HBoxContainer
 
-signal card_activated(card_index: int, card_spec: CardSpec)
-
 const SPACE_COUNT = 5
 
 var space_refs: Array[CardSpace] = []
@@ -14,15 +12,6 @@ var space_refs: Array[CardSpace] = []
 		if not is_node_ready():
 			await ready
 		
-		redraw()
-
-@export var cards: Dictionary[int, CardSpec] = {}:
-	set(v):
-		cards = v
-		
-		if not is_node_ready():
-			await ready
-			
 		redraw()
 
 func handle_click(card_index: int):

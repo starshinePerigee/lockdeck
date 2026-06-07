@@ -11,7 +11,6 @@ var draw_cards: Array[CardSpec] = []
 var discard_cards: Array[CardSpec] = []
 var trash_cards: Array[CardSpec] = []
 var hand_cards: Dictionary[int, CardSpec] = {}
-var keyway_cards: Dictionary[int, CardSpec] = {}
 var cyl_pins: Dictionary[int, PinSpec] = {}
 
 static func sort_reverse_dict_keys(d: Dictionary) -> Array:

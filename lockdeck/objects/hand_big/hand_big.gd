@@ -15,6 +15,7 @@ const SIZE_SCALE = [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
 		for i in len(cards):
 			if cards[i] == null:
 				cards[i] = CardSpec.new()
+		reset_highlight()
 		_redraw()
 
 @export var current_highlight: int = -1:
