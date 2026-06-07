@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=8 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/play_area/cylinders.tscn" id="1_wt0dc"]
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="4_0wo06"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
+[ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="5_d442i"]
+[ext_resource type="PackedScene" uid="uid://dvqmqre240rxw" path="res://objects/play_area/discard_target.tscn" id="6_8ewdi"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -14,10 +16,9 @@ script = ExtResource("1_db5vk")
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(880, 860)
 anchors_preset = 0
-offset_left = 650.0
-offset_top = 100.0
-offset_right = 1530.0
-offset_bottom = 960.0
+offset_left = 500.0
+offset_right = 1380.0
+offset_bottom = 860.0
 
 [node name="Cylinders" parent="LockBody" instance=ExtResource("1_wt0dc")]
 offset_left = 19.0
@@ -34,26 +35,40 @@ offset_bottom = 849.0
 
 [node name="DrawPile" parent="." instance=ExtResource("4_0wo06")]
 layout_mode = 0
-offset_left = 109.0
-offset_top = 175.0
-offset_right = 259.0
-offset_bottom = 400.0
+offset_left = 169.0
+offset_top = 406.0
+offset_right = 319.0
+offset_bottom = 631.0
 count = 5
 
 [node name="DiscardPile" parent="." instance=ExtResource("4_0wo06")]
 layout_mode = 0
-offset_left = 1648.0
-offset_top = 593.0
-offset_right = 1798.0
-offset_bottom = 818.0
+offset_left = 1614.0
+offset_top = 476.0
+offset_right = 1764.0
+offset_bottom = 701.0
 
 [node name="TrashPile" parent="." instance=ExtResource("4_0wo06")]
 layout_mode = 0
-offset_left = 1854.0
-offset_top = 882.0
-offset_right = 2004.0
-offset_bottom = 1107.0
+offset_left = 1805.0
+offset_top = 812.0
+offset_right = 1955.0
+offset_bottom = 1037.0
 rotation = 1.5708
+
+[node name="HandBig" parent="." instance=ExtResource("5_d442i")]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 850.0
+offset_right = 1425.0
+offset_bottom = 1075.0
+
+[node name="DiscardTarget" parent="." instance=ExtResource("6_8ewdi")]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 776.0
+offset_right = 268.0
+offset_bottom = 976.0
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 layout_mode = 0

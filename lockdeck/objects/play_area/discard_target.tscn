@@ -16,5 +16,6 @@ script = ExtResource("2_gj2el")
 [node name="DiscardArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DiscardArea"]
+visible = false
 position = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_gj2el")

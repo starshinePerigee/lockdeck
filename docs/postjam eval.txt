@@ -1,11 +1,11 @@
 STATIC KEYWAYECTOMY
 - Full bottom hand
-- Hand reorder mechanics
 - New game loop
 
 QUICK POLISH
 - new placeholder lockpick icons
 - evaluate new card layout (name, icons, more square)
+- revert window to 1440 x 900
 - drop textboxes when no text
 x why does dragging a card highlight later cards
 
@@ -51,6 +51,7 @@ ANIMATION
 
 POLISH AND COOL THINGS
 - opening animation
+- Hand reorder mechanics
 - TBR
 
 NEW DEPTHS / PICKS
