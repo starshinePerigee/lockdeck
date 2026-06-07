@@ -2,6 +2,7 @@
 extends TextureRect
 class_name CardSpace
 
+signal card_clicked()
 signal card_tapped()
 signal card_picked_up()
 signal card_dropped(Area2D)
@@ -62,6 +63,7 @@ const DRAG_DISTANCE = 50
 func _start_click():
 	if has_card:
 		_active = true
+		card_clicked.emit()
 		if draggable:
 			start_position = global_position
 			mouse_start_position = get_global_mouse_position()

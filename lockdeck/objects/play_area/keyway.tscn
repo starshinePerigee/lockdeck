@@ -2,17 +2,36 @@
 
 [ext_resource type="Script" uid="uid://kagnrja42sbv" path="res://objects/play_area/keyway.gd" id="1_6vmxt"]
 [ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="2_bey5w"]
-[ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="2_bn7tf"]
+
+[sub_resource type="GDScript" id="GDScript_ij1b0"]
+script/source = "extends Resource
+class_name CardSpec
+
+@export var effects: Dictionary[int, Array]
+# dictionary of int position to Array[EffectSpec]
+@export var pick_name: String
+@export var description: String
+@export var texture: Resource
+
+func _init(
+	template_flavor: PickTemplateData.PickTemplateFlavors = PickTemplateData.PickTemplateFlavors.DEBUG,
+):
+	var template = PickTemplateData.get_def(template_flavor)
+	pick_name = template.pick_name
+	description = template.description
+	texture = template.texture
+	effects = template.effects
+"
 
 [sub_resource type="Resource" id="Resource_bey5w"]
-script = ExtResource("2_bn7tf")
+script = SubResource("GDScript_ij1b0")
 effects = Dictionary[int, Array]({})
 pick_name = ""
 description = ""
 metadata/_custom_type_script = "uid://ctkr5pia2bqsk"
 
 [sub_resource type="Resource" id="Resource_bn7tf"]
-script = ExtResource("2_bn7tf")
+script = SubResource("GDScript_ij1b0")
 effects = Dictionary[int, Array]({})
 pick_name = ""
 description = ""

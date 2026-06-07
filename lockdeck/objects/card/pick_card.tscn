@@ -12,37 +12,37 @@
 [ext_resource type="Texture2D" uid="uid://twixcvnpm3x4" path="res://assets/card/card_title_box.png" id="8_v2bqt"]
 [ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets/card/card_text_box.png" id="8_xpvy4"]
 
-[sub_resource type="Resource" id="Resource_4ppwd"]
+[sub_resource type="Resource" id="Resource_1sytb"]
 script = ExtResource("7_xpvy4")
 flavor = 4
 value = 3
 
-[sub_resource type="Resource" id="Resource_67nnt"]
+[sub_resource type="Resource" id="Resource_8lkom"]
 script = ExtResource("7_xpvy4")
 flavor = 2
 value = 6
 
-[sub_resource type="Resource" id="Resource_ccj8k"]
+[sub_resource type="Resource" id="Resource_hiufj"]
 script = ExtResource("7_xpvy4")
 flavor = 5
 value = 3
 
-[sub_resource type="Resource" id="Resource_twmxx"]
+[sub_resource type="Resource" id="Resource_lyvnw"]
 script = ExtResource("7_xpvy4")
 flavor = 4
 value = 1
 
-[sub_resource type="Resource" id="Resource_ryg1q"]
+[sub_resource type="Resource" id="Resource_weuou"]
 script = ExtResource("7_xpvy4")
 flavor = 0
 value = 11
 
-[sub_resource type="Resource" id="Resource_p2nja"]
+[sub_resource type="Resource" id="Resource_6qvwq"]
 script = ExtResource("7_xpvy4")
 flavor = 3
 value = 3
 
-[sub_resource type="Resource" id="Resource_8bb45"]
+[sub_resource type="Resource" id="Resource_s2nqy"]
 script = ExtResource("7_xpvy4")
 flavor = 0
 value = 0
@@ -50,10 +50,10 @@ value = 0
 [sub_resource type="Resource" id="Resource_g4nul"]
 script = ExtResource("7_jlvwl")
 effects = Dictionary[int, Array]({
--1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_4ppwd")]),
-0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_67nnt"), SubResource("Resource_ccj8k"), SubResource("Resource_twmxx")]),
-2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_ryg1q")]),
-3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_p2nja"), SubResource("Resource_8bb45")])
+-1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
+0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
+2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_weuou")]),
+3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_6qvwq"), SubResource("Resource_s2nqy")])
 })
 pick_name = "debug"
 description = "DEBUG DEBUG DEBUG DEBUG
@@ -82,10 +82,10 @@ offset_right = 0.0
 offset_bottom = -150.0
 mouse_filter = 1
 effect_stacks = Dictionary[int, Array]({
--1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_4ppwd")]),
-0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_67nnt"), SubResource("Resource_ccj8k"), SubResource("Resource_twmxx")]),
-2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_ryg1q")]),
-3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_p2nja"), SubResource("Resource_8bb45")])
+-1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
+0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
+2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_weuou")]),
+3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_6qvwq"), SubResource("Resource_s2nqy")])
 })
 refrect_visible = false
 

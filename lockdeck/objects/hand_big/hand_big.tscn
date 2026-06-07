@@ -2,15 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dp3xnaa4ni64j" path="res://objects/hand_big/hand_big.gd" id="1_ph4ca"]
 
-[node name="HandBig" type="HBoxContainer"]
+[node name="HandBig" type="Container"]
 custom_minimum_size = Vector2(950, 225)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -970.0
-offset_bottom = -855.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 950.0
+offset_bottom = 225.0
+script = ExtResource("1_ph4ca")
+
+[node name="Hand" type="HBoxContainer" parent="."]
+layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
-script = ExtResource("1_ph4ca")

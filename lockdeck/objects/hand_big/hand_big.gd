@@ -1,7 +1,9 @@
 @tool
-extends HBoxContainer
+extends Container
 
 signal card_selected(card_spec: CardSpec, card_index: int)
+signal card_dropped(card_spec: CardSpec, card_area: Area2D, card_index: int)
+signal card_deselected(card_index: int)
 
 const CARD_SPACE = preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
@@ -15,31 +17,47 @@ const SIZE_SCALE = [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
 		for i in len(cards):
 			if cards[i] == null:
 				cards[i] = CardSpec.new()
-		reset_highlight()
+		current_card = -1
 		_redraw()
 
-@export var current_highlight: int = -1:
-	set(v):
-		if current_highlight < len(cards) and current_highlight >= 0:
-			get_children()[current_highlight].highlighted = false
-		current_highlight = v
-		if current_highlight < len(cards) and current_highlight >= 0:
-			get_children()[current_highlight].highlighted = true
+@export var current_card: int = -1
 
-func reset_highlight():
-	current_highlight = -1
+func highlight(card_index: int) -> void:
+	$Hand.get_children()[card_index].highlighted = true
 
-func card_select(card_index: int):
-	current_highlight = card_index
-	card_selected.emit(cards[card_index], card_index)
+func clear_highlight() -> void:
+	$Hand.get_children()[current_card].highlighted = false
+
+func card_select(card_index: int) -> void:
+	if current_card != card_index:
+		card_deselect()
+		current_card = card_index
+		card_selected.emit(cards[card_index], card_index)
+
+func card_deselect() -> void:
+	if current_card >= 0:
+		clear_highlight()
+		card_deselected.emit(current_card)
+		current_card = -1
+
+func card_tap(card_index: int) -> void:
+	card_select(card_index)
+	highlight(card_index)
+
+func card_pick_up(card_index: int) -> void:
+	card_select(card_index)
+
+func card_drop(card_area: Area2D, card_index: int) -> void:
+	card_dropped.emit(cards[card_index], card_area, card_index)
+	card_deselect()
 
 func _redraw() -> void:
 	"""Force a full redraw"""
 	if not is_node_ready():
 		await ready
 		
-	for child in get_children():
-		remove_child(child)
+	for child in $Hand.get_children():
+		$Hand.remove_child(child)
 		child.queue_free()
 	
 	for i in len(cards):
@@ -48,16 +66,18 @@ func _redraw() -> void:
 		var space := CARD_SPACE.instantiate()
 		space.card_spec = spec
 		space.has_card = true
-		add_child(space)
-		space.card_pressed.connect(card_select.bind(i))
+		$Hand.add_child(space)
+		space.card_tapped.connect(card_tap.bind(i))
+		space.card_picked_up.connect(card_pick_up.bind(i))
+		space.card_dropped.connect(card_drop.bind(i))
 
 	var space_index = clampi(
-		get_child_count() - 1,
+		$Hand.get_child_count() - 1,
 		0,
 		len(SIZE_SCALE)
 	)
 	var space: int = SIZE_SCALE[space_index]
-	add_theme_constant_override("separation", space)
+	$Hand.add_theme_constant_override("separation", space)
 
 func _ready() -> void:
 	_redraw()

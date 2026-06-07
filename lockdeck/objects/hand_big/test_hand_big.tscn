@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcf362b5let46"]
+
+[ext_resource type="Script" uid="uid://bo5855p0wkelj" path="res://objects/hand_big/test_hand_big.gd" id="1_12boc"]
+[ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="2_10yuw"]
+
+[node name="TestHandBig" type="Node2D"]
+script = ExtResource("1_12boc")
+
+[node name="HandBig" parent="." instance=ExtResource("2_10yuw")]
+offset_left = 213.0
+offset_top = 151.0
+offset_right = 1163.0
+offset_bottom = 376.0
