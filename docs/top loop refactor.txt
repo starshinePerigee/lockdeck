@@ -1,0 +1,28 @@
+Another simplification to consider: changing the top level loop to use a "turns" format.
+
+- At start of turn: draw up to N cards
+- Play as many as you'd like
+- Once all cards are played, any unlocked cylinders fall all the way
+
+What this does:
+- removes the "bounce" mechanic
+- significantly simplifies the "fall" mechanic
+- (possibly) removes the unlock depth's bind-on-unlock mechanic
+- removes the "discard pick" mechanic
+- makes jam mechanic way more valuable
+
+What this needs:
+- some kind of time pressure
+-- note: time pressure also means picks with more icons become more valuable
+
+Time pressure brainstorming:
+- break pick on end of turn (from discard?)
+- clock that counts down to failure?
+-- shape it like a wheel?
+-- shape it like a candle burning down?
+- sudden death modes (YOU ARE OUT OF TIME)
+-- every pick breaks
+-- picks that break BREAK FOR GOOD
+--- could lead to degenerate play where you thin your deck by playing out time
+-- permanently break a pick at end of turn
+-- picks break end of turn at random

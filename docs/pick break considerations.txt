@@ -1,0 +1,10 @@
+If a pick breaks in game, does it break IN REAL LIFE???
+
+(ie: if a pick breaks in a round, is it permanently removed from your deck)
+- this was the original intent
+- it's theoretically possible to no-break a round with careful picking
+
+This does lead to potential issues where you intentionally break a pick to remove it
+- could be mitigated with meta design:
+-- free trashing
+-- picks are always good
