@@ -21,7 +21,7 @@ func _init():
 		DepthData.DepthFlavors.DEBUG,
 		DepthData.DepthFlavors.DEBUG,
 		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.BOUNCE,
+		DepthData.DepthFlavors.DEBUG,
 	]
 	reveals = [
 		true,
@@ -32,7 +32,7 @@ func _init():
 		false,
 		false,
 		false,
-		true,
+		false,
 	]
 	pin_position = 0
 	pin_set = true

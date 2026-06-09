@@ -26,3 +26,8 @@ Time pressure brainstorming:
 --- could lead to degenerate play where you thin your deck by playing out time
 -- permanently break a pick at end of turn
 -- picks break end of turn at random
+
+
+VERDICT: USE TURNS
+- bounce can still be a random depth
+- don't bounce pins on limit - keep them there and break the pick

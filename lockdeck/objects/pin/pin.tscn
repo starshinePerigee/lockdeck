@@ -13,8 +13,8 @@ anchors_preset = 0
 offset_right = 120.0
 offset_bottom = 380.0
 script = ExtResource("1_sibiv")
-depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 6])
-revealed = Array[bool]([true, false, false, false, false, false, false, false, true])
+depths = Array[int]([5, 0, 0, 0, 0, 0, 0, 0, 0])
+revealed = Array[bool]([true, false, false, false, false, false, false, false, false])
 
 [node name="Stack" type="VBoxContainer" parent="."]
 layout_mode = 0
