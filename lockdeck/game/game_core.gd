@@ -3,6 +3,7 @@ extends Control
 signal game_fail
 signal game_win
 
+#region game state variables
 @export var CYLINDER_COUNT := 1
 @export var DECK_COUNT := 10
 @export var REVEAL_ALL := false
@@ -11,24 +12,32 @@ var draw_cards: Array[CardSpec] = []
 var discard_cards: Array[CardSpec] = []
 var trash_cards: Array[CardSpec] = []
 var hand_cards: Dictionary[int, CardSpec] = {}
+var active_card: CardSpec = CardSpec.new()
 var cyl_pins: Dictionary[int, PinSpec] = {}
+#endregion
 
+#region game utility functions
 static func sort_reverse_dict_keys(d: Dictionary) -> Array:
+	"""Takes a dictionary and returns the keys in reverse order."""
 	var keys = d.keys()
 	keys.sort()
 	keys.reverse()
 	return keys
 
 static func check_array_dict(d: Dictionary[int, Array]) -> int:
+	"""Finds the lowest key in a dictionary and returns it,
+	cleaning up any empty keys along the way."""
 	for k in sort_reverse_dict_keys(d):
 		if not d[k].is_empty():
 			return k
 		else:
 			d.erase(k)
 	return -383  # if you hit this the hard way I am gonna be so tilted
+#endregion
 
+#region pick execution logic
 # global scope these for maximum scuff
-# i degaf it's games james
+# i degaf it's games jamess
 var pending_effects: Dictionary[int, Array]
 var result_effect_pointer: int = 0
 var pins_modified: Dictionary[int, bool]
@@ -194,7 +203,7 @@ func handle_falling():
 			and cyl_pins[k].pin_position > 0
 		):
 			cyl_pins[k].pin_position -= 1
-			
+#endregion
 
 func spend_pick(card_index: int):
 	var spent_pick = keyway_cards[card_index]
