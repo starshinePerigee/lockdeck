@@ -31,3 +31,13 @@ Time pressure brainstorming:
 VERDICT: USE TURNS
 - bounce can still be a random depth
 - don't bounce pins on limit - keep them there and break the pick
+- Pins reset after each hand
+
+Time pressure:
+- A candle burning down in segments. 1 hand = 1 segment
+- once a candle is exhausted, every other pick breaks
+-- smoke from extinguished candle alternates between wisps and a skull
+
+Note on deck size:
+- Because time pressure is based on hands, not decks, more picks does dilute your deck
+- However, more picks insulate you from bad hands - you can smash your way through a bad round if you have a bunch of extra picks

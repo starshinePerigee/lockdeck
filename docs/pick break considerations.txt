@@ -8,3 +8,6 @@ This does lead to potential issues where you intentionally break a pick to remov
 - could be mitigated with meta design:
 -- free trashing
 -- picks are always good
+
+Decision: yes
+- between rounds, you can visit your deck and throw out any picks you don't like
