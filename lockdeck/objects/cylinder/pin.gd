@@ -43,6 +43,8 @@ var depth_refs: Array[Depth] = []
 			await ready
 		
 		$Stack.visible = visible_
+		$JamIndicator.visible = visible_
+		$KeyIndicator.visible = visible_
 
 ## The value of the jam indicator, and if one is present. If jam count is less than or equal
 ## to zero, hide the jam indicator.
@@ -66,6 +68,7 @@ var depth_refs: Array[Depth] = []
 		
 		$KeyIndicator.visible = key_set
 
+## Load a PinSpec into this pin, setting all parameters.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
 		return
