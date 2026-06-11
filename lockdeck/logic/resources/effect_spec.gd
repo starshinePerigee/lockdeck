@@ -2,6 +2,12 @@
 extends Resource
 class_name EffectSpec
 
+# TODO: wtf is this
+# TODO: also needs docs
+# TODO: when you get to the cards ig
+
+# TODO: is this why cards take like 150 ms to draw
+
 @export var flavor := EffectData.EffectFlavors.DEBUG:
 	set(v):
 		flavor = v

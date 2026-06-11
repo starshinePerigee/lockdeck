@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=9 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
-[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/play_area/cylinders.tscn" id="1_wt0dc"]
+[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/cylinder/cylinders.tscn" id="1_wt0dc"]
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="4_0wo06"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="5_d442i"]
 [ext_resource type="PackedScene" uid="uid://dvqmqre240rxw" path="res://objects/play_area/discard_target.tscn" id="6_8ewdi"]
+[ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="6_i4qfg"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -25,6 +26,7 @@ offset_left = 19.0
 offset_top = -50.0
 offset_right = 699.0
 offset_bottom = 650.0
+cylinder_count = 5
 
 [node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
 layout_mode = 0
@@ -62,6 +64,7 @@ offset_left = 475.0
 offset_top = 850.0
 offset_right = 1425.0
 offset_bottom = 1075.0
+cards = Array[ExtResource("6_i4qfg")]([])
 
 [node name="DiscardTarget" parent="." instance=ExtResource("6_8ewdi")]
 layout_mode = 0

@@ -61,6 +61,11 @@ BALANCE
 - pick balance
 - level gen balance
 
+CLEANUP
+- stop mass redraws for hand
+- stop mass redraws for card
+- stop mass redraws for cylinder
+
 MENUS
 - start menu
 - options

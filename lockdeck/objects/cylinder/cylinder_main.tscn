@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxsr05baxul2b"]
+
+[ext_resource type="Script" uid="uid://7xrmnjmbat3i" path="res://objects/cylinder/cylinder_main.gd" id="1_j3ebm"]
+[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/cylinder/cylinders.tscn" id="2_s8kgd"]
+
+[node name="CylinderMain" type="Node"]
+script = ExtResource("1_j3ebm")
+
+[node name="Cylinders" parent="." instance=ExtResource("2_s8kgd")]

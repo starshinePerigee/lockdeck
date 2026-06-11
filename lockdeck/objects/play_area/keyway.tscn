@@ -1,41 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dshnrwms2tgt6"]
+[gd_scene load_steps=3 format=3 uid="uid://dshnrwms2tgt6"]
 
 [ext_resource type="Script" uid="uid://kagnrja42sbv" path="res://objects/play_area/keyway.gd" id="1_6vmxt"]
 [ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="2_bey5w"]
-
-[sub_resource type="GDScript" id="GDScript_ij1b0"]
-script/source = "extends Resource
-class_name CardSpec
-
-@export var effects: Dictionary[int, Array]
-# dictionary of int position to Array[EffectSpec]
-@export var pick_name: String
-@export var description: String
-@export var texture: Resource
-
-func _init(
-	template_flavor: PickTemplateData.PickTemplateFlavors = PickTemplateData.PickTemplateFlavors.DEBUG,
-):
-	var template = PickTemplateData.get_def(template_flavor)
-	pick_name = template.pick_name
-	description = template.description
-	texture = template.texture
-	effects = template.effects
-"
-
-[sub_resource type="Resource" id="Resource_bey5w"]
-script = SubResource("GDScript_ij1b0")
-effects = Dictionary[int, Array]({})
-pick_name = ""
-description = ""
-metadata/_custom_type_script = "uid://ctkr5pia2bqsk"
-
-[sub_resource type="Resource" id="Resource_bn7tf"]
-script = SubResource("GDScript_ij1b0")
-effects = Dictionary[int, Array]({})
-pick_name = ""
-description = ""
-metadata/_custom_type_script = "uid://ctkr5pia2bqsk"
 
 [node name="Keyway" type="HBoxContainer"]
 offset_right = 304.0
@@ -45,27 +11,20 @@ script = ExtResource("1_6vmxt")
 
 [node name="CardSpace1" parent="." instance=ExtResource("2_bey5w")]
 layout_mode = 2
-draggable = null
 has_card = false
-card_spec = SubResource("Resource_bey5w")
 
 [node name="CardSpace2" parent="." instance=ExtResource("2_bey5w")]
 layout_mode = 2
-draggable = null
 has_card = false
 
 [node name="CardSpace3" parent="." instance=ExtResource("2_bey5w")]
 layout_mode = 2
-draggable = null
 has_card = false
-card_spec = SubResource("Resource_bn7tf")
 
 [node name="CardSpace4" parent="." instance=ExtResource("2_bey5w")]
 layout_mode = 2
-draggable = null
 has_card = false
 
 [node name="CardSpace5" parent="." instance=ExtResource("2_bey5w")]
 layout_mode = 2
-draggable = null
 has_card = false

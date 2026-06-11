@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://2pv2ihci4aa7"]
+
+[ext_resource type="Script" uid="uid://c5tea2o0xyrjv" path="res://objects/cylinder/cylinders.gd" id="1_3tpfd"]
+[ext_resource type="PackedScene" uid="uid://bkcikxm7qtgka" path="res://objects/cylinder/pin.tscn" id="1_jelwg"]
+
+[node name="Cylinders" type="Control"]
+custom_minimum_size = Vector2(840, 700)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 720.0
+offset_bottom = 700.0
+script = ExtResource("1_3tpfd")
+cylinder_count = 5
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 347.5
+offset_right = 880.0
+offset_bottom = 367.5
+color = Color(0.937255, 0.894118, 0.690196, 1)
+
+[node name="CylinderHBox" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 680.0
+offset_bottom = 700.0
+theme_override_constants/separation = 60
+
+[node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
+layout_mode = 2
+
+[node name="Pin2" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
+layout_mode = 2
+
+[node name="Pin3" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
+layout_mode = 2
+
+[node name="Pin4" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
+layout_mode = 2
+
+[node name="Pin5" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
+layout_mode = 2

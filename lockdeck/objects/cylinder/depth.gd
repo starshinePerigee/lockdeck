@@ -1,24 +1,27 @@
 @tool
 extends TextureRect
+## The view for a single depth in a pin.
 class_name Depth
 
-const TEXTURE_HIDDEN = preload("res://assets/depths/depth_hidden.png")
+const _TEXTURE_HIDDEN = preload("res://assets/depths/depth_hidden.png")
 
+## Flavor for this depth.
 @export var flavor: DepthData.DepthFlavors = DepthData.DepthFlavors.DEBUG:
 	set(v):
 		flavor = v
 		_redraw()
 
+## If this depth is revealed. False sets the default ? texture.
 @export var revealed: bool = false:
 	set(v):
 		revealed = v
 		_redraw()
 
-func _redraw():
+func _redraw() -> void:
 	if not is_node_ready():
 		await ready
 		
 	if revealed:
 		texture = DepthData.get_def(flavor).texture
 	else:
-		texture = TEXTURE_HIDDEN
+		texture = _TEXTURE_HIDDEN

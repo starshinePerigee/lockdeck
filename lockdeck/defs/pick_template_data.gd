@@ -1,5 +1,6 @@
 @tool
 class_name PickTemplateData
+## Contains the defined data collections for predefined pick cards
 extends Object
 
 #region base class
@@ -11,9 +12,13 @@ class PickTemplateDef:
 		else:
 			return load("res://assets/effects/pick_debug.png")
 	
+	## Human readable pick name, lowercase
 	var pick_name: String
+	## Pick description or flavortext (vestigial)
 	var description: String
+	## Pick effect dictionary. Type is dict[int, Array[EffectSpec]]
 	var effects: Dictionary[int, Array]
+	## Card art texture
 	var texture: Resource
 	
 	func _init(
@@ -29,7 +34,8 @@ class PickTemplateDef:
 
 #region global instances
 # the order must match the order of the declaration, below
-enum PickTemplateFlavors {DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE, FORK}
+enum PickTemplateFlavors {
+	DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE, FORK}
 
 static var ValidPicks = [
 	PickTemplateFlavors.DIAMOND,
@@ -113,6 +119,7 @@ static func _get_def() -> Array[PickTemplateDef]:
 		print("Loaded %s pick templates" % len(_defs))
 	return _defs
 
+## Gets a live pick template defition from a PickTemplateFlavors enum
 static func get_def(pick_template: PickTemplateFlavors) -> PickTemplateDef:
 	return _get_def()[pick_template]
 #endregion
