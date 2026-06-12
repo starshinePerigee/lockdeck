@@ -4,6 +4,11 @@ extends Resource
 ## as well as other pin information like jam and unlock indicatiors.
 class_name PinSpec
 
+## Maxmimum number of cylinders.
+## This is a deep assumption - changing this will break *everything*.
+## so dont.
+const CYLINDER_COUNT_MAX := 5
+
 ## Array of depth flavors for this pin. Index 0 is the top flavor, and
 ## will typically be DepthFlavors.BASE
 @export var depths: Array[DepthData.DepthFlavors]
