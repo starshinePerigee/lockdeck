@@ -3,9 +3,6 @@ extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin
 
-## Number of depth segments to make a pin.
-## Sets the forced size of the depths and revealed arrays.
-const DEPTH_SIZE = 9
 ## Vertical height of a depth texture in pixels.
 const DEPTH_VHEIGHT = 35
 const _DEPTH = preload("res://objects/cylinder/depth.tscn")
@@ -30,7 +27,10 @@ var depth_refs: Array[Depth] = []
 		if not is_node_ready():
 			await ready
 		
-		$Stack.position = Vector2(0, DEPTH_VHEIGHT * DEPTH_SIZE - DEPTH_VHEIGHT * v)
+		$Stack.position = Vector2(
+			0,
+			DEPTH_VHEIGHT * PinSpec.PIN_DEPTH_COUNT - DEPTH_VHEIGHT * v
+		)
 
 ## Hides the pin, visually.
 ## I don't remember why I use this instaead of just self.visible?
@@ -73,7 +73,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
 		return
 		
-	for i in min(DEPTH_SIZE, len(depth_refs)):
+	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.depths[i]
 		depth_refs[i].revealed = pin_spec.reveals[i]
 	
@@ -84,7 +84,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 
 func _ready() -> void:
 	depth_refs = []
-	for i in DEPTH_SIZE:
+	for i in PinSpec.PIN_DEPTH_COUNT:
 		var next_depth = _DEPTH.instantiate()
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
