@@ -70,7 +70,7 @@ static var defs := {
 	),
 	PickTemplateFlavors.DIAMOND: PickTemplateDef.new(
 		"diamond",
-		"[i]The standard.[/i]",
+		"",
 		{
 			-1: [EffectSpec.new("force", 1)],
 			0: [EffectSpec.new("force", 3)]
@@ -78,14 +78,14 @@ static var defs := {
 	),
 	PickTemplateFlavors.HOOK: PickTemplateDef.new(
 		"hook",
-		"[i]Feel things out.[/i]",
+		"",
 		{
 			0: [EffectSpec.new("jump", 2), EffectSpec.new("force", 1)]
 		}
 	),
 	PickTemplateFlavors.BALL: PickTemplateDef.new(
 		"ball",
-		"[i]Jammed.[/i]",
+		"",
 		{
 			-1: [EffectSpec.new("jam", 1)],
 			0: [EffectSpec.new("jam", 2)]
@@ -93,7 +93,7 @@ static var defs := {
 	),
 	PickTemplateFlavors.RAKE: PickTemplateDef.new(
 		"rake",
-		"[i]Shake things up.[/i]",
+		"",
 		{
 			-2: [EffectSpec.new("force", 1)],
 			-1: [EffectSpec.new("force", 1)],
@@ -103,7 +103,7 @@ static var defs := {
 	),
 	PickTemplateFlavors.SNAKE: PickTemplateDef.new(
 		"snake",
-		"[i]Fast and loose.[/i]",
+		"",
 		{
 			-1: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)],
 			0: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)]
@@ -111,7 +111,7 @@ static var defs := {
 	),
 	PickTemplateFlavors.FORK: PickTemplateDef.new(
 		"fork",
-		"[i]They're done.[/i]",
+		"",
 		{
 			-1: [EffectSpec.new("force", 2)],
 			0: [EffectSpec.new("jam", 1)],
