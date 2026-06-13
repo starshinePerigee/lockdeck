@@ -1,4 +1,3 @@
-@tool
 class_name EffectData
 ## Contains the defined data collection effects - both pick card and depth effects
 extends Object
@@ -7,8 +6,8 @@ extends Object
 ## A single defined set of data for a single Effect.
 class EffectDef:
 	static func _get_texture(name: String, small: bool) -> Resource:
-		var suffix = "_small" if small else ""
-		var res_str = "res://assets/effects/icon_%s%s.png" % [name, suffix]
+		var suffix := "_small" if small else ""
+		var res_str := "res://assets/effects/icon_%s%s.png" % [name, suffix]
 		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
@@ -30,7 +29,7 @@ class EffectDef:
 #region global instances
 # the order must match the order of the declaration, below
 enum EffectFlavors {
-	DEBUG,  ## DEBUG
+	DEBUG,  ## Debug effect. should not be used.
 	EMPTY,  ## do nothing. Depth / pick effect
 	FORCE,  ## move the pin
 	JAM,  ## apply jam
@@ -40,29 +39,23 @@ enum EffectFlavors {
 	BREAK,  ## Depth effect - break the current pin 
 	BOUNCE,  ## Depth effect - bounce the pin back to the top
 	OUT_OF_BOUNDS,  ## Depth effect - pick out of bounds (typically breaks)
+	END_EXECUTION,  ## stop evaluating current card. Used as a sentinel value in execution.
 }
 
-static var _defs: Array[EffectDef] = []
-
-static func _get_def() -> Array[EffectDef]:
-	if _defs.is_empty():
-		_defs = [
-			EffectDef.new("debug"),
-			EffectDef.new("empty"),
-			EffectDef.new("force"),
-			EffectDef.new("jam"),
-			EffectDef.new("test"),
-			EffectDef.new("jump"),
-			EffectDef.new("key"),
-			EffectDef.new("break"),
-			EffectDef.new("bounce"),
-			EffectDef.new("out_of_bounds"),
-		]
-		assert(len(_defs) == len(EffectFlavors), "Hey dipshit update the enum")
-		print("Loaded %s effects" % len(_defs))
-	return _defs
+static var defs := {
+	EffectFlavors.DEBUG: EffectDef.new("debug"),
+	EffectFlavors.EMPTY: EffectDef.new("empty"),
+	EffectFlavors.FORCE: EffectDef.new("force"),
+	EffectFlavors.JAM: EffectDef.new("jam"),
+	EffectFlavors.TEST: EffectDef.new("test"),
+	EffectFlavors.JUMP: EffectDef.new("jump"),
+	EffectFlavors.KEY: EffectDef.new("key"),
+	EffectFlavors.BREAK: EffectDef.new("break"),
+	EffectFlavors.BOUNCE: EffectDef.new("bounce"),
+	EffectFlavors.OUT_OF_BOUNDS: EffectDef.new("out_of_bounds"),
+}
 
 ## Gets a live EffectDef object given an EffectFlavors enum value.
 static func get_def(effect: EffectFlavors) -> EffectDef:
-	return _get_def()[effect]
+	return defs[effect]
 #endregion

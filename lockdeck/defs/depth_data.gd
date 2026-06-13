@@ -6,7 +6,7 @@ extends Object
 ## A single defined set of data for a single Depth.
 class DepthDef:
 	static func _get_texture(n: String) -> Resource:
-		var res_str = "res://assets/depths/depth_%s.png" % [n]
+		var res_str := "res://assets/depths/depth_%s.png" % [n]
 		if ResourceLoader.exists(res_str):
 			return load(res_str)
 		else:
@@ -37,24 +37,17 @@ enum DepthFlavors {
 	BOUNCE  ## Bounces the pin back to extended. Vestigial.
 }
 
-static var _defs: Array[DepthDef] = []
-
-static func _get_def() -> Array[DepthDef]:
-	if _defs.is_empty():
-		_defs = [
-			DepthDef.new("debug", EffectData.EffectFlavors.DEBUG),
-			DepthDef.new("hidden", EffectData.EffectFlavors.DEBUG),
-			DepthDef.new("empty", EffectData.EffectFlavors.EMPTY),
-			DepthDef.new("key", EffectData.EffectFlavors.KEY),
-			DepthDef.new("break", EffectData.EffectFlavors.BREAK),
-			DepthDef.new("base", EffectData.EffectFlavors.EMPTY),
-			DepthDef.new("bounce", EffectData.EffectFlavors.BOUNCE),
-		]
-		assert(len(_defs) == len(DepthFlavors), "Hey dipshit update the enum")
-		print("Loaded %s depths" % len(_defs))
-	return _defs
+static var defs := {
+	DepthFlavors.DEBUG: DepthDef.new("debug", EffectData.EffectFlavors.DEBUG),
+	DepthFlavors.HIDDEN: DepthDef.new("hidden", EffectData.EffectFlavors.DEBUG),
+	DepthFlavors.EMPTY: DepthDef.new("empty", EffectData.EffectFlavors.EMPTY),
+	DepthFlavors.KEY: DepthDef.new("key", EffectData.EffectFlavors.KEY),
+	DepthFlavors.BREAK: DepthDef.new("break", EffectData.EffectFlavors.BREAK),
+	DepthFlavors.BASE: DepthDef.new("base", EffectData.EffectFlavors.EMPTY),
+	DepthFlavors.BOUNCE: DepthDef.new("bounce", EffectData.EffectFlavors.BOUNCE),
+}
 
 ## Gets a live DepthDef object given an DepthFlavors enum value.
 static func get_def(depth: DepthFlavors) -> DepthDef:
-	return _get_def()[depth]
+	return defs[depth]
 #endregion
