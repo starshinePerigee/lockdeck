@@ -21,29 +21,22 @@ class NotificationDef:
 #region global instances
 # the order must match the order of the declaration, below
 enum NotificationFlavors {
-	DEBUG,  ## DEBUG
+	DEBUG,  ## debug
 	BREAK,  ## Current pick broke
 	UNLOCK,  ## Lock unlocked, stage complete
 	FAILURE,  ## Stage failed
 	RELOAD  ## Deck reloaded (vestigial)
 }
 
-static var _defs: Array[NotificationDef] = []
-
-static func _get_def() -> Array[NotificationDef]:
-	if _defs.is_empty():
-		_defs = [
-			NotificationDef.new("debug"),
-			NotificationDef.new("break"),
-			NotificationDef.new("unlock"),
-			NotificationDef.new("failure"),
-			NotificationDef.new("reload"),
-		]
-		assert(len(_defs) == len(NotificationFlavors), "Hey dipshit update the enum")
-		print("Loaded %s notifications" % len(_defs))
-	return _defs
+static var defs := {
+	NotificationFlavors.DEBUG: NotificationDef.new("debug"),
+	NotificationFlavors.BREAK: NotificationDef.new("break"),
+	NotificationFlavors.UNLOCK: NotificationDef.new("unlock"),
+	NotificationFlavors.FAILURE: NotificationDef.new("failure"),
+	NotificationFlavors.RELOAD: NotificationDef.new("reload")
+}
 
 ## Gets a live NotificationDef object given an NotificationFlavors enum value.
 static func get_def(notification_: NotificationFlavors) -> NotificationDef:
-	return _get_def()[notification_]
+	return defs[notification_]
 #endregion

@@ -10,15 +10,16 @@ class_name EffectSpec
 ## Value of effect. Can be 0.
 @export var value: int
 
-func _init(p_flavor: Variant = 0, p_value: int = 0):
-	match type_string(typeof(p_flavor)):
+func _init(effect_flavor: Variant = 0, effect_value: int = 0):
+	# disambiguation logic is becuase pick templates like strings here.
+	match type_string(typeof(effect_flavor)):
 		"int":
 			# enums show as ints
-			flavor = p_flavor
+			flavor = effect_flavor
 		"String":
-			flavor = EffectData.EffectFlavors.get(p_flavor.to_upper())
+			flavor = EffectData.EffectFlavors.get(effect_flavor.to_upper())
 		_:
 			push_error(
 				"Invalid type for effect spec: %s" % [type_string(typeof(flavor))]
 			)
-	value = p_value
+	value = effect_value

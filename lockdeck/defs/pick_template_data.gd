@@ -35,9 +35,17 @@ class PickTemplateDef:
 #region global instances
 # the order must match the order of the declaration, below
 enum PickTemplateFlavors {
-	DEBUG, DIAMOND, HOOK, BALL, RAKE, SNAKE, FORK}
+	DEBUG,
+	DIAMOND,
+	HOOK,
+	BALL,
+	RAKE,
+	SNAKE,
+	FORK
+}
 
-static var ValidPicks = [
+## valid pick template flavors used for generation
+static var ValidPicks := [
 	PickTemplateFlavors.DIAMOND,
 	PickTemplateFlavors.HOOK,
 	PickTemplateFlavors.BALL,
@@ -46,80 +54,73 @@ static var ValidPicks = [
 	PickTemplateFlavors.FORK
 ]
 
-static var _defs: Array[PickTemplateDef] = []
-
-static func _get_def() -> Array[PickTemplateDef]:
-	if _defs.is_empty():
-		_defs = [
-			PickTemplateDef.new(
-				"debug", 
-				"DEBUG DEBUG DEBUG DEBUG\n
-				DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG\n
-				DEBUG\n
-				DEBUG",
-				{
-					-1: [EffectSpec.new("test", 3)],
-					0: [EffectSpec.new("force", 6), EffectSpec.new("jump", 3), EffectSpec.new("test", 1)],
-					2: [EffectSpec.new("debug", 11)],
-					3: [EffectSpec.new("jam", 3), EffectSpec.new("debug", 0)]
-				}
-			),
-			PickTemplateDef.new(
-				"diamond",
-				"[i]The standard.[/i]",
-				{
-					-1: [EffectSpec.new("force", 1)],
-					0: [EffectSpec.new("force", 3)]
-				}
-			),
-			PickTemplateDef.new(
-				"hook",
-				"[i]Feel things out.[/i]",
-				{
-					0: [EffectSpec.new("jump", 2), EffectSpec.new("force", 1)]
-				}
-			),
-			PickTemplateDef.new(
-				"ball",
-				"[i]Jammed.[/i]",
-				{
-					-1: [EffectSpec.new("jam", 1)],
-					0: [EffectSpec.new("jam", 2)]
-				}
-			),
-			PickTemplateDef.new(
-				"rake",
-				"[i]Shake things up.[/i]",
-				{
-					-2: [EffectSpec.new("force", 1)],
-					-1: [EffectSpec.new("force", 1)],
-					0: [EffectSpec.new("force", 1)],
-					1: [EffectSpec.new("force", 1)]
-				}
-			),
-			PickTemplateDef.new(
-				"snake",
-				"[i]Fast and loose.[/i]",
-				{
-					-1: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)],
-					0: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)]
-				}
-			),
-			PickTemplateDef.new(
-				"fork",
-				"[i]They're done.[/i]",
-				{
-					-1: [EffectSpec.new("force", 2)],
-					0: [EffectSpec.new("jam", 1)],
-					1: [EffectSpec.new("force", 2)]
-				}
-			)
-		]
-		assert(len(_defs) == len(PickTemplateFlavors), "Hey dipshit update the enum")
-		print("Loaded %s pick templates" % len(_defs))
-	return _defs
+static var defs := {
+	PickTemplateFlavors.DEBUG: PickTemplateDef.new(
+		"debug", 
+		"DEBUG DEBUG DEBUG DEBUG\n
+		DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG\n
+		DEBUG\n
+		DEBUG",
+		{
+			-1: [EffectSpec.new("test", 3)],
+			0: [EffectSpec.new("force", 6), EffectSpec.new("jump", 3), EffectSpec.new("test", 1)],
+			2: [EffectSpec.new("debug", 11)],
+			3: [EffectSpec.new("jam", 3), EffectSpec.new("debug", 0)]
+		}
+	),
+	PickTemplateFlavors.DIAMOND: PickTemplateDef.new(
+		"diamond",
+		"[i]The standard.[/i]",
+		{
+			-1: [EffectSpec.new("force", 1)],
+			0: [EffectSpec.new("force", 3)]
+		}
+	),
+	PickTemplateFlavors.HOOK: PickTemplateDef.new(
+		"hook",
+		"[i]Feel things out.[/i]",
+		{
+			0: [EffectSpec.new("jump", 2), EffectSpec.new("force", 1)]
+		}
+	),
+	PickTemplateFlavors.BALL: PickTemplateDef.new(
+		"ball",
+		"[i]Jammed.[/i]",
+		{
+			-1: [EffectSpec.new("jam", 1)],
+			0: [EffectSpec.new("jam", 2)]
+		}
+	),
+	PickTemplateFlavors.RAKE: PickTemplateDef.new(
+		"rake",
+		"[i]Shake things up.[/i]",
+		{
+			-2: [EffectSpec.new("force", 1)],
+			-1: [EffectSpec.new("force", 1)],
+			0: [EffectSpec.new("force", 1)],
+			1: [EffectSpec.new("force", 1)]
+		}
+	),
+	PickTemplateFlavors.SNAKE: PickTemplateDef.new(
+		"snake",
+		"[i]Fast and loose.[/i]",
+		{
+			-1: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)],
+			0: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)]
+		}
+	),
+	PickTemplateFlavors.FORK: PickTemplateDef.new(
+		"fork",
+		"[i]They're done.[/i]",
+		{
+			-1: [EffectSpec.new("force", 2)],
+			0: [EffectSpec.new("jam", 1)],
+			1: [EffectSpec.new("force", 2)]
+		}
+	)
+}
 
 ## Gets a live pick template defition from a PickTemplateFlavors enum
 static func get_def(pick_template: PickTemplateFlavors) -> PickTemplateDef:
-	return _get_def()[pick_template]
+	return defs[pick_template]
 #endregion
