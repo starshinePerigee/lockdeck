@@ -24,10 +24,10 @@ static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> Card
 	)
 
 func _init(
-	pick_name_ = "",
-	description_ = "",
-	texture_ = null,
-	effects_ = null
+	pick_name_: String,
+	description_: String,
+	texture_: Resource,
+	effects_: Dictionary[int, Array]
 ):
 	pick_name = pick_name_
 	description = description_

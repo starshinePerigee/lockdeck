@@ -41,7 +41,7 @@ class Execution:
 	## If a pick breaks, we only want to emit that signal once.
 	var pick_broke_emitted: bool
 	
-	static var execution_sentinel := EffectSpec.new(EffectData.EffectFlavors.END_EXECUTION)
+	static var execution_sentinel := EffectSpec.new(Effects.END_EXECUTION)
 		
 	func _init(pin_count: int) -> void:
 		pending_effects = []
@@ -90,9 +90,9 @@ class Execution:
 func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	var pin := pins[pin_index]
 	if pin.advance_pin(advance_by):
-		ex.add_effect(pin_index, EffectSpec.new(EffectData.EffectFlavors.OUT_OF_BOUNDS))
+		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		ex.add_effect(pin_index, EffectSpec.new(pin.current_depth()))
+		ex.add_effect(pin_index, EffectSpec.new(pin.current_depth().effect))
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
@@ -108,7 +108,7 @@ func execute(card: CardSpec, card_index: int) -> void:
 			return
 		
 		var next_effect := ex.get_next_effect()
-		if next_effect.flavor == EffectData.EffectFlavors.END_EXECUTION:
+		if next_effect.flavor == Effects.END_EXECUTION:
 			print("Completed executiona after %s iterations." % iterations)
 			return
 		evaluate_pin(next_effect, ex)
@@ -124,26 +124,26 @@ func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)
-		EffectData.EffectFlavors.EMPTY:
+		Effects.EMPTY:
 			pass
-		EffectData.EffectFlavors.FORCE:
+		Effects.FORCE:
 			execute_force(effect, ex)
-#		EffectData.EffectFlavors.JUMP:
+#		Effects.JUMP:
 #			execute_jump(effect, ex)
-#		EffectData.EffectFlavors.JAM:
+#		Effects.JAM:
 #			execute_jam(effect, ex)
-#		EffectData.EffectFlavors.TEST:
+#		Effects.TEST:
 #			execute_test(effect, ex)
-#		EffectData.EffectFlavors.BOUNCE:
+#		Effects.BOUNCE:
 #			execute_bounce(effect)
-#		EffectData.EffectFlavors.OUT_OF_BOUNDS:
+#		Effects.OUT_OF_BOUNDS:
 #			execute_bounce(effect)
 #			execute_break()
-#		EffectData.EffectFlavors.KEY:
+#		Effects.KEY:
 #			execute_key(effect)
-#		EffectData.EffectFlavors.BREAK:
+#		Effects.BREAK:
 #			execute_break()
-		EffectData.EffectFlavors.DEBUG:
+		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)

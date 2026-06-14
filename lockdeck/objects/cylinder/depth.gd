@@ -3,7 +3,7 @@ extends TextureRect
 ## The view for a single depth in a pin.
 class_name Depth
 
-const _TEXTURE_HIDDEN = preload("res://assets/depths/depth_hidden.png")
+const _TEXTURE_HIDDEN := preload("res://assets/depths/depth_hidden.png")
 
 ## Flavor for this depth.
 @export var flavor: Depths = Depths.DEBUG:
