@@ -7,3 +7,36 @@
 script = ExtResource("1_7p8rp")
 
 [node name="HandMain" parent="." instance=ExtResource("2_sbsmq")]
+
+[node name="DrawButton" type="Button" parent="."]
+offset_left = 223.146
+offset_top = 470.311
+offset_right = 273.146
+offset_bottom = 501.311
+text = "Draw"
+
+[node name="DiscardButton" type="Button" parent="."]
+offset_left = 528.0
+offset_top = 470.0
+offset_right = 614.0
+offset_bottom = 501.0
+text = "Discard at"
+
+[node name="DiscardEnter" type="LineEdit" parent="."]
+offset_left = 447.0
+offset_top = 468.0
+offset_right = 515.563
+offset_bottom = 499.0
+
+[node name="ManyButton" type="Button" parent="."]
+offset_left = 227.0
+offset_top = 525.0
+offset_right = 313.0
+offset_bottom = 556.0
+text = "Load n"
+
+[node name="ManyEnter" type="LineEdit" parent="."]
+offset_left = 146.0
+offset_top = 523.0
+offset_right = 214.563
+offset_bottom = 554.0

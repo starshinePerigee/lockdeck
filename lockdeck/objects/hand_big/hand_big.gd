@@ -1,14 +1,14 @@
 extends Container
+# The view for the hand and all the cards in it
 
-signal card_selected(card_spec: CardSpec, card_index: int)
-signal card_dropped(card_spec: CardSpec, card_area: Area2D, card_index: int)
+signal card_selected(card_index: int)
+signal card_dropped(card_area: Area2D, card_index: int)
 signal card_deselected(card_index: int)
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
-const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
+const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
 
-@export var cards: Array[CardSpec]
 var current_card: int = -1
 
 func get_space() -> CardSpace:
@@ -30,7 +30,7 @@ func card_select(card_index: int) -> void:
 	if current_card != card_index:
 		card_deselect()
 		current_card = card_index
-		card_selected.emit(cards[card_index], card_index)
+		card_selected.emit(card_index)
 
 func card_deselect() -> void:
 	if current_card >= 0:
@@ -48,12 +48,12 @@ func card_pick_up(card_index: int) -> void:
 	_disable_others(card_index)
 
 func card_drop(card_area: Area2D, card_index: int) -> void:
-	card_dropped.emit(cards[card_index], card_area, card_index)
+	card_dropped.emit(card_area, card_index)
 	card_deselect()
 	_enable_all()
 
 ## Forces full redraw
-func redraw() -> void:
+func redraw(cards: Array[CardSpec]) -> void:
 	for child in $Hand.get_children():
 		$Hand.remove_child(child)
 		child.queue_free()
@@ -75,10 +75,10 @@ func redraw() -> void:
 	var sep_index := clampi(
 		$Hand.get_child_count() - 1,
 		0,
-		len(SIZE_SCALE)
+		len(SIZE_SCALE) - 1
 	)
 	var separation: int = SIZE_SCALE[sep_index]
 	$Hand.add_theme_constant_override("separation", separation)
 
 func ready() -> void:
-	redraw()
+	redraw([])

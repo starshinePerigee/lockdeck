@@ -12,5 +12,5 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_48slg")
 
-[node name="HandBig" parent="." instance=ExtResource("1_pmw1l")]
+[node name="Hand" parent="." instance=ExtResource("1_pmw1l")]
 layout_mode = 0
