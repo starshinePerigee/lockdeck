@@ -1,4 +1,4 @@
-extends RefCounted
+extends Resource
 ## Contains the defined data collections for predefined pick cards
 class_name PickTemplates
 
@@ -11,17 +11,17 @@ static func _get_texture(n: String) -> Resource:
 	
 ## Human readable pick name, lowercase
 var pick_name: String
-## Pick description or flavortext (vestigial)
-var description: String
 ## Pick effect dictionary. Type is dict[int, Array[EffectSpec]]
 var effects: Dictionary[int, Array]
 ## Card art texture
 var texture: Resource
+## Pick description or flavortext (vestigial)
+var description: String = ""
 	
 func _init(
 	pick_name_: String,
+	effects_: Dictionary[int, Array] = {},
 	description_: String = "",
-	effects_: Dictionary[int, Array] = {}
 ):
 	pick_name = pick_name_
 	description = description_
@@ -31,70 +31,80 @@ func _init(
 
 static var DEBUG := PickTemplates.new(
 	"debug", 
+	{
+		-1: [EffectSpec.new(Effects.TEST, 3)],
+		0: [
+			EffectSpec.new(Effects.FORCE, 6), 
+			EffectSpec.new(Effects.JUMP, 3),
+			EffectSpec.new(Effects.TEST, 1)
+		],
+		2: [EffectSpec.new(Effects.DEBUG, 11)],
+		3: [
+			EffectSpec.new(Effects.JAM, 3),
+			EffectSpec.new(Effects.DEBUG, 0)
+		]
+	},
 	"DEBUG DEBUG DEBUG DEBUG\n
 	DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG\n
 	DEBUG\n
 	DEBUG",
-	{
-		-1: [EffectSpec.new("test", 3)],
-		0: [EffectSpec.new("force", 6), EffectSpec.new("jump", 3), EffectSpec.new("test", 1)],
-		2: [EffectSpec.new("debug", 11)],
-		3: [EffectSpec.new("jam", 3), EffectSpec.new("debug", 0)]
-	}
 )
 
 static var DIAMOND := PickTemplates.new(
 	"diamond",
-	"",
 	{
-		-1: [EffectSpec.new("force", 1)],
-		0: [EffectSpec.new("force", 3)]
+		-1: [EffectSpec.new(Effects.FORCE, 1)],
+		0: [EffectSpec.new(Effects.FORCE, 3)]
 	}
 )
 
 static var HOOK := PickTemplates.new(
 	"hook",
-	"",
 	{
-		0: [EffectSpec.new("jump", 2), EffectSpec.new("force", 1)]
+		0: [
+			EffectSpec.new(Effects.JUMP, 2),
+			EffectSpec.new(Effects.FORCE, 1)
+		]
 	}
 )
 
 static var BALL := PickTemplates.new(
 	"ball",
-	"",
 	{
-		-1: [EffectSpec.new("jam", 1)],
-		0: [EffectSpec.new("jam", 2)]
+		-1: [EffectSpec.new(Effects.JAM, 1)],
+		0: [EffectSpec.new(Effects.JAM, 2)]
 	}
 )
 
 static var RAKE := PickTemplates.new(
 	"rake",
-	"",
 	{
-		-2: [EffectSpec.new("force", 1)],
-		-1: [EffectSpec.new("force", 1)],
-		0: [EffectSpec.new("force", 1)],
-		1: [EffectSpec.new("force", 1)]
+		-2: [EffectSpec.new(Effects.FORCE, 1)],
+		-1: [EffectSpec.new(Effects.FORCE, 1)],
+		0: [EffectSpec.new(Effects.FORCE, 1)],
+		1: [EffectSpec.new(Effects.FORCE, 1)]
 	}
 )
 
 static var SNAKE := PickTemplates.new(
 	"snake",
-	"",
 	{
-		-1: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)],
-		0: [EffectSpec.new("force", 1), EffectSpec.new("test", 2)]
+		-1: [
+			EffectSpec.new(Effects.FORCE, 1), 
+			EffectSpec.new(Effects.TEST, 2)
+		],
+		0: [
+			EffectSpec.new(Effects.FORCE, 1), 
+			EffectSpec.new(Effects.TEST, 2)
+		]
 	}
 )
 
 static var FORK := PickTemplates.new(
 	"fork",
-	"",
 	{
-		-1: [EffectSpec.new("force", 2)],
-		0: [EffectSpec.new("jam", 1)],
-		1: [EffectSpec.new("force", 2)]
+		-1: [EffectSpec.new(Effects.FORCE, 2)],
+		0: [EffectSpec.new(Effects.JAM, 1)],
+		1: [EffectSpec.new(Effects.FORCE, 2)]
 	}
 )

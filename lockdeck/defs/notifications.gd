@@ -1,4 +1,4 @@
-extends RefCounted
+extends Resource
 ## Contains the defined data collection for the play area notifications.
 class_name Notifications
 

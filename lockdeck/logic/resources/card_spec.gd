@@ -16,9 +16,8 @@ class_name CardSpec
 @export var texture: Resource
 
 func _init(
-	template_flavor: PickTemplateData.PickTemplateFlavors = PickTemplateData.PickTemplateFlavors.DEBUG,
+	template: PickTemplates = PickTemplates.DEBUG,
 ):
-	var template := PickTemplateData.get_def(template_flavor)
 	pick_name = template.pick_name
 	description = template.description
 	texture = template.texture

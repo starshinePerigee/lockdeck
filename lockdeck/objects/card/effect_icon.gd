@@ -1,60 +1,52 @@
-@tool
 extends Control
+## A single card effect icon
 class_name EffectIcon
 
-@export var effect: EffectData.EffectFlavors = EffectData.EffectFlavors.DEBUG:
-	set(v):
-		effect = v
-		_redraw()
-	
-@export var small: bool = true:
-	set(v):
-		small = v
-		_redraw()
-		
-@export var value: int = 0:
-	set(v):
-		value = v
-		_redraw()
+## Effect flavor to use for the texture of this icon
+@export var effect: Effects
 
-@export var show_text: bool = false:
-	set(v):
-		show_text = v
-		if not is_node_ready():
-			await ready
-		$ValueLabel.visible = v and not hide_all
+## If the small icon should be used. (Cards use the small icon)
+@export var small: bool
 
-@export var hide_all: bool = false:
-	set(v):
-		hide_all = v
-		if not is_node_ready():
-			await ready
-		$ValueLabel.visible = v and not hide_all
-		$Icon.visible = not hide_all
-		if v:
-			$ReferenceRect.border_color = Color(0, 255, 0)
-		else:
-			$ReferenceRect.border_color = Color(255, 0, 0)
+## The number to display for the value
+@export var value: int
 
-@export var refrect_visible: bool = true:
-	set(v):
-		refrect_visible = v
-		if not is_node_ready():
-			await ready
-		$ReferenceRect.visible = v
+## If the value number should be shown.
+@export var show_text: bool
 
-func _redraw():
-	if not is_node_ready():
-		await ready
-	var texture = (
-		EffectData.get_def(effect).texture_small 
+func redraw() -> void:
+	var texture := (
+		effect.texture_small 
 		if small
-		else EffectData.get_def(effect).texture
+		else effect.texture
 	)
 	$Icon.texture = texture
-	var new_size = $Icon.texture.get_size()
+	var new_size: Vector2 = $Icon.texture.get_size()
 	custom_minimum_size = new_size
-	$ValueLabel.text = str(value)
+	
+	if show_text:
+		$ValueLabel.text = str(value)
+		$ValueLabel.visible = true
+	else:
+		$ValueLabel.visible = false
 
-func _ready() -> void:
-	_redraw()
+const SELF_PACKED := preload("res://objects/card/effect_icon.tscn")
+
+## Create a new instantiated instance from data
+static func build(
+	effect_: Effects,
+	small_: bool = true,
+	value_: int = 0,
+	show_text_: bool = false 
+) -> Node:
+	var n := SELF_PACKED.instantiate()
+	n.effect = effect_
+	n.small = small_
+	if show_text_:
+		n.show_text = true
+		n.value = value_
+	else:
+		n.show_text = false
+		n.value = 0
+	n.redraw()
+	return n

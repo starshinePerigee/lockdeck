@@ -1,4 +1,4 @@
-﻿extends RefCounted
+﻿extends Resource
 ## Stores all depths flavors as a hand-rolled enum equivalent
 class_name Depths
 
