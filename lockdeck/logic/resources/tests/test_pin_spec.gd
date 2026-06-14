@@ -10,7 +10,7 @@ func adv():
 	var a := int($AdvanceEdit.text)
 	var oob := p.advance_pin(a)
 	w()
-	$OOBLabel.visibile = oob
+	$OOBLabel.visible = oob
 
 func jam():
 	var j := int($JamEdit.text)

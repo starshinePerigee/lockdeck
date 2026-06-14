@@ -14,8 +14,8 @@ const CYLINDER_COUNT_MAX := 5
 const PIN_DEPTH_COUNT := 9
 
 ## Array of depth flavors for this pin. Index 0 is the top flavor, and
-## will typically be DepthFlavors.BASE
-@export var depths: Array[DepthData.DepthFlavors]
+## will typically be Depths.BASE
+@export var depths: Array[Depths]
 ## Revealed status array. True shows the depth texture, false shows "?"
 @export var reveals: Array[bool]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
@@ -28,7 +28,7 @@ const PIN_DEPTH_COUNT := 9
 @export var jam_count: int
 
 ## Get the depth flavor that the pin is currently set to.
-func current_depth() -> DepthData.DepthFlavors:
+func current_depth() -> Depths:
 	return depths[pin_position]
 
 ## Touch the pin
@@ -57,8 +57,8 @@ func advance_pin(value: int) -> bool:
 
 ## Resets the pin to default values but does not change depths
 func reset_pin():
-	depths.fill(DepthData.DepthFlavors.DEBUG)
-	depths[0] = DepthData.DepthFlavors.BASE
+	depths.fill(Depths.DEBUG)
+	depths[0] = Depths.BASE
 	
 	reveals.fill(false)
 	reveals[0] = true

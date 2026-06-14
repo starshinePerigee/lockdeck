@@ -4,8 +4,8 @@ extends Control
 class_name Pin
 
 ## Vertical height of a depth texture in pixels.
-const DEPTH_VHEIGHT = 35
-const _DEPTH = preload("res://objects/cylinder/depth.tscn")
+const DEPTH_VHEIGHT := 35
+const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -85,7 +85,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 func _ready() -> void:
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:
-		var next_depth = _DEPTH.instantiate()
+		var next_depth := _DEPTH.instantiate()
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
 	

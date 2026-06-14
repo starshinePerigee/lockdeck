@@ -6,7 +6,7 @@ class_name Depth
 const _TEXTURE_HIDDEN = preload("res://assets/depths/depth_hidden.png")
 
 ## Flavor for this depth.
-@export var flavor: DepthData.DepthFlavors = DepthData.DepthFlavors.DEBUG:
+@export var flavor: Depths = Depths.DEBUG:
 	set(v):
 		flavor = v
 		_redraw()
@@ -22,6 +22,6 @@ func _redraw() -> void:
 		await ready
 		
 	if revealed:
-		texture = DepthData.get_def(flavor).texture
+		texture = flavor.texture
 	else:
 		texture = _TEXTURE_HIDDEN
