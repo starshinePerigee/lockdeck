@@ -1,4 +1,4 @@
-extends Node
+extends Control
 ## Manages the pins (cylinders) for the lock.
 
 ## The one true reference for the current state of all pins.
@@ -46,7 +46,8 @@ class Execution:
 	func _init(pin_count: int) -> void:
 		pending_effects = []
 		pending_effects.resize(pin_count)
-		pending_effects.fill([])
+		for i in pin_count:
+			pending_effects.append([])
 		
 		effect_insertion_pointers = []
 		effect_insertion_pointers.resize(pin_count)
@@ -57,8 +58,8 @@ class Execution:
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
 		for k in card.effects.keys():
-			var pin_index = card_index + k
-			if pin_index in self.pending_effects:
+			var pin_index: int = card_index + k
+			if pin_index >= 0 and pin_index < len(pending_effects):
 				for e in card.effects[k]:
 					self.pending_effects[pin_index].append(e)
 	
@@ -66,7 +67,7 @@ class Execution:
 	## Effects are pulled from pins high to low (right to left), down the effect stack.
 	## Each effect that is returned is popped from the pending effects dictionary.
 	func get_next_effect() -> EffectSpec:
-		for pin_index in range(len(self.pending_effects), -1):
+		for pin_index in range(len(self.pending_effects) - 1, -1, -1):
 			if len(self.pending_effects[pin_index]) > 0:
 				var effect: EffectSpec = self.pending_effects[pin_index].pop_front()
 				effect.realized_pin = pin_index
@@ -110,8 +111,10 @@ func execute(card: CardSpec, card_index: int) -> void:
 		var next_effect := ex.get_next_effect()
 		if next_effect.flavor == Effects.END_EXECUTION:
 			print("Completed executiona after %s iterations." % iterations)
-			return
+			break
 		evaluate_pin(next_effect, ex)
+	
+	$Cylinders.set_pin_specs(pins)
 
 ## Evaluates a single effect, updating the execution context and emitting signals.
 func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
@@ -150,6 +153,7 @@ func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
 
 func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
+		print("advancing %s" % effect.realized_pin)
 		advance_pin(effect.realized_pin, 1, ex)
 #
 #func execute_jump(pin_index: int, effect: EffectSpec):

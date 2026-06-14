@@ -1,7 +1,50 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd1vutjsva0qm"]
+[gd_scene load_steps=4 format=3 uid="uid://cd1vutjsva0qm"]
 
-[ext_resource type="PackedScene" path="res://logic/core_nodes/cylinder_main.tscn" id="1_gmt7f"]
+[ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="1_gmt7f"]
+[ext_resource type="Script" uid="uid://cm8vqtt32iofj" path="res://logic/tests/test_cylinder_main.gd" id="1_tgx1c"]
+[ext_resource type="PackedScene" uid="uid://bqn5rdh63x6lm" path="res://logic/tests/test_card_spec.tscn" id="3_8f3wq"]
 
 [node name="TestCylinderMain" type="Node2D"]
+script = ExtResource("1_tgx1c")
 
 [node name="CylinderMain" parent="." instance=ExtResource("1_gmt7f")]
+
+[node name="CardHBox" type="HBoxContainer" parent="."]
+offset_top = 750.0
+offset_right = 850.0
+offset_bottom = 770.0
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="OptionButton1" type="OptionButton" parent="CardHBox"]
+layout_mode = 2
+
+[node name="OptionButton2" type="OptionButton" parent="CardHBox"]
+layout_mode = 2
+
+[node name="OptionButton3" type="OptionButton" parent="CardHBox"]
+layout_mode = 2
+
+[node name="OptionButton4" type="OptionButton" parent="CardHBox"]
+layout_mode = 2
+
+[node name="OptionButton5" type="OptionButton" parent="CardHBox"]
+layout_mode = 2
+
+[node name="TestCardSpec" parent="." instance=ExtResource("3_8f3wq")]
+position = Vector2(1277, 300)
+
+[node name="TemplateSelector" parent="TestCardSpec" index="1"]
+offset_left = 4.0
+offset_top = -73.0
+offset_right = 115.0
+offset_bottom = -42.0
+
+[node name="ResetButton" type="Button" parent="."]
+offset_left = 126.0
+offset_top = 866.0
+offset_right = 177.0
+offset_bottom = 897.0
+text = "Reset"
+
+[editable path="TestCardSpec"]
