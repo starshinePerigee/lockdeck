@@ -5,7 +5,7 @@ class_name CardSpace
 
 signal card_clicked()
 signal card_tapped()
-signal card_picked_up()
+signal card_picked_up(Area2D)
 signal card_dropped(Area2D)
 
 var _active := false
@@ -103,7 +103,7 @@ func _process(_delta: float) -> void:
 		if not _dragging and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
 				_dragging = true
-				card_picked_up.emit()
+				card_picked_up.emit($PickCard/Area2D)
 		if _dragging:
 			$PickCard.set_global_position(
 				start_position + get_global_mouse_position() - mouse_start_position
@@ -113,3 +113,6 @@ func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)
 	_set_texture()
+
+func get_area() -> Area2D:
+	return $PickCard/Area2D

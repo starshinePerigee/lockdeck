@@ -194,15 +194,15 @@ func check_solve() -> bool:
 	$Notifications.notify(NotificationData.NotificationFlavors.UNLOCK)
 	game_win.emit()
 	return true
-
-func handle_falling():
-	for k in cyl_pins.keys():
-		if (
-			not pins_modified[k]
-			and not cyl_pins[k].pin_set 
-			and cyl_pins[k].pin_position > 0
-		):
-			cyl_pins[k].pin_position -= 1
+#
+#func handle_falling():
+#	for k in cyl_pins.keys():
+#		if (
+#			not pins_modified[k]
+#			and not cyl_pins[k].pin_set 
+#			and cyl_pins[k].pin_position > 0
+#		):
+#			cyl_pins[k].pin_position -= 1
 #endregion
 
 func spend_pick(card_index: int):

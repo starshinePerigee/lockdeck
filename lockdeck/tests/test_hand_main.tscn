@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://df5nkc2k0nn2i"]
+[gd_scene load_steps=4 format=3 uid="uid://df5nkc2k0nn2i"]
 
 [ext_resource type="Script" uid="uid://by35ouo48te7h" path="res://tests/test_hand_main.gd" id="1_7p8rp"]
-[ext_resource type="PackedScene" uid="uid://bn8xn8ea8nink" path="res://objects/hand_big/hand_main.tscn" id="2_sbsmq"]
+[ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="2_sbsmq"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="3_s35tu"]
 
 [node name="TestHandMain" type="Node2D"]
 script = ExtResource("1_7p8rp")
@@ -40,3 +41,19 @@ offset_left = 146.0
 offset_top = 523.0
 offset_right = 214.563
 offset_bottom = 554.0
+
+[node name="DropTarget1" parent="." instance=ExtResource("3_s35tu")]
+offset_left = 128.0
+offset_top = 746.0
+offset_right = 278.0
+offset_bottom = 971.0
+draggable = false
+has_card = false
+
+[node name="DropTarget2" parent="." instance=ExtResource("3_s35tu")]
+offset_left = 508.0
+offset_top = 749.0
+offset_right = 658.0
+offset_bottom = 974.0
+draggable = false
+has_card = false

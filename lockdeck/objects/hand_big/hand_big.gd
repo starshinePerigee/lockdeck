@@ -2,8 +2,9 @@ extends Container
 # The view for the hand and all the cards in it
 
 signal card_selected(card_index: int)
-signal card_dropped(card_area: Area2D, card_index: int)
 signal card_deselected(card_index: int)
+signal card_dragged(card_area: Area2D, card_index: int)
+signal card_dropped(card_area: Area2D, card_index: int)
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
@@ -42,7 +43,8 @@ func card_tap(card_index: int) -> void:
 	card_select(card_index)
 	get_space().highlighted = true
 
-func card_pick_up(card_index: int) -> void:
+func card_pick_up(card_area: Area2D, card_index: int) -> void:
+	card_dragged.emit(card_area, card_index)
 	card_select(card_index)
 	get_space().z_boost = true
 	_disable_others(card_index)
