@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn8xn8ea8nink"]
+
+[ext_resource type="Script" uid="uid://dhd4iyk3bmdco" path="res://objects/hand_big/hand_main.gd" id="1_48slg"]
+[ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="1_pmw1l"]
+
+[node name="HandMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_48slg")
+
+[node name="HandBig" parent="." instance=ExtResource("1_pmw1l")]
+layout_mode = 0

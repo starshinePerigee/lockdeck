@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://df5nkc2k0nn2i"]
+
+[ext_resource type="Script" uid="uid://by35ouo48te7h" path="res://tests/test_hand_main.gd" id="1_7p8rp"]
+[ext_resource type="PackedScene" uid="uid://bn8xn8ea8nink" path="res://objects/hand_big/hand_main.tscn" id="2_sbsmq"]
+
+[node name="TestHandMain" type="Node2D"]
+script = ExtResource("1_7p8rp")
+
+[node name="HandMain" parent="." instance=ExtResource("2_sbsmq")]
