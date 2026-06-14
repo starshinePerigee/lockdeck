@@ -4,22 +4,12 @@ signal card_selected(card_spec: CardSpec, card_index: int)
 signal card_dropped(card_spec: CardSpec, card_area: Area2D, card_index: int)
 signal card_deselected(card_index: int)
 
-const CARD_SPACE = preload("res://objects/card/card_space.tscn")
+const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
-const SIZE_SCALE = [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
+const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25]
 
-# this performs like pants
-# TODO: make this not rebuild every card every time it changes
-@export var cards: Array[CardSpec] = []:
-	set(v):
-		cards = v
-		for i in len(cards):
-			if cards[i] == null:
-				cards[i] = CardSpec.new()
-		current_card = -1
-		_redraw()
-
-@export var current_card: int = -1
+@export var cards: Array[CardSpec]
+var current_card: int = -1
 
 func get_space() -> CardSpace:
 	return $Hand.get_children()[current_card]
@@ -62,17 +52,17 @@ func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_deselect()
 	_enable_all()
 
-func _redraw() -> void:
-	"""Force a full redraw"""
-	if not is_node_ready():
-		await ready
-		
+## Forces full redraw
+func redraw() -> void:
 	for child in $Hand.get_children():
 		$Hand.remove_child(child)
 		child.queue_free()
 	
 	for i in len(cards):
 		var spec := cards[i]
+		if spec == null:
+			continue
+		
 		# TODO: probably need a factory method to prevent the double-init
 		var space := CARD_SPACE.instantiate()
 		space.card_spec = spec
@@ -82,13 +72,13 @@ func _redraw() -> void:
 		space.card_picked_up.connect(card_pick_up.bind(i))
 		space.card_dropped.connect(card_drop.bind(i))
 
-	var space_index = clampi(
+	var sep_index := clampi(
 		$Hand.get_child_count() - 1,
 		0,
 		len(SIZE_SCALE)
 	)
-	var space: int = SIZE_SCALE[space_index]
-	$Hand.add_theme_constant_override("separation", space)
+	var separation: int = SIZE_SCALE[sep_index]
+	$Hand.add_theme_constant_override("separation", separation)
 
-func _ready() -> void:
-	_redraw()
+func ready() -> void:
+	redraw()

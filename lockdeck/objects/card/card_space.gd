@@ -1,5 +1,6 @@
-@tool
 extends TextureRect
+## Represents a single card or space for a card on the game field.
+## Note that despite being used for empty spaces, this always has a child PickCard - just hidden.
 class_name CardSpace
 
 signal card_clicked()
@@ -12,12 +13,13 @@ var _dragging := false
 var start_position := Vector2()
 var mouse_start_position := Vector2()
 
-const TEXTURE_OPEN = preload("res://assets/card/card_space.png")
-const TEXTURE_CLOSED = preload("res://assets/card/card_space_blocked.png")
-const TEXTURE_EMPTY = preload("res://assets/card/card_space_empty.png")
-const CARD_SCENE = preload("res://objects/card/pick_card.tscn")
+const TEXTURE_OPEN := preload("res://assets/card/card_space.png")
+const TEXTURE_CLOSED := preload("res://assets/card/card_space_blocked.png")
+const TEXTURE_EMPTY := preload("res://assets/card/card_space_empty.png")
+const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
-const DRAG_DISTANCE = 25
+const DRAG_DISTANCE := 25
+
 @export var draggable: bool = false
 
 @export var closed: bool = false:
@@ -28,11 +30,6 @@ const DRAG_DISTANCE = 25
 @export var has_card: bool = false:
 	set(v):
 		has_card = v
-	
-		if not is_node_ready():
-			await ready
-		
-		$PickCard.visible = has_card
 		_set_texture()
 
 @export var highlighted: bool:
@@ -55,18 +52,17 @@ const DRAG_DISTANCE = 25
 	set(v):
 		z_boost = v
 		if z_boost:
-			z_index = 100
+			z_index = 200
 		else:
 			z_index = 0
 
 @export var card_spec: CardSpec: 
 	set(v):
 		card_spec = v
-		
-		if not is_node_ready():
-			await ready
-		
-		$PickCard.card_spec = v
+		if card_spec != null:
+			$PickCard.card_spec = v
+		else:
+			has_card = false
 
 func _start_click():
 	if has_card:
@@ -90,6 +86,10 @@ func snapback():
 	$PickCard.set_global_position(start_position)
 
 func _set_texture():
+	if not is_node_ready():
+		await ready
+
+	$PickCard.visible = has_card
 	if has_card and false:  # trying leaving the outline out
 		texture = TEXTURE_EMPTY
 	elif closed:
@@ -99,7 +99,7 @@ func _set_texture():
 
 func _process(_delta: float) -> void:
 	if _active:
-		var curr_mouse_position = get_global_mouse_position()
+		var curr_mouse_position := get_global_mouse_position()
 		if not _dragging and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
 				_dragging = true
@@ -112,3 +112,4 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)
+	_set_texture()

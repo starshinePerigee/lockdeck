@@ -19,3 +19,4 @@ func _ready() -> void:
 	$HandBig.card_selected.connect(card_selected)
 	$HandBig.card_dropped.connect(card_dropped)
 	$HandBig.card_deselected.connect(card_deselected)
+	$HandBig.redraw()
