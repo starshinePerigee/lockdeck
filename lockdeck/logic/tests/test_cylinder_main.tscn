@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd1vutjsva0qm"]
+
+[ext_resource type="PackedScene" path="res://logic/core_nodes/cylinder_main.tscn" id="1_gmt7f"]
+
+[node name="TestCylinderMain" type="Node2D"]
+
+[node name="CylinderMain" parent="." instance=ExtResource("1_gmt7f")]
