@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bcf362b5let46"]
 
-[ext_resource type="Script" uid="uid://bo5855p0wkelj" path="res://objects/hand_big/test_hand_big.gd" id="1_12boc"]
+[ext_resource type="Script" uid="uid://bo5855p0wkelj" path="res://tests/test_hand_big.gd" id="1_12boc"]
 [ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="2_10yuw"]
 [ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="3_10yuw"]
 

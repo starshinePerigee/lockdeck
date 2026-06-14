@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqn5rdh63x6lm"]
+[gd_scene load_steps=14 format=3 uid="uid://du1nymu3a4vr2"]
 
-[ext_resource type="Script" uid="uid://clev5s2v3b1ox" path="res://logic/tests/test_card_spec.gd" id="1_y4ud8"]
+[ext_resource type="Script" uid="uid://clev5s2v3b1ox" path="res://tests/test_card_spec.gd" id="1_y4ud8"]
 [ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="2_qr7qa"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="3_ofi2c"]
 [ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="4_5k336"]
