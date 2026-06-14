@@ -10,6 +10,9 @@ class_name EffectSpec
 ## Value of effect. Can be 0.
 @export var value: int
 
+## used for pin execution logic. carries the value of the pin the effect is applied to.
+var realized_pin: int = -1
+
 func _init(effect_flavor: Variant = 0, effect_value: int = 0):
 	# disambiguation logic is becuase pick templates like strings here.
 	match type_string(typeof(effect_flavor)):

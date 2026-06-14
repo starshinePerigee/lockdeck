@@ -34,46 +34,46 @@ static func check_array_dict(d: Dictionary[int, Array]) -> int:
 			d.erase(k)
 	return -383  # if you hit this the hard way I am gonna be so tilted
 #endregion
-
-#region pick execution logic
-# global scope these for maximum scuff
-# i degaf it's games jamess
-var pending_effects: Dictionary[int, Array]
-var result_effect_pointer: int = 0
-var pins_modified: Dictionary[int, bool]
-var pick_broke: bool
-
-func _reset_globals():
-	$Notifications.clear()
-	pending_effects = {}
-	result_effect_pointer = 0
-	for k in cyl_pins.keys():
-		pins_modified[k] = false
-	pick_broke = false
-
-func execute_pick(card_index: int, card_spec: CardSpec):
-	_reset_globals()
-	for k in card_spec.effects.keys():
-		var pin_index = card_index + k
-		if pin_index not in pending_effects:
-			pending_effects[pin_index] = []
-		for e in card_spec.effects[k]:
-			pending_effects[pin_index].append(e)
-			
-	var iterations = 0
-	while iterations < 1000:
-		iterations += 1
-		var k = check_array_dict(pending_effects)
-		if k == -383:
-			break
-		var next_effect = pending_effects[k].pop_front()
-		if next_effect == null:
-			push_error("Popped a null evaluating %s?" % card_spec.pick_name)
-			break
-		evaluate_pin(k, next_effect)
-	if iterations == 1000:
-		push_error("Execution loop overflow!")
-	
+#
+##region pick execution logic
+## global scope these for maximum scuff
+## i degaf it's games jamess
+#var pending_effects: Dictionary[int, Array]
+#var result_effect_pointer: int = 0
+#var pins_modified: Dictionary[int, bool]
+#var pick_broke: bool
+#
+#func _reset_globals():
+#	$Notifications.clear()
+#	pending_effects = {}
+#	result_effect_pointer = 0
+#	for k in cyl_pins.keys():
+#		pins_modified[k] = false
+#	pick_broke = false
+#
+#func execute_pick(card_index: int, card_spec: CardSpec):
+#	_reset_globals()
+#	for k in card_spec.effects.keys():
+#		var pin_index = card_index + k
+#		if pin_index not in pending_effects:
+#			pending_effects[pin_index] = []
+#		for e in card_spec.effects[k]:
+#			pending_effects[pin_index].append(e)
+#			
+#	var iterations = 0
+#	while iterations < 1000:
+#		iterations += 1
+#		var k = check_array_dict(pending_effects)
+#		if k == -383:
+#			break
+#		var next_effect = pending_effects[k].pop_front()
+#		if next_effect == null:
+#			push_error("Popped a null evaluating %s?" % card_spec.pick_name)
+#			break
+#		evaluate_pin(k, next_effect)
+#	if iterations == 1000:
+#		push_error("Execution loop overflow!")
+#	
 	check_solve()
 	handle_falling()
 	spend_pick(card_index)
@@ -81,111 +81,111 @@ func execute_pick(card_index: int, card_spec: CardSpec):
 	refresh_objects()
 
 func evaluate_pin(pin_index: int, effect: EffectSpec) -> void:
-	if pin_index not in cyl_pins:
-		#print("out of bounds pin index %s (this is probably fine)" % pin_index)
-		return
-	
-	result_effect_pointer = 0
-	pins_modified[pin_index] = true
-	
-	# when inserting depths, they insert starting at index 0 but
-	# go in ascending order
-	match effect.flavor:
-		# ALL OF THE GAME LOGIC GOES HERE: 
-		# (BALATRO REFERENCE LMAO)
-		EffectData.EffectFlavors.EMPTY:
-			pass
-		EffectData.EffectFlavors.FORCE:
-			execute_force(pin_index, effect)
-		EffectData.EffectFlavors.JUMP:
-			execute_jump(pin_index, effect)
-		EffectData.EffectFlavors.JAM:
-			execute_jam(pin_index, effect)
-		EffectData.EffectFlavors.TEST:
-			execute_test(pin_index, effect)
-		EffectData.EffectFlavors.BOUNCE:
-			execute_bounce(pin_index)
-		EffectData.EffectFlavors.OUT_OF_BOUNDS:
-			execute_bounce(pin_index)
-			execute_break()
-		EffectData.EffectFlavors.KEY:
-			execute_key(pin_index)
-		EffectData.EffectFlavors.BREAK:
-			execute_break()
-		EffectData.EffectFlavors.DEBUG:
-			push_error("DEBUG effect flavor called! Pin index %s" % pin_index)
-		_:
-			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
-
-func add_effect(pin_index: int, effect: EffectSpec):
-	"""
-	Adds an effect to the correct location
-	(at the top of the stack but behind anything else added
-	during this effect evaluation)
-	"""
-	pending_effects[pin_index].insert(result_effect_pointer, effect)
-	result_effect_pointer += 1
-
-func advance_pin(pin_index: int, advance_by: int) -> bool:
-	"""
-	Moves pin_index pin forward by advance_by.
-	Returns true if this oobed, and false otherwise
-	"""
-	var p: PinSpec = cyl_pins[pin_index]
-	
-	if p.jam_count > 0:
-		p.jam_count -= 1
-		if p.jam_count == 0:
-			p.pin_set = false
-		return false
-	
-	p.pin_set = false
-	p.key_set = false
-	var depth_index = p.pin_position + advance_by
-
-	if depth_index < 0 or depth_index >= Pin.DEPTH_SIZE:
-		add_effect(pin_index, EffectSpec.new(EffectData.EffectFlavors.OUT_OF_BOUNDS, 1))
-		p.pin_position = clamp(depth_index, 0, Pin.DEPTH_SIZE-1)
-		return true
-	
-	p.pin_position = depth_index
-	add_effect(
-		pin_index,
-		EffectSpec.new(DepthData.get_def(p.depths[depth_index]).effect, 1)
-	)
-	p.reveals[p.pin_position] = true
-	return false
-
-func execute_force(pin_index: int, effect: EffectSpec):
-	for i in range(effect.value):
-		if advance_pin(pin_index, 1):
-			break
-
-func execute_jump(pin_index: int, effect: EffectSpec):
-	advance_pin(pin_index, effect.value)
-
-func execute_jam(pin_index: int, effect: EffectSpec):
-	cyl_pins[pin_index].jam_count += effect.value
-	cyl_pins[pin_index].pin_set = true
-
-func execute_test(pin_index: int, effect: EffectSpec):
-	for i in range(effect.value):
-		var test_depth = cyl_pins[pin_index].pin_position + i
-		if test_depth > 0 and test_depth < Pin.DEPTH_SIZE:
-			cyl_pins[pin_index].reveals[test_depth] = true
-
-func execute_bounce(pin_index: int):
-	cyl_pins[pin_index].pin_set = false
-	cyl_pins[pin_index].pin_position = 0
-
-func execute_key(pin_index: int):
-	cyl_pins[pin_index].key_set = true
-	cyl_pins[pin_index].pin_set = true
-	
-func execute_break():
-	if not pick_broke:
-		$Notifications.notify(NotificationData.NotificationFlavors.BREAK)
-		pick_broke = true
+#	if pin_index not in cyl_pins:
+#		#print("out of bounds pin index %s (this is probably fine)" % pin_index)
+#		return
+#	
+#	result_effect_pointer = 0
+#	pins_modified[pin_index] = true
+##	
+#	# when inserting depths, they insert starting at index 0 but
+#	# go in ascending order
+#	match effect.flavor:
+#		# ALL OF THE GAME LOGIC GOES HERE: 
+#		# (BALATRO REFERENCE LMAO)
+#		EffectData.EffectFlavors.EMPTY:
+#			pass
+#		EffectData.EffectFlavors.FORCE:
+#			execute_force(pin_index, effect)
+#		EffectData.EffectFlavors.JUMP:
+#			execute_jump(pin_index, effect)
+#		EffectData.EffectFlavors.JAM:
+#			execute_jam(pin_index, effect)
+#		EffectData.EffectFlavors.TEST:
+#			execute_test(pin_index, effect)
+#		EffectData.EffectFlavors.BOUNCE:
+#			execute_bounce(pin_index)
+#		EffectData.EffectFlavors.OUT_OF_BOUNDS:
+#			execute_bounce(pin_index)
+#			execute_break()
+#		EffectData.EffectFlavors.KEY:
+#			execute_key(pin_index)
+#		EffectData.EffectFlavors.BREAK:
+#			execute_break()
+#		EffectData.EffectFlavors.DEBUG:
+#			push_error("DEBUG effect flavor called! Pin index %s" % pin_index)
+#		_:
+#			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
+#
+#func add_effect(pin_index: int, effect: EffectSpec):
+#	"""
+#	Adds an effect to the correct location
+#	(at the top of the stack but behind anything else added
+#	during this effect evaluation)
+#	"""
+#	pending_effects[pin_index].insert(result_effect_pointer, effect)
+#	result_effect_pointer += 1
+#
+#func advance_pin(pin_index: int, advance_by: int) -> bool:
+#	"""
+#	Moves pin_index pin forward by advance_by.
+#	Returns true if this oobed, and false otherwise
+#	"""
+#	var p: PinSpec = cyl_pins[pin_index]
+#	
+#	if p.jam_count > 0:
+#		p.jam_count -= 1
+#		if p.jam_count == 0:
+#			p.pin_set = false
+#		return false
+#	
+#	p.pin_set = false
+#	p.key_set = false
+#	var depth_index = p.pin_position + advance_by
+#
+#	if depth_index < 0 or depth_index >= Pin.DEPTH_SIZE:
+#		add_effect(pin_index, EffectSpec.new(EffectData.EffectFlavors.OUT_OF_BOUNDS, 1))
+#		p.pin_position = clamp(depth_index, 0, Pin.DEPTH_SIZE-1)
+#		return true
+#	
+#	p.pin_position = depth_index
+#	add_effect(
+#		pin_index,
+#		EffectSpec.new(DepthData.get_def(p.depths[depth_index]).effect, 1)
+#	)
+#	p.reveals[p.pin_position] = true
+#	return false
+#
+#func execute_force(pin_index: int, effect: EffectSpec):
+#	for i in range(effect.value):
+#		if advance_pin(pin_index, 1):
+#			break
+#
+#func execute_jump(pin_index: int, effect: EffectSpec):
+#	advance_pin(pin_index, effect.value)
+#
+#func execute_jam(pin_index: int, effect: EffectSpec):
+#	cyl_pins[pin_index].jam_count += effect.value
+#	cyl_pins[pin_index].pin_set = true
+#
+#func execute_test(pin_index: int, effect: EffectSpec):
+#	for i in range(effect.value):
+#		var test_depth = cyl_pins[pin_index].pin_position + i
+#		if test_depth > 0 and test_depth < Pin.DEPTH_SIZE:
+#			cyl_pins[pin_index].reveals[test_depth] = true
+#
+#func execute_bounce(pin_index: int):
+#	cyl_pins[pin_index].pin_set = false
+#	cyl_pins[pin_index].pin_position = 0
+#
+#func execute_key(pin_index: int):
+#	cyl_pins[pin_index].key_set = true
+#	cyl_pins[pin_index].pin_set = true
+#	
+#func execute_break():
+#	if not pick_broke:
+#		$Notifications.notify(NotificationData.NotificationFlavors.BREAK)
+#		pick_broke = true
 
 func check_solve() -> bool:
 	for k in cyl_pins.keys():
