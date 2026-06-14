@@ -15,10 +15,21 @@ class_name CardSpec
 ## The pick art resource for this card.
 @export var texture: Resource
 
+static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
+	return CardSpec.new(
+		template.pick_name,
+		template.description,
+		template.texture,
+		template.effects
+	)
+
 func _init(
-	template: PickTemplates = PickTemplates.DEBUG,
+	pick_name_ = "",
+	description_ = "",
+	texture_ = null,
+	effects_ = null
 ):
-	pick_name = template.pick_name
-	description = template.description
-	texture = template.texture
-	effects = template.effects
+	pick_name = pick_name_
+	description = description_
+	texture = texture_
+	effects.assign(effects_)

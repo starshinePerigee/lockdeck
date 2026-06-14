@@ -13,6 +13,6 @@ class_name EffectSpec
 ## used for pin execution logic. carries the value of the pin the effect is applied to.
 var realized_pin: int = -1
 
-func _init(flavor_: Effects, value_: int = 0):
+func _init(flavor_: Effects = Effects.DEBUG, value_: int = 0):
 	flavor = flavor_
 	value = value_

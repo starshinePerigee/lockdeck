@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl4diaupcg82o"]
+
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="1_c812y"]
+[ext_resource type="Script" uid="uid://cg0lbsxr2elwp" path="res://objects/card/test_pick_card.gd" id="1_l6l45"]
+
+[node name="TestPickCard" type="Node2D"]
+script = ExtResource("1_l6l45")
+
+[node name="PickCard" parent="." instance=ExtResource("1_c812y")]
+
+[node name="OptionButton" type="OptionButton" parent="."]
+offset_left = 228.75
+offset_top = 35.75
+offset_right = 260.75
+offset_bottom = 55.75

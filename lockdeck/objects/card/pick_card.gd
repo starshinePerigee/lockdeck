@@ -19,8 +19,8 @@ const SELF_PACKED := preload("res://objects/card/pick_card.tscn")
 
 func build_from_template(flavor: PickTemplates):
 	var n := SELF_PACKED.instantiate()
-	n.card_spec = CardSpec.new(flavor)
+	n.card_spec = CardSpec.from_template(flavor)
 
 func _ready() -> void:
 	if card_spec == null:
-		card_spec = CardSpec.new(PickTemplates.DEBUG)
+		card_spec = CardSpec.from_template(PickTemplates.DEBUG)

@@ -108,3 +108,13 @@ static var FORK := PickTemplates.new(
 		1: [EffectSpec.new(Effects.FORCE, 2)]
 	}
 )
+
+
+static var valid_templates: Array[PickTemplates] = [
+	DIAMOND,
+	HOOK,
+	BALL,
+	RAKE,
+	SNAKE,
+	FORK
+]
