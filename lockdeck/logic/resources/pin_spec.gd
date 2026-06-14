@@ -36,18 +36,15 @@ func unset_pin() -> void:
 	pin_set = false
 	key_set = false
 
-## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed
-func advance_pin(value: int) -> bool:
-	# handle jam
-	if jam_count > 0:
-		jam_count -= 1
-		if jam_count <= 0:
-			unset_pin()
+## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed.
+func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
+	if add_jam(-1):
 		return false
 	
-	unset_pin()
 	var oob := false
-	pin_position += value
+	if absolute >= 0:
+		pin_position = absolute
+	pin_position += relative
 	if pin_position >= PIN_DEPTH_COUNT or pin_position < 0:
 		pin_position = clamp(pin_position, 0, PIN_DEPTH_COUNT - 1)
 		oob = true
@@ -55,7 +52,27 @@ func advance_pin(value: int) -> bool:
 	reveals[pin_position] = true
 	return oob
 
-## Resets the pin to default values but does not change depths
+## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
+func add_jam(value: int) -> bool:
+	var jammed := jam_count > 0
+	jam_count = max(0, jam_count + value)
+	if jam_count > 0:
+		pin_set = true
+		return true
+	else:
+		unset_pin()
+		return jammed
+
+## Reveals a pin in n positions. Unsets the pin.
+func reveal_pin(value: int) -> void:
+	if add_jam(-1):
+		return
+	
+	var reveal_position := pin_position + value
+	if not (reveal_position >= PIN_DEPTH_COUNT or pin_position < 0):
+		reveals[reveal_position] = true
+
+## Resets the pin to default values but does not change depths.
 func reset_pin():
 	depths.fill(Depths.DEBUG)
 	depths[0] = Depths.BASE

@@ -1,6 +1,8 @@
 extends Control
 ## Manages the pins (cylinders) for the lock.
 
+signal pick_break
+
 ## The one true reference for the current state of all pins.
 ## Length is the length of active pins - inactive pins are present as hidden objects
 ## but are not present in the pins array.
@@ -131,21 +133,20 @@ func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
 			pass
 		Effects.FORCE:
 			execute_force(effect, ex)
-#		Effects.JUMP:
-#			execute_jump(effect, ex)
-#		Effects.JAM:
-#			execute_jam(effect, ex)
-#		Effects.TEST:
-#			execute_test(effect, ex)
-#		Effects.BOUNCE:
-#			execute_bounce(effect)
-#		Effects.OUT_OF_BOUNDS:
-#			execute_bounce(effect)
-#			execute_break()
-#		Effects.KEY:
-#			execute_key(effect)
-#		Effects.BREAK:
-#			execute_break()
+		Effects.JUMP:
+			execute_jump(effect, ex)
+		Effects.JAM:
+			execute_jam(effect)
+		Effects.TEST:
+			execute_test(effect)
+		Effects.BOUNCE:
+			execute_bounce(effect)
+		Effects.OUT_OF_BOUNDS:
+			execute_break(ex)
+		Effects.BREAK:
+			execute_break(ex)
+		Effects.KEY:
+			execute_key(effect)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
@@ -153,38 +154,34 @@ func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
 
 func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
-		print("advancing %s" % effect.realized_pin)
 		advance_pin(effect.realized_pin, 1, ex)
-#
-#func execute_jump(pin_index: int, effect: EffectSpec):
-#	advance_pin(pin_index, effect.value)
-#
-#func execute_jam(pin_index: int, effect: EffectSpec):
-#	cyl_pins[pin_index].jam_count += effect.value
-#	cyl_pins[pin_index].pin_set = true
-#
-#func execute_test(pin_index: int, effect: EffectSpec):
-#	for i in range(effect.value):
-#		var test_depth = cyl_pins[pin_index].pin_position + i
-#		if test_depth > 0 and test_depth < Pin.DEPTH_SIZE:
-#			cyl_pins[pin_index].reveals[test_depth] = true
-#
-#func execute_bounce(pin_index: int):
-#	cyl_pins[pin_index].pin_set = false
-#	cyl_pins[pin_index].pin_position = 0
-#
-#func execute_key(pin_index: int):
-#	cyl_pins[pin_index].key_set = true
-#	cyl_pins[pin_index].pin_set = true
-#	
-#func execute_break():
-#	if not pick_broke:
-#		$Notifications.notify(NotificationData.NotificationFlavors.BREAK)
-#		pick_broke = true
+
+func execute_jump(effect: EffectSpec, ex: Execution) -> void:
+	advance_pin(effect.realized_pin, effect.value, ex)
+
+func execute_jam(effect: EffectSpec) -> void:
+	pins[effect.realized_pin].add_jam(effect.value)
+
+func execute_test(effect: EffectSpec) -> void:
+	for i in range(effect.value):
+		pins[effect.realized_pin].reveal_pin(i + 1)
+
+func execute_bounce(effect: EffectSpec) -> void:
+	pins[effect.realized_pin].advance_pin(0, 0)
+
+func execute_key(effect: EffectSpec) -> void:
+	pins[effect.realized_pin].key_set = true
+
+func execute_break(ex: Execution):
+	if not ex.pick_broke_emitted:
+		ex.pick_broke_emitted = true
+		pick_break.emit()
 
 #endregion
 
 ## Perform the end of hand/round/turn fall step, resetting non-bound pins
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
-	pass
+	for pin in pins:
+		pin.advance_pin(0, 0)
+	$Cylinders.set_pin_specs(pins)
