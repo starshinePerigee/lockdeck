@@ -1,4 +1,3 @@
-@tool
 extends Control
 ## The view for the full set of cylinders in the lock.
 ## Made up of pins, which are made up of depths.

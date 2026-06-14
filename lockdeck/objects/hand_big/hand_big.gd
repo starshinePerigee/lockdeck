@@ -1,4 +1,3 @@
-@tool
 extends Container
 
 signal card_selected(card_spec: CardSpec, card_index: int)

@@ -1,4 +1,3 @@
-@tool
 extends TextureRect
 ## The view for a single depth in a pin.
 class_name Depth
