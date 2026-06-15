@@ -14,3 +14,4 @@ script = ExtResource("1_0x64h")
 
 [node name="CardPile" parent="." instance=ExtResource("2_50n1f")]
 layout_mode = 0
+highlighted = null

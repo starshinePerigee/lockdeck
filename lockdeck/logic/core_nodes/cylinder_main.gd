@@ -2,6 +2,7 @@ extends Control
 ## Manages the pins (cylinders) for the lock.
 
 signal pick_break
+signal keyway_solved
 
 ## The one true reference for the current state of all pins.
 ## Length is the length of active pins - inactive pins are present as hidden objects
@@ -117,6 +118,9 @@ func execute(card: CardSpec, card_index: int) -> void:
 		evaluate_pin(next_effect, ex)
 	
 	$Cylinders.set_pin_specs(pins)
+	
+	if check_solve():
+		keyway_solved.emit()
 
 ## Evaluates a single effect, updating the execution context and emitting signals.
 func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
@@ -185,3 +189,10 @@ func handle_fall() -> void:
 	for pin in pins:
 		pin.advance_pin(0, 0)
 	$Cylinders.set_pin_specs(pins)
+
+## Check if all pins are solved
+func check_solve() -> bool:
+	for pin in pins:
+		if not pin.key_set:
+			return false
+	return true

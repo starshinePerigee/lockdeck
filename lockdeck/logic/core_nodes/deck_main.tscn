@@ -14,3 +14,4 @@ script = ExtResource("1_isaa4")
 
 [node name="CardPile" parent="." instance=ExtResource("2_ga2i2")]
 layout_mode = 0
+highlighted = null

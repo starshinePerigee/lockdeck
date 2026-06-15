@@ -21,3 +21,12 @@ static func get_random_base_pin() -> PinSpec:
 	
 	spec.pin_set = false
 	return spec
+
+static func build_test_lock(cylinders: int = 4) -> Array[PinSpec]:
+	var pin_specs: Array[PinSpec] = []
+	for i in range(cylinders):
+		if i < 3:
+			pin_specs.append(get_known_test_pin())
+		else:
+			pin_specs.append(get_random_base_pin())
+	return pin_specs

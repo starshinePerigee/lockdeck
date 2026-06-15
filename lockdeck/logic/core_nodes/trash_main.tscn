@@ -14,3 +14,4 @@ script = ExtResource("1_goswl")
 
 [node name="CardPile" parent="." instance=ExtResource("2_tenfn")]
 layout_mode = 0
+highlighted = null

@@ -22,13 +22,7 @@ func break_pick() -> void:
 	$BreakLabel.visible = true
 
 func _ready() -> void:
-	var pin_specs: Array[PinSpec] = []
-	for i in range(CYL_COUNT):
-		if i < 3:
-			pin_specs.append(PinGenerator.get_known_test_pin())
-		else:
-			pin_specs.append(PinGenerator.get_random_base_pin())
-	$CylinderMain.load_new_pins(pin_specs)
+	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
 
 	for i in range(PinSpec.CYLINDER_COUNT_MAX):
 		var selector: OptionButton = $CardHBox.get_child(i)

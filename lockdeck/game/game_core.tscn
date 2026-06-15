@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=10 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
+[ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
@@ -21,6 +22,12 @@ offset_top = 269.0
 offset_right = 1251.0
 offset_bottom = 419.0
 rotation = -0.261799
+
+[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
+offset_left = 1756.0
+offset_top = 98.0
+offset_right = 1756.0
+offset_bottom = 98.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(880, 860)
