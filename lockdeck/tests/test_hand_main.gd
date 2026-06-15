@@ -7,15 +7,24 @@ func deselect() -> void:
 	print("Deselected")
 
 func pick_up(card_area: Area2D, _card: CardSpec) -> void:
-	# TODO: add highlight logic based on entered signals
-	pass
+	for target: CardSpace in [$DropTarget1, $DropTarget2]:
+		var area: Area2D = target.get_area()
+		area.area_entered.connect(target.set_highlight.unbind(1))
+		area.area_exited.connect(target.clear_highlight.unbind(1))
 
 func drop(card_area: Area2D, card: CardSpec) -> void:
 	var collisions := card_area.get_overlapping_areas()
 	if $DropTarget1.get_area() in collisions:
 		print("%s dropped on 1" % card.pick_name)
+		$DropTarget1.clear_highlight()
 	if $DropTarget2.get_area() in collisions:
 		print("%s dropped on 2" % card.pick_name)
+		$DropTarget2.clear_highlight()
+	
+	for target: CardSpace in [$DropTarget1, $DropTarget2]:
+		var area: Area2D = target.get_area()
+		area.area_entered.disconnect(target.set_highlight.unbind(1))
+		area.area_exited.disconnect(target.clear_highlight.unbind(1))
 
 func draw_card() -> void:
 	$HandMain.add_card(PickGenerator.get_random_base_card())
@@ -39,4 +48,9 @@ func _ready() -> void:
 	$ManyButton.pressed.connect(load_cards)
 	$HandMain.hand_selected.connect(select)
 	$HandMain.hand_deselected.connect(deselect)
+	$HandMain.hand_dragged.connect(pick_up)
 	$HandMain.hand_dropped.connect(drop)
+	
+	draw_card()
+	draw_card()
+	draw_card()

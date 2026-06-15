@@ -32,21 +32,28 @@ const DRAG_DISTANCE := 25
 		has_card = v
 		_set_texture()
 
-@export var highlighted: bool:
-	set(v):
-		highlighted = v
-		if highlighted:
-			$HighlightRect.z_index = 90
-			$HighlightRect.position = Vector2(-5, -30)
-			$HighlightRect.visible = true
-			$PickCard.position = Vector2(0, -25)
-			z_boost = true
-		else:
-			$HighlightRect.z_index = -10
-			$HighlightRect.position = Vector2(-5, -5)
-			$HighlightRect.visible = false
-			$PickCard.position = Vector2(0, 0)
-			z_boost = false
+## Draw highlight and pop card
+func set_selected() -> void:
+	$HighlightRect.z_index = 90
+	$HighlightRect.position = Vector2(-5, -30)
+	$HighlightRect.visible = true
+	$PickCard.position = Vector2(0, -25)
+	z_boost = true
+
+## Unpop card
+func clear_selected() -> void:
+	$HighlightRect.z_index = -10
+	$HighlightRect.position = Vector2(-5, -5)
+	$HighlightRect.visible = false
+	$PickCard.position = Vector2(0, 0)
+	z_boost = false
+
+# Used for signal targets:
+func set_highlight() -> void:
+	$HighlightRect.visible = true
+
+func clear_highlight() -> void:
+	$HighlightRect.visible = false
 
 @export var z_boost: bool:
 	set(v):

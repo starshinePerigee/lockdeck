@@ -12,9 +12,11 @@ const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
 
 var current_card: int = -1
 
+## gets the current space based on current card
 func get_space() -> CardSpace:
 	return $Hand.get_children()[current_card]
 
+## Lock out all other card spaces while dragging
 func _disable_others(card_index: int) -> void:
 	for i in len($Hand.get_children()):
 		if i != card_index:
@@ -22,33 +24,44 @@ func _disable_others(card_index: int) -> void:
 			space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+## Re-enable all other cards
 func _enable_all() -> void:
 	for space in $Hand.get_children():
 		space.mouse_filter = Control.MOUSE_FILTER_STOP
 		space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_STOP
 
+## Set the current card to card_index
 func card_select(card_index: int) -> void:
 	if current_card != card_index:
 		card_deselect()
 		current_card = card_index
 		card_selected.emit(card_index)
 
+## Clear the current card
 func card_deselect() -> void:
 	if current_card >= 0:
-		get_space().highlighted = false
+		get_space().clear_selected()
 		card_deselected.emit(current_card)
 		current_card = -1
 
+## Handle a card being clicked
 func card_tap(card_index: int) -> void:
-	card_select(card_index)
-	get_space().highlighted = true
+	if card_index == current_card:
+		get_space().clear_selected()
+		card_deselect()
+	else:
+		card_select(card_index)
+		get_space().set_selected()
 
+## Handle a card being dragged
 func card_pick_up(card_area: Area2D, card_index: int) -> void:
 	card_dragged.emit(card_area, card_index)
 	card_select(card_index)
+	get_space().clear_selected()
 	get_space().z_boost = true
 	_disable_others(card_index)
 
+## Handle a dragged card being dropped
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(card_area, card_index)
 	card_deselect()
