@@ -20,17 +20,45 @@ const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
 const DRAG_DISTANCE := 25
 
+## True if the card in the space is draggable
 @export var draggable: bool = false
 
+## True if this is a closed space (has X)
+## Implies but does not set can_drop = false and has_card = false
 @export var closed: bool = false:
 	set(v):
 		closed = v
 		_set_texture()
 
+## True if there is a card in this space, and if that card should be drawn
 @export var has_card: bool = false:
 	set(v):
 		has_card = v
 		_set_texture()
+
+## True if this space should listen for collisions and highlight on them
+@export var can_drop: bool = false:
+	set(v):
+		can_drop = v
+		connect_drop_signals()
+
+## Connects the drop signals, responsible for highlighting spaces when they're a valid drop target
+func connect_drop_signals() -> void:
+	if not is_node_ready():
+		await ready
+	
+	# Note: right now the only area2ds flying around are dragged cards, so these are
+	# very indiscriminate. In the future you may need to verify the entering area is the card 
+	# we care about.
+	if can_drop:
+		$PickCard/Area2D.area_entered.connect(set_highlight.unbind(1))
+		$PickCard/Area2D.area_exited.connect(clear_highlight.unbind(1))
+	else:
+		if $PickCard/Area2D.area_entered.is_connected(set_highlight.unbind(1)):
+			$PickCard/Area2D.area_entered.disconnect(set_highlight.unbind(1))
+		if $PickCard/Area2D.area_exited.is_connected(clear_highlight.unbind(1)):
+			$PickCard/Area2D.area_exited.disconnect(clear_highlight.unbind(1))
+
 
 ## Draw highlight and pop card
 func set_selected() -> void:
@@ -119,6 +147,7 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)
+	connect_drop_signals()
 	_set_texture()
 
 func get_area() -> Area2D:

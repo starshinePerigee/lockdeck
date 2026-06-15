@@ -49,6 +49,7 @@ offset_right = 278.0
 offset_bottom = 971.0
 draggable = false
 has_card = false
+can_drop = true
 
 [node name="DropTarget2" parent="." instance=ExtResource("3_s35tu")]
 offset_left = 508.0
@@ -57,3 +58,4 @@ offset_right = 658.0
 offset_bottom = 974.0
 draggable = false
 has_card = false
+can_drop = true
