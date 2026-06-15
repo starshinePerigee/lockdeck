@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://5io01qsv1qby"]
+
+[ext_resource type="Script" uid="uid://cbws7n2egd8ao" path="res://logic/core_nodes/discard_main.gd" id="1_0x64h"]
+[ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_50n1f"]
+
+[node name="DiscardMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0x64h")
+
+[node name="CardPile" parent="." instance=ExtResource("2_50n1f")]
+layout_mode = 0

@@ -1,6 +1,7 @@
 x cylinders
 x hand
-- keyway
-- deck
-- discard
-- trash
+x keyway
+x deck
+x discard
+x trash
+- top level

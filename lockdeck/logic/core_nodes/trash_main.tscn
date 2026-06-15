@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmo5cgmd68fwu"]
+
+[ext_resource type="Script" uid="uid://cx4icem1s4ps8" path="res://logic/core_nodes/trash_main.gd" id="1_goswl"]
+[ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_tenfn"]
+
+[node name="TrashMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_goswl")
+
+[node name="CardPile" parent="." instance=ExtResource("2_tenfn")]
+layout_mode = 0
