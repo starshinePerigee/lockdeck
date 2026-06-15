@@ -51,8 +51,10 @@ func connect_drop_signals() -> void:
 	# very indiscriminate. In the future you may need to verify the entering area is the card 
 	# we care about.
 	if can_drop:
-		$PickCard/Area2D.area_entered.connect(set_highlight.unbind(1))
-		$PickCard/Area2D.area_exited.connect(clear_highlight.unbind(1))
+		if not $PickCard/Area2D.area_entered.is_connected(set_highlight.unbind(1)):
+			$PickCard/Area2D.area_entered.connect(set_highlight.unbind(1))
+		if not $PickCard/Area2D.area_exited.is_connected(clear_highlight.unbind(1)):
+			$PickCard/Area2D.area_exited.connect(clear_highlight.unbind(1))
 	else:
 		if $PickCard/Area2D.area_entered.is_connected(set_highlight.unbind(1)):
 			$PickCard/Area2D.area_entered.disconnect(set_highlight.unbind(1))

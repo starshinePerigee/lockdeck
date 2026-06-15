@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://drsxptxuvjyp1"]
+
+[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="1_5df8b"]
+
+[node name="TestKeyway" type="Node2D"]
+
+[node name="Keyway" parent="." instance=ExtResource("1_5df8b")]
+space_count = 4

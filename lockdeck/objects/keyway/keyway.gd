@@ -1,11 +1,13 @@
-@tool
 extends HBoxContainer
+## Keyway is the series of drop targets that pick cards are played to. 
 
-const SPACE_COUNT = 5
+# Don't get too attached - this logic might move entirely to cylinders after we rearrange the 
+# play area, and the player just drags the cards directly on to the cylinder.
+# Still this is a fine stopgap for now.
 
 var space_refs: Array[CardSpace] = []
 
-@export var space_count: int = SPACE_COUNT:
+@export var space_count: int = PinSpec.CYLINDER_COUNT_MAX:
 	set(v):
 		space_count = v
 		
@@ -14,20 +16,15 @@ var space_refs: Array[CardSpace] = []
 		
 		redraw()
 
-func handle_click(card_index: int):
-	card_activated.emit(card_index, space_refs[card_index].card_spec)
-
+## Updates the card spaces
 func redraw():
-	if len(space_refs) == 0:
-			return
-			
-	for i in range(SPACE_COUNT):
-		space_refs[i].closed = i >= space_count
-		if i in cards:
-			space_refs[i].card_spec = cards[i]
-			space_refs[i].has_card = true
-		else:
-			space_refs[i].has_card = false
+	for i in range(0, space_count):
+		space_refs[i].can_drop = true
+		space_refs[i].closed = false
+	
+	for i in range(space_count, PinSpec.CYLINDER_COUNT_MAX):
+		space_refs[i].can_drop = false
+		space_refs[i].closed = true
 
 func _ready() -> void:
 	space_refs = [
@@ -37,10 +34,4 @@ func _ready() -> void:
 		$CardSpace4,
 		$CardSpace5
 	]
-	
-	for i in range(len(space_refs)):
-		var bound_click = handle_click.bind(i)  # owo
-		space_refs[i].card_pressed.connect(bound_click)
-	
-	space_count = SPACE_COUNT
 	redraw()
