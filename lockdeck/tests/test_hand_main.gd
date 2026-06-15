@@ -6,12 +6,6 @@ func select(card: CardSpec) -> void:
 func deselect() -> void:
 	print("Deselected")
 
-func pick_up(card_area: Area2D, _card: CardSpec) -> void:
-	for target: CardSpace in [$DropTarget1, $DropTarget2]:
-		var area: Area2D = target.get_area()
-		area.area_entered.connect(target.set_highlight.unbind(1))
-		area.area_exited.connect(target.clear_highlight.unbind(1))
-
 func drop(card_area: Area2D, card: CardSpec) -> void:
 	var collisions := card_area.get_overlapping_areas()
 	if $DropTarget1.get_area() in collisions:
@@ -41,7 +35,6 @@ func _ready() -> void:
 	$ManyButton.pressed.connect(load_cards)
 	$HandMain.hand_selected.connect(select)
 	$HandMain.hand_deselected.connect(deselect)
-	$HandMain.hand_dragged.connect(pick_up)
 	$HandMain.hand_dropped.connect(drop)
 	
 	draw_card()

@@ -21,6 +21,7 @@ OUTER LOOP
 - level - deck loop
 
 INDICATORS
+- remove keyway and use cylinders direct
 - lockpick preview highlights
 - deck and trash contents
 

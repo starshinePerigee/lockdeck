@@ -3,10 +3,20 @@ extends TextureRect
 ## Note that despite being used for empty spaces, this always has a child PickCard - just hidden.
 class_name CardSpace
 
+## Card is present and clicked (could be tap, could be drag)
 signal card_clicked()
+## Card is tapped (clicked and relesaed within short distance)
 signal card_tapped()
+## Drag started
 signal card_picked_up(Area2D)
+## Drag eneded
 signal card_dropped(Area2D)
+## Other card has dragged into this space
+signal drag_entered(Area2D)
+## Other card has dragged out of this space
+signal drag_exited(Area2D)
+## Card is not present and space is clicked
+signal area_clicked()
 
 var _active := false
 var _dragging := false
@@ -37,30 +47,7 @@ const DRAG_DISTANCE := 25
 		_set_texture()
 
 ## True if this space should listen for collisions and highlight on them
-@export var can_drop: bool = false:
-	set(v):
-		can_drop = v
-		connect_drop_signals()
-
-## Connects the drop signals, responsible for highlighting spaces when they're a valid drop target
-func connect_drop_signals() -> void:
-	if not is_node_ready():
-		await ready
-	
-	# Note: right now the only area2ds flying around are dragged cards, so these are
-	# very indiscriminate. In the future you may need to verify the entering area is the card 
-	# we care about.
-	if can_drop:
-		if not $PickCard/Area2D.area_entered.is_connected(set_highlight.unbind(1)):
-			$PickCard/Area2D.area_entered.connect(set_highlight.unbind(1))
-		if not $PickCard/Area2D.area_exited.is_connected(clear_highlight.unbind(1)):
-			$PickCard/Area2D.area_exited.connect(clear_highlight.unbind(1))
-	else:
-		if $PickCard/Area2D.area_entered.is_connected(set_highlight.unbind(1)):
-			$PickCard/Area2D.area_entered.disconnect(set_highlight.unbind(1))
-		if $PickCard/Area2D.area_exited.is_connected(clear_highlight.unbind(1)):
-			$PickCard/Area2D.area_exited.disconnect(clear_highlight.unbind(1))
-
+@export var can_drop: bool = false
 
 ## Draw highlight and pop card
 func set_selected() -> void:
@@ -78,12 +65,33 @@ func clear_selected() -> void:
 	$PickCard.position = Vector2(0, 0)
 	z_boost = false
 
-# Used for signal targets:
-func set_highlight() -> void:
-	$HighlightRect.visible = true
+## Check if area is a valid collision source
+## (card but not this card)
+func _valid_collider(area: Area2D) -> bool:
+	if not can_drop:
+		return false
+	if area == null:
+		return true
+	var parent := area.get_parent()
+	if parent == $PickCard:
+		return false
+	return parent is PickCard
 
-func clear_highlight() -> void:
+var _card_inside := false
+
+# Used for signal targets:
+func set_highlight(area: Area2D = null) -> void:
+	if not _valid_collider(area):
+		return
+	_card_inside = true
+	$HighlightRect.visible = true
+	drag_entered.emit(area)
+
+func clear_highlight(area: Area2D = null) -> void:
 	$HighlightRect.visible = false
+	if _card_inside:
+		_card_inside = false
+		drag_exited.emit(area)
 
 @export var z_boost: bool:
 	set(v):
@@ -100,6 +108,11 @@ func clear_highlight() -> void:
 			$PickCard.card_spec = v
 		else:
 			has_card = false
+
+func _handle_space_input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			area_clicked.emit()
 
 func _start_click():
 	if has_card:
@@ -149,8 +162,12 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)
-	connect_drop_signals()
+	$Area2D.area_entered.connect(set_highlight)
+	$Area2D.area_exited.connect(clear_highlight)
+	
+	gui_input.connect(_handle_space_input)
 	_set_texture()
+	clear_selected()
 
 func get_area() -> Area2D:
-	return $PickCard/Area2D
+	return $Area2D
