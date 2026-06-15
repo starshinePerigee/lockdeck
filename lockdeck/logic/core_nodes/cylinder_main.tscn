@@ -10,9 +10,10 @@ script = ExtResource("1_j3ebm")
 
 [node name="Cylinders" parent="." instance=ExtResource("2_s8kgd")]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="Cylinders"]
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_right = 840.0
 offset_bottom = 700.0
+mouse_filter = 2
 border_color = Color(0.251698, 0.503876, 1, 1)
 border_width = 3.0

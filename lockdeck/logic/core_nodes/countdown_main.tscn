@@ -12,6 +12,7 @@ script = ExtResource("1_5l2d8")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 200.0
+mouse_filter = 2
 border_color = Color(0.812127, 0.408589, 5.77569e-07, 1)
 border_width = 3.0
 
