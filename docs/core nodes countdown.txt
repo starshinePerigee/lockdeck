@@ -1,0 +1,6 @@
+x cylinders
+x hand
+- keyway
+- deck
+- discard
+- trash
