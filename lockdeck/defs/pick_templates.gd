@@ -7,7 +7,7 @@ static func _get_texture(n: String) -> Resource:
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/effects/pick_debug.png")
+		return load("res://assets/picks/pick_debug.png")
 	
 ## Human readable pick name, lowercase
 var pick_name: String
