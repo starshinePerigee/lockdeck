@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://kamh53utjtpo"]
+
+[ext_resource type="Texture2D" uid="uid://dhqylgrb1jh2t" path="res://assets/countdown/segment.png" id="1_nm15w"]
+
+[node name="Segment" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 45.0
+texture = ExtResource("1_nm15w")
