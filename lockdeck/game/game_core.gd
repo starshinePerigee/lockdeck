@@ -6,6 +6,7 @@ extends Control
 #region game state variables
 @export var CYLINDER_COUNT := 4
 @export var DECK_COUNT := 10
+@export var HAND_SIZE := 5
 @export var REVEAL_ALL := false
 
 var card_is_active := false
@@ -42,14 +43,20 @@ func activate_pick() -> void:
 	#		discard_cards.append(spent_pick)
 	#	fill_cards()
 
+## Draw from deck to hand
+func draw_new_hand(mute: bool = false) -> void:
+	$DiscardMain.add_cards($HandMain.cards)
+	$HandMain.load_new_hand($DeckMain.draw_cards(HAND_SIZE))
+	if not mute:
+		$Notifications.notify(Notifications.RELOAD)
 
 func _ready() -> void:
 	$Notifications.clear()
 	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
 	$LockBody/Keyway.space_count = CYLINDER_COUNT
-	
-	for i in range(5):
-		$HandMain.add_card(PickGenerator.get_random_base_card())
+
+	$DeckMain.add_cards(PickGenerator.get_many_base_cards(DECK_COUNT))
+	draw_new_hand(true)
 
 #	$LockBody/Keyway.card_activated.connect(execute_pick)
 #	$DiscardPile.pile_pressed.connect(reload)

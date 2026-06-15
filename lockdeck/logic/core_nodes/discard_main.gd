@@ -7,8 +7,8 @@ signal discard_pressed()
 @export var cards: Array[CardSpec]
 
 ## Add a card to the discard pile
-func add_card(card: CardSpec) -> void:
-	cards.append(card)
+func add_cards(discards: Array[CardSpec]) -> void:
+	cards.append_array(discards)
 
 ## Get all cards from the discard pile
 func empty_deck() -> Array[CardSpec]:

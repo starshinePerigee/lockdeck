@@ -16,6 +16,7 @@ anchors_preset = 0
 script = ExtResource("1_db5vk")
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
+z_index = 950
 layout_mode = 0
 offset_left = 251.0
 offset_top = 269.0

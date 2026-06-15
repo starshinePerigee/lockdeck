@@ -17,6 +17,9 @@ signal hand_dropped(card_area: Area2D, card: CardSpec)
 ## Length is total number of cards in hand. Can be empty.
 @export var cards: Array[CardSpec]
 
+func count() -> int:
+	return len(cards)
+
 ## Add a single card to the hand. Added to the right side.
 func add_card(card: CardSpec) -> void:
 	cards.append(card)

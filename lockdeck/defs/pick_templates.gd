@@ -50,11 +50,6 @@ static var DEBUG := PickTemplates.new(
 	DEBUG",
 )
 
-static var DRAW_FAILED := PickTemplates.new(
-	"DRAW_FAILED",
-	{},
-)
-
 static var DIAMOND := PickTemplates.new(
 	"diamond",
 	{
