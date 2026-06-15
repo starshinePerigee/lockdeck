@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dshnrwms2tgt6"]
 
-[ext_resource type="Script" uid="uid://kagnrja42sbv" path="res://objects/play_area/keyway.gd" id="1_6vmxt"]
+[ext_resource type="Script" uid="uid://kagnrja42sbv" path="res://objects/keyway/keyway.gd" id="1_6vmxt"]
 [ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="2_bey5w"]
 
 [node name="Keyway" type="HBoxContainer"]
