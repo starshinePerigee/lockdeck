@@ -41,6 +41,11 @@ func load_new_hand(new_cards: Array[CardSpec] = []) -> Array[CardSpec]:
 	$Hand.redraw(cards)
 	return old_cards
 
+## Unselect the current pin
+## Rebounds via hand signal into _handle_deselect
+func deselect() -> void:
+	$Hand.card_deselect()
+
 func _handle_select(card_index: int) -> void:
 	hand_selected.emit(cards[card_index])
 

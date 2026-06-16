@@ -14,6 +14,29 @@ var card_is_active := false
 var active_card: CardSpec
 #endregion
 
+func pick_selected(card: CardSpec) -> void:
+	$Notifications.clear()
+	card_is_active = true
+	active_card = card
+
+func pick_deselected() -> void:
+	card_is_active = false
+
+func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
+	$Notifications.clear()
+	card_is_active = true
+	active_card = card
+
+func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
+	$LockBody/Keyway.check_drop(card_area)
+	card_is_active = false
+
+func pick_activated(space_index: int) -> void:
+	if not card_is_active:
+		return
+	
+	do_pick(active_card, space_index)
+
 func break_pick() -> void:
 	pass
 	# move pick to trash
@@ -22,8 +45,8 @@ func break_pick() -> void:
 	#game_fail.emit()
 
 ## Handle all steps from pick activation
-func activate_pick() -> void:
-	pass
+func do_pick(card: CardSpec, cylinder: int) -> void:
+	print("doing pick %s to cyl %s" % [card.pick_name, cylinder])
 	#func spend_pick(card_index: int):
 	#	var spent_pick = keyway_cards[card_index]
 	#	keyway_cards.erase(card_index)
@@ -33,6 +56,8 @@ func activate_pick() -> void:
 	#		discard_cards.append(spent_pick)
 	#	fill_cards()
 	# don't forget: check if hand empty and highlight end turn if so
+	# also check game win
+	$HandMain.deselect()
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
@@ -63,6 +88,11 @@ func end_turn() -> void:
 
 func _ready() -> void:
 	$EndTurn.pressed.connect(end_turn)
+	$HandMain.hand_selected.connect(pick_selected)
+	$HandMain.hand_deselected.connect(pick_deselected)
+	$HandMain.hand_dragged.connect(pick_dragged)
+	$HandMain.hand_dropped.connect(pick_dropped)
+	$LockBody/Keyway.space_activated.connect(pick_activated)
 
 	$Notifications.clear()
 	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
@@ -70,9 +100,3 @@ func _ready() -> void:
 
 	$DeckMain.add_cards(PickGenerator.get_many_base_cards(DECK_COUNT))
 	draw_new_hand()
-
-#	$LockBody/Keyway.card_activated.connect(execute_pick)
-#	$DiscardPile.pile_pressed.connect(reload)
-#	$Hand.card_discarded.connect(discard_from_hand)
-#	$Hand.card_rearranged.connect(rearrange_hand)
-#

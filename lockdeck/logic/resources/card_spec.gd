@@ -15,6 +15,11 @@ class_name CardSpec
 ## The pick art resource for this card.
 @export var texture: Resource
 
+## Unique ID used for tracking specific cards
+var unique_id: int
+
+static var last_id := 100
+
 static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
 		template.pick_name,
@@ -29,6 +34,9 @@ func _init(
 	texture_: Resource,
 	effects_: Dictionary[int, Array]
 ):
+	unique_id = last_id
+	last_id += 1
+	
 	pick_name = pick_name_
 	description = description_
 	texture = texture_
