@@ -34,9 +34,6 @@ func check_drop(card_area: Area2D) -> void:
 	if i > -1 and i < space_count:
 		space_activated.emit(i)
 
-# TODO: There is a bug where highlights can persist if you release a card in the
-# hysteresis area.
-
 func first_highlight(_card_area: Area2D, index: int) -> void:
 	for i in space_count:
 		if i != index:
@@ -46,7 +43,11 @@ func unhighlight(card_area: Area2D, index: int) -> void:
 	for i in space_count:
 		space_refs[i].can_drop = true
 	var c := _get_first_collision(card_area, index)
-	if c > -1 and c < space_count:
+	if (
+		c > -1
+		and c < space_count
+		and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+	):
 		space_refs[c].set_highlight()
 
 ## Updates the card spaces
