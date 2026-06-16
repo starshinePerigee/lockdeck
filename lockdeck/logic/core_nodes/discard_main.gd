@@ -6,6 +6,9 @@ signal discard_pressed()
 
 @export var cards: Array[CardSpec]
 
+func count() -> int:
+	return len(cards)
+
 ## Add a card to the discard pile
 func add_cards(discards: Array[CardSpec]) -> void:
 	cards.append_array(discards)

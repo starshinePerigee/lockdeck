@@ -38,7 +38,6 @@ func remove_card(index: int) -> CardSpec:
 func load_new_hand(new_cards: Array[CardSpec] = []) -> Array[CardSpec]:
 	var old_cards := cards.duplicate()
 	cards = new_cards.duplicate()
-	print("loaded %s" %len(new_cards))
 	$Hand.redraw(cards)
 	return old_cards
 

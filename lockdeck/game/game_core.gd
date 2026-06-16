@@ -1,7 +1,7 @@
 extends Control
 #
-#signal game_fail
-#signal game_win
+signal game_fail
+signal game_win
 
 #region game state variables
 @export var CYLINDER_COUNT := 4
@@ -14,22 +14,12 @@ var card_is_active := false
 var active_card: CardSpec
 #endregion
 
-## Player requests end of turn by clicking the discard pile
-func request_end_turn() -> void:
+func break_pick() -> void:
 	pass
-	#	_reset_globals()
-	#	discard_cards.shuffle()
-	#	var trashed_pick = discard_cards.pop_front()
-	#	trash_cards.append(trashed_pick)
-	#	draw_cards.append_array(discard_cards)
-	#	discard_cards.clear()
-	#	$Notifications.notify(NotificationData.NotificationFlavors.RELOAD)
-	#	fill_cards()
-	#	refresh_objects()
-
-## perform the end of turn step once the player clicks the discard (if it's valid)
-func end_turn() -> void:
-	$LockBody/CylinderMain.handle_fall()
+	# move pick to trash
+	# check for game failure
+	#$Notifications.notify(Notifications.FAILURE)
+	#game_fail.emit()
 
 ## Handle all steps from pick activation
 func activate_pick() -> void:
@@ -42,29 +32,47 @@ func activate_pick() -> void:
 	#	else:
 	#		discard_cards.append(spent_pick)
 	#	fill_cards()
+	# don't forget: check if hand empty and highlight end turn if so
 
-## Draw from deck to hand
-func draw_new_hand(mute: bool = false) -> void:
-	$DiscardMain.add_cards($HandMain.cards)
-	$HandMain.load_new_hand($DeckMain.draw_cards(HAND_SIZE))
-	if not mute:
+func discard_hand() -> void:
+	$DiscardMain.add_cards($HandMain.load_new_hand())
+
+func draw_new_hand() -> void:
+	var extra_cards: Array[CardSpec] = $HandMain.load_new_hand(
+		$DeckMain.draw_cards(HAND_SIZE)
+	)
+	if len(extra_cards) > 0:
+		push_warning("%s extra cards in hand after drawing.")
+		$DiscardMain.add_cards(extra_cards)
+
+## Move discard back into deck
+func reload_deck() -> void:
+	if $DiscardMain.count() > 0:
+		$DeckMain.add_cards($DiscardMain.empty_deck())
 		$Notifications.notify(Notifications.RELOAD)
 
+## perform the end of turn step once the player clicks the discard (if it's valid)
+func end_turn() -> void:
+	$Notifications.clear()
+	discard_hand()
+	if $DeckMain.count() == 0:
+		reload_deck()
+		$CountdownMain.count_down()
+	draw_new_hand()
+	$LockBody/CylinderMain.handle_fall()
+
 func _ready() -> void:
+	$EndTurn.pressed.connect(end_turn)
+
 	$Notifications.clear()
 	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
 	$LockBody/Keyway.space_count = CYLINDER_COUNT
 
 	$DeckMain.add_cards(PickGenerator.get_many_base_cards(DECK_COUNT))
-	draw_new_hand(true)
+	draw_new_hand()
 
 #	$LockBody/Keyway.card_activated.connect(execute_pick)
 #	$DiscardPile.pile_pressed.connect(reload)
 #	$Hand.card_discarded.connect(discard_from_hand)
 #	$Hand.card_rearranged.connect(rearrange_hand)
-#	
-#	for i in range(DECK_COUNT):
-#		draw_cards.append(PickGenerator.get_random_base_card())
-#	
-#	fill_cards()
-#	refresh_objects()
+#
