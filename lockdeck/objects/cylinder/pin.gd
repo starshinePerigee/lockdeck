@@ -50,12 +50,13 @@ var depth_refs: Array[Depth] = []
 ## to zero, hide the jam indicator.
 @export var jam_count: int = 0:
 	set(v):
+		var old_jam := jam_count
 		jam_count = v
 		
 		if not is_node_ready():
 			await ready
 		
-		$JamIndicator.visible = jam_count > 0
+		$JamIndicator.visible = jam_count > 0 or (old_jam > 0 and pin_set)
 		$JamIndicator/JamCount.text = str(jam_count)
 
 ## If the unlock indicator is visible.

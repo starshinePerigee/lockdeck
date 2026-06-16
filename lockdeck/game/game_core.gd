@@ -104,5 +104,5 @@ func _ready() -> void:
 	$LockBody/Keyway.space_count = CYLINDER_COUNT
 	$CountdownMain.set_count(COUNTDOWN_TIME)
 
-	$DeckMain.add_cards(PickGenerator.get_many_base_cards(DECK_COUNT))
+	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
 	draw_new_hand()

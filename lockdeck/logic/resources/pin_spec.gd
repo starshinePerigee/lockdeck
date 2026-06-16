@@ -59,13 +59,14 @@ func add_jam(value: int) -> bool:
 	if jam_count > 0:
 		pin_set = true
 		return true
-	else:
+	
+	if not jammed:
 		unset_pin()
-		return jammed
+	return jammed
 
-## Reveals a pin in n positions. Unsets the pin.
+## Reveals a pin in n positions. Does not work through jam.
 func reveal_pin(value: int) -> void:
-	if add_jam(-1):
+	if jam_count > 0:
 		return
 	
 	var reveal_position := pin_position + value
