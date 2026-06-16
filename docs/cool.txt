@@ -25,6 +25,8 @@ Cool:
 Animations
 - Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
 - hints: character by character, wipe out
+- depth effect animation
+- candle flicker
 
 Meta
 - pick modification
