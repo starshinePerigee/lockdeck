@@ -1,6 +1,6 @@
 STATIC KEYWAYECTOMY
 x Full bottom hand
-- New game loop
+x New game loop
 
 QUICK POLISH
 - new placeholder lockpick icons

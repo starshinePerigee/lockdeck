@@ -5,4 +5,6 @@ x deck
 x discard
 x trash
 x countdown
-- top level
+x top level
+- evaluate game
+- merges
