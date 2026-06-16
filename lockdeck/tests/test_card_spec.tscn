@@ -1,0 +1,72 @@
+[gd_scene load_steps=14 format=3 uid="uid://du1nymu3a4vr2"]
+
+[ext_resource type="Script" uid="uid://clev5s2v3b1ox" path="res://tests/test_card_spec.gd" id="1_y4ud8"]
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="2_qr7qa"]
+[ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="3_ofi2c"]
+[ext_resource type="Script" uid="uid://ctkr5pia2bqsk" path="res://logic/resources/card_spec.gd" id="4_5k336"]
+[ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets/picks/pick_debug.png" id="5_8n4lr"]
+
+[sub_resource type="Resource" id="Resource_jlvwl"]
+script = ExtResource("3_ofi2c")
+flavor = 4
+value = 3
+
+[sub_resource type="Resource" id="Resource_g4nul"]
+script = ExtResource("3_ofi2c")
+flavor = 2
+value = 6
+
+[sub_resource type="Resource" id="Resource_bielf"]
+script = ExtResource("3_ofi2c")
+flavor = 5
+value = 3
+
+[sub_resource type="Resource" id="Resource_tvmft"]
+script = ExtResource("3_ofi2c")
+flavor = 4
+value = 1
+
+[sub_resource type="Resource" id="Resource_e4eoc"]
+script = ExtResource("3_ofi2c")
+value = 11
+
+[sub_resource type="Resource" id="Resource_eh24l"]
+script = ExtResource("3_ofi2c")
+flavor = 3
+value = 3
+
+[sub_resource type="Resource" id="Resource_8xrg5"]
+script = ExtResource("3_ofi2c")
+value = 0
+
+[sub_resource type="Resource" id="Resource_b2k5o"]
+script = ExtResource("4_5k336")
+effects = Dictionary[int, Array]({
+-1: Array[ExtResource("3_ofi2c")]([SubResource("Resource_jlvwl")]),
+0: Array[ExtResource("3_ofi2c")]([SubResource("Resource_g4nul"), SubResource("Resource_bielf"), SubResource("Resource_tvmft")]),
+2: Array[ExtResource("3_ofi2c")]([SubResource("Resource_e4eoc")]),
+3: Array[ExtResource("3_ofi2c")]([SubResource("Resource_eh24l"), SubResource("Resource_8xrg5")])
+})
+pick_name = "debug"
+description = "DEBUG DEBUG DEBUG DEBUG
+
+				DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG
+
+				DEBUG
+
+				DEBUG"
+texture = ExtResource("5_8n4lr")
+
+[node name="TestCardSpec" type="Node2D"]
+script = ExtResource("1_y4ud8")
+
+[node name="PickCard" parent="." instance=ExtResource("2_qr7qa")]
+z_index = 100
+card_spec = SubResource("Resource_b2k5o")
+
+[node name="TemplateSelector" type="OptionButton" parent="."]
+offset_left = 216.0
+offset_top = 45.0
+offset_right = 327.0
+offset_bottom = 76.0
+flat = true

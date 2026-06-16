@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkcikxm7qtgka"]
+
+[ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/cylinder/pin.gd" id="1_sibiv"]
+[ext_resource type="Texture2D" uid="uid://dh88yqknebunj" path="res://assets/pin/pin_top.png" id="2_p0s7i"]
+[ext_resource type="Texture2D" uid="uid://b28h0rl80yl7f" path="res://assets/pin/pin_bottom.png" id="3_kade0"]
+[ext_resource type="Texture2D" uid="uid://2ikb3y5kxndr" path="res://assets/pin/jam.png" id="4_kade0"]
+[ext_resource type="Texture2D" uid="uid://7ucxu27idrck" path="res://assets/pin/key.png" id="5_4k2rn"]
+
+[node name="Pin" type="Control"]
+custom_minimum_size = Vector2(120, 700)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 380.0
+script = ExtResource("1_sibiv")
+visible_ = true
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 315.0
+offset_right = 120.0
+offset_bottom = 700.0
+theme_override_constants/separation = 0
+
+[node name="Top" type="TextureRect" parent="Stack"]
+layout_mode = 2
+texture = ExtResource("2_p0s7i")
+
+[node name="Depths" type="VBoxContainer" parent="Stack"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Bottom" type="TextureRect" parent="Stack"]
+layout_mode = 2
+texture = ExtResource("3_kade0")
+
+[node name="JamIndicator" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 365.0
+offset_right = 140.0
+offset_bottom = 415.0
+texture = ExtResource("4_kade0")
+
+[node name="JamCount" type="Label" parent="JamIndicator"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.709804, 0.901961, 0.113725, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyIndicator" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 335.0
+offset_right = 160.0
+offset_bottom = 385.0
+texture = ExtResource("5_4k2rn")

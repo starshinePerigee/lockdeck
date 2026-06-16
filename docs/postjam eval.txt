@@ -1,11 +1,15 @@
 STATIC KEYWAYECTOMY
-- Full bottom hand
-- Hand reorder mechanics
-- New game loop
+x Full bottom hand
+x New game loop
+- is forcing past a key depth still unlocking weird / confusing? (yes)
 
 QUICK POLISH
 - new placeholder lockpick icons
+- evaluate new card layout (name, icons, more square)
+- revert window to 1440 x 900
 - drop textboxes when no text
+- end turn should be clicking the countdown indicator
+x why does dragging a card highlight later cards
 
 CORE EXPLORATION
 - draft depth effects
@@ -19,6 +23,7 @@ OUTER LOOP
 - level - deck loop
 
 INDICATORS
+- remove keyway and use cylinders direct
 - lockpick preview highlights
 - deck and trash contents
 
@@ -40,6 +45,7 @@ SOUND
 - other effects
 
 ANIMATION
+- hand effects
 - cylinder slides
 - shuffle
 - effects on depths
@@ -48,6 +54,7 @@ ANIMATION
 
 POLISH AND COOL THINGS
 - opening animation
+- Hand reorder mechanics
 - TBR
 
 NEW DEPTHS / PICKS
@@ -56,6 +63,11 @@ NEW DEPTHS / PICKS
 BALANCE
 - pick balance
 - level gen balance
+
+CLEANUP
+- stop mass redraws for hand
+- stop mass redraws for card
+- stop mass redraws for cylinder
 
 MENUS
 - start menu

@@ -1,47 +1,16 @@
-@tool
-extends Control
+extends HBoxContainer
+## A full horizontal collection of effect stacks for a pick card
+## Has logic for spacing and drawing
 
-const EFFECT_STACK = preload("res://objects/card/effect_stack.tscn")
-const SIZE_SCALE = [0, -15, -25, -30, -30, -30, -30, -30]
+# spacing between items (i is number on one side)
+const SIZE_SCALE := [0, -15, -25, -35, -40, -45, -50, -50]
 
-@export var effect_stacks: Dictionary[int, Array] = {}:
-	set(v):
-		for stack in effect_stacks.values():
-			for spec in stack:
-				if spec.changed.is_connected(_redraw):
-					spec.changed.disconnect(_redraw)
+# Dictionary of pin_index_offset: Array[EffectSpec)
+@export var effect_stacks: Dictionary[int, Array]
 
-		effect_stacks = v
-
-		# rebuild because i guess that's necessary??
-		for key in effect_stacks.keys():
-			var rebuild: Array[EffectSpec] = []
-			for j in len(effect_stacks[key]):
-				if effect_stacks[key][j] == null:
-					rebuild.append(EffectSpec.new())
-				else:
-					rebuild.append(effect_stacks[key][j])
-			effect_stacks[key] = rebuild
-
-		for stack in effect_stacks.values():
-			for spec in stack:
-				if not spec.changed.is_connected(_redraw):
-					spec.changed.connect(_redraw)
-		_redraw()
-
-@export var refrect_visible = true:
-	set(v):
-		refrect_visible = v
-		if not is_node_ready():
-			await ready
-		$ReferenceRect.visible = refrect_visible
-		_redraw()
-
-func _redraw() -> void:
-	if not is_node_ready():
-		await ready
-	for child in $StackHBox.get_children():
-		$StackHBox.remove_child(child)
+func redraw() -> void:
+	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 	
 	if len(effect_stacks) == 0:
@@ -51,19 +20,19 @@ func _redraw() -> void:
 	var highest: int = max(0, effect_stacks.keys().max())
 	var dist = max(-lowest, highest)
 	
-	for k in range(-dist, dist + 1):
-		var stack = EFFECT_STACK.instantiate()
-		if k in effect_stacks:
-			stack.effects = effect_stacks[k]
+	# iterate from -dist to dist for centering purposes (bad hack alert lol)
+	for i in range(-dist, dist + 1):
+		# fill only if you're in the actual range
+		var fill := i not in effect_stacks and i >= lowest and i <= highest
+		# use big icons if you're the only effect on the card
+		# might cut this?
+		var small := len(effect_stacks) != 1
 		
-		if k > lowest and k < highest:
-			stack.fill = true
+		var effect_stack: Array[EffectSpec] = []
+		if i in effect_stacks:
+			effect_stack.assign(effect_stacks[i])
 		
-		if len(effect_stacks) == 1:
-			stack.small = false
-		
-		stack.refrect_visible = refrect_visible
-		$StackHBox.add_child(stack)
+		var stack := EffectStack.build(effect_stack, small, fill)
+		add_child(stack)
 	
-	$StackHBox.add_theme_constant_override("separation", SIZE_SCALE[dist])
-			
+	add_theme_constant_override("separation", SIZE_SCALE[dist])

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://djw7asxuic3e7"]
+
+[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="1_5df8b"]
+[ext_resource type="Script" uid="uid://bjb5ix2micc1g" path="res://tests/test_keyway.gd" id="1_gg5co"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="3_lcyvw"]
+
+[node name="TestKeyway" type="Node2D"]
+script = ExtResource("1_gg5co")
+
+[node name="Keyway" parent="." instance=ExtResource("1_5df8b")]
+
+[node name="CardSpace" parent="." instance=ExtResource("3_lcyvw")]
+offset_left = 156.0
+offset_top = 364.0
+offset_right = 306.0
+offset_bottom = 589.0

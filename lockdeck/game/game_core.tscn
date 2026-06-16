@@ -1,71 +1,97 @@
-[gd_scene load_steps=7 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=10 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
-[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/play_area/cylinders.tscn" id="1_wt0dc"]
-[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/play_area/keyway.tscn" id="2_db5vk"]
-[ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="4_0wo06"]
+[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="2_db5vk"]
+[ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
+[ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
-[ext_resource type="PackedScene" uid="uid://e4dbfc26npte" path="res://objects/hand/hand.tscn" id="5_1moii"]
+[ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
+[ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
+[ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
+[ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_db5vk")
 
-[node name="Hand" parent="." instance=ExtResource("5_1moii")]
-offset_left = 60.0
-offset_top = 550.0
-offset_right = 560.0
-offset_bottom = 850.0
-
-[node name="LockBody" type="Control" parent="."]
-custom_minimum_size = Vector2(880, 860)
-anchors_preset = 0
-offset_left = 650.0
-offset_top = 100.0
-offset_right = 1530.0
-offset_bottom = 960.0
-
-[node name="Cylinders" parent="LockBody" instance=ExtResource("1_wt0dc")]
-offset_left = 19.0
-offset_top = -50.0
-offset_right = 699.0
-offset_bottom = 650.0
-
-[node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 624.0
-offset_right = 835.0
-offset_bottom = 849.0
-
-[node name="DrawPile" parent="." instance=ExtResource("4_0wo06")]
-layout_mode = 0
-offset_left = 109.0
-offset_top = 175.0
-offset_right = 259.0
-offset_bottom = 400.0
-count = 5
-
-[node name="DiscardPile" parent="." instance=ExtResource("4_0wo06")]
-layout_mode = 0
-offset_left = 1648.0
-offset_top = 593.0
-offset_right = 1798.0
-offset_bottom = 818.0
-
-[node name="TrashPile" parent="." instance=ExtResource("4_0wo06")]
-layout_mode = 0
-offset_left = 1854.0
-offset_top = 882.0
-offset_right = 2004.0
-offset_bottom = 1107.0
-rotation = 1.5708
-
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
+z_index = 950
 layout_mode = 0
 offset_left = 251.0
 offset_top = 269.0
 offset_right = 1251.0
 offset_bottom = 419.0
 rotation = -0.261799
+
+[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
+offset_left = 1756.0
+offset_top = 98.0
+offset_right = 1756.0
+offset_bottom = 98.0
+
+[node name="LockBody" type="Control" parent="."]
+custom_minimum_size = Vector2(880, 860)
+anchors_preset = 0
+offset_left = 500.0
+offset_top = -50.0
+offset_right = 1380.0
+offset_bottom = 810.0
+
+[node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
+
+[node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 650.0
+offset_right = 855.0
+offset_bottom = 875.0
+
+[node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
+layout_mode = 1
+offset_left = 450.0
+offset_top = 840.0
+offset_right = 450.0
+offset_bottom = 840.0
+
+[node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
+layout_mode = 1
+offset_left = 146.0
+offset_top = 313.0
+offset_right = 146.0
+offset_bottom = 313.0
+
+[node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
+layout_mode = 1
+offset_left = 1596.0
+offset_top = 459.0
+offset_right = 1596.0
+offset_bottom = 459.0
+
+[node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
+layout_mode = 1
+offset_left = 1796.0
+offset_top = 802.0
+offset_right = 1796.0
+offset_bottom = 802.0
+rotation = 1.5708
+
+[node name="EndTurn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 922.0
+offset_right = 280.0
+offset_bottom = 985.0
+theme_override_font_sizes/font_size = 40
+text = "End Turn"
+
+[node name="EndTurnHighlight" type="ColorRect" parent="EndTurn"]
+visible = false
+z_index = -1
+layout_mode = 0
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 197.0
+offset_bottom = 77.0
+mouse_filter = 2
+color = Color(1, 1, 0.25098, 0.517647)
