@@ -1,0 +1,7 @@
+candlestick: add two segments to the candle
+chalice: draw five cards
+dagger: force 9, one cylinder
+deed: next shop, everything is free
+spyglass: reveal all cylinders
+crown: skip this stage, get no rewards
+toothpick: break if you would break a different pick

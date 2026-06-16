@@ -1,6 +1,0 @@
-- next to every depth and also the top of the pin is a space for hints
-- hints are a number, a direction, and an icon (ie: 2 spaces up is the target)
-- top pin hints indicate counts of traps
-- hovering a hint gives a description of the meaning and a highlight of its dependencies
-- every hint has a list of dependencies - depths that it looks at
-- once all deps are revealed, the hint is erased

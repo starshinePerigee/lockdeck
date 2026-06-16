@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c22d8h8h4h4tg"]
 
-[ext_resource type="Script" uid="uid://dhd4iyk3bmdco" path="res://logic/core_nodes/hand_main.gd" id="1_48slg"]
+[ext_resource type="Script" path="res://logic/core_nodes/hand_main.gd" id="1_48slg"]
 [ext_resource type="PackedScene" uid="uid://dc87frttnrjxq" path="res://objects/hand_big/hand_big.tscn" id="1_pmw1l"]
 
 [node name="HandMain" type="Control"]

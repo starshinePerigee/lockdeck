@@ -1,7 +1,7 @@
 STATIC KEYWAYECTOMY
 x Full bottom hand
 x New game loop
-- is forcing past a key depth still unlocking weird / confusing? (yes)
+x is forcing past a key depth still unlocking weird / confusing? (yes)
 
 QUICK POLISH
 - new placeholder lockpick icons

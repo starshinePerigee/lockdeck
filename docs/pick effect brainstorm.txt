@@ -1,0 +1,15 @@
+can ignore jam
+restore a segment when a pick breaks
+applies key if breaks
+don't trigger non-break traps
+don't break if you hit end of pin
+destroy depth if not key
+draw a card
+return to hand if you hit key
+activates twice
+
+### core abilities
+
+Should current "test" be reveal, and then "test" only highlight if safe / danger?
+safe: permanent texture change
+danger: texture change for next turn

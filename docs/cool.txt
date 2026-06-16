@@ -20,6 +20,8 @@ Cool:
 - can you show the pick in the keyway when you're hovering a card?
 -- pick is removed from the card
 
+- effects are handles - pick is handle + card. When pick breaks both fly off
+
 Animations
 - Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
 - hints: character by character, wipe out
