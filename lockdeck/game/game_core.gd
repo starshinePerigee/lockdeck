@@ -7,6 +7,7 @@ signal game_win
 @export var CYLINDER_COUNT := 4
 @export var DECK_COUNT := 10
 @export var HAND_SIZE := 5
+@export var COUNTDOWN_TIME := 4
 @export var REVEAL_ALL := false
 
 var card_is_active := false
@@ -97,6 +98,7 @@ func _ready() -> void:
 	$Notifications.clear()
 	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
 	$LockBody/Keyway.space_count = CYLINDER_COUNT
+	$CountdownMain.set_count(COUNTDOWN_TIME)
 
 	$DeckMain.add_cards(PickGenerator.get_many_base_cards(DECK_COUNT))
 	draw_new_hand()
