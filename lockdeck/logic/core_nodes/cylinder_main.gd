@@ -1,9 +1,6 @@
 extends Control
 ## Manages the pins (cylinders) for the lock.
 
-signal pick_break
-signal keyway_solved
-
 ## The one true reference for the current state of all pins.
 ## Length is the length of active pins - inactive pins are present as hidden objects
 ## but are not present in the pins array.
@@ -48,15 +45,12 @@ class Execution:
 		
 	func _init(pin_count: int) -> void:
 		pending_effects = []
-		pending_effects.resize(pin_count)
 		for i in pin_count:
 			pending_effects.append([])
 		
 		effect_insertion_pointers = []
 		effect_insertion_pointers.resize(pin_count)
 		effect_insertion_pointers.fill(0)
-		
-		pick_broke_emitted = false
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
@@ -88,7 +82,6 @@ class Execution:
 		pending_effects[pin_index].insert(effect_insertion_pointers[pin_index], effect)
 		effect_insertion_pointers[pin_index] += 1
 
-
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
 func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
@@ -100,9 +93,10 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
-func execute(card: CardSpec, card_index: int) -> void:
+func execute(card: CardSpec, card_index: int) -> ResultSpec:
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
+	var result := ResultSpec.new()
 	
 	var iterations := 0
 	while iterations < 1000:
@@ -115,15 +109,20 @@ func execute(card: CardSpec, card_index: int) -> void:
 		if next_effect.flavor == Effects.END_EXECUTION:
 			print("Completed executiona after %s iterations." % iterations)
 			break
-		evaluate_pin(next_effect, ex)
+		evaluate_pin(next_effect, ex, result)
 	
 	$Cylinders.set_pin_specs(pins)
 	
 	if check_solve():
-		keyway_solved.emit()
+		result.lock_solved = true
+	return result
 
 ## Evaluates a single effect, updating the execution context and emitting signals.
-func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
+func evaluate_pin(
+	effect: EffectSpec, 
+	ex: Execution,
+	result: ResultSpec
+) -> void:
 	if effect.realized_pin >= len(pins) or effect.realized_pin < 0:
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
@@ -146,9 +145,9 @@ func evaluate_pin(effect: EffectSpec, ex: Execution) -> void:
 		Effects.BOUNCE:
 			execute_bounce(effect)
 		Effects.OUT_OF_BOUNDS:
-			execute_break(ex)
+			execute_break(result)
 		Effects.BREAK:
-			execute_break(ex)
+			execute_break(result)
 		Effects.KEY:
 			execute_key(effect)
 		Effects.DEBUG:
@@ -176,10 +175,8 @@ func execute_bounce(effect: EffectSpec) -> void:
 func execute_key(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].key_set = true
 
-func execute_break(ex: Execution):
-	if not ex.pick_broke_emitted:
-		ex.pick_broke_emitted = true
-		pick_break.emit()
+func execute_break(result: ResultSpec):
+	result.pick_broke = true
 
 #endregion
 

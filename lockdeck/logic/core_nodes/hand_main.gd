@@ -26,13 +26,21 @@ func add_card(card: CardSpec) -> void:
 	$Hand.redraw(cards)
 
 ## Remove a specific card by index, returning it.
-func remove_card(index: int) -> CardSpec:
+func remove_index(index: int) -> CardSpec:
 	if index >= len(cards):
 		push_error("Tried to remove card at high index %s", index)
 		return
 	var old_card: CardSpec = cards.pop_at(index)
 	$Hand.redraw(cards)
 	return old_card
+
+## Removes a specific card by CardSpec.unique_id
+func remove_card(card: CardSpec) -> void:
+	for i in range(len(cards)):
+		if cards[i].unique_id == card.unique_id:
+			remove_index(i)
+			return
+	push_warning("Failed to remove card %s with UID %s" % [card.pick_name, card.unique_id])
 
 ## Remove the current hand and load a new one, returning them.
 func load_new_hand(new_cards: Array[CardSpec] = []) -> Array[CardSpec]:

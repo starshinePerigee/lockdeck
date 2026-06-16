@@ -38,27 +38,30 @@ func pick_activated(space_index: int) -> void:
 	
 	do_pick(active_card, space_index)
 
-func break_pick() -> void:
-	pass
-	# move pick to trash
-	# check for game failure
-	#$Notifications.notify(Notifications.FAILURE)
-	#game_fail.emit()
+func break_pick(card: CardSpec) -> void:
+	$TrashMain.add_card(card)
+	$Notifications.notify(Notifications.BREAK)
+	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
+		$Notifications.notify(Notifications.FAILURE)
+		game_fail.emit()
 
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
-	print("doing pick %s to cyl %s" % [card.pick_name, cylinder])
-	#func spend_pick(card_index: int):
-	#	var spent_pick = keyway_cards[card_index]
-	#	keyway_cards.erase(card_index)
-	#	if pick_broke:
-	#		trash_cards.append(spent_pick)
-	#	else:
-	#		discard_cards.append(spent_pick)
-	#	fill_cards()
-	# don't forget: check if hand empty and highlight end turn if so
-	# also check game win
+	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
+	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	
 	$HandMain.deselect()
+	$HandMain.remove_card(card)
+	if result.pick_broke:
+		break_pick(card)
+	else:
+		$DiscardMain.add_card(card)
+	
+	if result.lock_solved:
+		game_win.emit()
+		$Notifications.notify(Notifications.UNLOCK)
+	
+	$EndTurn/EndTurnHighlight.visible = $HandMain.count() == 0
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
@@ -80,6 +83,7 @@ func reload_deck() -> void:
 ## perform the end of turn step once the player clicks the discard (if it's valid)
 func end_turn() -> void:
 	$Notifications.clear()
+	$EndTurn/EndTurnHighlight.visible = false
 	discard_hand()
 	if $DeckMain.count() == 0:
 		reload_deck()

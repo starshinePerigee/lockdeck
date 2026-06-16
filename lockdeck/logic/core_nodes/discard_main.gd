@@ -9,14 +9,20 @@ signal discard_pressed()
 func count() -> int:
 	return len(cards)
 
-## Add a card to the discard pile
-func add_cards(discards: Array[CardSpec]) -> void:
-	cards.append_array(discards)
+## Add multiple cards to the discard pile
+func add_cards(dis_cards: Array[CardSpec]) -> void:
+	cards.append_array(dis_cards)
+	$CardPile.count = len(cards)
+
+func add_card(card: CardSpec) -> void:
+	cards.append(card)
+	$CardPile.count = len(cards)
 
 ## Get all cards from the discard pile
 func empty_deck() -> Array[CardSpec]:
 	var old_cards: = cards
 	cards = []
+	$CardPile.count = 0
 	return old_cards
 
 func _ready() -> void:

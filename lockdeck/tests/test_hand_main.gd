@@ -18,7 +18,7 @@ func draw_card() -> void:
 
 func discard_card() -> void:
 	var i := int($DiscardEnter.text)
-	var c: CardSpec = $HandMain.remove_card(i)
+	var c: CardSpec = $HandMain.remove_index(i)
 	print("Removed %s" % c.pick_name)
 
 func load_cards() -> void:
