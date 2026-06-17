@@ -1,0 +1,21 @@
+- 32 color palette
+- You need pick art for like 10 picks.
+- 10ish depths with art, icon, preview, animation, and sound effect
+- Handle art for like 10 effects
+- card templating. 
+- Like 20 gems (can be color swapped)
+- like 10 pieces of treasure (can be color swapped)
+- like 10 artifacts, with icon versions
+- loot get sound
+- coin (with animation and sound)
+- candle (with animation and sound)
+- background
+- shopkeep ui
+- deck ui
+- lock body
+- gears
+- opening animation
+- notification art (??) and effects (?)
+- item get pop ups (with sound)
+- splash screen
+- back of card art

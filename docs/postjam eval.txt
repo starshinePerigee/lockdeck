@@ -28,6 +28,7 @@ INDICATORS
 - remove keyway and use cylinders direct
 - lockpick preview highlights
 - deck and trash contents
+- current floor
 
 ASSETS
 - new new lockpick icons

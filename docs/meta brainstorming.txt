@@ -64,3 +64,12 @@ iron/copper/silver/gold based on quality of pick
 ### Flow and balance
 
 Coins are your reserve health - they're how you "heal", buying picks back up to a healthy number.
+
+
+## Coins and endgame
+
+You have a coin cap
+
+You are trying to get the n shards of yendor - these are sometimes rare loot (with pity mechanic)
+
+and also sold by shopkeepers (primary way of acquiring them) - main gold sink
