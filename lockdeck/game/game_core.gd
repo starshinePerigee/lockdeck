@@ -7,7 +7,7 @@ signal game_win
 @export var CYLINDER_COUNT := 4
 @export var DECK_COUNT := 10
 @export var HAND_SIZE := 5
-@export var COUNTDOWN_TIME := 4
+@export var COUNTDOWN_TIME := 2
 @export var REVEAL_ALL := false
 
 var card_is_active := false
@@ -47,6 +47,7 @@ func break_pick(card: CardSpec) -> void:
 
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
+	# main pick logic lives here:
 	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
@@ -61,11 +62,19 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		game_win.emit()
 		$Notifications.notify(Notifications.UNLOCK)
 	
-	$EndTurn/EndTurnHighlight.visible = $HandMain.count() == 0
+	draw_to_five()
+	$CountdownMain.highlight = $HandMain.count() == 0
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
 
+func draw_to_five() -> void:
+	var cards_to_draw: int = HAND_SIZE - $HandMain.count()
+	if cards_to_draw <= 0:
+		return
+	$HandMain.add_cards($DeckMain.draw_cards(cards_to_draw))
+
+## Discards the current hand and draws up to five cards
 func draw_new_hand() -> void:
 	var extra_cards: Array[CardSpec] = $HandMain.load_new_hand(
 		$DeckMain.draw_cards(HAND_SIZE)
@@ -83,16 +92,15 @@ func reload_deck() -> void:
 ## perform the end of turn step once the player clicks the discard (if it's valid)
 func end_turn() -> void:
 	$Notifications.clear()
-	$EndTurn/EndTurnHighlight.visible = false
+	$CountdownMain.highlight = false
+	$CountdownMain.count_down()
+	$LockBody/CylinderMain.reset_all_pins()
 	discard_hand()
-	if $DeckMain.count() == 0:
-		reload_deck()
-		$CountdownMain.count_down()
+	reload_deck()
 	draw_new_hand()
-	$LockBody/CylinderMain.handle_fall()
 
 func _ready() -> void:
-	$EndTurn.pressed.connect(end_turn)
+	$CountdownMain.countdown_pressed.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_deselected.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
