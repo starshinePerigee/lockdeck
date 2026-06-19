@@ -13,13 +13,20 @@ grow_vertical = 2
 script = ExtResource("1_48slg")
 
 [node name="Hand" parent="." instance=ExtResource("1_pmw1l")]
-layout_mode = 0
+layout_mode = 1
+offset_left = -475.0
+offset_right = 475.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 custom_minimum_size = Vector2(950, 225)
-layout_mode = 2
-offset_right = 950.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -475.0
+offset_right = 475.0
 offset_bottom = 225.0
+grow_horizontal = 2
 mouse_filter = 2
 border_color = Color(0.210275, 0.639105, 5.77569e-07, 1)
 border_width = 3.0
