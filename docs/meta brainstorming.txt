@@ -73,3 +73,5 @@ You have a coin cap
 You are trying to get the n shards of yendor - these are sometimes rare loot (with pity mechanic)
 
 and also sold by shopkeepers (primary way of acquiring them) - main gold sink
+
+bonus coins for finishing in a single pass?

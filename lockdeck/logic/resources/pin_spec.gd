@@ -26,6 +26,8 @@ const PIN_DEPTH_COUNT := 9
 @export var key_set: bool
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
+## If the jam indicator is visible
+@export var jam_visible: bool
 
 ## Get the depth flavor that the pin is currently set to.
 func current_depth() -> Depths:
@@ -33,6 +35,7 @@ func current_depth() -> Depths:
 
 ## Touch the pin
 func unset_pin() -> void:
+	jam_visible = false
 	pin_set = false
 	key_set = false
 
@@ -58,6 +61,7 @@ func add_jam(value: int) -> bool:
 	jam_count = max(0, jam_count + value)
 	if jam_count > 0:
 		pin_set = true
+		jam_visible = true
 		return true
 	
 	if not jammed:
@@ -75,22 +79,21 @@ func reveal_pin(value: int) -> void:
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin():
-	depths.fill(Depths.DEBUG)
-	depths[0] = Depths.BASE
-	
-	reveals.fill(false)
-	reveals[0] = true
-	
 	pin_position = 0
 	pin_set = false
 	key_set = false
-	jam_count = false
+	jam_count = 0
+	jam_visible = false
 
 func _init():
 	depths = []
 	depths.resize(PIN_DEPTH_COUNT)
+	depths.fill(Depths.DEBUG)
+	depths[0] = Depths.BASE
 	
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
+	reveals.fill(false)
+	reveals[0] = true
 	
 	reset_pin()

@@ -25,6 +25,11 @@ func add_card(card: CardSpec) -> void:
 	cards.append(card)
 	$Hand.redraw(cards)
 
+## Add multiple cards to the hand. Added to the right side.
+func add_cards(new_cards: Array[CardSpec]) -> void:
+	cards.append_array(new_cards)
+	$Hand.redraw(cards)
+
 ## Remove a specific card by index, returning it.
 func remove_index(index: int) -> CardSpec:
 	if index >= len(cards):

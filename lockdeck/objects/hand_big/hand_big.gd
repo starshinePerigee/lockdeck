@@ -1,4 +1,4 @@
-extends Container
+extends CenterContainer
 # The view for the hand and all the cards in it
 
 signal card_selected(card_index: int)

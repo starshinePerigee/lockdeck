@@ -50,14 +50,23 @@ var depth_refs: Array[Depth] = []
 ## to zero, hide the jam indicator.
 @export var jam_count: int = 0:
 	set(v):
-		var old_jam := jam_count
 		jam_count = v
 		
 		if not is_node_ready():
 			await ready
 		
-		$JamIndicator.visible = jam_count > 0 or (old_jam > 0 and pin_set)
+		if jam_count > 1:
+			jam_visible = true
 		$JamIndicator/JamCount.text = str(jam_count)
+
+@export var jam_visible: bool = false:
+	set(v):
+		jam_visible = v
+		
+		if not is_node_ready():
+			await ready
+		
+		$JamIndicator.visible = jam_visible
 
 ## If the unlock indicator is visible.
 @export var key_set: bool = false:
@@ -80,6 +89,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
+	jam_visible = pin_spec.jam_visible
 	pin_set = pin_spec.pin_set
 	key_set = pin_spec.key_set
 

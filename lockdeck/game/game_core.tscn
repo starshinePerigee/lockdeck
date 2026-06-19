@@ -49,9 +49,9 @@ offset_bottom = 875.0
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 450.0
+offset_left = 915.0
 offset_top = 840.0
-offset_right = 450.0
+offset_right = 915.0
 offset_bottom = 840.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
@@ -75,23 +75,3 @@ offset_top = 802.0
 offset_right = 1796.0
 offset_bottom = 802.0
 rotation = 1.5708
-
-[node name="EndTurn" type="Button" parent="."]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 922.0
-offset_right = 280.0
-offset_bottom = 985.0
-theme_override_font_sizes/font_size = 40
-text = "End Turn"
-
-[node name="EndTurnHighlight" type="ColorRect" parent="EndTurn"]
-visible = false
-z_index = -1
-layout_mode = 0
-offset_left = -13.0
-offset_top = -13.0
-offset_right = 197.0
-offset_bottom = 77.0
-mouse_filter = 2
-color = Color(1, 1, 0.25098, 0.517647)
