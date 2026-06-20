@@ -3,6 +3,18 @@ x Full bottom hand
 x New game loop
 x is forcing past a key depth still unlocking weird / confusing? (yes)
 
+PAGE UPDATE
+- discard pick option
+- "jam" depth
+- "force" depth
+- new skip lockpick
+- quick scribble keyway + lock
+- rearrange core
+- new splash + top level
+- top level loop
+- candle placeholder art
+- quick tutorial
+
 QUICK POLISH
 - new placeholder lockpick icons
 - evaluate new card layout (name, icons, more square)
@@ -10,6 +22,7 @@ QUICK POLISH
 - drop textboxes when no text
 - end turn button w/ art and highlight
 x why does dragging a card highlight later cards
+- highlight still broken occasionally
 
 CORE EXPLORATION
 - draft depth effects
