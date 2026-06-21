@@ -1,0 +1,14 @@
+pin width: 96 (from 120)
+pin height: 32 (from 35)
+
+8 pins + base = 256 + 8 + 16 + 8 = 288 * 2 = 576
+
+icon width: 16
+7 icons + 8 px border * 2 = 128
+card: 128 (from 150)
+
+icon offsets by 8; so an 8-icon stack = 9 * 8 = 72
+icon offsets by 12: 12 * 8 = 96 + 4 = 100
+name: 32
+
+card height: 160? (from 225)
