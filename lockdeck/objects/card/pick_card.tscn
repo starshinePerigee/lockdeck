@@ -1,15 +1,15 @@
 [gd_scene load_steps=18 format=3 uid="uid://3tt7yy0bstia"]
 
-[ext_resource type="Texture2D" uid="uid://ccu8pbuomtii5" path="res://assets/card/card_bg.png" id="1_ofssw"]
-[ext_resource type="Texture2D" uid="uid://cpdxwmtx4w8g" path="res://assets/card/card_pressed.png" id="2_0je1g"]
-[ext_resource type="Texture2D" uid="uid://c7kbqk236n27t" path="res://assets/card/card_hover.png" id="3_n5c2q"]
-[ext_resource type="Texture2D" uid="uid://ygcfctkmd5ch" path="res://assets/card/card_back.png" id="4_0dxge"]
+[ext_resource type="Texture2D" uid="uid://ccu8pbuomtii5" path="res://assets_old/card/card_bg.png" id="1_ofssw"]
+[ext_resource type="Texture2D" uid="uid://cpdxwmtx4w8g" path="res://assets_old/card/card_pressed.png" id="2_0je1g"]
+[ext_resource type="Texture2D" uid="uid://c7kbqk236n27t" path="res://assets_old/card/card_hover.png" id="3_n5c2q"]
+[ext_resource type="Texture2D" uid="uid://ygcfctkmd5ch" path="res://assets_old/card/card_back.png" id="4_0dxge"]
 [ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
 [ext_resource type="Script" uid="uid://ddxbcyvqdaxxg" path="res://objects/card/pick_card.gd" id="5_xpvy4"]
-[ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets/picks/pick_debug.png" id="7_v2bqt"]
+[ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets_old/picks/pick_debug.png" id="7_v2bqt"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
-[ext_resource type="Texture2D" uid="uid://twixcvnpm3x4" path="res://assets/card/card_title_box.png" id="8_v2bqt"]
-[ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets/card/card_text_box.png" id="8_xpvy4"]
+[ext_resource type="Texture2D" uid="uid://twixcvnpm3x4" path="res://assets_old/card/card_title_box.png" id="8_v2bqt"]
+[ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets_old/card/card_text_box.png" id="8_xpvy4"]
 
 [sub_resource type="Resource" id="Resource_1sytb"]
 script = ExtResource("7_xpvy4")
@@ -82,7 +82,7 @@ offset_top = 104.0
 offset_right = 142.0
 offset_bottom = 121.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 16
 text = "Debug"
 autowrap_mode = 2
 
@@ -101,10 +101,10 @@ offset_right = 142.0
 offset_bottom = 208.0
 mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/bold_italics_font_size = 12
-theme_override_font_sizes/italics_font_size = 12
-theme_override_font_sizes/normal_font_size = 12
-theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 text = "DEBUG DEBUG DEBUG DEBUG
 

@@ -13,6 +13,7 @@ offset_bottom = -880.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gnwly")
+count = -1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

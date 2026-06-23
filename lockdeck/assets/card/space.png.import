@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brroetbx6x1t6"
-path="res://.godot/imported/icon_force_large.png-a17c29c245a36047bc9e52dd8fe976f8.ctex"
+uid="uid://cqpixqeatajej"
+path="res://.godot/imported/space.png-62ea8c991924cbe4e08d00f162f6ca6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_force_large.png"
-dest_files=["res://.godot/imported/icon_force_large.png-a17c29c245a36047bc9e52dd8fe976f8.ctex"]
+source_file="res://assets/card/space.png"
+dest_files=["res://.godot/imported/space.png-62ea8c991924cbe4e08d00f162f6ca6b.ctex"]
 
 [params]
 
