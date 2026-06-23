@@ -1,4 +1,4 @@
-- 32 color palette
+x 32 color palette
 - You need pick art for like 10 picks.
 - 10ish depths with art, icon, preview, animation, and sound effect
 - Handle art for like 10 effects
@@ -8,7 +8,7 @@
 - like 10 artifacts, with icon versions
 - loot get sound
 - coin (with animation and sound)
-- candle (with animation and sound)
+% candle (with animation and sound)
 - background
 - shopkeep ui
 - deck ui
