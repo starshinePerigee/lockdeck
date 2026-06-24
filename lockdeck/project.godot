@@ -13,14 +13,14 @@ config_version=5
 config/name="lockdeck"
 run/main_scene="uid://csinn0yt64xam"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/image="uid://bohaaqsg55ub4"
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1440
-window/size/viewport_height=900
+window/size/viewport_width=960
+window/size/viewport_height=540
 window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor]
 
