@@ -1,5 +1,0 @@
-GOAL: tiny viewport
-
-notes: 
-- card icons are TOO TINY - see if you can't use 2x number size and large icons.
-- limit icons? 3 left, 1 right, 1 center, with indicator on card (a stripe? red paint stripe?)

@@ -7,19 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://dq3ioeinfnr4p" path="res://assets/pin/key.png" id="5_agct7"]
 
 [node name="Pin" type="Control"]
-custom_minimum_size = Vector2(96, 608)
+custom_minimum_size = Vector2(96, 640)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 96.0
-offset_bottom = 608.0
+offset_bottom = 640.0
 script = ExtResource("1_sibiv")
 visible_ = true
 
 [node name="Stack" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 256.0
+offset_top = 288.0
 offset_right = 96.0
-offset_bottom = 608.0
+offset_bottom = 640.0
 theme_override_constants/separation = 0
 
 [node name="Top" type="TextureRect" parent="Stack"]
@@ -37,17 +37,17 @@ texture = ExtResource("3_agct7")
 [node name="KeyIndicator" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -16.0
-offset_top = 264.0
+offset_top = 296.0
 offset_right = 112.0
-offset_bottom = 312.0
+offset_bottom = 344.0
 texture = ExtResource("5_agct7")
 
 [node name="JamIndicator" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -16.0
-offset_top = 296.0
+offset_top = 326.0
 offset_right = 112.0
-offset_bottom = 344.0
+offset_bottom = 374.0
 texture = ExtResource("4_agct7")
 
 [node name="JamCount" type="Label" parent="JamIndicator"]

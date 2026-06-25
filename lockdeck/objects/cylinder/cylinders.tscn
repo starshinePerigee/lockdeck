@@ -7,15 +7,15 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 608.0
-offset_bottom = 608.0
+offset_bottom = 640.0
 script = ExtResource("1_3tpfd")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = -32.0
-offset_top = 338.0
+offset_top = 300.0
 offset_right = 640.0
-offset_bottom = 354.0
+offset_bottom = 316.0
 color = Color(0.937255, 0.894118, 0.690196, 1)
 
 [node name="CylinderHBox" type="HBoxContainer" parent="."]

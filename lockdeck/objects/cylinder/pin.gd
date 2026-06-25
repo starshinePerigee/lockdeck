@@ -4,7 +4,7 @@ extends Control
 class_name Pin
 
 ## Vertical height of a depth texture in pixels.
-const DEPTH_VHEIGHT := 35
+const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
 ## Reference to each depth object, so adding children doesn't break things.
@@ -19,7 +19,7 @@ var depth_refs: Array[Depth] = []
 		else:
 			$Stack.modulate = Color("ffffff")
 
-## Current position of the pin. 0 is all the way down, and 9 is all the way up.
+## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
 	set(v):
 		pin_position = v
@@ -29,7 +29,8 @@ var depth_refs: Array[Depth] = []
 		
 		$Stack.position = Vector2(
 			0,
-			DEPTH_VHEIGHT * PinSpec.PIN_DEPTH_COUNT - DEPTH_VHEIGHT * v
+			DEPTH_VHEIGHT * PinSpec.PIN_DEPTH_COUNT 
+			- DEPTH_VHEIGHT * v 
 		)
 
 ## Hides the pin, visually.
