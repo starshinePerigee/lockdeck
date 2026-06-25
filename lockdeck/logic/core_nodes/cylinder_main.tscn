@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/cylinder/cylinders.tscn" id="2_s8kgd"]
 
 [node name="CylinderMain" type="Control"]
+custom_minimum_size = Vector2(608, 608)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_j3ebm")
@@ -12,8 +13,8 @@ script = ExtResource("1_j3ebm")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
-offset_right = 840.0
-offset_bottom = 700.0
+offset_right = 608.0
+offset_bottom = 608.0
 mouse_filter = 2
 border_color = Color(0.251698, 0.503876, 1, 1)
 border_width = 3.0

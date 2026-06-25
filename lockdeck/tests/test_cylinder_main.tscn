@@ -1,19 +1,24 @@
 [gd_scene load_steps=4 format=3 uid="uid://cd1vutjsva0qm"]
 
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="1_gmt7f"]
-[ext_resource type="Script" path="res://tests/test_cylinder_main.gd" id="1_tgx1c"]
+[ext_resource type="Script" uid="uid://cm8vqtt32iofj" path="res://tests/test_cylinder_main.gd" id="1_tgx1c"]
 [ext_resource type="PackedScene" uid="uid://du1nymu3a4vr2" path="res://tests/test_card_spec.tscn" id="3_8f3wq"]
 
 [node name="TestCylinderMain" type="Node2D"]
 script = ExtResource("1_tgx1c")
 
 [node name="CylinderMain" parent="." instance=ExtResource("1_gmt7f")]
+offset_left = 40.0
+offset_top = -218.0
+offset_right = 648.0
+offset_bottom = 390.0
 
 [node name="CardHBox" type="HBoxContainer" parent="."]
-offset_top = 750.0
-offset_right = 850.0
-offset_bottom = 770.0
-theme_override_constants/separation = 75
+offset_left = -78.0
+offset_top = 454.0
+offset_right = 772.0
+offset_bottom = 474.0
+theme_override_constants/separation = 55
 alignment = 1
 
 [node name="OptionButton1" type="OptionButton" parent="CardHBox"]
@@ -32,7 +37,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TestCardSpec" parent="." instance=ExtResource("3_8f3wq")]
-position = Vector2(1277, 300)
+position = Vector2(797, 171)
 
 [node name="TemplateSelector" parent="TestCardSpec" index="1"]
 offset_left = 4.0
@@ -41,17 +46,17 @@ offset_right = 115.0
 offset_bottom = -42.0
 
 [node name="ResetButton" type="Button" parent="."]
-offset_left = 126.0
-offset_top = 866.0
-offset_right = 177.0
-offset_bottom = 897.0
+offset_left = 145.0
+offset_top = 493.0
+offset_right = 196.0
+offset_bottom = 524.0
 text = "Reset"
 
 [node name="FallButton" type="Button" parent="."]
-offset_left = 276.0
-offset_top = 872.0
-offset_right = 327.0
-offset_bottom = 903.0
+offset_left = 295.0
+offset_top = 499.0
+offset_right = 346.0
+offset_bottom = 530.0
 text = "Fall"
 
 [node name="BreakLabel" type="Label" parent="."]

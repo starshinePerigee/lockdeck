@@ -23,9 +23,9 @@ var _dragging := false
 var start_position := Vector2()
 var mouse_start_position := Vector2()
 
-const TEXTURE_OPEN := preload("res://assets/card/card_space.png")
-const TEXTURE_CLOSED := preload("res://assets/card/card_space_blocked.png")
-const TEXTURE_EMPTY := preload("res://assets/card/card_space_empty.png")
+const TEXTURE_OPEN := preload("res://assets/card/space.png")
+const TEXTURE_CLOSED := preload("res://assets/card/blocked.png")
+const TEXTURE_EMPTY := preload("res://assets/card/empty.png")
 const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
 const DRAG_DISTANCE := 25

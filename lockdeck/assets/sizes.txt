@@ -12,3 +12,5 @@ icon offsets by 12: 12 * 8 = 96 + 4 = 100
 name: 32
 
 card height: 160? (from 225)
+
+field height: 1440 x 810 (1x most monitors) or 960x540 (half hd, would defs need pin scrolling mechanic)

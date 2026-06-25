@@ -15,9 +15,6 @@ const SIZE_SCALE := {
 ## If small icons should be used. (Cards use small icons)
 @export var small: bool
 
-## If a fill icon (dot) should be drawn if effects is empty
-@export var fill: bool
-
 func redraw() -> void:
 	for child in get_children():
 		remove_child(child)
@@ -36,9 +33,6 @@ func redraw() -> void:
 		# hidden spacer between effect groups
 		add_child(EffectIcon.build(Effects.BLANK, small))
 	
-	if effects.size() == 0 and fill:
-		add_child(EffectIcon.build(Effects.EMPTY, small))
-
 	add_theme_constant_override("separation", SIZE_SCALE[small])
 
 const SELF_PACKED := preload("res://objects/card/effect_stack.tscn")
@@ -46,12 +40,10 @@ const SELF_PACKED := preload("res://objects/card/effect_stack.tscn")
 ## Create a new instantiated instance from data
 static func build(
 	effects_: Array[EffectSpec],
-	small_: bool = true,
-	fill_: bool = false
+	small_: bool = false,
 ) -> Node:
 	var n := SELF_PACKED.instantiate()
 	n.effects = effects_
 	n.small = small_
-	n.fill = fill_
 	n.redraw()
 	return n

@@ -1,6 +1,6 @@
 extends Node2D
 
-static var CYL_COUNT := 4
+static var CYL_COUNT := 5
 
 
 func get_pick(selected: String) -> CardSpec:
@@ -15,7 +15,9 @@ func apply_card(dropdown_index: int, card_index: int) -> void:
 	var selected: String = $CardHBox.get_child(card_index).get_item_text(dropdown_index)
 	var card := get_pick(selected)
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
-	$CylinderMain.execute(card, card_index)
+	var result: ResultSpec = $CylinderMain.execute(card, card_index)
+	if result.pick_broke:
+		break_pick()
 
 func break_pick() -> void:
 	print("Pick break!")
@@ -37,4 +39,3 @@ func _ready() -> void:
 		
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
-	$CylinderMain.pick_break.connect(break_pick)

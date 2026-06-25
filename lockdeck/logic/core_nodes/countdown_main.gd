@@ -20,11 +20,11 @@ func count_down() -> void:
 		countdown_ended.emit()
 	else:
 		count -= 1
-	$Countdown.set_count(count)
+	$Countdown.count = count
 
 func set_count(new_count: int) -> void:
 	count = new_count
-	$Countdown.set_count(count)
+	$Countdown.count = count
 
 func _ready() -> void:
 	$Button.pressed.connect(countdown_pressed.emit)

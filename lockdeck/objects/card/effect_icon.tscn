@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cohqsrmfrrym1" path="res://assets/effects/icon_debug_large.png" id="2_xa6iv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xa6iv"]
-font_color = Color(0, 0, 0, 1)
-outline_size = 3
-shadow_size = 2
+font_size = 32
+shadow_size = 3
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="EffectIcon" type="Control"]
@@ -39,9 +38,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -12.0
-offset_top = -20.0
+offset_top = -16.0
 offset_right = 12.0
-offset_bottom = 4.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
