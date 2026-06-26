@@ -24,10 +24,16 @@ func get_pick(selected: String) -> CardSpec:
 	push_error("Could not find pick from selector!")
 	return CardSpec.from_template(PickTemplates.DEBUG)
 
-func apply_card(dropdown_index: int, card_index: int) -> void:
-	$BreakLabel.visible = false
-	var selected: String = $CardHBox.get_child(card_index).get_item_text(dropdown_index)
+func update_card(dropdown_index: int):
+	var selected: String = $CardSelectionOption.get_item_text(dropdown_index)
 	var card := get_pick(selected)
+	$CardSpace.card_spec = card
+
+func do_click(pin_index: int) -> void:
+	apply_card($CardSpace.card_spec, pin_index)
+
+func apply_card(card: CardSpec, card_index: int) -> void:
+	$BreakLabel.visible = false
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
 	var result: ResultSpec = $CylinderMain.execute(card, card_index)
 	if result.pick_broke:
@@ -37,20 +43,40 @@ func break_pick() -> void:
 	print("Pick break!")
 	$BreakLabel.visible = true
 
-func _ready() -> void:
-	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
+func start_drag() -> void:
+	$CylinderMain/Cylinders.listening_for_drag = true
 
-	for i in range(PinSpec.CYLINDER_COUNT_MAX):
-		var selector: OptionButton = $CardHBox.get_child(i)
-		for t in PickTemplates.valid_templates:
-			selector.add_item(t.pick_name)
-		# let you repeat diamonds
-		selector.add_item("diamond")
-		selector.item_selected.connect(apply_card.bind(i))
+func end_drag() -> void:
+	$CylinderMain/Cylinders.listening_for_drag = false
+	var target: int = $CylinderMain.get_current_drag_target()
+	if target >= 0:
+		apply_card($CardSpace.card_spec, target)
+
+func do_highlight(pin_index: int) -> void:
+	$HighlightPos.text = str(pin_index)
+	$Anchor/Dot.position = Vector2((96 + 32) * (pin_index + 1), 0)
+
+func clear_highlight() -> void:
+	$HighlightPos.text = "-1"
+	$Anchor/Dot.position = Vector2()
+
+func _ready() -> void:
+	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
+	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
+	$CylinderMain/Cylinders.pin_activated.connect(do_click)
+	
+	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
+	for t in PickTemplates.valid_templates:
+		$CardSelectionOption.add_item(t.pick_name)
+	$CardSelectionOption.item_selected.connect(update_card)
+	
+	$CardSpace.card_picked_up.connect(start_drag.unbind(1))
+	$CardSpace.card_dropped.connect(end_drag.unbind(1))
+	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DIAMOND)
 
 	for i in range(CYL_COUNT, PinSpec.CYLINDER_COUNT_MAX):
 		$CardHBox.get_child(i).disabled = true
-		
+	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
