@@ -15,9 +15,9 @@ offset_bottom = 634.0
 
 [node name="CardHBox" type="HBoxContainer" parent="."]
 offset_left = -95.0
-offset_top = 667.0
+offset_top = 691.0
 offset_right = 755.0
-offset_bottom = 687.0
+offset_bottom = 711.0
 theme_override_constants/separation = 55
 alignment = 1
 
