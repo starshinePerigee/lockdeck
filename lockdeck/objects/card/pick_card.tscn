@@ -50,9 +50,9 @@ custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 anchors_preset = 0
 offset_left = -64.0
-offset_top = 8.0
+offset_top = 10.0
 offset_right = 64.0
-offset_bottom = 136.0
+offset_bottom = 138.0
 effect_stacks = Dictionary[int, Array]({
 -1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
 0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
