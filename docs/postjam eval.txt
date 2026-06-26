@@ -16,10 +16,10 @@ PAGE UPDATE
 - quick tutorial
 
 QUICK POLISH
-- new placeholder lockpick icons
-- evaluate new card layout (name, icons, more square)
-- revert window to 1440 x 900
-- drop textboxes when no text
+- new placeholder lockpick ico. Nns
+x evaluate new card layout (name, icons, more square)
+x revert window to 1440 x 900
+x drop textboxes when no text
 - end turn button w/ art and highlight
 x why does dragging a card highlight later cards
 - highlight still broken occasionally

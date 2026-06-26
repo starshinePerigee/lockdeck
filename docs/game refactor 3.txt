@@ -1,0 +1,4 @@
+FYC: goal is to get pins to the end (ie: final depth is always the key)
+- simpler
+- more balanced
+- more like oblivion

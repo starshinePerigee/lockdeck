@@ -36,6 +36,7 @@ var depth_refs: Array[Depth] = []
 ## Hides the pin, visually.
 ## I don't remember why I use this instaead of just self.visible?
 ## games james ¯\_(ツ)_/¯
+## Ed note: I think it's because self.visible removes it from the hbox layout
 @export var visible_: bool = false:
 	set(v):
 		visible_ = v
