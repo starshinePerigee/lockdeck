@@ -10,45 +10,72 @@ signal game_win
 @export var COUNTDOWN_TIME := 2
 @export var REVEAL_ALL := false
 
-var card_is_active := false
+enum InputState {
+	INACTIVE,
+	ACTIVE_SELECT,
+	ACTIVE_DRAG
+}
+var current_state := InputState.INACTIVE
+
 ## Holds the most recent active card (even if a card isn't active)
 var active_card: CardSpec
 #endregion
 
-func pin_hovered(pin_index):
-	$LockBody/IndicatorPick.go_index(pin_index)
+var card_is_selected := false
 
-func pin_unhovered():
-	if card_is_active:
-		$LockBody/IndicatorPick.go_stow()
+func set_state(state: InputState) -> void:
+	if current_state == state:
+		return
+	print("Set state: %s" % state)
+	current_state = state
+	
+	match state:
+		InputState.INACTIVE:
+			$LockBody/IndicatorPick.go_hide()
+		InputState.ACTIVE_SELECT:
+			$LockBody/IndicatorPick.go_stow()
+			$Notifications.clear()
+		InputState.ACTIVE_DRAG:
+			$LockBody/IndicatorPick.go_stow()
+			$Notifications.clear()
 
 func pick_selected(card: CardSpec) -> void:
-	$Notifications.clear()
-	$LockBody/IndicatorPick.go_stow()
-	card_is_active = true
-	active_card = card
+	if current_state == InputState.INACTIVE:
+		set_state(InputState.ACTIVE_SELECT)
+		active_card = card
+
+func pin_cursored(pin_index) -> void:
+	if current_state == InputState.ACTIVE_SELECT:
+		$LockBody/IndicatorPick.go_index(pin_index)
+		
+func pin_uncursored() -> void:
+	if current_state == InputState.ACTIVE_SELECT:
+		$LockBody/IndicatorPick.go_stow()
 
 func pick_deselected() -> void:
-	$LockBody/IndicatorPick.go_hide()
-	card_is_active = false
+	set_state(InputState.INACTIVE)
 
 func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
-	$Notifications.clear()
-	$LockBody/IndicatorPick.go_stow()
-	card_is_active = true
+	set_state(InputState.ACTIVE_DRAG)
 	active_card = card
 
+func pin_hovered(pin_index):
+	if current_state == InputState.ACTIVE_DRAG:
+		$LockBody/IndicatorPick.go_index(pin_index)
+
+func pin_unhovered():
+	if current_state == InputState.ACTIVE_DRAG:
+		$LockBody/IndicatorPick.go_stow()
+
 func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
-	$LockBody/IndicatorPick.go_hide()
-	card_is_active = false
+	set_state(InputState.INACTIVE)
 	var target: int = $LockBody/CylinderMain.get_current_drag_target()
 	if target >= 0:
 		do_pick(card, target)
 
 func pick_activated(space_index: int) -> void:
-	if not card_is_active:
+	if current_state == InputState.INACTIVE:
 		return
-	
 	do_pick(active_card, space_index)
 
 func break_pick(card: CardSpec) -> void:
@@ -121,6 +148,8 @@ func _ready() -> void:
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)
+	$LockBody/CylinderMain/Cylinders.new_pin_cursored.connect(pin_cursored)
+	$LockBody/CylinderMain/Cylinders.pin_no_longer_cursored.connect(pin_uncursored)
 	$LockBody/CylinderMain/Cylinders.pin_activated.connect(pick_activated)
 
 	$Notifications.clear()

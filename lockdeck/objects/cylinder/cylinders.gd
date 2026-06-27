@@ -80,6 +80,8 @@ func current_active_pin() -> int:
 var _last_cursor: int = -1
 
 func _handle_cursor_enter_pin(pin_index: int) -> void:
+	if not pin_refs[pin_index].visible_:
+		return
 	if pin_index != _last_cursor:
 		_last_cursor = pin_index
 		new_pin_cursored.emit(pin_index)
