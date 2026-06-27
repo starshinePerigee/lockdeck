@@ -16,10 +16,6 @@ signal pin_activated(pin_index: int)
 ## if more children are added.
 var pin_refs: Array[Pin]
 
-## Sets if the cylinder should be listening for drag events (and thus emitting
-## new_pin_hovered events)
-var listening_for_drag: bool = false
-
 #region display logic
 ## Updates all pins simultaneously as well as clearing unused pins.
 func set_pin_specs(pins: Array[PinSpec]) -> void:

@@ -15,22 +15,33 @@ var card_is_active := false
 var active_card: CardSpec
 #endregion
 
+func pin_hovered(pin_index):
+	$LockBody/IndicatorPick.go_index(pin_index)
+
+func pin_unhovered():
+	if card_is_active:
+		$LockBody/IndicatorPick.go_stow()
+
 func pick_selected(card: CardSpec) -> void:
 	$Notifications.clear()
+	$LockBody/IndicatorPick.go_stow()
 	card_is_active = true
 	active_card = card
 
 func pick_deselected() -> void:
+	$LockBody/IndicatorPick.go_hide()
 	card_is_active = false
 
 func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
 	$Notifications.clear()
+	$LockBody/IndicatorPick.go_stow()
 	card_is_active = true
 	active_card = card
 
 func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
-	$LockBody/Keyway.check_drop(card_area)
+	$LockBody/IndicatorPick.go_hide()
 	card_is_active = false
+#	$LockBody/Keyway.check_drop(card_area)
 
 func pick_activated(space_index: int) -> void:
 	if not card_is_active:
@@ -105,11 +116,13 @@ func _ready() -> void:
 	$HandMain.hand_deselected.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
 	$HandMain.hand_dropped.connect(pick_dropped)
-	$LockBody/Keyway.space_activated.connect(pick_activated)
+	
+	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
+	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)
+	$LockBody/CylinderMain/Cylinders.pin_activated.connect(pick_activated)
 
 	$Notifications.clear()
 	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
-	$LockBody/Keyway.space_count = CYLINDER_COUNT
 	$CountdownMain.set_count(COUNTDOWN_TIME)
 
 	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))

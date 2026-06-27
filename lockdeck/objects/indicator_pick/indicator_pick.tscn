@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2jv527wajjta"]
+
+[ext_resource type="Script" uid="uid://dcvxn187chf1g" path="res://objects/indicator_pick/indicator_pick.gd" id="1_6wsdp"]
+[ext_resource type="Texture2D" uid="uid://dviswnheou3bj" path="res://assets/game/selection pick.png" id="1_k2fax"]
+
+[node name="IndicatorPick" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -928.0
+offset_bottom = -727.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_6wsdp")
+
+[node name="Position" type="Control" parent="."]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Position"]
+layout_mode = 0
+offset_left = -823.0
+offset_right = 2.0
+offset_bottom = 83.0
+mouse_filter = 2
+texture = ExtResource("1_k2fax")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = -823.0
+offset_right = 514.0
+offset_bottom = 83.0
+mouse_filter = 2
+border_color = Color(0.77, 0.22176, 0.0847, 1)

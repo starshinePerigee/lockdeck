@@ -1,7 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
-[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
@@ -9,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
+[ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -18,10 +18,10 @@ script = ExtResource("1_db5vk")
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
 layout_mode = 0
-offset_left = 251.0
-offset_top = 269.0
-offset_right = 1251.0
-offset_bottom = 419.0
+offset_left = 26.0
+offset_top = 207.0
+offset_right = 1026.0
+offset_bottom = 357.0
 rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
@@ -44,12 +44,12 @@ offset_top = -137.0
 offset_right = 624.0
 offset_bottom = 471.0
 
-[node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
-layout_mode = 0
-offset_left = -23.0
-offset_top = 383.0
-offset_right = 847.0
-offset_bottom = 608.0
+[node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
+layout_mode = 1
+offset_left = 65.0
+offset_top = 481.5
+offset_right = 65.0
+offset_bottom = 481.5
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
