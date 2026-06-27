@@ -41,7 +41,9 @@ func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
 func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
 	$LockBody/IndicatorPick.go_hide()
 	card_is_active = false
-#	$LockBody/Keyway.check_drop(card_area)
+	var target: int = $LockBody/CylinderMain.get_current_drag_target()
+	if target >= 0:
+		do_pick(card, target)
 
 func pick_activated(space_index: int) -> void:
 	if not card_is_active:

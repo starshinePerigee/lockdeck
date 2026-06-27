@@ -43,11 +43,7 @@ func break_pick() -> void:
 	print("Pick break!")
 	$BreakLabel.visible = true
 
-func start_drag() -> void:
-	$CylinderMain/Cylinders.listening_for_drag = true
-
 func end_drag() -> void:
-	$CylinderMain/Cylinders.listening_for_drag = false
 	var target: int = $CylinderMain.get_current_drag_target()
 	if target >= 0:
 		apply_card($CardSpace.card_spec, target)
@@ -60,9 +56,19 @@ func clear_highlight() -> void:
 	$HighlightPos.text = "-1"
 	$Anchor/Dot.position = Vector2()
 
+func do_cursor(pin_index: int) -> void:
+	$CursorPos.text = str(pin_index)
+	$AnchorCursor/Dot.position = Vector2((96+32) * (pin_index + 1), 0)
+
+func clear_cursor() -> void:
+	$CursorPos.text = "-1"
+	$AnchorCursor/Dot.position = Vector2()
+
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
 	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
+	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
+	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
 	$CylinderMain/Cylinders.pin_activated.connect(do_click)
 	
 	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
@@ -70,7 +76,6 @@ func _ready() -> void:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)
 	
-	$CardSpace.card_picked_up.connect(start_drag.unbind(1))
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
 	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DIAMOND)
 

@@ -8,7 +8,7 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 608.0
-offset_bottom = 640.0
+offset_bottom = 766.0
 script = ExtResource("1_3tpfd")
 
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
