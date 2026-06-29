@@ -2,3 +2,8 @@ FYC: goal is to get pins to the end (ie: final depth is always the key)
 - simpler
 - more balanced
 - more like oblivion
+
+need: more reveals, crush, trap if skipped
+
+keys are bonuses:
+Key: sets the pin. if all pins are set, win. Moving a pin - including additional actions on the current card - unset a pin.

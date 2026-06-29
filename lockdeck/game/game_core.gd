@@ -26,7 +26,6 @@ var card_is_selected := false
 func set_state(state: InputState) -> void:
 	if current_state == state:
 		return
-	print("Set state: %s" % state)
 	current_state = state
 	
 	match state:
