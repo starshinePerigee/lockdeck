@@ -3,19 +3,18 @@ Effects:
 -- skip
 -- reveal
 -- jam
-
--- test
+-- hint
 -- crush
--- pull
 
 Depths
 x- force
 -- jam
-x- key
--- reveal  (next unseen?)
+-- hint  (next danger or sets pin to clear)
+
+x- key 
+
 x- reset
 x- break
 
--- trap (locks pin if skipped)
--- pull
--- hint  (next danger or sets pin to clear)
+x- trap (locks pin if skipped)
+x- bind (locks pin until other pin is set)
