@@ -21,5 +21,5 @@ func redraw() -> void:
 		if i in effect_stacks:
 			effect_stack.assign(effect_stacks[i])
 		
-		var stack := EffectStack.build(effect_stack, false)
+		var stack := EffectStack.build(effect_stack)
 		add_child(stack)

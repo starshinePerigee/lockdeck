@@ -2,13 +2,12 @@
 ## Stores all effect flavors as a hand-rolled enum equivalent
 class_name Effects
 
-static func _get_texture(n: String, small: bool) -> Resource:
-	var suffix := "_small" if small else "_large"
-	var res_str := "res://assets/effects/icon_%s%s.png" % [n, suffix]
+static func _get_texture(n: String) -> Resource:
+	var res_str := "res://assets/effects/icon_%s.png" % n
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/effects/icon_debug_small.png")
+		return load("res://assets/effects/icon_debug.png")
 
 ## Human readable name of this effect, in lower case.
 var effect_name:String
@@ -19,8 +18,7 @@ var texture_small:Resource
 
 func _init(name: String):
 	self.effect_name = name
-	self.texture = _get_texture(name, false)
-	self.texture_small = _get_texture(name, true)
+	self.texture = _get_texture(name)
 
 
 ## Debug effect. should not be used.
