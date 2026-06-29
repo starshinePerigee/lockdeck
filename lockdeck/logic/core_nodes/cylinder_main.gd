@@ -139,12 +139,12 @@ func evaluate_pin(
 			pass
 		Effects.FORCE:
 			execute_force(effect, ex)
-		Effects.JUMP:
-			execute_jump(effect, ex)
+		Effects.SKIP:
+			execute_skip(effect, ex)
 		Effects.JAM:
 			execute_jam(effect)
-		Effects.TEST:
-			execute_test(effect)
+		Effects.REVEAL:
+			execute_reveal(effect)
 		Effects.OUT_OF_BOUNDS:
 			execute_break(result)
 		Effects.BREAK:
@@ -160,13 +160,13 @@ func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
 		advance_pin(effect.realized_pin, 1, ex)
 
-func execute_jump(effect: EffectSpec, ex: Execution) -> void:
+func execute_skip(effect: EffectSpec, ex: Execution) -> void:
 	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_jam(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
 
-func execute_test(effect: EffectSpec) -> void:
+func execute_reveal(effect: EffectSpec) -> void:
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
 

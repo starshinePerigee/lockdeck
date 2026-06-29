@@ -37,10 +37,10 @@ static var FORCE := Effects.new("force")
 static var JAM := Effects.new("jam")
 
 ## reveal the next depth but do not advance the pin
-static var TEST := Effects.new("test")
+static var REVEAL := Effects.new("reveal")
 
 ## Skip the next depth
-static var JUMP := Effects.new("jump")
+static var SKIP := Effects.new("skip")
 
 ## Depth effect - unlock the current pin
 static var KEY := Effects.new("key")
