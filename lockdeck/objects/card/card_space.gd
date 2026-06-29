@@ -11,21 +11,15 @@ signal card_tapped()
 signal card_picked_up(Area2D)
 ## Drag eneded
 signal card_dropped(Area2D)
-## Other card has dragged into this space
-signal drag_entered(Area2D)
-## Other card has dragged out of this space
-signal drag_exited(Area2D)
-## Card is not present and space is clicked
-signal area_clicked()
 
 var _active := false
 var _dragging := false
 var start_position := Vector2()
 var mouse_start_position := Vector2()
 
-const TEXTURE_OPEN := preload("res://assets/card/card_space.png")
-const TEXTURE_CLOSED := preload("res://assets/card/card_space_blocked.png")
-const TEXTURE_EMPTY := preload("res://assets/card/card_space_empty.png")
+const TEXTURE_OPEN := preload("res://assets/card/space.png")
+const TEXTURE_CLOSED := preload("res://assets/card/blocked.png")
+const TEXTURE_EMPTY := preload("res://assets/card/empty.png")
 const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
 const DRAG_DISTANCE := 25
@@ -34,7 +28,6 @@ const DRAG_DISTANCE := 25
 @export var draggable: bool = false
 
 ## True if this is a closed space (has X)
-## Implies but does not set can_drop = false and has_card = false
 @export var closed: bool = false:
 	set(v):
 		closed = v
@@ -46,8 +39,10 @@ const DRAG_DISTANCE := 25
 		has_card = v
 		_set_texture()
 
-## True if this space should listen for collisions and highlight on them
-@export var can_drop: bool = false
+@export var highlighted: bool = false:
+	set(v):
+		highlighted = v
+		_set_texture()
 
 ## Draw highlight and pop card
 func set_selected() -> void:
@@ -65,34 +60,6 @@ func clear_selected() -> void:
 	$PickCard.position = Vector2(0, 0)
 	z_boost = false
 
-## Check if area is a valid collision source
-## (card but not this card)
-func _valid_collider(area: Area2D) -> bool:
-	if not can_drop:
-		return false
-	if area == null:
-		return true
-	var parent := area.get_parent()
-	if parent == $PickCard:
-		return false
-	return parent is PickCard
-
-var _card_inside := false
-
-# Used for signal targets:
-func set_highlight(area: Area2D = null) -> void:
-	if not _valid_collider(area):
-		return
-	_card_inside = true
-	$HighlightRect.visible = true
-	drag_entered.emit(area)
-
-func clear_highlight(area: Area2D = null) -> void:
-	$HighlightRect.visible = false
-	if _card_inside:
-		_card_inside = false
-		drag_exited.emit(area)
-
 @export var z_boost: bool:
 	set(v):
 		z_boost = v
@@ -108,11 +75,6 @@ func clear_highlight(area: Area2D = null) -> void:
 			$PickCard.card_spec = v
 		else:
 			has_card = false
-
-func _handle_space_input(event: InputEvent):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			area_clicked.emit()
 
 func _start_click():
 	if has_card:
@@ -140,6 +102,7 @@ func _set_texture():
 		await ready
 
 	$PickCard.visible = has_card
+	$HighlightRect.visible = highlighted
 	if has_card and false:  # trying leaving the outline out
 		texture = TEXTURE_EMPTY
 	elif closed:
@@ -161,11 +124,7 @@ func _process(_delta: float) -> void:
 
 func _ready():
 	$PickCard.button_down.connect(_start_click)
-	$PickCard.button_up.connect(_end_click)
-	$Area2D.area_entered.connect(set_highlight)
-	$Area2D.area_exited.connect(clear_highlight)
-	
-	gui_input.connect(_handle_space_input)
+	$PickCard.button_up.connect(_end_click)	
 	_set_texture()
 	clear_selected()
 

@@ -3,10 +3,10 @@ extends Control
 ## Has logic for drawing multiple different EffectSpecs
 class_name EffectStack
 
+
 const SIZE_SCALE := {
-	# these start at 1; the 5th element is the space if you have five values
-	true: [0, -8, -12, -16, -18, -19, -20],  # small
-	false: [-5, -20, -30, -35, -38, -40, -41, -42, -43, -43, -44, -44, -44, -45]  # big
+	true: -8,  # small
+	false: -12,  # big
 }
 
 ## Array of effect specs to draw for this column
@@ -14,9 +14,6 @@ const SIZE_SCALE := {
 
 ## If small icons should be used. (Cards use small icons)
 @export var small: bool
-
-## If a fill icon (dot) should be drawn if effects is empty
-@export var fill: bool
 
 func redraw() -> void:
 	for child in get_children():
@@ -36,29 +33,17 @@ func redraw() -> void:
 		# hidden spacer between effect groups
 		add_child(EffectIcon.build(Effects.BLANK, small))
 	
-	if effects.size() == 0 and fill:
-		add_child(EffectIcon.build(Effects.EMPTY, small))
-
-	var space: int = SIZE_SCALE[small][
-		min(
-			len(SIZE_SCALE[small]) - 1,
-			get_child_count()
-		)
-	]
-
-	add_theme_constant_override("separation", space)
+	add_theme_constant_override("separation", SIZE_SCALE[small])
 
 const SELF_PACKED := preload("res://objects/card/effect_stack.tscn")
 
 ## Create a new instantiated instance from data
 static func build(
 	effects_: Array[EffectSpec],
-	small_: bool = true,
-	fill_: bool = false
+	small_: bool = false,
 ) -> Node:
 	var n := SELF_PACKED.instantiate()
 	n.effects = effects_
 	n.small = small_
-	n.fill = fill_
 	n.redraw()
 	return n

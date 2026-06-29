@@ -1,15 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://3tt7yy0bstia"]
+[gd_scene load_steps=16 format=3 uid="uid://3tt7yy0bstia"]
 
-[ext_resource type="Texture2D" uid="uid://ccu8pbuomtii5" path="res://assets/card/card_bg.png" id="1_ofssw"]
-[ext_resource type="Texture2D" uid="uid://cpdxwmtx4w8g" path="res://assets/card/card_pressed.png" id="2_0je1g"]
-[ext_resource type="Texture2D" uid="uid://c7kbqk236n27t" path="res://assets/card/card_hover.png" id="3_n5c2q"]
-[ext_resource type="Texture2D" uid="uid://ygcfctkmd5ch" path="res://assets/card/card_back.png" id="4_0dxge"]
+[ext_resource type="Texture2D" uid="uid://v0438wjnd4w0" path="res://assets/card/card_bg.png" id="1_0dxge"]
+[ext_resource type="Texture2D" uid="uid://csrnajdiivx3q" path="res://assets/card/card_back.png" id="2_0dxge"]
 [ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
 [ext_resource type="Script" uid="uid://ddxbcyvqdaxxg" path="res://objects/card/pick_card.gd" id="5_xpvy4"]
-[ext_resource type="Texture2D" uid="uid://n11jl13nkrse" path="res://assets/picks/pick_debug.png" id="7_v2bqt"]
+[ext_resource type="Texture2D" uid="uid://un4p6k1icu2m" path="res://assets/picks/pick_debug_card.png" id="6_0dxge"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
-[ext_resource type="Texture2D" uid="uid://twixcvnpm3x4" path="res://assets/card/card_title_box.png" id="8_v2bqt"]
-[ext_resource type="Texture2D" uid="uid://c2ngbfybds7vp" path="res://assets/card/card_text_box.png" id="8_xpvy4"]
+[ext_resource type="Texture2D" uid="uid://dbweirtd3gtdb" path="res://assets/card/card_textbox.png" id="8_ll2st"]
+[ext_resource type="Texture2D" uid="uid://6p18c7vtuqf5" path="res://assets/card/card_titlebox.png" id="8_xpvy4"]
 
 [sub_resource type="Resource" id="Resource_1sytb"]
 script = ExtResource("7_xpvy4")
@@ -40,21 +38,21 @@ script = ExtResource("7_xpvy4")
 value = 0
 
 [node name="PickCard" type="TextureButton"]
-offset_right = 150.0
-offset_bottom = 225.0
-texture_normal = ExtResource("1_ofssw")
-texture_pressed = ExtResource("2_0je1g")
-texture_hover = ExtResource("3_n5c2q")
-texture_disabled = ExtResource("4_0dxge")
+offset_right = 128.0
+offset_bottom = 160.0
+texture_normal = ExtResource("1_0dxge")
+texture_disabled = ExtResource("2_0dxge")
 script = ExtResource("5_xpvy4")
 
 [node name="EffectBar" parent="." instance=ExtResource("5_0je1g")]
 z_index = 50
-custom_minimum_size = Vector2(150, 50)
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 anchors_preset = 0
-offset_left = -75.0
-offset_right = 75.0
+offset_left = -64.0
+offset_top = 10.0
+offset_right = 64.0
+offset_bottom = 138.0
 effect_stacks = Dictionary[int, Array]({
 -1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
 0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
@@ -64,55 +62,49 @@ effect_stacks = Dictionary[int, Array]({
 
 [node name="PickArt" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_v2bqt")
+offset_right = 128.0
+offset_bottom = 160.0
+texture = ExtResource("6_0dxge")
 
 [node name="TitleBox" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 225.0
-texture = ExtResource("8_v2bqt")
-
-[node name="Title" type="Label" parent="TitleBox"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 104.0
-offset_right = 142.0
-offset_bottom = 121.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Debug"
-autowrap_mode = 2
-
-[node name="TextBox" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("8_xpvy4")
 
+[node name="Title" type="Label" parent="TitleBox"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 135.0
+offset_right = 111.0
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Debug"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TextBox" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 160.0
+texture = ExtResource("8_ll2st")
+
 [node name="Text" type="RichTextLabel" parent="TextBox"]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 136.0
-offset_right = 142.0
-offset_bottom = 208.0
+offset_left = 13.0
+offset_top = 89.0
+offset_right = 119.0
+offset_bottom = 128.0
 mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/bold_italics_font_size = 12
-theme_override_font_sizes/italics_font_size = 12
-theme_override_font_sizes/normal_font_size = 12
-theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
-text = "DEBUG DEBUG DEBUG DEBUG
-
-				DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG
-
-				DEBUG
-
-				DEBUG"
+text = "If you see this, please tell starshine."
 fit_content = true
 scroll_active = false
 autowrap_mode = 2

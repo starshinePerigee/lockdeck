@@ -25,6 +25,9 @@ func preview(card: CardSpec, index: int) -> void:
 func cancel_preview() -> void:
 	pass
 
+## Gets the currently hovered pin during a drag
+func get_current_drag_target() -> int:
+	return $Cylinders.current_active_pin()
 
 #region pick execution logic
 ## Represents a single activation of a card.

@@ -13,18 +13,22 @@ config_version=5
 config/name="lockdeck"
 run/main_scene="uid://csinn0yt64xam"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/image="uid://bohaaqsg55ub4"
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/stretch/mode="canvas_items"
+window/size/viewport_width=1440
+window/size/viewport_height=810
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor]
 
 movie_writer/movie_file="C:/git/lockdeck/footage.avi"
+
+[gui]
+
+theme/custom_font="uid://xp1vle7pj08i"
 
 [rendering]
 

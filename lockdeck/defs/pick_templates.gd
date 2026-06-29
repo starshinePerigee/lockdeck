@@ -7,7 +7,7 @@ static func _get_texture(n: String) -> Resource:
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/picks/pick_debug.png")
+		return load("res://assets/picks/pick_debug_card.png")
 	
 ## Human readable pick name, lowercase
 var pick_name: String
@@ -34,20 +34,17 @@ static var DEBUG := PickTemplates.new(
 	{
 		-1: [EffectSpec.new(Effects.TEST, 3)],
 		0: [
-			EffectSpec.new(Effects.FORCE, 6), 
+			EffectSpec.new(Effects.FORCE, 4), 
 			EffectSpec.new(Effects.JUMP, 3),
 			EffectSpec.new(Effects.TEST, 1)
 		],
-		2: [EffectSpec.new(Effects.DEBUG, 11)],
+		2: [EffectSpec.new(Effects.DEBUG, 8)],
 		3: [
 			EffectSpec.new(Effects.JAM, 3),
 			EffectSpec.new(Effects.DEBUG, 0)
 		]
 	},
-	"DEBUG DEBUG DEBUG DEBUG\n
-	DEBUGDEBUGDEBUGDEBUGDEBUGDEBUG\n
-	DEBUG\n
-	DEBUG",
+	"If you see this, please tell starshine.",
 )
 
 static var DIAMOND := PickTemplates.new(

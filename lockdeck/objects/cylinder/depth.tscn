@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://br6rlbw57vk25"]
 
-[ext_resource type="Texture2D" uid="uid://tjwdheinj4u4" path="res://assets/depths/depth_hidden.png" id="1_pxkuq"]
+[ext_resource type="Texture2D" uid="uid://dufy74tlb6o2c" path="res://assets/depths/depth_hidden.png" id="1_pxkuq"]
 [ext_resource type="Script" uid="uid://dede4agib6hm6" path="res://objects/cylinder/depth.gd" id="1_t3uj8"]
 
 [node name="Depth" type="TextureRect"]

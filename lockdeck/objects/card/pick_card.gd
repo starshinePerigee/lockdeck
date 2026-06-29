@@ -13,7 +13,7 @@ class_name PickCard
 		$EffectBar.redraw()
 		$PickArt.texture = card_spec.texture
 		$TitleBox/Title.text = card_spec.pick_name.capitalize()
-		$TextBox/Text.text = card_spec.description
+#		$TextBox/Text.text = card_spec.description
 
 const SELF_PACKED := preload("res://objects/card/pick_card.tscn")
 

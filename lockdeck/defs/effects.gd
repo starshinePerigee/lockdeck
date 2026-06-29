@@ -3,7 +3,7 @@
 class_name Effects
 
 static func _get_texture(n: String, small: bool) -> Resource:
-	var suffix := "_small" if small else ""
+	var suffix := "_small" if small else "_large"
 	var res_str := "res://assets/effects/icon_%s%s.png" % [n, suffix]
 	if ResourceLoader.exists(res_str):
 		return load(res_str)

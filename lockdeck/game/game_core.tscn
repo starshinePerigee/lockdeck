@@ -1,7 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
-[ext_resource type="PackedScene" uid="uid://dshnrwms2tgt6" path="res://objects/keyway/keyway.tscn" id="2_db5vk"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
@@ -9,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
+[ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -18,17 +18,17 @@ script = ExtResource("1_db5vk")
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
 layout_mode = 0
-offset_left = 251.0
-offset_top = 269.0
-offset_right = 1251.0
-offset_bottom = 419.0
+offset_left = 26.0
+offset_top = 207.0
+offset_right = 1026.0
+offset_bottom = 357.0
 rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 1756.0
-offset_top = 98.0
-offset_right = 1756.0
-offset_bottom = 98.0
+offset_left = 1289.0
+offset_top = 26.0
+offset_right = 1289.0
+offset_bottom = 26.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(880, 860)
@@ -39,39 +39,43 @@ offset_right = 1380.0
 offset_bottom = 810.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
+offset_left = 16.0
+offset_top = -137.0
+offset_right = 624.0
+offset_bottom = 471.0
 
-[node name="Keyway" parent="LockBody" instance=ExtResource("2_db5vk")]
-layout_mode = 0
-offset_left = -15.0
-offset_top = 650.0
-offset_right = 855.0
-offset_bottom = 875.0
+[node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
+layout_mode = 1
+offset_left = 65.0
+offset_top = 481.5
+offset_right = -303.0
+offset_bottom = -295.5
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 915.0
-offset_top = 840.0
-offset_right = 915.0
-offset_bottom = 840.0
+offset_left = 512.0
+offset_top = 571.0
+offset_right = 512.0
+offset_bottom = 571.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
-offset_left = 146.0
-offset_top = 313.0
-offset_right = 146.0
-offset_bottom = 313.0
+offset_left = 155.0
+offset_top = 160.0
+offset_right = 155.0
+offset_bottom = 160.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 1596.0
-offset_top = 459.0
-offset_right = 1596.0
-offset_bottom = 459.0
+offset_left = 1227.0
+offset_top = 326.0
+offset_right = 1227.0
+offset_bottom = 326.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 1796.0
-offset_top = 802.0
-offset_right = 1796.0
-offset_bottom = 802.0
+offset_left = 1334.0
+offset_top = 630.0
+offset_right = 1334.0
+offset_bottom = 630.0
 rotation = 1.5708

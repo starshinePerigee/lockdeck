@@ -1,33 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1hem81ie6tbe"]
+[gd_scene load_steps=3 format=3 uid="uid://c1hem81ie6tbe"]
 
 [ext_resource type="Script" uid="uid://bia6khmvpk3xy" path="res://objects/countdown/countdown.gd" id="1_gnwly"]
+[ext_resource type="Texture2D" uid="uid://ch24c0crkib1y" path="res://assets/countdown/countdown_2.png" id="2_toqrs"]
 
 [node name="Countdown" type="Control"]
+custom_minimum_size = Vector2(128, 256)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1880.0
-offset_bottom = -880.0
+offset_right = -832.0
+offset_bottom = -284.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gnwly")
+count = -1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(40, 200)
-layout_mode = 2
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 40.0
-offset_bottom = 200.0
-theme_override_constants/separation = -10
-alignment = 2
+offset_bottom = 40.0
+texture = ExtResource("2_toqrs")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_top = 157.0
-offset_right = 40.0
-offset_bottom = 199.0
+offset_left = -58.0
+offset_top = 232.0
+offset_right = 198.0
+offset_bottom = 256.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 30
-text = "0"
+text = "two turns remain"
 horizontal_alignment = 1
