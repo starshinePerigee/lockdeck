@@ -145,8 +145,6 @@ func evaluate_pin(
 			execute_jam(effect)
 		Effects.TEST:
 			execute_test(effect)
-		Effects.BOUNCE:
-			execute_bounce(effect)
 		Effects.OUT_OF_BOUNDS:
 			execute_break(result)
 		Effects.BREAK:
@@ -171,9 +169,6 @@ func execute_jam(effect: EffectSpec) -> void:
 func execute_test(effect: EffectSpec) -> void:
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
-
-func execute_bounce(effect: EffectSpec) -> void:
-	pins[effect.realized_pin].advance_pin(0, 0)
 
 func execute_key(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].key_set = true

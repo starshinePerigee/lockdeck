@@ -1,7 +1,7 @@
 Effects:
 -- force
 -- skip
--- show
+-- reveal
 -- jam
 
 -- test
@@ -9,12 +9,13 @@ Effects:
 -- pull
 
 Depths
--- force
--- pull
+x- force
 -- jam
--- key
--- reveal
--- reset
--- break
+x- key
+-- reveal  (next unseen?)
+x- reset
+x- break
 
--- hint
+-- trap (locks pin if skipped)
+-- pull
+-- hint  (next danger or sets pin to clear)

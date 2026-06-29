@@ -38,6 +38,3 @@ static var BREAK := Depths.new("break", Effects.BREAK)
 
 ## The neutral depth at the top of a pin. Has no effect.
 static var BASE := Depths.new("base", Effects.EMPTY)
-
-## Bounces the pin back to extended. Vestigial.
-static var BOUNCE := Depths.new("bounce", Effects.BOUNCE)

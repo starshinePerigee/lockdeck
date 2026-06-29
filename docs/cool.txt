@@ -1,3 +1,7 @@
+Help:
+- hovering a pick card pops up a reminder box which shows tooltips for all depths on the card
+- hovering a depth pops up a tooltip on what it does
+
 Sound:
 - bgm is fireplace ambience, random strums
 - effects are tied to signals
