@@ -1,0 +1,20 @@
+Effects:
+-- force
+-- skip
+-- show
+-- jam
+
+-- test
+-- crush
+-- pull
+
+Depths
+-- force
+-- pull
+-- jam
+-- key
+-- reveal
+-- reset
+-- break
+
+-- hint

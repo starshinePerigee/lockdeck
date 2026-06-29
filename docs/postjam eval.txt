@@ -9,10 +9,10 @@ PAGE UPDATE
 - "force" depth
 - new skip lockpick
 - quick scribble keyway + lock
-- rearrange core
+x rearrange core
 - new splash + top level
 - top level loop
-- candle placeholder art
+x candle placeholder art
 - quick tutorial
 
 QUICK POLISH
@@ -38,15 +38,16 @@ OUTER LOOP
 - level - deck loop
 
 INDICATORS
-- remove keyway and use cylinders direct
+x remove keyway and use cylinders direct
 - lockpick preview highlights
-- deck and trash contents
+- deck and discard contents
+- trashed picks tracking
 - current floor
 
 ASSETS
 - new new lockpick icons
 - new pick art
-- new card bg
+x new card bg
 - background
 - container
 - new splash
