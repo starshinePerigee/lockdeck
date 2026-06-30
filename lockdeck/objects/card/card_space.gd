@@ -23,6 +23,7 @@ const TEXTURE_EMPTY := preload("res://assets/card/empty.png")
 const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
 const DRAG_DISTANCE := 25
+const HIGHLIGHT_OFFSET = 64
 
 ## True if the card in the space is draggable
 @export var draggable: bool = false
@@ -47,9 +48,9 @@ const DRAG_DISTANCE := 25
 ## Draw highlight and pop card
 func set_selected() -> void:
 	$HighlightRect.z_index = 90
-	$HighlightRect.position = Vector2(-5, -30)
+	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
 	$HighlightRect.visible = true
-	$PickCard.position = Vector2(0, -25)
+	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
 	z_boost = true
 
 ## Unpop card

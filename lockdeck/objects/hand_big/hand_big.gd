@@ -9,6 +9,7 @@ signal card_dropped(card_area: Area2D, card_index: int)
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
+const HIDE_OFFSET = 96
 
 var current_card: int = -1
 
@@ -60,18 +61,16 @@ func card_pick_up(card_area: Area2D, card_index: int) -> void:
 	get_space().clear_selected()
 	get_space().z_boost = true
 	_disable_others(card_index)
-	hide_hand()
 
 ## Handle a dragged card being dropped
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(card_area, card_index)
 	card_deselect()
 	_enable_all()
-	unhide_hand()
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
-	$Hand.position = Vector2(0, 120)
+	$Hand.position = Vector2(0, HIDE_OFFSET)
 
 func unhide_hand() -> void:
 	$Hand.position = Vector2(0, 0)
