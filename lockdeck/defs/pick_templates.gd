@@ -106,6 +106,13 @@ static var FORK := PickTemplates.new(
 	}
 )
 
+static var LEVER := PickTemplates.new(
+	"lever",
+	{
+		0: [EffectSpec.new(Effects.CRUSH, 1), EffectSpec.new(Effects.FORCE, 3)]
+	}
+)
+
 
 static var valid_templates: Array[PickTemplates] = [
 	DIAMOND,
@@ -113,5 +120,6 @@ static var valid_templates: Array[PickTemplates] = [
 	BALL,
 	RAKE,
 	SNAKE,
-	FORK
+	FORK,
+	LEVER
 ]

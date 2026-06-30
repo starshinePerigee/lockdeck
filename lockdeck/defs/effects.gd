@@ -24,6 +24,9 @@ func _init(name: String):
 ## Debug effect. should not be used.
 static var DEBUG := Effects.new("debug")
 
+## Blank effect - needed for a display hack when composing cards :c
+static var BLANK := Effects.new("blank")
+
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 

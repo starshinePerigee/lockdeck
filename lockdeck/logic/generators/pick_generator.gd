@@ -17,7 +17,7 @@ static var STANDARD_TEST_CARDS: Array[PickTemplates] = [
 	PickTemplates.SNAKE,
 	PickTemplates.RAKE,
 	PickTemplates.BALL,
-	PickTemplates.DIAMOND,
+	PickTemplates.LEVER,
 	PickTemplates.FORK,
 	PickTemplates.HOOK,
 	PickTemplates.SNAKE,
