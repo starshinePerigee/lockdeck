@@ -4,7 +4,7 @@ xx skip
 xx reveal
 xx jam
 x- hint
--- crush
+x- crush
 
 Depths
 x- force
