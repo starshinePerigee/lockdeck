@@ -1,0 +1,7 @@
+picks break a lot - if you want to avoid picks breaking as a matter of course, you'll need to do a lot of work. Consider reconsidering "if your pick breaks in game, it breaks in real life"
+
+It's possible to be stuck in a no-win situation where your deck doesn't have enough movement to solve every pin. Should total deck movement + pick movement be surfaced somewhere?
+
+Consider letting jams persist over end of turn, which would help with (solve?) the above.
+
+The starter deck is deeply incapable of managing a 4-pin difficulty 1 level without hints.

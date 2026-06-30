@@ -1,10 +1,10 @@
 - update pin generator:
--- break
+x- break
 -- key
--- jam
--- force
+x- jam
+x- force
 - pick discard option
-- fix jam logic
+x fix jam logic
 x fix end turn
 - end turn button
 -- end turn button highlights
