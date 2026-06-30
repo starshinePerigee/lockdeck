@@ -25,18 +25,18 @@ offset_bottom = 357.0
 rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 1289.0
-offset_top = 26.0
-offset_right = 1289.0
-offset_bottom = 26.0
+offset_left = 322.0
+offset_top = 41.0
+offset_right = 322.0
+offset_bottom = 41.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(880, 860)
 anchors_preset = 0
-offset_left = 500.0
-offset_top = -50.0
-offset_right = 1380.0
-offset_bottom = 810.0
+offset_left = 764.0
+offset_top = 114.0
+offset_right = 1644.0
+offset_bottom = 974.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 offset_left = 16.0
@@ -53,29 +53,29 @@ offset_bottom = -295.5
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 512.0
-offset_top = 571.0
-offset_right = 512.0
-offset_bottom = 571.0
+offset_left = 405.0
+offset_top = 579.0
+offset_right = 405.0
+offset_bottom = 579.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
-offset_left = 155.0
-offset_top = 160.0
-offset_right = 155.0
-offset_bottom = 160.0
+offset_left = 60.0
+offset_top = 70.0
+offset_right = 60.0
+offset_bottom = 70.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 1227.0
-offset_top = 326.0
-offset_right = 1227.0
-offset_bottom = 326.0
+offset_left = 59.0
+offset_top = 314.0
+offset_right = 59.0
+offset_bottom = 314.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 1334.0
-offset_top = 630.0
-offset_right = 1334.0
-offset_bottom = 630.0
+offset_left = 438.0
+offset_top = 384.0
+offset_right = 438.0
+offset_bottom = 384.0
 rotation = 1.5708

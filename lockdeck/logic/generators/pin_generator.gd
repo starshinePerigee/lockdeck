@@ -40,3 +40,9 @@ static func build_test_lock(cylinders: int = 4) -> Array[PinSpec]:
 		else:
 			pin_specs.append(get_random_base_pin())
 	return pin_specs
+
+static func build_real_lock(cylinders: int = 1, difficulty_mod: int = 0) -> Array[PinSpec]:
+	var pin_specs: Array[PinSpec] = []
+	for i in range(cylinders):
+		pin_specs.append(get_random_base_pin(difficulty_mod))
+	return pin_specs

@@ -16,4 +16,3 @@ script = ExtResource("1_ph4ca")
 [node name="Hand" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 0
-alignment = 1

@@ -152,7 +152,7 @@ func _ready() -> void:
 	$LockBody/CylinderMain/Cylinders.pin_activated.connect(pick_activated)
 
 	$Notifications.clear()
-	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYLINDER_COUNT))
+	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_real_lock(CYLINDER_COUNT, 1))
 	$CountdownMain.set_count(COUNTDOWN_TIME)
 
 	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))

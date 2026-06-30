@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfrit88c6c1oy"]
 
-[ext_resource type="Script" path="res://logic/core_nodes/deck_main.gd" id="1_isaa4"]
+[ext_resource type="Script" uid="uid://e7fhodhmh3nl" path="res://logic/core_nodes/deck_main.gd" id="1_isaa4"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_ga2i2"]
 
 [node name="DeckMain" type="Control"]
