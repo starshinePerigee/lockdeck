@@ -31,13 +31,14 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
 	
+	# Place two breaks (one will become a warning)
 	var pos_1 := random_pos()
 	var pos_2 := pos_1
 	while pos_2 == pos_1:
 		pos_2 = random_pos()
 	
-	spec.depths[min(pos_1, pos_2)] = Depths.WARN
-	spec.depths[max(pos_1, pos_2)] = Depths.BREAK
+	spec.depths[pos_1] = Depths.BREAK
+	spec.depths[pos_2] = Depths.BREAK
 	
 	for i in range(randi_range(0, difficulty_mod)):
 		var p := random_pos()
@@ -48,6 +49,11 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 		var p := random_pos()
 		if spec.depths[p] == Depths.EMPTY:
 			spec.depths[p] = get_filler()
+	
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
+		if spec.depths[i] == Depths.BREAK:
+			spec.depths[i] = Depths.WARN
+			break
 	
 	return spec
 
