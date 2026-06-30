@@ -59,10 +59,14 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	if randi_range(0, 9) < 4 + difficulty_mod:
 		try_add_at_random(spec, Depths.KEY)
 	
+	# Make the first break a warning
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
 		if spec.depths[i] == Depths.BREAK:
 			spec.depths[i] = Depths.WARN
 			break
+	
+	# Do some other validation checks
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
 		if spec.depths[i] == Depths.SKIP and i > PinSpec.PIN_DEPTH_COUNT - 4:
 			spec.depths[i] = Depths.EMPTY 
 	

@@ -9,3 +9,5 @@ Consider letting jams persist over end of turn, which would help with (solve?) t
 The starter deck is deeply incapable of managing a 4-pin difficulty 1 level without hints.
 
 Should crush clear existing jam?
+
+A "care" pin that means the next n depths won't affect you? Is this just skip?
