@@ -26,6 +26,15 @@ static func get_filler() -> Depths:
 		)
 	]
 
+## Tries to add the provided depth to a random valid position.
+## Returns true if it was added
+static func try_add_at_random(spec: PinSpec, depth: Depths) -> bool:
+	var p := random_pos()
+	if spec.depths[p] == Depths.EMPTY:
+		spec.depths[p] = depth
+		return true
+	return false
+
 static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
@@ -41,14 +50,14 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	spec.depths[pos_2] = Depths.BREAK
 	
 	for i in range(randi_range(0, difficulty_mod)):
-		var p := random_pos()
-		if spec.depths[p] == Depths.EMPTY:
-			spec.depths[p] = Depths.BREAK
+		try_add_at_random(spec, Depths.BREAK)
 	
 	for i in range(randi_range(0, 5)):
-		var p := random_pos()
-		if spec.depths[p] == Depths.EMPTY:
-			spec.depths[p] = get_filler()
+		try_add_at_random(spec, get_filler())
+	
+	# Add more key depths at higher difficulty because i like you
+	if randi_range(0, 9) < 4 + difficulty_mod:
+		try_add_at_random(spec, Depths.KEY)
 	
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
 		if spec.depths[i] == Depths.BREAK:

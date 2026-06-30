@@ -1,6 +1,6 @@
 - update pin generator:
 x- break
--- key
+x- key
 x- jam
 x- force
 - pick discard option
