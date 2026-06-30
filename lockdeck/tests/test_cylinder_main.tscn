@@ -8,10 +8,10 @@
 script = ExtResource("1_tgx1c")
 
 [node name="CylinderMain" parent="." instance=ExtResource("1_gmt7f")]
-offset_left = 304.0
-offset_top = -159.0
-offset_right = 912.0
-offset_bottom = 449.0
+offset_left = 378.0
+offset_top = -139.0
+offset_right = 842.0
+offset_bottom = 469.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Anchor" type="Control" parent="CylinderMain"]

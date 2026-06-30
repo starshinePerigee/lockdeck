@@ -17,6 +17,12 @@ script = ExtResource("1_48slg")
 
 [node name="Hand" parent="." instance=ExtResource("1_pmw1l")]
 layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -80.0
+offset_bottom = 80.0
+grow_vertical = 2
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 custom_minimum_size = Vector2(512, 160)

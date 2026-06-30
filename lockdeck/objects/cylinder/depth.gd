@@ -24,3 +24,5 @@ func _redraw() -> void:
 		texture = flavor.texture
 	else:
 		texture = _TEXTURE_HIDDEN
+	
+	size = texture.get_size()

@@ -1,7 +1,7 @@
 extends Control
 ## Manages the position of the indicator pick
 
-var INTER_PIN_SPACING := 128
+var INTER_PIN_SPACING := 80 + 16
 var STOW_POSITION := Vector2(-128, 32)
 
 ## Sets the pin to away and stowed

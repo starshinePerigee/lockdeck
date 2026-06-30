@@ -1,16 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkcikxm7qtgka"]
+[gd_scene load_steps=5 format=3 uid="uid://bkcikxm7qtgka"]
 
 [ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/cylinder/pin.gd" id="1_sibiv"]
-[ext_resource type="Texture2D" uid="uid://tcrqvg81pu7a" path="res://assets/pin/pin_final_neutral.png" id="2_parf1"]
 [ext_resource type="Texture2D" uid="uid://doqoo3uhhte1b" path="res://assets/pin/jam.png" id="4_agct7"]
 [ext_resource type="Texture2D" uid="uid://dq3ioeinfnr4p" path="res://assets/pin/key.png" id="5_agct7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_agct7"]
-radius = 34.0
+radius = 22.0
 height = 628.0
 
 [node name="Pin" type="Control"]
-custom_minimum_size = Vector2(96, 672)
+custom_minimum_size = Vector2(80, 672)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 96.0
@@ -22,7 +21,7 @@ visible_ = true
 [node name="Stack" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_top = 256.0
-offset_right = 96.0
+offset_right = 80.0
 offset_bottom = 560.0
 theme_override_constants/separation = 0
 
@@ -30,15 +29,11 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Bottom" type="TextureRect" parent="Stack"]
-layout_mode = 2
-texture = ExtResource("2_parf1")
-
 [node name="KeyIndicator" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -16.0
 offset_top = 249.0
-offset_right = 112.0
+offset_right = 96.0
 offset_bottom = 297.0
 texture = ExtResource("5_agct7")
 
@@ -46,7 +41,7 @@ texture = ExtResource("5_agct7")
 layout_mode = 0
 offset_left = -16.0
 offset_top = 282.0
-offset_right = 112.0
+offset_right = 96.0
 offset_bottom = 330.0
 texture = ExtResource("4_agct7")
 
@@ -68,12 +63,12 @@ vertical_alignment = 1
 [node name="DropArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea"]
-position = Vector2(48, 332)
+position = Vector2(40, 332)
 shape = SubResource("CapsuleShape2D_agct7")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
-offset_right = 96.0
+offset_right = 80.0
 offset_bottom = 560.0
 mouse_filter = 2
 border_color = Color(0.670377, 0.507888, 3.85046e-07, 1)

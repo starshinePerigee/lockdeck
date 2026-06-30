@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dp3xnaa4ni64j" path="res://objects/hand_big/hand_big.gd" id="1_ph4ca"]
 
-[node name="HandBig" type="CenterContainer"]
+[node name="HandBig" type="Control"]
 custom_minimum_size = Vector2(512, 160)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 512.0
 offset_bottom = 160.0
 script = ExtResource("1_ph4ca")

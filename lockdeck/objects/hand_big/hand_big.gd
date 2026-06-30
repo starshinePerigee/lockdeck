@@ -1,4 +1,4 @@
-extends CenterContainer
+extends Control
 # The view for the hand and all the cards in it
 
 signal card_selected(card_index: int)
@@ -60,12 +60,21 @@ func card_pick_up(card_area: Area2D, card_index: int) -> void:
 	get_space().clear_selected()
 	get_space().z_boost = true
 	_disable_others(card_index)
+	hide_hand()
 
 ## Handle a dragged card being dropped
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(card_area, card_index)
 	card_deselect()
 	_enable_all()
+	unhide_hand()
+
+## Hides (moves out of the way) the hand
+func hide_hand() -> void:
+	$Hand.position = Vector2(0, 120)
+
+func unhide_hand() -> void:
+	$Hand.position = Vector2(0, 0)
 
 ## Forces full redraw
 func redraw(cards: Array[CardSpec]) -> void:
