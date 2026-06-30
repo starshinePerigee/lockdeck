@@ -3,7 +3,7 @@ xx force
 xx skip
 xx reveal
 xx jam
-x- hint
+x- test
 x- crush
 
 Depths

@@ -24,32 +24,41 @@ func _init(name: String):
 ## Debug effect. should not be used.
 static var DEBUG := Effects.new("debug")
 
-## actually blank textures
-static var BLANK := Effects.new("blank")
-
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 
 ## move the pin
 static var FORCE := Effects.new("force")
 
-## apply jam
-static var JAM := Effects.new("jam")
+## Skip the next depth
+static var SKIP := Effects.new("skip")
 
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new("reveal")
 
-## Skip the next depth
-static var SKIP := Effects.new("skip")
+## apply jam
+static var JAM := Effects.new("jam")
+
+## Test the next depths, indicating if there is a hazard or not
+static var TEST := Effects.new("test")  # TODO
+
+## Destroy the affected depth, replacing it with a blank
+static var CRUSH := Effects.new("crush")
+
+## Depth effect - hint at the next danger or sets the pin to clear
+static var HINT := Effects.new("hint")  # TODO
 
 ## Depth effect - unlock the current pin
 static var KEY := Effects.new("key")
 
+## Depth effect - lock spin until other pin is set
+static var BIND := Effects.new("bind")
+
 ## Depth effect - break the current pin
 static var BREAK := Effects.new("break")
 
-## Depth effect - bounce the pin back to the top
-static var BOUNCE := Effects.new("bounce")
+## Depth effect - resets another pin (if set) or this one
+static var RESET := Effects.new("reset")
 
 ## Depth effect - pick out of bounds (typically breaks)
 static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
