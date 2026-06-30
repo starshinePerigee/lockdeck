@@ -3,7 +3,7 @@ xx force
 xx skip
 xx reveal
 xx jam
--- hint
+x- hint
 -- crush
 
 Depths
@@ -16,3 +16,4 @@ xx key
 
 x- reset
 xx break
+..
