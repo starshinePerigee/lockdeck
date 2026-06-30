@@ -68,3 +68,12 @@ static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
 
 ## stop evaluating current card. Used as a sentinel value in execution.
 static var END_EXECUTION := Effects.new("end_execution")
+
+
+## Some effects move the pin, and thus should be decomposed before being
+## executed. This array holds those effects
+static var MOVE_PIN: Array[Effects] = [
+	FORCE,
+	SKIP,
+	CRUSH,
+]

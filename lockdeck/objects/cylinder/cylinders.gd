@@ -39,7 +39,6 @@ func set_pin(pin_index: int, pin_spec: PinSpec) -> void:
 func clear_pin(pin_index: int) -> void:
 	pin_refs[pin_index].load_spec(PinSpec.new())
 	pin_refs[pin_index].visible_ = false
-	pin_refs[pin_index].pin_set = true
 
 ## Loads a debug pinspec for and hides all pins.
 func clear_all_pins() -> void:

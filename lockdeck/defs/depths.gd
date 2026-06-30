@@ -30,6 +30,9 @@ static var DEBUG := Depths.new("debug", Effects.DEBUG)
 ## The neutral depth at the top of a pin. Has no effect.
 static var BASE := Depths.new("base", Effects.EMPTY)
 
+## The target end of the pin
+static var FINAL := Depths.new("final_neutral", Effects.KEY)
+
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
 
@@ -37,10 +40,7 @@ static var EMPTY := Depths.new("empty", Effects.EMPTY)
 static var FORCE := Depths.new("force", Effects.FORCE, 2)
 
 ## Jam effect
-static var JAM := Depths.new("jam", Effects.JAM, 5)
-
-## Returned when a pin is jammed
-static var JAMMED := Depths.new("jammed", Effects.EMPTY)
+static var JAM := Depths.new("jam", Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
 static var KEY := Depths.new("key", Effects.KEY)
@@ -62,3 +62,10 @@ static var REST := Depths.new("reset", Effects.RESET)
 
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new("warn", Effects.EMPTY)
+
+
+## Holds all depths which count as solves
+static var SOLVE_DEPTHS: Array[Depths] = [
+	FINAL, 
+	KEY
+]

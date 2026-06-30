@@ -6,7 +6,7 @@ func card_selected(card_index: int):
 	print("Selected: %s" % card_index)
 	print("Should be %s" % cards[card_index].pick_name)
 	
-func card_dropped(card_spec: CardSpec, card_area: Area2D, card_index: int):
+func card_dropped(card_area: Area2D, card_index: int):
 	print("Dropped: %s" % card_index)
 	
 func card_deselected(card_index: int):

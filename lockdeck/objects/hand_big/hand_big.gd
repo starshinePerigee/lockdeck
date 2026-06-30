@@ -1,4 +1,4 @@
-extends CenterContainer
+extends Control
 # The view for the hand and all the cards in it
 
 signal card_selected(card_index: int)
@@ -9,6 +9,7 @@ signal card_dropped(card_area: Area2D, card_index: int)
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
+const HIDE_OFFSET = 96
 
 var current_card: int = -1
 
@@ -66,6 +67,13 @@ func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(card_area, card_index)
 	card_deselect()
 	_enable_all()
+
+## Hides (moves out of the way) the hand
+func hide_hand() -> void:
+	$Hand.position = Vector2(0, HIDE_OFFSET)
+
+func unhide_hand() -> void:
+	$Hand.position = Vector2(0, 0)
 
 ## Forces full redraw
 func redraw(cards: Array[CardSpec]) -> void:

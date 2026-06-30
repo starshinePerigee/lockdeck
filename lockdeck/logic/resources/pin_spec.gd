@@ -20,24 +20,20 @@ const PIN_DEPTH_COUNT := 9
 @export var reveals: Array[bool]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
-## If the pin is "set" (will not fall during the next fall step). Greys out the pin.
-@export var pin_set: bool
-## If the pin is ready to unlock. Shows the unlock graphic.
-@export var key_set: bool
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
-## If the jam indicator is visible
-@export var jam_visible: bool
 
 ## Get the depth flavor that the pin is currently set to.
 func current_depth() -> Depths:
 	return depths[pin_position]
 
-## Touch the pin
-func unset_pin() -> void:
-	jam_visible = false
-	pin_set = false
-	key_set = false
+## Returns true if the pin is currently solved.
+func is_solved() -> bool:
+	return current_depth() in Depths.SOLVE_DEPTHS
+
+## Returns true if the pin is currently jammed
+func is_jammed() -> bool:
+	return jam_count > 0
 
 ## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed.
 func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
@@ -60,12 +56,7 @@ func add_jam(value: int) -> bool:
 	var jammed := jam_count > 0
 	jam_count = max(0, jam_count + value)
 	if jam_count > 0:
-		pin_set = true
-		jam_visible = true
 		return true
-	
-	if not jammed:
-		unset_pin()
 	return jammed
 
 ## Reveals a pin in n positions. Does not work through jam.
@@ -78,22 +69,21 @@ func reveal_pin(value: int) -> void:
 		reveals[reveal_position] = true
 
 ## Resets the pin to default values but does not change depths.
-func reset_pin():
+func reset_pin() -> void:
 	pin_position = 0
-	pin_set = false
-	key_set = false
 	jam_count = 0
-	jam_visible = false
 
 func _init():
 	depths = []
 	depths.resize(PIN_DEPTH_COUNT)
 	depths.fill(Depths.DEBUG)
 	depths[0] = Depths.BASE
+	depths[-1] = Depths.FINAL
 	
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
 	reveals.fill(false)
 	reveals[0] = true
+	reveals[-1] = true
 	
 	reset_pin()

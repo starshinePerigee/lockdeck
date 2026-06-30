@@ -37,12 +37,6 @@ class Execution:
 	## The top level array has an index per pin, 0 on the left and 4 on the right
 	## identical to the cylinder_main.pins array.
 	var pending_effects: Array[Array]
-	## When an effect executes, if a depth triggers additional effects these
-	## go on the effect stack right above the current effect. This pointer tracks
-	## that position for each pin
-	var effect_insertion_pointers: Array[int]
-	## If a pick breaks, we only want to emit that signal once.
-	var pick_broke_emitted: bool
 	
 	static var execution_sentinel := EffectSpec.new(Effects.END_EXECUTION)
 		
@@ -50,10 +44,6 @@ class Execution:
 		pending_effects = []
 		for i in pin_count:
 			pending_effects.append([])
-		
-		effect_insertion_pointers = []
-		effect_insertion_pointers.resize(pin_count)
-		effect_insertion_pointers.fill(0)
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
@@ -61,7 +51,7 @@ class Execution:
 			var pin_index: int = card_index + k
 			if pin_index >= 0 and pin_index < len(pending_effects):
 				for e in card.effects[k]:
-					self.pending_effects[pin_index].append(e)
+					add_effect(pin_index, e, false)
 	
 	## Gets the next effect, or EffectSpec.. Use has_next_effect to avoid that.
 	## Effects are pulled from pins high to low (right to left), down the effect stack.
@@ -74,26 +64,36 @@ class Execution:
 				return effect
 		return execution_sentinel
 	
-	## Resets the insertion pointers. Call before an effect executes.
-	func reset_effect_insertion_pointers():
-		effect_insertion_pointers.fill(0)
-	
-	## Adds an effect to the correct location
-	## (at the top of the stack but behind anything else added
-	## during this effect evaluation)
-	func add_effect(pin_index: int, effect: EffectSpec):
-		pending_effects[pin_index].insert(effect_insertion_pointers[pin_index], effect)
-		effect_insertion_pointers[pin_index] += 1
+	## Adds effects to the top of the stack
+	func add_effect(pin_index: int, effect: EffectSpec, front: bool = true):
+		if effect.flavor in Effects.MOVE_PIN:
+			## Decompose into value-1 effects
+			for i in range(effect.value):
+				var new_effect: EffectSpec = EffectSpec.new(effect.flavor, 1)
+				if front:
+					pending_effects[pin_index].push_front(new_effect)
+				else:
+					pending_effects[pin_index].push_back(new_effect)
+		else:
+			if front:
+				pending_effects[pin_index].push_front(effect)
+			else:
+				pending_effects[pin_index].push_back(effect)
 
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
-func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
+func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = false) -> void:
 	var pin := pins[pin_index]
-	if pin.advance_pin(advance_by):
+	if pin.is_jammed():
+		if advance_by > 1:
+			push_warning("Advancing by more than one, could have weird jam interactions!")
+		pin.add_jam(-advance_by)
+	elif pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		var depth := pin.current_depth()
-		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+		if not skip:
+			var depth := pin.current_depth()
+			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
@@ -110,15 +110,14 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 			return
 		
 		var next_effect := ex.get_next_effect()
+#		print("%s: Evaluating %s at %s" % [iterations, next_effect.flavor.effect_name, next_effect.realized_pin])
 		if next_effect.flavor == Effects.END_EXECUTION:
-			print("Completed executiona after %s iterations." % iterations)
+#			print("Completed execution after %s iterations." % iterations)
 			break
 		evaluate_pin(next_effect, ex, result)
 	
 	$Cylinders.set_pin_specs(pins)
 	
-	if check_solve():
-		result.lock_solved = true
 	return result
 
 ## Evaluates a single effect, updating the execution context and emitting signals.
@@ -131,7 +130,11 @@ func evaluate_pin(
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
 	
-	ex.reset_effect_insertion_pointers()
+	if effect.value > 1 and effect.flavor in Effects.MOVE_PIN:
+		push_error(
+			"Move effect was not decomposed: %s with value %s" 
+			% [effect.flavor.effect_name, effect.value]
+		)
 	
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
@@ -153,18 +156,17 @@ func evaluate_pin(
 		Effects.BREAK:
 			execute_break(result)
 		Effects.KEY:
-			execute_key(effect)
+			execute_key(result)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
 func execute_force(effect: EffectSpec, ex: Execution) -> void:
-	for i in range(effect.value):
-		advance_pin(effect.realized_pin, 1, ex)
+	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_skip(effect: EffectSpec, ex: Execution) -> void:
-	advance_pin(effect.realized_pin, effect.value, ex)
+	advance_pin(effect.realized_pin, effect.value, ex, true)
 
 func execute_reveal(effect: EffectSpec) -> void:
 	for i in range(effect.value):
@@ -184,13 +186,22 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 		else:
 			pin.depths[pin.pin_position] = Depths.EMPTY
 
-func execute_key(effect: EffectSpec) -> void:
-	pins[effect.realized_pin].key_set = true
+func execute_key(result: ResultSpec) -> void:
+	for pin in pins:
+		if not pin.is_solved():
+			return
+	result.lock_solved = true
+	return
 
-func execute_break(result: ResultSpec):
+func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
 #endregion
+
+## Redraws the pins by reloading the pin specs.
+## Useful if you're monkeying with .pins directly
+func redraw_pins() -> void:
+	$Cylinders.set_pin_specs(pins)
 
 ## Perform the end of hand/round/turn fall step, resetting non-bound pins
 ## to their default state or whatever mechanic I wind up deciding.
@@ -198,10 +209,3 @@ func handle_fall() -> void:
 	for pin in pins:
 		pin.advance_pin(0, 0)
 	$Cylinders.set_pin_specs(pins)
-
-## Check if all pins are solved
-func check_solve() -> bool:
-	for pin in pins:
-		if not pin.key_set:
-			return false
-	return true

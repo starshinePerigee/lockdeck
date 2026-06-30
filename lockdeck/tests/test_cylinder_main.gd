@@ -8,10 +8,7 @@ func set_testpos() -> void:
 	pins[1].pin_position = 1
 	pins[1].jam_count = 2
 	pins[1].jam_visible = true
-	pins[1].pin_set = true
-	pins[1].key_set = true
 	pins[2].pin_position = 2
-	pins[2].key_set = true
 	pins[3].pin_position = 4
 	pins[4].pin_position = PinSpec.PIN_DEPTH_COUNT - 1
 	$CylinderMain.load_new_pins(pins)
@@ -49,20 +46,26 @@ func end_drag() -> void:
 		apply_card($CardSpace.card_spec, target)
 
 func do_highlight(pin_index: int) -> void:
-	$HighlightPos.text = str(pin_index)
-	$Anchor/Dot.position = Vector2((96 + 32) * (pin_index + 1), 0)
+	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
+	$CylinderMain/Anchor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
 
 func clear_highlight() -> void:
-	$HighlightPos.text = "-1"
-	$Anchor/Dot.position = Vector2()
+	$CylinderMain/Anchor/HighlightPos.text = "-1"
+	$CylinderMain/Anchor/Dot.position = Vector2()
 
 func do_cursor(pin_index: int) -> void:
-	$CursorPos.text = str(pin_index)
-	$AnchorCursor/Dot.position = Vector2((96+32) * (pin_index + 1), 0)
+	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
+	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
 
 func clear_cursor() -> void:
-	$CursorPos.text = "-1"
-	$AnchorCursor/Dot.position = Vector2()
+	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
+	$CylinderMain/AnchorCursor/Dot.position = Vector2()
+
+func reveal_all() -> void:
+	print("The world unfolds before your eyes.")
+	for pin in $CylinderMain.pins:
+		pin.reveals.fill(true)
+	$CylinderMain.redraw_pins()
 
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
@@ -85,3 +88,4 @@ func _ready() -> void:
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
+	$RevealButton.pressed.connect(reveal_all)

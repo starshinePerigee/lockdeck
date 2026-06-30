@@ -31,11 +31,14 @@ func set_state(state: InputState) -> void:
 	match state:
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
+			$HandMain/Hand.unhide_hand()
 		InputState.ACTIVE_SELECT:
 			$LockBody/IndicatorPick.go_stow()
+			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
 		InputState.ACTIVE_DRAG:
 			$LockBody/IndicatorPick.go_stow()
+			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
 
 func pick_selected(card: CardSpec) -> void:
@@ -87,7 +90,7 @@ func break_pick(card: CardSpec) -> void:
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
-	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
+#	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
