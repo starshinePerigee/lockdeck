@@ -25,18 +25,18 @@ offset_bottom = 357.0
 rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 322.0
-offset_top = 41.0
-offset_right = 322.0
-offset_bottom = 41.0
+offset_left = 137.0
+offset_top = 72.0
+offset_right = 137.0
+offset_bottom = 72.0
 
 [node name="LockBody" type="Control" parent="."]
-custom_minimum_size = Vector2(880, 860)
+custom_minimum_size = Vector2(608, 608)
 anchors_preset = 0
-offset_left = 764.0
-offset_top = 114.0
-offset_right = 1644.0
-offset_bottom = 974.0
+offset_left = 256.0
+offset_top = -64.0
+offset_right = 864.0
+offset_bottom = 544.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 offset_left = 16.0
@@ -46,36 +46,35 @@ offset_bottom = 471.0
 
 [node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
 layout_mode = 1
-offset_left = 65.0
-offset_top = 481.5
-offset_right = -303.0
-offset_bottom = -295.5
+offset_left = -17.0
+offset_top = 539.0
+offset_right = -385.0
+offset_bottom = -69.0
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 405.0
-offset_top = 579.0
-offset_right = 405.0
-offset_bottom = 579.0
+offset_left = 33.0
+offset_top = 367.0
+offset_right = 545.0
+offset_bottom = 527.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
-offset_left = 60.0
-offset_top = 70.0
-offset_right = 60.0
-offset_bottom = 70.0
+offset_left = 24.0
+offset_top = 23.0
+offset_right = 24.0
+offset_bottom = 23.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 59.0
-offset_top = 314.0
-offset_right = 59.0
-offset_bottom = 314.0
+offset_left = 29.0
+offset_top = 198.0
+offset_right = 29.0
+offset_bottom = 198.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 438.0
-offset_top = 384.0
-offset_right = 438.0
-offset_bottom = 384.0
-rotation = 1.5708
+offset_left = 96.0
+offset_top = -1.0
+offset_right = 96.0
+offset_bottom = -1.0

@@ -90,10 +90,12 @@ func _init():
 	depths.resize(PIN_DEPTH_COUNT)
 	depths.fill(Depths.DEBUG)
 	depths[0] = Depths.BASE
+	depths[-1] = Depths.FINAL
 	
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
 	reveals.fill(false)
 	reveals[0] = true
+	reveals[-1] = true
 	
 	reset_pin()

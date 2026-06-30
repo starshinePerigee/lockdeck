@@ -49,20 +49,20 @@ func end_drag() -> void:
 		apply_card($CardSpace.card_spec, target)
 
 func do_highlight(pin_index: int) -> void:
-	$HighlightPos.text = str(pin_index)
-	$Anchor/Dot.position = Vector2((96 + 32) * (pin_index + 1), 0)
+	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
+	$CylinderMain/Anchor/Dot.position = Vector2((96 + 32) * (pin_index + 1), 0)
 
 func clear_highlight() -> void:
-	$HighlightPos.text = "-1"
-	$Anchor/Dot.position = Vector2()
+	$CylinderMain/Anchor/HighlightPos.text = "-1"
+	$CylinderMain/Anchor/Dot.position = Vector2()
 
 func do_cursor(pin_index: int) -> void:
-	$CursorPos.text = str(pin_index)
-	$AnchorCursor/Dot.position = Vector2((96+32) * (pin_index + 1), 0)
+	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
+	$CylinderMain/AnchorCursor/Dot.position = Vector2((96+32) * (pin_index + 1), 0)
 
 func clear_cursor() -> void:
-	$CursorPos.text = "-1"
-	$AnchorCursor/Dot.position = Vector2()
+	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
+	$CylinderMain/AnchorCursor/Dot.position = Vector2()
 
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)

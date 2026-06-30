@@ -30,6 +30,9 @@ static var DEBUG := Depths.new("debug", Effects.DEBUG)
 ## The neutral depth at the top of a pin. Has no effect.
 static var BASE := Depths.new("base", Effects.EMPTY)
 
+## The target end of the pin
+static var FINAL := Depths.new("final_neutral", Effects.KEY)
+
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
 

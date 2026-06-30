@@ -2,7 +2,7 @@ class_name PinGenerator
 
 static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
-	for i in range(1, 9):
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
 	spec.depths[4] = Depths.KEY
 	spec.depths[6] = Depths.BREAK
@@ -12,7 +12,7 @@ static var FILLER_DEPTHS: Array[Depths] = [Depths.FORCE, Depths.JAM]
 
 static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	var spec := PinSpec.new()
-	for i in range(1, 9):
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
 		
 	var key_loc := randi_range(1, 8)

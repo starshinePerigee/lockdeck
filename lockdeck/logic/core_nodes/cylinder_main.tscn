@@ -8,7 +8,7 @@ custom_minimum_size = Vector2(608, 608)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 608.0
-offset_bottom = 783.0
+offset_bottom = 672.0
 script = ExtResource("1_j3ebm")
 
 [node name="Cylinders" parent="." instance=ExtResource("2_s8kgd")]
@@ -16,7 +16,7 @@ script = ExtResource("1_j3ebm")
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_right = 608.0
-offset_bottom = 600.0
+offset_bottom = 560.0
 mouse_filter = 2
 border_color = Color(0.251698, 0.503876, 1, 1)
 border_width = 3.0
@@ -24,7 +24,7 @@ border_width = 3.0
 [node name="ReferenceRect2" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_right = 608.0
-offset_bottom = 766.0
+offset_bottom = 672.0
 mouse_filter = 2
 border_color = Color(0.251698, 0.503876, 1, 1)
 border_width = 3.0

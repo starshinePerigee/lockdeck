@@ -5,10 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://dxfvugetme86i" path="res://assets/game/lock body.png" id="3_t6n63"]
 
 [node name="Cylinders" type="Control"]
+custom_minimum_size = Vector2(608, 672)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 608.0
-offset_bottom = 766.0
 script = ExtResource("1_3tpfd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -16,16 +15,15 @@ layout_mode = 0
 offset_left = -32.0
 offset_top = -41.0
 offset_right = 640.0
-offset_bottom = 619.0
+offset_bottom = 570.0
 mouse_filter = 2
 texture = ExtResource("3_t6n63")
 
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(608, 608)
 layout_mode = 0
-offset_top = -33.0
 offset_right = 608.0
-offset_bottom = 607.0
+offset_bottom = 672.0
 theme_override_constants/separation = 32
 
 [node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]

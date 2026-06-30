@@ -40,7 +40,7 @@ var depth_refs: Array[Depth] = []
 		$Stack.position = Vector2(
 			0,
 			DEPTH_VHEIGHT * PinSpec.PIN_DEPTH_COUNT 
-			- DEPTH_VHEIGHT * v 
+			- DEPTH_VHEIGHT * (v + 1)
 		)
 
 ## Hides the pin, visually.
@@ -132,6 +132,12 @@ func _ready() -> void:
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:
 		var next_depth := _DEPTH.instantiate()
+		if i == 0:
+			next_depth.flavor = Depths.BASE
+			next_depth.revealed = true
+		elif i == PinSpec.PIN_DEPTH_COUNT - 1:
+			next_depth.flavor = Depths.FINAL
+			next_depth.revealed = true
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
 	
