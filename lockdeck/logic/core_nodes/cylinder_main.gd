@@ -82,7 +82,7 @@ class Execution:
 
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
-func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
+func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = false) -> void:
 	var pin := pins[pin_index]
 	if pin.is_jammed():
 		if advance_by > 1:
@@ -91,8 +91,9 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	elif pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		var depth := pin.current_depth()
-		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+		if not skip:
+			var depth := pin.current_depth()
+			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
@@ -109,7 +110,7 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 			return
 		
 		var next_effect := ex.get_next_effect()
-		print("%s: Evaluating %s at %s" % [iterations, next_effect.flavor.effect_name, next_effect.realized_pin])
+#		print("%s: Evaluating %s at %s" % [iterations, next_effect.flavor.effect_name, next_effect.realized_pin])
 		if next_effect.flavor == Effects.END_EXECUTION:
 			print("Completed executiona after %s iterations." % iterations)
 			break
@@ -162,11 +163,10 @@ func evaluate_pin(
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
 func execute_force(effect: EffectSpec, ex: Execution) -> void:
-	for i in range(effect.value):
-		advance_pin(effect.realized_pin, 1, ex)
+	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_skip(effect: EffectSpec, ex: Execution) -> void:
-	advance_pin(effect.realized_pin, effect.value, ex)
+	advance_pin(effect.realized_pin, effect.value, ex, true)
 
 func execute_reveal(effect: EffectSpec) -> void:
 	for i in range(effect.value):

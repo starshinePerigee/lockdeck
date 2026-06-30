@@ -67,7 +67,7 @@ var depth_refs: Array[Depth] = []
 		if not is_node_ready():
 			await ready
 		
-		$JamIndicator.visible = jam_count > 1
+		$JamIndicator.visible = jam_count > 0
 		$JamIndicator/JamCount.text = str(jam_count)
 
 ## Load a PinSpec into this pin, setting all parameters.
