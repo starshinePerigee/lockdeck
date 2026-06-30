@@ -4,7 +4,8 @@
 -- jam
 -- force
 - pick discard option
-- fix end turn
+- fix jam logic
+x fix end turn
 - end turn button
 -- end turn button highlights
 - death round logic
@@ -13,7 +14,10 @@
 - pop up tutorial
 - top level scene with new picks
 - extended 5-pin new threat logic
+- resize face down decks
+- add see lock 
 - placeholder bg
 - placeholder lock body
 - placeholder keyway
 - reorganize main scene
+- redo notifications
