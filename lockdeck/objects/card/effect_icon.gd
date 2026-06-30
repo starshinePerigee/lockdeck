@@ -5,9 +5,6 @@ class_name EffectIcon
 ## Effect flavor to use for the texture of this icon
 @export var effect: Effects
 
-## If the small icon should be used. (Cards use the small icon)
-@export var small: bool
-
 ## The number to display for the value
 @export var value: int
 
@@ -15,11 +12,7 @@ class_name EffectIcon
 @export var show_text: bool
 
 func redraw() -> void:
-	var texture := (
-		effect.texture_small 
-		if small
-		else effect.texture
-	)
+	var texture := effect.texture
 	$Icon.texture = texture
 	var new_size: Vector2 = $Icon.texture.get_size()
 	custom_minimum_size = new_size
@@ -35,13 +28,11 @@ const SELF_PACKED := preload("res://objects/card/effect_icon.tscn")
 ## Create a new instantiated instance from data
 static func build(
 	effect_: Effects,
-	small_: bool = true,
 	value_: int = 0,
 	show_text_: bool = false 
 ) -> Node:
 	var n := SELF_PACKED.instantiate()
 	n.effect = effect_
-	n.small = small_
 	if show_text_:
 		n.show_text = true
 		n.value = value_

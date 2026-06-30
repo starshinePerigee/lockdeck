@@ -11,6 +11,15 @@ offset_right = 608.0
 offset_bottom = 766.0
 script = ExtResource("1_3tpfd")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -41.0
+offset_right = 640.0
+offset_bottom = 619.0
+mouse_filter = 2
+texture = ExtResource("3_t6n63")
+
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(608, 608)
 layout_mode = 0
@@ -38,12 +47,3 @@ visible_ = false
 [node name="Pin5" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
 visible_ = false
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -32.0
-offset_top = -41.0
-offset_right = 640.0
-offset_bottom = 619.0
-mouse_filter = 2
-texture = ExtResource("3_t6n63")

@@ -92,7 +92,8 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	if pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		ex.add_effect(pin_index, EffectSpec.new(pin.current_depth().effect))
+		var depth := pin.current_depth()
+		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
@@ -139,14 +140,14 @@ func evaluate_pin(
 			pass
 		Effects.FORCE:
 			execute_force(effect, ex)
-		Effects.JUMP:
-			execute_jump(effect, ex)
+		Effects.SKIP:
+			execute_skip(effect, ex)
+		Effects.REVEAL:
+			execute_reveal(effect)
 		Effects.JAM:
 			execute_jam(effect)
-		Effects.TEST:
-			execute_test(effect)
-		Effects.BOUNCE:
-			execute_bounce(effect)
+		Effects.CRUSH:
+			execute_crush(effect, ex)
 		Effects.OUT_OF_BOUNDS:
 			execute_break(result)
 		Effects.BREAK:
@@ -162,18 +163,26 @@ func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
 		advance_pin(effect.realized_pin, 1, ex)
 
-func execute_jump(effect: EffectSpec, ex: Execution) -> void:
+func execute_skip(effect: EffectSpec, ex: Execution) -> void:
 	advance_pin(effect.realized_pin, effect.value, ex)
+
+func execute_reveal(effect: EffectSpec) -> void:
+	for i in range(effect.value):
+		pins[effect.realized_pin].reveal_pin(i + 1)
 
 func execute_jam(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
 
-func execute_test(effect: EffectSpec) -> void:
+func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
-		pins[effect.realized_pin].reveal_pin(i + 1)
-
-func execute_bounce(effect: EffectSpec) -> void:
-	pins[effect.realized_pin].advance_pin(0, 0)
+		var pin := pins[effect.realized_pin]
+		var oob := pin.advance_pin(1)
+		
+		if oob or pin.current_depth() == Depths.KEY:
+			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
+			return
+		else:
+			pin.depths[pin.pin_position] = Depths.EMPTY
 
 func execute_key(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].key_set = true

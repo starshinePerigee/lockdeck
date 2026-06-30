@@ -15,29 +15,47 @@ var depth_name: String
 var texture: Resource
 ## Effect flavor
 var effect: Effects
+## Default effect value
+var value: int
 
-func _init(depth_name_: String, effect_: Effects):
+func _init(depth_name_: String, effect_: Effects, value_: int = 1):
 	depth_name = depth_name_
 	texture = _get_texture(depth_name_)
 	effect = effect_
+	value = value_
 
 ## Debug depth. Should not be used.
 static var DEBUG := Depths.new("debug", Effects.DEBUG)
 
-## "?" texture. Should not be used.
-static var HIDDEN := Depths.new("hidden", Effects.DEBUG)
+## The neutral depth at the top of a pin. Has no effect.
+static var BASE := Depths.new("base", Effects.EMPTY)
 
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
 
+## Force effect
+static var FORCE := Depths.new("force", Effects.FORCE, 2)
+
+## Jam effect
+static var JAM := Depths.new("jam", Effects.JAM, 5)
+
 ## Unlock depth, needed to win.
 static var KEY := Depths.new("key", Effects.KEY)
+
+## Reveals the next hazard (if one) or sets the pin as clear
+static var HINT := Depths.new("hint", Effects.HINT)  # TODO
 
 ## Breaks the pick. Bad.
 static var BREAK := Depths.new("break", Effects.BREAK)
 
-## The neutral depth at the top of a pin. Has no effect.
-static var BASE := Depths.new("base", Effects.EMPTY)
+## Locks pin if skipped, does nothing if activated.
+static var TRAP := Depths.new("trap", Effects.EMPTY)
 
-## Bounces the pin back to extended. Vestigial.
-static var BOUNCE := Depths.new("bounce", Effects.BOUNCE)
+## Locks the cylinder until another pin is set
+static var BIND := Depths.new("bind", Effects.BIND)
+
+## Resets another set pin (or this one, if none are set)
+static var REST := Depths.new("reset", Effects.RESET)
+
+## Does nothing except indicates a break is ahead somewhere
+static var WARN := Depths.new("warn", Effects.EMPTY)

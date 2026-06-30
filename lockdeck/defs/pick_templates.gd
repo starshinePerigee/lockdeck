@@ -32,11 +32,11 @@ func _init(
 static var DEBUG := PickTemplates.new(
 	"debug", 
 	{
-		-1: [EffectSpec.new(Effects.TEST, 3)],
+		-1: [EffectSpec.new(Effects.REVEAL, 3)],
 		0: [
 			EffectSpec.new(Effects.FORCE, 4), 
-			EffectSpec.new(Effects.JUMP, 3),
-			EffectSpec.new(Effects.TEST, 1)
+			EffectSpec.new(Effects.SKIP, 3),
+			EffectSpec.new(Effects.REVEAL, 1)
 		],
 		2: [EffectSpec.new(Effects.DEBUG, 8)],
 		3: [
@@ -59,7 +59,7 @@ static var HOOK := PickTemplates.new(
 	"hook",
 	{
 		0: [
-			EffectSpec.new(Effects.JUMP, 2),
+			EffectSpec.new(Effects.SKIP, 2),
 			EffectSpec.new(Effects.FORCE, 1)
 		]
 	}
@@ -88,11 +88,11 @@ static var SNAKE := PickTemplates.new(
 	{
 		-1: [
 			EffectSpec.new(Effects.FORCE, 1), 
-			EffectSpec.new(Effects.TEST, 2)
+			EffectSpec.new(Effects.REVEAL, 2)
 		],
 		0: [
 			EffectSpec.new(Effects.FORCE, 1), 
-			EffectSpec.new(Effects.TEST, 2)
+			EffectSpec.new(Effects.REVEAL, 2)
 		]
 	}
 )
@@ -106,6 +106,13 @@ static var FORK := PickTemplates.new(
 	}
 )
 
+static var LEVER := PickTemplates.new(
+	"lever",
+	{
+		0: [EffectSpec.new(Effects.CRUSH, 1), EffectSpec.new(Effects.FORCE, 3)]
+	}
+)
+
 
 static var valid_templates: Array[PickTemplates] = [
 	DIAMOND,
@@ -113,5 +120,6 @@ static var valid_templates: Array[PickTemplates] = [
 	BALL,
 	RAKE,
 	SNAKE,
-	FORK
+	FORK,
+	LEVER
 ]

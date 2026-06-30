@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://clr2b5mrjcd1g"]
 
 [ext_resource type="Script" uid="uid://dd20s0t6wvn5f" path="res://objects/card/effect_icon.gd" id="1_6xuvl"]
-[ext_resource type="Texture2D" uid="uid://cohqsrmfrrym1" path="res://assets/effects/icon_debug_large.png" id="2_xa6iv"]
+[ext_resource type="Texture2D" uid="uid://ck763fxht4h22" path="res://assets/effects/icon_debug.png" id="2_xa6iv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xa6iv"]
 font_size = 32

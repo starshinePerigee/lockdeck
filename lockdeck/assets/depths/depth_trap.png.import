@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh5xr00s2uk3v"
-path="res://.godot/imported/icon_blank_large.png-b869d298e3bfd3438cd961bf38174e8c.ctex"
+uid="uid://cjvviwmo3j66u"
+path="res://.godot/imported/depth_trap.png-a696dd78de8f97c3d59e2f8721635d4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_blank_large.png"
-dest_files=["res://.godot/imported/icon_blank_large.png-b869d298e3bfd3438cd961bf38174e8c.ctex"]
+source_file="res://assets/depths/depth_trap.png"
+dest_files=["res://.godot/imported/depth_trap.png-a696dd78de8f97c3d59e2f8721635d4c.ctex"]
 
 [params]
 

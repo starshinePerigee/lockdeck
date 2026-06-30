@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brroetbx6x1t6"
-path="res://.godot/imported/icon_force_large.png-a17c29c245a36047bc9e52dd8fe976f8.ctex"
+uid="uid://bf3bwwjj66n18"
+path="res://.godot/imported/depth_empty.png-e6ad363518406ee77fae17d3730e18d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_force_large.png"
-dest_files=["res://.godot/imported/icon_force_large.png-a17c29c245a36047bc9e52dd8fe976f8.ctex"]
+source_file="res://assets/depths/depth_empty.png"
+dest_files=["res://.godot/imported/depth_empty.png-e6ad363518406ee77fae17d3730e18d0.ctex"]
 
 [params]
 

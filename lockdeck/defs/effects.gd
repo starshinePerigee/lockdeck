@@ -2,13 +2,12 @@
 ## Stores all effect flavors as a hand-rolled enum equivalent
 class_name Effects
 
-static func _get_texture(n: String, small: bool) -> Resource:
-	var suffix := "_small" if small else "_large"
-	var res_str := "res://assets/effects/icon_%s%s.png" % [n, suffix]
+static func _get_texture(n: String) -> Resource:
+	var res_str := "res://assets/effects/icon_%s.png" % n
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/effects/icon_debug_small.png")
+		return load("res://assets/effects/icon_debug.png")
 
 ## Human readable name of this effect, in lower case.
 var effect_name:String
@@ -19,14 +18,13 @@ var texture_small:Resource
 
 func _init(name: String):
 	self.effect_name = name
-	self.texture = _get_texture(name, false)
-	self.texture_small = _get_texture(name, true)
+	self.texture = _get_texture(name)
 
 
 ## Debug effect. should not be used.
 static var DEBUG := Effects.new("debug")
 
-## actually blank textures
+## Blank effect - needed for a display hack when composing cards :c
 static var BLANK := Effects.new("blank")
 
 ## do nothing. Depth / pick effect  
@@ -35,23 +33,35 @@ static var EMPTY := Effects.new("empty")
 ## move the pin
 static var FORCE := Effects.new("force")
 
+## Skip the next depth
+static var SKIP := Effects.new("skip")
+
+## reveal the next depth but do not advance the pin
+static var REVEAL := Effects.new("reveal")
+
 ## apply jam
 static var JAM := Effects.new("jam")
 
-## reveal the next depth but do not advance the pin
-static var TEST := Effects.new("test")
+## Test the next depths, indicating if there is a hazard or not
+static var TEST := Effects.new("test")  # TODO
 
-## Skip the next depth
-static var JUMP := Effects.new("jump")
+## Destroy the affected depth, replacing it with a blank
+static var CRUSH := Effects.new("crush")
+
+## Depth effect - hint at the next danger or sets the pin to clear
+static var HINT := Effects.new("hint")  # TODO
 
 ## Depth effect - unlock the current pin
 static var KEY := Effects.new("key")
 
+## Depth effect - lock spin until other pin is set
+static var BIND := Effects.new("bind")
+
 ## Depth effect - break the current pin
 static var BREAK := Effects.new("break")
 
-## Depth effect - bounce the pin back to the top
-static var BOUNCE := Effects.new("bounce")
+## Depth effect - resets another pin (if set) or this one
+static var RESET := Effects.new("reset")
 
 ## Depth effect - pick out of bounds (typically breaks)
 static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
