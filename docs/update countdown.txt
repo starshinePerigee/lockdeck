@@ -1,0 +1,19 @@
+- update pin generator:
+-- break
+-- key
+-- jam
+-- force
+- pick discard option
+- fix end turn
+- end turn button
+-- end turn button highlights
+- death round logic
+- end of round rewards (two random picks, for free)
+- card backs
+- pop up tutorial
+- top level scene with new picks
+- extended 5-pin new threat logic
+- placeholder bg
+- placeholder lock body
+- placeholder keyway
+- reorganize main scene
