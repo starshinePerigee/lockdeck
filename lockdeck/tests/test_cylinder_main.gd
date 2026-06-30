@@ -64,6 +64,12 @@ func clear_cursor() -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
 	$CylinderMain/AnchorCursor/Dot.position = Vector2()
 
+func reveal_all() -> void:
+	print("The world unfolds before your eyes.")
+	for pin in $CylinderMain.pins:
+		pin.reveals.fill(true)
+	$CylinderMain.redraw_pins()
+
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
 	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
@@ -85,3 +91,4 @@ func _ready() -> void:
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
+	$RevealButton.pressed.connect(reveal_all)

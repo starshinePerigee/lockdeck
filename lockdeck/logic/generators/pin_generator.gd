@@ -9,6 +9,8 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
+	spec.depths[1] = Depths.FORCE
+	spec.depths[2] = Depths.JAM
 	spec.depths[4] = Depths.KEY
 	spec.depths[6] = Depths.BREAK
 	return spec

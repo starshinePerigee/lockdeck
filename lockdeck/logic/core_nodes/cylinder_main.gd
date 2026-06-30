@@ -187,10 +187,15 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 func execute_key(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].key_set = true
 
-func execute_break(result: ResultSpec):
+func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
 #endregion
+
+## Redraws the pins by reloading the pin specs.
+## Useful if you're monkeying with .pins directly
+func redraw_pins() -> void:
+	$Cylinders.set_pin_specs(pins)
 
 ## Perform the end of hand/round/turn fall step, resetting non-bound pins
 ## to their default state or whatever mechanic I wind up deciding.
