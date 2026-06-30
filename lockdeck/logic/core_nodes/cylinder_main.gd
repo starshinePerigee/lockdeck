@@ -94,6 +94,7 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = fa
 		if not skip:
 			var depth := pin.current_depth()
 			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+			pin.reveal_position()
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.

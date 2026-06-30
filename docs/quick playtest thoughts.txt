@@ -7,3 +7,5 @@ It's possible to be stuck in a no-win situation where your deck doesn't have eno
 Consider letting jams persist over end of turn, which would help with (solve?) the above. Or rethink end turn in general - right now it's very harsh.
 
 The starter deck is deeply incapable of managing a 4-pin difficulty 1 level without hints.
+
+Should crush clear existing jam?

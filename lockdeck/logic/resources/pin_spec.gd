@@ -46,10 +46,14 @@ func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
 	pin_position += relative
 	if pin_position >= PIN_DEPTH_COUNT or pin_position < 0:
 		pin_position = clamp(pin_position, 0, PIN_DEPTH_COUNT - 1)
-		oob = true
-	
-	reveals[pin_position] = true
+		oob = true	
 	return oob
+
+## Reveals a depth (or the current depth if none is provided)
+func reveal_position(pos: int = -1) -> void:
+	if pos == -1:
+		pos = pin_position
+	reveals[pos] = true
 
 ## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
 func add_jam(value: int) -> bool:

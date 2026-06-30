@@ -42,6 +42,9 @@ static var FORCE := Depths.new("force", Effects.FORCE, 2)
 ## Jam effect
 static var JAM := Depths.new("jam", Effects.JAM, 3)
 
+## Skip effect
+static var SKIP := Depths.new("skip", Effects.SKIP, 3)
+
 ## Unlock depth, needed to win.
 static var KEY := Depths.new("key", Effects.KEY)
 
