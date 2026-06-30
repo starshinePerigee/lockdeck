@@ -112,7 +112,7 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 		var next_effect := ex.get_next_effect()
 #		print("%s: Evaluating %s at %s" % [iterations, next_effect.flavor.effect_name, next_effect.realized_pin])
 		if next_effect.flavor == Effects.END_EXECUTION:
-			print("Completed executiona after %s iterations." % iterations)
+#			print("Completed execution after %s iterations." % iterations)
 			break
 		evaluate_pin(next_effect, ex, result)
 	

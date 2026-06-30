@@ -90,7 +90,7 @@ func break_pick(card: CardSpec) -> void:
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
-	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
+#	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
