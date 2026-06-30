@@ -20,11 +20,11 @@ const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 var depth_refs: Array[Depth] = []
 
 #region display logic
-## If this pin is "set" - aka, jammed and won't fall at the next fall step.
-@export var pin_set: bool = false:
+## If this pin is "locked" - displayed as greyed out.
+@export var pin_locked: bool = false:
 	set(v):
-		pin_set = v
-		if pin_set:
+		pin_locked = v
+		if pin_locked:
 			$Stack.modulate = Color("848484")
 		else:
 			$Stack.modulate = Color("ffffff")
@@ -67,28 +67,8 @@ var depth_refs: Array[Depth] = []
 		if not is_node_ready():
 			await ready
 		
-		if jam_count > 1:
-			jam_visible = true
+		$JamIndicator.visible = jam_count > 1
 		$JamIndicator/JamCount.text = str(jam_count)
-
-@export var jam_visible: bool = false:
-	set(v):
-		jam_visible = v
-		
-		if not is_node_ready():
-			await ready
-		
-		$JamIndicator.visible = jam_visible
-
-## If the unlock indicator is visible.
-@export var key_set: bool = false:
-	set(v):
-		key_set = v
-		
-		if not is_node_ready():
-			await ready
-		
-		$KeyIndicator.visible = key_set
 
 ## Load a PinSpec into this pin, setting all parameters.
 func load_spec(pin_spec: PinSpec) -> void:
@@ -101,9 +81,8 @@ func load_spec(pin_spec: PinSpec) -> void:
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
-	jam_visible = pin_spec.jam_visible
-	pin_set = pin_spec.pin_set
-	key_set = pin_spec.key_set
+	pin_locked = pin_spec.is_jammed()
+	$KeyIndicator.visible = pin_spec.is_solved()
 
 #endregion
 

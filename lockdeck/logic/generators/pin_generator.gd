@@ -49,7 +49,6 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 		if spec.depths[p] == Depths.EMPTY:
 			spec.depths[p] = get_filler()
 	
-	spec.pin_set = false
 	return spec
 
 static func build_test_lock(cylinders: int = 4) -> Array[PinSpec]:

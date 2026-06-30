@@ -8,10 +8,7 @@ func set_testpos() -> void:
 	pins[1].pin_position = 1
 	pins[1].jam_count = 2
 	pins[1].jam_visible = true
-	pins[1].pin_set = true
-	pins[1].key_set = true
 	pins[2].pin_position = 2
-	pins[2].key_set = true
 	pins[3].pin_position = 4
 	pins[4].pin_position = PinSpec.PIN_DEPTH_COUNT - 1
 	$CylinderMain.load_new_pins(pins)

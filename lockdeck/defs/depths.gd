@@ -65,3 +65,10 @@ static var REST := Depths.new("reset", Effects.RESET)
 
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new("warn", Effects.EMPTY)
+
+
+## Holds all depths which count as solves
+static var SOLVE_DEPTHS: Array[Depths] = [
+	FINAL, 
+	KEY
+]
