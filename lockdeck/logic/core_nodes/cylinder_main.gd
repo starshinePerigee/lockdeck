@@ -84,7 +84,11 @@ class Execution:
 ## Note that this only trips jam once, skips intermediate depths, etc.
 func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	var pin := pins[pin_index]
-	if pin.advance_pin(advance_by):
+	if pin.is_jammed():
+		if advance_by > 1:
+			push_warning("Advancing by more than one, could have weird jam interactions!")
+		pin.add_jam(-advance_by)
+	elif pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
 		var depth := pin.current_depth()
@@ -129,7 +133,7 @@ func evaluate_pin(
 		push_error(
 			"Move effect was not decomposed: %s with value %s" 
 			% [effect.flavor.effect_name, effect.value]
-		) 
+		)
 	
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 

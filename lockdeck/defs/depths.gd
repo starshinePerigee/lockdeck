@@ -40,10 +40,7 @@ static var EMPTY := Depths.new("empty", Effects.EMPTY)
 static var FORCE := Depths.new("force", Effects.FORCE, 2)
 
 ## Jam effect
-static var JAM := Depths.new("jam", Effects.JAM, 5)
-
-## Returned when a pin is jammed
-static var JAMMED := Depths.new("jammed", Effects.EMPTY)
+static var JAM := Depths.new("jam", Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
 static var KEY := Depths.new("key", Effects.KEY)
