@@ -25,18 +25,18 @@ offset_bottom = 357.0
 rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 137.0
-offset_top = 72.0
-offset_right = 137.0
-offset_bottom = 72.0
+offset_left = 178.0
+offset_top = 60.0
+offset_right = 178.0
+offset_bottom = 60.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(608, 608)
 anchors_preset = 0
-offset_left = 256.0
-offset_top = -64.0
-offset_right = 864.0
-offset_bottom = 544.0
+offset_left = 320.0
+offset_top = -48.0
+offset_right = 928.0
+offset_bottom = 560.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 offset_left = 16.0
@@ -46,16 +46,16 @@ offset_bottom = 471.0
 
 [node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
 layout_mode = 1
-offset_left = -17.0
-offset_top = 539.0
-offset_right = -385.0
-offset_bottom = -69.0
+offset_left = 66.0
+offset_top = 441.0
+offset_right = -302.0
+offset_bottom = -167.0
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 33.0
+offset_left = 16.0
 offset_top = 367.0
-offset_right = 545.0
+offset_right = 528.0
 offset_bottom = 527.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]

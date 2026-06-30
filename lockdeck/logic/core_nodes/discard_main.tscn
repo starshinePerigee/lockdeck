@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://5io01qsv1qby"]
 
-[ext_resource type="Script" uid="uid://cbws7n2egd8ao" path="res://logic/core_nodes/discard_main.gd" id="1_0x64h"]
+[ext_resource type="Script" path="res://logic/core_nodes/discard_main.gd" id="1_0x64h"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_50n1f"]
 
 [node name="DiscardMain" type="Control"]

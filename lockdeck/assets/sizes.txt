@@ -1,7 +1,10 @@
 pin width: 96 (from 120)
 pin height: 32 (from 35)
 
-8 pins + base = 256 + 8 + 16 + 8 = 288 * 2 = 576
+9 depths + 8 px cap = 32 * 9 + 8 = 296
+motion = 8 * 32 = 256
+full pin = 560
+
 
 icon width: 16
 7 icons + 8 px border * 2 = 128
