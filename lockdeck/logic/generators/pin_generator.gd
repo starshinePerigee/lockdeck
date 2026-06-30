@@ -8,7 +8,9 @@ static func get_known_test_pin() -> PinSpec:
 	spec.depths[6] = Depths.BREAK
 	return spec
 
-static func get_random_base_pin() -> PinSpec:
+static var FILLER_DEPTHS: Array[Depths] = [Depths.FORCE, Depths.JAM]
+
+static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, 9):
 		spec.depths[i] = Depths.EMPTY
@@ -18,6 +20,14 @@ static func get_random_base_pin() -> PinSpec:
 	
 	if key_loc < 8:
 		spec.depths[randi_range(key_loc + 1, 8)] = Depths.BREAK
+		
+	for i in range(randi_range(0, difficulty_mod)):
+		if spec.depths[i] == Depths.EMPTY:
+			spec.depths[i] = Depths.BREAK
+	
+	for i in range(randi_range(0, 5)):
+		if spec.depths[i] == Depths.EMPTY:
+			spec.depths[i] = FILLER_DEPTHS[randi_range(0, len(FILLER_DEPTHS) - 1)]
 	
 	spec.pin_set = false
 	return spec
