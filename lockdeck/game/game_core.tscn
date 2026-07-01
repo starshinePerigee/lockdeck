@@ -95,9 +95,9 @@ offset_bottom = 498.0
 [node name="ViewMoreButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 163.0
-offset_top = 6.0
+offset_top = 7.0
 offset_right = 211.0
-offset_bottom = 54.0
+offset_bottom = 55.0
 texture_normal = ExtResource("6_rrevw")
 texture_pressed = ExtResource("11_tmhk6")
 texture_hover = ExtResource("12_q6sjy")
@@ -106,13 +106,18 @@ texture_click_mask = ExtResource("13_q6sjy")
 
 [node name="Label" type="Label" parent="ViewMoreButton"]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 24.0
-offset_right = 44.0
-offset_bottom = 37.0
+offset_left = -16.0
+offset_top = -5.0
+offset_right = 64.0
+offset_bottom = 50.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 1
-text = "View all"
+theme_override_constants/line_spacing = -8
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "View
+all"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GoBackButton" type="TextureButton" parent="."]
 visible = false
@@ -130,11 +135,16 @@ texture_click_mask = ExtResource("13_q6sjy")
 
 [node name="Label" type="Label" parent="GoBackButton"]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 24.0
-offset_right = 84.0
-offset_bottom = 37.0
+offset_left = 45.0
+offset_top = 52.0
+offset_right = 89.0
+offset_bottom = 107.0
 scale = Vector2(-1, -1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 1
-text = "Go back"
+theme_override_constants/line_spacing = -8
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "Go
+back"
+horizontal_alignment = 1
+vertical_alignment = 1
