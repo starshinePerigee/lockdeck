@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=15 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
+[ext_resource type="Texture2D" uid="uid://bnm1inbbboj7h" path="res://assets/game/view_more_button.png" id="6_rrevw"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
+[ext_resource type="Texture2D" uid="uid://c6jyy60nmq1pj" path="res://assets/game/view_more_button_press.png" id="11_tmhk6"]
+[ext_resource type="Texture2D" uid="uid://gf7u34sk1dp3" path="res://assets/game/view_more_button_hover.png" id="12_q6sjy"]
+[ext_resource type="Texture2D" uid="uid://o6otmtguvik4" path="res://assets/game/view_more_button_disabled.png" id="13_o5sbf"]
+[ext_resource type="BitMap" uid="uid://gx3q1vcycaym" path="res://assets/game/view_more_button_map.bmp" id="13_q6sjy"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -86,3 +91,50 @@ offset_left = 780.0
 offset_top = 498.0
 offset_right = 780.0
 offset_bottom = 498.0
+
+[node name="ViewMoreButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 6.0
+offset_right = 211.0
+offset_bottom = 54.0
+texture_normal = ExtResource("6_rrevw")
+texture_pressed = ExtResource("11_tmhk6")
+texture_hover = ExtResource("12_q6sjy")
+texture_disabled = ExtResource("13_o5sbf")
+texture_click_mask = ExtResource("13_q6sjy")
+
+[node name="Label" type="Label" parent="ViewMoreButton"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 24.0
+offset_right = 44.0
+offset_bottom = 37.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "View all"
+
+[node name="GoBackButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 211.0
+offset_top = 54.0
+offset_right = 259.0
+offset_bottom = 102.0
+scale = Vector2(-1, -1)
+texture_normal = ExtResource("6_rrevw")
+texture_pressed = ExtResource("11_tmhk6")
+texture_hover = ExtResource("12_q6sjy")
+texture_disabled = ExtResource("13_o5sbf")
+texture_click_mask = ExtResource("13_q6sjy")
+
+[node name="Label" type="Label" parent="GoBackButton"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 24.0
+offset_right = 84.0
+offset_bottom = 37.0
+scale = Vector2(-1, -1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "Go back"

@@ -13,7 +13,8 @@ signal game_win
 enum InputState {
 	INACTIVE,
 	ACTIVE_SELECT,
-	ACTIVE_DRAG
+	ACTIVE_DRAG,
+	VIEW_ALL
 }
 var current_state := InputState.INACTIVE
 
@@ -32,14 +33,32 @@ func set_state(state: InputState) -> void:
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
+			$HandMain/Hand.enable_all()
+			$LockBody/CylinderMain.position = Vector2(0, 0)
+			$ViewMoreButton.disabled = false
+			$ViewMoreButton.visible = true
+			$GoBackButton.visible = false
+			$CountdownMain/Button.disabled = false
 		InputState.ACTIVE_SELECT:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
+			$ViewMoreButton.disabled = true
 		InputState.ACTIVE_DRAG:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
+			$ViewMoreButton.disabled = true
+		InputState.VIEW_ALL:
+			$LockBody/CylinderMain.global_position = Vector2(
+				$LockBody/CylinderMain.global_position.x, 16
+			)
+			$HandMain/Hand.hide_hand()
+			$HandMain/Hand.disable_all()
+			$ViewMoreButton.visible = false
+			$GoBackButton.visible = true
+			$CountdownMain/Button.disabled = true
+
 
 func pick_selected(card: CardSpec) -> void:
 	if current_state == InputState.INACTIVE:
@@ -76,7 +95,7 @@ func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
 		do_pick(card, target)
 
 func pick_activated(space_index: int) -> void:
-	if current_state == InputState.INACTIVE:
+	if not current_state in [InputState.ACTIVE_SELECT, InputState.ACTIVE_DRAG]:
 		return
 	do_pick(active_card, space_index)
 
@@ -86,6 +105,14 @@ func break_pick(card: CardSpec) -> void:
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
 		game_fail.emit()
+
+func view_all_pins() -> void:
+	if current_state != InputState.INACTIVE:
+		return
+	set_state(InputState.VIEW_ALL)
+
+func return_from_view_all() -> void:
+	set_state(InputState.INACTIVE)
 
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
@@ -147,6 +174,8 @@ func _ready() -> void:
 	$HandMain.hand_deselected.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
 	$HandMain.hand_dropped.connect(pick_dropped)
+	$ViewMoreButton.pressed.connect(view_all_pins)
+	$GoBackButton.pressed.connect(return_from_view_all)
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

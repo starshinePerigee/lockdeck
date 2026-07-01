@@ -9,7 +9,7 @@ signal card_dropped(card_area: Area2D, card_index: int)
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
-const HIDE_OFFSET = 96
+const HIDE_OFFSET = 102
 
 var current_card: int = -1
 
@@ -17,19 +17,31 @@ var current_card: int = -1
 func get_space() -> CardSpace:
 	return $Hand.get_children()[current_card]
 
+func _dis_en_able_card(card_index: int, enable: bool) -> void:
+	var space := $Hand.get_child(card_index)
+	
+	var filter := Control.MOUSE_FILTER_IGNORE
+	if enable:
+		filter = Control.MOUSE_FILTER_STOP
+	
+	space.mouse_filter = filter
+	space.get_node("PickCard").mouse_filter = filter
+
+## Disable all card activations
+func disable_all() -> void:
+	for i in len($Hand.get_children()):
+		_dis_en_able_card(i, false)
+
 ## Lock out all other card spaces while dragging
 func _disable_others(card_index: int) -> void:
 	for i in len($Hand.get_children()):
 		if i != card_index:
-			var space := $Hand.get_child(i)
-			space.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_dis_en_able_card(i, false)
 
 ## Re-enable all other cards
-func _enable_all() -> void:
-	for space in $Hand.get_children():
-		space.mouse_filter = Control.MOUSE_FILTER_STOP
-		space.get_node("PickCard").mouse_filter = Control.MOUSE_FILTER_STOP
+func enable_all() -> void:
+	for i in len($Hand.get_children()):
+		_dis_en_able_card(i, true)
 
 ## Set the current card to card_index
 func card_select(card_index: int) -> void:
@@ -66,7 +78,7 @@ func card_pick_up(card_area: Area2D, card_index: int) -> void:
 func card_drop(card_area: Area2D, card_index: int) -> void:
 	card_dropped.emit(card_area, card_index)
 	card_deselect()
-	_enable_all()
+	enable_all()
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
