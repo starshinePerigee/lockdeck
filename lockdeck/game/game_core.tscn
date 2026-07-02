@@ -79,11 +79,10 @@ offset_bottom = 227.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 940.0
-offset_top = 343.0
-offset_right = 940.0
-offset_bottom = 343.0
-rotation = 1.5708
+offset_left = 787.0
+offset_top = 352.0
+offset_right = 787.0
+offset_bottom = 352.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1

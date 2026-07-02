@@ -16,3 +16,4 @@ signal pile_pressed
 
 func _ready():
 	$Button.pressed.connect(pile_pressed.emit)
+	count = 0

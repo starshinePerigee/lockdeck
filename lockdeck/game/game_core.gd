@@ -22,8 +22,6 @@ var current_state := InputState.INACTIVE
 var active_card: CardSpec
 #endregion
 
-var card_is_selected := false
-
 func set_state(state: InputState) -> void:
 	if current_state == state:
 		return
@@ -39,16 +37,21 @@ func set_state(state: InputState) -> void:
 			$ViewMoreButton.visible = true
 			$GoBackButton.visible = false
 			$CountdownMain/Button.disabled = false
+			$DiscardMain.show_icon = false
+			$DiscardMain.listening_for_mouse = false
 		InputState.ACTIVE_SELECT:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
 			$ViewMoreButton.disabled = true
+			$DiscardMain.show_icon = true
+			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			$Notifications.clear()
 			$ViewMoreButton.disabled = true
+			$DiscardMain.show_icon = true
 		InputState.VIEW_ALL:
 			$LockBody/CylinderMain.global_position = Vector2(
 				$LockBody/CylinderMain.global_position.x, 16
@@ -99,6 +102,11 @@ func pick_activated(space_index: int) -> void:
 		return
 	do_pick(active_card, space_index)
 
+func discard_clicked() -> void:
+	if current_state != InputState.ACTIVE_SELECT:
+		return
+	discard_pick()
+
 func break_pick(card: CardSpec) -> void:
 	$TrashMain.add_card(card)
 	$Notifications.notify(Notifications.BREAK)
@@ -133,6 +141,13 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	
 	draw_to_five()
 	$CountdownMain.highlight = $HandMain.count() == 0
+
+func discard_pick() -> void:
+	$HandMain.deselect()
+	$HandMain.remove_card(active_card)
+	$DiscardMain.add_card(active_card)
+	draw_to_five()
+	set_state(InputState.INACTIVE)
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
@@ -176,6 +191,7 @@ func _ready() -> void:
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$ViewMoreButton.pressed.connect(view_all_pins)
 	$GoBackButton.pressed.connect(return_from_view_all)
+	$DiscardMain.discard_pressed.connect(discard_clicked)
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)
