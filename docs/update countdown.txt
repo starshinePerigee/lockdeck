@@ -4,7 +4,7 @@ x update pin generator:
 -x key
 -x jam
 -x force
-- pick discard option
+x pick discard option
 x fix jam logic
 x fix end turn
 - placeholder top level scene

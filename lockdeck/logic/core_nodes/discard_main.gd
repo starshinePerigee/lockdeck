@@ -24,6 +24,7 @@ signal discard_pressed()
 		else:
 			$DiscardIcon.texture = DISCARD_DESELECTED
 
+## Both listening_for_ variables might be unnecessary actually
 @export var listening_for_mouse: bool = false
 
 func do_mouse_enter() -> void:
@@ -33,6 +34,19 @@ func do_mouse_enter() -> void:
 func do_mouse_exit() -> void:
 	if listening_for_mouse:
 		icon_selected = false
+
+@export var listening_for_drag: bool = false
+
+func _handle_enter_exit(area: Area2D, entered: bool) -> void:
+	if not listening_for_drag:
+		return
+	var parent := area.get_parent()
+	if parent is PickCard:
+		icon_selected = entered
+
+## Returns true a a card was dragged in this area
+func is_dragged_into() -> bool:
+	return listening_for_drag and icon_selected
 
 func count() -> int:
 	return len(cards)
@@ -59,3 +73,5 @@ func _ready() -> void:
 	$CardPile/Button.mouse_exited.connect(do_mouse_exit)
 	$CardPile/Label.rotation = deg_to_rad(-90)
 	$CardPile/Label.position = Vector2(-20, 145)
+	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
+	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))

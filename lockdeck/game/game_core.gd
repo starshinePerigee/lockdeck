@@ -52,6 +52,7 @@ func set_state(state: InputState) -> void:
 			$Notifications.clear()
 			$ViewMoreButton.disabled = true
 			$DiscardMain.show_icon = true
+			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
 			$LockBody/CylinderMain.global_position = Vector2(
 				$LockBody/CylinderMain.global_position.x, 16
@@ -91,11 +92,13 @@ func pin_unhovered():
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_stow()
 
-func pick_dropped(card_area: Area2D, card: CardSpec) -> void:
-	set_state(InputState.INACTIVE)
+func pick_dropped(_card_area: Area2D, card: CardSpec) -> void:
 	var target: int = $LockBody/CylinderMain.get_current_drag_target()
 	if target >= 0:
 		do_pick(card, target)
+	elif $DiscardMain.is_dragged_into():
+		discard_pick()
+	set_state(InputState.INACTIVE)
 
 func pick_activated(space_index: int) -> void:
 	if not current_state in [InputState.ACTIVE_SELECT, InputState.ACTIVE_DRAG]:
