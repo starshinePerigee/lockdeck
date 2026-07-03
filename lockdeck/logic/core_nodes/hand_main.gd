@@ -10,6 +10,9 @@ signal hand_deselected()
 ## Raised when a card is started dragging
 signal hand_dragged(card_area: Area2D, card: CardSpec)
 
+## Raised when a card is dragged a significant distance
+signal hand_super_dragged()
+
 ## Raised when a dragged card is dropped
 signal hand_dropped(card_area: Area2D, card: CardSpec)
 
@@ -75,4 +78,5 @@ func _ready() -> void:
 	$Hand.card_selected.connect(_handle_select)
 	$Hand.card_deselected.connect(_handle_deselect)
 	$Hand.card_dragged.connect(_handle_pick_up)
+	$Hand.card_definitive_dragged.connect(hand_super_dragged.emit)
 	$Hand.card_dropped.connect(_handle_drop)

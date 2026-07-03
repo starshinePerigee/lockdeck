@@ -89,6 +89,9 @@ func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
 	set_state(InputState.ACTIVE_DRAG)
 	active_card = card
 
+func pick_superdragged():
+	$LockBody/CylinderMain/Cylinders.force_update()
+
 func pin_hovered(pin_index):
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_index(pin_index)
@@ -225,6 +228,7 @@ func _ready() -> void:
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_deselected.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
+	$HandMain.hand_super_dragged.connect(pick_superdragged)
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$ViewMoreButton.pressed.connect(view_all_pins)
 	$GoBackButton.pressed.connect(return_from_view_all)

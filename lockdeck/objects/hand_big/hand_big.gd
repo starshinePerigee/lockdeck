@@ -4,12 +4,13 @@ extends Control
 signal card_selected(card_index: int)
 signal card_deselected(card_index: int)
 signal card_dragged(card_area: Area2D, card_index: int)
+signal card_definitive_dragged()
 signal card_dropped(card_area: Area2D, card_index: int)
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
-const HIDE_OFFSET = 102
+const HIDE_OFFSET := 102
 
 var current_card: int = -1
 
@@ -105,6 +106,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		$Hand.add_child(space)
 		space.card_tapped.connect(card_tap.bind(i))
 		space.card_picked_up.connect(card_pick_up.bind(i))
+		space.drag_definitive.connect(card_definitive_dragged.emit)
 		space.card_dropped.connect(card_drop.bind(i))
 
 	var sep_index := clampi(

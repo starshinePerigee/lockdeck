@@ -9,11 +9,19 @@ signal card_clicked()
 signal card_tapped()
 ## Drag started
 signal card_picked_up(Area2D)
+## Drag is significant
+signal drag_definitive()
 ## Drag eneded
 signal card_dropped(Area2D)
 
+enum DragState {
+	NOT,
+	DRAG,
+	SUPERDRAG
+}
+
+var _dragging := DragState.NOT
 var _active := false
-var _dragging := false
 var start_position := Vector2()
 var mouse_start_position := Vector2()
 
@@ -23,7 +31,8 @@ const TEXTURE_EMPTY := preload("res://assets/card/empty.png")
 const CARD_SCENE := preload("res://objects/card/pick_card.tscn")
 
 const DRAG_DISTANCE := 25
-const HIGHLIGHT_OFFSET = 64
+const SUPER_DRAG_DISTANCE := 60
+const HIGHLIGHT_OFFSET := 64
 
 ## True if the card in the space is draggable
 @export var draggable: bool = false
@@ -87,13 +96,13 @@ func _start_click():
 
 func _end_click():
 	if _active:
-		if not _dragging:
+		if _dragging == DragState.NOT:
 			card_tapped.emit()
 		else:
 			card_dropped.emit($PickCard/Area2D)
 			call_deferred("snapback")
 	_active = false
-	_dragging = false
+	_dragging = DragState.NOT
 
 func snapback():
 	$PickCard.set_global_position(start_position)
@@ -114,11 +123,15 @@ func _set_texture():
 func _process(_delta: float) -> void:
 	if _active:
 		var curr_mouse_position := get_global_mouse_position()
-		if not _dragging and draggable:
+		if _dragging == DragState.NOT and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
-				_dragging = true
+				_dragging = DragState.DRAG
 				card_picked_up.emit($PickCard/Area2D)
-		if _dragging:
+		if _dragging == DragState.DRAG:
+			if curr_mouse_position.distance_to(mouse_start_position) >= SUPER_DRAG_DISTANCE:
+				_dragging = DragState.SUPERDRAG
+				drag_definitive.emit()
+		if _dragging != DragState.NOT:
 			$PickCard.set_global_position(
 				start_position + get_global_mouse_position() - mouse_start_position
 			)

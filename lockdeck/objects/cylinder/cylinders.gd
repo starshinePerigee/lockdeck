@@ -74,6 +74,12 @@ func current_active_pin() -> int:
 		return -1
 	return _active_pins[0]
 
+func force_update() -> void:
+	if len(_active_pins) > 0:
+		# grab the middle one
+		@warning_ignore("integer_division")
+		new_pin_hovered.emit(_active_pins[len(_active_pins) / 2])
+
 # Becasue mouse regions don't overlap (the way card drag areas do) 
 # the logic is a little different:
 var _last_cursor: int = -1
