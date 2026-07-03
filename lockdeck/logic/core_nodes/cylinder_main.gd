@@ -180,8 +180,9 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	for i in range(effect.value):
 		var pin := pins[effect.realized_pin]
 		var oob := pin.advance_pin(1)
+		pin.reveal_position()
 		
-		if oob or pin.current_depth() == Depths.KEY:
+		if oob or pin.current_depth() == Depths.FINAL:
 			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 			return
 		else:

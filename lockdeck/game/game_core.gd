@@ -5,10 +5,13 @@ signal game_win
 
 #region game state variables
 @export var CYLINDER_COUNT := 4
+@export var DIFFICULTY_MOD := 1
 @export var DECK_COUNT := 10
 @export var HAND_SIZE := 3
 @export var COUNTDOWN_TIME := 2
 @export var REVEAL_ALL := false
+
+var DEBUG_MODE := false
 
 enum InputState {
 	INACTIVE,
@@ -32,6 +35,7 @@ func set_state(state: InputState) -> void:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
 			$HandMain/Hand.enable_all()
+			$HandMain.deselect()
 			$LockBody/CylinderMain.position = Vector2(0, 0)
 			$ViewMoreButton.disabled = false
 			$ViewMoreButton.visible = true
@@ -40,20 +44,21 @@ func set_state(state: InputState) -> void:
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.ACTIVE_SELECT:
+			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$Notifications.clear()
 			$ViewMoreButton.disabled = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
+			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$Notifications.clear()
 			$ViewMoreButton.disabled = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
+			$Notifications.clear()
 			$LockBody/CylinderMain.global_position = Vector2(
 				$LockBody/CylinderMain.global_position.x, 16
 			)
@@ -125,10 +130,15 @@ func view_all_pins() -> void:
 func return_from_view_all() -> void:
 	set_state(InputState.INACTIVE)
 
+## the background is clicked so back out of whatever:
+func bg_cancel() -> void:
+	set_state(InputState.INACTIVE)
+
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
-#	print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
+	if DEBUG_MODE:
+		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
@@ -177,14 +187,38 @@ func reload_deck() -> void:
 		$Notifications.notify(Notifications.RELOAD)
 
 ## perform the end of turn step once the player clicks the discard (if it's valid)
-func end_turn() -> void:
-	$Notifications.clear()
+func end_turn(count_down: bool = true) -> void:
 	$CountdownMain.highlight = false
-	$CountdownMain.count_down()
+	if count_down:
+		$CountdownMain.count_down()
 	$LockBody/CylinderMain.reset_all_pins()
 	discard_hand()
 	reload_deck()
 	draw_new_hand()
+	set_state(InputState.INACTIVE)
+
+## Loads the starter hand
+func load_starter_deck() -> void:
+	discard_hand()
+	reload_deck()
+	
+	$DeckMain.clear_all()
+	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
+	print("Loaded default %s cards." % DECK_COUNT)
+
+func add_random_cards(count: int = 1) -> void:
+	var cards := PickGenerator.get_many_base_cards(2)
+	$DeckMain.add_cards(cards)
+	for card in cards:
+		print("Added new pick: %s." % card.pick_name)
+
+func restart() -> void:
+	$LockBody/CylinderMain.load_new_pins(
+		PinGenerator.build_real_lock(CYLINDER_COUNT, DIFFICULTY_MOD)
+	)
+	$CountdownMain.set_count(COUNTDOWN_TIME)
+	end_turn(false)
+	$Notifications.clear()
 
 func _ready() -> void:
 	$CountdownMain.countdown_pressed.connect(end_turn)
@@ -195,6 +229,7 @@ func _ready() -> void:
 	$ViewMoreButton.pressed.connect(view_all_pins)
 	$GoBackButton.pressed.connect(return_from_view_all)
 	$DiscardMain.discard_pressed.connect(discard_clicked)
+	$BackgroundClick.pressed.connect(bg_cancel)
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)
@@ -202,9 +237,9 @@ func _ready() -> void:
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_cursored.connect(pin_uncursored)
 	$LockBody/CylinderMain/Cylinders.pin_activated.connect(pick_activated)
 
-	$Notifications.clear()
-	$LockBody/CylinderMain.load_new_pins(PinGenerator.build_real_lock(CYLINDER_COUNT, 1))
-	$CountdownMain.set_count(COUNTDOWN_TIME)
-
-	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
-	draw_new_hand()
+	# if name == "__main__:
+	if get_tree().current_scene == self:
+		print("Running in debug mode.")
+		DEBUG_MODE = true
+		$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
+		restart()

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://csinn0yt64xam"]
 
 [ext_resource type="Script" uid="uid://ceywqkqroboov" path="res://game/main.gd" id="1_emt18"]
-[ext_resource type="Texture2D" uid="uid://bwucmrq0cslx3" path="res://assets/bg.png" id="1_xtpaf"]
 [ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/game_core.tscn" id="2_emt18"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vop5m"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -18,25 +18,38 @@ z_index = -1000
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_xtpaf")
+texture = ExtResource("2_vop5m")
 
 [node name="GameCore" parent="." instance=ExtResource("2_emt18")]
+layout_mode = 1
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1650.0
-offset_top = 38.0
-offset_right = 1868.0
-offset_bottom = 129.0
-theme_override_font_sizes/font_size = 60
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
 text = "Restart"
 
-[node name="NextLevelButton" type="Button" parent="."]
+[node name="ColorRect" type="ColorRect" parent="RestartButton"]
+visible = false
+z_index = -1
 layout_mode = 0
-offset_left = 1655.0
-offset_top = 300.0
-offset_right = 1873.0
-offset_bottom = 391.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 80.0
+offset_bottom = 40.0
+mouse_filter = 1
+color = Color(0.439216, 0.196078, 1, 1)
+
+[node name="NextLevelButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 371.0
+offset_top = 223.0
+offset_right = 589.0
+offset_bottom = 314.0
 theme_override_font_sizes/font_size = 60
 disabled = true
 text = "Next"

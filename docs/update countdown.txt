@@ -7,11 +7,16 @@ x update pin generator:
 x pick discard option
 x fix jam logic
 x fix end turn
-- placeholder top level scene
-- superplaceholder bg
+x placeholder top level scene
+x superplaceholder bg
 - jam holds position over end turn
+x view all clears notifs
+- tip picks
+- global settings object and debug mode
+- fix drag immediately onto pin
 
 first polish:
+- double check key depth logic (works if currently)
 - end turn button
 -- end turn button highlights
 - death round logic

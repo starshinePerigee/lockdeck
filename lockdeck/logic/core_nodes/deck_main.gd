@@ -27,6 +27,10 @@ func add_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
 	redraw()
 
+## Remove all cards
+func clear_all() -> void:
+	cards.clear()
+
 ## Redraw the deck
 func redraw():
 	$CardPile.count = len(cards)

@@ -68,9 +68,9 @@ func reveal_pin(value: int) -> void:
 	if jam_count > 0:
 		return
 	
-	var reveal_position := pin_position + value
-	if not (reveal_position >= PIN_DEPTH_COUNT or pin_position < 0):
-		reveals[reveal_position] = true
+	var target_position := pin_position + value
+	if not (target_position >= PIN_DEPTH_COUNT or pin_position < 0):
+		reveals[target_position] = true
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
