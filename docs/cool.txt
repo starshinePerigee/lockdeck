@@ -1,15 +1,5 @@
-Help:
-- hovering a pick card pops up a reminder box which shows tooltips for all depths on the card
-- hovering a depth pops up a tooltip on what it does
-
-Sound:
-- bgm is fireplace ambience, random strums
-- effects are tied to signals
-
-Cool:
 - can broken picks pop off the card and accumulate at the bottom of the screen?
 - can you click and drag broken picks?
-- also gems and coins are rewards for each level, can roll and bounce around
 - one you unlock, items fall from above as physics objects
 - when you take a loot, the popup dialogue is random from like "take!", "yoink!", "don't mind if I do!"
 
@@ -17,16 +7,3 @@ Cool:
 -- pick is removed from the card
 
 - effects are handles - pick is handle + card. When pick breaks both fly off
-
-Animations
-- all pins use the same base color, and icons get drawn on as an animation
-- hints also get drawn on
-- Victory animation: fades the UI, plays unlock, so you don't need to deal with splitting the UI elements
-- hints: character by character, wipe out
-- depth effect animation
-- candle flicker (4 frame, throw off sparks)
-
-Meta
-- pick modification
-- permanent pick effects (downgrade / upgrade)
-- randomly generated picks

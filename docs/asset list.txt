@@ -1,3 +1,6 @@
+Art
+- font style objects
+- revisit font
 x 32 color palette
 - You need pick art for like 10 picks.
 - 10ish depths with art, icon, preview, animation, and sound effect
@@ -10,13 +13,29 @@ x card templating.
 - loot get sound
 - coin (with animation and sound)
 % candle (with animation and sound)
-- background
+- chest background
 - shopkeep ui
 - deck ui
 - lock body
+- keyway
 - gears
-- opening animation
 - notification art (??) and effects (?)
 - item get pop ups (with sound)
 - splash screen
 - back of card art
+
+Animations
+- opening animation
+- pin motion
+- broken pick flicks
+
+cooler animations
+- all pins use the same base color, and icons get drawn on as an animation
+- hints also get drawn on
+- hints: character by character, wipe out
+- depth effect animation
+- candle flicker (4 frame, throw off sparks)
+
+Sound
+- bgm is fireplace ambience, random strums
+- effects are tied to signals

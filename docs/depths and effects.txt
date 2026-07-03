@@ -9,7 +9,7 @@ xx crush
 Depths
 xx force
 xx jam
--- pull (move back four)
+xx pull (move back four)
 
 x- hint  (next danger or sets pin to clear)
 xx warn (break is after this depth)
