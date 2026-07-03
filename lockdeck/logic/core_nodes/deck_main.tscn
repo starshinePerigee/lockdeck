@@ -16,3 +16,12 @@ script = ExtResource("1_isaa4")
 layout_mode = 0
 texture = null
 highlighted = null
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 170.0
+offset_right = 125.0
+offset_bottom = 196.0
+theme_override_font_sizes/font_size = 32
+text = "Deck"
+horizontal_alignment = 1

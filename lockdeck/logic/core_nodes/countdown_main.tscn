@@ -37,4 +37,5 @@ offset_left = 30.0
 offset_top = 272.0
 offset_right = 108.0
 offset_bottom = 303.0
-text = "End Turn"
+text = "End turn
+and reset"

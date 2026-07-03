@@ -85,16 +85,16 @@ offset_bottom = 90.0
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
 offset_left = 787.0
-offset_top = 352.0
+offset_top = 337.0
 offset_right = 787.0
-offset_bottom = 352.0
+offset_bottom = 337.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
 offset_left = 780.0
-offset_top = 498.0
+offset_top = 511.0
 offset_right = 780.0
-offset_bottom = 498.0
+offset_bottom = 511.0
 
 [node name="ViewMoreButton" type="TextureButton" parent="."]
 layout_mode = 0
