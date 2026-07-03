@@ -1,3 +1,0 @@
-extra force / pull / skip (this pin or others) (1 or n value)
-reveal / warn (next, random, random other pin, key, or break)
-jam

@@ -1,6 +1,0 @@
-- after each pick, draw up to five cards
-- discard a card to "relax", doing the fall action
-- after a full deck, the candle burns
-
-- candle is a fixed hight for the entire game - not an issue at early stages, becomes an issue over time
-- two segments? (fresh, burning, extingished with skull/whisp smoke)

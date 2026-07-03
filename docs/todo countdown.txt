@@ -23,16 +23,16 @@ X hand rearranging
 X card discarding
 
 LAST MINUTE:
-- why is hand feeding backwards
-- rearrange is broke at limited
+X why is hand feeding backwards
+X rearrange is broke at limited
 X update card art
 X splash
 - top menu
 - tutorial
-- cylinders +
+X cylinders +
 
 META:
-- level generator
+X level generator
 - lockpick generator
 - lockpick modifier
 - level - deck loop

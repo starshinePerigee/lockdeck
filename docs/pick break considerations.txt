@@ -11,3 +11,31 @@ This does lead to potential issues where you intentionally break a pick to remov
 
 Decision: yes
 - between rounds, you can visit your deck and throw out any picks you don't like
+
+
+CONSIDER: Repairs
+
+maybe one of the last systems is repairs? after each round, you can repair any/all of your broken picks
+
+- from that round or forever?
+- cost increases with eqch repair
+- a system for permanently junking picks and/or sorting junk (picks whos repair cost is equal or greater to buying a new one)
+- or remove / adjust the shop
+
+is there a penalty for a huge deck or is that desired?
+
+Artifacts that repair picks: potions
+- repair one
+- repair 3 random
+- repair last two broken
+- reset repair cost
+
+Pick effects:
+- repair cost is always n (or repair cost starts at 0)
+- cant be repaired or upgraded (discard after round?)
+- breaks after use always (but cheap to repair?)
+
+bonus picks (lost after lock, cant be upgraded)
+- toothpick (1 coin, force / force / force force / force force / force force / jam jam)
+- needle (1 coin, force hint hint / hint hint)
+- nail (crush crush jam jam jam / crush crush jam jam jam)

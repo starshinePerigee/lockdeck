@@ -12,10 +12,17 @@ x superplaceholder bg
 - jam holds position over end turn
 x view all clears notifs
 x tip picks
-- global settings object and debug mode
-- fix drag immediately onto pin
 
 first polish:
+- version indicator
+- new depths:
+-- pull
+-- bind
+-- reset
+-- trap
+- global settings object and debug mode
+- fix drag immediately onto pin
+- overshot with two skips, broke pick, did not get solve
 - double check key depth logic (works if currently)
 - end turn button
 -- end turn button highlights
