@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3 uid="uid://df5nkc2k0nn2i"]
+
+[ext_resource type="Script" path="res://tests/test_hand_main.gd" id="1_7p8rp"]
+[ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="2_sbsmq"]
+[ext_resource type="PackedScene" uid="uid://slpfrt15iygb" path="res://objects/card/card_space.tscn" id="3_s35tu"]
+
+[node name="TestHandMain" type="Node2D"]
+script = ExtResource("1_7p8rp")
+
+[node name="HandMain" parent="." instance=ExtResource("2_sbsmq")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = 121.0
+offset_top = 39.0
+offset_right = 633.0
+offset_bottom = 199.0
+grow_vertical = 1
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="HandMain"]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 160.0
+mouse_filter = 2
+editor_only = false
+
+[node name="DrawButton" type="Button" parent="."]
+offset_left = 187.146
+offset_top = 260.311
+offset_right = 237.146
+offset_bottom = 291.311
+text = "Draw"
+
+[node name="DiscardButton" type="Button" parent="."]
+offset_left = 492.0
+offset_top = 260.0
+offset_right = 578.0
+offset_bottom = 291.0
+text = "Discard at"
+
+[node name="DiscardEnter" type="LineEdit" parent="."]
+offset_left = 411.0
+offset_top = 258.0
+offset_right = 479.563
+offset_bottom = 289.0
+
+[node name="ManyButton" type="Button" parent="."]
+offset_left = 191.0
+offset_top = 315.0
+offset_right = 277.0
+offset_bottom = 346.0
+text = "Load n"
+
+[node name="ManyEnter" type="LineEdit" parent="."]
+offset_left = 110.0
+offset_top = 313.0
+offset_right = 178.563
+offset_bottom = 344.0
+
+[node name="DropTarget1" parent="." instance=ExtResource("3_s35tu")]
+offset_left = 478.0
+offset_top = 328.0
+offset_right = 628.0
+offset_bottom = 553.0
+draggable = false
+has_card = false
+
+[node name="DropTarget2" parent="." instance=ExtResource("3_s35tu")]
+offset_left = 748.0
+offset_top = 329.0
+offset_right = 898.0
+offset_bottom = 554.0
+draggable = false
+has_card = false

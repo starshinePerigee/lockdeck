@@ -1,0 +1,30 @@
+extends Control
+
+# emitted when we are out of turns
+signal countdown_ended
+
+signal countdown_pressed
+
+@export var count: int = 0
+
+@export var highlight := false:
+	set(v):
+		highlight = v
+		$ColorRect.visible = highlight
+
+func count_down() -> void:
+	if count == 0:
+		return
+	if count == 1:
+		count = 0
+		countdown_ended.emit()
+	else:
+		count -= 1
+	$Countdown.count = count
+
+func set_count(new_count: int) -> void:
+	count = new_count
+	$Countdown.count = count
+
+func _ready() -> void:
+	$Button.pressed.connect(countdown_pressed.emit)

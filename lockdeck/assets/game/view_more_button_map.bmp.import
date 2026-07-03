@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://gx3q1vcycaym"
+path="res://.godot/imported/view_more_button_map.bmp-0ca8ab553f6169304dda49735462f14d.res"
+
+[deps]
+
+source_file="res://assets/game/view_more_button_map.bmp"
+dest_files=["res://.godot/imported/view_more_button_map.bmp-0ca8ab553f6169304dda49735462f14d.res"]
+
+[params]
+
+create_from=0
+threshold=0.5

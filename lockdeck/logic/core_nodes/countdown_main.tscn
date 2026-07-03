@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://di84qisvciahm"]
+
+[ext_resource type="Script" uid="uid://bg6xc4jpo1e65" path="res://logic/core_nodes/countdown_main.gd" id="1_5l2d8"]
+[ext_resource type="PackedScene" uid="uid://c1hem81ie6tbe" path="res://objects/countdown/countdown.tscn" id="1_y85n1"]
+
+[node name="CountdownMain" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5l2d8")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 256.0
+mouse_filter = 2
+border_color = Color(0.812127, 0.408589, 5.77569e-07, 1)
+border_width = 3.0
+
+[node name="Countdown" parent="." instance=ExtResource("1_y85n1")]
+layout_mode = 1
+offset_right = 128.0
+offset_bottom = 256.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 68.0
+offset_top = 294.0
+offset_right = 108.0
+offset_bottom = 334.0
+rotation = 0.785398
+color = Color(1, 1, 0, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 272.0
+offset_right = 108.0
+offset_bottom = 303.0
+text = "End turn
+and reset"

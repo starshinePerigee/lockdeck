@@ -1,0 +1,77 @@
+When you beat a level, you unlock a chest. Treasure inside helps you refine your hand:
+
+## Artifacts: single use consumables
+
+Artifacts are powerful single use consumables.
+
+The are shown at the top of the screen, with a hovertext guide.
+
+ex:
+- toothpick: break instead of a pick
+
+When you click one, the guide is shown, as well as "keep" and "sell: 1🪙"
+
+If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out
+
+
+## Pick modifications
+
+When you pick up a gem/jewelry, a number of picks are chosen at random to apply the effect to.
+You can also pick a coin to sell the gem/jewelry.
+
+(Will need to have a highlight preview in the UI)
+
+### Jewelry: apply pick effects
+
+See pick effect brainstorm
+
+Pick effects are shown on card as a custom handle, as well as an prefix. ("strong", "sneaky")
+
+Picks can only have one effect - prioritize effectless picks when picking up jewelry, but if not enough allow overwriting effects.
+
+
+### Gems: upgrade the pick
+
+Each pick effect has a corresponding gem. (Force is topaz, etc)
+
+Effects have a hidden "priority" level, which will set where on the pick they apply.
+Force and jump are the same, but are both higher than reveal so you don't reveal then immediately force past it. Jam always goes on the bottom.
+
+Gems have a preset pattern they add or remove. For instance, a topaz might look like "+1 +2 -1 force"
+
+Trend toward removals - built-in picks should be overbuilt and splashy 
+
+Each gem adds a "+1" to the pick's name.
+
+
+## Coins: buy new picks
+
+After you loot treasure, there are two icons: deck and shop
+
+Deck: view your deck. Lets you trash picks for free.
+
+Shop: see standard picks. Lets you buy picks for coins.
+Has one (?) random pick plus the standard spread. (Buying it shows another?)
+
+Also standard artifacts? (toothpick?)
+
+
+## Ingots: whole new randomly generated picks
+
+iron/copper/silver/gold based on quality of pick
+
+
+### Flow and balance
+
+Coins are your reserve health - they're how you "heal", buying picks back up to a healthy number.
+
+
+## Coins and endgame
+
+You have a coin cap
+
+You are trying to get the n shards of yendor - these are sometimes rare loot (with pity mechanic)
+
+and also sold by shopkeepers (primary way of acquiring them) - main gold sink
+
+bonus coins for finishing in a single pass?

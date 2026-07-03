@@ -1,40 +1,93 @@
 extends Resource
+## PinSpec is the dataclass that describes a single pin's status.
+## It includes an array of depth flavors, depth reveal statuses, 
+## as well as other pin information like jam and unlock indicatiors.
 class_name PinSpec
 
-@export var depths: Array[DepthData.DepthFlavors]
+## Maxmimum number of cylinders.
+## This is a deep assumption - changing this will break *everything*.
+## so dont.
+const CYLINDER_COUNT_MAX := 5
+
+## Number of depths
+## This is also pretty deep so maybe don't touch it?
+const PIN_DEPTH_COUNT := 9
+
+## Array of depth flavors for this pin. Index 0 is the top flavor, and
+## will typically be Depths.BASE
+@export var depths: Array[Depths]
+## Revealed status array. True shows the depth texture, false shows "?"
 @export var reveals: Array[bool]
+## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
-@export var pin_set: bool
-@export var key_set: bool
+## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
 
-func current_depth() -> DepthData.DepthFlavors:
+## Get the depth flavor that the pin is currently set to.
+func current_depth() -> Depths:
 	return depths[pin_position]
 
-func _init():
-	depths = [
-		DepthData.DepthFlavors.BASE,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.DEBUG,
-		DepthData.DepthFlavors.BOUNCE,
-	]
-	reveals = [
-		true,
-		false,
-		false,
-		false,
-		false,
-		false,
-		false,
-		false,
-		true,
-	]
+## Returns true if the pin is currently solved.
+func is_solved() -> bool:
+	return current_depth() in Depths.SOLVE_DEPTHS
+
+## Returns true if the pin is currently jammed
+func is_jammed() -> bool:
+	return jam_count > 0
+
+## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed.
+func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
+	if add_jam(-1):
+		return false
+	
+	var oob := false
+	if absolute >= 0:
+		pin_position = absolute
+	pin_position += relative
+	if pin_position >= PIN_DEPTH_COUNT or pin_position < 0:
+		pin_position = clamp(pin_position, 0, PIN_DEPTH_COUNT - 1)
+		oob = true	
+	return oob
+
+## Reveals a depth (or the current depth if none is provided)
+func reveal_position(pos: int = -1) -> void:
+	if pos == -1:
+		pos = pin_position
+	reveals[pos] = true
+
+## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
+func add_jam(value: int) -> bool:
+	var jammed := jam_count > 0
+	jam_count = max(0, jam_count + value)
+	if jam_count > 0:
+		return true
+	return jammed
+
+## Reveals a pin in n positions. Does not work through jam.
+func reveal_pin(value: int) -> void:
+	if jam_count > 0:
+		return
+	
+	var target_position := pin_position + value
+	if not (target_position >= PIN_DEPTH_COUNT or pin_position < 0):
+		reveals[target_position] = true
+
+## Resets the pin to default values but does not change depths.
+func reset_pin() -> void:
 	pin_position = 0
-	pin_set = true
-	key_set = false
 	jam_count = 0
+
+func _init():
+	depths = []
+	depths.resize(PIN_DEPTH_COUNT)
+	depths.fill(Depths.DEBUG)
+	depths[0] = Depths.BASE
+	depths[-1] = Depths.FINAL
+	
+	reveals = []
+	reveals.resize(PIN_DEPTH_COUNT)
+	reveals.fill(false)
+	reveals[0] = true
+	reveals[-1] = true
+	
+	reset_pin()

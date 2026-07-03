@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://slpfrt15iygb"]
+
+[ext_resource type="Texture2D" uid="uid://cqpixqeatajej" path="res://assets/card/space.png" id="1_b6gk6"]
+[ext_resource type="Script" uid="uid://crhowcv7jkjr3" path="res://objects/card/card_space.gd" id="2_nyvl3"]
+[ext_resource type="Texture2D" uid="uid://c53hgmilngf7p" path="res://assets/card/highlight.png" id="3_b6gk6"]
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_ss3r8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_edh6n"]
+radius = 45.0
+height = 118.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b6gk6"]
+size = Vector2(112, 146)
+
+[node name="CardSpace" type="TextureRect"]
+offset_right = 128.0
+offset_bottom = 160.0
+mouse_filter = 0
+texture = ExtResource("1_b6gk6")
+stretch_mode = 2
+script = ExtResource("2_nyvl3")
+draggable = true
+has_card = true
+
+[node name="HighlightRect" type="TextureRect" parent="."]
+visible = false
+z_index = -10
+layout_mode = 0
+offset_left = -8.0
+offset_top = -4.0
+offset_right = 136.0
+offset_bottom = 172.0
+texture = ExtResource("3_b6gk6")
+
+[node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
+layout_mode = 0
+
+[node name="Area2D" type="Area2D" parent="PickCard"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickCard/Area2D"]
+position = Vector2(72, 84)
+shape = SubResource("CapsuleShape2D_edh6n")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(62, 81)
+shape = SubResource("RectangleShape2D_b6gk6")

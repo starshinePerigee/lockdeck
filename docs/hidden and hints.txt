@@ -1,0 +1,20 @@
+Emphasize hidden and discovery more:
+
+- new depth - hint x
+- make skip the default for most picks
+-- skip also hints skipped depths
+- make test way more common
+- reveal is special - reveal / force / destroy are special, skip and test are normal
+- test off the end is okay
+- you must hit depth exactly (except for the final cylinder)
+- after a pick, all hints are shown highlighted - and color changes (blue for safe, red for danger)
+-- safe stays, danger clears after a pick
+-- draggable hint marks
+
+
+refresh:
+- hint for all picks
+- if not break, update color permanently
+- if break, all hint depths get ticked
+- negative hints persist as tickmarks on the bottom of the lock
+-- unique tickmarks for each hint set

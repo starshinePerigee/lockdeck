@@ -1,0 +1,19 @@
+pin width: 96 (from 120)
+pin height: 32 (from 35)
+
+9 depths + 8 px cap = 32 * 9 + 8 = 296
+motion = 8 * 32 = 256
+full pin = 560
+
+
+icon width: 16
+7 icons + 8 px border * 2 = 128
+card: 128 (from 150)
+
+icon offsets by 8; so an 8-icon stack = 9 * 8 = 72
+icon offsets by 12: 12 * 8 = 96 + 4 = 100
+name: 32
+
+card height: 160? (from 225)
+
+field height: 1440 x 810 (1x most monitors) or 960x540 (half hd, would defs need pin scrolling mechanic)

@@ -2,36 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bov186e0x668l" path="res://objects/card/effect_bar.gd" id="1_myxku"]
 
-[node name="EffectBar" type="Control"]
-custom_minimum_size = Vector2(150, 75)
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1002.0
-offset_bottom = -573.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_myxku")
-
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-border_color = Color(0, 1, 1, 1)
-
-[node name="StackHBox" type="HBoxContainer" parent="."]
+[node name="EffectBar" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
-layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -59.0
-offset_right = 59.0
-offset_bottom = 106.0
+offset_bottom = 50.0
 grow_horizontal = 2
-theme_override_constants/separation = -25
+theme_override_constants/separation = 0
 alignment = 1
+script = ExtResource("1_myxku")

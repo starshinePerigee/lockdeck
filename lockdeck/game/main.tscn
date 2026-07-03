@@ -1,12 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://csinn0yt64xam"]
+[gd_scene load_steps=4 format=3 uid="uid://csinn0yt64xam"]
 
 [ext_resource type="Script" uid="uid://ceywqkqroboov" path="res://game/main.gd" id="1_emt18"]
-[ext_resource type="Texture2D" uid="uid://bwucmrq0cslx3" path="res://assets/bg.png" id="1_xtpaf"]
 [ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/game_core.tscn" id="2_emt18"]
-[ext_resource type="Texture2D" uid="uid://c1pbwcb5j6f1p" path="res://assets/effects/icon_force_small.png" id="4_wjctj"]
-[ext_resource type="Texture2D" uid="uid://c2damcouc55ql" path="res://assets/effects/icon_jam.png" id="5_xkbyp"]
-[ext_resource type="Texture2D" uid="uid://b8dj1dkc2cjlt" path="res://assets/effects/icon_jump.png" id="6_lx3aj"]
-[ext_resource type="Texture2D" uid="uid://b8bv7eu0pj074" path="res://assets/effects/icon_test.png" id="7_itumj"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vop5m"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -22,200 +18,46 @@ z_index = -1000
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_xtpaf")
+texture = ExtResource("2_vop5m")
 
 [node name="GameCore" parent="." instance=ExtResource("2_emt18")]
+layout_mode = 1
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1650.0
-offset_top = 38.0
-offset_right = 1868.0
-offset_bottom = 129.0
-theme_override_font_sizes/font_size = 60
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
 text = "Restart"
 
-[node name="TutorialButton" type="Button" parent="."]
+[node name="ColorRect" type="ColorRect" parent="RestartButton"]
+visible = false
+z_index = -1
 layout_mode = 0
-offset_left = 1654.0
-offset_top = 152.0
-offset_right = 1872.0
-offset_bottom = 243.0
-theme_override_font_sizes/font_size = 60
-text = "WTF?"
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 80.0
+offset_bottom = 40.0
+mouse_filter = 1
+color = Color(0.439216, 0.196078, 1, 1)
 
 [node name="NextLevelButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 1655.0
-offset_top = 300.0
-offset_right = 1873.0
-offset_bottom = 391.0
+offset_left = 371.0
+offset_top = 223.0
+offset_right = 589.0
+offset_bottom = 314.0
 theme_override_font_sizes/font_size = 60
 disabled = true
 text = "Next"
 
-[node name="Tutorial" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="Tutorial"]
+[node name="Version" type="Label" parent="."]
 layout_mode = 0
-offset_left = 287.0
-offset_top = 194.0
-offset_right = 531.0
-offset_bottom = 395.0
-theme_override_font_sizes/font_size = 16
-text = "This is your deck.
-If you run out of cards in your deck, you'll need to reload by clicking the discard pile."
-autowrap_mode = 2
-
-[node name="Label2" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 651.0
-offset_top = 952.0
-offset_right = 1289.0
-offset_bottom = 1027.0
-theme_override_font_sizes/font_size = 16
-text = "This is the keyway - once cards enter here, they can't be rearranged.
-Click a card to activate it. Each card has different abilities:"
-autowrap_mode = 2
-
-[node name="Label3" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 902.0
-offset_right = 264.0
-offset_bottom = 1103.0
-theme_override_font_sizes/font_size = 16
-text = "This is your hand.
-You can rearrange it freely by clicking and dragging, or discard a card by dragging it to the discard icon. Discarding a card costs a turn."
-autowrap_mode = 2
-
-[node name="Label4" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 622.0
-offset_top = 44.0
-offset_right = 1260.0
-offset_bottom = 275.0
-theme_override_font_sizes/font_size = 16
-text = "These are the pins. Your goal is to find the \"key\", where each pin is positioned so you can open the lock. 
-
-Each pin is made up of 9 segments. The \"base\", as well as most segments, do nothing. One segment is the key... and one segment will break the pick you used to activate it!
-
-If you land on the last segment, the pin will reset cleanly. Otherwise, if you overshoot, you will also break your pick."
-autowrap_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Tutorial"]
-layout_mode = 0
-offset_left = 656.0
-offset_top = 1021.0
-offset_right = 696.0
-offset_bottom = 1061.0
-texture = ExtResource("4_wjctj")
-
-[node name="Label6" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 702.0
-offset_top = 1016.0
-offset_right = 865.0
-offset_bottom = 1091.0
-theme_override_font_sizes/font_size = 16
-text = "Moves the pin, activating segments"
-autowrap_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="Tutorial"]
-layout_mode = 0
-offset_left = 884.0
-offset_top = 1015.0
-offset_right = 934.0
-offset_bottom = 1065.0
-texture = ExtResource("5_xkbyp")
-
-[node name="Label7" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 944.0
-offset_top = 1015.0
-offset_right = 1107.0
-offset_bottom = 1090.0
-theme_override_font_sizes/font_size = 16
-text = "Jams the pin,
-preventing motion"
-autowrap_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1110.0
-offset_top = 1013.0
-offset_right = 1160.0
-offset_bottom = 1063.0
-texture = ExtResource("6_lx3aj")
-
-[node name="Label8" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1161.0
-offset_top = 1013.0
-offset_right = 1324.0
-offset_bottom = 1088.0
-theme_override_font_sizes/font_size = 16
-text = "Moves the pin without activating it."
-autowrap_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1352.0
-offset_top = 1007.0
-offset_right = 1402.0
-offset_bottom = 1057.0
-texture = ExtResource("7_itumj")
-
-[node name="Label9" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1401.0
-offset_top = 1011.0
-offset_right = 1564.0
-offset_bottom = 1086.0
-theme_override_font_sizes/font_size = 16
-text = "Reveals upcoming segments."
-autowrap_mode = 2
-
-[node name="Label10" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1543.0
-offset_top = 521.0
-offset_right = 1886.0
-offset_bottom = 596.0
-theme_override_font_sizes/font_size = 16
-text = "This is your discard pile. Click it to reload!
-Reloading will break a pick."
-autowrap_mode = 2
-
-[node name="Label11" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1628.0
-offset_top = 1045.0
-offset_right = 1971.0
-offset_bottom = 1120.0
-theme_override_font_sizes/font_size = 16
-text = "These are your broken picks."
-autowrap_mode = 2
-
-[node name="Label5" type="Label" parent="Tutorial"]
-layout_mode = 0
-offset_left = 1528.0
-offset_top = 141.0
-offset_right = 1668.0
-offset_bottom = 342.0
-theme_override_font_sizes/font_size = 16
-text = "Press this to dismiss (or summon back) the tutorial:"
-autowrap_mode = 2
-
-[node name="Label12" type="Label" parent="Tutorial"]
-offset_left = 407.0
-offset_top = 398.0
-offset_right = 651.0
-offset_bottom = 599.0
-theme_override_font_sizes/font_size = 16
-text = "This is the activation line ->
-Pin segments that go past it get activated."
-autowrap_mode = 2
+offset_left = 1.0
+offset_top = 527.0
+offset_right = 41.0
+offset_bottom = 540.0
+text = "v0.0.0"

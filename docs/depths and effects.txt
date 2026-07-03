@@ -1,0 +1,21 @@
+Effects:
+xx force
+xx skip
+xx reveal
+xx jam
+x- test
+xx crush
+
+Depths
+xx force
+xx jam
+xx pull (move back four)
+
+x- hint  (next danger or sets pin to clear)
+xx warn (break is after this depth)
+x- trap (locks pin if skipped)
+x- bind (locks pin until other pin is set)
+xx key 
+
+x- reset
+xx break

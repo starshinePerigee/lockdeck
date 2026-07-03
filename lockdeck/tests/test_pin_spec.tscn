@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy58gwdsf0br2"]
+
+[ext_resource type="Script" path="res://tests/test_pin_spec.gd" id="1_uutyu"]
+[ext_resource type="PackedScene" uid="uid://bkcikxm7qtgka" path="res://objects/cylinder/pin.tscn" id="2_prxg1"]
+
+[node name="TestPinSpec" type="Node2D"]
+script = ExtResource("1_uutyu")
+
+[node name="Pin" parent="." instance=ExtResource("2_prxg1")]
+
+[node name="AdvanceEdit" type="LineEdit" parent="."]
+offset_left = 299.0
+offset_top = 243.0
+offset_right = 367.563
+offset_bottom = 274.0
+
+[node name="AdvanceButton" type="Button" parent="."]
+offset_left = 388.0
+offset_top = 241.0
+offset_right = 462.0
+offset_bottom = 272.0
+text = "Advance"
+
+[node name="JamEdit" type="LineEdit" parent="."]
+offset_left = 303.0
+offset_top = 299.0
+offset_right = 371.563
+offset_bottom = 330.0
+
+[node name="JamButton" type="Button" parent="."]
+offset_left = 392.0
+offset_top = 297.0
+offset_right = 466.0
+offset_bottom = 328.0
+text = "Jam"
+
+[node name="ResetButton" type="Button" parent="."]
+offset_left = 316.182
+offset_top = 380.47
+offset_right = 324.182
+offset_bottom = 388.47
+text = "Reset"
+
+[node name="OOBLabel" type="Label" parent="."]
+visible = false
+offset_left = 521.0
+offset_top = 253.0
+offset_right = 561.0
+offset_bottom = 276.0
+text = "OOB"

@@ -1,24 +1,18 @@
-@tool
 extends Resource
+## EffectSpec is the dataclass that defines a single effect as part of a card or depth.
+## Note that effects also have a value - so 4 "forces" is a single Force flavored EffectSpec
+## with value 4
 class_name EffectSpec
 
-@export var flavor := EffectData.EffectFlavors.DEBUG:
-	set(v):
-		flavor = v
-		emit_changed()
-	
-@export var value := 0:
-	set(v):
-		value = v
-		emit_changed()
+## Flavor of effect, defined in EffectData
+@export var flavor: Effects
 
-func _init(p_flavor: Variant = 0, p_value: int = 0):
-	match type_string(typeof(p_flavor)):
-		"int":
-			# enums show as ints
-			flavor = p_flavor
-		"String":
-			flavor = EffectData.EffectFlavors.get(p_flavor.to_upper())
-		_:
-			push_error("Invalid type for effect spec: %s" % [type_string(typeof(flavor))])
-	value = p_value
+## Value of effect. Can be 0.
+@export var value: int
+
+## used for pin execution logic. carries the value of the pin the effect is applied to.
+var realized_pin: int = -1
+
+func _init(flavor_: Effects = Effects.DEBUG, value_: int = 0):
+	flavor = flavor_
+	value = value_
