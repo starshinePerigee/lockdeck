@@ -66,6 +66,9 @@ static var REST := Depths.new("reset", Effects.RESET)
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new("warn", Effects.EMPTY)
 
+## Bounces up four (or to the edge)
+static var BOUNCE := Depths.new("bounce", Effects.BOUNCE, 4)
+
 
 ## Holds all depths which count as solves
 static var SOLVE_DEPTHS: Array[Depths] = [

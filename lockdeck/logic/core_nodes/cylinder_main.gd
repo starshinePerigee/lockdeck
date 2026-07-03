@@ -152,6 +152,8 @@ func evaluate_pin(
 			execute_jam(effect)
 		Effects.CRUSH:
 			execute_crush(effect, ex)
+		Effects.BOUNCE:
+			execute_bounce(effect, ex)
 		Effects.OUT_OF_BOUNDS:
 			execute_break(result)
 		Effects.BREAK:
@@ -187,6 +189,16 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 			return
 		else:
 			pin.depths[pin.pin_position] = Depths.EMPTY
+
+func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
+	var pin := pins[effect.realized_pin]
+	var target_depth: int = max(0, pin.pin_position - effect.value)
+	var oob := pin.advance_pin(0, target_depth)
+	if oob:
+		push_error("OOB'ed on bounce? Pin: %s, target: %s" % [effect.realized_pin, target_depth])
+		return
+	var depth := pin.current_depth()
+	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
 func execute_key(result: ResultSpec) -> void:
 	for pin in pins:
