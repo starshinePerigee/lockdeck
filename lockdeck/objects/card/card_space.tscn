@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_ss3r8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_edh6n"]
-radius = 34.0
-height = 102.0
+radius = 45.0
+height = 118.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6gk6"]
 size = Vector2(112, 146)
@@ -33,14 +33,12 @@ offset_bottom = 172.0
 texture = ExtResource("3_b6gk6")
 
 [node name="PickCard" parent="." instance=ExtResource("3_ss3r8")]
-visible = false
 layout_mode = 0
 
 [node name="Area2D" type="Area2D" parent="PickCard"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickCard/Area2D"]
-position = Vector2(64, 84)
+position = Vector2(72, 84)
 shape = SubResource("CapsuleShape2D_edh6n")
 
 [node name="Area2D" type="Area2D" parent="."]
