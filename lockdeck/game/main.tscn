@@ -53,3 +53,11 @@ offset_bottom = 314.0
 theme_override_font_sizes/font_size = 60
 disabled = true
 text = "Next"
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 527.0
+offset_right = 41.0
+offset_bottom = 540.0
+text = "v0.2.0"

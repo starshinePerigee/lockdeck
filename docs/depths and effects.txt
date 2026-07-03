@@ -7,11 +7,12 @@ x- test
 xx crush
 
 Depths
-x- force
-x- jam
+xx force
+xx jam
+xx pull (move back four)
 
 x- hint  (next danger or sets pin to clear)
-x- warn (break is after this depth)
+xx warn (break is after this depth)
 x- trap (locks pin if skipped)
 x- bind (locks pin until other pin is set)
 xx key 

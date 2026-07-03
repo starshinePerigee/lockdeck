@@ -4,4 +4,5 @@ dagger: force 9, one cylinder
 deed: next shop, everything is free
 spyglass: reveal all cylinders
 crown: skip this stage, get no rewards
-toothpick: break if you would break a different pick
+hourglass: invincible for three turns
+flask: gives you five toothpicks

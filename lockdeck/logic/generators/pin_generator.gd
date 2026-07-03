@@ -12,10 +12,17 @@ static func get_known_test_pin() -> PinSpec:
 	spec.depths[1] = Depths.FORCE
 	spec.depths[2] = Depths.JAM
 	spec.depths[4] = Depths.KEY
+	spec.depths[5] = Depths.BOUNCE
 	spec.depths[6] = Depths.BREAK
 	return spec
 
-static var FILLER_DEPTHS: Array[Depths] = [Depths.FORCE, Depths.JAM, Depths.SKIP]
+static var FILLER_DEPTHS: Array[Depths] = [
+	Depths.FORCE,
+	Depths.JAM,
+	Depths.SKIP,
+	Depths.BOUNCE,
+	Depths.BOUNCE
+]
 
 ## Gets a random "filler" depth
 static func get_filler() -> Depths:

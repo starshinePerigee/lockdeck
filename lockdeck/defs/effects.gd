@@ -63,6 +63,9 @@ static var BREAK := Effects.new("break")
 ## Depth effect - resets another pin (if set) or this one
 static var RESET := Effects.new("reset")
 
+## Depth effect - bounces up four, or to top. Triggers landing spot.
+static var BOUNCE := Effects.new("bounce")
+
 ## Depth effect - pick out of bounds (typically breaks)
 static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
 
