@@ -17,7 +17,8 @@ enum InputState {
 	INACTIVE,
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
-	VIEW_ALL
+	VIEW_ALL,
+	COMPLETE
 }
 var current_state := InputState.INACTIVE
 
@@ -43,6 +44,8 @@ func set_state(state: InputState) -> void:
 			$CountdownMain/Button.disabled = false
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
+		InputState.COMPLETE:
+			$HandMain/Hand.disable_all()
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
@@ -154,9 +157,11 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	if result.lock_solved:
 		game_win.emit()
 		$Notifications.notify(Notifications.UNLOCK)
-	
-	draw_to_five()
-	$CountdownMain.highlight = $HandMain.count() == 0
+		set_state(InputState.INACTIVE)
+		set_state(InputState.COMPLETE)
+	else:
+		draw_to_five()
+		$CountdownMain.highlight = $HandMain.count() == 0
 
 func discard_pick() -> void:
 	$HandMain.deselect()

@@ -1,5 +1,7 @@
 extends Control
 
+var VERSION_NUMBER := "v0.2.1"
+
 var difficulty := 0
 
 func set_next_button_state(enabled: bool) -> void:
@@ -33,3 +35,4 @@ func _ready():
 	$GameCore.game_win.connect(show_win)
 	$NextLevelButton.pressed.connect(start_next_level)
 	restart_game()
+	$Version.text = VERSION_NUMBER

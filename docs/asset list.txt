@@ -26,7 +26,7 @@ x card templating.
 
 Animations
 - opening animation
-- pin motion
+- pin execution
 - broken pick flicks
 
 cooler animations
