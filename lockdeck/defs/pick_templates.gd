@@ -32,14 +32,14 @@ func _init(
 static var DEBUG := PickTemplates.new(
 	"debug", 
 	{
-		-1: [EffectSpec.new(Effects.REVEAL, 3)],
-		0: [
+		0: [EffectSpec.new(Effects.REVEAL, 3)],
+		1: [
 			EffectSpec.new(Effects.FORCE, 4), 
 			EffectSpec.new(Effects.SKIP, 3),
 			EffectSpec.new(Effects.REVEAL, 1)
 		],
-		2: [EffectSpec.new(Effects.DEBUG, 8)],
-		3: [
+		3: [EffectSpec.new(Effects.DEBUG, 8)],
+		4: [
 			EffectSpec.new(Effects.JAM, 3),
 			EffectSpec.new(Effects.DEBUG, 0)
 		]
@@ -50,7 +50,7 @@ static var DEBUG := PickTemplates.new(
 static var DIAMOND := PickTemplates.new(
 	"diamond",
 	{
-		-1: [EffectSpec.new(Effects.FORCE, 1)],
+		1: [EffectSpec.new(Effects.FORCE, 1)],
 		0: [EffectSpec.new(Effects.FORCE, 3)]
 	}
 )
@@ -68,7 +68,7 @@ static var HOOK := PickTemplates.new(
 static var BALL := PickTemplates.new(
 	"ball",
 	{
-		-1: [EffectSpec.new(Effects.JAM, 1)],
+		1: [EffectSpec.new(Effects.JAM, 1)],
 		0: [EffectSpec.new(Effects.JAM, 2)]
 	}
 )
@@ -76,17 +76,17 @@ static var BALL := PickTemplates.new(
 static var RAKE := PickTemplates.new(
 	"rake",
 	{
-		-2: [EffectSpec.new(Effects.FORCE, 1)],
-		-1: [EffectSpec.new(Effects.FORCE, 1)],
-		0: [EffectSpec.new(Effects.FORCE, 1)],
-		1: [EffectSpec.new(Effects.FORCE, 1)]
+		3: [EffectSpec.new(Effects.FORCE, 1)],
+		2: [EffectSpec.new(Effects.FORCE, 1)],
+		1: [EffectSpec.new(Effects.FORCE, 1)],
+		0: [EffectSpec.new(Effects.FORCE, 1)]
 	}
 )
 
 static var SNAKE := PickTemplates.new(
 	"snake",
 	{
-		-1: [
+		1: [
 			EffectSpec.new(Effects.FORCE, 1), 
 			EffectSpec.new(Effects.REVEAL, 2)
 		],
@@ -100,9 +100,9 @@ static var SNAKE := PickTemplates.new(
 static var FORK := PickTemplates.new(
 	"fork",
 	{
-		-1: [EffectSpec.new(Effects.FORCE, 2)],
-		0: [EffectSpec.new(Effects.JAM, 1)],
-		1: [EffectSpec.new(Effects.FORCE, 2)]
+		2: [EffectSpec.new(Effects.FORCE, 2)],
+		1: [EffectSpec.new(Effects.JAM, 1)],
+		0: [EffectSpec.new(Effects.FORCE, 2)]
 	}
 )
 

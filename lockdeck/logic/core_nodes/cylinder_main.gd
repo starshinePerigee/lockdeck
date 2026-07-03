@@ -48,7 +48,7 @@ class Execution:
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
 		for k in card.effects.keys():
-			var pin_index: int = card_index + k
+			var pin_index: int = card_index - k
 			if pin_index >= 0 and pin_index < len(pending_effects):
 				for e in card.effects[k]:
 					add_effect(pin_index, e, false)

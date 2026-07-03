@@ -11,7 +11,7 @@ x placeholder top level scene
 x superplaceholder bg
 - jam holds position over end turn
 x view all clears notifs
-- tip picks
+x tip picks
 - global settings object and debug mode
 - fix drag immediately onto pin
 
