@@ -8,9 +8,16 @@ class_name Depth
 		flavor = v
 		_redraw()
 
+@export var checked: bool = false:
+	set(v):
+		checked = v
+		_redraw()
+
 func _redraw() -> void:
 	if not is_node_ready():
 		await ready
 		
 	texture = flavor.texture
 	size = texture.get_size()
+	$CheckedIcon.visible = checked
+	

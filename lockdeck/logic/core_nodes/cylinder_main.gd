@@ -96,9 +96,17 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = fa
 			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 			pin.reveal_position()
 
+func test_pin(pin_index: int, test_ahead: int) -> void:
+	for i in range(1, 1+test_ahead):
+		var offset := i + pins[pin_index].pin_position
+		if offset < PinSpec.PIN_DEPTH_COUNT:
+			pins[pin_index].checked[offset] = true
+
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
 func execute(card: CardSpec, card_index: int) -> ResultSpec:
+	for pin in pins:
+		pin.reset_checked()
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
 	var result := ResultSpec.new()
@@ -146,6 +154,8 @@ func evaluate_pin(
 			execute_force(effect, ex)
 		Effects.SKIP:
 			execute_skip(effect, ex)
+		Effects.TEST:
+			execute_test(effect, ex)
 		Effects.REVEAL:
 			execute_reveal(effect)
 		Effects.JAM:
@@ -169,7 +179,11 @@ func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_skip(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 	advance_pin(effect.realized_pin, effect.value, ex, true)
+
+func execute_test(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 
 func execute_reveal(effect: EffectSpec) -> void:
 	for i in range(effect.value):

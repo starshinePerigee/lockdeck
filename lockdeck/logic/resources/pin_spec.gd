@@ -26,6 +26,8 @@ enum RevealLevel {
 @export var depths: Array[Depths]
 ## Revealed status array.
 @export var reveals: Array[RevealLevel]
+## Checks if depths have been tested this turn
+@export var checked: Array[bool]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -52,6 +54,30 @@ func get_visible(idx: int = 99) -> Depths:
 		RevealLevel.DANGEROUS:
 			return Depths.MARK_DANGEROUS
 	return Depths.DEBUG
+
+## Updates a level's reveal level, setting it to the highest option.
+func update_visible(idx: int, level: RevealLevel) -> void:
+	var combined: Array[RevealLevel] = [reveals[idx], level]
+	for l in [
+		RevealLevel.REVEALED,
+		RevealLevel.CLEAR,
+		RevealLevel.INTERESTING,
+		RevealLevel.DANGEROUS,
+		RevealLevel.UNKNOWN
+	]:
+		if l in combined:
+			reveals[idx] = l
+			return
+	push_error("How did you get here? reveal: %s, level: %s" % combined)
+
+func reset_checked() -> void:
+	checked = []
+	checked.resize(PinSpec.PIN_DEPTH_COUNT)
+	checked.fill(false)
+
+## Get if the pin is currently revealed
+func revealed(idx: int) -> bool:
+	return reveals[idx] == RevealLevel.REVEALED
 
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
@@ -102,6 +128,7 @@ func reveal_pin(value: int) -> void:
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
+	reset_checked()
 
 func _init():
 	depths = []
