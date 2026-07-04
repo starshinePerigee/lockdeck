@@ -35,6 +35,24 @@ enum RevealLevel {
 func current_depth() -> Depths:
 	return depths[pin_position]
 
+## Get the visible depth for a pin, or the current one (default)
+## Negative numbers index from the back 
+func get_visible(idx: int = 99) -> Depths:
+	if idx == 99:
+		idx = pin_position
+	match reveals[idx]:
+		RevealLevel.REVEALED:
+			return depths[idx]
+		RevealLevel.UNKNOWN:
+			return Depths.HIDDEN
+		RevealLevel.CLEAR:
+			return Depths.MARK_CLEAR
+		RevealLevel.INTERESTING:
+			return Depths.MARK_INTERESTING
+		RevealLevel.DANGEROUS:
+			return Depths.MARK_DANGEROUS
+	return Depths.DEBUG
+
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
 	return current_depth() in Depths.SOLVE_DEPTHS

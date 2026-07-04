@@ -76,8 +76,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 		return
 		
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
-		depth_refs[i].flavor = pin_spec.depths[i]
-		depth_refs[i].revealed = pin_spec.reveals[i]
+		depth_refs[i].flavor = pin_spec.get_visible(i)
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
@@ -113,10 +112,8 @@ func _ready() -> void:
 		var next_depth := _DEPTH.instantiate()
 		if i == 0:
 			next_depth.flavor = Depths.BASE
-			next_depth.revealed = true
 		elif i == PinSpec.PIN_DEPTH_COUNT - 1:
 			next_depth.flavor = Depths.FINAL
-			next_depth.revealed = true
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
 	

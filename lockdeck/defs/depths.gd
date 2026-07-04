@@ -34,7 +34,7 @@ static var BASE := Depths.new("base", Effects.EMPTY)
 static var FINAL := Depths.new("final_neutral", Effects.KEY)
 
 ## Default unrevealed depth
-static var UNKNOWN := Depths.new("unknown", Effects.DEBUG)
+static var HIDDEN := Depths.new("hidden", Effects.DEBUG)
 
 ## Marked clear
 static var MARK_CLEAR := Depths.new("mark_clear", Effects.DEBUG)
