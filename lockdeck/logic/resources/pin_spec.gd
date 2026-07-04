@@ -14,11 +14,11 @@ const CYLINDER_COUNT_MAX := 5
 const PIN_DEPTH_COUNT := 9
 
 enum RevealLevel {
-	REVEALED,
-	UNKNOWN,
-	CLEAR,
-	INTERESTING,
-	DANGEROUS
+	REVEALED = 0,
+	CLEAR = 1,
+	INTERESTING = 2,
+	DANGEROUS = 3,
+	UNKNOWN = 4,
 }
 
 ## Array of depth flavors for this pin. Index 0 is the top flavor, and
@@ -57,22 +57,9 @@ func get_visible(idx: int = 99) -> Depths:
 
 ## Updates a level's reveal level, setting it to the highest option.
 func update_visible(idx: int, level: RevealLevel) -> void:
-	var combined: Array[RevealLevel] = [reveals[idx], level]
-	for l in [
-		RevealLevel.REVEALED,
-		RevealLevel.CLEAR,
-		RevealLevel.INTERESTING,
-		RevealLevel.DANGEROUS,
-		RevealLevel.UNKNOWN
-	]:
-		if l in combined:
-			reveals[idx] = l
-			return
-	push_error("How did you get here? reveal: %s, level: %s" % combined)
+	reveals[idx] = min(reveals[idx], level)
 
 func reset_checked() -> void:
-	checked = []
-	checked.resize(PinSpec.PIN_DEPTH_COUNT)
 	checked.fill(false)
 
 ## Get if the pin is currently revealed
@@ -143,4 +130,8 @@ func _init():
 	reveals[0] = RevealLevel.REVEALED
 	reveals[-1] = RevealLevel.REVEALED
 	
+	checked = []
+	checked.resize(PinSpec.PIN_DEPTH_COUNT)
+	checked.fill(false)
+
 	reset_pin()

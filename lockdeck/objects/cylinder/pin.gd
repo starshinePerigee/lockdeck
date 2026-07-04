@@ -77,7 +77,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 		
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
-		depth_refs[i].checked = pin_spec.checked[i]
+		depth_refs[i].checked = pin_spec.checked[i] and not pin_spec.revealed(i)
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count

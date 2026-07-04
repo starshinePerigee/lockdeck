@@ -224,6 +224,9 @@ func execute_key(result: ResultSpec) -> void:
 func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
+func update_visibility() -> void:
+	pass
+
 #endregion
 
 ## Redraws the pins by reloading the pin specs.
