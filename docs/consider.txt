@@ -1,8 +1,16 @@
 force works like skip does now: move n, then applies the depth at n; hints along way
 skip doesn't even trigger the effect at the end and doesn't hint
+cut skip entirely?
+
+refactor core loop entirely - don't really queue actions?
+
+crush breaks jam?
 
 jam holds position over end turn?
 
 improvise lockpicks at any time (costs a coin)
 
 track pick strength, not total lockpicks
+
+change key depth to "unlock" depth, and then a new "key" depth that you must hit to clear the pin
+- revealed from the start? revealed once you hit the pin (but pin bounces you?)
