@@ -13,11 +13,19 @@ const CYLINDER_COUNT_MAX := 5
 ## This is also pretty deep so maybe don't touch it?
 const PIN_DEPTH_COUNT := 9
 
+enum RevealLevel {
+	REVEALED,
+	UNKNOWN,
+	CLEAR,
+	INTERESTING,
+	DANGEROUS
+}
+
 ## Array of depth flavors for this pin. Index 0 is the top flavor, and
 ## will typically be Depths.BASE
 @export var depths: Array[Depths]
-## Revealed status array. True shows the depth texture, false shows "?"
-@export var reveals: Array[bool]
+## Revealed status array.
+@export var reveals: Array[RevealLevel]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -53,7 +61,7 @@ func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
 func reveal_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
-	reveals[pos] = true
+	reveals[pos] = RevealLevel.REVEALED
 
 ## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
 func add_jam(value: int) -> bool:
@@ -70,7 +78,7 @@ func reveal_pin(value: int) -> void:
 	
 	var target_position := pin_position + value
 	if not (target_position >= PIN_DEPTH_COUNT or pin_position < 0):
-		reveals[target_position] = true
+		reveals[target_position] = RevealLevel.REVEALED
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
@@ -86,8 +94,8 @@ func _init():
 	
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
-	reveals.fill(false)
-	reveals[0] = true
-	reveals[-1] = true
+	reveals.fill(RevealLevel.UNKNOWN)
+	reveals[0] = RevealLevel.REVEALED
+	reveals[-1] = RevealLevel.REVEALED
 	
 	reset_pin()
