@@ -58,9 +58,17 @@ func get_visible(idx: int = 99) -> Depths:
 ## Updates a level's reveal level, setting it to the highest option.
 func update_visible(idx: int, level: RevealLevel) -> void:
 	reveals[idx] = min(reveals[idx], level)
+	if revealed(idx):
+		checked[idx] = false
 
+## Resets all checked values
 func reset_checked() -> void:
 	checked.fill(false)
+
+## Updates a checked setting, if it's not revealed
+func set_checked(idx: int) -> void:
+	if not revealed(idx):
+		checked[idx] = true
 
 ## Get if the pin is currently revealed
 func revealed(idx: int) -> bool:
