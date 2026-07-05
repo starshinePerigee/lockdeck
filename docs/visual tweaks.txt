@@ -2,9 +2,9 @@ x make jam icon less visible
 
 x hint depth tracker - letters (upper, then lower case)
 x remove checkmark
-add "last turn: X" indicator on the "see all" view
+x add "last turn: X" indicator on the "see all" view
 
-replace "see all" with "see previous turn"
+x replace "see all" with "see previous turn"
 
 remove numbers from cards, but increase space?
 
@@ -13,6 +13,11 @@ convert candle to end turn button - add highlight
 remove top hook from test arrow and flip horizontal?
 
 more two push picks
+
+
+crush clears jam
+
+jam blocks reveal AND hints
 
 
 also: double check reveal logic

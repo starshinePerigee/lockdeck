@@ -65,6 +65,7 @@ static var DIAMOND := PickTemplates.new(
 static var PROBE := PickTemplates.new(
 	"probe",
 	{
+		3: [EffectSpec.new(Effects.TEST, 1)],
 		2: [EffectSpec.new(Effects.TEST, 2)],
 		1: [EffectSpec.new(Effects.TEST, 2)],
 		0: [
@@ -78,7 +79,7 @@ static var HOOK := PickTemplates.new(
 	"hook",
 	{
 		0: [
-			EffectSpec.new(Effects.PUSH, 3),
+			EffectSpec.new(Effects.PUSH, 2),
 			EffectSpec.new(Effects.TEST, 2)
 		]
 	}
