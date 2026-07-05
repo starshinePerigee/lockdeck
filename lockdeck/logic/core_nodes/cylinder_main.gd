@@ -76,11 +76,14 @@ class Execution:
 func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	var pin := pins[pin_index]
 	if pin.is_jammed():
-		# TODO
-		if advance_by > 1:
-			push_warning("Advancing by more than one, could have weird jam interactions!")
-		pin.add_jam(-advance_by)
-	elif pin.advance_pin(advance_by):
+		if pin.jam_count >= advance_by:
+			pin.add_jam(-advance_by)
+			return
+		else:
+			advance_by -= pin.jam_count
+			pin.add_jam(-pin.jam_count) 
+	
+	if pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
 		var depth := pin.current_depth()

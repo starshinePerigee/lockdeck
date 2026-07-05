@@ -6,6 +6,8 @@ refactor core loop entirely - don't really queue actions?
 
 crush breaks jam?
 
+make jam icon less visible
+
 jam holds position over end turn?
 
 improvise lockpicks at any time (costs a coin)

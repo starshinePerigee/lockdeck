@@ -66,11 +66,11 @@ static var PROBE := PickTemplates.new(
 	"probe",
 	{
 		2: [EffectSpec.new(Effects.TEST, 2)],
-		1: [
+		1: [EffectSpec.new(Effects.TEST, 2)],
+		0: [
 			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 2)
-		],
-		0: [EffectSpec.new(Effects.TEST, 2)]
+		]
 	}
 )
 
@@ -132,13 +132,13 @@ static var FORK := PickTemplates.new(
 	"fork",
 	{
 		2: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2)
+			EffectSpec.new(Effects.TEST, 2),
+			EffectSpec.new(Effects.JAM, 2),
 		],
-		1: [EffectSpec.new(Effects.JAM, 1)],
+		1: [EffectSpec.new(Effects.PUSH, 1)],
 		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2)
+			EffectSpec.new(Effects.TEST, 2),
+			EffectSpec.new(Effects.JAM, 2),
 		]
 	}
 )
