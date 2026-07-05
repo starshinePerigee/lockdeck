@@ -9,7 +9,7 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
-	spec.depths[1] = Depths.FORCE
+	spec.depths[1] = Depths.PUSH
 	spec.depths[2] = Depths.JAM
 	spec.depths[4] = Depths.KEY
 	spec.depths[5] = Depths.BOUNCE
@@ -17,11 +17,9 @@ static func get_known_test_pin() -> PinSpec:
 	return spec
 
 static var FILLER_DEPTHS: Array[Depths] = [
-	Depths.FORCE,
+	Depths.PUSH,
 	Depths.JAM,
-	Depths.SKIP,
 	Depths.BOUNCE,
-	Depths.BOUNCE
 ]
 
 ## Gets a random "filler" depth
@@ -74,7 +72,7 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	
 	# Do some other validation checks
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
-		if spec.depths[i] == Depths.SKIP and i > PinSpec.PIN_DEPTH_COUNT - 4:
+		if spec.depths[i] == Depths.PUSH and i > PinSpec.PIN_DEPTH_COUNT - 2:
 			spec.depths[i] = Depths.EMPTY 
 	
 	return spec

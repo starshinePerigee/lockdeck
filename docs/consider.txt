@@ -6,6 +6,8 @@ refactor core loop entirely - don't really queue actions?
 
 crush breaks jam?
 
+make jam icon less visible
+
 jam holds position over end turn?
 
 improvise lockpicks at any time (costs a coin)
@@ -14,3 +16,6 @@ track pick strength, not total lockpicks
 
 change key depth to "unlock" depth, and then a new "key" depth that you must hit to clear the pin
 - revealed from the start? revealed once you hit the pin (but pin bounces you?)
+
+remove numbers from cards
+redo hint icon

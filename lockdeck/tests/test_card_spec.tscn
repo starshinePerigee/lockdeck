@@ -8,22 +8,18 @@
 
 [sub_resource type="Resource" id="Resource_jlvwl"]
 script = ExtResource("3_ofi2c")
-flavor = 4
 value = 3
 
 [sub_resource type="Resource" id="Resource_g4nul"]
 script = ExtResource("3_ofi2c")
-flavor = 2
 value = 6
 
 [sub_resource type="Resource" id="Resource_bielf"]
 script = ExtResource("3_ofi2c")
-flavor = 5
 value = 3
 
 [sub_resource type="Resource" id="Resource_tvmft"]
 script = ExtResource("3_ofi2c")
-flavor = 4
 value = 1
 
 [sub_resource type="Resource" id="Resource_e4eoc"]
@@ -32,7 +28,6 @@ value = 11
 
 [sub_resource type="Resource" id="Resource_eh24l"]
 script = ExtResource("3_ofi2c")
-flavor = 3
 value = 3
 
 [sub_resource type="Resource" id="Resource_8xrg5"]
