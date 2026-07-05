@@ -15,7 +15,7 @@ remove top hook from test arrow and flip horizontal?
 more two push picks
 
 
-crush clears jam
+x crush clears jam
 
 jam blocks reveal AND hints
 
