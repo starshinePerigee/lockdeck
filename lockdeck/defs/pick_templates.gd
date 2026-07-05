@@ -34,8 +34,8 @@ static var DEBUG := PickTemplates.new(
 	{
 		0: [EffectSpec.new(Effects.REVEAL, 3)],
 		1: [
-			EffectSpec.new(Effects.FORCE, 4), 
-			EffectSpec.new(Effects.SKIP, 3),
+			EffectSpec.new(Effects.PUSH, 4), 
+			EffectSpec.new(Effects.TEST, 3),
 			EffectSpec.new(Effects.REVEAL, 1)
 		],
 		3: [EffectSpec.new(Effects.DEBUG, 8)],
@@ -52,11 +52,11 @@ static var DIAMOND := PickTemplates.new(
 	{
 		2: [EffectSpec.new(Effects.TEST, 1)],
 		1: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 1),
 		],
 		0: [
-			EffectSpec.new(Effects.FORCE, 3),
+			EffectSpec.new(Effects.PUSH, 3),
 			EffectSpec.new(Effects.TEST, 1),
 		]
 	}
@@ -67,7 +67,7 @@ static var PROBE := PickTemplates.new(
 	{
 		2: [EffectSpec.new(Effects.TEST, 2)],
 		1: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 2)
 		],
 		0: [EffectSpec.new(Effects.TEST, 2)]
@@ -78,8 +78,7 @@ static var HOOK := PickTemplates.new(
 	"hook",
 	{
 		0: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 3),
 			EffectSpec.new(Effects.TEST, 2)
 		]
 	}
@@ -97,19 +96,19 @@ static var RAKE := PickTemplates.new(
 	"rake",
 	{
 		3: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 1)
 		],
 		2: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 1)
 		],
 		1: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 1)
 		],
 		0: [
-			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.PUSH, 1),
 			EffectSpec.new(Effects.TEST, 1)
 		]
 	}
@@ -119,11 +118,11 @@ static var SNAKE := PickTemplates.new(
 	"snake",
 	{
 		1: [
-			EffectSpec.new(Effects.FORCE, 1), 
+			EffectSpec.new(Effects.PUSH, 1), 
 			EffectSpec.new(Effects.REVEAL, 2)
 		],
 		0: [
-			EffectSpec.new(Effects.FORCE, 1), 
+			EffectSpec.new(Effects.PUSH, 1), 
 			EffectSpec.new(Effects.REVEAL, 2)
 		]
 	}
@@ -133,12 +132,12 @@ static var FORK := PickTemplates.new(
 	"fork",
 	{
 		2: [
-			EffectSpec.new(Effects.FORCE, 2),
+			EffectSpec.new(Effects.PUSH, 2),
 			EffectSpec.new(Effects.TEST, 2)
 		],
 		1: [EffectSpec.new(Effects.JAM, 1)],
 		0: [
-			EffectSpec.new(Effects.FORCE, 2),
+			EffectSpec.new(Effects.PUSH, 2),
 			EffectSpec.new(Effects.TEST, 2)
 		]
 	}
@@ -147,7 +146,10 @@ static var FORK := PickTemplates.new(
 static var LEVER := PickTemplates.new(
 	"lever",
 	{
-		0: [EffectSpec.new(Effects.CRUSH, 1), EffectSpec.new(Effects.FORCE, 3)]
+		0: [
+			EffectSpec.new(Effects.CRUSH, 1), 
+			EffectSpec.new(Effects.PUSH, 3)
+		]
 	}
 )
 
