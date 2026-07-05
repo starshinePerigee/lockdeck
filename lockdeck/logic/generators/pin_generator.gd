@@ -72,7 +72,7 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	
 	# Do some other validation checks
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT):
-		if spec.depths[i] == Depths.PUSH and i > PinSpec.PIN_DEPTH_COUNT - 2:
+		if spec.depths[i] == Depths.PUSH and i > PinSpec.PIN_DEPTH_COUNT - 3:
 			spec.depths[i] = Depths.EMPTY 
 	
 	return spec
