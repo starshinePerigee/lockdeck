@@ -8,10 +8,14 @@ class_name Depth
 		flavor = v
 		_redraw()
 
-@export var checked: bool = false:
-	set(v):
-		checked = v
-		_redraw()
+func set_hints(letters: String, color: Color = Color()):
+	if letters:
+		$HintTracker.visible = true
+	if len(letters) > 8:
+		$HintTracker.text = "*" + letters.substr(len(letters) - 7, 7)
+	else:
+		$HintTracker.text = letters
+	$HintTracker.add_theme_color_override("font_color", color)
 
 func _redraw() -> void:
 	if not is_node_ready():
@@ -19,5 +23,3 @@ func _redraw() -> void:
 		
 	texture = flavor.texture
 	size = texture.get_size()
-	$CheckedIcon.visible = checked
-	

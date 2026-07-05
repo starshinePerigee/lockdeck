@@ -6,6 +6,34 @@ extends Control
 ## but are not present in the pins array.
 @export var pins: Array[PinSpec]
 
+## Holds the current hint id (integer corresponding to ascii)
+var _hint_id := -1
+
+## Bump hint_id to the next letter
+func increment_hint() -> int:
+	# pre-A (65)
+	if _hint_id < 0:
+		_hint_id = 65
+	# A-Z (65-89)
+	elif _hint_id >= 65 and _hint_id < 90:
+		_hint_id += 1
+	# Z (90) to 1 (97)
+	elif _hint_id == 90:
+		_hint_id = 49
+	# 1-9 (49-57)
+	elif _hint_id >= 49 and _hint_id < 57:
+		_hint_id += 1
+	# 9 (57) to a (97)
+	elif _hint_id == 57:
+		_hint_id = 97
+	# a-z (97-121)
+	elif _hint_id >= 97 and _hint_id < 122:
+		_hint_id += 1
+	# # (35)
+	else:
+		_hint_id = 35
+	return _hint_id
+
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
 	for pin in pins:
@@ -16,6 +44,8 @@ func reset_all_pins() -> void:
 func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	pins = new_pins
 	$Cylinders.set_pin_specs(new_pins)
+	Execution.turn_number = 0
+	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> void:
@@ -37,6 +67,9 @@ class Execution:
 	## The top level array has an index per pin, 0 on the left and 4 on the right
 	## identical to the cylinder_main.pins array.
 	var pending_effects: Array[Array]
+	## Holds the current turn number
+	static var turn_number := -1
+	var current_turn
 	
 	static var execution_sentinel := EffectSpec.new(Effects.END_EXECUTION)
 		
@@ -44,6 +77,8 @@ class Execution:
 		pending_effects = []
 		for i in pin_count:
 			pending_effects.append([])
+		turn_number += 1
+		current_turn = turn_number
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
@@ -210,25 +245,27 @@ func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
 func update_visibility() -> void:
-	var new_level := PinSpec.RevealLevel.CLEAR
+	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
-			if pin.checked[i]:
+			if pin.get_checked(i):
 				var depth := pin.depths[i]
 				if depth in Depths.DANGEROUS_DEPTHS:
 					new_level = max(new_level, PinSpec.RevealLevel.DANGEROUS)
 				elif depth in Depths.INTERESTING_DEPTHS:
 					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
 				elif depth in Depths.CLEAR_DEPTHS:
-					pass
+					new_level = max(new_level, PinSpec.RevealLevel.CLEAR)
 				else:
 					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
-	print("Hint level: %s" % new_level)
+	if new_level == PinSpec.RevealLevel.REVEALED:
+		# we didn't hint anything
+		return
+	increment_hint()
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
 			if pin.checked[i]:
-				pin.update_visible(i, new_level)
-				
+				pin.update_visible(i, new_level, String.chr(_hint_id))
 
 #endregion
 

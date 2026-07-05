@@ -28,6 +28,8 @@ enum RevealLevel {
 @export var reveals: Array[RevealLevel]
 ## Checks if depths have been tested this turn
 @export var checked: Array[bool]
+## Holds the checked tracking letters
+@export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -56,10 +58,17 @@ func get_visible(idx: int = 99) -> Depths:
 	return Depths.DEBUG
 
 ## Updates a level's reveal level, setting it to the highest option.
-func update_visible(idx: int, level: RevealLevel) -> void:
-	reveals[idx] = min(reveals[idx], level)
-	if revealed(idx):
-		checked[idx] = false
+func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
+	var old_reveal := reveals[idx]
+	var new_reveal: RevealLevel = min(old_reveal, level)
+	reveals[idx] = new_reveal
+	
+	if get_revealed(idx):
+		hint_tracks[idx] = ""
+	elif old_reveal != new_reveal:
+		hint_tracks[idx] = hint
+	elif old_reveal == level:
+		hint_tracks[idx] = hint_tracks[idx] + hint 
 
 ## Resets all checked values
 func reset_checked() -> void:
@@ -67,12 +76,15 @@ func reset_checked() -> void:
 
 ## Updates a checked setting, if it's not revealed
 func set_checked(idx: int) -> void:
-	if not revealed(idx):
-		checked[idx] = true
+	checked[idx] = true
 
 ## Get if the pin is currently revealed
-func revealed(idx: int) -> bool:
+func get_revealed(idx: int) -> bool:
 	return reveals[idx] == RevealLevel.REVEALED
+
+## Get if the pin was checked (and not revealed)
+func get_checked(idx: int) -> bool:
+	return checked[idx] and not get_revealed(idx)
 
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
@@ -101,6 +113,7 @@ func reveal_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
 	reveals[pos] = RevealLevel.REVEALED
+	hint_tracks[pos] = ""
 
 ## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
 func add_jam(value: int) -> bool:
@@ -139,7 +152,11 @@ func _init():
 	reveals[-1] = RevealLevel.REVEALED
 	
 	checked = []
-	checked.resize(PinSpec.PIN_DEPTH_COUNT)
+	checked.resize(PIN_DEPTH_COUNT)
 	checked.fill(false)
+	
+	hint_tracks = []
+	hint_tracks.resize(PIN_DEPTH_COUNT)
+	hint_tracks.fill("ABC")
 
 	reset_pin()
