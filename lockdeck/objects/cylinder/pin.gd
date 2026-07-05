@@ -1,4 +1,3 @@
-@tool
 extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin

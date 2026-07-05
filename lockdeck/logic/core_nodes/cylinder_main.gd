@@ -6,6 +6,9 @@ extends Control
 ## but are not present in the pins array.
 @export var pins: Array[PinSpec]
 
+## Holds the current turn number
+static var turn_number := -1
+
 ## Holds the current hint id (integer corresponding to ascii)
 var _hint_id := -1
 
@@ -44,7 +47,7 @@ func reset_all_pins() -> void:
 func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	pins = new_pins
 	$Cylinders.set_pin_specs(new_pins)
-	Execution.turn_number = 0
+	turn_number = 0
 	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
@@ -67,9 +70,6 @@ class Execution:
 	## The top level array has an index per pin, 0 on the left and 4 on the right
 	## identical to the cylinder_main.pins array.
 	var pending_effects: Array[Array]
-	## Holds the current turn number
-	static var turn_number := -1
-	var current_turn
 	
 	static var execution_sentinel := EffectSpec.new(Effects.END_EXECUTION)
 		
@@ -77,8 +77,6 @@ class Execution:
 		pending_effects = []
 		for i in pin_count:
 			pending_effects.append([])
-		turn_number += 1
-		current_turn = turn_number
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
@@ -154,7 +152,7 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 			break
 		evaluate_pin(next_effect, ex, result)
 	
-	update_visibility()
+	result.last_hint = update_visibility()
 	
 	$Cylinders.set_pin_specs(pins)
 	
@@ -244,7 +242,7 @@ func execute_key(result: ResultSpec) -> void:
 func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
-func update_visibility() -> void:
+func update_visibility() -> String:
 	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
@@ -260,12 +258,20 @@ func update_visibility() -> void:
 					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
 	if new_level == PinSpec.RevealLevel.REVEALED:
 		# we didn't hint anything
-		return
+		return ""
 	increment_hint()
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
 			if pin.checked[i]:
 				pin.update_visible(i, new_level, String.chr(_hint_id))
+	return String.chr(_hint_id)
+
+func update_turn_number() -> int:
+	if turn_number < 0:
+		push_error("Failed to init turn number!")
+		turn_number = 0
+	turn_number += 1
+	return turn_number
 
 #endregion
 

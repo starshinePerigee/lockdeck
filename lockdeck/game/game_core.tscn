@@ -118,8 +118,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -8
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 32
-text = "View
-all"
+text = "Last
+turn"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -150,5 +150,19 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 32
 text = "Go
 back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LastHint" type="Label" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 489.0
+offset_right = 184.0
+offset_bottom = 515.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -8
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1

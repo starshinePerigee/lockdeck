@@ -40,6 +40,7 @@ func set_state(state: InputState) -> void:
 			$LockBody/CylinderMain.position = Vector2(0, 0)
 			$ViewMoreButton.disabled = false
 			$ViewMoreButton.visible = true
+			$LastHint.visible = false
 			$GoBackButton.visible = false
 			$CountdownMain/Button.disabled = false
 			$DiscardMain.show_icon = false
@@ -69,6 +70,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			$ViewMoreButton.visible = false
 			$GoBackButton.visible = true
+			$LastHint.visible = true
 			$CountdownMain/Button.disabled = true
 
 
@@ -155,6 +157,11 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	else:
 		$DiscardMain.add_card(card)
 	
+	if result.last_hint:
+		$LastHint.text = "Last hint: %s" % result.last_hint
+	else:
+		$LastHint.text = "No hints last turn"
+	
 	if result.lock_solved:
 		game_win.emit()
 		$Notifications.notify(Notifications.UNLOCK)
@@ -228,6 +235,7 @@ func restart() -> void:
 	$CountdownMain.set_count(COUNTDOWN_TIME)
 	end_turn(false)
 	$Notifications.clear()
+	$LastHint.text = "No picks played yet."
 
 func _ready() -> void:
 	$CountdownMain.countdown_pressed.connect(end_turn)
