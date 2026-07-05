@@ -37,11 +37,12 @@ META
 - basic lockpick pass and expansion
 
 HINTS
-- hint effect
-- permanent safe
+x hint effect
+x permanent safe
 - multiple warn tracking
 
 GUIDES
 - card effect preview
 - card guide (hovering a pick card pops up a reminder box which shows tooltips for all depths on the card)
 - depth description hover (hovering a depth pops up a tooltip on what it does)
+- depth glossary that shows all depths that could be present in the current stage, as well as all card effects

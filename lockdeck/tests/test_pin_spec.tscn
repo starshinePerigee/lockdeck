@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dy58gwdsf0br2"]
 
-[ext_resource type="Script" path="res://tests/test_pin_spec.gd" id="1_uutyu"]
+[ext_resource type="Script" uid="uid://bax1c2tudqai4" path="res://tests/test_pin_spec.gd" id="1_uutyu"]
 [ext_resource type="PackedScene" uid="uid://bkcikxm7qtgka" path="res://objects/cylinder/pin.tscn" id="2_prxg1"]
 
 [node name="TestPinSpec" type="Node2D"]

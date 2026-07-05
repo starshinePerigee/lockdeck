@@ -64,7 +64,7 @@ func clear_cursor() -> void:
 func reveal_all() -> void:
 	print("The world unfolds before your eyes.")
 	for pin in $CylinderMain.pins:
-		pin.reveals.fill(true)
+		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
 	$CylinderMain.redraw_pins()
 
 func _ready() -> void:

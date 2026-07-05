@@ -33,6 +33,18 @@ static var BASE := Depths.new("base", Effects.EMPTY)
 ## The target end of the pin
 static var FINAL := Depths.new("final_neutral", Effects.KEY)
 
+## Default unrevealed depth
+static var HIDDEN := Depths.new("hidden", Effects.DEBUG)
+
+## Marked clear
+static var MARK_CLEAR := Depths.new("mark_clear", Effects.DEBUG)
+
+## Default unrevealed depth
+static var MARK_INTERESTING := Depths.new("mark_interesting", Effects.DEBUG)
+
+## Default unrevealed depth
+static var MARK_DANGEROUS := Depths.new("MARK_DANGEROUS", Effects.DEBUG)
+
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
 
@@ -61,7 +73,7 @@ static var TRAP := Depths.new("trap", Effects.EMPTY)
 static var BIND := Depths.new("bind", Effects.BIND)
 
 ## Resets another set pin (or this one, if none are set)
-static var REST := Depths.new("reset", Effects.RESET)
+static var RESET := Depths.new("reset", Effects.RESET)
 
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new("warn", Effects.EMPTY)
@@ -75,3 +87,29 @@ static var SOLVE_DEPTHS: Array[Depths] = [
 	FINAL, 
 	KEY
 ]
+
+## Holds all depths which count for clear
+static var CLEAR_DEPTHS: Array[Depths] = [
+	BASE,
+	FINAL,
+	EMPTY,
+	KEY,
+	WARN,
+	JAM,
+	HINT,
+]
+
+static var INTERESTING_DEPTHS: Array[Depths] = [
+	FORCE,
+	SKIP,
+	RESET,
+	BOUNCE,
+	TRAP,
+	BIND,
+]
+
+static var DANGEROUS_DEPTHS: Array[Depths] = [
+	BREAK
+]
+
+## Note: all other depths raise warnings and are treated as interesting.

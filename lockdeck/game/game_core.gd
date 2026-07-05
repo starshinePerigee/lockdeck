@@ -138,6 +138,7 @@ func return_from_view_all() -> void:
 
 ## the background is clicked so back out of whatever:
 func bg_cancel() -> void:
+	$Notifications.clear()
 	set_state(InputState.INACTIVE)
 
 ## Handle all steps from pick activation

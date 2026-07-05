@@ -96,9 +96,17 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = fa
 			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 			pin.reveal_position()
 
+func test_pin(pin_index: int, test_ahead: int) -> void:
+	for i in range(1, 1+test_ahead):
+		var offset := i + pins[pin_index].pin_position
+		if offset < PinSpec.PIN_DEPTH_COUNT:
+			pins[pin_index].set_checked(offset)
+
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
 func execute(card: CardSpec, card_index: int) -> ResultSpec:
+	for pin in pins:
+		pin.reset_checked()
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
 	var result := ResultSpec.new()
@@ -116,6 +124,8 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 #			print("Completed execution after %s iterations." % iterations)
 			break
 		evaluate_pin(next_effect, ex, result)
+	
+	update_visibility()
 	
 	$Cylinders.set_pin_specs(pins)
 	
@@ -146,6 +156,8 @@ func evaluate_pin(
 			execute_force(effect, ex)
 		Effects.SKIP:
 			execute_skip(effect, ex)
+		Effects.TEST:
+			execute_test(effect, ex)
 		Effects.REVEAL:
 			execute_reveal(effect)
 		Effects.JAM:
@@ -169,7 +181,11 @@ func execute_force(effect: EffectSpec, ex: Execution) -> void:
 	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_skip(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 	advance_pin(effect.realized_pin, effect.value, ex, true)
+
+func execute_test(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 
 func execute_reveal(effect: EffectSpec) -> void:
 	for i in range(effect.value):
@@ -209,6 +225,27 @@ func execute_key(result: ResultSpec) -> void:
 
 func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
+
+func update_visibility() -> void:
+	var new_level := PinSpec.RevealLevel.CLEAR
+	for pin in pins:
+		for i in range(PinSpec.PIN_DEPTH_COUNT):
+			if pin.checked[i]:
+				var depth := pin.depths[i]
+				if depth in Depths.DANGEROUS_DEPTHS:
+					new_level = max(new_level, PinSpec.RevealLevel.DANGEROUS)
+				elif depth in Depths.INTERESTING_DEPTHS:
+					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
+				elif depth in Depths.CLEAR_DEPTHS:
+					pass
+				else:
+					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
+	print("Hint level: %s" % new_level)
+	for pin in pins:
+		for i in range(PinSpec.PIN_DEPTH_COUNT):
+			if pin.checked[i]:
+				pin.update_visible(i, new_level)
+				
 
 #endregion
 

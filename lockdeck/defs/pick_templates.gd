@@ -50,8 +50,27 @@ static var DEBUG := PickTemplates.new(
 static var DIAMOND := PickTemplates.new(
 	"diamond",
 	{
-		1: [EffectSpec.new(Effects.FORCE, 1)],
-		0: [EffectSpec.new(Effects.FORCE, 3)]
+		2: [EffectSpec.new(Effects.TEST, 1)],
+		1: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 1),
+		],
+		0: [
+			EffectSpec.new(Effects.FORCE, 3),
+			EffectSpec.new(Effects.TEST, 1),
+		]
+	}
+)
+
+static var PROBE := PickTemplates.new(
+	"probe",
+	{
+		2: [EffectSpec.new(Effects.TEST, 2)],
+		1: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 2)
+		],
+		0: [EffectSpec.new(Effects.TEST, 2)]
 	}
 )
 
@@ -60,7 +79,8 @@ static var HOOK := PickTemplates.new(
 	{
 		0: [
 			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.FORCE, 1)
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 2)
 		]
 	}
 )
@@ -76,10 +96,22 @@ static var BALL := PickTemplates.new(
 static var RAKE := PickTemplates.new(
 	"rake",
 	{
-		3: [EffectSpec.new(Effects.FORCE, 1)],
-		2: [EffectSpec.new(Effects.FORCE, 1)],
-		1: [EffectSpec.new(Effects.FORCE, 1)],
-		0: [EffectSpec.new(Effects.FORCE, 1)]
+		3: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 1)
+		],
+		2: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 1)
+		],
+		1: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 1)
+		],
+		0: [
+			EffectSpec.new(Effects.FORCE, 1),
+			EffectSpec.new(Effects.TEST, 1)
+		]
 	}
 )
 
@@ -100,9 +132,15 @@ static var SNAKE := PickTemplates.new(
 static var FORK := PickTemplates.new(
 	"fork",
 	{
-		2: [EffectSpec.new(Effects.FORCE, 2)],
+		2: [
+			EffectSpec.new(Effects.FORCE, 2),
+			EffectSpec.new(Effects.TEST, 2)
+		],
 		1: [EffectSpec.new(Effects.JAM, 1)],
-		0: [EffectSpec.new(Effects.FORCE, 2)]
+		0: [
+			EffectSpec.new(Effects.FORCE, 2),
+			EffectSpec.new(Effects.TEST, 2)
+		]
 	}
 )
 
@@ -117,6 +155,7 @@ static var LEVER := PickTemplates.new(
 static var valid_templates: Array[PickTemplates] = [
 	DIAMOND,
 	HOOK,
+	PROBE,
 	BALL,
 	RAKE,
 	SNAKE,
