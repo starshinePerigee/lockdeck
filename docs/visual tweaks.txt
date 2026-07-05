@@ -6,7 +6,7 @@ x add "last turn: X" indicator on the "see all" view
 
 x replace "see all" with "see previous turn"
 
-remove numbers from cards, but increase space?
+x remove numbers from cards, but increase space?
 
 convert candle to end turn button - add highlight
 
@@ -34,5 +34,5 @@ also: double check debug messages
 
 
 also: add more power to starter deck
-
+also also: too much jam in the deck
 
