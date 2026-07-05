@@ -1,6 +1,6 @@
 extends Resource
 ## EffectSpec is the dataclass that defines a single effect as part of a card or depth.
-## Note that effects also have a value - so 4 "forces" is a single Force flavored EffectSpec
+## Note that effects also have a value - so 4 "pushes" are a single push flavored EffectSpec
 ## with value 4
 class_name EffectSpec
 

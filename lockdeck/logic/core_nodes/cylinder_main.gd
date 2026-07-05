@@ -66,35 +66,26 @@ class Execution:
 	
 	## Adds effects to the top of the stack
 	func add_effect(pin_index: int, effect: EffectSpec, front: bool = true):
-		if effect.flavor in Effects.MOVE_PIN:
-			## Decompose into value-1 effects
-			for i in range(effect.value):
-				var new_effect: EffectSpec = EffectSpec.new(effect.flavor, 1)
-				if front:
-					pending_effects[pin_index].push_front(new_effect)
-				else:
-					pending_effects[pin_index].push_back(new_effect)
+		if front:
+			pending_effects[pin_index].push_front(effect)
 		else:
-			if front:
-				pending_effects[pin_index].push_front(effect)
-			else:
-				pending_effects[pin_index].push_back(effect)
+			pending_effects[pin_index].push_back(effect)
 
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
-func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = false) -> void:
+func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	var pin := pins[pin_index]
 	if pin.is_jammed():
+		# TODO
 		if advance_by > 1:
 			push_warning("Advancing by more than one, could have weird jam interactions!")
 		pin.add_jam(-advance_by)
 	elif pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		if not skip:
-			var depth := pin.current_depth()
-			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
-			pin.reveal_position()
+		var depth := pin.current_depth()
+		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+		pin.reveal_position()
 
 func test_pin(pin_index: int, test_ahead: int) -> void:
 	for i in range(1, 1+test_ahead):
@@ -141,21 +132,13 @@ func evaluate_pin(
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
 	
-	if effect.value > 1 and effect.flavor in Effects.MOVE_PIN:
-		push_error(
-			"Move effect was not decomposed: %s with value %s" 
-			% [effect.flavor.effect_name, effect.value]
-		)
-	
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)
 		Effects.EMPTY:
 			pass
-		Effects.FORCE:
-			execute_force(effect, ex)
-		Effects.SKIP:
-			execute_skip(effect, ex)
+		Effects.PUSH:
+			execute_push(effect, ex)
 		Effects.TEST:
 			execute_test(effect, ex)
 		Effects.REVEAL:
@@ -177,12 +160,9 @@ func evaluate_pin(
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
-func execute_force(effect: EffectSpec, ex: Execution) -> void:
-	advance_pin(effect.realized_pin, effect.value, ex)
-
-func execute_skip(effect: EffectSpec, ex: Execution) -> void:
+func execute_push(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
-	advance_pin(effect.realized_pin, effect.value, ex, true)
+	advance_pin(effect.realized_pin, effect.value, ex)
 
 func execute_test(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)

@@ -48,14 +48,11 @@ static var MARK_DANGEROUS := Depths.new("MARK_DANGEROUS", Effects.DEBUG)
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
 
-## Force effect
-static var FORCE := Depths.new("force", Effects.FORCE, 2)
+## Push effect
+static var PUSH := Depths.new("push", Effects.PUSH, 2)
 
 ## Jam effect
 static var JAM := Depths.new("jam", Effects.JAM, 3)
-
-## Skip effect
-static var SKIP := Depths.new("skip", Effects.SKIP, 3)
 
 ## Unlock depth, needed to win.
 static var KEY := Depths.new("key", Effects.KEY)
@@ -100,8 +97,7 @@ static var CLEAR_DEPTHS: Array[Depths] = [
 ]
 
 static var INTERESTING_DEPTHS: Array[Depths] = [
-	FORCE,
-	SKIP,
+	PUSH,
 	RESET,
 	BOUNCE,
 	TRAP,
