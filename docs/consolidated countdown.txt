@@ -37,8 +37,8 @@ META
 - basic lockpick pass and expansion
 
 HINTS
-- hint effect
-- permanent safe
+x hint effect
+x permanent safe
 - multiple warn tracking
 
 GUIDES
