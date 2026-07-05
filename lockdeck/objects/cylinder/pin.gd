@@ -81,7 +81,6 @@ func load_spec(pin_spec: PinSpec) -> void:
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
-	pin_locked = pin_spec.is_jammed()
 	$KeyIndicator.visible = pin_spec.is_solved()
 
 #endregion
