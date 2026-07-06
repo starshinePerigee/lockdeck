@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
-[ext_resource type="PackedScene" uid="uid://cxg3ri88p0vqe" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
+[ext_resource type="PackedScene" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3

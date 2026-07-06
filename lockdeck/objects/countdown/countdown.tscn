@@ -19,6 +19,7 @@ count = -1
 
 [node name="Highlight" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -3.0
 offset_top = 211.0
 offset_right = 141.0
