@@ -1,6 +1,6 @@
 extends Control
 
-var VERSION_NUMBER := "v0.3.3"
+var VERSION_NUMBER := "v0.3.4"
 
 var difficulty := 0
 
@@ -18,8 +18,8 @@ func start_next_level():
 	set_next_button_state(false)
 	
 	difficulty += 1
-	$GameCore.CYLINDER_COUNT = min(difficulty, 5)
-	$GameCore.DIFFICULTY_MOD = max(difficulty - 6, 0)
+	$GameCore.cylinder_count = min(difficulty, 5)
+	$GameCore.difficulty_mod = max(difficulty - 6, 0)
 	$GameCore.restart()
 	$GameCore.add_random_cards(2)
 	$NextLevelButton.disabled = true
@@ -33,6 +33,7 @@ func show_fail():
 func _ready():
 	$RestartButton.pressed.connect(restart_game)
 	$GameCore.game_win.connect(show_win)
+	$GameCore.DEBUG_MODE = true
 	$NextLevelButton.pressed.connect(start_next_level)
 	restart_game()
 	$Version.text = VERSION_NUMBER
