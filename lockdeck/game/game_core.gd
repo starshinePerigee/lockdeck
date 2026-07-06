@@ -207,7 +207,7 @@ func end_turn(count_down: bool = true) -> void:
 	$CountdownMain.highlight = false
 	if count_down:
 		$CountdownMain.count_down()
-	$LockBody/CylinderMain.reset_all_pins()
+	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
 	draw_new_hand()

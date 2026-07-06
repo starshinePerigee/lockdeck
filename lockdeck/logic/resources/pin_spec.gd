@@ -123,11 +123,8 @@ func add_jam(value: int) -> bool:
 		return true
 	return jammed
 
-## Reveals a pin in n positions. Does not work through jam.
+## Reveals a pin in n positions. Does work through jam, so test jam on the caller.
 func reveal_pin(value: int) -> void:
-	if jam_count > 0:
-		return
-	
 	var target_position := pin_position + value
 	if not (target_position >= PIN_DEPTH_COUNT or pin_position < 0):
 		reveals[target_position] = RevealLevel.REVEALED

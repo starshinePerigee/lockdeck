@@ -124,6 +124,8 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 		pin.reveal_position()
 
 func test_pin(pin_index: int, test_ahead: int) -> void:
+	if pins[pin_index].is_jammed():
+		return
 	for i in range(1, 1+test_ahead):
 		var offset := i + pins[pin_index].pin_position
 		if offset < PinSpec.PIN_DEPTH_COUNT:
@@ -204,6 +206,8 @@ func execute_test(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
 
 func execute_reveal(effect: EffectSpec) -> void:
+	if pins[effect.realized_pin].is_jammed():
+		return
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
 
@@ -294,5 +298,9 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		pin.advance_pin(0, 0)
+		if pin.is_jammed():
+			pin.add_jam(-pin.jam_count) 
+		else:
+			pin.advance_pin(0, 0)
+		pin.reset_checked()
 	$Cylinders.set_pin_specs(pins)
