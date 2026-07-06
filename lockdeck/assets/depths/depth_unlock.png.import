@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wye0kkasayvx"
-path="res://.godot/imported/icon_test.png-0ca517614c98907530829bae1b92d0d6.ctex"
+uid="uid://bb7l7ifipfmgf"
+path="res://.godot/imported/depth_unlock.png-4726d4e4d0229afa20a2a8c00303e29f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_test.png"
-dest_files=["res://.godot/imported/icon_test.png-0ca517614c98907530829bae1b92d0d6.ctex"]
+source_file="res://assets/depths/depth_unlock.png"
+dest_files=["res://.godot/imported/depth_unlock.png-4726d4e4d0229afa20a2a8c00303e29f.ctex"]
 
 [params]
 

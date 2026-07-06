@@ -6,6 +6,37 @@ extends Control
 ## but are not present in the pins array.
 @export var pins: Array[PinSpec]
 
+## Holds the current turn number
+static var turn_number := -1
+
+## Holds the current hint id (integer corresponding to ascii)
+var _hint_id := -1
+
+## Bump hint_id to the next letter
+func increment_hint() -> int:
+	# pre-A (65)
+	if _hint_id < 0:
+		_hint_id = 65
+	# A-Z (65-89)
+	elif _hint_id >= 65 and _hint_id < 90:
+		_hint_id += 1
+	# Z (90) to 1 (97)
+	elif _hint_id == 90:
+		_hint_id = 49
+	# 1-9 (49-57)
+	elif _hint_id >= 49 and _hint_id < 57:
+		_hint_id += 1
+	# 9 (57) to a (97)
+	elif _hint_id == 57:
+		_hint_id = 97
+	# a-z (97-121)
+	elif _hint_id >= 97 and _hint_id < 122:
+		_hint_id += 1
+	# # (35)
+	else:
+		_hint_id = 35
+	return _hint_id
+
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
 	for pin in pins:
@@ -16,6 +47,8 @@ func reset_all_pins() -> void:
 func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	pins = new_pins
 	$Cylinders.set_pin_specs(new_pins)
+	turn_number = 0
+	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> void:
@@ -66,39 +99,43 @@ class Execution:
 	
 	## Adds effects to the top of the stack
 	func add_effect(pin_index: int, effect: EffectSpec, front: bool = true):
-		if effect.flavor in Effects.MOVE_PIN:
-			## Decompose into value-1 effects
-			for i in range(effect.value):
-				var new_effect: EffectSpec = EffectSpec.new(effect.flavor, 1)
-				if front:
-					pending_effects[pin_index].push_front(new_effect)
-				else:
-					pending_effects[pin_index].push_back(new_effect)
+		if front:
+			pending_effects[pin_index].push_front(effect)
 		else:
-			if front:
-				pending_effects[pin_index].push_front(effect)
-			else:
-				pending_effects[pin_index].push_back(effect)
+			pending_effects[pin_index].push_back(effect)
 
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
-func advance_pin(pin_index: int, advance_by: int, ex: Execution, skip: bool = false) -> void:
+func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	var pin := pins[pin_index]
 	if pin.is_jammed():
-		if advance_by > 1:
-			push_warning("Advancing by more than one, could have weird jam interactions!")
-		pin.add_jam(-advance_by)
-	elif pin.advance_pin(advance_by):
+		if pin.jam_count >= advance_by:
+			pin.add_jam(-advance_by)
+			return
+		else:
+			advance_by -= pin.jam_count
+			pin.add_jam(-pin.jam_count) 
+	
+	if pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		if not skip:
-			var depth := pin.current_depth()
-			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
-			pin.reveal_position()
+		var depth := pin.current_depth()
+		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+		pin.reveal_position()
+
+func test_pin(pin_index: int, test_ahead: int) -> void:
+	if pins[pin_index].is_jammed():
+		return
+	for i in range(1, 1+test_ahead):
+		var offset := i + pins[pin_index].pin_position
+		if offset < PinSpec.PIN_DEPTH_COUNT:
+			pins[pin_index].set_checked(offset)
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
 func execute(card: CardSpec, card_index: int) -> ResultSpec:
+	for pin in pins:
+		pin.reset_checked()
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
 	var result := ResultSpec.new()
@@ -117,6 +154,8 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 			break
 		evaluate_pin(next_effect, ex, result)
 	
+	result.last_hint = update_visibility()
+	
 	$Cylinders.set_pin_specs(pins)
 	
 	return result
@@ -131,21 +170,15 @@ func evaluate_pin(
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
 	
-	if effect.value > 1 and effect.flavor in Effects.MOVE_PIN:
-		push_error(
-			"Move effect was not decomposed: %s with value %s" 
-			% [effect.flavor.effect_name, effect.value]
-		)
-	
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)
 		Effects.EMPTY:
 			pass
-		Effects.FORCE:
-			execute_force(effect, ex)
-		Effects.SKIP:
-			execute_skip(effect, ex)
+		Effects.PUSH:
+			execute_push(effect, ex)
+		Effects.TEST:
+			execute_test(effect, ex)
 		Effects.REVEAL:
 			execute_reveal(effect)
 		Effects.JAM:
@@ -158,20 +191,23 @@ func evaluate_pin(
 			execute_break(result)
 		Effects.BREAK:
 			execute_break(result)
-		Effects.KEY:
-			execute_key(result)
+		Effects.UNLOCK:
+			execute_unlock(result)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
-func execute_force(effect: EffectSpec, ex: Execution) -> void:
+func execute_push(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 	advance_pin(effect.realized_pin, effect.value, ex)
 
-func execute_skip(effect: EffectSpec, ex: Execution) -> void:
-	advance_pin(effect.realized_pin, effect.value, ex, true)
+func execute_test(effect: EffectSpec, ex: Execution) -> void:
+	test_pin(effect.realized_pin, effect.value)
 
 func execute_reveal(effect: EffectSpec) -> void:
+	if pins[effect.realized_pin].is_jammed():
+		return
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
 
@@ -179,16 +215,26 @@ func execute_jam(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
 
 func execute_crush(effect: EffectSpec, ex: Execution) -> void:
+	var pin := pins[effect.realized_pin]
+	
+	var depth_offset := 1
 	for i in range(effect.value):
-		var pin := pins[effect.realized_pin]
-		var oob := pin.advance_pin(1)
-		pin.reveal_position()
+		if pin.is_jammed():
+			pin.add_jam(-pin.jam_count)
+			continue
 		
-		if oob or pin.current_depth() == Depths.FINAL:
+		var target := pin.pin_position + depth_offset
+		if target >= PinSpec.PIN_DEPTH_COUNT:
 			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 			return
+		
+		pin.reveal_position(target)
+		var next_depth := pin.depths[target]
+		if next_depth == Depths.FINAL:
+			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 		else:
-			pin.depths[pin.pin_position] = Depths.EMPTY
+			pin.depths[target] = Depths.EMPTY
+		depth_offset += 1
 
 func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
@@ -200,7 +246,7 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var depth := pin.current_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
-func execute_key(result: ResultSpec) -> void:
+func execute_unlock(result: ResultSpec) -> void:
 	for pin in pins:
 		if not pin.is_solved():
 			return
@@ -209,6 +255,37 @@ func execute_key(result: ResultSpec) -> void:
 
 func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
+
+func update_visibility() -> String:
+	var new_level := PinSpec.RevealLevel.REVEALED
+	for pin in pins:
+		for i in range(PinSpec.PIN_DEPTH_COUNT):
+			if pin.get_checked(i):
+				var depth := pin.depths[i]
+				if depth in Depths.DANGEROUS_DEPTHS:
+					new_level = max(new_level, PinSpec.RevealLevel.DANGEROUS)
+				elif depth in Depths.INTERESTING_DEPTHS:
+					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
+				elif depth in Depths.CLEAR_DEPTHS:
+					new_level = max(new_level, PinSpec.RevealLevel.CLEAR)
+				else:
+					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
+	if new_level == PinSpec.RevealLevel.REVEALED:
+		# we didn't hint anything
+		return ""
+	increment_hint()
+	for pin in pins:
+		for i in range(PinSpec.PIN_DEPTH_COUNT):
+			if pin.checked[i]:
+				pin.update_visible(i, new_level, String.chr(_hint_id))
+	return String.chr(_hint_id)
+
+func update_turn_number() -> int:
+	if turn_number < 0:
+		push_error("Failed to init turn number!")
+		turn_number = 0
+	turn_number += 1
+	return turn_number
 
 #endregion
 
@@ -221,5 +298,9 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		pin.advance_pin(0, 0)
+		if pin.is_jammed():
+			pin.add_jam(-pin.jam_count) 
+		else:
+			pin.advance_pin(0, 0)
+		pin.reset_checked()
 	$Cylinders.set_pin_specs(pins)

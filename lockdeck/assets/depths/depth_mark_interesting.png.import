@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxodtfuihwecd"
-path="res://.godot/imported/depth_skip.png-b6ff147905ffe001ccba75cb1b19d5be.ctex"
+uid="uid://cyajs78t1kwg1"
+path="res://.godot/imported/depth_mark_interesting.png-796e41dc977397d9bd219d40d5a6d8ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/depths/depth_skip.png"
-dest_files=["res://.godot/imported/depth_skip.png-b6ff147905ffe001ccba75cb1b19d5be.ctex"]
+source_file="res://assets/depths/depth_mark_interesting.png"
+dest_files=["res://.godot/imported/depth_mark_interesting.png-796e41dc977397d9bd219d40d5a6d8ec.ctex"]
 
 [params]
 

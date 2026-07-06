@@ -1,16 +1,32 @@
 extends Control
 
-# emitted when we are out of turns
+## emitted when we are out of turns
 signal countdown_ended
 
-signal countdown_pressed
+## emitted when countdown is pressed (and confirmed, if needed)
+signal countdown_triggered
 
 @export var count: int = 0
 
-@export var highlight := false:
+## disregard button presses
+@export var button_disable := false:
 	set(v):
-		highlight = v
-		$ColorRect.visible = highlight
+		button_disable = v
+		if button_disable:
+			$Countdown/Label.add_theme_color_override(
+				"font_color", Color("#918891")
+			)
+		else:
+			$Countdown/Label.add_theme_color_override(
+				"font_color", Color("FFFFFF")
+			)
+
+## If end turn is suggested
+@export var suggest := false:
+	set(v):
+		suggest = v
+		$Countdown/Highlight.visible = suggest
+		$Countdown.show_end = suggest
 
 func count_down() -> void:
 	if count == 0:
@@ -26,5 +42,13 @@ func set_count(new_count: int) -> void:
 	count = new_count
 	$Countdown.count = count
 
+func handle_press() -> void:
+	if button_disable:
+		return
+	if suggest:
+		countdown_triggered.emit()
+	else:
+		suggest = true
+
 func _ready() -> void:
-	$Button.pressed.connect(countdown_pressed.emit)
+	$Countdown.candle_clicked.connect(handle_press)

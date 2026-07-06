@@ -15,7 +15,9 @@ x- hint  (next danger or sets pin to clear)
 xx warn (break is after this depth)
 x- trap (locks pin if skipped)
 x- bind (locks pin until other pin is set)
-xx key 
+xx key
+-- breathe (draw a card)
+- key (ii) (must hit to unlock)
 
 x- reset
 xx break

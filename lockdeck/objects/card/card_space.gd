@@ -22,7 +22,6 @@ enum DragState {
 
 var _dragging := DragState.NOT
 var _active := false
-var start_position := Vector2()
 var mouse_start_position := Vector2()
 
 const TEXTURE_OPEN := preload("res://assets/card/space.png")
@@ -91,8 +90,7 @@ func _start_click():
 		_active = true
 		card_clicked.emit()
 		if draggable:
-			start_position = global_position
-			mouse_start_position = get_global_mouse_position()
+			mouse_start_position = get_local_mouse_position()
 
 func _end_click():
 	if _active:
@@ -105,7 +103,7 @@ func _end_click():
 	_dragging = DragState.NOT
 
 func snapback():
-	$PickCard.set_global_position(start_position)
+	$PickCard.position = Vector2()
 
 func _set_texture():
 	if not is_node_ready():
@@ -122,7 +120,7 @@ func _set_texture():
 
 func _process(_delta: float) -> void:
 	if _active:
-		var curr_mouse_position := get_global_mouse_position()
+		var curr_mouse_position := get_local_mouse_position()
 		if _dragging == DragState.NOT and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
 				_dragging = DragState.DRAG
@@ -132,8 +130,8 @@ func _process(_delta: float) -> void:
 				_dragging = DragState.SUPERDRAG
 				drag_definitive.emit()
 		if _dragging != DragState.NOT:
-			$PickCard.set_global_position(
-				start_position + get_global_mouse_position() - mouse_start_position
+			$PickCard.set_position(
+				get_local_mouse_position() - mouse_start_position
 			)
 
 func _ready():

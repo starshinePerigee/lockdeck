@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvybxg46fu5ya"
-path="res://.godot/imported/depth_force.png-c2617e93072ac9ed8086cf60852cb560.ctex"
+uid="uid://bgq47vgacuw25"
+path="res://.godot/imported/depth_mark_dangerous.png-604d68cfa2ecd8f94acfe6d772651c0d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/depths/depth_force.png"
-dest_files=["res://.godot/imported/depth_force.png-c2617e93072ac9ed8086cf60852cb560.ctex"]
+source_file="res://assets/depths/depth_mark_dangerous.png"
+dest_files=["res://.godot/imported/depth_mark_dangerous.png-604d68cfa2ecd8f94acfe6d772651c0d.ctex"]
 
 [params]
 

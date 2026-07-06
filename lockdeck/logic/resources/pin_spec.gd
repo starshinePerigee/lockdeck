@@ -13,11 +13,23 @@ const CYLINDER_COUNT_MAX := 5
 ## This is also pretty deep so maybe don't touch it?
 const PIN_DEPTH_COUNT := 9
 
+enum RevealLevel {
+	REVEALED = 0,
+	CLEAR = 1,
+	INTERESTING = 2,
+	DANGEROUS = 3,
+	UNKNOWN = 4,
+}
+
 ## Array of depth flavors for this pin. Index 0 is the top flavor, and
 ## will typically be Depths.BASE
 @export var depths: Array[Depths]
-## Revealed status array. True shows the depth texture, false shows "?"
-@export var reveals: Array[bool]
+## Revealed status array.
+@export var reveals: Array[RevealLevel]
+## Checks if depths have been tested this turn
+@export var checked: Array[bool]
+## Holds the checked tracking letters
+@export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -26,6 +38,53 @@ const PIN_DEPTH_COUNT := 9
 ## Get the depth flavor that the pin is currently set to.
 func current_depth() -> Depths:
 	return depths[pin_position]
+
+## Get the visible depth for a pin, or the current one (default)
+## Negative numbers index from the back 
+func get_visible(idx: int = 99) -> Depths:
+	if idx == 99:
+		idx = pin_position
+	match reveals[idx]:
+		RevealLevel.REVEALED:
+			return depths[idx]
+		RevealLevel.UNKNOWN:
+			return Depths.HIDDEN
+		RevealLevel.CLEAR:
+			return Depths.MARK_CLEAR
+		RevealLevel.INTERESTING:
+			return Depths.MARK_INTERESTING
+		RevealLevel.DANGEROUS:
+			return Depths.MARK_DANGEROUS
+	return Depths.DEBUG
+
+## Updates a level's reveal level, setting it to the highest option.
+func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
+	var old_reveal := reveals[idx]
+	var new_reveal: RevealLevel = min(old_reveal, level)
+	reveals[idx] = new_reveal
+	
+	if get_revealed(idx):
+		hint_tracks[idx] = ""
+	elif old_reveal != new_reveal:
+		hint_tracks[idx] = hint
+	elif old_reveal == level:
+		hint_tracks[idx] = hint_tracks[idx] + hint 
+
+## Resets all checked values
+func reset_checked() -> void:
+	checked.fill(false)
+
+## Updates a checked setting, if it's not revealed
+func set_checked(idx: int) -> void:
+	checked[idx] = true
+
+## Get if the pin is currently revealed
+func get_revealed(idx: int) -> bool:
+	return reveals[idx] == RevealLevel.REVEALED
+
+## Get if the pin was checked (and not revealed)
+func get_checked(idx: int) -> bool:
+	return checked[idx] and not get_revealed(idx)
 
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
@@ -53,7 +112,8 @@ func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
 func reveal_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
-	reveals[pos] = true
+	reveals[pos] = RevealLevel.REVEALED
+	hint_tracks[pos] = ""
 
 ## Adds or removes jam. Sets the pin if jam > 0. Returns true if pin was jammed.
 func add_jam(value: int) -> bool:
@@ -63,19 +123,17 @@ func add_jam(value: int) -> bool:
 		return true
 	return jammed
 
-## Reveals a pin in n positions. Does not work through jam.
+## Reveals a pin in n positions. Does work through jam, so test jam on the caller.
 func reveal_pin(value: int) -> void:
-	if jam_count > 0:
-		return
-	
 	var target_position := pin_position + value
 	if not (target_position >= PIN_DEPTH_COUNT or pin_position < 0):
-		reveals[target_position] = true
+		reveals[target_position] = RevealLevel.REVEALED
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
+	reset_checked()
 
 func _init():
 	depths = []
@@ -86,8 +144,16 @@ func _init():
 	
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
-	reveals.fill(false)
-	reveals[0] = true
-	reveals[-1] = true
+	reveals.fill(RevealLevel.UNKNOWN)
+	reveals[0] = RevealLevel.REVEALED
+	reveals[-1] = RevealLevel.REVEALED
 	
+	checked = []
+	checked.resize(PIN_DEPTH_COUNT)
+	checked.fill(false)
+	
+	hint_tracks = []
+	hint_tracks.resize(PIN_DEPTH_COUNT)
+	hint_tracks.fill("ABC")
+
 	reset_pin()

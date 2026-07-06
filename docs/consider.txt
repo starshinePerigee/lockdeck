@@ -1,8 +1,0 @@
-force works like skip does now: move n, then applies the depth at n; hints along way
-skip doesn't even trigger the effect at the end and doesn't hint
-
-jam holds position over end turn?
-
-improvise lockpicks at any time (costs a coin)
-
-track pick strength, not total lockpicks

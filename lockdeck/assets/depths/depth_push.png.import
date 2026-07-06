@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc2oxqt52p1mm"
-path="res://.godot/imported/icon_skip.png-76a5ae8fe4061c48085201bc26598e55.ctex"
+uid="uid://bsoqichr5e4s4"
+path="res://.godot/imported/depth_push.png-48cf69ac070ccf7d215b9c5fd1d39f50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/effects/icon_skip.png"
-dest_files=["res://.godot/imported/icon_skip.png-76a5ae8fe4061c48085201bc26598e55.ctex"]
+source_file="res://assets/depths/depth_push.png"
+dest_files=["res://.godot/imported/depth_push.png-48cf69ac070ccf7d215b9c5fd1d39f50.ctex"]
 
 [params]
 

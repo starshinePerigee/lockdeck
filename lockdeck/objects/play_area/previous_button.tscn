@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxg3ri88p0vqe"]
+
+[ext_resource type="Script" uid="uid://beis08trqfojh" path="res://objects/play_area/previous_button.gd" id="1_hdkky"]
+[ext_resource type="Texture2D" uid="uid://bnm1inbbboj7h" path="res://assets/game/view_more_button.png" id="1_k67bk"]
+[ext_resource type="Texture2D" uid="uid://c6jyy60nmq1pj" path="res://assets/game/view_more_button_press.png" id="2_bhfld"]
+[ext_resource type="Texture2D" uid="uid://gf7u34sk1dp3" path="res://assets/game/view_more_button_hover.png" id="3_4urr5"]
+[ext_resource type="Texture2D" uid="uid://o6otmtguvik4" path="res://assets/game/view_more_button_disabled.png" id="4_mfmm8"]
+[ext_resource type="BitMap" uid="uid://gx3q1vcycaym" path="res://assets/game/view_more_button_map.bmp" id="5_f757e"]
+
+[node name="PreviousButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hdkky")
+
+[node name="ViewMoreButton" type="TextureButton" parent="."]
+offset_right = 48.0
+offset_bottom = 48.0
+texture_normal = ExtResource("1_k67bk")
+texture_pressed = ExtResource("2_bhfld")
+texture_hover = ExtResource("3_4urr5")
+texture_disabled = ExtResource("4_mfmm8")
+texture_click_mask = ExtResource("5_f757e")
+
+[node name="Label" type="Label" parent="ViewMoreButton"]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -5.0
+offset_right = 64.0
+offset_bottom = 50.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -8
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "Prev.
+turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoBackButton" type="TextureButton" parent="."]
+visible = false
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 96.0
+offset_bottom = 96.0
+scale = Vector2(-1, -1)
+texture_normal = ExtResource("1_k67bk")
+texture_pressed = ExtResource("2_bhfld")
+texture_hover = ExtResource("3_4urr5")
+texture_disabled = ExtResource("4_mfmm8")
+texture_click_mask = ExtResource("5_f757e")
+
+[node name="Label" type="Label" parent="GoBackButton"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 52.0
+offset_right = 89.0
+offset_bottom = 107.0
+scale = Vector2(-1, -1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -8
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "Go
+back"
+horizontal_alignment = 1
+vertical_alignment = 1

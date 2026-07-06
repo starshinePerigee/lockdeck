@@ -2,27 +2,24 @@ extends TextureRect
 ## The view for a single depth in a pin.
 class_name Depth
 
-const _TEXTURE_HIDDEN := preload("res://assets/depths/depth_hidden.png")
-
-## Flavor for this depth.
+## Flavor to show for this depth.
 @export var flavor: Depths = Depths.DEBUG:
 	set(v):
 		flavor = v
 		_redraw()
 
-## If this depth is revealed. False sets the default ? texture.
-@export var revealed: bool = false:
-	set(v):
-		revealed = v
-		_redraw()
+func set_hints(letters: String, color: Color = Color()):
+	if letters:
+		$HintTracker.visible = true
+	if len(letters) > 8:
+		$HintTracker.text = "*" + letters.substr(len(letters) - 7, 7)
+	else:
+		$HintTracker.text = letters
+	$HintTracker.add_theme_color_override("font_color", color)
 
 func _redraw() -> void:
 	if not is_node_ready():
 		await ready
 		
-	if revealed:
-		texture = flavor.texture
-	else:
-		texture = _TEXTURE_HIDDEN
-	
+	texture = flavor.texture
 	size = texture.get_size()

@@ -30,11 +30,8 @@ static var BLANK := Effects.new("blank")
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 
-## move the pin
-static var FORCE := Effects.new("force")
-
-## Skip the next depth
-static var SKIP := Effects.new("skip")
+## move the pin, triggering the depth at the destination and hinting everything between
+static var PUSH := Effects.new("push")
 
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new("reveal")
@@ -43,7 +40,7 @@ static var REVEAL := Effects.new("reveal")
 static var JAM := Effects.new("jam")
 
 ## Test the next depths, indicating if there is a hazard or not
-static var TEST := Effects.new("test")  # TODO
+static var TEST := Effects.new("test")
 
 ## Destroy the affected depth, replacing it with a blank
 static var CRUSH := Effects.new("crush")
@@ -52,7 +49,7 @@ static var CRUSH := Effects.new("crush")
 static var HINT := Effects.new("hint")  # TODO
 
 ## Depth effect - unlock the current pin
-static var KEY := Effects.new("key")
+static var UNLOCK := Effects.new("unlock")
 
 ## Depth effect - lock spin until other pin is set
 static var BIND := Effects.new("bind")
@@ -71,12 +68,3 @@ static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
 
 ## stop evaluating current card. Used as a sentinel value in execution.
 static var END_EXECUTION := Effects.new("end_execution")
-
-
-## Some effects move the pin, and thus should be decomposed before being
-## executed. This array holds those effects
-static var MOVE_PIN: Array[Effects] = [
-	FORCE,
-	SKIP,
-	CRUSH,
-]

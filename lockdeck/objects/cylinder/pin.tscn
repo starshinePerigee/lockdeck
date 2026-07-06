@@ -32,17 +32,17 @@ theme_override_constants/separation = 0
 [node name="KeyIndicator" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -16.0
-offset_top = 249.0
+offset_top = 247.0
 offset_right = 96.0
-offset_bottom = 297.0
+offset_bottom = 295.0
 texture = ExtResource("5_agct7")
 
 [node name="JamIndicator" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -16.0
-offset_top = 282.0
+offset_top = 266.0
 offset_right = 96.0
-offset_bottom = 330.0
+offset_bottom = 314.0
 texture = ExtResource("4_agct7")
 
 [node name="JamCount" type="Label" parent="JamIndicator"]

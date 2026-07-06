@@ -20,22 +20,3 @@ border_width = 3.0
 layout_mode = 1
 offset_right = 128.0
 offset_bottom = 256.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 68.0
-offset_top = 294.0
-offset_right = 108.0
-offset_bottom = 334.0
-rotation = 0.785398
-color = Color(1, 1, 0, 1)
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 272.0
-offset_right = 108.0
-offset_bottom = 303.0
-text = "End turn
-and reset"
