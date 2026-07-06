@@ -32,7 +32,7 @@ Picks can only have one effect - prioritize effectless picks when picking up jew
 
 ### Gems: upgrade the pick
 
-Each pick effect has a corresponding gem. (Force is topaz, etc)
+Each pick effect has a corresponding gem. (Force is topaz, etc) ??
 
 Effects have a hidden "priority" level, which will set where on the pick they apply.
 Force and jump are the same, but are both higher than reveal so you don't reveal then immediately force past it. Jam always goes on the bottom.
@@ -42,6 +42,20 @@ Gems have a preset pattern they add or remove. For instance, a topaz might look 
 Trend toward removals - built-in picks should be overbuilt and splashy 
 
 Each gem adds a "+1" to the pick's name.
+
+
+OR
+
+gems either add a new effect (in order) or add to specific instances of specific effects
+
+gems tied to pick families?
+
+order:
+move
+crush
+reveal
+test
+jam
 
 
 ## Coins: buy new picks

@@ -2,7 +2,6 @@ non-asset todos:
 
 BUGS
 - superdrag still shows issues (superdrag to right, then left, stays on right)
-- click apply leaves hand hidden
 
 GAME LOOP
 - un-align
