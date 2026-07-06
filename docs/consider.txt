@@ -1,5 +1,3 @@
-jam holds position over end turn?
-
 track pick strength, not total lockpicks
 
 change key depth to "unlock" depth, and then a new "key" depth that you must hit to clear the pin
