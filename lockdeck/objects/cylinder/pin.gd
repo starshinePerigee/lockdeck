@@ -1,4 +1,3 @@
-@tool
 extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin
@@ -18,6 +17,13 @@ const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
+
+## Holds hint colors
+static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
+	PinSpec.RevealLevel.CLEAR: Color("7ac259"),
+	PinSpec.RevealLevel.INTERESTING: Color("ffbc57"),
+	PinSpec.RevealLevel.DANGEROUS: Color("b01712"),
+}
 
 #region display logic
 ## If this pin is "locked" - displayed as greyed out.
@@ -77,11 +83,18 @@ func load_spec(pin_spec: PinSpec) -> void:
 		
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
-		depth_refs[i].checked = pin_spec.checked[i]
+		var reveal_level := pin_spec.reveals[i]
+		if reveal_level in [
+			PinSpec.RevealLevel.DANGEROUS,
+			PinSpec.RevealLevel.INTERESTING,
+			PinSpec.RevealLevel.CLEAR
+		]:
+			depth_refs[i].set_hints(pin_spec.hint_tracks[i], HINT_COLORS[reveal_level])
+		else:
+			depth_refs[i].set_hints("")
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
-	pin_locked = pin_spec.is_jammed()
 	$KeyIndicator.visible = pin_spec.is_solved()
 
 #endregion

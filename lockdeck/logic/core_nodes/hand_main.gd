@@ -7,6 +7,9 @@ signal hand_selected(card: CardSpec)
 ## Raised when a card is unselected or a drag ends (but after hand_dropped)
 signal hand_deselected()
 
+## Raised when a card is specifically unselected by clicking it
+signal hand_untapped()
+
 ## Raised when a card is started dragging
 signal hand_dragged(card_area: Area2D, card: CardSpec)
 
@@ -77,6 +80,7 @@ func _handle_drop(card_area: Area2D, card_index: int) -> void:
 func _ready() -> void:
 	$Hand.card_selected.connect(_handle_select)
 	$Hand.card_deselected.connect(_handle_deselect)
+	$Hand.card_untapped.connect(hand_untapped.emit)
 	$Hand.card_dragged.connect(_handle_pick_up)
 	$Hand.card_definitive_dragged.connect(hand_super_dragged.emit)
 	$Hand.card_dropped.connect(_handle_drop)

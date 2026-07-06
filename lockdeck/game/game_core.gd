@@ -1,5 +1,5 @@
 extends Control
-#
+
 signal game_fail
 signal game_win
 
@@ -14,6 +14,7 @@ signal game_win
 var DEBUG_MODE := false
 
 enum InputState {
+	REFRESH_PENDING,  # used to refresh a state
 	INACTIVE,
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
@@ -32,32 +33,40 @@ func set_state(state: InputState) -> void:
 	current_state = state
 	
 	match state:
+		InputState.REFRESH_PENDING:
+			pass
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
 			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
 			$LockBody/CylinderMain.position = Vector2(0, 0)
-			$ViewMoreButton.disabled = false
-			$ViewMoreButton.visible = true
-			$GoBackButton.visible = false
-			$CountdownMain/Button.disabled = false
+			$PreviousButton.disable = false
+			$PreviousButton.show_see_prev = true
+			$LastHint.visible = false
+			reset_countdown()
+			$CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.COMPLETE:
 			$HandMain/Hand.disable_all()
+			$CountdownMain.button_disable = true
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$ViewMoreButton.disabled = true
+			$PreviousButton.disable = true
+			reset_countdown()
+			$CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$ViewMoreButton.disabled = true
+			$PreviousButton.disable = true
+			reset_countdown()
+			$CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
@@ -67,10 +76,12 @@ func set_state(state: InputState) -> void:
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
-			$ViewMoreButton.visible = false
-			$GoBackButton.visible = true
-			$CountdownMain/Button.disabled = true
+			$PreviousButton.show_see_prev = false
+			$LastHint.visible = true
+			$CountdownMain.button_disable = true
 
+func reset_countdown():
+	$CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
 
 func pick_selected(card: CardSpec) -> void:
 	if current_state == InputState.INACTIVE:
@@ -127,6 +138,7 @@ func break_pick(card: CardSpec) -> void:
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
 		game_fail.emit()
+	update_power_count()
 
 func view_all_pins() -> void:
 	if current_state != InputState.INACTIVE:
@@ -139,6 +151,7 @@ func return_from_view_all() -> void:
 ## the background is clicked so back out of whatever:
 func bg_cancel() -> void:
 	$Notifications.clear()
+	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
 ## Handle all steps from pick activation
@@ -155,6 +168,11 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	else:
 		$DiscardMain.add_card(card)
 	
+	if result.last_hint:
+		$LastHint.text = "Last hint: %s" % result.last_hint
+	else:
+		$LastHint.text = "No hints last turn"
+	
 	if result.lock_solved:
 		game_win.emit()
 		$Notifications.notify(Notifications.UNLOCK)
@@ -162,7 +180,6 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		set_state(InputState.COMPLETE)
 	else:
 		draw_to_five()
-		$CountdownMain.highlight = $HandMain.count() == 0
 
 func discard_pick() -> void:
 	$HandMain.deselect()
@@ -197,14 +214,27 @@ func reload_deck() -> void:
 
 ## perform the end of turn step once the player clicks the discard (if it's valid)
 func end_turn(count_down: bool = true) -> void:
-	$CountdownMain.highlight = false
+	$Notifications.clear()
 	if count_down:
 		$CountdownMain.count_down()
-	$LockBody/CylinderMain.reset_all_pins()
+	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
 	draw_new_hand()
+	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
+
+## Updates the push label
+func update_power_count() -> void:
+	var power_required := (PinSpec.PIN_DEPTH_COUNT - 1) * CYLINDER_COUNT
+	var current_power := 0
+	for area in [$DeckMain.cards, $HandMain.cards, $DiscardMain.cards]:
+		for pick in area:
+			for effects in pick.effects.values():
+				for effect in effects:
+					if effect.flavor == Effects.PUSH:
+						current_power += effect.value
+	$PushCountLabel.text = "Power: %s / %s" % [current_power, power_required]
 
 ## Loads the starter hand
 func load_starter_deck() -> void:
@@ -228,16 +258,18 @@ func restart() -> void:
 	$CountdownMain.set_count(COUNTDOWN_TIME)
 	end_turn(false)
 	$Notifications.clear()
+	$LastHint.text = "No picks played yet."
+	update_power_count()
 
 func _ready() -> void:
-	$CountdownMain.countdown_pressed.connect(end_turn)
+	$CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
-	$HandMain.hand_deselected.connect(pick_deselected)
+	$HandMain.hand_untapped.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
 	$HandMain.hand_super_dragged.connect(pick_superdragged)
 	$HandMain.hand_dropped.connect(pick_dropped)
-	$ViewMoreButton.pressed.connect(view_all_pins)
-	$GoBackButton.pressed.connect(return_from_view_all)
+	$PreviousButton.show_previous.connect(view_all_pins)
+	$PreviousButton.go_back.connect(return_from_view_all)
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	

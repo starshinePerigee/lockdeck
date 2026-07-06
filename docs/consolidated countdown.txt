@@ -20,8 +20,7 @@ MENUS AND GAME FLOW
 - debug mode
 
 MAIN OBJECTS
-- end turn button
--- end turn button highlights
+x end turn button
 - make deck / discard smaller?
 
 META
@@ -39,11 +38,15 @@ META
 HINTS
 x hint effect
 x permanent safe
-z multiple warn tracking
+x multiple warn tracking
 
 GUIDES
 - card effect preview
 - what happened last turn
+-- track previous turn
+-- icons for depth effects
+-- offset right for each pins' iteration
+-- boxes for hinted and activated
 - card guide (hovering a pick card pops up a reminder box which shows tooltips for all depths on the card)
 - depth description hover (hovering a depth pops up a tooltip on what it does)
 - depth glossary that shows all depths that could be present in the current stage, as well as all card effects

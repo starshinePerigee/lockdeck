@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1hem81ie6tbe"]
+[gd_scene load_steps=4 format=3 uid="uid://c1hem81ie6tbe"]
 
 [ext_resource type="Script" uid="uid://bia6khmvpk3xy" path="res://objects/countdown/countdown.gd" id="1_gnwly"]
+[ext_resource type="Texture2D" uid="uid://dd2nfcgysxxii" path="res://assets/countdown/cd_highlight.png" id="2_ceg5m"]
 [ext_resource type="Texture2D" uid="uid://ch24c0crkib1y" path="res://assets/countdown/countdown_2.png" id="2_toqrs"]
 
 [node name="Countdown" type="Control"]
@@ -16,6 +17,15 @@ grow_vertical = 2
 script = ExtResource("1_gnwly")
 count = -1
 
+[node name="Highlight" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -3.0
+offset_top = 211.0
+offset_right = 141.0
+offset_bottom = 275.0
+texture = ExtResource("2_ceg5m")
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
@@ -29,6 +39,7 @@ offset_top = 232.0
 offset_right = 198.0
 offset_bottom = 256.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -6
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 30
 text = "two turns remain"

@@ -6,6 +6,37 @@ extends Control
 ## but are not present in the pins array.
 @export var pins: Array[PinSpec]
 
+## Holds the current turn number
+static var turn_number := -1
+
+## Holds the current hint id (integer corresponding to ascii)
+var _hint_id := -1
+
+## Bump hint_id to the next letter
+func increment_hint() -> int:
+	# pre-A (65)
+	if _hint_id < 0:
+		_hint_id = 65
+	# A-Z (65-89)
+	elif _hint_id >= 65 and _hint_id < 90:
+		_hint_id += 1
+	# Z (90) to 1 (97)
+	elif _hint_id == 90:
+		_hint_id = 49
+	# 1-9 (49-57)
+	elif _hint_id >= 49 and _hint_id < 57:
+		_hint_id += 1
+	# 9 (57) to a (97)
+	elif _hint_id == 57:
+		_hint_id = 97
+	# a-z (97-121)
+	elif _hint_id >= 97 and _hint_id < 122:
+		_hint_id += 1
+	# # (35)
+	else:
+		_hint_id = 35
+	return _hint_id
+
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
 	for pin in pins:
@@ -16,6 +47,8 @@ func reset_all_pins() -> void:
 func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	pins = new_pins
 	$Cylinders.set_pin_specs(new_pins)
+	turn_number = 0
+	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> void:
@@ -91,6 +124,8 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 		pin.reveal_position()
 
 func test_pin(pin_index: int, test_ahead: int) -> void:
+	if pins[pin_index].is_jammed():
+		return
 	for i in range(1, 1+test_ahead):
 		var offset := i + pins[pin_index].pin_position
 		if offset < PinSpec.PIN_DEPTH_COUNT:
@@ -119,7 +154,7 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 			break
 		evaluate_pin(next_effect, ex, result)
 	
-	update_visibility()
+	result.last_hint = update_visibility()
 	
 	$Cylinders.set_pin_specs(pins)
 	
@@ -156,8 +191,8 @@ func evaluate_pin(
 			execute_break(result)
 		Effects.BREAK:
 			execute_break(result)
-		Effects.KEY:
-			execute_key(result)
+		Effects.UNLOCK:
+			execute_unlock(result)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
@@ -171,6 +206,8 @@ func execute_test(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
 
 func execute_reveal(effect: EffectSpec) -> void:
+	if pins[effect.realized_pin].is_jammed():
+		return
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
 
@@ -178,16 +215,26 @@ func execute_jam(effect: EffectSpec) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
 
 func execute_crush(effect: EffectSpec, ex: Execution) -> void:
+	var pin := pins[effect.realized_pin]
+	
+	var depth_offset := 1
 	for i in range(effect.value):
-		var pin := pins[effect.realized_pin]
-		var oob := pin.advance_pin(1)
-		pin.reveal_position()
+		if pin.is_jammed():
+			pin.add_jam(-pin.jam_count)
+			continue
 		
-		if oob or pin.current_depth() == Depths.FINAL:
+		var target := pin.pin_position + depth_offset
+		if target >= PinSpec.PIN_DEPTH_COUNT:
 			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 			return
+		
+		pin.reveal_position(target)
+		var next_depth := pin.depths[target]
+		if next_depth == Depths.FINAL:
+			ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 		else:
-			pin.depths[pin.pin_position] = Depths.EMPTY
+			pin.depths[target] = Depths.EMPTY
+		depth_offset += 1
 
 func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
@@ -199,7 +246,7 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var depth := pin.current_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
-func execute_key(result: ResultSpec) -> void:
+func execute_unlock(result: ResultSpec) -> void:
 	for pin in pins:
 		if not pin.is_solved():
 			return
@@ -209,26 +256,36 @@ func execute_key(result: ResultSpec) -> void:
 func execute_break(result: ResultSpec) -> void:
 	result.pick_broke = true
 
-func update_visibility() -> void:
-	var new_level := PinSpec.RevealLevel.CLEAR
+func update_visibility() -> String:
+	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
-			if pin.checked[i]:
+			if pin.get_checked(i):
 				var depth := pin.depths[i]
 				if depth in Depths.DANGEROUS_DEPTHS:
 					new_level = max(new_level, PinSpec.RevealLevel.DANGEROUS)
 				elif depth in Depths.INTERESTING_DEPTHS:
 					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
 				elif depth in Depths.CLEAR_DEPTHS:
-					pass
+					new_level = max(new_level, PinSpec.RevealLevel.CLEAR)
 				else:
 					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
-	print("Hint level: %s" % new_level)
+	if new_level == PinSpec.RevealLevel.REVEALED:
+		# we didn't hint anything
+		return ""
+	increment_hint()
 	for pin in pins:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
 			if pin.checked[i]:
-				pin.update_visible(i, new_level)
-				
+				pin.update_visible(i, new_level, String.chr(_hint_id))
+	return String.chr(_hint_id)
+
+func update_turn_number() -> int:
+	if turn_number < 0:
+		push_error("Failed to init turn number!")
+		turn_number = 0
+	turn_number += 1
+	return turn_number
 
 #endregion
 
@@ -241,5 +298,9 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		pin.advance_pin(0, 0)
+		if pin.is_jammed():
+			pin.add_jam(-pin.jam_count) 
+		else:
+			pin.advance_pin(0, 0)
+		pin.reset_checked()
 	$Cylinders.set_pin_specs(pins)

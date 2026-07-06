@@ -19,8 +19,7 @@ func redraw() -> void:
 		var count: int = max(1, spec.value)
 		
 		for j in count:
-			var show_text := j == spec.value - 1 or spec.value == 0
-			var icon := EffectIcon.build(spec.flavor, spec.value, show_text)
+			var icon := EffectIcon.build(spec.flavor)
 			icon.z_index = j - 5 * s
 			add_child(icon)
 		

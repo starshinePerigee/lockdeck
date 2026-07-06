@@ -31,7 +31,7 @@ static var DEBUG := Depths.new("debug", Effects.DEBUG)
 static var BASE := Depths.new("base", Effects.EMPTY)
 
 ## The target end of the pin
-static var FINAL := Depths.new("final_neutral", Effects.KEY)
+static var FINAL := Depths.new("final_neutral", Effects.UNLOCK)
 
 ## Default unrevealed depth
 static var HIDDEN := Depths.new("hidden", Effects.DEBUG)
@@ -55,7 +55,7 @@ static var PUSH := Depths.new("push", Effects.PUSH, 2)
 static var JAM := Depths.new("jam", Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
-static var KEY := Depths.new("key", Effects.KEY)
+static var UNLOCK := Depths.new("unlock", Effects.UNLOCK)
 
 ## Reveals the next hazard (if one) or sets the pin as clear
 static var HINT := Depths.new("hint", Effects.HINT)  # TODO
@@ -82,7 +82,7 @@ static var BOUNCE := Depths.new("bounce", Effects.BOUNCE, 4)
 ## Holds all depths which count as solves
 static var SOLVE_DEPTHS: Array[Depths] = [
 	FINAL, 
-	KEY
+	UNLOCK
 ]
 
 ## Holds all depths which count for clear
@@ -90,7 +90,7 @@ static var CLEAR_DEPTHS: Array[Depths] = [
 	BASE,
 	FINAL,
 	EMPTY,
-	KEY,
+	UNLOCK,
 	WARN,
 	JAM,
 	HINT,
