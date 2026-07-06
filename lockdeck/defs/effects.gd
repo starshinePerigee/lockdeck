@@ -49,7 +49,7 @@ static var CRUSH := Effects.new("crush")
 static var HINT := Effects.new("hint")  # TODO
 
 ## Depth effect - unlock the current pin
-static var KEY := Effects.new("key")
+static var UNLOCK := Effects.new("unlock")
 
 ## Depth effect - lock spin until other pin is set
 static var BIND := Effects.new("bind")

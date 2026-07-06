@@ -11,7 +11,7 @@ static func get_known_test_pin() -> PinSpec:
 		spec.depths[i] = Depths.EMPTY
 	spec.depths[1] = Depths.PUSH
 	spec.depths[2] = Depths.JAM
-	spec.depths[4] = Depths.KEY
+	spec.depths[4] = Depths.UNLOCK
 	spec.depths[5] = Depths.BOUNCE
 	spec.depths[6] = Depths.BREAK
 	return spec
@@ -62,7 +62,7 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 	
 	# Add more key depths at higher difficulty because i like you
 	if randi_range(0, 9) < 4 + difficulty_mod:
-		try_add_at_random(spec, Depths.KEY)
+		try_add_at_random(spec, Depths.UNLOCK)
 	
 	# Make the first break a warning
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT):

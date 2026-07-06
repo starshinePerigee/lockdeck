@@ -191,8 +191,8 @@ func evaluate_pin(
 			execute_break(result)
 		Effects.BREAK:
 			execute_break(result)
-		Effects.KEY:
-			execute_key(result)
+		Effects.UNLOCK:
+			execute_unlock(result)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
@@ -246,7 +246,7 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var depth := pin.current_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
-func execute_key(result: ResultSpec) -> void:
+func execute_unlock(result: ResultSpec) -> void:
 	for pin in pins:
 		if not pin.is_solved():
 			return

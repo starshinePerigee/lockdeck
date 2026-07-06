@@ -1,4 +1,0 @@
-track pick strength, not total lockpicks
-
-change key depth to "unlock" depth, and then a new "key" depth that you must hit to clear the pin
-- revealed from the start? revealed once you hit the pin (but pin bounces you?)

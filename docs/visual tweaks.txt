@@ -13,14 +13,17 @@ x convert candle to end turn button - add highlight
 x remove top hook from test arrow and flip horizontal?
 x reposition gradient on reveal to look more like an eye - outside edge?
 
-more two push picks
 
 fix BG
-
 
 x crush clears jam
 
 x jam blocks reveal AND hints
+
+
+track pick strength, not total lockpicks
+
+
 
 
 also: double check reveal logic
@@ -31,11 +34,4 @@ also: double check reveal logic
 - break
 
 crush/push3 broke pin, then left test as a dangerous depth (it was empty)
-
-
-also: double check debug messages
-
-
-also: add more power to starter deck
-also also: too much jam in the deck
 

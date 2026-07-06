@@ -20,8 +20,7 @@ MENUS AND GAME FLOW
 - debug mode
 
 MAIN OBJECTS
-- end turn button
--- end turn button highlights
+x end turn button
 - make deck / discard smaller?
 
 META
@@ -39,7 +38,7 @@ META
 HINTS
 x hint effect
 x permanent safe
-z multiple warn tracking
+x multiple warn tracking
 
 GUIDES
 - card effect preview

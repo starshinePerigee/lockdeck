@@ -3,3 +3,4 @@ the starter deck is wonky:
 - not enough power
 - power is inconsistent
 - a lot of picks are weird at 1-pin / not being able to push past the first pin is weird
+- maybe more 2-push picks?
