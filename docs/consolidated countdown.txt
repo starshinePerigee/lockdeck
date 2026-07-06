@@ -2,8 +2,10 @@ non-asset todos:
 
 BUGS
 - superdrag still shows issues (superdrag to right, then left, stays on right)
+- click apply leaves hand hidden
 
 GAME LOOP
+- un-align
 - update level generator
 - new depths:
 -- bind
@@ -24,6 +26,7 @@ MENUS AND GAME FLOW
 
 MAIN OBJECTS
 x end turn button
+- current lock
 - make deck / discard smaller?
 - see deck contents
 - see discard contents
@@ -57,3 +60,6 @@ GUIDES
 - card guide (hovering a pick card pops up a reminder box which shows tooltips for all depths on the card)
 - depth description hover (hovering a depth pops up a tooltip on what it does)
 - depth glossary that shows all depths that could be present in the current stage, as well as all card effects
+
+ITCH
+- 
