@@ -11,6 +11,7 @@ x remove numbers from cards, but increase space?
 convert candle to end turn button - add highlight
 
 remove top hook from test arrow and flip horizontal?
+reposition gradient on reveal to look more like an eye - outside edge?
 
 more two push picks
 
