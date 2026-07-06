@@ -1,12 +1,12 @@
 extends Control
-#
+
 signal game_fail
 signal game_win
 
 #region game state variables
 @export var CYLINDER_COUNT := 4
 @export var DIFFICULTY_MOD := 1
-@export var DECK_COUNT := 10
+@export var DECK_COUNT := 4
 @export var HAND_SIZE := 3
 @export var COUNTDOWN_TIME := 2
 @export var REVEAL_ALL := false
@@ -14,6 +14,7 @@ signal game_win
 var DEBUG_MODE := false
 
 enum InputState {
+	REFRESH_PENDING,  # used to refresh a state
 	INACTIVE,
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
@@ -32,33 +33,40 @@ func set_state(state: InputState) -> void:
 	current_state = state
 	
 	match state:
+		InputState.REFRESH_PENDING:
+			pass
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
 			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
 			$LockBody/CylinderMain.position = Vector2(0, 0)
-			$ViewMoreButton.disabled = false
-			$ViewMoreButton.visible = true
+			$PreviousButton.disable = false
+			$PreviousButton.show_see_prev = true
 			$LastHint.visible = false
-			$GoBackButton.visible = false
-			$CountdownMain/Button.disabled = false
+			reset_countdown()
+			$CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.COMPLETE:
 			$HandMain/Hand.disable_all()
+			$CountdownMain.button_disable = true
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$ViewMoreButton.disabled = true
+			$PreviousButton.disable = true
+			reset_countdown()
+			$CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
-			$ViewMoreButton.disabled = true
+			$PreviousButton.disable = true
+			reset_countdown()
+			$CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
@@ -68,11 +76,12 @@ func set_state(state: InputState) -> void:
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
-			$ViewMoreButton.visible = false
-			$GoBackButton.visible = true
+			$PreviousButton.show_see_prev = false
 			$LastHint.visible = true
-			$CountdownMain/Button.disabled = true
+			$CountdownMain.button_disable = true
 
+func reset_countdown():
+	$CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
 
 func pick_selected(card: CardSpec) -> void:
 	if current_state == InputState.INACTIVE:
@@ -141,6 +150,7 @@ func return_from_view_all() -> void:
 ## the background is clicked so back out of whatever:
 func bg_cancel() -> void:
 	$Notifications.clear()
+	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
 ## Handle all steps from pick activation
@@ -169,7 +179,6 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		set_state(InputState.COMPLETE)
 	else:
 		draw_to_five()
-		$CountdownMain.highlight = $HandMain.count() == 0
 
 func discard_pick() -> void:
 	$HandMain.deselect()
@@ -204,13 +213,14 @@ func reload_deck() -> void:
 
 ## perform the end of turn step once the player clicks the discard (if it's valid)
 func end_turn(count_down: bool = true) -> void:
-	$CountdownMain.highlight = false
+	$Notifications.clear()
 	if count_down:
 		$CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
 	draw_new_hand()
+	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
 ## Loads the starter hand
@@ -238,14 +248,14 @@ func restart() -> void:
 	$LastHint.text = "No picks played yet."
 
 func _ready() -> void:
-	$CountdownMain.countdown_pressed.connect(end_turn)
+	$CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
-	$HandMain.hand_deselected.connect(pick_deselected)
+	$HandMain.hand_untapped.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)
 	$HandMain.hand_super_dragged.connect(pick_superdragged)
 	$HandMain.hand_dropped.connect(pick_dropped)
-	$ViewMoreButton.pressed.connect(view_all_pins)
-	$GoBackButton.pressed.connect(return_from_view_all)
+	$PreviousButton.show_previous.connect(view_all_pins)
+	$PreviousButton.go_back.connect(return_from_view_all)
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	

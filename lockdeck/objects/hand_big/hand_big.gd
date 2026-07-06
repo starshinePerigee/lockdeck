@@ -3,6 +3,7 @@ extends Control
 
 signal card_selected(card_index: int)
 signal card_deselected(card_index: int)
+signal card_untapped()
 signal card_dragged(card_area: Area2D, card_index: int)
 signal card_definitive_dragged()
 signal card_dropped(card_area: Area2D, card_index: int)
@@ -63,6 +64,7 @@ func card_tap(card_index: int) -> void:
 	if card_index == current_card:
 		get_space().clear_selected()
 		card_deselect()
+		card_untapped.emit()
 	else:
 		card_select(card_index)
 		get_space().set_selected()
