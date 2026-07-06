@@ -138,6 +138,7 @@ func break_pick(card: CardSpec) -> void:
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
 		game_fail.emit()
+	update_power_count()
 
 func view_all_pins() -> void:
 	if current_state != InputState.INACTIVE:
@@ -223,6 +224,18 @@ func end_turn(count_down: bool = true) -> void:
 	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
+## Updates the push label
+func update_power_count() -> void:
+	var power_required := (PinSpec.PIN_DEPTH_COUNT - 1) * CYLINDER_COUNT
+	var current_power := 0
+	for area in [$DeckMain.cards, $HandMain.cards, $DiscardMain.cards]:
+		for pick in area:
+			for effects in pick.effects.values():
+				for effect in effects:
+					if effect.flavor == Effects.PUSH:
+						current_power += effect.value
+	$PushCountLabel.text = "Power: %s / %s" % [current_power, power_required]
+
 ## Loads the starter hand
 func load_starter_deck() -> void:
 	discard_hand()
@@ -246,6 +259,7 @@ func restart() -> void:
 	end_turn(false)
 	$Notifications.clear()
 	$LastHint.text = "No picks played yet."
+	update_power_count()
 
 func _ready() -> void:
 	$CountdownMain.countdown_triggered.connect(end_turn)
