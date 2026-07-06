@@ -2,15 +2,13 @@ non-asset todos:
 
 BUGS
 - superdrag still shows issues (superdrag to right, then left, stays on right)
-- overshot with two skips, broke pick, did not get solve
-- double check key depth logic (should unlock mid-force chain)
 
 GAME LOOP
 - update level generator
 - new depths:
 -- bind
 -- reset
--- trap
+-- key
 - death round logic
 
 MENUS AND GAME FLOW
@@ -18,17 +16,26 @@ MENUS AND GAME FLOW
 - tutorial mode
 - global settings object
 - debug mode
+- end of run screen
+-- total loot
+-- total picks
+-- picks broken
+-- favorite (most repaired + used)
 
 MAIN OBJECTS
 x end turn button
 - make deck / discard smaller?
+- see deck contents
+- see discard contents
+- see broken pick status
 
 META
 - view deck (with trash forever)
 - coins
-- repair
+- repair (show broken picks, trash forever, track tossed pick count)
 -- track breaks
 - basic shop
+- basic deck management (show power, trash forever)
 - pick modifiers (gems)
 - pick effectors (jewelry)
 - pick generator (bars)

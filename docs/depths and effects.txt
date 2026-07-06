@@ -1,9 +1,9 @@
 Effects:
 xx force
-xx skip
+zz skip
 xx reveal
 xx jam
-x- test
+xx test
 xx crush
 
 Depths
@@ -11,13 +11,14 @@ xx force
 xx jam
 xx pull (move back four)
 
-x- hint  (next danger or sets pin to clear)
 xx warn (break is after this depth)
 x- trap (locks pin if skipped)
 x- bind (locks pin until other pin is set)
-xx key
+xx unlock
 -- breathe (draw a card)
-- key (ii) (must hit to unlock)
+-- hint (shows where key is)
+-- key (ii) (must hit to unlock)
+-- ____ (unlocks other cylinder)
 
 x- reset
 xx break
