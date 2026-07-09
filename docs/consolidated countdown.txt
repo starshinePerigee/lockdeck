@@ -4,12 +4,7 @@ BUGS
 - superdrag still shows issues (superdrag to right, then left, stays on right)
 
 GAME LOOP
-- un-align
-- update level generator
-- new depths:
--- bind
--- reset
--- key
+x un-align
 - death round logic
 
 MENUS AND GAME FLOW
@@ -32,6 +27,8 @@ x end turn button
 - see broken pick status
 
 META
+- redo pick templates
+- update level generator
 - view deck (with trash forever)
 - coins
 - repair (show broken picks, trash forever, track tossed pick count)
@@ -43,6 +40,7 @@ META
 - pick generator (bars)
 - random shop picks
 - basic lockpick pass and expansion
+- more depths
 
 HINTS
 x hint effect

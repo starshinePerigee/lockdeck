@@ -1,3 +1,9 @@
+Previously planned depths:
+- bind: locks this pin until another one is set (if no others, reset another one)
+- reset: resets another pin, or this one
+- hint/key: depth s
+
+
 More depths:
 open design space:
 - depths that consume themselves

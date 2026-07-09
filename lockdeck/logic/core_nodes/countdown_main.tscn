@@ -7,6 +7,9 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_5l2d8")
+count = null
+button_disable = null
+suggest = null
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
