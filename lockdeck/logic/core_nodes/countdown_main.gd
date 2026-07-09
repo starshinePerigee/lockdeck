@@ -36,12 +36,11 @@ func end_turn() -> bool:
 	
 	break_bag.shuffle()
 	if break_bag[0]:
-		print("clear")
 		reset_odds()
 		$Countdown.count = -1
 		return true
 	else:
-		print("break!")
+		early_lockout = false
 		break_bag.append(true)
 		$Countdown.count = 0
 		return false
@@ -53,14 +52,18 @@ func end_turn() -> bool:
 @export var button_disable := false:
 	set(v):
 		button_disable = v
-		if button_disable:
-			$Countdown/Label.add_theme_color_override(
-				"font_color", Color("#918891")
-			)
-		else:
-			$Countdown/Label.add_theme_color_override(
-				"font_color", Color("FFFFFF")
-			)
+		_draw_label()
+
+func _draw_label() -> void:
+	if button_disable or early_lockout:
+		print("lockout")
+		$Countdown/Label.add_theme_color_override(
+			"font_color", Color("#918891")
+		)
+	else:
+		$Countdown/Label.add_theme_color_override(
+			"font_color", Color("FFFFFF")
+		)
 
 ## If end turn is suggested
 @export var suggest := false:
@@ -69,8 +72,16 @@ func end_turn() -> bool:
 		$Countdown/Highlight.visible = suggest
 		$Countdown.show_end = suggest
 
+var early_lockout := false:
+	set(v):
+		early_lockout = v
+		_draw_label()
+
 func count_down() -> void:
 	if count <= 0:
+		break_bag = [true]
+		print("TRUNE NOW")
+		early_lockout = true
 		return
 	if count == 1:
 		count = 0
@@ -82,10 +93,13 @@ func count_down() -> void:
 func set_count(new_count: int) -> void:
 	count = new_count
 	$Countdown.count = count
+	early_lockout = false
 	reset_odds()
 
 func handle_press() -> void:
-	if button_disable:
+	print(early_lockout)
+	if button_disable or early_lockout:
+		print("???")
 		return
 	if suggest:
 		countdown_triggered.emit()

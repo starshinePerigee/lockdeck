@@ -155,6 +155,7 @@ func break_pick(card: CardSpec) -> void:
 	$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
+		set_state(InputState.COMPLETE)
 		game_fail.emit()
 	update_power_count()
 
@@ -202,7 +203,10 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 func discard_pick() -> void:
 	$HandMain.deselect()
 	$HandMain.remove_card(active_card)
-	$DiscardMain.add_card(active_card)
+	if break_next:
+		break_pick(active_card)
+	else:
+		$DiscardMain.add_card(active_card)
 	cleanup_step()
 	set_state(InputState.INACTIVE)
 
@@ -243,10 +247,8 @@ func end_turn(count_down: bool = true) -> void:
 	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
-	draw_new_hand()
 	set_state(InputState.REFRESH_PENDING)
-	break_next = false
-	tick_turn_count()
+	cleanup_step()
 	set_state(InputState.INACTIVE)
 
 ## Updates the push label

@@ -28,11 +28,12 @@ func show_win():
 	set_next_button_state(true)
 
 func show_fail():
-	$RestartButton/TextureRect.visible = true
+	$RestartButton/ColorRect.visible = true
 
 func _ready():
 	$RestartButton.pressed.connect(restart_game)
 	$GameCore.game_win.connect(show_win)
+	$GameCore.game_fail.connect(show_fail)
 	$GameCore.DEBUG_MODE = true
 	$NextLevelButton.pressed.connect(start_next_level)
 	restart_game()
