@@ -148,8 +148,7 @@ static var LEVER := PickTemplates.new(
 	"lever",
 	{
 		0: [
-			EffectSpec.new(Effects.CRUSH, 2), 
-			EffectSpec.new(Effects.PUSH, 3)
+			EffectSpec.new(Effects.CRUSH, 2),
 		]
 	}
 )
