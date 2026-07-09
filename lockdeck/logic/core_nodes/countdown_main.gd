@@ -8,6 +8,47 @@ signal countdown_triggered
 
 @export var count: int = 0
 
+#region end turn logic
+# End of turn mechanics work like this:
+# once you run out of turns, countdown puts SAFE_COUNT white balls in a bag.
+# at the end of each turn, countdown puts a black ball in that bag, then draws a ball.
+# if it's white, it's a safe turn and nothing happens
+# if it's black, the next pick will break and countdown resets.
+
+## How much to bias end of countdown towards breaks
+const SAFE_COUNT := 3
+
+@export var break_bag: Array[bool] = []
+
+## resets the break odds
+func reset_odds() -> void:
+	break_bag.resize(SAFE_COUNT)
+	break_bag.fill(false)
+
+## Performs the end turn step, returning true if the next pick is to break.
+func end_turn() -> bool:
+	if len(break_bag) == 0:
+		push_error("You forgot to initialize countdown odds!")
+		return true
+	
+	if count > 0:
+		return false
+	
+	break_bag.shuffle()
+	if break_bag[0]:
+		print("clear")
+		reset_odds()
+		$Countdown.count = -1
+		return true
+	else:
+		print("break!")
+		break_bag.append(true)
+		$Countdown.count = 0
+		return false
+
+#endregion
+
+#region interface code
 ## disregard button presses
 @export var button_disable := false:
 	set(v):
@@ -29,7 +70,7 @@ signal countdown_triggered
 		$Countdown.show_end = suggest
 
 func count_down() -> void:
-	if count == 0:
+	if count <= 0:
 		return
 	if count == 1:
 		count = 0
@@ -41,6 +82,7 @@ func count_down() -> void:
 func set_count(new_count: int) -> void:
 	count = new_count
 	$Countdown.count = count
+	reset_odds()
 
 func handle_press() -> void:
 	if button_disable:
@@ -49,6 +91,8 @@ func handle_press() -> void:
 		countdown_triggered.emit()
 	else:
 		suggest = true
+#endregion
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)
+	reset_odds()

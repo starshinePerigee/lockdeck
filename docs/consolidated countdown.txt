@@ -5,7 +5,7 @@ BUGS
 
 GAME LOOP
 x un-align
-- death round logic
+x death round logic
 
 MENUS AND GAME FLOW
 - top menu

@@ -6,7 +6,7 @@ signal game_win
 #region game state variables
 @export var cylinder_count := 4
 @export var difficulty_mod := 1
-@export var deck_count := 10
+@export var deck_count := 4
 @export var hand_size := 3
 @export var countdown_time := 2
 
@@ -21,6 +21,9 @@ func tick_turn_count() -> void:
 	turn_count += 1
 	if DEBUG_MODE:
 		print("-- turn %s --" % turn_count)
+
+## Holds if the countdown mechanics are calling for a break next turn
+var break_next: bool
 
 enum InputState {
 	REFRESH_PENDING,  # used to refresh a state
@@ -178,7 +181,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
-	if result.pick_broke:
+	if result.pick_broke or break_next:
 		break_pick(card)
 	else:
 		$DiscardMain.add_card(card)
@@ -194,16 +197,19 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		set_state(InputState.INACTIVE)
 		set_state(InputState.COMPLETE)
 	else:
-		draw_to_five()
-	tick_turn_count()
+		cleanup_step()
 
 func discard_pick() -> void:
 	$HandMain.deselect()
 	$HandMain.remove_card(active_card)
 	$DiscardMain.add_card(active_card)
-	draw_to_five()
-	tick_turn_count()
+	cleanup_step()
 	set_state(InputState.INACTIVE)
+
+func cleanup_step() -> void:
+	draw_to_five()
+	break_next = $CountdownMain.end_turn()
+	tick_turn_count()
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
@@ -239,6 +245,7 @@ func end_turn(count_down: bool = true) -> void:
 	reload_deck()
 	draw_new_hand()
 	set_state(InputState.REFRESH_PENDING)
+	break_next = false
 	tick_turn_count()
 	set_state(InputState.INACTIVE)
 
@@ -274,6 +281,7 @@ func restart() -> void:
 		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
 	)
 	$CountdownMain.set_count(countdown_time)
+	$CountdownMain.reset_odds()
 	turn_count = 0
 	end_turn(false)
 	$Notifications.clear()
