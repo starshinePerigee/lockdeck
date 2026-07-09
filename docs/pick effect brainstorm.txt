@@ -7,3 +7,4 @@ draw a card
 draw a card for each depth triggered
 return to hand if you hit key
 activates twice
+draw a card if tests interesting / dangerous

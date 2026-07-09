@@ -7,3 +7,5 @@
 -- pick is removed from the card
 
 - effects are handles - pick is handle + card. When pick breaks both fly off
+
+- new background (or palette swapped) when candle is out

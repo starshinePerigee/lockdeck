@@ -1,0 +1,54 @@
+More depths:
+open design space:
+- depths that consume themselves
+- depths revealed from the start - very cool!
+
+(traps should be revealed from the start, but break a pick) (depths that penalize for tests?)
+
+
+
+depth brainstorming, focusing on threatening safe pins
+
+first / option 1: make sure every pick has push on it
+
+second / option 2: effects that break random picks
+
+third / option 3: more, specialized depths
+- jam break: if you hit it, and have pins jammed, it breaks the picks that applied the jam
+- jam limit: pins have a fixed, random max amount of jam. specific depths can reveal / disable this limit
+- test break: if you test this depth (twice?) it breaks the test pick (scans as safe / scans as dangerous)
+- test limit: upper bound on number of test on a pin at once / total number of tests on a segment / total number of tests all time
+- rush: if you test / reveal a depth, you have to hit a (different depth/the revealed depth/set the pin) (next turn / in n turns) or the pick breaks (could reveal itself on test)
+- surprise: a depth that breaks if you skip it, but has an earlier depth that diffuses it
+- pair: if you test two specific depths at once, the testing pick breaks
+- link: the scanning pick is linked and breaks if you break the next pick / any pick
+- unjam: if jammed, you have to (travel x depths / set the pick) (in n turns) or else it breaks
+- jam trap: if you jam the pin past the trap depth, it breaks the jam pick
+- crush trap: reads as safe, if you try to crush it it breaks the crush
+- minima: if you test this depth, it pulls you to it
+- generic: does (bad effect) if you (test / reveal / jam) (without passing / activating this depth)
+- safe crush: crushes backwards, but kicks you backwards
+- darkness: if you hit both, the lights go out
+- random break: breaks from discard
+
+(can also substitute other bad things for break: apply jam, reset the pin, reset others)
+
+
+
+Currently leaning:
+- jam: jam trap. If you are below this depth and jam, the jamming pick breaks; activating it clears it
+- test 1 (anti-broad): if you test this depth twice without passing it, it breaks the test pick. (scans as safe)
+- test 2 (anti-narrow): if this is the only depth you test, it breaks the test pick
+- reveal: rush: if this is revealed, next turn you have to advance past it or the revealer breaks (also plays interesting with move into it, and move/jam!)
+- trap: a depth that breaks if you skip it, but has an earlier depth that diffuses it
+
+
+plus:
+- minima: if you test this depth, it pulls you to it
+- darkness: extinguishes a segment
+- fumble: discards cards (percent of deck)
+
+
+Also, bosses will push a lot of these.
+
+Also also: while a hypothetical 1 push / 1 test pick is invincible, it's a bit of investment (base pick + 2 gems) for a relatively minor effect.

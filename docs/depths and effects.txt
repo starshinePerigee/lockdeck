@@ -15,10 +15,8 @@ xx warn (break is after this depth)
 x- trap (locks pin if skipped)
 x- bind (locks pin until other pin is set)
 xx unlock
--- breathe (draw a card)
 -- hint (shows where key is)
 -- key (ii) (must hit to unlock)
--- ____ (unlocks other cylinder)
 
 x- reset
 xx break

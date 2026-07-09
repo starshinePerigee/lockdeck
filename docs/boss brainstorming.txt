@@ -1,0 +1,16 @@
+What does a boss lock look like? 
+- undoes depths randomly / periodically
+- hides and randomizes depths youve revealed
+- breaks picks on a turn-based countdown
+- one less candle segment / candle segment depths (both diminish and light)
+- forces a pin unlock pattern (it is hidden?)
+- discard breaks; only two cards in hand
+- extra breaks / break also breaks a random card from discard
+- lava rises: you have to keep pins above a rising level or else it breaks from discard
+- penalizes for having too many unrevealed test segments / re-testing a segment (breaks test pick if you test a depth already tested) / tracks total number of tests and penalizes if count is high
+- tests reveal, but... (every depth has the rush effect) (unpassed reveals jam?)
+- constantly adding surprise bonus jam; if a jam hits 10 it breaks a random pick
+- jam limit: pins have a fixed max jam and exceeding it breaks
+- doubled up: breaking a pick breaks a second random one from the discard
+
+boss every three chests to unlock +1 pin; after 5 pin boss just have a boss every level?
