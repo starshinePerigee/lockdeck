@@ -220,12 +220,11 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	var depth_offset := 1
 	var is_final := false
 	
-	# "If the pin is jammed, crush will travel one less depth, but will crush the current depth.
-	if pin.is_jammed():
-		pin.add_jam(-pin.jam_count)
-		depth_offset = 0
-	
 	for i in range(effect.value):
+		if pin.is_jammed():
+			pin.add_jam(-1)
+			depth_offset = 0
+	
 		var target := pin.pin_position + depth_offset
 		if target >= PinSpec.PIN_DEPTH_COUNT:
 			is_final = true
@@ -236,6 +235,7 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 			is_final = true
 			break
 		elif next_depth == Depths.BASE:
+			# this can happen if you jam and then crush immediately
 			pass
 		else:
 			pin.reveal_position(target)
