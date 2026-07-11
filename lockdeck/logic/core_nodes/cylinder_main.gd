@@ -304,7 +304,8 @@ func update_visibility() -> String:
 ## Calculates the preview given a pin index and a channel from a card specs effects
 func calculate_preview(pin_index: int, effects: Array[EffectSpec]) -> ResultSpec:
 	var result := ResultSpec.new()
-	var depth := pins[pin_index].pin_position
+	var pin := pins[pin_index]
+	var depth := pin.pin_position
 	
 	for effect in effects:
 		match effect.flavor:
@@ -334,6 +335,27 @@ func calculate_preview(pin_index: int, effects: Array[EffectSpec]) -> ResultSpec
 					"Invalid effect when calculating preview: %s"
 					% effect.flavor.effect_name
 				)
+	
+	for i in len(pin.depths):
+		if i not in result.results:
+			continue
+		if (
+			result.results[i] == Results.ACTIVATE
+			and pin.get_revealed(i)
+		):
+			if pin.depths[i] == Depths.BREAK:
+				result.update(i, Results.BREAK)
+			elif pin.depths[i] in Depths.SOLVE_DEPTHS:
+				result.update(i, Results.UNLOCK)
+		elif (
+			result.results[i] == Results.CRUSH
+			and pin.depths[i] == Depths.FINAL
+		):
+			result.update(i, Results.BREAK)
+	
+	if PinSpec.PIN_DEPTH_COUNT in result.results:
+		if result.results[PinSpec.PIN_DEPTH_COUNT] in [Results.CRUSH, Results.ACTIVATE]:
+			result.update(PinSpec.PIN_DEPTH_COUNT, Results.BREAK)
 	
 	return result
 

@@ -56,8 +56,8 @@ static var PRIORITY: Array[Results] = [
 	REVEAL,
 	ACTIVATE,
 	UNLOCK,
-	BREAK,
 	CRUSH,
+	BREAK,
 	DEBUG,
 ]
 
