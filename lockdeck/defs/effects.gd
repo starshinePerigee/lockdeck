@@ -10,11 +10,11 @@ static func _get_texture(n: String) -> Resource:
 		return load("res://assets/effects/icon_debug.png")
 
 ## Human readable name of this effect, in lower case.
-var effect_name:String
+var effect_name: String
 ## Large texture, such as used for indicators and help.
-var texture:Resource
+var texture: Resource
 ## Small texture, such as used on a pick card.
-var texture_small:Resource
+var texture_small: Resource
 
 func _init(name: String):
 	self.effect_name = name
