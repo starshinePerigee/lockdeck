@@ -54,10 +54,13 @@ func load_new_pins(new_pins: Array[PinSpec]) -> void:
 func preview(card: CardSpec, index: int) -> void:
 	var results: Array[ResultSpec] = []
 	for i in len(pins):
-		var result := ResultSpec.new()
-		result.update(1, Results.NONE)
-		result.update(2, Results.HINT)
-		results.append(result)
+		var effect_offset := index - i
+		if effect_offset in card.effects:
+			var effects: Array[EffectSpec] = []
+			effects.assign(card.effects[effect_offset])
+			results.append(calculate_preview(i, effects))
+		else:
+			results.append(ResultSpec.new())
 	$Cylinders.set_results(results)
 
 ## Removes the current preview.
@@ -297,6 +300,42 @@ func update_visibility() -> String:
 			if pin.checked[i]:
 				pin.update_visible(i, new_level, String.chr(_hint_id))
 	return String.chr(_hint_id)
+
+## Calculates the preview given a pin index and a channel from a card specs effects
+func calculate_preview(pin_index: int, effects: Array[EffectSpec]) -> ResultSpec:
+	var result := ResultSpec.new()
+	var depth := pins[pin_index].pin_position
+	
+	for effect in effects:
+		match effect.flavor:
+			Effects.PUSH:
+				depth += 1
+				for i in (effect.value - 1):
+					result.update(depth, Results.HINT)
+					depth += 1
+				result.update(depth, Results.ACTIVATE)
+			Effects.TEST:
+				for i in effect.value:
+					result.update(depth + i + 1, Results.HINT)
+			Effects.REVEAL:
+				for i in effect.value:
+					result.update(depth + i + 1, Results.REVEAL)
+			Effects.CRUSH:
+				result.update(depth, Results.CRUSH)
+				depth += 1
+				for i in (effect.value - 1):
+					result.update(depth, Results.CRUSH)
+					depth += 1
+				result.update(depth, Results.ACTIVATE)
+			Effects.JAM:
+				pass
+			_:
+				push_warning(
+					"Invalid effect when calculating preview: %s"
+					% effect.flavor.effect_name
+				)
+	
+	return result
 
 func update_turn_number() -> int:
 	if turn_number < 0:

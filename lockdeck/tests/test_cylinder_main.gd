@@ -48,18 +48,22 @@ func end_drag() -> void:
 func do_highlight(pin_index: int) -> void:
 	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
 	$CylinderMain/Anchor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_highlight() -> void:
 	$CylinderMain/Anchor/HighlightPos.text = "-1"
 	$CylinderMain/Anchor/Dot.position = Vector2()
+	$CylinderMain.cancel_preview()
 
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
 	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_cursor() -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
 	$CylinderMain/AnchorCursor/Dot.position = Vector2()
+	$CylinderMain.cancel_preview()
 
 func reveal_all() -> void:
 	print("The world unfolds before your eyes.")
