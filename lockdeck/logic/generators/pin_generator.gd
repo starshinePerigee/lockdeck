@@ -11,6 +11,7 @@ static func get_known_test_pin() -> PinSpec:
 		spec.depths[i] = Depths.EMPTY
 	spec.depths[1] = Depths.PUSH
 	spec.depths[2] = Depths.JAM
+	spec.depths[3] = Depths.PUSH
 	spec.depths[4] = Depths.UNLOCK
 	spec.depths[5] = Depths.BOUNCE
 	spec.depths[6] = Depths.BREAK

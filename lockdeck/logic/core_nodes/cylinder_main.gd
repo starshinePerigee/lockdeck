@@ -128,7 +128,7 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	if pin.advance_pin(advance_by):
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 	else:
-		var depth := pin.current_depth()
+		var depth := pin.activate_and_get_depth()
 		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 		pin.reveal_position()
 
@@ -144,7 +144,7 @@ func test_pin(pin_index: int, test_ahead: int) -> void:
 ## Raises hella signals.
 func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 	for pin in pins:
-		pin.reset_checked()
+		pin.end_step()
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
 	var result := EndStepSpec.new()
@@ -264,7 +264,7 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	if oob:
 		push_error("OOB'ed on bounce? Pin: %s, target: %s" % [effect.realized_pin, target_depth])
 		return
-	var depth := pin.current_depth()
+	var depth := pin.activate_and_get_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
 func execute_unlock(result: EndStepSpec) -> void:
@@ -333,5 +333,5 @@ func handle_fall() -> void:
 			pin.add_jam(-pin.jam_count) 
 		else:
 			pin.advance_pin(0, 0)
-		pin.reset_checked()
+		pin.end_step()
 	$Cylinders.set_pin_specs(pins)
