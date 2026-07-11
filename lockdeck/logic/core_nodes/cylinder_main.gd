@@ -217,14 +217,10 @@ func execute_jam(effect: EffectSpec) -> void:
 func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
 	
-	var depth_offset := 1
+	var depth_offset := 0
 	var is_final := false
 	
 	for i in range(effect.value):
-		if pin.is_jammed():
-			pin.add_jam(-1)
-			depth_offset = 0
-	
 		var target := pin.pin_position + depth_offset
 		if target >= PinSpec.PIN_DEPTH_COUNT:
 			is_final = true
@@ -240,7 +236,11 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 		else:
 			pin.reveal_position(target)
 			pin.depths[target] = Depths.EMPTY
-		depth_offset += 1
+		
+		if pin.is_jammed():
+			pin.add_jam(-1)
+		else:
+			depth_offset += 1
 	
 	if is_final:
 		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
