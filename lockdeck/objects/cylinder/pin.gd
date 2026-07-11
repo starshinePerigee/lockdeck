@@ -114,6 +114,20 @@ func clear_results() -> void:
 	for depth in depth_refs:
 		depth.result = Results.EMPTY
 
+func load_previouses(effects: Array[EffectSpec]) -> void:
+	for i in len(effects):
+		for d in effects[i].realized_positions.keys():
+			depth_refs[d].add_previous_icon(i, effects[i].flavor)
+
+func clear_previouses() -> void:
+	for depth in depth_refs:
+		depth.clear_previous_icons()
+
+## Show all the previously loaded previous icons
+func set_previouses_visibility(show_previous: bool) -> void:
+	for depth in depth_refs:
+		depth.show_previous = show_previous
+
 #endregion
 
 #region input logic

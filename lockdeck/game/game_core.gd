@@ -61,6 +61,8 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$LastHint.visible = false
+			$LockBody/CylinderMain.cancel_preview()
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
 			$CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
@@ -95,6 +97,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			$PreviousButton.show_see_prev = false
 			$LastHint.visible = true
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
 			$CountdownMain.button_disable = true
 
 func reset_countdown():
@@ -191,6 +194,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	else:
 		$DiscardMain.add_card(card)
 	
+	$LockBody/CylinderMain/Cylinders.load_previouses(result)
 	if result.last_hint:
 		$LastHint.text = "Last hint: %s" % result.last_hint
 	else:

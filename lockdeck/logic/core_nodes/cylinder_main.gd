@@ -80,12 +80,16 @@ class Execution:
 	## identical to the cylinder_main.pins array.
 	var pending_effects: Array[Array]
 	
+	## All effects which executed - loaded directly into EndStepSpec
+	var executed_effects: Dictionary[int, Array]
+	
 	static var execution_sentinel := EffectSpec.new(Effects.END_EXECUTION)
 		
 	func _init(pin_count: int) -> void:
 		pending_effects = []
 		for i in pin_count:
 			pending_effects.append([])
+			executed_effects[i] = []
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
@@ -164,6 +168,7 @@ func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 		evaluate_pin(next_effect, ex, result)
 	
 	result.last_hint = update_visibility()
+	result.effects = ex.executed_effects
 	
 	$Cylinders.set_pin_specs(pins)
 	
@@ -206,10 +211,17 @@ func evaluate_pin(
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
+	
+	# the execute functions should set depths if they want to be included
+	if len(effect.realized_positions) > 0:
+		ex.executed_effects[effect.realized_pin].append(effect)
 
 func execute_push(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
+	var start_depth := pins[effect.realized_pin].pin_position
 	advance_pin(effect.realized_pin, effect.value, ex)
+	var end_depth := pins[effect.realized_pin].pin_position
+	effect.add_positions(range(start_depth, end_depth + 1, 1))
 
 func execute_test(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)

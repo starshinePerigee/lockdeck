@@ -7,7 +7,7 @@ static func _get_texture(n: String) -> Resource:
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/effects/icon_debug.png")
+		return load("res://assets/effects/icon_activate.png")
 
 ## Human readable name of this effect, in lower case.
 var effect_name: String
@@ -46,7 +46,7 @@ static var TEST := Effects.new("test")
 static var CRUSH := Effects.new("crush")
 
 ## Depth effect - hint at the next danger or sets the pin to clear
-static var HINT := Effects.new("hint")  # TODO
+static var HINT := Effects.new("hint")
 
 ## Depth effect - unlock the current pin
 static var UNLOCK := Effects.new("unlock")

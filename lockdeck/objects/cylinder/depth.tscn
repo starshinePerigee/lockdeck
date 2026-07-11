@@ -10,7 +10,6 @@ offset_right = 80.0
 offset_bottom = 32.0
 texture = ExtResource("1_pxkuq")
 script = ExtResource("1_t3uj8")
-show_jam_hint = null
 
 [node name="HintTracker" type="Label" parent="."]
 visible = false
@@ -38,3 +37,11 @@ offset_top = 5.0
 offset_right = 54.0
 offset_bottom = 29.0
 texture = ExtResource("4_hntsp")
+
+[node name="PreviousAnchor" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 100.0
+offset_bottom = 36.0

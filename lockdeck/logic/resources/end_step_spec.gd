@@ -6,3 +6,9 @@ class_name EndStepSpec
 @export var lock_solved := false
 @export var turn_number := -1
 @export var last_hint := ""
+
+## Holds all effects as a Dictionary[pin position, Array[EffectSpec))
+@export var effects: Dictionary[int, Array]
+
+func _init() -> void:
+	effects = {}

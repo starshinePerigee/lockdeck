@@ -12,7 +12,6 @@ offset_left = 416.0
 offset_top = -12.0
 offset_right = 880.0
 offset_bottom = 596.0
-pins = null
 metadata/_edit_use_anchors_ = true
 
 [node name="Anchor" type="Control" parent="CylinderMain"]
