@@ -310,15 +310,18 @@ func calculate_preview(pin_index: int, effects: Array[EffectSpec]) -> ResultSpec
 	for effect in effects:
 		match effect.flavor:
 			Effects.PUSH:
+				result.update(depth, Results.NONE)
 				depth += 1
 				for i in (effect.value - 1):
 					result.update(depth, Results.HINT)
 					depth += 1
 				result.update(depth, Results.ACTIVATE)
 			Effects.TEST:
+				result.update(depth, Results.NONE)
 				for i in effect.value:
 					result.update(depth + i + 1, Results.HINT)
 			Effects.REVEAL:
+				result.update(depth, Results.NONE)
 				for i in effect.value:
 					result.update(depth + i + 1, Results.REVEAL)
 			Effects.CRUSH:
@@ -353,10 +356,15 @@ func calculate_preview(pin_index: int, effects: Array[EffectSpec]) -> ResultSpec
 		):
 			result.update(i, Results.BREAK)
 	
-	if PinSpec.PIN_DEPTH_COUNT in result.results:
-		if result.results[PinSpec.PIN_DEPTH_COUNT] in [Results.CRUSH, Results.ACTIVATE]:
+	## Check for oob
+	for i in result.results.keys():
+		if (
+			i >= PinSpec.PIN_DEPTH_COUNT
+			and result.results[i] in [Results.CRUSH, Results.ACTIVATE] 
+		):
 			result.update(PinSpec.PIN_DEPTH_COUNT, Results.BREAK)
-	
+			break
+
 	return result
 
 func update_turn_number() -> int:

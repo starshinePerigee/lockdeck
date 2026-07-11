@@ -104,6 +104,10 @@ func load_results(results: ResultSpec) -> void:
 			depth_refs[i].result = results.results[i]
 		else:
 			depth_refs[i].result = Results.EMPTY
+	$Stack/BreakResult.visible = (
+		len(depth_refs) in results.results
+		and results.results[len(depth_refs)] == Results.BREAK
+	)
 
 func clear_results() -> void:
 	for depth in depth_refs:
