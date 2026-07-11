@@ -6,7 +6,7 @@ signal game_win
 #region game state variables
 @export var cylinder_count := 4
 @export var difficulty_mod := 1
-@export var deck_count := 4
+@export var deck_count := 10
 @export var hand_size := 3
 @export var countdown_time := 2
 
