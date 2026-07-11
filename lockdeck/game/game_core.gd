@@ -182,7 +182,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
-	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	var result: EndStepSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)

@@ -51,7 +51,7 @@ func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
-func preview(card: CardSpec, index: int) -> void:	
+func preview(card: CardSpec, index: int) -> void:
 	$Cylinders.set_results([{
 		1: Results.NONE,
 		2: Results.HINT,
@@ -138,12 +138,12 @@ func test_pin(pin_index: int, test_ahead: int) -> void:
 
 ## Applies the cardspec at the specified index.
 ## Raises hella signals.
-func execute(card: CardSpec, card_index: int) -> ResultSpec:
+func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 	for pin in pins:
 		pin.reset_checked()
 	var ex := Execution.new(len(pins))
 	ex.load_card(card, card_index)
-	var result := ResultSpec.new()
+	var result := EndStepSpec.new()
 	
 	var iterations := 0
 	while iterations < 1000:
@@ -169,7 +169,7 @@ func execute(card: CardSpec, card_index: int) -> ResultSpec:
 func evaluate_pin(
 	effect: EffectSpec, 
 	ex: Execution,
-	result: ResultSpec
+	result: EndStepSpec
 ) -> void:
 	if effect.realized_pin >= len(pins) or effect.realized_pin < 0:
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
@@ -263,14 +263,14 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var depth := pin.current_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
-func execute_unlock(result: ResultSpec) -> void:
+func execute_unlock(result: EndStepSpec) -> void:
 	for pin in pins:
 		if not pin.is_solved():
 			return
 	result.lock_solved = true
 	return
 
-func execute_break(result: ResultSpec) -> void:
+func execute_break(result: EndStepSpec) -> void:
 	result.pick_broke = true
 
 func update_visibility() -> String:

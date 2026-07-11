@@ -32,7 +32,7 @@ func do_click(pin_index: int) -> void:
 func apply_card(card: CardSpec, card_index: int) -> void:
 	$BreakLabel.visible = false
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
-	var result: ResultSpec = $CylinderMain.execute(card, card_index)
+	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
 	if result.pick_broke:
 		break_pick()
 
