@@ -98,12 +98,16 @@ func load_spec(pin_spec: PinSpec) -> void:
 	jam_count = pin_spec.jam_count
 	$KeyIndicator.visible = pin_spec.is_solved()
 
-func load_results(results: Dictionary[int, Results]) -> void:
+func load_results(results: ResultSpec) -> void:
 	for i in len(depth_refs):
-		if i in results:
-			depth_refs[i].result = results[i]
+		if i in results.results:
+			depth_refs[i].result = results.results[i]
 		else:
 			depth_refs[i].result = Results.EMPTY
+
+func clear_results() -> void:
+	for depth in depth_refs:
+		depth.result = Results.EMPTY
 
 #endregion
 

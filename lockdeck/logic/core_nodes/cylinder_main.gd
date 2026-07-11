@@ -52,12 +52,13 @@ func load_new_pins(new_pins: Array[PinSpec]) -> void:
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> void:
-	$Cylinders.set_results([{
-		1: Results.NONE,
-		2: Results.HINT,
-		3: Results.HINT,
-		4: Results.ACTIVATE
-	},] as Array[Dictionary])
+	var results: Array[ResultSpec] = []
+	for i in len(pins):
+		var result := ResultSpec.new()
+		result.update(1, Results.NONE)
+		result.update(2, Results.HINT)
+		results.append(result)
+	$Cylinders.set_results(results)
 
 ## Removes the current preview.
 func cancel_preview() -> void:
