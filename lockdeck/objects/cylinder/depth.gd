@@ -14,6 +14,11 @@ class_name Depth
 		$Result.visible = result != Results.EMPTY
 		$Result.texture = result.texture
 
+@export var show_jam_result: bool = false:
+	set(v):
+		show_jam_result = v
+		$JamResult.visible = show_jam_result
+
 func set_hints(letters: String, color: Color = Color()):
 	if letters:
 		$HintTracker.visible = true

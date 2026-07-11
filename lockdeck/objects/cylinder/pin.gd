@@ -104,6 +104,7 @@ func load_results(results: ResultSpec) -> void:
 			depth_refs[i].result = results.results[i]
 		else:
 			depth_refs[i].result = Results.EMPTY
+		depth_refs[i].show_jam_result = i == results.jam_depth
 	$Stack/BreakResult.visible = (
 		len(depth_refs) in results.results
 		and results.results[len(depth_refs)] == Results.BREAK
