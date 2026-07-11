@@ -22,7 +22,7 @@ var depth_refs: Array[Depth] = []
 static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 	PinSpec.RevealLevel.CLEAR: Color("7ac259"),
 	PinSpec.RevealLevel.INTERESTING: Color("ffbc57"),
-	PinSpec.RevealLevel.DANGEROUS: Color("b01712"),
+	PinSpec.RevealLevel.DANGEROUS: Color("#f1504b"),
 }
 
 #region display logic
@@ -92,10 +92,18 @@ func load_spec(pin_spec: PinSpec) -> void:
 			depth_refs[i].set_hints(pin_spec.hint_tracks[i], HINT_COLORS[reveal_level])
 		else:
 			depth_refs[i].set_hints("")
+		depth_refs[i].result = Results.EMPTY
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
 	$KeyIndicator.visible = pin_spec.is_solved()
+
+func load_results(results: Dictionary[int, Results]) -> void:
+	for i in len(depth_refs):
+		if i in results:
+			depth_refs[i].result = results[i]
+		else:
+			depth_refs[i].result = Results.EMPTY
 
 #endregion
 

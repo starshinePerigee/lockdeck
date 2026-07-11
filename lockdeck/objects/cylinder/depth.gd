@@ -8,6 +8,12 @@ class_name Depth
 		flavor = v
 		_redraw()
 
+@export var result: Results = Results.DEBUG:
+	set(v):
+		result = v
+		$Result.visible = result != Results.EMPTY
+		$Result.texture = result.texture
+
 func set_hints(letters: String, color: Color = Color()):
 	if letters:
 		$HintTracker.visible = true

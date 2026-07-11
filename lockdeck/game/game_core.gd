@@ -108,10 +108,12 @@ func pick_selected(card: CardSpec) -> void:
 func pin_cursored(pin_index) -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 		
 func pin_uncursored() -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_deselected() -> void:
 	set_state(InputState.INACTIVE)
@@ -126,10 +128,12 @@ func pick_superdragged():
 func pin_hovered(pin_index):
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 
 func pin_unhovered():
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_dropped(_card_area: Area2D, card: CardSpec) -> void:
 	var target: int = $LockBody/CylinderMain.get_current_drag_target()

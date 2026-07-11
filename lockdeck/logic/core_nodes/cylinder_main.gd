@@ -51,12 +51,17 @@ func load_new_pins(new_pins: Array[PinSpec]) -> void:
 	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
-func preview(card: CardSpec, index: int) -> void:
-	pass
+func preview(card: CardSpec, index: int) -> void:	
+	$Cylinders.set_results([{
+		1: Results.NONE,
+		2: Results.HINT,
+		3: Results.HINT,
+		4: Results.ACTIVATE
+	},] as Array[Dictionary])
 
 ## Removes the current preview.
 func cancel_preview() -> void:
-	pass
+	$Cylinders.clear_results()
 
 ## Gets the currently hovered pin during a drag
 func get_current_drag_target() -> int:

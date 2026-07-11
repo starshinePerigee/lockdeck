@@ -45,6 +45,19 @@ func clear_all_pins() -> void:
 	for i in PinSpec.CYLINDER_COUNT_MAX:
 		clear_pin(i)
 
+## Loads a set of results into the pins
+## pin_results is an Array[Dictionary[int, Results))
+## where the top level Array is the results for each 
+func set_results(pin_results: Array[Dictionary]) -> void:
+	for i in len(pin_results):
+		var results: Dictionary[int, Results] = {}
+		results.assign(pin_results[i])
+		pin_refs[i].load_results(results)
+
+func clear_results() -> void:
+	for pin in pin_refs:
+		pin.load_results({} as Dictionary[int, Results])
+
 #endregion
 
 #region input logic
