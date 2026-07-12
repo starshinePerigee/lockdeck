@@ -39,6 +39,9 @@ static var REVEAL := Effects.new("reveal")
 ## apply jam
 static var JAM := Effects.new("jam")
 
+## used to record effects blocked by jam
+static var UNJAM := Effects.new("unjam")
+
 ## Test the next depths, indicating if there is a hazard or not
 static var TEST := Effects.new("test")
 

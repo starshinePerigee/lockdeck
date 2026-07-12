@@ -76,6 +76,8 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 		$JamIndicator.visible = jam_count > 0
 		$JamIndicator/JamCount.text = str(jam_count)
 
+var _key_visible := false
+
 ## Load a PinSpec into this pin, setting all parameters.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
@@ -96,7 +98,8 @@ func load_spec(pin_spec: PinSpec) -> void:
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
-	$KeyIndicator.visible = pin_spec.is_solved()
+	_key_visible = pin_spec.is_solved()
+	$KeyIndicator.visible = _key_visible
 
 func load_results(results: ResultSpec) -> void:
 	for i in len(depth_refs):
@@ -113,11 +116,13 @@ func load_results(results: ResultSpec) -> void:
 func clear_results() -> void:
 	for depth in depth_refs:
 		depth.result = Results.EMPTY
+		depth.show_jam_result = false
 
 func load_previouses(effects: Array[EffectSpec]) -> void:
 	for i in len(effects):
 		for d in effects[i].realized_positions.keys():
-			depth_refs[d].add_previous_icon(i, effects[i].flavor)
+			if d < len(depth_refs):
+				depth_refs[d].add_previous_icon(i, effects[i].flavor)
 
 func clear_previouses() -> void:
 	for depth in depth_refs:
@@ -127,6 +132,12 @@ func clear_previouses() -> void:
 func set_previouses_visibility(show_previous: bool) -> void:
 	for depth in depth_refs:
 		depth.show_previous = show_previous
+	if show_previous:
+		$JamIndicator.visible = false
+		$KeyIndicator.visible = false
+	else:
+		$JamIndicator.visible = jam_count > 0
+		$KeyIndicator.visible = _key_visible
 
 #endregion
 

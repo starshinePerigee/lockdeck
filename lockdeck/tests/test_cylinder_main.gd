@@ -33,6 +33,17 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	$BreakLabel.visible = false
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
 	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
+	
+	for i in len($CylinderMain.pins):
+		var s := "Pin %s: " % i
+		var effects := result.effects[i]
+		for effect in effects:
+			s += "%s: " % effect.flavor.effect_name
+			for pos in effect.realized_positions:
+				s += "%s" % pos
+			s += " "
+		print(s)
+	
 	if result.pick_broke:
 		break_pick()
 

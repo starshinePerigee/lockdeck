@@ -71,18 +71,18 @@ text = "-2"
 metadata/_edit_use_anchors_ = true
 
 [node name="ResetButton" type="Button" parent="."]
-offset_left = 30.0
-offset_top = 387.0
-offset_right = 81.0
-offset_bottom = 418.0
+offset_left = 127.0
+offset_top = 392.0
+offset_right = 178.0
+offset_bottom = 423.0
 text = "Reset"
 metadata/_edit_use_anchors_ = true
 
 [node name="FallButton" type="Button" parent="."]
-offset_left = 28.0
-offset_top = 311.0
-offset_right = 79.0
-offset_bottom = 342.0
+offset_left = 34.0
+offset_top = 391.0
+offset_right = 85.0
+offset_bottom = 422.0
 text = "Fall"
 metadata/_edit_use_anchors_ = true
 

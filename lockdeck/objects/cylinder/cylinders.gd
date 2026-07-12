@@ -56,6 +56,8 @@ func clear_results() -> void:
 
 ## Loads a new set of effects into pins:
 func load_previouses(spec: EndStepSpec):
+	for pin in pin_refs:
+		pin.clear_previouses()
 	for pin in spec.effects.keys():
 		var effects: Array[EffectSpec] = []
 		effects.assign(spec.effects[pin])
@@ -65,6 +67,7 @@ func load_previouses(spec: EndStepSpec):
 func set_previouses_visibility(show_previous: bool) -> void:
 	for pin in pin_refs:
 		pin.set_previouses_visibility(show_previous)
+		
 #endregion
 
 #region input logic
