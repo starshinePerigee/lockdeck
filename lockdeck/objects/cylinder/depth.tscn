@@ -41,8 +41,8 @@ texture = ExtResource("4_hntsp")
 [node name="PreviousAnchor" type="Control" parent="."]
 clip_contents = true
 anchors_preset = 0
-offset_left = 4.0
+offset_left = -8.0
 offset_top = 4.0
-offset_right = 100.0
+offset_right = 88.0
 offset_bottom = 36.0
 mouse_filter = 2

@@ -190,6 +190,12 @@ func evaluate_pin(
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
 	
+	if len(ex.executed_effects[effect.realized_pin]) == 0:
+		var empty_effect := EffectSpec.new(Effects.EMPTY)
+		empty_effect.realized_pin = effect.realized_pin
+		empty_effect.add_positions([_effect_pos(empty_effect)])
+		ex.record_effect(empty_effect)
+	
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)
@@ -237,7 +243,7 @@ func execute_push(effect: EffectSpec, ex: Execution) -> void:
 	if start_depth == end_depth:
 		ex.record_effect(_unjam_effect(effect))
 	else:
-		effect.add_positions(range(start_depth, _effect_pos(effect) + 1, 1))
+		effect.add_positions(range(start_depth + 1, _effect_pos(effect) + 1, 1))
 		ex.record_effect(effect)
 
 func execute_test(effect: EffectSpec, ex: Execution) -> void:
@@ -270,6 +276,7 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	var depth_offset := 0
 	var is_final := false
 	
+	var effect_depths: Array = [_effect_pos(effect)]
 	for i in range(effect.value):
 		var target := pin.pin_position + depth_offset
 		if target >= PinSpec.PIN_DEPTH_COUNT:
@@ -290,7 +297,15 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 		if pin.is_jammed():
 			pin.add_jam(-1)
 		else:
+			effect_depths.append(target)
 			depth_offset += 1
+	
+	print(effect_depths)
+	effect.add_positions(effect_depths)
+	if len(effect_depths) == 1:
+		ex.record_effect(_unjam_effect(effect))
+	else:
+		ex.record_effect(effect)
 	
 	if is_final:
 		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
@@ -300,13 +315,17 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 
 func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
+	var start_depth := _effect_pos(effect)
 	var target_depth: int = max(0, pin.pin_position - effect.value)
 	var oob := pin.advance_pin(0, target_depth)
 	if oob:
 		push_error("OOB'ed on bounce? Pin: %s, target: %s" % [effect.realized_pin, target_depth])
 		return
+	effect.add_positions(range(_effect_pos(effect), start_depth + 1, 1))
+	print(effect.realized_positions)
 	var depth := pin.activate_and_get_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
+	ex.record_effect(effect)
 
 func execute_unlock(result: EndStepSpec) -> void:
 	for pin in pins:

@@ -29,11 +29,7 @@ func update_card(dropdown_index: int):
 func do_click(pin_index: int) -> void:
 	apply_card($CardSpace.card_spec, pin_index)
 
-func apply_card(card: CardSpec, card_index: int) -> void:
-	$BreakLabel.visible = false
-	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
-	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
-	
+func print_previouses(result: EndStepSpec) -> void:
 	for i in len($CylinderMain.pins):
 		var s := "Pin %s: " % i
 		var effects := result.effects[i]
@@ -43,6 +39,14 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 				s += "%s" % pos
 			s += " "
 		print(s)
+
+func apply_card(card: CardSpec, card_index: int) -> void:
+	$BreakLabel.visible = false
+	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
+	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
+	
+	print_previouses(result)
+	$CylinderMain/Cylinders.load_previouses(result)
 	
 	if result.pick_broke:
 		break_pick()
