@@ -4,14 +4,26 @@ signal game_fail
 signal game_win
 
 #region game state variables
-@export var CYLINDER_COUNT := 4
-@export var DIFFICULTY_MOD := 1
-@export var DECK_COUNT := 10
-@export var HAND_SIZE := 3
-@export var COUNTDOWN_TIME := 2
-@export var REVEAL_ALL := false
+@export var cylinder_count := 4
+@export var difficulty_mod := 1
+@export var deck_count := 10
+@export var hand_size := 3
+@export var countdown_time := 2
 
 var DEBUG_MODE := false
+
+var turn_count := -1
+
+func tick_turn_count() -> void:
+	if turn_count < 0:
+		push_warning("Turn count never initialized!")
+		turn_count = 0
+	turn_count += 1
+	if DEBUG_MODE:
+		print("-- turn %s --" % turn_count)
+
+## Holds if the countdown mechanics are calling for a break next turn
+var break_next: bool
 
 enum InputState {
 	REFRESH_PENDING,  # used to refresh a state
@@ -29,7 +41,12 @@ var active_card: CardSpec
 
 func set_state(state: InputState) -> void:
 	if current_state == state:
+		if DEBUG_MODE:
+			print("Already in state %s" % InputState.find_key(state))
 		return
+	
+	if DEBUG_MODE:
+		print("Entering state %s" % InputState.find_key(state))
 	current_state = state
 	
 	match state:
@@ -44,6 +61,8 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$LastHint.visible = false
+			$LockBody/CylinderMain.cancel_preview()
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
 			$CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
@@ -78,6 +97,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			$PreviousButton.show_see_prev = false
 			$LastHint.visible = true
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
 			$CountdownMain.button_disable = true
 
 func reset_countdown():
@@ -91,10 +111,12 @@ func pick_selected(card: CardSpec) -> void:
 func pin_cursored(pin_index) -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 		
 func pin_uncursored() -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_deselected() -> void:
 	set_state(InputState.INACTIVE)
@@ -109,10 +131,12 @@ func pick_superdragged():
 func pin_hovered(pin_index):
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 
 func pin_unhovered():
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_dropped(_card_area: Area2D, card: CardSpec) -> void:
 	var target: int = $LockBody/CylinderMain.get_current_drag_target()
@@ -126,6 +150,7 @@ func pick_activated(space_index: int) -> void:
 	if not current_state in [InputState.ACTIVE_SELECT, InputState.ACTIVE_DRAG]:
 		return
 	do_pick(active_card, space_index)
+	set_state(InputState.INACTIVE)
 
 func discard_clicked() -> void:
 	if current_state != InputState.ACTIVE_SELECT:
@@ -137,6 +162,7 @@ func break_pick(card: CardSpec) -> void:
 	$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
+		set_state(InputState.COMPLETE)
 		game_fail.emit()
 	update_power_count()
 
@@ -159,15 +185,16 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
-	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	var result: EndStepSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
-	if result.pick_broke:
+	if result.pick_broke or break_next:
 		break_pick(card)
 	else:
 		$DiscardMain.add_card(card)
 	
+	$LockBody/CylinderMain/Cylinders.load_previouses(result)
 	if result.last_hint:
 		$LastHint.text = "Last hint: %s" % result.last_hint
 	else:
@@ -179,20 +206,28 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		set_state(InputState.INACTIVE)
 		set_state(InputState.COMPLETE)
 	else:
-		draw_to_five()
+		cleanup_step()
 
 func discard_pick() -> void:
 	$HandMain.deselect()
 	$HandMain.remove_card(active_card)
-	$DiscardMain.add_card(active_card)
-	draw_to_five()
+	if break_next:
+		break_pick(active_card)
+	else:
+		$DiscardMain.add_card(active_card)
+	cleanup_step()
 	set_state(InputState.INACTIVE)
+
+func cleanup_step() -> void:
+	draw_to_five()
+	break_next = $CountdownMain.end_turn()
+	tick_turn_count()
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
 
 func draw_to_five() -> void:
-	var cards_to_draw: int = HAND_SIZE - $HandMain.count()
+	var cards_to_draw: int = hand_size - $HandMain.count()
 	if cards_to_draw <= 0:
 		return
 	$HandMain.add_cards($DeckMain.draw_cards(cards_to_draw))
@@ -200,7 +235,7 @@ func draw_to_five() -> void:
 ## Discards the current hand and draws up to five cards
 func draw_new_hand() -> void:
 	var extra_cards: Array[CardSpec] = $HandMain.load_new_hand(
-		$DeckMain.draw_cards(HAND_SIZE)
+		$DeckMain.draw_cards(hand_size)
 	)
 	if len(extra_cards) > 0:
 		push_warning("%s extra cards in hand after drawing.")
@@ -220,13 +255,13 @@ func end_turn(count_down: bool = true) -> void:
 	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
-	draw_new_hand()
 	set_state(InputState.REFRESH_PENDING)
+	cleanup_step()
 	set_state(InputState.INACTIVE)
 
 ## Updates the push label
 func update_power_count() -> void:
-	var power_required := (PinSpec.PIN_DEPTH_COUNT - 1) * CYLINDER_COUNT
+	var power_required := (PinSpec.PIN_DEPTH_COUNT - 1) * cylinder_count
 	var current_power := 0
 	for area in [$DeckMain.cards, $HandMain.cards, $DiscardMain.cards]:
 		for pick in area:
@@ -242,8 +277,8 @@ func load_starter_deck() -> void:
 	reload_deck()
 	
 	$DeckMain.clear_all()
-	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
-	print("Loaded default %s cards." % DECK_COUNT)
+	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
+	print("Loaded default %s cards." % deck_count)
 
 func add_random_cards(count: int = 1) -> void:
 	var cards := PickGenerator.get_many_base_cards(2)
@@ -253,9 +288,11 @@ func add_random_cards(count: int = 1) -> void:
 
 func restart() -> void:
 	$LockBody/CylinderMain.load_new_pins(
-		PinGenerator.build_real_lock(CYLINDER_COUNT, DIFFICULTY_MOD)
+		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
 	)
-	$CountdownMain.set_count(COUNTDOWN_TIME)
+	$CountdownMain.set_count(countdown_time)
+	$CountdownMain.reset_odds()
+	turn_count = 0
 	end_turn(false)
 	$Notifications.clear()
 	$LastHint.text = "No picks played yet."
@@ -283,5 +320,5 @@ func _ready() -> void:
 	if get_tree().current_scene == self:
 		print("Running in debug mode.")
 		DEBUG_MODE = true
-		$DeckMain.add_cards(PickGenerator.get_standard_test_hand(DECK_COUNT))
+		$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
 		restart()

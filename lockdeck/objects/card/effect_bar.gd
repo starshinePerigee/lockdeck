@@ -13,7 +13,7 @@ func redraw() -> void:
 	if len(effect_stacks) == 0:
 		return
 	
-	for i in range(4, -1, -1):
+	for i in range(3, -2, -1):
 		# use big icons if you're the only effect on the card
 		# might cut this?
 		

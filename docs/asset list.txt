@@ -28,6 +28,8 @@ Animations
 - opening animation
 - pin execution
 - broken pick flicks
+- draw card
+- shuffle deck
 
 cooler animations
 - all pins use the same base color, and icons get drawn on as an animation

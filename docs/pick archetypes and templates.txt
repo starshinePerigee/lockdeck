@@ -1,0 +1,31 @@
+What pick archetypes are useful?
+- bulk push - move lots of pins in safety / emergency
+- light push to close out a position
+- tall push to skip danger
+- mid push filler pick
+- broad hints to give you basic outline
+- tall hints to line up safe skips after reveal
+- narrow hints to identify threats conclusively
+- small jams for tricks
+- large jams for protection of cleared pins
+- reveal and crush to deal with upcoming threats
+-- reveal + hint + jump = safe
+-- crush is useful as a defense against particularly difficult layouts
+
+
+
+weird picks:
+
+add a grey slash between multiple pushes, for when multiple activations are required 
+(combination logic:
+- push / push
+- crush / crush
+- jam + jam
+- max(test)
+- max(reveal)
+
+add a grey dot above tests to allow skipping a test??
+
+
+
+when balancing, note that high push pins are way more likely to break. a jam/jam pick *cant* break through normal means but a 12-push is basically good for two uses

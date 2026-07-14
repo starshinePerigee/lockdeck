@@ -43,10 +43,14 @@ static var MARK_CLEAR := Depths.new("mark_clear", Effects.DEBUG)
 static var MARK_INTERESTING := Depths.new("mark_interesting", Effects.DEBUG)
 
 ## Default unrevealed depth
-static var MARK_DANGEROUS := Depths.new("MARK_DANGEROUS", Effects.DEBUG)
+static var MARK_DANGEROUS := Depths.new("mark_dangerous", Effects.DEBUG)
 
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
+
+## Execution only depth indicating a depth has already been activated this turn
+## and is now not activating again
+static var EXHAUSTED := Depths.new("exhausted", Effects.EMPTY)
 
 ## Push effect
 static var PUSH := Depths.new("push", Effects.PUSH, 2)

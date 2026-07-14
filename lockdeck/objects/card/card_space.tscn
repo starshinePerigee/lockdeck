@@ -38,7 +38,7 @@ layout_mode = 0
 [node name="Area2D" type="Area2D" parent="PickCard"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickCard/Area2D"]
-position = Vector2(72, 84)
+position = Vector2(64, 76)
 shape = SubResource("CapsuleShape2D_edh6n")
 
 [node name="Area2D" type="Area2D" parent="."]
