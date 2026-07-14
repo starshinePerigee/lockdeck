@@ -1,6 +1,7 @@
 Art
 - font style objects
 - revisit font
+- revisit click indicator
 x 32 color palette
 - You need pick art for like 10 picks.
 - 10ish depths with art, icon, preview, animation, and sound effect

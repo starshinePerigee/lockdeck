@@ -38,9 +38,9 @@ rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
 offset_left = 785.0
-offset_top = -2.0
+offset_top = 8.0
 offset_right = 785.0
-offset_bottom = -2.0
+offset_bottom = 8.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(464, 608)

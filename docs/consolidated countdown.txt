@@ -2,6 +2,7 @@ non-asset todos:
 
 BUGS
 - superdrag still shows issues (superdrag to right, then left, stays on right)
+- better cancel area handling
 
 GAME LOOP
 x un-align

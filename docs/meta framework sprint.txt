@@ -1,0 +1,9 @@
+- choose deck scene
+- use existing level gen
+- rewards scene
+-- coins
+-- new picks
+- shop (have random picks)
+ - or -
+- repair
+- deck (show broken picks too, with trash forever option for one coin)
