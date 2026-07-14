@@ -62,6 +62,10 @@ func load_previouses(spec: EndStepSpec):
 		var effects: Array[EffectSpec] = []
 		effects.assign(spec.effects[pin])
 		pin_refs[pin].load_previouses(effects)
+	for pin in spec.activations.keys():
+		var activations: Array[bool] = []
+		activations.assign(spec.activations[pin])
+		pin_refs[pin].load_activations(activations)
 
 ## Show all the previously loaded previous icons
 func set_previouses_visibility(show_previous: bool) -> void:

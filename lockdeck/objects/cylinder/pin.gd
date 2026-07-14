@@ -124,14 +124,20 @@ func load_previouses(effects: Array[EffectSpec]) -> void:
 			if d < len(depth_refs):
 				depth_refs[d].add_previous_icon(i, effects[i].flavor)
 
+func load_activations(activations: Array[bool]) -> void:
+	for i in len(activations):
+		depth_refs[i].exhausted = activations[i]
+
 func clear_previouses() -> void:
 	for depth in depth_refs:
 		depth.clear_previous_icons()
+		depth.exhausted = false
 
 ## Show all the previously loaded previous icons
 func set_previouses_visibility(show_previous: bool) -> void:
 	for depth in depth_refs:
 		depth.show_previous = show_previous
+		depth.show_exhausted = show_previous
 	if show_previous:
 		$JamIndicator.visible = false
 		$KeyIndicator.visible = false

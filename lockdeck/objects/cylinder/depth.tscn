@@ -5,11 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://dmngqshk6j878" path="res://assets/results/result_debug.png" id="3_f3om4"]
 [ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="4_hntsp"]
 
-[node name="Depth" type="TextureRect"]
+[node name="Depth" type="Control"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 80.0
+offset_bottom = 32.0
+mouse_filter = 1
+script = ExtResource("1_t3uj8")
+
+[node name="DepthTexture" type="TextureRect" parent="."]
 offset_right = 80.0
 offset_bottom = 32.0
 texture = ExtResource("1_pxkuq")
-script = ExtResource("1_t3uj8")
 
 [node name="HintTracker" type="Label" parent="."]
 visible = false

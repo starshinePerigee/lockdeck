@@ -93,12 +93,12 @@ class Execution:
 	
 	## Loads a card into the pending effects dictionary
 	func load_card(card: CardSpec, card_index: int) -> void:
-		card.unrealize_effects()
 		for k in card.effects.keys():
 			var pin_index: int = card_index - k
 			if pin_index >= 0 and pin_index < len(pending_effects):
 				for e in card.effects[k]:
-					add_effect(pin_index, e, false)
+					var new_e := EffectSpec.new(e.flavor, e.value)
+					add_effect(pin_index, new_e, false)
 	
 	## Gets the next effect, or EffectSpec.. Use has_next_effect to avoid that.
 	## Effects are pulled from pins high to low (right to left), down the effect stack.
@@ -122,6 +122,10 @@ class Execution:
 	func record_effect(effect: EffectSpec) -> void:
 		if len(effect.realized_positions) > 0:
 			executed_effects[effect.realized_pin].append(effect)
+
+## Helper function to get the current pin position for an effect
+func _effect_pos(effect: EffectSpec) -> int:
+	return pins[effect.realized_pin].pin_position
 
 ## Moves pin_index pin forward by advance_by.
 ## Note that this only trips jam once, skips intermediate depths, etc.
@@ -175,6 +179,8 @@ func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 	
 	result.last_hint = update_visibility()
 	result.effects = ex.executed_effects
+	for i in len(pins):
+		result.activations[i] = pins[i].activated
 	
 	$Cylinders.set_pin_specs(pins)
 	
@@ -189,6 +195,8 @@ func evaluate_pin(
 	if effect.realized_pin >= len(pins) or effect.realized_pin < 0:
 		push_error("Invalid realized pin: %s" % effect.realized_pin)
 		return
+	
+	effect.realized_start = _effect_pos(effect)
 	
 	if len(ex.executed_effects[effect.realized_pin]) == 0:
 		var empty_effect := EffectSpec.new(Effects.EMPTY)
@@ -223,52 +231,45 @@ func evaluate_pin(
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
+	
+	ex.record_effect(effect)
 
-## Helper function to get the current pin position for an effect
-func _effect_pos(effect: EffectSpec) -> int:
-	return pins[effect.realized_pin].pin_position
-
-## Creates a new jam effect when an effect's effects are totally jammed
-func _unjam_effect(effect: EffectSpec) -> EffectSpec:
-	var new_effect := EffectSpec.new(Effects.UNJAM, 1)
-	new_effect.realized_pin = effect.realized_pin
-	new_effect.add_positions([_effect_pos(new_effect)])
-	return new_effect
+## Updates the current effect to show jam instead
+func _unjam_effect(effect: EffectSpec) -> void:
+	effect.flavor = Effects.UNJAM
+	effect.realized_positions = {_effect_pos(effect): true}
 
 func execute_push(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
-	var start_depth := _effect_pos(effect)
 	advance_pin(effect.realized_pin, effect.value, ex)
 	var end_depth := _effect_pos(effect)
-	if start_depth == end_depth:
-		ex.record_effect(_unjam_effect(effect))
+	if effect.realized_start == end_depth:
+		_unjam_effect(effect)
 	else:
-		effect.add_positions(range(start_depth + 1, _effect_pos(effect) + 1, 1))
-		ex.record_effect(effect)
+		effect.add_positions(range(effect.realized_start + 1, _effect_pos(effect) + 1, 1))
 
 func execute_test(effect: EffectSpec, ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
 	if pins[effect.realized_pin].is_jammed():
-		ex.record_effect(_unjam_effect(effect))
+		_unjam_effect(effect)
 	else:
-		var start_depth := _effect_pos(effect) + 1
-		effect.add_positions(range(start_depth, start_depth + effect.value))
-		ex.record_effect(effect)
+		effect.add_positions(range(
+			effect.realized_start + 1,
+			effect.realized_start + 1 + effect.value
+		))
 
 func execute_reveal(effect: EffectSpec, ex: Execution) -> void:
 	if pins[effect.realized_pin].is_jammed():
-		ex.record_effect(_unjam_effect(effect))
+		_unjam_effect(effect)
 		return
 	for i in range(effect.value):
 		pins[effect.realized_pin].reveal_pin(i + 1)
 	var start_depth := _effect_pos(effect) + 1
 	effect.add_positions(range(start_depth, start_depth + effect.value))
-	ex.record_effect(effect)
 
 func execute_jam(effect: EffectSpec, ex: Execution) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
-	effect.add_positions([_effect_pos(effect)])
-	ex.record_effect(effect)
+	effect.add_positions([effect.realized_start])
 
 func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
@@ -303,9 +304,7 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	print(effect_depths)
 	effect.add_positions(effect_depths)
 	if len(effect_depths) == 1:
-		ex.record_effect(_unjam_effect(effect))
-	else:
-		ex.record_effect(effect)
+		_unjam_effect(effect)
 	
 	if is_final:
 		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
@@ -321,15 +320,12 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	if oob:
 		push_error("OOB'ed on bounce? Pin: %s, target: %s" % [effect.realized_pin, target_depth])
 		return
-	effect.add_positions(range(_effect_pos(effect), start_depth + 1, 1))
-	print(effect.realized_positions)
+	effect.add_positions(range(_effect_pos(effect), start_depth, 1))
 	var depth := pin.activate_and_get_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
-	ex.record_effect(effect)
 
 func execute_unlock(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
 	effect.add_positions([_effect_pos(effect)])
-	ex.record_effect(effect)
 	for pin in pins:
 		if not pin.is_solved():
 			return
@@ -338,7 +334,6 @@ func execute_unlock(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> v
 func execute_break(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
 	result.pick_broke = true
 	effect.add_positions([_effect_pos(effect)])
-	ex.record_effect(effect)
 
 func update_visibility() -> String:
 	var new_level := PinSpec.RevealLevel.REVEALED

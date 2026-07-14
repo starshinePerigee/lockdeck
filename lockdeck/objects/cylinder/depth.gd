@@ -1,4 +1,4 @@
-extends TextureRect
+extends Control
 ## The view for a single depth in a pin.
 class_name Depth
 
@@ -26,6 +26,24 @@ const PREV_SPACING := 12
 		show_previous = v
 		$PreviousAnchor.visible = show_previous
 
+@export var exhausted: bool = false:
+	set(v):
+		exhausted = v
+		_update_exhaust()
+
+@export var show_exhausted: bool = false:
+	set(v):
+		show_exhausted = v
+		_update_exhaust()
+
+func _update_exhaust() -> void:
+	# TODO: this should be a shader to replace the normal background texture
+	# as modulation breaks the color limitations
+	if exhausted and show_exhausted:
+		$DepthTexture.modulate = Color("B4B4B4")
+	else:
+		$DepthTexture.modulate = Color("ffffff")
+
 func set_hints(letters: String, color: Color = Color()):
 	if letters:
 		$HintTracker.visible = true
@@ -49,5 +67,6 @@ func _redraw() -> void:
 	if not is_node_ready():
 		await ready
 		
-	texture = flavor.texture
-	size = texture.get_size()
+	$DepthTexture.texture = flavor.texture
+	$DepthTexture.size = $DepthTexture.texture.get_size()
+	size = $DepthTexture.size

@@ -108,3 +108,5 @@ func _ready() -> void:
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
 	$RevealButton.pressed.connect(reveal_all)
+
+	$CylinderMain/Cylinders.set_previouses_visibility(true)

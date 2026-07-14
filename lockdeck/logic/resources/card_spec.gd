@@ -28,12 +28,6 @@ static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> Card
 		template.effects
 	)
 
-func unrealize_effects() -> void:
-	for effect_array in effects.values():
-		for effect in effect_array:
-			effect.realized_pin = -1
-			effect.realized_positions.clear()
-
 func _init(
 	pick_name_: String,
 	description_: String,

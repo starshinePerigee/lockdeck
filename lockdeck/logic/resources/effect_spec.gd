@@ -16,6 +16,9 @@ var realized_pin: int = -1
 ## used for displaying previous results. Dictionary as a set
 var realized_positions: Dictionary[int, bool]
 
+## used in tracking execution logic
+var realized_start: int = -1
+
 func add_positions(positions: Array) -> void:
 	for position in positions:
 		realized_positions[position] = true
