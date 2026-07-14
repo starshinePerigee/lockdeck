@@ -328,12 +328,12 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	ex.record_effect(effect)
 
 func execute_unlock(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
-	result.lock_solved = true
 	effect.add_positions([_effect_pos(effect)])
+	ex.record_effect(effect)
 	for pin in pins:
 		if not pin.is_solved():
 			return
-	ex.record_effect(effect)
+	result.lock_solved = true
 
 func execute_break(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
 	result.pick_broke = true
