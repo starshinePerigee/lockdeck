@@ -45,6 +45,33 @@ func clear_all_pins() -> void:
 	for i in PinSpec.CYLINDER_COUNT_MAX:
 		clear_pin(i)
 
+## Loads a set of results into the pins
+func set_results(pin_results: Array[ResultSpec]) -> void:
+	for i in len(pin_results):
+		pin_refs[i].load_results(pin_results[i])
+
+func clear_results() -> void:
+	for pin in pin_refs:
+		pin.clear_results()
+
+## Loads a new set of effects into pins:
+func load_previouses(spec: EndStepSpec):
+	for pin in pin_refs:
+		pin.clear_previouses()
+	for pin in spec.effects.keys():
+		var effects: Array[EffectSpec] = []
+		effects.assign(spec.effects[pin])
+		pin_refs[pin].load_previouses(effects)
+	for pin in spec.activations.keys():
+		var activations: Array[bool] = []
+		activations.assign(spec.activations[pin])
+		pin_refs[pin].load_activations(activations)
+
+## Show all the previously loaded previous icons
+func set_previouses_visibility(show_previous: bool) -> void:
+	for pin in pin_refs:
+		pin.set_previouses_visibility(show_previous)
+		
 #endregion
 
 #region input logic

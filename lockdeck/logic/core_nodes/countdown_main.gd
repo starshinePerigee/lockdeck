@@ -56,7 +56,6 @@ func end_turn() -> bool:
 
 func _draw_label() -> void:
 	if button_disable or early_lockout:
-		print("lockout")
 		$Countdown/Label.add_theme_color_override(
 			"font_color", Color("#918891")
 		)
@@ -80,7 +79,6 @@ var early_lockout := false:
 func count_down() -> void:
 	if count <= 0:
 		break_bag = [true]
-		print("TRUNE NOW")
 		early_lockout = true
 		return
 	if count == 1:
@@ -99,7 +97,6 @@ func set_count(new_count: int) -> void:
 func handle_press() -> void:
 	print(early_lockout)
 	if button_disable or early_lockout:
-		print("???")
 		return
 	if suggest:
 		countdown_triggered.emit()

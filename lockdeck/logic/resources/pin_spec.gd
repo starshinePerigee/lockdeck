@@ -28,6 +28,8 @@ enum RevealLevel {
 @export var reveals: Array[RevealLevel]
 ## Checks if depths have been tested this turn
 @export var checked: Array[bool]
+## Checks if depths have been activated this turn
+@export var activated: Array[bool]
 ## Holds the checked tracking letters
 @export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
@@ -35,9 +37,15 @@ enum RevealLevel {
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
 
-## Get the depth flavor that the pin is currently set to.
-func current_depth() -> Depths:
-	return depths[pin_position]
+## Get the depth flavor that the pin is currently set to
+## (if it hasn't been activated yet)
+func activate_and_get_depth() -> Depths:
+	if activated[pin_position]:
+		return Depths.EXHAUSTED
+	else:
+		activated[pin_position] = true
+		return depths[pin_position]
+	# tutorialization guide: should emit a signal that triggers an explainer
 
 ## Get the visible depth for a pin, or the current one (default)
 ## Negative numbers index from the back 
@@ -70,9 +78,10 @@ func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
 	elif old_reveal == level:
 		hint_tracks[idx] = hint_tracks[idx] + hint 
 
-## Resets all checked values
-func reset_checked() -> void:
+## Resets all single-execution values
+func end_step() -> void:
 	checked.fill(false)
+	activated.fill(false)
 
 ## Updates a checked setting, if it's not revealed
 func set_checked(idx: int) -> void:
@@ -88,7 +97,7 @@ func get_checked(idx: int) -> bool:
 
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
-	return current_depth() in Depths.SOLVE_DEPTHS
+	return depths[pin_position] in Depths.SOLVE_DEPTHS
 
 ## Returns true if the pin is currently jammed
 func is_jammed() -> bool:
@@ -133,7 +142,7 @@ func reveal_pin(value: int) -> void:
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
-	reset_checked()
+	end_step()
 
 func _init():
 	depths = []
@@ -151,6 +160,10 @@ func _init():
 	checked = []
 	checked.resize(PIN_DEPTH_COUNT)
 	checked.fill(false)
+	
+	activated = []
+	activated.resize(PIN_DEPTH_COUNT)
+	activated.fill(false)
 	
 	hint_tracks = []
 	hint_tracks.resize(PIN_DEPTH_COUNT)

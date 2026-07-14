@@ -22,7 +22,7 @@ var depth_refs: Array[Depth] = []
 static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 	PinSpec.RevealLevel.CLEAR: Color("7ac259"),
 	PinSpec.RevealLevel.INTERESTING: Color("ffbc57"),
-	PinSpec.RevealLevel.DANGEROUS: Color("b01712"),
+	PinSpec.RevealLevel.DANGEROUS: Color("#f1504b"),
 }
 
 #region display logic
@@ -76,6 +76,8 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 		$JamIndicator.visible = jam_count > 0
 		$JamIndicator/JamCount.text = str(jam_count)
 
+var _key_visible := false
+
 ## Load a PinSpec into this pin, setting all parameters.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
@@ -92,10 +94,56 @@ func load_spec(pin_spec: PinSpec) -> void:
 			depth_refs[i].set_hints(pin_spec.hint_tracks[i], HINT_COLORS[reveal_level])
 		else:
 			depth_refs[i].set_hints("")
+		depth_refs[i].result = Results.EMPTY
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
-	$KeyIndicator.visible = pin_spec.is_solved()
+	_key_visible = pin_spec.is_solved()
+	$KeyIndicator.visible = _key_visible
+
+func load_results(results: ResultSpec) -> void:
+	for i in len(depth_refs):
+		if i in results.results:
+			depth_refs[i].result = results.results[i]
+		else:
+			depth_refs[i].result = Results.EMPTY
+		depth_refs[i].show_jam_result = i == results.jam_depth
+	$Stack/BreakResult.visible = (
+		len(depth_refs) in results.results
+		and results.results[len(depth_refs)] == Results.BREAK
+	)
+
+func clear_results() -> void:
+	for depth in depth_refs:
+		depth.result = Results.EMPTY
+		depth.show_jam_result = false
+
+func load_previouses(effects: Array[EffectSpec]) -> void:
+	for i in len(effects):
+		for d in effects[i].realized_positions.keys():
+			if d < len(depth_refs):
+				depth_refs[d].add_previous_icon(i, effects[i].flavor)
+
+func load_activations(activations: Array[bool]) -> void:
+	for i in len(activations):
+		depth_refs[i].exhausted = activations[i]
+
+func clear_previouses() -> void:
+	for depth in depth_refs:
+		depth.clear_previous_icons()
+		depth.exhausted = false
+
+## Show all the previously loaded previous icons
+func set_previouses_visibility(show_previous: bool) -> void:
+	for depth in depth_refs:
+		depth.show_previous = show_previous
+		depth.show_exhausted = show_previous
+	if show_previous:
+		$JamIndicator.visible = false
+		$KeyIndicator.visible = false
+	else:
+		$JamIndicator.visible = jam_count > 0
+		$KeyIndicator.visible = _key_visible
 
 #endregion
 
