@@ -214,11 +214,11 @@ func evaluate_pin(
 		Effects.BOUNCE:
 			execute_bounce(effect, ex)
 		Effects.OUT_OF_BOUNDS:
-			execute_break(result)
+			execute_break(effect, ex, result)
 		Effects.BREAK:
-			execute_break(result)
+			execute_break(effect, ex, result)
 		Effects.UNLOCK:
-			execute_unlock(result)
+			execute_unlock(effect, ex, result)
 		Effects.DEBUG:
 			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
 		_:
@@ -327,15 +327,18 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 	ex.record_effect(effect)
 
-func execute_unlock(result: EndStepSpec) -> void:
+func execute_unlock(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
+	result.lock_solved = true
+	effect.add_positions([_effect_pos(effect)])
 	for pin in pins:
 		if not pin.is_solved():
 			return
-	result.lock_solved = true
-	return
+	ex.record_effect(effect)
 
-func execute_break(result: EndStepSpec) -> void:
+func execute_break(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
 	result.pick_broke = true
+	effect.add_positions([_effect_pos(effect)])
+	ex.record_effect(effect)
 
 func update_visibility() -> String:
 	var new_level := PinSpec.RevealLevel.REVEALED
