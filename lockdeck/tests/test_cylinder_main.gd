@@ -29,10 +29,25 @@ func update_card(dropdown_index: int):
 func do_click(pin_index: int) -> void:
 	apply_card($CardSpace.card_spec, pin_index)
 
+func print_previouses(result: EndStepSpec) -> void:
+	for i in len($CylinderMain.pins):
+		var s := "Pin %s: " % i
+		var effects := result.effects[i]
+		for effect in effects:
+			s += "%s: " % effect.flavor.effect_name
+			for pos in effect.realized_positions:
+				s += "%s" % pos
+			s += " "
+		print(s)
+
 func apply_card(card: CardSpec, card_index: int) -> void:
 	$BreakLabel.visible = false
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
-	var result: ResultSpec = $CylinderMain.execute(card, card_index)
+	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
+	
+	print_previouses(result)
+	$CylinderMain/Cylinders.load_previouses(result)
+	
 	if result.pick_broke:
 		break_pick()
 
@@ -48,18 +63,22 @@ func end_drag() -> void:
 func do_highlight(pin_index: int) -> void:
 	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
 	$CylinderMain/Anchor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_highlight() -> void:
 	$CylinderMain/Anchor/HighlightPos.text = "-1"
 	$CylinderMain/Anchor/Dot.position = Vector2()
+	$CylinderMain.cancel_preview()
 
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
 	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_cursor() -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
 	$CylinderMain/AnchorCursor/Dot.position = Vector2()
+	$CylinderMain.cancel_preview()
 
 func reveal_all() -> void:
 	print("The world unfolds before your eyes.")
@@ -89,3 +108,5 @@ func _ready() -> void:
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
 	$RevealButton.pressed.connect(reveal_all)
+
+	$CylinderMain/Cylinders.set_previouses_visibility(true)

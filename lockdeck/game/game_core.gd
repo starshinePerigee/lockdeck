@@ -61,6 +61,8 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$LastHint.visible = false
+			$LockBody/CylinderMain.cancel_preview()
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
 			$CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
@@ -95,6 +97,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			$PreviousButton.show_see_prev = false
 			$LastHint.visible = true
+			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
 			$CountdownMain.button_disable = true
 
 func reset_countdown():
@@ -108,10 +111,12 @@ func pick_selected(card: CardSpec) -> void:
 func pin_cursored(pin_index) -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 		
 func pin_uncursored() -> void:
 	if current_state == InputState.ACTIVE_SELECT:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_deselected() -> void:
 	set_state(InputState.INACTIVE)
@@ -126,10 +131,12 @@ func pick_superdragged():
 func pin_hovered(pin_index):
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
 
 func pin_unhovered():
 	if current_state == InputState.ACTIVE_DRAG:
 		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
 
 func pick_dropped(_card_area: Area2D, card: CardSpec) -> void:
 	var target: int = $LockBody/CylinderMain.get_current_drag_target()
@@ -178,7 +185,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
-	var result: ResultSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	var result: EndStepSpec = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
@@ -187,6 +194,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	else:
 		$DiscardMain.add_card(card)
 	
+	$LockBody/CylinderMain/Cylinders.load_previouses(result)
 	if result.last_hint:
 		$LastHint.text = "Last hint: %s" % result.last_hint
 	else:

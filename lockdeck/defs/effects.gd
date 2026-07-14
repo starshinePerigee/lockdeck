@@ -7,14 +7,14 @@ static func _get_texture(n: String) -> Resource:
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/effects/icon_debug.png")
+		return load("res://assets/effects/icon_activate.png")
 
 ## Human readable name of this effect, in lower case.
-var effect_name:String
+var effect_name: String
 ## Large texture, such as used for indicators and help.
-var texture:Resource
+var texture: Resource
 ## Small texture, such as used on a pick card.
-var texture_small:Resource
+var texture_small: Resource
 
 func _init(name: String):
 	self.effect_name = name
@@ -39,6 +39,9 @@ static var REVEAL := Effects.new("reveal")
 ## apply jam
 static var JAM := Effects.new("jam")
 
+## used to record effects blocked by jam
+static var UNJAM := Effects.new("unjam")
+
 ## Test the next depths, indicating if there is a hazard or not
 static var TEST := Effects.new("test")
 
@@ -46,7 +49,7 @@ static var TEST := Effects.new("test")
 static var CRUSH := Effects.new("crush")
 
 ## Depth effect - hint at the next danger or sets the pin to clear
-static var HINT := Effects.new("hint")  # TODO
+static var HINT := Effects.new("hint")
 
 ## Depth effect - unlock the current pin
 static var UNLOCK := Effects.new("unlock")
