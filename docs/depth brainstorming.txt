@@ -58,3 +58,6 @@ plus:
 Also, bosses will push a lot of these.
 
 Also also: while a hypothetical 1 push / 1 test pick is invincible, it's a bit of investment (base pick + 2 gems) for a relatively minor effect.
+
+If it's really unbalanced, you can give a "big pick discount" / "precision penalty" for picks that 
+have less than three push
