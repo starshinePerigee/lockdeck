@@ -17,7 +17,7 @@ List of elements:
 -- Current chest / floor
 -- coin count
 -- Artifacts list
-- Menu button
+- Menu button (audio, effects, abandon run and return to main menu)
  
 New assets:
 - deck asset (or just move it semi-offscreen bottom left)

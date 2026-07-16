@@ -38,9 +38,16 @@ rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
 offset_left = 785.0
-offset_top = 8.0
+offset_top = 80.0
 offset_right = 785.0
-offset_bottom = 8.0
+offset_bottom = 80.0
+
+[node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
+layout_mode = 1
+offset_left = 23.0
+offset_top = 472.0
+offset_right = 23.0
+offset_bottom = 472.0
 
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(464, 608)
@@ -66,46 +73,38 @@ grow_vertical = 1
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 72.0
+offset_left = 224.0
 offset_top = 416.0
-offset_right = 584.0
+offset_right = 736.0
 offset_bottom = 576.0
-
-[node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
-layout_mode = 1
-offset_left = 22.0
-offset_top = 90.0
-offset_right = 22.0
-offset_bottom = 90.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
 offset_left = 787.0
-offset_top = 337.0
+offset_top = 472.0
 offset_right = 787.0
-offset_bottom = 337.0
+offset_bottom = 472.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 780.0
-offset_top = 511.0
-offset_right = 780.0
-offset_bottom = 511.0
+offset_left = 812.0
+offset_top = 512.0
+offset_right = 812.0
+offset_bottom = 512.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 7.0
-offset_right = 211.0
-offset_bottom = 55.0
+offset_left = 759.0
+offset_top = 15.0
+offset_right = 807.0
+offset_bottom = 63.0
 
 [node name="LastHint" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 8.0
-offset_top = 489.0
-offset_right = 184.0
-offset_bottom = 515.0
+offset_left = 14.0
+offset_top = 382.0
+offset_right = 190.0
+offset_bottom = 408.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -8
 theme_override_constants/outline_size = 2

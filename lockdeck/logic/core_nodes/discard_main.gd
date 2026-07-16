@@ -13,7 +13,6 @@ signal discard_pressed()
 	set(v):
 		show_icon = v
 		icon_selected = false
-		$CardPile/Label.visible = not show_icon
 		$DiscardIcon.visible = show_icon
 
 @export var icon_selected: bool = false:
@@ -21,8 +20,10 @@ signal discard_pressed()
 		icon_selected = v
 		if icon_selected:
 			$DiscardIcon.texture = DISCARD_SELECTED
+			update_label(count() + 1)
 		else:
 			$DiscardIcon.texture = DISCARD_DESELECTED
+			update_label()
 
 ## Both listening_for_ variables might be unnecessary actually
 @export var listening_for_mouse: bool = false
@@ -55,23 +56,29 @@ func count() -> int:
 func add_cards(dis_cards: Array[CardSpec]) -> void:
 	cards.append_array(dis_cards)
 	$CardPile.count = len(cards)
+	update_label()
 
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	$CardPile.count = len(cards)
+	$CardPile.count = count()
+	update_label()
 
 ## Get all cards from the discard pile
 func empty_deck() -> Array[CardSpec]:
 	var old_cards: = cards
 	cards = []
 	$CardPile.count = 0
+	update_label()
 	return old_cards
+
+func update_label(n: int = -1) -> void:
+	if n == -1:
+		n = count()
+	$Label.text = "Discard: %s" % n
 
 func _ready() -> void:
 	$CardPile.pile_pressed.connect(discard_pressed.emit)
 	$CardPile/Button.mouse_entered.connect(do_mouse_enter)
 	$CardPile/Button.mouse_exited.connect(do_mouse_exit)
-	$CardPile/Label.rotation = deg_to_rad(-90)
-	$CardPile/Label.position = Vector2(-20, 145)
 	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
 	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))

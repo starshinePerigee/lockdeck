@@ -25,10 +25,10 @@ layout_mode = 1
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 88.0
-offset_bottom = 48.0
+offset_left = 870.0
+offset_top = 17.0
+offset_right = 942.0
+offset_bottom = 49.0
 theme_override_font_sizes/font_size = 24
 text = "Restart"
 
