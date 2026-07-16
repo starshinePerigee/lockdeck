@@ -1,0 +1,25 @@
+goal: finalize interface and create placeholders for game core elements
+
+List of elements:
+- Cards:
+-- Deck
+-- Hand
+-- Discard
+- lock
+-- Lock Body
+-- Cylinders
+-- Keyway
+-- Previous Turn
+- game status
+-- Candle
+-- Current Depths
+- meta status
+-- Current chest / floor
+-- coin count
+-- Artifacts list
+- Menu button
+ 
+New assets:
+- deck asset (or just move it semi-offscreen bottom left)
+- lock body asset
+- keyway asset
