@@ -52,9 +52,9 @@ offset_bottom = 472.0
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(464, 608)
 anchors_preset = 0
-offset_left = 248.0
+offset_left = 216.0
 offset_top = -144.0
-offset_right = 712.0
+offset_right = 680.0
 offset_bottom = 464.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]

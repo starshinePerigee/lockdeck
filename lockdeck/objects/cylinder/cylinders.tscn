@@ -13,6 +13,7 @@ offset_bottom = 672.0
 script = ExtResource("1_3tpfd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -32.0
 offset_top = -41.0
@@ -26,7 +27,7 @@ custom_minimum_size = Vector2(464, 672)
 layout_mode = 0
 offset_right = 464.0
 offset_bottom = 672.0
-theme_override_constants/separation = 16
+theme_override_constants/separation = 32
 
 [node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
