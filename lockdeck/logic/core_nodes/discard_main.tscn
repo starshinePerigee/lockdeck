@@ -32,8 +32,8 @@ offset_bottom = 153.0
 layout_mode = 0
 offset_left = 13.0
 offset_top = -98.0
-offset_right = 110.0
-offset_bottom = -15.0
+offset_right = 125.0
+offset_bottom = -2.0
 mouse_filter = 2
 texture = ExtResource("3_4350w")
 

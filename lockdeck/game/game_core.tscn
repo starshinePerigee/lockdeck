@@ -38,9 +38,9 @@ rotation = -0.261799
 
 [node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
 offset_left = 785.0
-offset_top = 80.0
+offset_top = 112.0
 offset_right = 785.0
-offset_bottom = 80.0
+offset_bottom = 112.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
@@ -101,23 +101,13 @@ offset_bottom = 63.0
 
 [node name="LastHint" type="Label" parent="."]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 382.0
-offset_right = 190.0
-offset_bottom = 408.0
+offset_left = 758.0
+offset_top = 70.0
+offset_right = 934.0
+offset_bottom = 96.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -8
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 32
 text = "LAST HINT LABEL"
-horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="PushCountLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 356.0
-offset_right = 168.0
-offset_bottom = 382.0
-theme_override_font_sizes/font_size = 32
-text = "Power: 0/0"
