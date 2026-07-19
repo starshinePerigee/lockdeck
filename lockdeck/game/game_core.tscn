@@ -59,6 +59,7 @@ offset_bottom = 219.0
 texture = ExtResource("3_q6sjy")
 
 [node name="Gear2" type="TextureRect" parent="LockBody/LockBottom"]
+layout_mode = 0
 offset_left = 348.0
 offset_top = -11.0
 offset_right = 579.0
