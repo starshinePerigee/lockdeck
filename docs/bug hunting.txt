@@ -1,5 +1,3 @@
-double check reveal logic
-
 this setup:
 - start
 - ?? (crushed / revealed empty)
@@ -9,3 +7,6 @@ this setup:
 crush/push3 broke pin, then left test as a dangerous depth (it was empty)
 (note: this was when lever was crush 1 / push 3)
 
+
+
+the final over the end "break" icons are failing to erase

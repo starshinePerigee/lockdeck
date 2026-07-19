@@ -1,11 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=17 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
+[ext_resource type="Texture2D" uid="uid://h8pv4o88k3ou" path="res://assets/lock/lock bottom.png" id="2_tmhk6"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
+[ext_resource type="Texture2D" uid="uid://d4gjo0ds6ft2d" path="res://assets/lock/gear.png" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
+[ext_resource type="Texture2D" uid="uid://cfbv1i18d4cf8" path="res://assets/lock/latch base.png" id="4_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
+[ext_resource type="Texture2D" uid="uid://b4jxacsq7b8xi" path="res://assets/lock/latch top.png" id="5_8oyco"]
+[ext_resource type="Texture2D" uid="uid://dfeqem1naq14y" path="res://assets/lock/lock top.png" id="6_8ogbl"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
+[ext_resource type="Texture2D" uid="uid://pbt28washmuq" path="res://assets/lock/keyway.png" id="7_6ukdq"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
@@ -27,28 +33,6 @@ layout_mode = 0
 offset_right = 960.0
 offset_bottom = 540.0
 
-[node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
-z_index = 950
-layout_mode = 0
-offset_left = -9.0
-offset_top = 126.0
-offset_right = 991.0
-offset_bottom = 276.0
-rotation = -0.261799
-
-[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 785.0
-offset_top = 112.0
-offset_right = 785.0
-offset_bottom = 112.0
-
-[node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
-layout_mode = 1
-offset_left = 23.0
-offset_top = 472.0
-offset_right = 23.0
-offset_bottom = 472.0
-
 [node name="LockBody" type="Control" parent="."]
 custom_minimum_size = Vector2(464, 608)
 anchors_preset = 0
@@ -56,6 +40,64 @@ offset_left = 216.0
 offset_top = -144.0
 offset_right = 680.0
 offset_bottom = 464.0
+
+[node name="LockBottom" type="TextureRect" parent="LockBody"]
+z_index = -2
+layout_mode = 0
+offset_left = -27.0
+offset_top = 663.0
+offset_right = 636.0
+offset_bottom = 854.0
+texture = ExtResource("2_tmhk6")
+
+[node name="Gear1" type="TextureRect" parent="LockBody/LockBottom"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = -17.0
+offset_right = 314.0
+offset_bottom = 219.0
+texture = ExtResource("3_q6sjy")
+
+[node name="Gear2" type="TextureRect" parent="LockBody/LockBottom"]
+offset_left = 348.0
+offset_top = -11.0
+offset_right = 579.0
+offset_bottom = 225.0
+texture = ExtResource("3_q6sjy")
+
+[node name="LatchBase" type="TextureRect" parent="LockBody"]
+z_index = -2
+layout_mode = 0
+offset_left = 642.0
+offset_top = 173.0
+offset_right = 738.0
+offset_bottom = 810.0
+texture = ExtResource("4_q6sjy")
+
+[node name="LatchTop" type="TextureRect" parent="LockBody/LatchBase"]
+z_index = 2
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_8oyco")
+
+[node name="LockTop" type="TextureRect" parent="LockBody"]
+z_index = -2
+layout_mode = 0
+offset_left = -97.0
+offset_top = -221.0
+offset_right = 627.0
+offset_bottom = 292.0
+texture = ExtResource("6_8ogbl")
+
+[node name="Keyway" type="TextureRect" parent="LockBody"]
+z_index = -1
+layout_mode = 0
+offset_left = -192.0
+offset_top = 184.0
+offset_right = 761.0
+offset_bottom = 713.0
+texture = ExtResource("7_6ukdq")
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 
@@ -71,12 +113,25 @@ offset_bottom = 573.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
+offset_left = 785.0
+offset_top = 112.0
+offset_right = 785.0
+offset_bottom = 112.0
+
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
 offset_left = 224.0
 offset_top = 416.0
 offset_right = 736.0
 offset_bottom = 576.0
+
+[node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
+layout_mode = 1
+offset_left = 23.0
+offset_top = 472.0
+offset_right = 23.0
+offset_bottom = 472.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
@@ -100,6 +155,7 @@ offset_right = 807.0
 offset_bottom = 63.0
 
 [node name="LastHint" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 758.0
 offset_top = 70.0
@@ -111,3 +167,13 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 32
 text = "LAST HINT LABEL"
 vertical_alignment = 1
+
+[node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
+visible = false
+z_index = 950
+layout_mode = 0
+offset_left = -9.0
+offset_top = 126.0
+offset_right = 991.0
+offset_bottom = 276.0
+rotation = -0.261799

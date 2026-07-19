@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c5tea2o0xyrjv" path="res://objects/cylinder/cylinders.gd" id="1_3tpfd"]
 [ext_resource type="PackedScene" uid="uid://bkcikxm7qtgka" path="res://objects/cylinder/pin.tscn" id="1_jelwg"]
-[ext_resource type="Texture2D" uid="uid://dxfvugetme86i" path="res://assets/game/lock body.png" id="3_t6n63"]
+[ext_resource type="Texture2D" uid="uid://dxfvugetme86i" path="res://assets/lock/lock body.png" id="3_t6n63"]
 
 [node name="Cylinders" type="Control"]
 custom_minimum_size = Vector2(464, 672)
