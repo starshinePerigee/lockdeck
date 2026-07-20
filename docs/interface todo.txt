@@ -1,6 +1,9 @@
-candle position
-candle text
-make previous turn work
-less light purple
-discard is hard to see over latch
-click lines are weird now
+- try strict 2color
+- less light purple
+- candle position
+- candle text
+x make previous turn work
+- discard is hard to see over latch
+- click! lines are weird now
+- notifications are broken
+- last hint overlaps

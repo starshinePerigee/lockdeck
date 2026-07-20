@@ -39,6 +39,9 @@ var current_state := InputState.INACTIVE
 var active_card: CardSpec
 #endregion
 
+## used for moving the lock body
+var lock_body_start_pos: Vector2
+
 func set_state(state: InputState) -> void:
 	if current_state == state:
 		if DEBUG_MODE:
@@ -57,7 +60,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.unhide_hand()
 			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
-			$LockBody/CylinderMain.position = Vector2(0, 0)
+			$LockBody.position = lock_body_start_pos
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$LastHint.visible = false
@@ -90,8 +93,9 @@ func set_state(state: InputState) -> void:
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
 			$Notifications.clear()
-			$LockBody/CylinderMain.global_position = Vector2(
-				$LockBody/CylinderMain.global_position.x, 16
+			$LockBody.global_position = Vector2(
+				# 146 is a full pin worth of depths, putting the base at the top
+				lock_body_start_pos.x, lock_body_start_pos.y + 146 + 8
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
@@ -293,6 +297,7 @@ func _ready() -> void:
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
+	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	

@@ -22,6 +22,7 @@ x card templating.
 - gears
 - notification art (??) and effects (?)
 - item get pop ups (with sound)
+- previous turn button
 - splash screen
 - back of card art
 
