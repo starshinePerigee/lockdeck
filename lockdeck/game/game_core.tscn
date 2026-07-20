@@ -172,7 +172,6 @@ text = "LAST HINT LABEL"
 vertical_alignment = 1
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
-visible = false
 z_index = 950
 layout_mode = 0
 offset_left = -9.0
