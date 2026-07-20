@@ -63,23 +63,23 @@ func set_state(state: InputState) -> void:
 			$LockBody.position = lock_body_start_pos
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
-			$LastHint.visible = false
+			$PreviousButton/LastHint.visible = false
 			$LockBody/CylinderMain.cancel_preview()
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
-			$CountdownMain.button_disable = false
+			$LockBody/CountdownMain.button_disable = false
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.COMPLETE:
 			$HandMain/Hand.disable_all()
-			$CountdownMain.button_disable = true
+			$LockBody/CountdownMain.button_disable = true
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$CountdownMain.button_disable = true
+			$LockBody/CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
@@ -88,7 +88,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$CountdownMain.button_disable = true
+			$LockBody/CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
@@ -100,12 +100,12 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
 			$PreviousButton.show_see_prev = false
-			$LastHint.visible = true
+			$PreviousButton/LastHint.visible = true
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
-			$CountdownMain.button_disable = true
+			$LockBody/CountdownMain.button_disable = true
 
 func reset_countdown():
-	$CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
+	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
 
 func pick_selected(card: CardSpec) -> void:
 	if current_state == InputState.INACTIVE:
@@ -199,9 +199,9 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	
 	$LockBody/CylinderMain/Cylinders.load_previouses(result)
 	if result.last_hint:
-		$LastHint.text = "Last hint: %s" % result.last_hint
+		$PreviousButton/LastHint.text = "Last hint: %s" % result.last_hint
 	else:
-		$LastHint.text = "No hints last turn"
+		$PreviousButton/LastHint.text = "No hints last turn"
 	
 	if result.lock_solved:
 		game_win.emit()
@@ -223,7 +223,7 @@ func discard_pick() -> void:
 
 func cleanup_step() -> void:
 	draw_to_five()
-	break_next = $CountdownMain.end_turn()
+	break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
 
 func discard_hand() -> void:
@@ -254,7 +254,7 @@ func reload_deck() -> void:
 func end_turn(count_down: bool = true) -> void:
 	$Notifications.clear()
 	if count_down:
-		$CountdownMain.count_down()
+		$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
 	reload_deck()
@@ -281,15 +281,15 @@ func restart() -> void:
 	$LockBody/CylinderMain.load_new_pins(
 		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
 	)
-	$CountdownMain.set_count(countdown_time)
-	$CountdownMain.reset_odds()
+	$LockBody/CountdownMain.set_count(countdown_time)
+	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
 	end_turn(false)
 	$Notifications.clear()
-	$LastHint.text = "No picks yet"
+	$PreviousButton/LastHint.text = "No picks yet"
 
 func _ready() -> void:
-	$CountdownMain.countdown_triggered.connect(end_turn)
+	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_untapped.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)

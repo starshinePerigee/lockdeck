@@ -71,9 +71,9 @@ texture = ExtResource("3_q6sjy")
 [node name="LatchBase" type="TextureRect" parent="LockBody"]
 z_index = -2
 layout_mode = 0
-offset_left = 639.0
+offset_left = 628.0
 offset_top = 429.0
-offset_right = 734.0
+offset_right = 723.0
 offset_bottom = 716.0
 texture = ExtResource("4_q6sjy")
 
@@ -116,11 +116,11 @@ offset_bottom = 547.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 824.0
-offset_top = 7.0
-offset_right = 824.0
-offset_bottom = 7.0
+[node name="CountdownMain" parent="LockBody" instance=ExtResource("3_i4qfg")]
+offset_left = 593.0
+offset_top = 158.0
+offset_right = 593.0
+offset_bottom = 158.0
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
@@ -157,18 +157,18 @@ offset_top = 44.0
 offset_right = 854.0
 offset_bottom = 92.0
 
-[node name="LastHint" type="Label" parent="."]
-visible = false
+[node name="LastHint" type="Label" parent="PreviousButton"]
 layout_mode = 0
-offset_left = 758.0
-offset_top = 70.0
-offset_right = 934.0
-offset_bottom = 96.0
+offset_left = -79.0
+offset_top = -38.0
+offset_right = 128.0
+offset_bottom = -12.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -8
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 32
 text = "LAST HINT LABEL"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]

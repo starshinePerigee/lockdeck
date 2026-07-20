@@ -1,9 +1,9 @@
 x try strict 2color
 x less light purple
-- candle position
+x candle position
 - candle text
 x make previous turn work
-- discard is hard to see over latch
+x discard is hard to see over latch
 - click! lines are weird now
 - notifications are broken
-- last hint overlaps
+x last hint overlaps
