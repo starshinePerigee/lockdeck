@@ -1,5 +1,5 @@
-- try strict 2color
-- less light purple
+x try strict 2color
+x less light purple
 - candle position
 - candle text
 x make previous turn work
