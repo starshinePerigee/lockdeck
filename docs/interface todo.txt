@@ -1,0 +1,6 @@
+candle position
+candle text
+make previous turn work
+less light purple
+discard is hard to see over latch
+click lines are weird now
