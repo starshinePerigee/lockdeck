@@ -45,9 +45,9 @@ offset_bottom = 464.0
 z_index = -3
 layout_mode = 0
 offset_left = -78.0
-offset_top = 133.0
+offset_top = 134.0
 offset_right = 608.0
-offset_bottom = 933.0
+offset_bottom = 934.0
 texture = ExtResource("2_tmhk6")
 
 [node name="Gear1" type="TextureRect" parent="LockBody/LockBottom"]
