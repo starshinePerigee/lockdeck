@@ -17,9 +17,8 @@ layout_mode = 0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 8.0
-offset_right = 118.0
-offset_bottom = 34.0
-theme_override_font_sizes/font_size = 32
+offset_left = 31.0
+offset_top = 16.0
+offset_right = 147.0
+offset_bottom = 35.0
 text = "Deck: 99"

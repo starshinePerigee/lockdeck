@@ -1,9 +1,13 @@
 x try strict 2color
 x less light purple
 x candle position
-- candle text
+x candle text
 x make previous turn work
 x discard is hard to see over latch
 - click! lines are weird now
 - notifications are broken
 x last hint overlaps
+- update current depth accents
+- make keyway include up semicircles
+- move keyway extract hard stop / gears?
+- keyway / gear logic

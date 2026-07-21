@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0clquqp8m1tl"]
+
+[ext_resource type="Texture2D" uid="uid://h8pv4o88k3ou" path="res://assets/lock/lock bottom.png" id="1_lt8qs"]
+[ext_resource type="Texture2D" uid="uid://d4gjo0ds6ft2d" path="res://assets/lock/gear.png" id="2_03m53"]
+[ext_resource type="Texture2D" uid="uid://cfbv1i18d4cf8" path="res://assets/lock/latch base.png" id="3_o5o1k"]
+[ext_resource type="Texture2D" uid="uid://b4jxacsq7b8xi" path="res://assets/lock/latch top.png" id="4_dlplw"]
+[ext_resource type="Texture2D" uid="uid://dfeqem1naq14y" path="res://assets/lock/lock top.png" id="5_bpocr"]
+[ext_resource type="Texture2D" uid="uid://pbt28washmuq" path="res://assets/lock/keyway.png" id="6_1fqek"]
+
+[node name="LockArt" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LockBottom" type="TextureRect" parent="."]
+z_index = -3
+layout_mode = 0
+offset_left = -78.0
+offset_top = 134.0
+offset_right = 608.0
+offset_bottom = 934.0
+texture = ExtResource("1_lt8qs")
+
+[node name="Gear1" type="TextureRect" parent="LockBottom"]
+z_index = 3
+layout_mode = 0
+offset_left = 61.0
+offset_top = 520.0
+offset_right = 292.0
+offset_bottom = 756.0
+texture = ExtResource("2_03m53")
+
+[node name="Gear2" type="TextureRect" parent="LockBottom"]
+z_index = 3
+layout_mode = 0
+offset_left = 368.0
+offset_top = 518.0
+offset_right = 599.0
+offset_bottom = 754.0
+texture = ExtResource("2_03m53")
+
+[node name="LatchBase" type="TextureRect" parent="."]
+z_index = -2
+layout_mode = 0
+offset_left = 628.0
+offset_top = 429.0
+offset_right = 723.0
+offset_bottom = 716.0
+texture = ExtResource("3_o5o1k")
+
+[node name="LatchTop" type="TextureRect" parent="LatchBase"]
+z_index = 2
+layout_mode = 0
+offset_right = 95.0
+offset_bottom = 287.0
+texture = ExtResource("4_dlplw")
+
+[node name="LockTop" type="TextureRect" parent="."]
+z_index = -2
+layout_mode = 0
+offset_left = -103.0
+offset_top = -317.0
+offset_right = 634.0
+offset_bottom = 287.0
+texture = ExtResource("5_bpocr")
+
+[node name="Keyway" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_left = -192.0
+offset_top = 194.0
+offset_right = 761.0
+offset_bottom = 716.0
+texture = ExtResource("6_1fqek")

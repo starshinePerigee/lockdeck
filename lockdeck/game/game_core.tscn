@@ -1,21 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=12 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
+[ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
-[ext_resource type="Texture2D" uid="uid://h8pv4o88k3ou" path="res://assets/lock/lock bottom.png" id="2_tmhk6"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
-[ext_resource type="Texture2D" uid="uid://d4gjo0ds6ft2d" path="res://assets/lock/gear.png" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
-[ext_resource type="Texture2D" uid="uid://cfbv1i18d4cf8" path="res://assets/lock/latch base.png" id="4_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
-[ext_resource type="Texture2D" uid="uid://b4jxacsq7b8xi" path="res://assets/lock/latch top.png" id="5_8oyco"]
-[ext_resource type="Texture2D" uid="uid://dfeqem1naq14y" path="res://assets/lock/lock top.png" id="6_8ogbl"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
-[ext_resource type="Texture2D" uid="uid://pbt28washmuq" path="res://assets/lock/keyway.png" id="7_6ukdq"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
-[ext_resource type="PackedScene" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
+[ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -33,74 +28,11 @@ layout_mode = 0
 offset_right = 960.0
 offset_bottom = 540.0
 
-[node name="LockBody" type="Control" parent="."]
-custom_minimum_size = Vector2(464, 608)
-anchors_preset = 0
+[node name="LockBody" parent="." instance=ExtResource("2_2tf6j")]
 offset_left = 216.0
 offset_top = -144.0
-offset_right = 680.0
-offset_bottom = 464.0
-
-[node name="LockBottom" type="TextureRect" parent="LockBody"]
-z_index = -3
-layout_mode = 0
-offset_left = -78.0
-offset_top = 134.0
-offset_right = 608.0
-offset_bottom = 934.0
-texture = ExtResource("2_tmhk6")
-
-[node name="Gear1" type="TextureRect" parent="LockBody/LockBottom"]
-z_index = 3
-layout_mode = 0
-offset_left = 61.0
-offset_top = 520.0
-offset_right = 292.0
-offset_bottom = 756.0
-texture = ExtResource("3_q6sjy")
-
-[node name="Gear2" type="TextureRect" parent="LockBody/LockBottom"]
-z_index = 3
-layout_mode = 0
-offset_left = 368.0
-offset_top = 518.0
-offset_right = 599.0
-offset_bottom = 754.0
-texture = ExtResource("3_q6sjy")
-
-[node name="LatchBase" type="TextureRect" parent="LockBody"]
-z_index = -2
-layout_mode = 0
-offset_left = 628.0
-offset_top = 429.0
-offset_right = 723.0
-offset_bottom = 716.0
-texture = ExtResource("4_q6sjy")
-
-[node name="LatchTop" type="TextureRect" parent="LockBody/LatchBase"]
-z_index = 2
-layout_mode = 0
-offset_right = 95.0
-offset_bottom = 287.0
-texture = ExtResource("5_8oyco")
-
-[node name="LockTop" type="TextureRect" parent="LockBody"]
-z_index = -2
-layout_mode = 0
-offset_left = -103.0
-offset_top = -317.0
-offset_right = 634.0
-offset_bottom = 287.0
-texture = ExtResource("6_8ogbl")
-
-[node name="Keyway" type="TextureRect" parent="LockBody"]
-z_index = -1
-layout_mode = 0
-offset_left = -192.0
-offset_top = 194.0
-offset_right = 761.0
-offset_bottom = 716.0
-texture = ExtResource("7_6ukdq")
+offset_right = 256.0
+offset_bottom = -104.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 
@@ -145,10 +77,10 @@ offset_bottom = 472.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 812.0
-offset_top = 512.0
-offset_right = 812.0
-offset_bottom = 512.0
+offset_left = 822.0
+offset_top = 504.0
+offset_right = 822.0
+offset_bottom = 504.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
@@ -159,14 +91,10 @@ offset_bottom = 92.0
 
 [node name="LastHint" type="Label" parent="PreviousButton"]
 layout_mode = 0
-offset_left = -79.0
+offset_left = -133.0
 offset_top = -38.0
-offset_right = 128.0
-offset_bottom = -12.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -8
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 32
+offset_right = 182.0
+offset_bottom = -9.0
 text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1

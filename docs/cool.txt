@@ -13,3 +13,5 @@
 - exhausted depths are shadered to change the bg color, not modulated
 
 - pin depths are shown on a page and that page is moved mostly off-screen - but can be pulled out and referenced
+
+- unknown font as accents on cards

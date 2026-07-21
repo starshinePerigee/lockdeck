@@ -45,11 +45,10 @@ shape = SubResource("RectangleShape2D_1ngcg")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 8.0
-offset_right = 149.0
-offset_bottom = 34.0
-theme_override_font_sizes/font_size = 32
+offset_left = 34.0
+offset_top = 10.0
+offset_right = 164.0
+offset_bottom = 36.0
 text = "Discard: 99"
 
 [editable path="CardPile"]
