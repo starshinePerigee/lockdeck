@@ -170,10 +170,10 @@ offset_bottom = 40.0
 [node name="Keyway" type="TextureRect" parent="KeywayRef"]
 z_index = -2
 layout_mode = 0
-offset_left = -192.0
-offset_top = 194.0
-offset_right = 761.0
-offset_bottom = 716.0
+offset_left = -191.0
+offset_top = 193.0
+offset_right = 762.0
+offset_bottom = 715.0
 texture = ExtResource("6_1fqek")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
