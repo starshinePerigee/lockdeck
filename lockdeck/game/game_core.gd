@@ -205,6 +205,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	
 	if result.lock_solved:
 		game_win.emit()
+		$LockBody/AnimationPlayer.play("unlock")
 		$Notifications.notify(Notifications.UNLOCK)
 		set_state(InputState.INACTIVE)
 		set_state(InputState.COMPLETE)
@@ -278,6 +279,7 @@ func add_random_cards(count: int = 1) -> void:
 		print("Added new pick: %s." % card.pick_name)
 
 func restart() -> void:
+	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CylinderMain.load_new_pins(
 		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
 	)

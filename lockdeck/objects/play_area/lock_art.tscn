@@ -8,45 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bf2t1ailobnlm" path="res://assets/lock/lock top base.png" id="6_03m53"]
 [ext_resource type="Texture2D" uid="uid://y1l5m862w35" path="res://assets/lock/lock top top.png" id="6_lt8qs"]
 
-[sub_resource type="Animation" id="Animation_lt8qs"]
-resource_name = "unlock"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("KeywayRef/Keyway:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(-192, 194), Vector2(-184, 194), Vector2(-364, 194)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LockBottom/Gear1:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.133333, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.0642481, -1.56621]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("LockBottom/Gear2:rotation")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.133333, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.0706322, -1.64975]
-}
-
 [sub_resource type="Animation" id="Animation_03m53"]
 length = 0.001
 tracks/0/type = "value"
@@ -84,6 +45,45 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0706322]
+}
+
+[sub_resource type="Animation" id="Animation_lt8qs"]
+resource_name = "unlock"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeywayRef/Keyway:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-192, 194), Vector2(-184, 194), Vector2(-364, 194)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockBottom/Gear1:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0642481, -1.56621]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LockBottom/Gear2:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0706322, -1.64975]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o5o1k"]
@@ -174,7 +174,6 @@ offset_left = -192.0
 offset_top = 194.0
 offset_right = 761.0
 offset_bottom = 716.0
-rotation = 0.00453949
 texture = ExtResource("6_1fqek")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
