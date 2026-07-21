@@ -9,5 +9,6 @@ x discard is hard to see over latch
 x last hint overlaps
 - update current depth accents
 - make keyway include up semicircles
+- make edge between keyway and top much more obvious (include an accent asset?)
 - move keyway extract hard stop / gears?
 - keyway / gear logic
