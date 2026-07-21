@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfeqem1naq14y"
-path="res://.godot/imported/lock top.png-a0d3e67df29b316e210403d76feadbfa.ctex"
+uid="uid://bf2t1ailobnlm"
+path="res://.godot/imported/lock top base.png-ab38f6cb018e6b5698e066dd611d13c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/lock/lock top.png"
-dest_files=["res://.godot/imported/lock top.png-a0d3e67df29b316e210403d76feadbfa.ctex"]
+source_file="res://assets/lock/lock top base.png"
+dest_files=["res://.godot/imported/lock top base.png-ab38f6cb018e6b5698e066dd611d13c6.ctex"]
 
 [params]
 

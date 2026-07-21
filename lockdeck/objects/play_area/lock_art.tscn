@@ -1,11 +1,96 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0clquqp8m1tl"]
+[gd_scene load_steps=11 format=3 uid="uid://c0clquqp8m1tl"]
 
 [ext_resource type="Texture2D" uid="uid://h8pv4o88k3ou" path="res://assets/lock/lock bottom.png" id="1_lt8qs"]
 [ext_resource type="Texture2D" uid="uid://d4gjo0ds6ft2d" path="res://assets/lock/gear.png" id="2_03m53"]
 [ext_resource type="Texture2D" uid="uid://cfbv1i18d4cf8" path="res://assets/lock/latch base.png" id="3_o5o1k"]
 [ext_resource type="Texture2D" uid="uid://b4jxacsq7b8xi" path="res://assets/lock/latch top.png" id="4_dlplw"]
-[ext_resource type="Texture2D" uid="uid://dfeqem1naq14y" path="res://assets/lock/lock top.png" id="5_bpocr"]
 [ext_resource type="Texture2D" uid="uid://pbt28washmuq" path="res://assets/lock/keyway.png" id="6_1fqek"]
+[ext_resource type="Texture2D" uid="uid://bf2t1ailobnlm" path="res://assets/lock/lock top base.png" id="6_03m53"]
+[ext_resource type="Texture2D" uid="uid://y1l5m862w35" path="res://assets/lock/lock top top.png" id="6_lt8qs"]
+
+[sub_resource type="Animation" id="Animation_lt8qs"]
+resource_name = "unlock"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeywayRef/Keyway:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-192, 194), Vector2(-184, 194), Vector2(-364, 194)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockBottom/Gear1:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0642481, -1.56621]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LockBottom/Gear2:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0706322, -1.64975]
+}
+
+[sub_resource type="Animation" id="Animation_03m53"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeywayRef/Keyway:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-192, 194)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockBottom/Gear1:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LockBottom/Gear2:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0706322]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o5o1k"]
+_data = {
+&"RESET": SubResource("Animation_03m53"),
+&"unlock": SubResource("Animation_lt8qs")
+}
 
 [node name="LockArt" type="Control"]
 layout_mode = 3
@@ -29,6 +114,7 @@ offset_left = 61.0
 offset_top = 520.0
 offset_right = 292.0
 offset_bottom = 756.0
+pivot_offset = Vector2(115.5, 118)
 texture = ExtResource("2_03m53")
 
 [node name="Gear2" type="TextureRect" parent="LockBottom"]
@@ -38,6 +124,8 @@ offset_left = 368.0
 offset_top = 518.0
 offset_right = 599.0
 offset_bottom = 754.0
+rotation = 0.0706322
+pivot_offset = Vector2(115.5, 118)
 texture = ExtResource("2_03m53")
 
 [node name="LatchBase" type="TextureRect" parent="."]
@@ -56,20 +144,40 @@ offset_right = 95.0
 offset_bottom = 287.0
 texture = ExtResource("4_dlplw")
 
-[node name="LockTop" type="TextureRect" parent="."]
-z_index = -2
+[node name="LockTopBase" type="TextureRect" parent="."]
+z_index = -3
 layout_mode = 0
 offset_left = -103.0
 offset_top = -317.0
-offset_right = 634.0
-offset_bottom = 287.0
-texture = ExtResource("5_bpocr")
+offset_right = -63.0
+offset_bottom = -277.0
+texture = ExtResource("6_03m53")
 
-[node name="Keyway" type="TextureRect" parent="."]
-z_index = -1
+[node name="LockTop" type="TextureRect" parent="LockTopBase"]
+z_index = 2
+layout_mode = 0
+offset_right = 737.0
+offset_bottom = 604.0
+rotation = -0.00137621
+texture = ExtResource("6_lt8qs")
+
+[node name="KeywayRef" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Keyway" type="TextureRect" parent="KeywayRef"]
+z_index = -2
 layout_mode = 0
 offset_left = -192.0
 offset_top = 194.0
 offset_right = 761.0
 offset_bottom = 716.0
+rotation = 0.00101304
 texture = ExtResource("6_1fqek")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_o5o1k")
+}
