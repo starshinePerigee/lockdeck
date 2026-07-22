@@ -17,3 +17,5 @@
 - pin depths are shown on a page and that page is moved mostly off-screen - but can be pulled out and referenced
 
 - unknown font as accents on cards
+
+- notifications fade out and rise

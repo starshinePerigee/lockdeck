@@ -1,14 +1,3 @@
-this setup:
-- start
-- ?? (crushed / revealed empty)
-- ?? (unknown into mark_dangerous)
-- break
-
-can confirm - i think crushing over the final depth leaves it in a broken state
-
-crush/push3 broke pin, then left test as a dangerous depth (it was empty)
-(note: this was when lever was crush 1 / push 3)
-
-
+re-confirm that jumping over final depth still unlocks
 
 the final over the end "break" icons are failing to erase

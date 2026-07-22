@@ -6,9 +6,9 @@ x make previous turn work
 x discard is hard to see over latch
 x pin tops
 x springs
-- redo notifications
+x redo notifications
 - click! lines are weird now
-- notifications are broken
+x notifications are broken
 x last hint overlaps
 - update current depth accents
 x make keyway include up semicircles
