@@ -7,6 +7,6 @@
 -- update break label to only show this round's break count
 - see current depths
 
-- card guide (hovering a pick card pops up a reminder box which shows tooltips for all depths on the card)
-- depth description hover (hovering a depth pops up a tooltip on what it does)
-- depth glossary that shows all depths that could be present in the current stage, as well as all card effects
+- pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label)
+- pullout pick reference (small ? next to the deck)
+- artifact tooltip

@@ -1,9 +1,14 @@
 - choose deck scene
+-- tutorial
+-- basic
+-- powerful (crush, big splashes, lots of test)
+-- tricky (jam, big pushes, reveal, and crush without small push)
+-- careful (few, really important push picks and lots of reveal / test)
+-- random
 - use existing level gen
 - rewards scene
 -- coins
 -- new picks
 - shop (have random picks)
- - or -
-- repair
-- deck (show broken picks too, with trash forever option for one coin)
+- repair (including trash forever)
+- deck (with sell option for one coin)

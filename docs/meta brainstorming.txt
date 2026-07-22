@@ -11,7 +11,9 @@ ex:
 
 When you click one, the guide is shown, as well as "keep" and "sell: 1🪙"
 
-If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out
+If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out with a note why.
+
+on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact"
 
 
 ## Pick modifications
@@ -72,7 +74,9 @@ Also standard artifacts? (toothpick?)
 
 ## Ingots: whole new randomly generated picks
 
-iron/copper/silver/gold based on quality of pick
+iron/copper/silver/gold
+
+higher value offer more, better picks
 
 
 ### Flow and balance
@@ -81,6 +85,8 @@ Coins are your reserve health - they're how you "heal", buying picks back up to 
 
 
 ## Coins and endgame
+
+All artifacts always have a "sell for 1 coin" option.
 
 You have a coin cap
 

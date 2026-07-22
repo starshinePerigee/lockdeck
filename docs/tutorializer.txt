@@ -1,2 +1,19 @@
 tutorials: one or more pages (with images), plus drawing on the next game
 global tutorializer object, and "disable tutorial" and "reset tutorial" menu options
+
+tutorial pages go into a book - you're collecting pages (writing?) for the book (one of the skillbooks?)
+
+
+
+tutorial list:
+- page for every effect
+- pages for hints
+- pages on turn limits
+- page for each depth set
+- page for each asset type
+- page for "effects are ordered"
+- page for each artifact
+- page for loot
+- page for store
+- pages for repair
+- page for "you need x strength to clear a lock"
