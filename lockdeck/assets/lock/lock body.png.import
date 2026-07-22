@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dviswnheou3bj"
-path="res://.godot/imported/selection pick.png-a81a82dda1710e371197373255a0bd4d.ctex"
+uid="uid://dxfvugetme86i"
+path="res://.godot/imported/lock body.png-3d5298323b037460a8fc5c4071ae6377.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/selection pick.png"
-dest_files=["res://.godot/imported/selection pick.png-a81a82dda1710e371197373255a0bd4d.ctex"]
+source_file="res://assets/lock/lock body.png"
+dest_files=["res://.godot/imported/lock body.png-3d5298323b037460a8fc5c4071ae6377.ctex"]
 
 [params]
 

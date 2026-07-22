@@ -1,0 +1,3 @@
+- convert depths to transparent on second background
+- fix spring compression
+- clean up lock details

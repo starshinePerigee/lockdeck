@@ -6,8 +6,7 @@ func set_testpos() -> void:
 	var pins: Array[PinSpec] = $CylinderMain.pins
 	pins[0].pin_position = 0
 	pins[1].pin_position = 1
-	pins[1].jam_count = 2
-	pins[1].jam_visible = true
+#	pins[1].jam_count = 2
 	pins[2].pin_position = 2
 	pins[3].pin_position = 4
 	pins[4].pin_position = PinSpec.PIN_DEPTH_COUNT - 1
@@ -62,7 +61,7 @@ func end_drag() -> void:
 
 func do_highlight(pin_index: int) -> void:
 	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
-	$CylinderMain/Anchor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain/Anchor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
 	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_highlight() -> void:
@@ -72,7 +71,7 @@ func clear_highlight() -> void:
 
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
-	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 16) * (pin_index + 1), 0)
+	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
 	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_cursor() -> void:

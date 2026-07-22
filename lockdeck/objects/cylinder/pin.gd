@@ -35,6 +35,9 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 		else:
 			$Stack.modulate = Color("ffffff")
 
+var SPRING_SIZE: Vector2
+var SPRING_POSITION: Vector2
+
 ## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
 	set(v):
@@ -43,11 +46,18 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 		if not is_node_ready():
 			await ready
 		
+		var depth_shift := DEPTH_VHEIGHT * v
 		$Stack.position = Vector2(
 			0,
-			DEPTH_VHEIGHT * PinSpec.PIN_DEPTH_COUNT 
-			- DEPTH_VHEIGHT * (v + 1)
+			DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
+			- depth_shift
 		)
+		
+		# this logic handles skewing the spring as a hack
+		@warning_ignore("integer_division")
+		var pin_shift = depth_shift / 3
+		$Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
+		$Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y - (depth_shift - pin_shift))
 
 ## Hides the pin, visually.
 ## I don't remember why I use this instaead of just self.visible?
@@ -63,6 +73,7 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 		$Stack.visible = visible_
 		$JamIndicator.visible = visible_
 		$KeyIndicator.visible = visible_
+		$Spring.visible = visible_
 
 ## The value of the jam indicator, and if one is present. If jam count is less than or equal
 ## to zero, hide the jam indicator.
@@ -169,6 +180,9 @@ func _handle_enter_exit(area: Area2D, entered: bool) -> void:
 #endregion
 
 func _ready() -> void:
+	SPRING_POSITION = $Spring.position
+	SPRING_SIZE = $Spring.size
+
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:
 		var next_depth := _DEPTH.instantiate()

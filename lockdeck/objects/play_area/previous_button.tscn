@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxg3ri88p0vqe"]
+[gd_scene load_steps=7 format=3 uid="uid://crs57pdq8xw4l"]
 
-[ext_resource type="Script" uid="uid://beis08trqfojh" path="res://objects/play_area/previous_button.gd" id="1_hdkky"]
+[ext_resource type="Script" path="res://objects/play_area/previous_button.gd" id="1_hdkky"]
 [ext_resource type="Texture2D" uid="uid://bnm1inbbboj7h" path="res://assets/game/view_more_button.png" id="1_k67bk"]
 [ext_resource type="Texture2D" uid="uid://c6jyy60nmq1pj" path="res://assets/game/view_more_button_press.png" id="2_bhfld"]
 [ext_resource type="Texture2D" uid="uid://gf7u34sk1dp3" path="res://assets/game/view_more_button_hover.png" id="3_4urr5"]
@@ -15,6 +15,7 @@ offset_bottom = 40.0
 script = ExtResource("1_hdkky")
 
 [node name="ViewMoreButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_right = 48.0
 offset_bottom = 48.0
 texture_normal = ExtResource("1_k67bk")
@@ -25,14 +26,10 @@ texture_click_mask = ExtResource("5_f757e")
 
 [node name="Label" type="Label" parent="ViewMoreButton"]
 layout_mode = 0
-offset_left = -16.0
+offset_left = -34.0
 offset_top = -5.0
-offset_right = 64.0
-offset_bottom = 50.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -8
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 32
+offset_right = 83.0
+offset_bottom = 53.0
 text = "Prev.
 turn"
 horizontal_alignment = 1
@@ -40,6 +37,7 @@ vertical_alignment = 1
 
 [node name="GoBackButton" type="TextureButton" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 48.0
 offset_top = 48.0
 offset_right = 96.0
@@ -53,15 +51,11 @@ texture_click_mask = ExtResource("5_f757e")
 
 [node name="Label" type="Label" parent="GoBackButton"]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 73.0
 offset_top = 52.0
-offset_right = 89.0
+offset_right = 171.0
 offset_bottom = 107.0
 scale = Vector2(-1, -1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -8
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 32
 text = "Go
 back"
 horizontal_alignment = 1
