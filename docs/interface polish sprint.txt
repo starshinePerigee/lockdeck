@@ -1,7 +1,7 @@
 goal: finalize interface and create placeholders for game core elements
 
 Short todo:
-- click! lines are weird now
+x click! lines are weird now
 - update current depth accents
 x fix hanging break logo
 

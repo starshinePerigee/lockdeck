@@ -59,10 +59,9 @@ expand_mode = 1
 
 [node name="KeyIndicator" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -16.0
-offset_top = 247.0
-offset_right = 96.0
-offset_bottom = 295.0
+offset_top = 232.0
+offset_right = 112.0
+offset_bottom = 280.0
 texture = ExtResource("5_agct7")
 
 [node name="JamIndicator" type="TextureRect" parent="."]
