@@ -4,8 +4,8 @@ x candle position
 x candle text
 x make previous turn work
 x discard is hard to see over latch
-- pin tops
-- springs
+x pin tops
+x springs
 - redo notifications
 - click! lines are weird now
 - notifications are broken

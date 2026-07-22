@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkcikxm7qtgka"]
+[gd_scene load_steps=8 format=3 uid="uid://bkcikxm7qtgka"]
 
 [ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/cylinder/pin.gd" id="1_sibiv"]
 [ext_resource type="Texture2D" uid="uid://d1dmijccgmps2" path="res://assets/pin/pin_top.png" id="2_agct7"]
 [ext_resource type="Texture2D" uid="uid://banjkjqdeelbx" path="res://assets/results/result_break.png" id="2_parf1"]
+[ext_resource type="Texture2D" uid="uid://50xv2qfoofcw" path="res://assets/pin/spring.png" id="3_asg8y"]
 [ext_resource type="Texture2D" uid="uid://doqoo3uhhte1b" path="res://assets/pin/jam.png" id="4_agct7"]
 [ext_resource type="Texture2D" uid="uid://dq3ioeinfnr4p" path="res://assets/pin/key.png" id="5_agct7"]
 
@@ -46,6 +47,15 @@ offset_top = 288.0
 offset_right = 96.0
 offset_bottom = 320.0
 texture = ExtResource("2_parf1")
+
+[node name="Spring" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -123.0
+offset_right = 84.0
+offset_bottom = 201.0
+texture = ExtResource("3_asg8y")
+expand_mode = 1
 
 [node name="KeyIndicator" type="TextureRect" parent="."]
 layout_mode = 0
