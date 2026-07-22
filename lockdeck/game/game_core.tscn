@@ -106,8 +106,7 @@ vertical_alignment = 1
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
 layout_mode = 0
-offset_left = -9.0
-offset_top = 126.0
-offset_right = 991.0
-offset_bottom = 276.0
-rotation = -0.261799
+offset_left = 39.0
+offset_top = 38.0
+offset_right = 551.0
+offset_bottom = 102.0
