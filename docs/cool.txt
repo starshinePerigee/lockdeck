@@ -10,12 +10,14 @@
 
 - new background (or palette swapped) when candle is out
 
-- exhausted depths are shadered to change the bg color, not modulated
-
-- on pin set, raise by 8px and exhaust
-
 - pin depths are shown on a page and that page is moved mostly off-screen - but can be pulled out and referenced
 
 - unknown font as accents on cards
 
 - notifications fade out and rise
+
+- end of run screen
+-- total loot
+-- total picks
+-- picks broken
+-- favorite (most repaired + used)

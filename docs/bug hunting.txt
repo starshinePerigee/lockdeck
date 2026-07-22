@@ -1,3 +1,7 @@
 re-confirm that jumping over final depth still unlocks
 
 the final over the end "break" icons are failing to erase
+
+superdrag still shows issues (superdrag to right, then left, stays on right)
+
+better cancel area handling

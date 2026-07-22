@@ -128,6 +128,7 @@ func clear_results() -> void:
 	for depth in depth_refs:
 		depth.result = Results.EMPTY
 		depth.show_jam_result = false
+	$Stack/BreakResult.visible = false
 
 func load_previouses(effects: Array[EffectSpec]) -> void:
 	for i in len(effects):
