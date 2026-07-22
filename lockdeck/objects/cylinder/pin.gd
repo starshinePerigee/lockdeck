@@ -73,6 +73,7 @@ var SPRING_POSITION: Vector2
 		$Stack.visible = visible_
 		$JamIndicator.visible = visible_
 		$KeyIndicator.visible = visible_
+		$Spring.visible = visible_
 
 ## The value of the jam indicator, and if one is present. If jam count is less than or equal
 ## to zero, hide the jam indicator.
