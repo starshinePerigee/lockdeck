@@ -1,0 +1,12 @@
+- global settings object
+- debug mode
+- menu (return to title, etc)
+- see deck contents
+- see discard contents
+- see break contents
+-- update break label to only show this round's break count
+- see current depths
+
+- pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label)
+- pullout pick reference (small ? next to the deck)
+- artifact tooltip

@@ -1,10 +1,49 @@
-can ignore jam
-restore a segment when a pick breaks
-applies key if breaks
-don't trigger non-break traps
-don't break if you hit end of pin
-draw a card
-draw a card for each depth triggered
-return to hand if you hit key
-activates twice
-draw a card if tests interesting / dangerous
+Pick templates have families - so abilities (and gems) can apply to a specific sub-family or a broad family
+
+JAM
+- how do you do special jams without special jams
+- next pick moves one always
+- persists across end of turn
+- while this jam is present, any picks that break break this pick instead
+- draw card each time you hit this pin
+- draw a card when this jam breaks
+- draw two card if this jam is cleared by the end of turn
+- can test/reveal through this jam
+- return to your hand once
+
+CRUSH
+- clears all jam
+- crushes the result depth after it activates (crushes any depth it activates)
+- doesn't crush safe depths
+- draw a card for each interesting depth crushed
+- sets the pin if this pick breaks
+
+PUSH
+- immune to bounce / push
+- doesn't trigger non-break traps (worse idea than above)
+- reveals instead of tests
+- ignores jam
+- doesn't break if hits end of pin
+- draw a card for each depth triggered (empty depths don't count)
+- push three if this pick breaks
+- draw a card for each unrevealed, untested depth activated
+- repair costs start at 0
+- will skip revealed active depths
+- does not affect jam
+
+TEST
+- advance if the next one is safe
+- reveal all if safe
+- draw if it tests danger
+- test extra depths if you re-test a depth
+- draw a card if you re-test a depth
+- can test through jam
+
+REVEAL
+- draw card for each revealed danger
+- re-tests all revealed hints
+- sets the pin if it reveals a key
+- always reveals the next unrevealed depth
+- reveals pins if this pick breaks
+
+NOTE: discard always draws 1.

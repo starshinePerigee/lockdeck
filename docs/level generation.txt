@@ -1,3 +1,0 @@
-- when generating levels, pick a few specific depths and show them before the stage / next to the "stage" marker (with hovers)
-- the reference needs to show what the depth "tests as" (so a bounce "tests as interesting")
-

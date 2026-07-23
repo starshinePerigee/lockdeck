@@ -95,7 +95,6 @@ func set_count(new_count: int) -> void:
 	reset_odds()
 
 func handle_press() -> void:
-	print(early_lockout)
 	if button_disable or early_lockout:
 		return
 	if suggest:

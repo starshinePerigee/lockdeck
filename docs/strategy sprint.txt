@@ -1,0 +1,4 @@
+- new depths
+- depth templates
+- pick modification
+- starting decks

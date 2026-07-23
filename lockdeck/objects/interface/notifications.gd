@@ -10,7 +10,7 @@ func notify(notif: Notifications):
 
 	var next := TextureRect.new()
 	next.texture = notif.texture
-	next.custom_minimum_size = Vector2(1000, 150)
+	next.custom_minimum_size = Vector2(512, 64)
 	add_child(next)
 
 func clear():

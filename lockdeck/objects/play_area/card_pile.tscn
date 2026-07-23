@@ -16,9 +16,9 @@ script = ExtResource("2_xkj5j")
 [node name="Highlight" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = -15.0
+offset_left = -9.0
 offset_top = -5.0
-offset_right = 129.0
+offset_right = 135.0
 offset_bottom = 171.0
 texture = ExtResource("3_xe7x2")
 
@@ -35,62 +35,40 @@ texture = ExtResource("3_m3mqe")
 
 [node name="CardBack2" type="TextureRect" parent="Holder"]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 11.0
-offset_right = 139.0
-offset_bottom = 171.0
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 132.0
+offset_bottom = 166.0
 texture = ExtResource("3_m3mqe")
 
 [node name="CardBack3" type="TextureRect" parent="Holder"]
 layout_mode = 0
-offset_left = -12.0
-offset_top = 5.0
-offset_right = 116.0
-offset_bottom = 165.0
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 122.0
+offset_bottom = 162.0
 texture = ExtResource("3_m3mqe")
 
 [node name="CardBack4" type="TextureRect" parent="Holder"]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 17.0
-offset_right = 135.0
-offset_bottom = 177.0
+offset_left = 3.0
+offset_top = 11.0
+offset_right = 131.0
+offset_bottom = 171.0
 texture = ExtResource("3_m3mqe")
 
 [node name="CardBack5" type="TextureRect" parent="Holder"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 12.0
-offset_right = 130.0
-offset_bottom = 172.0
+offset_top = 4.0
+offset_right = 128.0
+offset_bottom = 164.0
 texture = ExtResource("3_m3mqe")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 5
-theme_override_constants/shadow_offset_y = 5
-theme_override_constants/outline_size = 10
-theme_override_constants/shadow_outline_size = 5
-theme_override_font_sizes/font_size = 80
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = -12.0
-offset_top = 1.0
-offset_right = 133.0
-offset_bottom = 170.0
+offset_left = -3.0
+offset_top = 3.0
+offset_right = 129.0
+offset_bottom = 168.0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bscuu")
 flat = true

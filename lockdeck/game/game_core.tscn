@@ -1,15 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=15 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
+[ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
+[ext_resource type="PackedScene" uid="uid://cuxudbvsktnnd" path="res://objects/play_area/game_status.tscn" id="2_tmhk6"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
+[ext_resource type="PackedScene" uid="uid://bvv5brbe2kjwk" path="res://objects/play_area/artifacts_interface.tscn" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
+[ext_resource type="Texture2D" uid="uid://dxduwrhshxgbw" path="res://assets/lock/active box.png" id="6_o5sbf"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
-[ext_resource type="PackedScene" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
+[ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -22,103 +26,129 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_db5vk")
 
+[node name="MenuCutout" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 40.0
+
 [node name="BackgroundClick" type="TextureButton" parent="."]
 layout_mode = 0
 offset_right = 960.0
 offset_bottom = 540.0
 
-[node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
-z_index = 950
-layout_mode = 0
-offset_left = -9.0
-offset_top = 126.0
-offset_right = 991.0
-offset_bottom = 276.0
-rotation = -0.261799
-
-[node name="CountdownMain" parent="." instance=ExtResource("3_i4qfg")]
-offset_left = 785.0
-offset_top = -2.0
-offset_right = 785.0
-offset_bottom = -2.0
-
-[node name="LockBody" type="Control" parent="."]
-custom_minimum_size = Vector2(464, 608)
-anchors_preset = 0
-offset_left = 248.0
-offset_top = -144.0
-offset_right = 712.0
-offset_bottom = 464.0
+[node name="LockBody" parent="." instance=ExtResource("2_2tf6j")]
+offset_left = 216.0
+offset_top = -143.0
+offset_right = 256.0
+offset_bottom = -103.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 529.0
+offset_bottom = 607.0
 
 [node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 44.0
-offset_top = 573.0
-offset_right = 44.0
-offset_bottom = 573.0
+offset_left = 45.0
+offset_top = 542.0
+offset_right = 45.0
+offset_bottom = 542.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="CountdownMain" parent="LockBody" instance=ExtResource("3_i4qfg")]
+offset_left = 593.0
+offset_top = 158.0
+offset_right = 593.0
+offset_bottom = 158.0
+
+[node name="ActiveBox" type="TextureRect" parent="LockBody"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 249.0
+offset_right = 541.0
+offset_bottom = 295.0
+texture = ExtResource("6_o5sbf")
+stretch_mode = 2
+
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 72.0
-offset_top = 416.0
-offset_right = 584.0
-offset_bottom = 576.0
+offset_left = 231.0
+offset_top = 415.0
+offset_right = 743.0
+offset_bottom = 575.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
-offset_left = 22.0
-offset_top = 90.0
-offset_right = 22.0
-offset_bottom = 90.0
+offset_left = 16.0
+offset_top = 474.0
+offset_right = 16.0
+offset_bottom = 474.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 787.0
-offset_top = 337.0
-offset_right = 787.0
-offset_bottom = 337.0
+offset_left = 791.0
+offset_top = 472.0
+offset_right = 791.0
+offset_bottom = 472.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 780.0
-offset_top = 511.0
-offset_right = 780.0
-offset_bottom = 511.0
+offset_left = 825.0
+offset_top = 506.0
+offset_right = 825.0
+offset_bottom = 506.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 7.0
-offset_right = 211.0
-offset_bottom = 55.0
+offset_left = 806.0
+offset_top = 44.0
+offset_right = 854.0
+offset_bottom = 92.0
 
-[node name="LastHint" type="Label" parent="."]
-visible = false
+[node name="LastHint" type="Label" parent="PreviousButton"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 489.0
-offset_right = 184.0
-offset_bottom = 515.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -8
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 32
+offset_left = -133.0
+offset_top = -38.0
+offset_right = 182.0
+offset_bottom = -9.0
 text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PushCountLabel" type="Label" parent="."]
+[node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 16.0
+offset_bottom = 48.0
+
+[node name="ArtifactsInterface" parent="." instance=ExtResource("3_q6sjy")]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 94.0
+offset_right = 16.0
+offset_bottom = 94.0
+
+[node name="HelpButton" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
-offset_left = 14.0
-offset_top = 356.0
-offset_right = 168.0
-offset_bottom = 382.0
-theme_override_font_sizes/font_size = 32
-text = "Power: 0/0"
+offset_left = 168.0
+offset_top = 492.0
+offset_right = 200.0
+offset_bottom = 524.0
+text = "?"
+
+[node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
+z_index = 950
+layout_mode = 0
+offset_left = 226.0
+offset_top = 19.0
+offset_right = 738.0
+offset_bottom = 83.0

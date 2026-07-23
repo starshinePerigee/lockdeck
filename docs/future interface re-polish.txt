@@ -1,0 +1,7 @@
+- fix spring compression
+- clean up lock details
+- convert depths to transparent on second background
+- exhausted depths are shadered to change the bg color, not modulated
+- on pin set, raise by 8px and exhaust
+
+- how the fuck do early unlocks work

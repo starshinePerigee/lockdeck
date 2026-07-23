@@ -13,19 +13,43 @@ What pick archetypes are useful?
 -- crush is useful as a defense against particularly difficult layouts
 
 
+Templates:
 
-weird picks:
+pick templates:
+- name
+- effect
+- rarity - common, uncommon, rare.
+- value - in coins
+- family
+- two graphics: pick and base
 
-add a grey slash between multiple pushes, for when multiple activations are required 
-(combination logic:
-- push / push
-- crush / crush
-- jam + jam
-- max(test)
-- max(reveal)
+Rarer templates arent necessarily better, just weirder
+All templates should be somewhat flawed and unweildy. A good pick needs to be crafted at least a little bit.
 
-add a grey dot above tests to allow skipping a test??
 
+
+RAKES - affect many pins. typically have a mix of push and test
+- bulk push - peak rake
+- broad test - snake rake
+- mid test - worm rake
+
+DIAMONDS - affect a few pins a little bit, also have a mix of push and test
+- mid push - half diamond
+- light push - small diamond
+
+HOOKS - navigate a danger via push, test, and reveal
+- tall push - gem hook
+- narrow test - short hook
+- tall test - reach hook
+- reveal - soft hook
+
+JAMS - used for tricks and safekeeping
+- split - fork
+- small jam - light ball
+- large jam - heavy ball
+
+CRUSHES - used to deal with really hard combos
+- crush - lever
 
 
 when balancing, note that high push pins are way more likely to break. a jam/jam pick *cant* break through normal means but a 12-push is basically good for two uses

@@ -1,12 +1,13 @@
 Art
-- font style objects
-- revisit font
+x font style objects
+x revisit font
+x revisit click indicator
 x 32 color palette
 - You need pick art for like 10 picks.
 - 10ish depths with art, icon, preview, animation, and sound effect
 - Handle art for like 10 effects
 x card templating.
-- decks/piles prolly need their own art
+x decks/piles prolly need their own art
 - Like 20 gems (can be color swapped)
 - like 10 pieces of treasure (can be color swapped)
 - like 10 artifacts, with icon versions
@@ -16,11 +17,12 @@ x card templating.
 - chest background
 - shopkeep ui
 - deck ui
-- lock body
-- keyway
-- gears
-- notification art (??) and effects (?)
+% lock body
+% keyway
+x gears
+% notification art (??) and effects (?)
 - item get pop ups (with sound)
+% previous turn button
 - splash screen
 - back of card art
 
@@ -39,5 +41,6 @@ cooler animations
 - candle flicker (4 frame, throw off sparks)
 
 Sound
-- bgm is fireplace ambience, random strums
+- bgm is fireplace ambience, random strums (bass?)
+- success / rewards / post level uses a different instrument (guitar? flute?)
 - effects are tied to signals

@@ -1,11 +1,6 @@
-double check reveal logic
+re-confirm that jumping over final depth still unlocks
 
-this setup:
-- start
-- ?? (crushed / revealed empty)
-- ?? (unknown into mark_dangerous)
-- break
+superdrag still shows issues (superdrag to right, then left, stays on right)
 
-crush/push3 broke pin, then left test as a dangerous depth (it was empty)
-(note: this was when lever was crush 1 / push 3)
-
+better cancel area handling
+- make sure you can click cancel out of end turn

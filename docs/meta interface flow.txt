@@ -1,0 +1,39 @@
+Deck, repair, shop, etc all requee the following element:
+
+ArrayDisplay
+- shows a grid of elements
+- possibly/optionally scrollable (horizontal or vertical)
+- elements can be clickable and hoverable
+- after click / hover, they are selected. (a separate preview pane will handle the context-specific logic)
+- can hold more than just cards - also artifacts, rewards, the "sell" icon (maybe)
+- All of the above should probably be a single base class ThingSpec?
+
+
+Once the user completes the level, they get the unlock animation and the continue button is shown (over the keyway where the hand was) (its on the latch part so its revealed with the withdraw unlock animation??)
+
+They're still allowed to click "show previous", use the menu, and any other info-only ui widgets.
+
+On continue, the entire play area slides up out of view and the user is brought to the results screen where results are displayed, one by one (wipe reveal effect)
+- "current depth unlocked!
+- Actions taken (uses, discards, and artifacts)
+- Time remaining (with a +1 coin time bonus if they one-shot it)
+- Picks broken (scrollable)
+- continue button (ideally in the same location as before)
+
+
+on continue, the results slides to the left and rewards are shown / dropped in
+- preview / options / details pane
+- list of rewards
+- "yoink!" on take
+
+- continue button is present (a new one slides in) but greyed out until all loot is dealt with (as loot is taken, it is removed)
+- continue slides screen to the left and slides in the hub scene: next lock, deck, repair, shop
+
+- next lock is shown immediately, but this slides out of the way
+- deck: hand of lockpicks icon
+- repair: file and ball peen hammer
+- shop: hooded figure head (RE4 merchant)
+
+each scene slides up from top/bottom
+
+on continue, slide horizontal to an empty "depth: foo" label, then the core scene slides up, the hand is dealt, and we start

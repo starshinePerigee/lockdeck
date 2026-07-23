@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dviswnheou3bj"
-path="res://.godot/imported/selection pick.png-a81a82dda1710e371197373255a0bd4d.ctex"
+uid="uid://dxduwrhshxgbw"
+path="res://.godot/imported/active box.png-55e992a53373447795104c45cea650f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/selection pick.png"
-dest_files=["res://.godot/imported/selection pick.png-a81a82dda1710e371197373255a0bd4d.ctex"]
+source_file="res://assets/lock/active box.png"
+dest_files=["res://.godot/imported/active box.png-55e992a53373447795104c45cea650f7.ctex"]
 
 [params]
 

@@ -5,7 +5,6 @@ signal pile_pressed
 @export var count: int = 0:
 	set(v):
 		count = v
-		$Label.text = str(count)
 		for i in range($Holder.get_child_count()):
 			$Holder.get_child(i).visible = i < count
 

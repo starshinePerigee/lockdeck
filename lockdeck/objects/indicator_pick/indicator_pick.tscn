@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2jv527wajjta"]
 
 [ext_resource type="Script" uid="uid://dcvxn187chf1g" path="res://objects/indicator_pick/indicator_pick.gd" id="1_6wsdp"]
-[ext_resource type="Texture2D" uid="uid://dviswnheou3bj" path="res://assets/game/selection pick.png" id="1_k2fax"]
+[ext_resource type="Texture2D" uid="uid://dviswnheou3bj" path="res://assets/lock/selection pick.png" id="1_k2fax"]
 
 [node name="IndicatorPick" type="Control"]
 layout_mode = 3
