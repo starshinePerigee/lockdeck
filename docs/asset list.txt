@@ -41,5 +41,6 @@ cooler animations
 - candle flicker (4 frame, throw off sparks)
 
 Sound
-- bgm is fireplace ambience, random strums
+- bgm is fireplace ambience, random strums (bass?)
+- success / rewards / post level uses a different instrument (guitar? flute?)
 - effects are tied to signals

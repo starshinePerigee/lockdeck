@@ -1,1 +1,4 @@
-push is danger level
+push depth is danger level
+
+crush + push only activates a pin once
+
