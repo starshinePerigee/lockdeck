@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=14 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
+[ext_resource type="PackedScene" uid="uid://cuxudbvsktnnd" path="res://objects/play_area/game_status.tscn" id="2_tmhk6"]
 [ext_resource type="PackedScene" uid="uid://di84qisvciahm" path="res://logic/core_nodes/countdown_main.tscn" id="3_i4qfg"]
+[ext_resource type="PackedScene" uid="uid://bvv5brbe2kjwk" path="res://objects/play_area/artifacts_interface.tscn" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
@@ -22,6 +24,13 @@ offset_bottom = -540.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_db5vk")
+
+[node name="MenuCutout" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 40.0
 
 [node name="BackgroundClick" type="TextureButton" parent="."]
 layout_mode = 0
@@ -67,24 +76,24 @@ offset_bottom = 576.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
-offset_left = 23.0
-offset_top = 472.0
-offset_right = 23.0
-offset_bottom = 472.0
+offset_left = 16.0
+offset_top = 474.0
+offset_right = 16.0
+offset_bottom = 474.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
-offset_left = 787.0
+offset_left = 791.0
 offset_top = 472.0
-offset_right = 787.0
+offset_right = 791.0
 offset_bottom = 472.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 822.0
-offset_top = 504.0
-offset_right = 822.0
-offset_bottom = 504.0
+offset_left = 825.0
+offset_top = 506.0
+offset_right = 825.0
+offset_bottom = 506.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
@@ -103,10 +112,33 @@ text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 16.0
+offset_bottom = 48.0
+
+[node name="ArtifactsInterface" parent="." instance=ExtResource("3_q6sjy")]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 94.0
+offset_right = 16.0
+offset_bottom = 94.0
+
+[node name="HelpButton" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = 168.0
+offset_top = 492.0
+offset_right = 200.0
+offset_bottom = 524.0
+text = "?"
+
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
 layout_mode = 0
-offset_left = 39.0
-offset_top = 38.0
-offset_right = 551.0
-offset_bottom = 102.0
+offset_left = 226.0
+offset_top = 19.0
+offset_right = 738.0
+offset_bottom = 83.0

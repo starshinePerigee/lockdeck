@@ -6,23 +6,23 @@ x click! lines are weird now
 x fix hanging break logo
 
 List of elements:
-- Cards:
+x Cards:
 x- Deck
 x- Hand
 x- Discard
-- lock
+x lock
 x- Lock Body
 x- Cylinders
 x- Keyway
 x- Previous Turn
-- game status
+x game status
 x- Candle
--- Current Depths
-- meta status
--- Current chest / floor
--- coin count
--- Artifacts list
-- Menu button (audio, effects, abandon run and return to main menu)
+z- Current Depths
+x meta status
+x- Current chest / floor
+z- coin count
+x- Artifacts list
+x Menu button (audio, effects, abandon run and return to main menu)
  
 New assets:
 x deck asset (or just move it semi-offscreen bottom left)

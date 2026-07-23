@@ -177,6 +177,9 @@ func view_all_pins() -> void:
 func return_from_view_all() -> void:
 	set_state(InputState.INACTIVE)
 
+func update_status_widget() -> void:
+	$GameStatus.picks = $DeckMain.count() + $DiscardMain.count() + $HandMain.count()
+
 ## the background is clicked so back out of whatever:
 func bg_cancel() -> void:
 	$Notifications.clear()
@@ -226,6 +229,7 @@ func cleanup_step() -> void:
 	draw_to_five()
 	break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
+	update_status_widget()
 
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
@@ -271,12 +275,14 @@ func load_starter_deck() -> void:
 	$DeckMain.clear_all()
 	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
 	print("Loaded default %s cards." % deck_count)
+	update_status_widget()
 
 func add_random_cards(count: int = 1) -> void:
 	var cards := PickGenerator.get_many_base_cards(2)
 	$DeckMain.add_cards(cards)
 	for card in cards:
 		print("Added new pick: %s." % card.pick_name)
+	update_status_widget()
 
 func restart() -> void:
 	$LockBody/AnimationPlayer.play("RESET")

@@ -26,10 +26,10 @@ layout_mode = 1
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 6.0
-offset_right = 83.0
-offset_bottom = 38.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 40.0
 text = "Restart"
 
 [node name="ColorRect" type="ColorRect" parent="RestartButton"]

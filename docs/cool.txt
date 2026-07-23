@@ -18,3 +18,5 @@
 
 - print tally marks on a card for the number of times it broke
 - need a shadowboard effect for pick art (use dark green that's already the bg offcolor)
+
+- do something with the indicator pick on discard
