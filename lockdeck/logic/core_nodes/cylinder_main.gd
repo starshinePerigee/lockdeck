@@ -249,7 +249,7 @@ func execute_push(effect: EffectSpec, ex: Execution) -> void:
 	else:
 		effect.add_positions(range(effect.realized_start + 1, _effect_pos(effect) + 1, 1))
 
-func execute_test(effect: EffectSpec, ex: Execution) -> void:
+func execute_test(effect: EffectSpec, _ex: Execution) -> void:
 	test_pin(effect.realized_pin, effect.value)
 	if pins[effect.realized_pin].is_jammed():
 		_unjam_effect(effect)
@@ -259,7 +259,7 @@ func execute_test(effect: EffectSpec, ex: Execution) -> void:
 			effect.realized_start + 1 + effect.value
 		))
 
-func execute_reveal(effect: EffectSpec, ex: Execution) -> void:
+func execute_reveal(effect: EffectSpec, _ex: Execution) -> void:
 	if pins[effect.realized_pin].is_jammed():
 		_unjam_effect(effect)
 		return
@@ -268,7 +268,7 @@ func execute_reveal(effect: EffectSpec, ex: Execution) -> void:
 	var start_depth := _effect_pos(effect) + 1
 	effect.add_positions(range(start_depth, start_depth + effect.value))
 
-func execute_jam(effect: EffectSpec, ex: Execution) -> void:
+func execute_jam(effect: EffectSpec, _ex: Execution) -> void:
 	pins[effect.realized_pin].add_jam(effect.value)
 	effect.add_positions([effect.realized_start])
 
@@ -308,8 +308,9 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 		_unjam_effect(effect)
 	
 	if is_final:
-		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
 		pin.advance_pin(0, PinSpec.PIN_DEPTH_COUNT - 1)
+		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.BREAK))
+		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.UNLOCK))
 	else:
 		advance_pin(effect.realized_pin, depth_offset, ex)
 
@@ -325,14 +326,14 @@ func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var depth := pin.activate_and_get_depth()
 	ex.add_effect(effect.realized_pin, EffectSpec.new(depth.effect, depth.value))
 
-func execute_unlock(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
+func execute_unlock(effect: EffectSpec, _ex: Execution, result: EndStepSpec) -> void:
 	effect.add_positions([_effect_pos(effect)])
 	for pin in pins:
 		if not pin.is_solved():
 			return
 	result.lock_solved = true
 
-func execute_break(effect: EffectSpec, ex: Execution, result: EndStepSpec) -> void:
+func execute_break(effect: EffectSpec, _ex: Execution, result: EndStepSpec) -> void:
 	result.pick_broke = true
 	effect.add_positions([_effect_pos(effect)])
 

@@ -39,15 +39,15 @@ offset_bottom = 540.0
 
 [node name="LockBody" parent="." instance=ExtResource("2_2tf6j")]
 offset_left = 216.0
-offset_top = -139.0
+offset_top = -141.0
 offset_right = 256.0
-offset_bottom = -99.0
+offset_bottom = -101.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 offset_left = 1.0
-offset_top = -5.0
+offset_top = -1.0
 offset_right = 529.0
-offset_bottom = 603.0
+offset_bottom = 607.0
 
 [node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
 layout_mode = 0

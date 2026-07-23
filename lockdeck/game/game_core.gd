@@ -278,7 +278,7 @@ func load_starter_deck() -> void:
 	update_status_widget()
 
 func add_random_cards(count: int = 1) -> void:
-	var cards := PickGenerator.get_many_base_cards(2)
+	var cards := PickGenerator.get_many_base_cards(count)
 	$DeckMain.add_cards(cards)
 	for card in cards:
 		print("Added new pick: %s." % card.pick_name)
