@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2l3enbuq6eol" path="res://assets/hand/discard_deselected.png" id="3_4350w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ngcg"]
-size = Vector2(125.75, 93)
+size = Vector2(125.75, 208)
 
 [node name="DiscardMain" type="Control"]
 layout_mode = 3
@@ -24,26 +24,31 @@ offset_left = 160.0
 offset_right = 288.0
 rotation = 1.5708
 
+[node name="Button" parent="CardPile" index="2"]
+offset_left = -89.0
+offset_bottom = 153.0
+
 [node name="DiscardIcon" type="TextureRect" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 17.0
-offset_top = 6.0
-offset_right = 128.0
-offset_bottom = 116.0
+offset_left = 13.0
+offset_top = -98.0
+offset_right = 125.0
+offset_bottom = -2.0
 mouse_filter = 2
 texture = ExtResource("3_4350w")
 
 [node name="DropArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea"]
-position = Vector2(79, 61)
+position = Vector2(79, 15)
 shape = SubResource("RectangleShape2D_1ngcg")
 
 [node name="Label" type="Label" parent="."]
-offset_top = 132.0
-offset_right = 125.0
-offset_bottom = 158.0
-theme_override_font_sizes/font_size = 32
-text = "Discard"
-horizontal_alignment = 1
+layout_mode = 0
+offset_left = 34.0
+offset_top = 10.0
+offset_right = 164.0
+offset_bottom = 36.0
+text = "Discard: 99"
+
+[editable path="CardPile"]

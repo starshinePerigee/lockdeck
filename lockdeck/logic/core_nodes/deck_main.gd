@@ -33,4 +33,6 @@ func clear_all() -> void:
 
 ## Redraw the deck
 func redraw():
-	$CardPile.count = len(cards)
+	var c := count()
+	$CardPile.count = c
+	$Label.text = "Deck: %s" % c

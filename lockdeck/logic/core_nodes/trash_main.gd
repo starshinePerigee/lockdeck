@@ -6,4 +6,7 @@ extends Control
 ## Add a card to the trash
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	$Label.text = "Broken picks: %s" % len(cards)
+	$Label.text = "Broken: %s" % len(cards)
+
+func _ready() -> void:
+	$Label.text = "Broken: 0"

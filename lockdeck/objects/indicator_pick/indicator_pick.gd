@@ -1,8 +1,8 @@
 extends Control
 ## Manages the position of the indicator pick
 
-var INTER_PIN_SPACING := 80 + 16
-var STOW_POSITION := Vector2(-128, 32)
+var INTER_PIN_SPACING := 80 + 32
+var STOW_POSITION := Vector2(-128, -16)
 
 ## Sets the pin to away and stowed
 func go_stow() -> void:

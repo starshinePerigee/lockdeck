@@ -34,13 +34,11 @@ texture = ExtResource("2_toqrs")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = -58.0
+offset_left = -8.0
 offset_top = 232.0
-offset_right = 198.0
-offset_bottom = 256.0
+offset_right = 148.0
+offset_bottom = 278.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -6
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 30
 text = "two turns remain"
 horizontal_alignment = 1
+autowrap_mode = 2

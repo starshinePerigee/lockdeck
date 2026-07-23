@@ -6,7 +6,11 @@ Palette is (superficial-35)\[https://lospec.com/palette-list/superficial-35] by 
 
 
 
-(m5x7)\[https://managore.itch.io/m5x7] font is by Daniel Linssen.
+(Not Jam Old Style 11)\[https://not-jam.itch.io/not-jam-old-style-11] by Not Jam, CC0.
+
+
+
+(m5x7)\[https://managore.itch.io/m5x7] font by Daniel Linssen, CC0.
 
 
 

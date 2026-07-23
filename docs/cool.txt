@@ -10,4 +10,15 @@
 
 - new background (or palette swapped) when candle is out
 
-- exhausted depths are shadered to change the bg color, not modulated
+- pin depths are shown on a page and that page is moved mostly off-screen - but can be pulled out and referenced
+
+- unknown font as accents on cards
+
+- notifications fade out and rise
+
+- print tally marks on a card for the number of times it broke
+- need a shadowboard effect for pick art (use dark green that's already the bg offcolor)
+
+- do something with the indicator pick on discard
+
+- if you decide to have a deck limit, let you put cards in your deck over the limit but you can't click the continue button and it says "Hand full!"

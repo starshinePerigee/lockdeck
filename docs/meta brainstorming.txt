@@ -11,7 +11,9 @@ ex:
 
 When you click one, the guide is shown, as well as "keep" and "sell: 1🪙"
 
-If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out
+If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out with a note why.
+
+on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact"
 
 
 ## Pick modifications
@@ -72,7 +74,9 @@ Also standard artifacts? (toothpick?)
 
 ## Ingots: whole new randomly generated picks
 
-iron/copper/silver/gold based on quality of pick
+iron/copper/silver/gold
+
+higher value offer more, better picks
 
 
 ### Flow and balance
@@ -82,6 +86,8 @@ Coins are your reserve health - they're how you "heal", buying picks back up to 
 
 ## Coins and endgame
 
+All artifacts always have a "sell for 1 coin" option.
+
 You have a coin cap
 
 You are trying to get the n shards of yendor - these are sometimes rare loot (with pity mechanic)
@@ -89,3 +95,26 @@ You are trying to get the n shards of yendor - these are sometimes rare loot (wi
 and also sold by shopkeepers (primary way of acquiring them) - main gold sink
 
 bonus coins for finishing in a single pass?
+
+
+
+### Gems
+
+Gems:
+
+Have a list of families they prefer. Two of the three targets should be from those families, the last one is always random (although if it's a subtract, it'll reroll to find a pick with that)
+
+Also have common / uncommon / rare, but also a value.
+
+Reminder: float order is crush > push > skip > reveal > test > jam.
+Crush is under push because logical sense, and also because push > crush is a weird rules interaction (you advance, crush and advance, and then advance again). Also, single crush is useful vs. jam and better ties to the mechanical goal (defeating complicated depth structures - putting crush later means it doesn't link with reveal)
+
+Push: super common, but lots of variants. Gems that add push are somewhat value neutral. Deep pin push is rare, so being able to shave sides is pretty good. gems have both side+, side-, and center+, and basically let you slide from rake-diamond-hook and go into super-hook (going super deep might mean adding broad also!) Gems that remove push from the sides typically add it to center, and there are rare gems that remove from the center.
+
+Test: less interesting, but lots of permutations of add / remove. Tends to have higher numbers. It is easier to build a deep test pick - deep test doesn't exist a lot in starter decks so it's an early goal.
+
+Reveal: always good. Deep reveal is hard because it is wildly powerful. Gems that add double reveal must come with a downside; gems that add a single center reveal also typically 
+
+Crush: has a very specific use case, but it's also a general push. Crush comes in offset +, center +, and center ++.
+
+Jam: strange and weird. Probably has more jam-es than jam+s tbh.

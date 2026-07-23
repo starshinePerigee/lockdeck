@@ -11,6 +11,7 @@ offset_bottom = 160.0
 script = ExtResource("1_ph4ca")
 
 [node name="Hand" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(512, 160)
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1

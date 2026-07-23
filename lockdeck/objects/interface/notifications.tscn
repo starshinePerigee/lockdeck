@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://crsy2s45oln02" path="res://objects/interface/notifications.gd" id="1_o2ke4"]
 
 [node name="Notifications" type="VBoxContainer"]
-offset_right = 1000.0
-offset_bottom = 150.0
+custom_minimum_size = Vector2(512, 64)
+offset_right = 512.0
+offset_bottom = 64.0
 script = ExtResource("1_o2ke4")

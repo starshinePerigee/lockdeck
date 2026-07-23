@@ -1,0 +1,13 @@
+- finish core interface
+	It needs to be done, its the most important asset, and you do not want negative work on it to fit other UI elements
+- build out rough meta elements
+	any future playtesting will now serve dual purpose and you need to calibrate your internal sense of balance
+- core game expansion (strategy sprint)
+	new depths, depth template building
+- animation sprint
+- meta expansion (artifacts, other meta)
+- sound
+- animation sprint 2
+- balance pass
+- tutorial
+- final polish
