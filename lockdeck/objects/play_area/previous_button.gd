@@ -26,8 +26,8 @@ func _redraw() -> void:
 	var font_color := Color("FFFFFF")
 	if disable:
 		font_color = Color("#918891")
-#	elif _is_hovered:
-#		font_color = Color("#f7ed7b")
+	elif _is_hovered:
+		font_color = Color("#ffbc57")
 
 	$ViewMoreButton/Label.add_theme_color_override("font_color", font_color)
 	$GoBackButton/Label.add_theme_color_override("font_color", font_color)

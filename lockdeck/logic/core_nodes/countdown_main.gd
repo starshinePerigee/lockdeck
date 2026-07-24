@@ -61,7 +61,7 @@ func _draw_label() -> void:
 	if button_disable or early_lockout:
 		font_color = Color("#918891")
 	elif _is_hovered:
-		font_color = Color("#f7ed7b")
+		font_color = Color("#ffbc57")
 	
 	$Countdown/Label.add_theme_color_override(
 		"font_color", font_color 
