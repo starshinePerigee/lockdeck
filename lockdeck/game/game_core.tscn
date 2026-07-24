@@ -107,17 +107,17 @@ offset_bottom = 506.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
-offset_left = 806.0
-offset_top = 44.0
-offset_right = 854.0
-offset_bottom = 92.0
+offset_left = 134.0
+offset_top = 4.0
+offset_right = 182.0
+offset_bottom = 52.0
 
 [node name="LastHint" type="Label" parent="PreviousButton"]
 layout_mode = 0
-offset_left = -133.0
-offset_top = -38.0
-offset_right = 182.0
-offset_bottom = -9.0
+offset_left = -131.0
+offset_top = 49.0
+offset_right = 184.0
+offset_bottom = 78.0
 text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -130,6 +130,7 @@ offset_right = 16.0
 offset_bottom = 48.0
 
 [node name="ArtifactsInterface" parent="." instance=ExtResource("3_q6sjy")]
+visible = false
 layout_mode = 1
 offset_left = 16.0
 offset_top = 94.0

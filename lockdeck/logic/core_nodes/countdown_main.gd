@@ -48,6 +48,8 @@ func end_turn() -> bool:
 #endregion
 
 #region interface code
+var _is_hovered := false
+
 ## disregard button presses
 @export var button_disable := false:
 	set(v):
@@ -55,14 +57,19 @@ func end_turn() -> bool:
 		_draw_label()
 
 func _draw_label() -> void:
+	var font_color := Color("#ffffff")
 	if button_disable or early_lockout:
-		$Countdown/Label.add_theme_color_override(
-			"font_color", Color("#918891")
-		)
-	else:
-		$Countdown/Label.add_theme_color_override(
-			"font_color", Color("FFFFFF")
-		)
+		font_color = Color("#918891")
+	elif _is_hovered:
+		font_color = Color("#f7ed7b")
+	
+	$Countdown/Label.add_theme_color_override(
+		"font_color", font_color 
+	)
+
+func set_hovered(hovered: bool) -> void:
+	_is_hovered = hovered
+	_draw_label()
 
 ## If end turn is suggested
 @export var suggest := false:
@@ -105,4 +112,6 @@ func handle_press() -> void:
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)
+	$Countdown.mouse_entered.connect(set_hovered.bind(true))
+	$Countdown.mouse_exited.connect(set_hovered.bind(false))
 	reset_odds()

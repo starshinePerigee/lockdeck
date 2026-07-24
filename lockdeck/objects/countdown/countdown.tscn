@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1hem81ie6tbe"]
+[gd_scene load_steps=4 format=3 uid="uid://l7ni6t1vva7j"]
 
 [ext_resource type="Script" uid="uid://bia6khmvpk3xy" path="res://objects/countdown/countdown.gd" id="1_gnwly"]
 [ext_resource type="Texture2D" uid="uid://dd2nfcgysxxii" path="res://assets/countdown/cd_highlight.png" id="2_ceg5m"]
