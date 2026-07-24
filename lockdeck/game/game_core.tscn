@@ -71,9 +71,9 @@ offset_bottom = 158.0
 [node name="ActiveBox" type="TextureRect" parent="LockBody"]
 layout_mode = 0
 offset_left = -10.0
-offset_top = 249.0
+offset_top = 248.0
 offset_right = 541.0
-offset_bottom = 295.0
+offset_bottom = 294.0
 texture = ExtResource("6_o5sbf")
 stretch_mode = 2
 

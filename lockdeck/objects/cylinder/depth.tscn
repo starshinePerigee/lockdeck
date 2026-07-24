@@ -22,7 +22,6 @@ offset_bottom = 32.0
 texture = ExtResource("1_pxkuq")
 
 [node name="HintTracker" type="Label" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 7.0
 offset_top = 5.0
