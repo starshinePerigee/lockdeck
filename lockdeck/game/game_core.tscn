@@ -113,6 +113,7 @@ offset_right = 182.0
 offset_bottom = 52.0
 
 [node name="LastHint" type="Label" parent="PreviousButton"]
+visible = false
 layout_mode = 0
 offset_left = -192.0
 offset_top = 385.0

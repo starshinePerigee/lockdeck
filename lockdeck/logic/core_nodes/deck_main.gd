@@ -39,14 +39,15 @@ func sort_card_id(a: CardSpec, b:CardSpec) -> bool:
 func load_display() -> void:
 	var cards_sorted := cards.duplicate()
 	cards_sorted.sort_custom(sort_card_id)
-	$DeckLabel/CardDisplay.cards = cards_sorted
-	$DeckLabel/CardDisplay.redraw()
+	$CardDisplay.cards = cards_sorted
+	$CardDisplay.redraw()
+	$CardDisplay.show_display()
 
 ## Redraw the deck
 func redraw():
 	var c := count()
 	$CardPile.count = c
-	$DeckLabel/Label.text = "Deck: %s" % c
+	$DeckLabel.text = "Deck: %s" % c
 
 func _ready() -> void:
-	$DeckLabel.display_opened.connect(load_display)
+	$DeckLabel.pressed.connect(load_display)

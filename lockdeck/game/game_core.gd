@@ -88,7 +88,6 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$DeckMain/DeckLabel.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
@@ -113,8 +112,8 @@ func set_state(state: InputState) -> void:
 func dis_en_able_buttons(state: bool = true) -> void:
 		$LockBody/CountdownMain.button_disable = state
 		$TrashMain.button_disable = state
-		$DeckMain/DeckLabel.button_disable = state
-		$DiscardMain/DiscardLabel.button_disable = state
+		$DeckMain/DeckLabel.disabled = state
+		$DiscardMain/DiscardLabel.disabled = state
 
 func go_card_display() -> void:
 	set_state(InputState.INACTIVE)
@@ -326,10 +325,10 @@ func _ready() -> void:
 	$BackgroundClick.pressed.connect(bg_cancel)
 	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$TrashMain.display_opened.connect(go_card_display)
-	$DeckMain/DeckLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DeckMain/DeckLabel.display_opened.connect(go_card_display)
-	$DiscardMain/DiscardLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DiscardMain/DiscardLabel.display_opened.connect(go_card_display)
+	$DeckMain/CardDisplay.display_opened.connect(go_card_display)
+	$DeckMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$DiscardMain/CardDisplay.display_opened.connect(go_card_display)
+	$DiscardMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

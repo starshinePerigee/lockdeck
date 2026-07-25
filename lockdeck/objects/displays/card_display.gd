@@ -1,5 +1,6 @@
 extends Control
 
+signal display_opened()
 signal closed()
 
 var grid: GridContainer
@@ -18,6 +19,7 @@ var label: Label
 
 func show_display():
 	visible = true
+	z_index = 120
 
 func hide_display():
 	visible = false
