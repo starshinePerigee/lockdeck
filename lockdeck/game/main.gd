@@ -1,6 +1,6 @@
 extends Control
 
-var VERSION_NUMBER := "v0.6.0"
+var VERSION_NUMBER := "v0.6.1"
 
 var difficulty := 0
 

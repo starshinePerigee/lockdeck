@@ -30,7 +30,7 @@ script = ExtResource("1_db5vk")
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 80.0
+offset_right = 116.0
 offset_bottom = 40.0
 
 [node name="BackgroundClick" type="TextureButton" parent="."]
@@ -136,15 +136,6 @@ offset_left = 16.0
 offset_top = 94.0
 offset_right = 16.0
 offset_bottom = 94.0
-
-[node name="HelpButton" type="Button" parent="."]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 0
-offset_left = 168.0
-offset_top = 492.0
-offset_right = 200.0
-offset_bottom = 524.0
-text = "?"
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
