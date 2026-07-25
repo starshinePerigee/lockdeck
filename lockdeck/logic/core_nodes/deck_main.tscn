@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfrit88c6c1oy"]
+[gd_scene load_steps=4 format=3 uid="uid://cfrit88c6c1oy"]
 
 [ext_resource type="Script" uid="uid://e7fhodhmh3nl" path="res://logic/core_nodes/deck_main.gd" id="1_isaa4"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_ga2i2"]
-[ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="3_ga2i2"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_sj352"]
 
 [node name="DeckMain" type="Control"]
@@ -25,8 +24,3 @@ offset_right = 105.0
 offset_bottom = 42.0
 theme = ExtResource("4_sj352")
 text = "Deck: 99"
-
-[node name="CardDisplay" parent="." instance=ExtResource("3_ga2i2")]
-visible = false
-layout_mode = 1
-header = "Remaining deck"

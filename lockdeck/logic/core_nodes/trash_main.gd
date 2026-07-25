@@ -1,15 +1,13 @@
 extends Button
 ## Manages the trash pile
 
-signal display_opened()
+signal display_cards(Array)
 
 @export var cards: Array[CardSpec]
 
 func show_display() -> void:
-	$CardDisplay.cards = cards
-	$CardDisplay.redraw()
-	$CardDisplay.show_display()
-
+	display_cards.emit(cards)
+	
 ## Add a card to the trash
 func add_card(card: CardSpec) -> void:
 	cards.append(card)

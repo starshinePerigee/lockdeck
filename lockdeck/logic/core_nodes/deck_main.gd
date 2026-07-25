@@ -4,6 +4,8 @@ extends Control
 ## Emitted if more cards are drawn than are present in the deck
 signal draw_empty
 
+signal display_cards(Array)
+
 @export var cards: Array[CardSpec]
 
 func count() -> int:
@@ -39,9 +41,7 @@ func sort_card_id(a: CardSpec, b:CardSpec) -> bool:
 func load_display() -> void:
 	var cards_sorted := cards.duplicate()
 	cards_sorted.sort_custom(sort_card_id)
-	$CardDisplay.cards = cards_sorted
-	$CardDisplay.redraw()
-	$CardDisplay.show_display()
+	display_cards.emit(cards_sorted)
 
 ## Redraw the deck
 func redraw():

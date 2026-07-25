@@ -7,6 +7,8 @@ const DISCARD_DESELECTED := preload("res://assets/hand/discard_deselected.png")
 ## Discard pile pressed
 signal discard_pressed()
 
+signal display_cards(Array)
+
 @export var cards: Array[CardSpec]
 
 @export var show_icon: bool = false:
@@ -76,15 +78,13 @@ func update_label(n: int = -1) -> void:
 		n = count()
 	$DiscardLabel.text = "Discard: %s" % n
 
-func load_display() -> void:
-	$CardDisplay.cards = cards
-	$CardDisplay.redraw()
-	$CardDisplay.show_display()
-
+func show_display() -> void:
+	display_cards.emit(cards)
+	
 func _ready() -> void:
 	$DiscardIcon.discard_icon_clicked.connect(discard_pressed.emit)
 	$DiscardIcon.mouse_entered.connect(do_mouse_enter)
 	$DiscardIcon.mouse_exited.connect(do_mouse_exit)
 	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
 	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
-	$DiscardLabel.pressed.connect(load_display)
+	$DiscardLabel.pressed.connect(show_display)

@@ -115,7 +115,13 @@ func dis_en_able_buttons(state: bool = true) -> void:
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
 
-func go_card_display() -> void:
+func display_cards(cards: Array, header: String) -> void:
+	var cards_typed: Array[CardSpec] = []
+	cards_typed.assign(cards)
+	$CardDisplay.header = header
+	$CardDisplay.cards = cards
+	$CardDisplay.redraw()
+	$CardDisplay.show_display()
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
@@ -323,12 +329,11 @@ func _ready() -> void:
 	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
-	$TrashMain/CardDisplay.display_opened.connect(go_card_display)
-	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DeckMain/CardDisplay.display_opened.connect(go_card_display)
-	$DeckMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DiscardMain/CardDisplay.display_opened.connect(go_card_display)
-	$DiscardMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	
+	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
+	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
+	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmo5cgmd68fwu"]
+[gd_scene load_steps=3 format=3 uid="uid://dmo5cgmd68fwu"]
 
 [ext_resource type="Script" uid="uid://cx4icem1s4ps8" path="res://logic/core_nodes/trash_main.gd" id="1_goswl"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="1_tenfn"]
-[ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="2_goswl"]
 
 [node name="TrashMain" type="Button"]
 custom_minimum_size = Vector2(112, 24)
@@ -16,10 +15,3 @@ grow_vertical = 2
 theme = ExtResource("1_tenfn")
 text = "Broken: 99"
 script = ExtResource("1_goswl")
-
-[node name="CardDisplay" parent="." instance=ExtResource("2_goswl")]
-visible = false
-layout_mode = 1
-offset_right = 880.0
-offset_bottom = 516.0
-header = "Broken picks"
