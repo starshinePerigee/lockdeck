@@ -111,7 +111,7 @@ func set_state(state: InputState) -> void:
 
 func dis_en_able_buttons(state: bool = true) -> void:
 		$LockBody/CountdownMain.button_disable = state
-		$TrashMain.button_disable = state
+		$TrashMain.disabled = state
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
 
@@ -323,8 +323,8 @@ func _ready() -> void:
 	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
+	$TrashMain/CardDisplay.display_opened.connect(go_card_display)
 	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$TrashMain.display_opened.connect(go_card_display)
 	$DeckMain/CardDisplay.display_opened.connect(go_card_display)
 	$DeckMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$DiscardMain/CardDisplay.display_opened.connect(go_card_display)

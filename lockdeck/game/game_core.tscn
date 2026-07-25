@@ -100,10 +100,10 @@ offset_bottom = 472.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 layout_mode = 1
-offset_left = 825.0
+offset_left = 803.0
 offset_top = 506.0
-offset_right = 905.0
-offset_bottom = 530.0
+offset_right = 915.0
+offset_bottom = 532.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0

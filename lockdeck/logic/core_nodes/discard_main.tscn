@@ -51,9 +51,9 @@ shape = SubResource("RectangleShape2D_1ngcg")
 [node name="DiscardLabel" type="Button" parent="."]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 10.0
+offset_top = 2.0
 offset_right = 128.0
-offset_bottom = 36.0
+offset_bottom = 28.0
 theme = ExtResource("5_wu67t")
 text = "Discard: 99"
 
