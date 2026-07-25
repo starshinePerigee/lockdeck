@@ -2,5 +2,7 @@ re-confirm that jumping over final depth still unlocks
 
 superdrag still shows issues (superdrag to right, then left, stays on right)
 
+can't click the top edge of a card?
+
 better cancel area handling
 - make sure you can click cancel out of end turn
