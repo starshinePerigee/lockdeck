@@ -46,3 +46,11 @@ func _ready() -> void:
 	redraw()
 	global_position = Vector2(0, 0)
 	visible = false
+
+	if get_parent() == get_tree().root:
+		var test_cards: Array[CardSpec]
+		for i in 14:
+			test_cards.append(CardSpec.from_template())
+		cards = test_cards
+		redraw()
+		visible = true
