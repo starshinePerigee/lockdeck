@@ -1,42 +1,42 @@
-extends Control
+extends Button
 
 signal show_previous()
 signal go_back()
 
+static var T_NORMAL := load("res://assets/game/view_more_button.png")
+static var T_HOVER := load("res://assets/game/view_more_button_hover.png")
+static var T_PRESS := load("res://assets/game/view_more_button_press.png")
+static var T_DISABLE := load("res://assets/game/view_more_button_disabled.png")
+
 @export var show_see_prev := true:
 	set(v):
 		show_see_prev = v
-		$ViewMoreButton.visible = show_see_prev
-		$GoBackButton.visible = not show_see_prev
-
-var _is_hovered := false
-
-func set_hovered(hovered: bool) -> void:
-	_is_hovered = hovered
-	_redraw()
+		$TextureRect.flip_v = not show_see_prev
+		if show_see_prev:
+			text = "Prev turn"
+		else:
+			text = "Go back"
 
 @export var disable := false:
 	set(v):
 		disable = v
-		$ViewMoreButton.disabled = v
-		$GoBackButton.disabled = v
-		_redraw()
+		disabled = v
 
-func _redraw() -> void:
-	var font_color := Color("FFFFFF")
-	if disable:
-		font_color = Color("#918891")
-	elif _is_hovered:
-		font_color = Color("#ffbc57")
+func _emit_signal():
+	if show_see_prev:
+		show_previous.emit()
+	else:
+		go_back.emit()
 
-	$ViewMoreButton/Label.add_theme_color_override("font_color", font_color)
-	$GoBackButton/Label.add_theme_color_override("font_color", font_color)
+func _update_icon(texture: Texture2D):
+	$TextureRect.texture = texture
 
 func _ready() -> void:
-	$ViewMoreButton.mouse_entered.connect(set_hovered.bind(true))
-	$ViewMoreButton.mouse_exited.connect(set_hovered.bind(false))
-	$ViewMoreButton.pressed.connect(show_previous.emit)
+	mouse_entered.connect(_update_icon.bind(T_HOVER))
+	mouse_exited.connect(_update_icon.bind(T_NORMAL))
+	button_down.connect(_update_icon.bind(T_PRESS))
+	button_up.connect(_update_icon.bind(T_HOVER))
+	focus_entered.connect(_update_icon.bind(T_HOVER))
+	focus_exited.connect(_update_icon.bind(T_NORMAL))
 	
-	$GoBackButton.mouse_entered.connect(set_hovered.bind(true))
-	$GoBackButton.mouse_exited.connect(set_hovered.bind(false))
-	$GoBackButton.pressed.connect(go_back.emit)
+	pressed.connect(_emit_signal)
