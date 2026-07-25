@@ -31,8 +31,22 @@ func add_cards(new_cards: Array[CardSpec]) -> void:
 func clear_all() -> void:
 	cards.clear()
 
+func sort_card_id(a: CardSpec, b:CardSpec) -> bool:
+	if a.unique_id < b.unique_id:
+		return true
+	return false
+
+func load_display() -> void:
+	var cards_sorted := cards.duplicate()
+	cards_sorted.sort_custom(sort_card_id)
+	$DeckLabel/CardDisplay.cards = cards_sorted
+	$DeckLabel/CardDisplay.redraw()
+
 ## Redraw the deck
 func redraw():
 	var c := count()
 	$CardPile.count = c
-	$Label.text = "Deck: %s" % c
+	$DeckLabel/Label.text = "Deck: %s" % c
+
+func _ready() -> void:
+	$DeckLabel.display_opened.connect(load_display)

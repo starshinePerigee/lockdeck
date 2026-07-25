@@ -1,3 +1,4 @@
+- scrollbars
 - fix spring compression
 - clean up lock details
 - convert depths to transparent on second background

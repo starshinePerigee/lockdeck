@@ -5,22 +5,32 @@ class_name PickCard
 @export var card_spec: CardSpec:
 	set(v):
 		card_spec = v
-		
-		if not is_node_ready():
-			await ready
-		
-		$EffectBar.effect_stacks = card_spec.effects
-		$EffectBar.redraw()
-		$PickArt.texture = card_spec.texture
-		$TitleBox/Title.text = card_spec.pick_name.capitalize()
-#		$TextBox/Text.text = card_spec.description
+		_redraw()
+
+func _redraw() -> void:
+	if not is_node_ready() or card_spec == null:
+		return
+	
+	$EffectBar.effect_stacks = card_spec.effects
+	$EffectBar.redraw()
+	$PickArt.texture = card_spec.texture
+	$TitleBox/Title.text = card_spec.pick_name.capitalize()
+	# $TextBox/Text.text = card_spec.description
+
+func _ready() -> void:
+	_redraw()
 
 const SELF_PACKED := preload("res://objects/card/pick_card.tscn")
 
-func build_from_template(flavor: PickTemplates):
-	var n := SELF_PACKED.instantiate()
+static func build_from_template(flavor: PickTemplates) -> PickCard:
+	var n := SELF_PACKED.instantiate() as PickCard
 	n.card_spec = CardSpec.from_template(flavor)
+	return n
 
-func _ready() -> void:
-	if card_spec == null:
-		card_spec = CardSpec.from_template(PickTemplates.DEBUG)
+static func build_from_spec(spec: CardSpec = null) -> PickCard:
+	var n := SELF_PACKED.instantiate() as PickCard
+	if spec == null:
+		n.card_spec = CardSpec.from_template(PickTemplates.DEBUG)
+	else:
+		n.card_spec = spec
+	return n

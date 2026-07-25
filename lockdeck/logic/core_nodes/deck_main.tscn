@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfrit88c6c1oy"]
+[gd_scene load_steps=5 format=3 uid="uid://cfrit88c6c1oy"]
 
 [ext_resource type="Script" uid="uid://e7fhodhmh3nl" path="res://logic/core_nodes/deck_main.gd" id="1_isaa4"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_ga2i2"]
+[ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="3_ga2i2"]
+[ext_resource type="Script" uid="uid://byq5qwmu5hb62" path="res://logic/core_nodes/deck_label.gd" id="3_sj352"]
 
 [node name="DeckMain" type="Control"]
 layout_mode = 3
@@ -15,10 +17,23 @@ script = ExtResource("1_isaa4")
 [node name="CardPile" parent="." instance=ExtResource("2_ga2i2")]
 layout_mode = 0
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
+[node name="DeckLabel" type="Control" parent="."]
+anchors_preset = 0
 offset_left = 31.0
 offset_top = 16.0
-offset_right = 147.0
-offset_bottom = 35.0
+offset_right = 92.0
+offset_bottom = 37.0
+script = ExtResource("3_sj352")
+
+[node name="Label" type="Label" parent="DeckLabel"]
+layout_mode = 0
+offset_right = 116.0
+offset_bottom = 19.0
 text = "Deck: 99"
+
+[node name="CardDisplay" parent="DeckLabel" instance=ExtResource("3_ga2i2")]
+visible = false
+layout_mode = 1
+offset_right = 920.0
+offset_bottom = 521.0
+header = "Remaining deck"

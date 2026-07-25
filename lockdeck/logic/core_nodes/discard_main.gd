@@ -74,11 +74,16 @@ func empty_deck() -> Array[CardSpec]:
 func update_label(n: int = -1) -> void:
 	if n == -1:
 		n = count()
-	$Label.text = "Discard: %s" % n
+	$DiscardLabel/Label.text = "Discard: %s" % n
+
+func load_display() -> void:
+	$DiscardLabel/CardDisplay.cards = cards
+	$DiscardLabel/CardDisplay.redraw()
 
 func _ready() -> void:
-	$CardPile.pile_pressed.connect(discard_pressed.emit)
-	$CardPile/Button.mouse_entered.connect(do_mouse_enter)
-	$CardPile/Button.mouse_exited.connect(do_mouse_exit)
+	$DiscardIcon.discard_icon_clicked.connect(discard_pressed.emit)
+	$DiscardIcon.mouse_entered.connect(do_mouse_enter)
+	$DiscardIcon.mouse_exited.connect(do_mouse_exit)
 	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
 	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
+	$DiscardLabel.display_opened.connect(load_display)
