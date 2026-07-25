@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://br6rlbw57vk25"]
 
 [ext_resource type="Texture2D" uid="uid://dufy74tlb6o2c" path="res://assets/depths/depth_hidden.png" id="1_pxkuq"]
-[ext_resource type="Script" path="res://objects/cylinder/depth.gd" id="1_t3uj8"]
+[ext_resource type="Script" uid="uid://dede4agib6hm6" path="res://objects/cylinder/depth.gd" id="1_t3uj8"]
 [ext_resource type="Texture2D" uid="uid://dmngqshk6j878" path="res://assets/results/result_debug.png" id="3_f3om4"]
 [ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="3_f08qc"]
 [ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="4_hntsp"]

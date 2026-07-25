@@ -114,6 +114,7 @@ func dis_en_able_buttons(state: bool = true) -> void:
 		$LockBody/CountdownMain.button_disable = state
 		$TrashMain.button_disable = state
 		$DeckMain/DeckLabel.button_disable = state
+		$DiscardMain/DiscardLabel.button_disable = state
 
 func go_card_display() -> void:
 	set_state(InputState.INACTIVE)
