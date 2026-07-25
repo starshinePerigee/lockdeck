@@ -37,3 +37,10 @@ on continue, the results slides to the left and rewards are shown / dropped in
 each scene slides up from top/bottom
 
 on continue, slide horizontal to an empty "depth: foo" label, then the core scene slides up, the hand is dealt, and we start
+
+
+
+
+~~~
+
+we might need a stage > stage > boss > shop/repair paradigm?
