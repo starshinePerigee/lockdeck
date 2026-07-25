@@ -14,7 +14,6 @@ func _redraw() -> void:
 	$EffectBar.effect_stacks = card_spec.effects
 	$EffectBar.redraw()
 	$PickArt.texture = card_spec.texture
-	print(card_spec.texture)
 	$TitleBox/Title.text = card_spec.pick_name.capitalize()
 	# $TextBox/Text.text = card_spec.description
 

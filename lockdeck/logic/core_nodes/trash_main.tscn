@@ -24,6 +24,6 @@ text = "Broken: 99"
 [node name="CardDisplay" parent="." instance=ExtResource("2_goswl")]
 visible = false
 layout_mode = 1
-offset_left = -800.0
-offset_right = -232.0
-offset_bottom = 400.0
+offset_right = 880.0
+offset_bottom = 516.0
+header = "Broken picks"

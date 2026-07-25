@@ -8,19 +8,22 @@ var label: Label
 @export var header: String = "CARD_DISPLAY_HEADER":
 	set(v):
 		header = v
+		
+		if not is_node_ready():
+			await ready
+		
 		label.text = header
 
 @export var cards: Array[CardSpec] = []
 
 func show_display():
-	_redraw()
 	visible = true
 
 func hide_display():
 	visible = false
 	closed.emit()
 
-func _redraw():
+func redraw():
 	if not is_node_ready():
 		await ready
 	
@@ -40,6 +43,6 @@ func _ready() -> void:
 	grid = $Container/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
 	label = $Container/MarginContainer/VBoxContainer/Label
 	gui_input.connect(_handle_input)
-	_redraw()
+	redraw()
 	global_position = Vector2(0, 0)
 	visible = false

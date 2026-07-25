@@ -68,8 +68,7 @@ func set_state(state: InputState) -> void:
 			$LockBody/CylinderMain.cancel_preview()
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
-			$LockBody/CountdownMain.button_disable = false
-			$TrashMain.button_disable = false
+			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.COMPLETE:
@@ -81,7 +80,6 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$LockBody/CountdownMain.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_mouse = true
 		InputState.ACTIVE_DRAG:
@@ -90,7 +88,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$LockBody/CountdownMain.button_disable = true
+			$DeckMain/DeckLabel.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
@@ -104,15 +102,22 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.show_see_prev = false
 			$PreviousButton/LastHint.visible = true
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
-			$LockBody/CountdownMain.button_disable = true
-			$TrashMain.button_disable = true
+			dis_en_able_buttons()
 		InputState.CARD_DISPLAY:
 			$Notifications.clear()
 			$HandMain/Hand.disable_all()
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
-			$LockBody/CountdownMain.button_disable = true
-			$TrashMain.button_disable = true
+			dis_en_able_buttons()
+
+func dis_en_able_buttons(state: bool = true) -> void:
+		$LockBody/CountdownMain.button_disable = state
+		$TrashMain.button_disable = state
+		$DeckMain/DeckLabel.button_disable = state
+
+func go_card_display() -> void:
+	set_state(InputState.INACTIVE)
+	set_state(InputState.CARD_DISPLAY)
 
 func reset_countdown():
 	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
@@ -319,7 +324,11 @@ func _ready() -> void:
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$TrashMain.display_opened.connect(set_state.bind(InputState.CARD_DISPLAY))
+	$TrashMain.display_opened.connect(go_card_display)
+	$DeckMain/DeckLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$DeckMain/DeckLabel.display_opened.connect(go_card_display)
+	$DiscardMain/DiscardLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$DiscardMain/DiscardLabel.display_opened.connect(go_card_display)
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

@@ -1,0 +1,11 @@
+extends TextureRect
+
+signal discard_icon_clicked()
+
+func _handle_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			discard_icon_clicked.emit()
+
+func _ready() -> void:
+	gui_input.connect(_handle_input)

@@ -1,5 +1,4 @@
 extends Control
-## Manages the trash pile
 
 signal display_opened()
 
@@ -26,8 +25,6 @@ func _draw_label() -> void:
 	$Label.add_theme_color_override("font_color", font_color)
 
 func show_display() -> void:
-		$CardDisplay.cards = cards
-		$CardDisplay.redraw()
 		$CardDisplay.show_display()
 		display_opened.emit()
 
@@ -37,14 +34,7 @@ func _handle_input(event: InputEvent) -> void:
 			if not button_disable:
 				show_display()
 
-## Add a card to the trash
-func add_card(card: CardSpec) -> void:
-	cards.append(card)
-	$Label.text = "Broken: %s" % len(cards)
-
 func _ready() -> void:
 	gui_input.connect(_handle_input)
 	mouse_entered.connect(set_hovered.bind(true))
 	mouse_exited.connect(set_hovered.bind(false))
-
-	$Label.text = "Broken: 0"

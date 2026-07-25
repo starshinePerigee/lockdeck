@@ -17,7 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_37sm2")
 
 [node name="Container" type="Control" parent="."]
-custom_minimum_size = Vector2(568, 400)
+custom_minimum_size = Vector2(568, 416)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -46,15 +46,6 @@ patch_margin_bottom = 64
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="Label" type="Label" parent="Container/NinePatchRect"]
-layout_mode = 0
-offset_top = 381.0
-offset_right = 568.0
-offset_bottom = 400.0
-theme = ExtResource("3_jld0d")
-text = "Click or tap outside the window to close."
-horizontal_alignment = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="Container"]
 layout_mode = 1
 anchors_preset = 15
@@ -72,7 +63,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Broken picks"
+text = "CARD DISPLAY HEADER"
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -88,3 +79,9 @@ theme = ExtResource("3_ltrma")
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
+
+[node name="Label2" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_jld0d")
+text = "Click or tap outside the window to close."
+horizontal_alignment = 1
