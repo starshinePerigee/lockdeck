@@ -1,6 +1,8 @@
 extends Control
 ## Manages the trash pile
 
+signal display_opened()
+
 @export var cards: Array[CardSpec]
 
 var _is_hovered := false
@@ -23,11 +25,15 @@ func _draw_label() -> void:
 	
 	$Label.add_theme_color_override("font_color", font_color)
 
+func show_display() -> void:
+		$CardDisplay.show_display()
+		display_opened.emit()
+
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if not button_disable:
-				$CardDisplay.show_display()
+				show_display()
 
 ## Add a card to the trash
 func add_card(card: CardSpec) -> void:

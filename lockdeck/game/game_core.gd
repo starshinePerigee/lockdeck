@@ -31,6 +31,7 @@ enum InputState {
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
 	VIEW_ALL,
+	CARD_DISPLAY,
 	COMPLETE
 }
 var current_state := InputState.INACTIVE
@@ -68,6 +69,7 @@ func set_state(state: InputState) -> void:
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
 			$LockBody/CountdownMain.button_disable = false
+			$TrashMain.button_disable = false
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
 		InputState.COMPLETE:
@@ -103,6 +105,14 @@ func set_state(state: InputState) -> void:
 			$PreviousButton/LastHint.visible = true
 			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
 			$LockBody/CountdownMain.button_disable = true
+			$TrashMain.button_disable = true
+		InputState.CARD_DISPLAY:
+			$Notifications.clear()
+			$HandMain/Hand.disable_all()
+			$HandMain/Hand.hide_hand()
+			$HandMain/Hand.disable_all()
+			$LockBody/CountdownMain.button_disable = true
+			$TrashMain.button_disable = true
 
 func reset_countdown():
 	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
@@ -308,6 +318,8 @@ func _ready() -> void:
 	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
+	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$TrashMain.display_opened.connect(set_state.bind(InputState.CARD_DISPLAY))
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

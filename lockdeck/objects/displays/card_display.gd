@@ -1,5 +1,7 @@
 extends Control
 
+signal closed()
+
 var grid: GridContainer
 var label: Label
 
@@ -16,6 +18,7 @@ func show_display():
 
 func hide_display():
 	visible = false
+	closed.emit()
 
 func _redraw():
 	if not is_node_ready():

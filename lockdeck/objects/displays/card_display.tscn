@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://rccuomam3kp"]
+[gd_scene load_steps=5 format=3 uid="uid://rccuomam3kp"]
 
 [ext_resource type="Script" uid="uid://d3ix22cqb8lv1" path="res://objects/displays/card_display.gd" id="1_37sm2"]
 [ext_resource type="Texture2D" uid="uid://b26sita8dy6qp" path="res://assets/game/flat bg.png" id="2_hye1w"]
+[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="3_jld0d"]
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_ltrma"]
 
 [node name="CardDisplay" type="Control"]
@@ -44,6 +45,15 @@ patch_margin_right = 64
 patch_margin_bottom = 64
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+
+[node name="Label" type="Label" parent="Container/NinePatchRect"]
+layout_mode = 0
+offset_top = 381.0
+offset_right = 568.0
+offset_bottom = 400.0
+theme = ExtResource("3_jld0d")
+text = "Click or tap outside the window to close."
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Container"]
 layout_mode = 1
