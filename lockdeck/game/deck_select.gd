@@ -1,11 +1,16 @@
 extends Control
 
 signal start_game(cards: Array[CardSpec])
+signal start_tutorial
 signal return_to_menu
 
 var current_deck: DeckTemplates
 
 func do_start() -> void:
+	if current_deck == DeckTemplates.TUTORIAL:
+		start_tutorial.emit()
+		return
+	
 	var specs: Array[CardSpec] = []
 	specs.assign(current_deck.deck_gen.call())
 	start_game.emit(specs)
