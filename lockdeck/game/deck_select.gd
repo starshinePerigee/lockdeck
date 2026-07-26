@@ -15,18 +15,24 @@ func do_start() -> void:
 	specs.assign(current_deck.deck_gen.call())
 	start_game.emit(specs)
 
+# TODO: display deck button?
+
 func select_deck(template: DeckTemplates) -> void:
 	current_deck = template
 	$Panel/Info.text = template.description
 	$Panel/Button.disabled = false
-	$Panel/Button.text = "Sounds good, let's get started."
+	$Panel/Button.text = "Sounds good, let's get started. >"
 
 func reset() -> void:
 	current_deck = null
 	$Panel/Info.text = ""
 	$Panel/Button.disabled = true
 	$Panel/Button.text = "Select a deck."
-	
+
+func _print_cards(cards: Array[CardSpec]):
+	for card in cards:
+		print(card.pick_name)
+
 func _ready() -> void:
 	reset()
 	
@@ -44,3 +50,6 @@ func _ready() -> void:
 	
 	$Panel/Button.pressed.connect(do_start)
 	$ReturnButton.pressed.connect(return_to_menu.emit)
+	
+	if get_parent() == get_tree().root:
+		start_game.connect(_print_cards) 

@@ -22,6 +22,7 @@ offset_bottom = 135.0
 text = "Handful of Lockpicks TITLE"
 
 [node name="Version" type="Label" parent="."]
+layout_mode = 0
 offset_left = 1.0
 offset_top = 527.0
 offset_right = 57.0
@@ -39,6 +40,7 @@ theme = ExtResource("3_0ery1")
 text = "Start Game"
 
 [node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 134.0
 offset_top = 250.0
 offset_right = 250.0

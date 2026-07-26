@@ -5,9 +5,11 @@ main screen
 deck select
 - multiple decks, has tooltip and hover/select paradigm -> strategy hub
 
+~ 🐦 ~
+
 strategy hub
 - shows current stage
-- upcoming depths
+
 - deck -> deck viewer
 -- has deck counter (/20?)
 - repair (disabled on floor 1) -> repair scene

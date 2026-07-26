@@ -1,10 +1,4 @@
-- choose deck scene
--- tutorial
--- basic
--- powerful (crush, big splashes, lots of test)
--- tricky (jam, big pushes, reveal, and crush without small push)
--- careful (few, really important push picks and lots of reveal / test)
--- random
+x choose deck scene
 - use existing level gen
 - rewards scene
 -- coins
