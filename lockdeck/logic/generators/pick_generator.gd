@@ -11,6 +11,7 @@ static func get_many_base_cards(n: int) -> Array[CardSpec]:
 		cards.append(get_random_base_card())
 	return cards
 
+# TODO: deprecate and remove
 static var STANDARD_TEST_CARDS: Array[PickTemplates] = [
 	PickTemplates.DIAMOND,
 	PickTemplates.HOOK,

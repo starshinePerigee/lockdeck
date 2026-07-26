@@ -20,6 +20,7 @@ offset_left = 146.349
 offset_top = 190.127
 offset_right = 186.349
 offset_bottom = 230.127
+theme = ExtResource("2_tpu8j")
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -50,6 +51,13 @@ alignment = 0
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Patient"
+alignment = 0
+
+[node name="Random" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_tpu8j")
+text = "Random
+"
 alignment = 0
 
 [node name="Label" type="Label" parent="."]
@@ -83,6 +91,7 @@ offset_left = 6.0
 offset_top = 7.0
 offset_right = 349.0
 offset_bottom = 127.0
+theme_override_constants/line_spacing = 0
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 autowrap_mode = 2
 text_overrun_behavior = 3
