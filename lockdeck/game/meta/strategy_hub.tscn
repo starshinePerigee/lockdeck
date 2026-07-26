@@ -12,6 +12,7 @@ grow_vertical = 2
 theme = ExtResource("1_fro3h")
 
 [node name="DeckButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 180.0
 offset_top = 188.0
 offset_right = 224.0
@@ -27,6 +28,7 @@ offset_bottom = -5.0
 text = "Picks; 0/20"
 
 [node name="RepairButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 365.0
 offset_top = 183.0
 offset_right = 421.0
@@ -34,6 +36,7 @@ offset_bottom = 210.0
 text = "Repair"
 
 [node name="Label" type="Label" parent="RepairButton"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = -24.0
 offset_right = 68.0
@@ -49,6 +52,7 @@ offset_bottom = 215.0
 text = "Shop"
 
 [node name="Label" type="Label" parent="ShopButton"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = -24.0
 offset_right = 68.0
