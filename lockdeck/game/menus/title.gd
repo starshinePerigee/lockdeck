@@ -1,6 +1,8 @@
 extends Control
 
-var VERSION_NUMBER := "v0.7.0"
+signal start_game
+signal show_settings
 
 func _ready() -> void:
-	$Version.text = VERSION_NUMBER
+	$StartGameButton.pressed.connect(start_game.emit)
+	$SettingsButton.pressed.connect(show_settings.emit)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5e0yy8ky4832"]
+[gd_scene load_steps=3 format=3 uid="uid://b5e0yy8ky4832"]
 
 [ext_resource type="Script" uid="uid://peauvaoe3emi" path="res://game/menus/title.gd" id="1_pwv2q"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="2_cjc1w"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="3_0ery1"]
 
 [node name="Title" type="Control"]
@@ -20,15 +19,6 @@ offset_top = 116.0
 offset_right = 346.0
 offset_bottom = 135.0
 text = "Handful of Lockpicks TITLE"
-
-[node name="Version" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 527.0
-offset_right = 57.0
-offset_bottom = 540.0
-theme = ExtResource("2_cjc1w")
-text = "v0.0.0"
 
 [node name="StartGameButton" type="Button" parent="."]
 layout_mode = 0

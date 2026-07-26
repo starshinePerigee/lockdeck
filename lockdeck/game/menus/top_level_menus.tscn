@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://5xk2bth3ug3d"]
+
+[ext_resource type="Script" uid="uid://buwp38onrby12" path="res://game/menus/top_level_menus.gd" id="1_cthtm"]
+[ext_resource type="PackedScene" uid="uid://b5e0yy8ky4832" path="res://game/menus/title.tscn" id="1_sxjyl"]
+[ext_resource type="PackedScene" uid="uid://cophugyta6nde" path="res://game/menus/deck_select.tscn" id="2_cthtm"]
+
+[sub_resource type="Animation" id="Animation_dgpao"]
+resource_name = "go_deck_select"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-960, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeckSelect:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(960, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wjctj"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeckSelect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xkbyp"]
+_data = {
+&"RESET": SubResource("Animation_wjctj"),
+&"go_deck_select": SubResource("Animation_dgpao")
+}
+
+[node name="TopLevelMenus" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cthtm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xkbyp")
+}
+
+[node name="Title" parent="." instance=ExtResource("1_sxjyl")]
+layout_mode = 1
+
+[node name="DeckSelect" parent="." instance=ExtResource("2_cthtm")]
+layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
