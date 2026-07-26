@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cophugyta6nde"]
 
-[ext_resource type="Script" uid="uid://7vqr4q1k1vi8" path="res://game/deck_select.gd" id="1_1dibr"]
+[ext_resource type="Script" uid="uid://7vqr4q1k1vi8" path="res://game/menus/deck_select.gd" id="1_1dibr"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="2_tpu8j"]
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_454oq"]
 [ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="4_hg6os"]

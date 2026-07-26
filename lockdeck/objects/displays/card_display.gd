@@ -1,6 +1,5 @@
 extends Control
 
-signal display_opened()
 signal closed()
 
 var grid: GridContainer

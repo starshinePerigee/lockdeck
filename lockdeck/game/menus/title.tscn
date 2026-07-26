@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5e0yy8ky4832"]
 
-[ext_resource type="Script" uid="uid://peauvaoe3emi" path="res://game/title.gd" id="1_pwv2q"]
+[ext_resource type="Script" uid="uid://peauvaoe3emi" path="res://game/menus/title.gd" id="1_pwv2q"]
 [ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="2_cjc1w"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="3_0ery1"]
 

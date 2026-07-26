@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://6n5hdt0ihpyn"]
 
-[ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/game_core.gd" id="1_db5vk"]
+[ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://bl8yci5ing0eq" path="res://logic/core_nodes/cylinder_main.tscn" id="2_l83s3"]
 [ext_resource type="PackedScene" uid="uid://cuxudbvsktnnd" path="res://objects/play_area/game_status.tscn" id="2_tmhk6"]

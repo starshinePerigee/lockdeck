@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://4nktv0wsa7s3"]
+
+[ext_resource type="Script" uid="uid://c5aim8ml7s4kv" path="res://game/main.gd" id="1_xtpaf"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_emt18"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xtpaf")
+
+[node name="GlobalBackground" type="TextureRect" parent="."]
+z_index = -1000
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_emt18")
