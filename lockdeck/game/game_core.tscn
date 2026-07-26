@@ -148,6 +148,7 @@ offset_right = 738.0
 offset_bottom = 83.0
 
 [node name="CardDisplay" parent="." instance=ExtResource("15_gg2qb")]
+visible = false
 layout_mode = 1
 offset_right = 960.0
 offset_bottom = 540.0

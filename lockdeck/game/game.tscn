@@ -1,28 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://csinn0yt64xam"]
+[gd_scene load_steps=5 format=3 uid="uid://csinn0yt64xam"]
 
-[ext_resource type="Script" uid="uid://ceywqkqroboov" path="res://game/main.gd" id="1_emt18"]
-[ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/game_core.tscn" id="2_emt18"]
-[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vop5m"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_5un7r"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="4_vop5m"]
+[ext_resource type="Script" uid="uid://ceywqkqroboov" path="res://game/game.gd" id="1_dxrkv"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_dakft"]
+[ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/game_core.tscn" id="3_u5opy"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_y36n6"]
 
-[node name="Main" type="Control"]
+[node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_emt18")
+script = ExtResource("1_dxrkv")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -1000
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_vop5m")
+texture = ExtResource("2_dakft")
 
-[node name="GameCore" parent="." instance=ExtResource("2_emt18")]
+[node name="GameCore" parent="." instance=ExtResource("3_u5opy")]
 layout_mode = 1
 
 [node name="RestartButton" type="Button" parent="."]
@@ -31,7 +30,7 @@ offset_left = 10.0
 offset_top = 8.0
 offset_right = 74.0
 offset_bottom = 40.0
-theme = ExtResource("4_5un7r")
+theme = ExtResource("4_y36n6")
 text = "Menu"
 
 [node name="ColorRect" type="ColorRect" parent="RestartButton"]
@@ -52,7 +51,7 @@ offset_left = 84.0
 offset_top = 8.0
 offset_right = 116.0
 offset_bottom = 40.0
-theme = ExtResource("4_5un7r")
+theme = ExtResource("4_y36n6")
 text = "?"
 
 [node name="NextLevelButton" type="Button" parent="."]
@@ -65,12 +64,3 @@ offset_bottom = 314.0
 theme_override_font_sizes/font_size = 60
 disabled = true
 text = "Next"
-
-[node name="Version" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 527.0
-offset_right = 57.0
-offset_bottom = 540.0
-theme = ExtResource("4_vop5m")
-text = "v0.0.0"
