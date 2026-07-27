@@ -342,14 +342,15 @@ func update_visibility() -> String:
 		for i in range(PinSpec.PIN_DEPTH_COUNT):
 			if pin.get_checked(i):
 				var depth := pin.depths[i]
-				if depth in Depths.DANGEROUS_DEPTHS:
+				if depth.tests_as == Depths.DangerLevel.DANGEROUS:
 					new_level = max(new_level, PinSpec.RevealLevel.DANGEROUS)
-				elif depth in Depths.INTERESTING_DEPTHS:
+				elif depth.tests_as == Depths.DangerLevel.INTERESTING:
 					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
-				elif depth in Depths.CLEAR_DEPTHS:
+				elif depth.tests_as == Depths.DangerLevel.CLEAR:
 					new_level = max(new_level, PinSpec.RevealLevel.CLEAR)
 				else:
 					push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
+					new_level = max(new_level, PinSpec.RevealLevel.INTERESTING)
 	if new_level == PinSpec.RevealLevel.REVEALED:
 		# we didn't hint anything
 		return ""
