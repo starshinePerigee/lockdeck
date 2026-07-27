@@ -144,10 +144,12 @@ offset_right = 16.0
 offset_bottom = 94.0
 
 [node name="ContinueButton" type="Button" parent="."]
-offset_left = 633.0
-offset_top = 418.0
-offset_right = 739.0
-offset_bottom = 444.0
+z_index = -3
+layout_mode = 0
+offset_left = 640.0
+offset_top = 298.0
+offset_right = 746.0
+offset_bottom = 324.0
 theme = ExtResource("6_3ctlq")
 text = "Continue >"
 

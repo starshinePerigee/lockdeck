@@ -5,13 +5,47 @@ extends Control
 @export var current_deck: Array[CardSpec] = []
 @export var broken_picks: Array[CardSpec] = []
 
+enum GameState {
+	INVALID,
+	BETWEEN_LOCK,
+	CORE_GAME
+}
+
+var current_state := GameState.INVALID
+
+func _check_state(desired_state: GameState) -> bool:
+	if current_state == desired_state:
+		return false
+	else:
+		push_warning(
+			"Invalid state: %s, expected: %s" 
+			% [
+				GameState.keys()[current_state],
+				GameState.keys()[desired_state]
+			]
+		)
+		return true
+
+func auto_complete_level() -> void:
+	if _check_state(GameState.CORE_GAME):
+		return
+	
+	$GameCore.solve_lock()
+
+func break_three() -> void:
+	if _check_state(GameState.CORE_GAME):
+		return
+
+	for __ in 3:
+		$GameCore.break_from_hand()
+
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	difficulty = 0
 	current_deck = starter_deck
+	current_state = GameState.BETWEEN_LOCK
 	$AnimationPlayer.play("first lock")
 
 func lock_complete():
-	$AnimationPlayer.play("lock to between")
 	var broken: Array[CardSpec] = $GameCore/TrashMain.cards
 	for broke in broken:
 		if broke in current_deck:
@@ -22,8 +56,13 @@ func lock_complete():
 				% [broke.pick_name, broke.unique_id]
 			)
 	broken_picks.append_array(broken)
+	current_state = GameState.BETWEEN_LOCK
+	$AnimationPlayer.play("lock to between")
 
-func next_lock():
+func next_lock() -> void:
+	if _check_state(GameState.BETWEEN_LOCK):
+		return
+
 	difficulty += 1
 	$GameCore/GameStatus.stage = difficulty
 	$GameCore.cylinder_count = min(difficulty, 5)
@@ -32,6 +71,8 @@ func next_lock():
 	$GameCore/TrashMain.reset()
 	$GameCore.restart()
 	$GameCore/GameStatus.coins = 0
+	
+	current_state = GameState.CORE_GAME
 	$AnimationPlayer.play("between to lock")
 
 func _ready() -> void:

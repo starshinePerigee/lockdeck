@@ -152,11 +152,13 @@ libraries = {
 [node name="GameCore" parent="." instance=ExtResource("2_51x2c")]
 visible = false
 layout_mode = 1
-offset_top = 1122.0
-offset_bottom = 582.0
+offset_top = 1200.0
+offset_bottom = 660.0
 
 [node name="BetweenLocks" parent="." instance=ExtResource("3_51x2c")]
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
 
 [node name="StrategyHub" parent="." instance=ExtResource("4_vpla2")]
 visible = false

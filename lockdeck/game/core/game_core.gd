@@ -229,14 +229,17 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		$PreviousButton/LastHint.text = "No hints last turn"
 	
 	if result.lock_solved:
-		$ContinueButton.visible = true	
-		game_win.emit()
-		$LockBody/AnimationPlayer.play("unlock")
-		$Notifications.notify(Notifications.UNLOCK)
-		set_state(InputState.INACTIVE)
-		set_state(InputState.COMPLETE)
+		solve_lock()
 	else:
 		cleanup_step()
+
+func solve_lock() -> void:
+	$ContinueButton.visible = true	
+	game_win.emit()
+	$LockBody/AnimationPlayer.play("unlock")
+	$Notifications.notify(Notifications.UNLOCK)
+	set_state(InputState.INACTIVE)
+	set_state(InputState.COMPLETE)
 
 func discard_pick() -> void:
 	$HandMain.deselect()
@@ -318,6 +321,14 @@ func restart() -> void:
 	end_turn(false)
 	$Notifications.clear()
 	$PreviousButton/LastHint.text = "No picks yet"
+
+func break_from_hand() -> void:
+	if $HandMain.count() == 0:
+		return
+		
+	active_card = $HandMain.cards[-1]
+	break_next = true
+	discard_pick()
 
 func _ready() -> void:
 	$ContinueButton.pressed.connect(continue_to_next.emit)

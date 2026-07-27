@@ -3,6 +3,31 @@ extends Control
 
 signal closed()
 
+var _button_holder: VBoxContainer
+var _button_table: Dictionary[String, Button] = {}
+
+## Adds a button to the settings menu that calls a callback when pushed.
+func add_button(button_text: String, callable: Callable) -> void:
+	if button_text in _button_table.keys():
+		push_warning("Button already in settings: %s" % button_text)
+		return
+	
+	var button := Button.new()
+	_button_table[button_text] = button
+	
+	button.text = button_text
+	button.pressed.connect(callable.call)
+	_button_holder.add_child(button)
+
+func remove_button(button_text: String) -> void:
+	if not button_text in _button_table.keys():
+		push_warning("Button not in settings: %s" % button_text)
+	
+	var button := _button_table[button_text]
+	_button_holder.remove_child(button)
+	_button_table.erase(button_text)
+	button.queue_free()
+
 func show_widget():
 	visible = true
 	z_index = 120
@@ -18,6 +43,7 @@ func _handle_input(event: InputEvent) -> void:
 			hide_widget()
 
 func _ready() -> void:
+	_button_holder = $Panel/VBoxContainer/MarginContainer/ButtonHolder
 	gui_input.connect(_handle_input)
 	global_position = Vector2(0, 0)
 	visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4nktv0wsa7s3"]
+[gd_scene load_steps=8 format=3 uid="uid://4nktv0wsa7s3"]
 
 [ext_resource type="Script" uid="uid://c5aim8ml7s4kv" path="res://game/main.gd" id="1_xtpaf"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_emt18"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://5xk2bth3ug3d" path="res://game/menus/top_level_menus.tscn" id="4_dgpao"]
 [ext_resource type="PackedScene" uid="uid://btse3gwbfu6wy" path="res://game/meta/game_manager.tscn" id="4_wjctj"]
 [ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="5_5un7r"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="5_wjctj"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -31,6 +32,15 @@ visible = false
 layout_mode = 1
 offset_top = 544.0
 offset_bottom = 544.0
+
+[node name="MenuButton" type="Button" parent="."]
+visible = false
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 74.0
+offset_bottom = 40.0
+theme = ExtResource("5_wjctj")
+text = "Menu"
 
 [node name="SettingsWidget" parent="." instance=ExtResource("4_5un7r")]
 layout_mode = 1
