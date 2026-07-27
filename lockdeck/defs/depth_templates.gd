@@ -113,7 +113,7 @@ static var UNLOCK := DepthTemplates.new(
 )
 
 static var ALL_TEMPLATES := [
-	EMPTY,
+	# EMPTY,
 	PUSH,
 	DOUBLE_PUSH,
 	JAM,
