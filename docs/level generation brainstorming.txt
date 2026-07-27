@@ -4,7 +4,7 @@ a depth template is a set of depths, level building instructions (with unique de
 
 draw depths based on weight until a hazard threshold is reached
 
-place all the depths according to their rules
+place all the depths according to their rules (randomly pick a pin with enough depth, then apply - do not stack depths by default)
 
 track which depths were placed successfully
 

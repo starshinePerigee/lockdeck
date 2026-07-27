@@ -18,14 +18,18 @@ var effect: Effects
 ## Default effect value
 var value: int
 
-func _init(depth_name_: String, effect_: Effects, value_: int = 1):
+func _init(
+	depth_name_: String,
+	effect_: Effects = Effects.DEBUG,
+	value_: int = 1
+):
 	depth_name = depth_name_
 	texture = _get_texture(depth_name_)
 	effect = effect_
 	value = value_
 
 ## Debug depth. Should not be used.
-static var DEBUG := Depths.new("debug", Effects.DEBUG)
+static var DEBUG := Depths.new("debug")
 
 ## The neutral depth at the top of a pin. Has no effect.
 static var BASE := Depths.new("base", Effects.EMPTY)
@@ -34,16 +38,16 @@ static var BASE := Depths.new("base", Effects.EMPTY)
 static var FINAL := Depths.new("final_neutral", Effects.UNLOCK)
 
 ## Default unrevealed depth
-static var HIDDEN := Depths.new("hidden", Effects.DEBUG)
+static var HIDDEN := Depths.new("hidden")
 
 ## Marked clear
-static var MARK_CLEAR := Depths.new("mark_clear", Effects.DEBUG)
+static var MARK_CLEAR := Depths.new("mark_clear")
 
 ## Default unrevealed depth
-static var MARK_INTERESTING := Depths.new("mark_interesting", Effects.DEBUG)
+static var MARK_INTERESTING := Depths.new("mark_interesting")
 
 ## Default unrevealed depth
-static var MARK_DANGEROUS := Depths.new("mark_dangerous", Effects.DEBUG)
+static var MARK_DANGEROUS := Depths.new("mark_dangerous")
 
 ## Blank depth with no effect.
 static var EMPTY := Depths.new("empty", Effects.EMPTY)
