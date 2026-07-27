@@ -14,3 +14,5 @@ What does a boss lock look like?
 - doubled up: breaking a pick breaks a second random one from the discard
 
 boss every three chests to unlock +1 pin; after 5 pin boss just have a boss every level?
+
+Boss is indicated by changing the front part of the keyway
