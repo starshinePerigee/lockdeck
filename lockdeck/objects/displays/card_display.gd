@@ -17,6 +17,7 @@ var label: Label
 @export var cards: Array[CardSpec] = []
 
 func show_display():
+	global_position = Vector2(0, 0)
 	visible = true
 	z_index = 120
 
@@ -45,7 +46,6 @@ func _ready() -> void:
 	label = $Container/MarginContainer/VBoxContainer/Label
 	gui_input.connect(_handle_input)
 	redraw()
-	global_position = Vector2(0, 0)
 	visible = false
 
 	if get_parent() == get_tree().root:

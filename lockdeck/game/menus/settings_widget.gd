@@ -6,8 +6,13 @@ signal closed()
 var _button_holder: VBoxContainer
 var _button_table: Dictionary[String, Button] = {}
 
+func call_callable(callable: Callable, close_after: bool):
+	callable.call()
+	if close_after:
+		hide_widget()
+
 ## Adds a button to the settings menu that calls a callback when pushed.
-func add_button(button_text: String, callable: Callable) -> void:
+func add_button(button_text: String, callable: Callable, close_after: bool = false) -> void:
 	if button_text in _button_table.keys():
 		push_warning("Button already in settings: %s" % button_text)
 		return
@@ -16,12 +21,13 @@ func add_button(button_text: String, callable: Callable) -> void:
 	_button_table[button_text] = button
 	
 	button.text = button_text
-	button.pressed.connect(callable.call)
+	button.pressed.connect(call_callable.bind(callable.call, close_after))
 	_button_holder.add_child(button)
 
 func remove_button(button_text: String) -> void:
 	if not button_text in _button_table.keys():
 		push_warning("Button not in settings: %s" % button_text)
+		return
 	
 	var button := _button_table[button_text]
 	_button_holder.remove_child(button)

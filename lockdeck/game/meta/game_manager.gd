@@ -75,6 +75,14 @@ func next_lock() -> void:
 	current_state = GameState.CORE_GAME
 	$AnimationPlayer.play("between to lock")
 
+## Abandon the current game. Call begin_new_game after
+func abort_and_reset() -> void:
+	difficulty = 0
+	current_deck = []
+	broken_picks = []
+	current_state = GameState.INVALID
+	$AnimationPlayer.play("RESET")
+
 func _ready() -> void:
 	global_position = Vector2(0, 0)
 	$BetweenLocks.continue_to_next.connect(next_lock)
