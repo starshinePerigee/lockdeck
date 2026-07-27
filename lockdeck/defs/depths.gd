@@ -43,6 +43,9 @@ func _init(
 ## Debug depth. Should not be used.
 static var DEBUG := Depths.new("debug")
 
+## Pending depth. used for level generation
+static var PENDING := Depths.new("pending")
+
 ## The neutral depth at the top of a pin. Has no effect.
 static var BASE := Depths.new("base", DangerLevel.CLEAR, Effects.EMPTY)
 

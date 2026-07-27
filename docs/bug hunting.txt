@@ -1,6 +1,8 @@
 re-confirm that jumping over final depth still unlocks
 
 superdrag still shows issues (superdrag to right, then left, stays on right)
+- hover over keyway feels weird?
+- hover over left side of lock selects pin
 
 can't click the top edge of a card?
 

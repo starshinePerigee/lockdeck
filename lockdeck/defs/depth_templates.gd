@@ -12,9 +12,9 @@ var minor_depth: Depths
 var depths_per_five: int
 # dp5 reference:
 #		pins
-# pp5	1	2	3	4	5
-#	1	0	0	1	1	1
-#	2	0	1	1	2	2
+# dp5	1	2	3	4	5
+#	1	1	1	1	1	1
+#	2	1	1	1	2	2
 #	3	1	1	2	2	3
 #	4	1	2	2	3	4
 #	5	1	2	3	4	5
@@ -29,7 +29,7 @@ var early_weight
 ## How frequently to include this depth for midgame (4 and early 5 pin) locks
 var mid_weight
 ## How frequently to include this depth in extended endgame locks
-var end_weight
+var late_weight
 
 func _init(
 	depth_: Depths,
@@ -45,7 +45,7 @@ func _init(
 	depths_per_five = per_five
 	early_weight = weights[0]
 	mid_weight = weights[1]
-	end_weight = weights[2]
+	late_weight = weights[2]
 
 ## Returns how many pins to apply this depth to.
 func pin_count(pins: int) -> int:
@@ -53,5 +53,70 @@ func pin_count(pins: int) -> int:
 
 ## returns how many depths this will require to fully place at the given number of pins.
 func total_depths_placed(pins: int) -> int:
-	# TODO: handle minor?
-	return pin_count(pins)
+	if minor_depth == null:
+		return pin_count(pins)
+	else:
+		return pin_count(pins) * 2
+
+
+## Break is automatically placed on every pin
+static var BREAK := DepthTemplates.new(
+	Depths.BREAK,
+	0,
+	[-1, -1, -1],
+	5,
+	Depths.WARN
+)
+
+## Intentionally place empties
+static var EMPTY := DepthTemplates.new(
+	Depths.EMPTY,
+	-1,
+	[5, 4, 3],
+	3,
+)
+
+static var PUSH := DepthTemplates.new(
+	Depths.PUSH,
+	2,
+	[4, 3, 3],
+	4
+)
+
+static var DOUBLE_PUSH := DepthTemplates.new(
+	Depths.PUSH,
+	3,
+	[0, 1, 2],
+	2,
+	Depths.PUSH
+)
+
+static var JAM := DepthTemplates.new(
+	Depths.JAM,
+	1,
+	[2, 3, 4],
+	3,
+)
+
+static var BOUNCE := DepthTemplates.new(
+	Depths.BOUNCE,
+	2,
+	[3, 2, 2],
+	3
+)
+
+static var UNLOCK := DepthTemplates.new(
+	Depths.UNLOCK,
+	-2,
+	[0, 2, 1],
+	2
+)
+
+static var ALL_TEMPLATES := [
+	EMPTY,
+	PUSH,
+	DOUBLE_PUSH,
+	JAM,
+	BOUNCE,
+	UNLOCK
+]

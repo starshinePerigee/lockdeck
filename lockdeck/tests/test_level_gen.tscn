@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://c055cehqnr6tk"]
+
+[ext_resource type="Script" uid="uid://bh5i7tgxpkqi5" path="res://tests/test_level_gen.gd" id="1_25lvv"]
+[ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/cylinder/cylinders.tscn" id="2_pnddi"]
+
+[node name="TestLevelGen" type="Node2D"]
+script = ExtResource("1_25lvv")
+
+[node name="GenerateButton" type="Button" parent="."]
+offset_left = 162.0
+offset_top = 157.0
+offset_right = 257.0
+offset_bottom = 184.0
+text = "Regenerate"
+
+[node name="CountOption" type="OptionButton" parent="."]
+offset_left = 162.0
+offset_top = 47.0
+offset_right = 203.0
+offset_bottom = 74.0
+selected = 4
+item_count = 5
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+
+[node name="Label" type="Label" parent="CountOption"]
+offset_left = -95.0
+offset_right = -19.0
+offset_bottom = 19.0
+text = "Pin count:"
+
+[node name="ArcOption" type="OptionButton" parent="."]
+offset_left = 162.0
+offset_top = 89.0
+offset_right = 233.0
+offset_bottom = 116.0
+
+[node name="Label" type="Label" parent="ArcOption"]
+offset_left = -95.0
+offset_right = -19.0
+offset_bottom = 19.0
+text = "Arc:"
+
+[node name="Cylinders" parent="." instance=ExtResource("2_pnddi")]
+offset_left = 400.0
+offset_top = -123.0
+offset_right = 928.0
+offset_bottom = 549.0
+
+[node name="BaseDeckButton" type="Button" parent="."]
+offset_left = 67.0
+offset_top = 421.0
+offset_right = 198.0
+offset_bottom = 448.0
+text = "print base deck"
