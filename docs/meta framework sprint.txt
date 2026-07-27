@@ -1,8 +1,0 @@
-x choose deck scene
-- use existing level gen
-- rewards scene
--- coins
--- new picks
-- shop (have random picks)
-- repair (including trash forever)
-- deck (with sell option for one coin)

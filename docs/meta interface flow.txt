@@ -9,9 +9,6 @@ ArrayDisplay
 - All of the above should probably be a single base class ThingSpec?
 
 
-Once the user completes the level, they get the unlock animation and the continue button is shown (over the keyway where the hand was) (its on the latch part so its revealed with the withdraw unlock animation??)
-
-They're still allowed to click "show previous", use the menu, and any other info-only ui widgets.
 
 On continue, the entire play area slides up out of view and the user is brought to the results screen where results are displayed, one by one (wipe reveal effect)
 - "current depth unlocked!

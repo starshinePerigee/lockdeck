@@ -36,8 +36,8 @@ shop scene
 (all three of the above - might use a popup confirm / info window instead?)
 
 game core
-- on unlock, show continue button -> loot scene
--- continue button should be in the same place across all scenes (bottom center - over keyway? under latch?)
+x on unlock, show continue button -> loot scene
+x- continue button should be in the same place across all scenes (bottom center - over keyway? under latch?)
 - on fail, show end run button -> end of run scene
 
 loot scene

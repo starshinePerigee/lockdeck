@@ -37,6 +37,9 @@ enum InputState {
 }
 var current_state := InputState.INACTIVE
 
+## disable all meaningful input (cards and candle)
+var _lock_input := false
+
 ## Holds the most recent active card (even if a card isn't active)
 var active_card: CardSpec
 #endregion
@@ -60,7 +63,6 @@ func set_state(state: InputState) -> void:
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
-			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
 			$LockBody.position = LOCK_BODY_HOME
 			$PreviousButton.disable = false
@@ -72,9 +74,10 @@ func set_state(state: InputState) -> void:
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
+			if not _lock_input:
+				$HandMain/Hand.enable_all()
 		InputState.COMPLETE:
-			$HandMain/Hand.disable_all()
-			$LockBody/CountdownMain.button_disable = true
+			lock_input(true)
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
@@ -110,11 +113,22 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			dis_en_able_buttons()
 
+# Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
-		$LockBody/CountdownMain.button_disable = state
+		$LockBody/CountdownMain.button_disable = state or _lock_input
 		$TrashMain.disabled = state
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
+
+# Used for when you want to continue interacting with the interface,
+# such as after unlock
+func lock_input(state: bool = true) -> void:
+	_lock_input = state
+	$LockBody/CountdownMain.button_disable = state
+	if state:
+		$HandMain/Hand.disable_all()
+	else:
+		$HandMain/Hand.enable_all()
 
 func display_cards(cards: Array, header: String) -> void:
 	var cards_typed: Array[CardSpec] = []
@@ -130,12 +144,12 @@ func reset_countdown():
 	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
 
 func pick_selected(card: CardSpec) -> void:
-	if current_state == InputState.INACTIVE:
+	if current_state == InputState.INACTIVE and not _lock_input:
 		set_state(InputState.ACTIVE_SELECT)
 		active_card = card
 
 func pin_cursored(pin_index) -> void:
-	if current_state == InputState.ACTIVE_SELECT:
+	if current_state == InputState.ACTIVE_SELECT and not _lock_input:
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
 		
@@ -155,7 +169,7 @@ func pick_superdragged():
 	$LockBody/CylinderMain/Cylinders.force_update()
 
 func pin_hovered(pin_index):
-	if current_state == InputState.ACTIVE_DRAG:
+	if current_state == InputState.ACTIVE_DRAG and not _lock_input:
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
 
@@ -310,6 +324,7 @@ func add_random_cards(count: int = 1) -> void:
 	update_status_widget()
 
 func restart() -> void:
+	lock_input(false)
 	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CylinderMain.load_new_pins(
