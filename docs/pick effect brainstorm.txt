@@ -28,6 +28,7 @@ PUSH
 - push three if this pick breaks
 - draw a card for each unrevealed, untested depth activated
 - repair costs start at 0
+- repair cost is always 2
 - will skip revealed active depths
 - does not affect jam
 

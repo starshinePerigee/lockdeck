@@ -22,3 +22,9 @@
 - do something with the indicator pick on discard
 
 - if you decide to have a deck limit, let you put cards in your deck over the limit but you can't click the continue button and it says "Hand full!"
+
+- when locking out a scene (such as CardDisplay or SettingsWidget) do you want to dither over the entire bg with a border?
+
+- saving and loading
+
+- deck select has a roll of lockpicks, and it rolls up after you click go

@@ -2,6 +2,7 @@ extends Control
 
 signal game_fail
 signal game_win
+signal continue_to_next
 
 #region game state variables
 @export var cylinder_count := 4
@@ -36,12 +37,15 @@ enum InputState {
 }
 var current_state := InputState.INACTIVE
 
+## disable all meaningful input (cards and candle)
+var _lock_input := false
+
 ## Holds the most recent active card (even if a card isn't active)
 var active_card: CardSpec
 #endregion
 
 ## used for moving the lock body
-var lock_body_start_pos: Vector2
+static var LOCK_BODY_HOME := Vector2(216, -143) 
 
 func set_state(state: InputState) -> void:
 	if current_state == state:
@@ -59,9 +63,8 @@ func set_state(state: InputState) -> void:
 		InputState.INACTIVE:
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
-			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
-			$LockBody.position = lock_body_start_pos
+			$LockBody.position = LOCK_BODY_HOME
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$PreviousButton/LastHint.visible = false
@@ -71,9 +74,10 @@ func set_state(state: InputState) -> void:
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
 			$DiscardMain.listening_for_mouse = false
+			if not _lock_input:
+				$HandMain/Hand.enable_all()
 		InputState.COMPLETE:
-			$HandMain/Hand.disable_all()
-			$LockBody/CountdownMain.button_disable = true
+			lock_input(true)
 		InputState.ACTIVE_SELECT:
 			$Notifications.clear()
 			$LockBody/IndicatorPick.go_stow()
@@ -88,14 +92,13 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			$PreviousButton.disable = true
 			reset_countdown()
-			$DeckMain/DeckLabel.button_disable = true
 			$DiscardMain.show_icon = true
 			$DiscardMain.listening_for_drag = true
 		InputState.VIEW_ALL:
 			$Notifications.clear()
 			$LockBody.global_position = Vector2(
 				# 146 is a full pin worth of depths, putting the base at the top
-				lock_body_start_pos.x, lock_body_start_pos.y + 146 + 8
+				LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
@@ -110,12 +113,30 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			dis_en_able_buttons()
 
+# Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
-		$LockBody/CountdownMain.button_disable = state
-		$TrashMain.button_disable = state
-		$DeckMain/DeckLabel.button_disable = state
+		$LockBody/CountdownMain.button_disable = state or _lock_input
+		$TrashMain.disabled = state
+		$DeckMain/DeckLabel.disabled = state
+		$DiscardMain/DiscardLabel.disabled = state
 
-func go_card_display() -> void:
+# Used for when you want to continue interacting with the interface,
+# such as after unlock
+func lock_input(state: bool = true) -> void:
+	_lock_input = state
+	$LockBody/CountdownMain.button_disable = state
+	if state:
+		$HandMain/Hand.disable_all()
+	else:
+		$HandMain/Hand.enable_all()
+
+func display_cards(cards: Array, header: String) -> void:
+	var cards_typed: Array[CardSpec] = []
+	cards_typed.assign(cards)
+	$CardDisplay.header = header
+	$CardDisplay.cards = cards
+	$CardDisplay.redraw()
+	$CardDisplay.show_display()
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
@@ -123,12 +144,12 @@ func reset_countdown():
 	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
 
 func pick_selected(card: CardSpec) -> void:
-	if current_state == InputState.INACTIVE:
+	if current_state == InputState.INACTIVE and not _lock_input:
 		set_state(InputState.ACTIVE_SELECT)
 		active_card = card
 
 func pin_cursored(pin_index) -> void:
-	if current_state == InputState.ACTIVE_SELECT:
+	if current_state == InputState.ACTIVE_SELECT and not _lock_input:
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
 		
@@ -148,7 +169,7 @@ func pick_superdragged():
 	$LockBody/CylinderMain/Cylinders.force_update()
 
 func pin_hovered(pin_index):
-	if current_state == InputState.ACTIVE_DRAG:
+	if current_state == InputState.ACTIVE_DRAG and not _lock_input:
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
 
@@ -222,13 +243,17 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		$PreviousButton/LastHint.text = "No hints last turn"
 	
 	if result.lock_solved:
-		game_win.emit()
-		$LockBody/AnimationPlayer.play("unlock")
-		$Notifications.notify(Notifications.UNLOCK)
-		set_state(InputState.INACTIVE)
-		set_state(InputState.COMPLETE)
+		solve_lock()
 	else:
 		cleanup_step()
+
+func solve_lock() -> void:
+	$ContinueButton.visible = true	
+	game_win.emit()
+	$LockBody/AnimationPlayer.play("unlock")
+	$Notifications.notify(Notifications.UNLOCK)
+	set_state(InputState.INACTIVE)
+	set_state(InputState.COMPLETE)
 
 func discard_pick() -> void:
 	$HandMain.deselect()
@@ -283,13 +308,12 @@ func end_turn(count_down: bool = true) -> void:
 	set_state(InputState.INACTIVE)
 
 ## Loads the starter hand
-func load_starter_deck() -> void:
+func load_deck(deck: Array[CardSpec]) -> void:
 	discard_hand()
 	reload_deck()
-	
 	$DeckMain.clear_all()
-	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
-	print("Loaded default %s cards." % deck_count)
+	$DeckMain.add_cards(deck)
+	print("Loaded %s cards." % deck_count)
 	update_status_widget()
 
 func add_random_cards(count: int = 1) -> void:
@@ -300,6 +324,8 @@ func add_random_cards(count: int = 1) -> void:
 	update_status_widget()
 
 func restart() -> void:
+	lock_input(false)
+	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CylinderMain.load_new_pins(
 		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
@@ -311,7 +337,17 @@ func restart() -> void:
 	$Notifications.clear()
 	$PreviousButton/LastHint.text = "No picks yet"
 
+func break_from_hand() -> void:
+	if $HandMain.count() == 0:
+		return
+		
+	active_card = $HandMain.cards[-1]
+	break_next = true
+	discard_pick()
+
 func _ready() -> void:
+	$ContinueButton.pressed.connect(continue_to_next.emit)
+
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_untapped.connect(pick_deselected)
@@ -320,15 +356,13 @@ func _ready() -> void:
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
-	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
-	$TrashMain/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$TrashMain.display_opened.connect(go_card_display)
-	$DeckMain/DeckLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DeckMain/DeckLabel.display_opened.connect(go_card_display)
-	$DiscardMain/DiscardLabel/CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
-	$DiscardMain/DiscardLabel.display_opened.connect(go_card_display)
+	
+	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
+	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
+	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
 	
 	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
 	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)

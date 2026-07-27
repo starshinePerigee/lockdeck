@@ -1,0 +1,50 @@
+main screen
+- start -> deck select
+- settings -> show settings window (global scene)
+
+deck select
+- multiple decks, has tooltip and hover/select paradigm -> strategy hub
+
+~ 🐦 ~
+
+strategy hub
+- shows current stage
+
+- deck -> deck viewer
+-- has deck counter (/20?)
+- repair (disabled on floor 1) -> repair scene
+-- has broken pick counter
+- shop (disabled on floor 1) -> shop scene
+-- has coin counter
+- next level -> game core
+
+deck viewer
+- top panel: selected card, with tooltips and a sell button
+- bottom panel: all cards
+- return button -> strategy hub
+
+repair scene
+- top panel: selected card, with tooltips and a repair button
+- bottom panel: all broken cards
+- return button -> strategy hub
+
+shop scene
+- top panel: selected card / object, with description and buy button
+- bottom panel: all items for sale
+- return button -> strategy hub
+
+(all three of the above - might use a popup confirm / info window instead?)
+
+game core
+x on unlock, show continue button -> loot scene
+x- continue button should be in the same place across all scenes (bottom center - over keyway? under latch?)
+- on fail, show end run button -> end of run scene
+
+loot scene
+- continue -> strategy hub
+-- locked until all loot is looted
+- loot -> pops up a confirm window
+
+end of run
+- show statistics
+- after a bit, show the main menu button -> main menu

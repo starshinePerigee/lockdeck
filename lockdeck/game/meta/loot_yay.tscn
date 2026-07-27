@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://b432wp5ei356c"]
+
+[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_d3fjh"]
+[ext_resource type="Script" uid="uid://c6qboikc3xanu" path="res://game/meta/loot_yay.gd" id="2_o85kv"]
+
+[node name="LootYay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_d3fjh")
+script = ExtResource("2_o85kv")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 234.0
+offset_top = 186.0
+offset_right = 274.0
+offset_bottom = 205.0
+text = "Loot summary
+"
+
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 776.0
+offset_top = 444.0
+offset_right = 864.0
+offset_bottom = 471.0
+text = "Continue >"

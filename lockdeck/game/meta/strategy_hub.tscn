@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://t14tg1tt2anv"]
+
+[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
+
+[node name="StrategyHub" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fro3h")
+
+[node name="DeckButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 188.0
+offset_right = 224.0
+offset_bottom = 215.0
+text = "Deck"
+
+[node name="Label" type="Label" parent="DeckButton"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 68.0
+offset_bottom = -5.0
+text = "Picks; 0/20"
+
+[node name="RepairButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 183.0
+offset_right = 421.0
+offset_bottom = 210.0
+text = "Repair"
+
+[node name="Label" type="Label" parent="RepairButton"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 68.0
+offset_bottom = -5.0
+text = "Broken: 0"
+
+[node name="ShopButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 558.0
+offset_top = 188.0
+offset_right = 602.0
+offset_bottom = 215.0
+text = "Shop"
+
+[node name="Label" type="Label" parent="ShopButton"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 68.0
+offset_bottom = -5.0
+text = "Coins: 0"

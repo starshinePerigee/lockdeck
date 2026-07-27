@@ -1,0 +1,8 @@
+- return to title screen
+-- confirm: abandon progress
+
+- effects
+- music
+- ambience
+
+- active row highlight

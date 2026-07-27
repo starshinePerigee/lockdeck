@@ -302,7 +302,6 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 			effect_depths.append(target)
 			depth_offset += 1
 	
-	print(effect_depths)
 	effect.add_positions(effect_depths)
 	if len(effect_depths) == 1:
 		_unjam_effect(effect)

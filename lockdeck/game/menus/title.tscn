@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5e0yy8ky4832"]
+
+[ext_resource type="Script" uid="uid://peauvaoe3emi" path="res://game/menus/title.gd" id="1_pwv2q"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="3_0ery1"]
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pwv2q")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 116.0
+offset_right = 346.0
+offset_bottom = 135.0
+text = "Handful of Lockpicks TITLE"
+
+[node name="StartGameButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 187.0
+offset_right = 250.0
+offset_bottom = 214.0
+theme = ExtResource("3_0ery1")
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 250.0
+offset_right = 250.0
+offset_bottom = 277.0
+theme = ExtResource("3_0ery1")
+text = "Settings"
+alignment = 0

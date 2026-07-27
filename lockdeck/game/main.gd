@@ -1,42 +1,37 @@
 extends Control
+## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.6.1"
+var VERSION_NUMBER := "v0.8.0"
 
-var difficulty := 0
-
-func set_next_button_state(enabled: bool) -> void:
-	$NextLevelButton.visible = enabled
-	$NextLevelButton.disabled = not enabled
-
-func restart_game() -> void:
-	difficulty = 0
-	$GameCore.load_starter_deck()
-	start_next_level()
-
-func start_next_level():
-	$RestartButton/ColorRect.visible = false
-	set_next_button_state(false)
+func start_game(starter_deck: Array[CardSpec]) -> void:
+	$MenuButton.visible = true
+	$GameManager.visible = true
+	$SettingsWidget.add_button("DEBUG: Solve level", $GameManager.auto_complete_level, true)
+	$SettingsWidget.add_button("DEBUG: Break three", $GameManager.break_three) 
 	
-	difficulty += 1
-	$GameCore/GameStatus.stage = difficulty
-	$GameCore.cylinder_count = min(difficulty, 5)
-	$GameCore.difficulty_mod = max(difficulty - 6, 0)
-	$GameCore.restart()
-	$GameCore.add_random_cards(2)
-	$NextLevelButton.disabled = true
-	$GameCore/GameStatus.coins = 0
+	$TopLevelMenus/AnimationPlayer.play("start_game")
+	$GameManager.begin_new_game(starter_deck)
 
-func show_win():
-	set_next_button_state(true)
+func abandon_game_and_return_to_title() -> void:
+	$MenuButton.visible = false
+	$GameManager.visible = false
+	$SettingsWidget.remove_button("DEBUG: Solve level")
+	$SettingsWidget.remove_button("DEBUG: Break three")
+	
+	$TopLevelMenus/AnimationPlayer.play("return_to_title")
+	$GameManager.abort_and_reset()
 
-func show_fail():
-	$RestartButton/ColorRect.visible = true
-
-func _ready():
-	$RestartButton.pressed.connect(restart_game)
-	$GameCore.game_win.connect(show_win)
-	$GameCore.game_fail.connect(show_fail)
-	$GameCore.DEBUG_MODE = true
-	$NextLevelButton.pressed.connect(start_next_level)
-	restart_game()
+func _ready() -> void:
 	$Version.text = VERSION_NUMBER
+	$MenuButton.visible = false
+	$GameManager.visible = false
+	
+	$MenuButton.pressed.connect($SettingsWidget.show_widget)
+	$SettingsWidget.add_button(
+		"Abort game and return to title",
+		abandon_game_and_return_to_title,
+		true
+	)
+	$TopLevelMenus/Title.show_settings.connect($SettingsWidget.show_widget)
+	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
+	$TopLevelMenus/AnimationPlayer.play("RESET")

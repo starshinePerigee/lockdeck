@@ -9,10 +9,11 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 528.0
 offset_bottom = 608.0
+mouse_filter = 2
 script = ExtResource("1_j3ebm")
 
 [node name="Cylinders" parent="." instance=ExtResource("2_s8kgd")]
-offset_right = 528.0
+mouse_filter = 0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0

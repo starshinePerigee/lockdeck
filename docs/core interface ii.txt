@@ -1,12 +1,25 @@
 - global settings object
 - debug mode
 - menu (return to title, etc)
-- see deck contents
-- see discard contents
-- see break contents
--- update break label to only show this round's break count
 - see current depths
+- update panel themes
+- fix panel theming
+-- scrollbars
 
 - pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label)
 - pullout pick reference (small ? next to the deck)
 - artifact tooltip
+
+- split settings into "menu" and "settings" where menu can open the settings
+- return to title should have confirm
+
+
+small polish asset list:
+- clean up carddisplay windows and areas
+- fix spring compression
+- clean up lock details
+- convert depths to transparent on second background
+-- make exhausted depths use a different darker base instead of modulating
+- on pin set, raise by 8px and exhaust
+
+- how the fuck do early unlocks work

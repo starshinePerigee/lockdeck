@@ -9,9 +9,6 @@ ArrayDisplay
 - All of the above should probably be a single base class ThingSpec?
 
 
-Once the user completes the level, they get the unlock animation and the continue button is shown (over the keyway where the hand was) (its on the latch part so its revealed with the withdraw unlock animation??)
-
-They're still allowed to click "show previous", use the menu, and any other info-only ui widgets.
 
 On continue, the entire play area slides up out of view and the user is brought to the results screen where results are displayed, one by one (wipe reveal effect)
 - "current depth unlocked!
@@ -37,3 +34,10 @@ on continue, the results slides to the left and rewards are shown / dropped in
 each scene slides up from top/bottom
 
 on continue, slide horizontal to an empty "depth: foo" label, then the core scene slides up, the hand is dealt, and we start
+
+
+
+
+~~~
+
+we might need a stage > stage > boss > shop/repair paradigm?
