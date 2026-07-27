@@ -2,6 +2,7 @@ extends Control
 
 signal game_fail
 signal game_win
+signal continue_to_next
 
 #region game state variables
 @export var cylinder_count := 4
@@ -41,7 +42,7 @@ var active_card: CardSpec
 #endregion
 
 ## used for moving the lock body
-var lock_body_start_pos: Vector2
+static var LOCK_BODY_HOME := Vector2(216, -143) 
 
 func set_state(state: InputState) -> void:
 	if current_state == state:
@@ -61,7 +62,7 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.unhide_hand()
 			$HandMain/Hand.enable_all()
 			$HandMain.deselect()
-			$LockBody.position = lock_body_start_pos
+			$LockBody.position = LOCK_BODY_HOME
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$PreviousButton/LastHint.visible = false
@@ -94,7 +95,7 @@ func set_state(state: InputState) -> void:
 			$Notifications.clear()
 			$LockBody.global_position = Vector2(
 				# 146 is a full pin worth of depths, putting the base at the top
-				lock_body_start_pos.x, lock_body_start_pos.y + 146 + 8
+				LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
@@ -228,6 +229,7 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		$PreviousButton/LastHint.text = "No hints last turn"
 	
 	if result.lock_solved:
+		$ContinueButton.visible = true	
 		game_win.emit()
 		$LockBody/AnimationPlayer.play("unlock")
 		$Notifications.notify(Notifications.UNLOCK)
@@ -289,13 +291,12 @@ func end_turn(count_down: bool = true) -> void:
 	set_state(InputState.INACTIVE)
 
 ## Loads the starter hand
-func load_starter_deck() -> void:
+func load_deck(deck: Array[CardSpec]) -> void:
 	discard_hand()
 	reload_deck()
-	
 	$DeckMain.clear_all()
-	$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
-	print("Loaded default %s cards." % deck_count)
+	$DeckMain.add_cards(deck)
+	print("Loaded %s cards." % deck_count)
 	update_status_widget()
 
 func add_random_cards(count: int = 1) -> void:
@@ -306,6 +307,7 @@ func add_random_cards(count: int = 1) -> void:
 	update_status_widget()
 
 func restart() -> void:
+	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CylinderMain.load_new_pins(
 		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
@@ -318,6 +320,8 @@ func restart() -> void:
 	$PreviousButton/LastHint.text = "No picks yet"
 
 func _ready() -> void:
+	$ContinueButton.pressed.connect(continue_to_next.emit)
+
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_untapped.connect(pick_deselected)
@@ -326,7 +330,6 @@ func _ready() -> void:
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
-	lock_body_start_pos = $LockBody.global_position
 	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	

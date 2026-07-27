@@ -1,5 +1,7 @@
 extends Control
 
+# DEPRECATED
+
 var difficulty := 0
 
 func set_next_button_state(enabled: bool) -> void:

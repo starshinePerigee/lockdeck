@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=17 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bvv5brbe2kjwk" path="res://objects/play_area/artifacts_interface.tscn" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="6_3ctlq"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
 [ext_resource type="Texture2D" uid="uid://dxduwrhshxgbw" path="res://assets/lock/active box.png" id="6_o5sbf"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
@@ -27,6 +28,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_db5vk")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
 [node name="MenuCutout" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = 8.0
@@ -40,6 +43,7 @@ offset_right = 960.0
 offset_bottom = 540.0
 
 [node name="LockBody" parent="." instance=ExtResource("2_2tf6j")]
+layout_mode = 0
 offset_left = 216.0
 offset_top = -143.0
 offset_right = 256.0
@@ -138,6 +142,14 @@ offset_left = 16.0
 offset_top = 94.0
 offset_right = 16.0
 offset_bottom = 94.0
+
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 633.0
+offset_top = 418.0
+offset_right = 739.0
+offset_bottom = 444.0
+theme = ExtResource("6_3ctlq")
+text = "Continue >"
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950

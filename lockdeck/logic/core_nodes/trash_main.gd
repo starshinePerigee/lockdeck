@@ -13,6 +13,11 @@ func add_card(card: CardSpec) -> void:
 	cards.append(card)
 	text = "Broken: %s" % len(cards)
 
+## resets trashmain, emptying the trash
+func reset() -> void:
+	cards = []
+	text = "Broken: 0"
+
 func _ready() -> void:
 	pressed.connect(show_display)
-	text = "Broken: 0"
+	reset()
