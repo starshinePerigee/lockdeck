@@ -2,6 +2,8 @@
 - debug mode
 - menu (return to title, etc)
 - see current depths
+-- the reference needs to show what the depth "tests as" (so a bounce "tests as interesting")
+-- in the tooltips, instead of using icons, just use [ ! ] [ok ] [ X ] with the color highlights
 - update panel themes
 - fix panel theming
 -- scrollbars
