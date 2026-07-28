@@ -20,6 +20,7 @@ in the tooltips, instead of using icons, just use [ ! ] [ok ] [ X ] with the col
 
 
 in the reference, the minor depth is shown offset and under the major depth
+ed note: nvm do not do this
 
 ---
 

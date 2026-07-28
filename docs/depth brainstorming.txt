@@ -7,6 +7,7 @@
 - test 3 (landmine): if this depth is tested or revealed, it breaks the pick. revealed at start
 - bomb (anti-reveal): if this is revealed, next turn you have to advance past it or the revealer breaks (also plays interesting with move into it, and move/jam!)
 - trap: a depth that breaks if you skip or activate it, but has an earlier depth that diffuses it (starts revealed)
+- super anti-reveal: if revealed, breaks pick. tests as safe
 - stuck: if this is tested or revealed, if you break a pick this turn this pick is also broken
 - x: a depth that resets the pin if you skip it without crush
 - x: a depth that breaks if you reveal it (without activating it)
