@@ -1,4 +1,4 @@
-﻿## Handles generating sets of locks
+## Handles generating sets of locks
 class_name LockGenerator
 
 enum GameArcs {
@@ -72,7 +72,8 @@ static func get_lock_deck(
 	lockset_deck.shuffle()
 	
 	var current_hazard := 0
-	var lock_deck: Array[DepthTemplates] = []
+	# Always include a break:
+	var lock_deck: Array[DepthTemplates] = [DepthTemplates.BREAK]
 	
 	for template in lockset_deck:
 		lock_deck.append(template)
@@ -83,75 +84,46 @@ static func get_lock_deck(
 	
 	return lock_deck
 
-
-
-### Pulls a number of depth templates from the total list, returning a smaller
-### collection that can be used to build locks.
-#static func get_lockset_deck(
-#	arc: GameArcs,
-#	target_hazard: int,
-#	target_count: int
-#) -> Array[DepthTemplates]:
-#	var base_deck := get_base_template_deck(arc)
-#	base_deck.shuffle()
-#	
-#	var current_hazard := 0
-#	var lockset_deck: Array[DepthTemplates] = []
-#	var skip_count := 0
-#	
-#	# TODO: if deck is super borked (skip count maxxed), retry entirely
-#	for template in base_deck:
-#		var future_hazard := current_hazard + template.net_hazard
-#		var hazard_delta := future_hazard - target_hazard
-#		
-#		# check if we are over-hazarded
-#		if hazard_delta > 0:
-#			var add_anyway: bool = randi_range(0, 5) > hazard_delta
-#			if not add_anyway:
-#				# use a skip
-#				skip_count += 1
-#				if skip_count > SKIP_THRESHOLD:
-#					print(
-#						"Returning deck with extra hazard. Hazard: %s vs %s target"
-#						% [future_hazard, target_hazard]
-#					)
-#					break
-#				else:
-#					continue
-#		current_hazard = future_hazard
-#		lockset_deck.append(template)
-#		
-#		# check if we are at the count limit
-#		if len(lockset_deck) >= target_count:
-#			#
-#			if hazard_delta >= 0:
-#				print(
-#					"Happy deck. Count: %s vs target %s, hazard: %s vs target %s"
-#					% [len(lockset_deck), target_count, current_hazard, target_hazard]
-#				)
-#				break
-#			
-#			var break_early: bool = randi_range(0, 5) > -hazard_delta
-#			if break_early:
-#				print(
-#					"Semi-happy deck. Count: %s vs target %s, hazard: %s vs target %s"
-#					% [len(lockset_deck), target_count, current_hazard, target_hazard]
-#				)
-#				break
-#			else:
-#				# use a skip
-#				skip_count += 1
-#				if skip_count > SKIP_THRESHOLD:
-#					print(
-#						"Returning deck with insufficent hazard. Hazard: %s vs %s target"
-#						% [current_hazard, target_hazard]
-#					)
-#					break
-#				else:
-#					continue
-#	print("Skip count: %s" % skip_count)
-#	return lockset_deck
-
-
-#func generate(pin_count: int, hazard_target: int) -> LockSpec:
-#	pass
+## Generate a lock_spec given a lock deck and some parameters
+static func build_lock(
+	deck: Array[DepthTemplates], pin_count: int, hazard_target: int
+) -> LockSpec:
+	var pins: Array[PinSpec] = []
+	# Array[Array[int))
+	var open: Array[Array]
+	
+	# pop Break, shuffle, and re-add it at the front
+	deck.erase(DepthTemplates.BREAK)
+	deck.shuffle()
+	deck.insert(0, DepthTemplates.BREAK)
+	
+	for i in pin_count:
+		pins.append(PinSpec.new(Depths.EMPTY))
+		var pin_open := range(1, PinSpec.PIN_DEPTH_COUNT - 1)
+		pin_open.shuffle()
+		open.append(pin_open)
+	
+	var pin_selector := range(0, pin_count)
+	
+	for template in deck:
+		pin_selector.shuffle()
+		var placed := 0
+		for i in range(pin_count):
+			var target: int = pin_selector[i]
+			# place the template's depths at pin_selector[i]
+			if len(open[target]) < template.depths_per_pin():
+				continue
+			
+			if template.minor_depth:
+				var poses: Array[int] = [open[target].pop_front(), open[target].pop_front()]
+				pins[target].depths[min(poses[0], poses[1])] = template.minor_depth
+				pins[target].depths[max(poses[0], poses[1])] = template.depth
+			else:
+				var pos: int = open[target].pop_front()
+				pins[target].depths[pos] = template.depth
+			
+			placed += 1
+			if placed > template.pin_count(pin_count):
+				break
+	
+	return LockSpec.new(deck, pins)

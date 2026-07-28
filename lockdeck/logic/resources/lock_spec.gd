@@ -7,3 +7,10 @@ var templates: Array[DepthTemplates]
 
 ## Holds the actual PinSpecs
 var pins: Array[PinSpec]
+
+func _init(
+	templates_: Array[DepthTemplates],
+	pins_: Array[PinSpec],
+):
+	templates = templates_
+	pins = pins_ 

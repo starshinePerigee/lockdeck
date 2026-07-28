@@ -1,4 +1,4 @@
-﻿extends Resource
+extends Resource
 ## Defines depth templates used for building locks
 class_name DepthTemplates
 
@@ -51,13 +51,22 @@ func _init(
 func pin_count(pins: int) -> int:
 	return max(roundi((depths_per_five + 0.00001) / 5.0 * pins), 1)
 
+func depths_per_pin() -> int:
+	if minor_depth == null:
+		return 1
+	else:
+		return 2
+
 ## returns how many depths this will require to fully place at the given number of pins.
 func total_depths_placed(pins: int) -> int:
-	if minor_depth == null:
-		return pin_count(pins)
-	else:
-		return pin_count(pins) * 2
+	return pin_count(pins) * depths_per_pin()
 
+## Prints the template
+func as_str() -> String:
+	var return_str := depth.depth_name
+	if minor_depth != null:
+		return_str += " / %s" % minor_depth.depth_name
+	return return_str
 
 ## Break is automatically placed on every pin
 static var BREAK := DepthTemplates.new(

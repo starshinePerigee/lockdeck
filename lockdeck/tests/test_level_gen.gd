@@ -4,6 +4,9 @@ var _current_arc := LockGenerator.GameArcs.MID
 var _lockset_deck: Array[DepthTemplates] = []
 var _lock_deck: Array[DepthTemplates] = []
 
+func pins() -> int:
+	return int($CountOption.value)
+
 func get_arc(idx: int) -> void:
 	var selected: String = $ArcOption.get_item_text(idx)
 	if selected in LockGenerator.GameArcs.keys():
@@ -16,7 +19,7 @@ func print_deck() -> void:
 	var deck := LockGenerator.get_base_template_deck(_current_arc)
 	var total_hazard := 0
 	for template in deck:
-		print(template.depth.depth_name)
+		print(template.as_str())
 		total_hazard += template.net_hazard
 	print("Count: %s" % len(deck))
 	print("Total hazard: %s" % total_hazard)
@@ -32,16 +35,16 @@ func gen_lockset_deck() -> void:
 func print_lockset_deck() -> void:
 	gen_lockset_deck()
 	gen_lock_deck()
+	gen_and_load()
 	
-	var pins := int($CountOption.value)
 	var total_depths := 0
 	for template in _lockset_deck:
-		print(template.depth.depth_name)
+		print(template.as_str())
 		if template.depth != Depths.EMPTY:
-			total_depths += template.total_depths_placed(pins)
+			total_depths += template.total_depths_placed(pins())
 	print(
 		"Total depths to place: %s / %s" 
-		% [total_depths, pins * 8]
+		% [total_depths, pins() * 7]
 	)
 
 func gen_lock_deck() -> void:
@@ -52,17 +55,30 @@ func gen_lock_deck() -> void:
 
 func print_lock_deck() -> void:
 	gen_lock_deck()
+	gen_and_load()
 	
-	var pins := int($CountOption.value)
 	var total_depths := 0
 	for template in _lock_deck:
-		print(template.depth.depth_name)
+		print(template.as_str())
 		if template.depth != Depths.EMPTY:
-			total_depths += template.total_depths_placed(pins)
+			total_depths += template.total_depths_placed(pins())
 	print(
 		"Total depths to place: %s / %s" 
-		% [total_depths, pins * 8]
+		% [total_depths, pins() * 7]
 	)
+
+func gen_and_load() -> void:
+	var lock_spec := LockGenerator.build_lock(
+		_lock_deck, pins(), int($DeckTarget.text)
+	)
+	for pin in lock_spec.pins:
+		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
+	$Cylinders.set_pin_specs(lock_spec.pins)
+
+func full_regen() -> void:
+	gen_lockset_deck()
+	gen_lock_deck()
+	gen_and_load()
 
 func _ready() -> void:
 	$ArcOption.clear()
@@ -84,8 +100,18 @@ func _ready() -> void:
 	$DeckTarget.text_submitted.connect(gen_lock_deck.unbind(1))
 	$DeckTarget.text = "6"
 
+	
+	$ArcOption.item_selected.connect(gen_and_load.unbind(1))
+	$HazardTarget.text_submitted.connect(gen_and_load.unbind(1))
+	$TemplateTarget.text_submitted.connect(gen_and_load.unbind(1))
+	$DeckTarget.text_submitted.connect(gen_and_load.unbind(1))
+	$CountOption.value_changed.connect(gen_and_load.unbind(1))
+
 	$BaseDeckButton.pressed.connect(print_deck)
 	$LocksetDeckButton.pressed.connect(print_lockset_deck)
 	$LockDeckButton.pressed.connect(print_lock_deck)
+	$GenerateButton.pressed.connect(gen_and_load)
 	
 	gen_lockset_deck()
+	gen_lock_deck()
+	gen_and_load()

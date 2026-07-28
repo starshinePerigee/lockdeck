@@ -6,32 +6,12 @@
 [node name="TestLevelGen" type="Node2D"]
 script = ExtResource("1_25lvv")
 
-[node name="GenerateButton" type="Button" parent="."]
+[node name="BaseDeckButton" type="Button" parent="."]
 offset_left = 162.0
-offset_top = 447.0
-offset_right = 257.0
-offset_bottom = 474.0
-text = "Regenerate"
-metadata/_edit_use_anchors_ = true
-
-[node name="CountOption" type="HSlider" parent="."]
-offset_left = 162.0
-offset_top = 401.0
-offset_right = 301.0
-offset_bottom = 428.0
-min_value = 1.0
-max_value = 5.0
-value = 4.0
-tick_count = 5
-ticks_on_borders = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CountOption"]
-layout_mode = 0
-offset_left = -95.0
-offset_right = -19.0
-offset_bottom = 19.0
-text = "Pin count:"
+offset_top = 24.0
+offset_right = 293.0
+offset_bottom = 51.0
+text = "print base deck"
 metadata/_edit_use_anchors_ = true
 
 [node name="ArcOption" type="OptionButton" parent="."]
@@ -47,28 +27,6 @@ offset_left = -95.0
 offset_right = -19.0
 offset_bottom = 19.0
 text = "Arc:"
-metadata/_edit_use_anchors_ = true
-
-[node name="Cylinders" parent="." instance=ExtResource("2_pnddi")]
-offset_left = 400.0
-offset_top = -123.0
-offset_right = 928.0
-offset_bottom = 549.0
-
-[node name="BaseDeckButton" type="Button" parent="."]
-offset_left = 162.0
-offset_top = 24.0
-offset_right = 293.0
-offset_bottom = 51.0
-text = "print base deck"
-metadata/_edit_use_anchors_ = true
-
-[node name="LocksetDeckButton" type="Button" parent="."]
-offset_left = 162.0
-offset_top = 235.0
-offset_right = 270.0
-offset_bottom = 262.0
-text = "Print lockset"
 metadata/_edit_use_anchors_ = true
 
 [node name="HazardTarget" type="LineEdit" parent="."]
@@ -101,12 +59,12 @@ offset_bottom = 19.0
 text = "Templates:"
 metadata/_edit_use_anchors_ = true
 
-[node name="LockDeckButton" type="Button" parent="."]
+[node name="LocksetDeckButton" type="Button" parent="."]
 offset_left = 162.0
-offset_top = 347.0
-offset_right = 277.0
-offset_bottom = 374.0
-text = "Print lockdeck"
+offset_top = 235.0
+offset_right = 270.0
+offset_bottom = 262.0
+text = "Print lockset"
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckTarget" type="LineEdit" parent="."]
@@ -126,3 +84,45 @@ offset_right = -19.0
 offset_bottom = 19.0
 text = "Lock Hazard:"
 metadata/_edit_use_anchors_ = true
+
+[node name="LockDeckButton" type="Button" parent="."]
+offset_left = 162.0
+offset_top = 347.0
+offset_right = 277.0
+offset_bottom = 374.0
+text = "Print lockdeck"
+metadata/_edit_use_anchors_ = true
+
+[node name="CountOption" type="HSlider" parent="."]
+offset_left = 162.0
+offset_top = 401.0
+offset_right = 301.0
+offset_bottom = 428.0
+min_value = 1.0
+max_value = 5.0
+value = 4.0
+tick_count = 5
+ticks_on_borders = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CountOption"]
+layout_mode = 0
+offset_left = -95.0
+offset_right = -19.0
+offset_bottom = 19.0
+text = "Pin count:"
+metadata/_edit_use_anchors_ = true
+
+[node name="GenerateButton" type="Button" parent="."]
+offset_left = 162.0
+offset_top = 447.0
+offset_right = 257.0
+offset_bottom = 474.0
+text = "Regenerate"
+metadata/_edit_use_anchors_ = true
+
+[node name="Cylinders" parent="." instance=ExtResource("2_pnddi")]
+offset_left = 400.0
+offset_top = -123.0
+offset_right = 928.0
+offset_bottom = 549.0
