@@ -1,4 +1,12 @@
-push depth is danger level
+push depth is danger level - testing now
 
 crush + push only activates a pin once
 
+show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
+
+
+the between scene:
+- textless
+- should auto-advance to the next lock after the animation
+- should be behind the lock instead of rolling in from the side?
+-- but should slide to the left for the next lock

@@ -126,3 +126,17 @@ Reveal: always good. Deep reveal is hard because it is wildly powerful. Gems tha
 Crush: has a very specific use case, but it's also a general push. Crush comes in offset +, center +, and center ++.
 
 Jam: strange and weird. Probably has more jam-es than jam+s tbh.
+
+
+## Shop:
+
+Sells:
+- one basic card (picked at random)
+- one weird card (has a number of gems pre-applied and maybe a jewelry)
+- one gem or jewelry
+- one artifact (50% chance of ancient coin)
+- temporary picks (1 coin) (all are lost after next burglary):
+-- needle ( hint / hint hint / push hint hint)
+-- nail (crush crush jam jam jam / crush crush jam jam jam)
+-- hairpin (push push / push push / push push / jam jam)
+-- fishhook (push null reveal hint)

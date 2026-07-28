@@ -144,10 +144,10 @@ func reset_pin() -> void:
 	jam_count = 0
 	end_step()
 
-func _init():
+func _init(fill: Depths = Depths.DEBUG):
 	depths = []
 	depths.resize(PIN_DEPTH_COUNT)
-	depths.fill(Depths.DEBUG)
+	depths.fill(fill)
 	depths[0] = Depths.BASE
 	depths[-1] = Depths.FINAL
 	

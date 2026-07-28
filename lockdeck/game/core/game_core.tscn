@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=18 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
+[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="12_ralr2"]
 [ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="15_gg2qb"]
 
 [node name="GameCore" type="Control"]
@@ -124,6 +125,7 @@ offset_left = -192.0
 offset_top = 385.0
 offset_right = 123.0
 offset_bottom = 414.0
+theme = ExtResource("12_ralr2")
 text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1

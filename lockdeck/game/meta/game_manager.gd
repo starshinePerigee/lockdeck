@@ -66,7 +66,16 @@ func next_lock() -> void:
 	difficulty += 1
 	$GameCore/GameStatus.stage = difficulty
 	$GameCore.cylinder_count = min(difficulty, 5)
-	$GameCore.difficulty_mod = max(difficulty - 6, 0)
+	
+	var lockset_deck := LockGenerator.get_lockset_deck(
+		LockGenerator.GameArcs.MID,
+		difficulty + 5,
+		8
+	)
+	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, difficulty + 2)
+	var lock := LockGenerator.build_lock(lock_deck, $GameCore.cylinder_count, difficulty + 2) 
+	$GameCore.load_lock(lock)
+	
 	$GameCore.load_deck(current_deck.duplicate())
 	$GameCore/TrashMain.reset()
 	$GameCore.restart()

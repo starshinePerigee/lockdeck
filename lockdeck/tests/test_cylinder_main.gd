@@ -10,7 +10,7 @@ func set_testpos() -> void:
 	pins[2].pin_position = 2
 	pins[3].pin_position = 4
 	pins[4].pin_position = PinSpec.PIN_DEPTH_COUNT - 1
-	$CylinderMain.load_new_pins(pins)
+	$CylinderMain.load_new_lock(LockSpec.new(pins))
 
 
 func get_pick(selected: String) -> CardSpec:
