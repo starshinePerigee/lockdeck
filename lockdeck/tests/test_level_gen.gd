@@ -29,6 +29,8 @@ func gen_lockset_deck():
 	)
 
 func print_lockset_deck() -> void:
+	gen_lockset_deck()
+	
 	var pins := int($CountOption.value)
 	var total_depths := 0
 	for template in _lockset_deck:
@@ -46,8 +48,8 @@ func _ready() -> void:
 		$ArcOption.add_item(key, LockGenerator.GameArcs[key])
 	$ArcOption.select(1)
 	$ArcOption.item_selected.connect(get_arc)
-	$ArcOption.item_selected.connect(gen_lockset_deck)
 	
+	$ArcOption.item_selected.connect(gen_lockset_deck.unbind(1))
 	$HazardTarget.text_submitted.connect(gen_lockset_deck.unbind(1))
 	$TemplateTarget.text_submitted.connect(gen_lockset_deck.unbind(1))
 	
