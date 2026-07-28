@@ -8,16 +8,16 @@ script = ExtResource("1_25lvv")
 
 [node name="GenerateButton" type="Button" parent="."]
 offset_left = 162.0
-offset_top = 245.0
+offset_top = 319.0
 offset_right = 257.0
-offset_bottom = 272.0
+offset_bottom = 346.0
 text = "Regenerate"
 
 [node name="CountOption" type="HSlider" parent="."]
 offset_left = 162.0
-offset_top = 191.0
+offset_top = 273.0
 offset_right = 301.0
-offset_bottom = 218.0
+offset_bottom = 300.0
 min_value = 1.0
 max_value = 5.0
 value = 4.0
@@ -51,18 +51,18 @@ offset_right = 928.0
 offset_bottom = 549.0
 
 [node name="BaseDeckButton" type="Button" parent="."]
-offset_left = 67.0
+offset_left = 162.0
 offset_top = 421.0
-offset_right = 198.0
+offset_right = 293.0
 offset_bottom = 448.0
 text = "print base deck"
 
 [node name="LocksetDeckButton" type="Button" parent="."]
-offset_left = 67.0
-offset_top = 473.0
-offset_right = 198.0
-offset_bottom = 500.0
-text = "print lockset deck"
+offset_left = 162.0
+offset_top = 195.0
+offset_right = 270.0
+offset_bottom = 222.0
+text = "Print lockset"
 
 [node name="HazardTarget" type="LineEdit" parent="."]
 offset_left = 162.0

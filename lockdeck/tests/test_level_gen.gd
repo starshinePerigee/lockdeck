@@ -1,6 +1,7 @@
 extends Node2D
 
 var _current_arc := LockGenerator.GameArcs.MID
+var _lockset_deck: Array[DepthTemplates] = []
 
 func get_arc(idx: int) -> void:
 	var selected: String = $ArcOption.get_item_text(idx)
@@ -20,8 +21,8 @@ func print_deck() -> void:
 	print("Total hazard: %s" % total_hazard)
 	print("Hazard/template: %s" % (float(total_hazard) / len(deck)))
 
-func get_lockset_deck() -> Array[DepthTemplates]:
-	return LockGenerator.get_lockset_deck(
+func gen_lockset_deck():
+	_lockset_deck = LockGenerator.get_lockset_deck(
 		_current_arc,
 		int($HazardTarget.text),
 		int($TemplateTarget.text)
@@ -29,9 +30,8 @@ func get_lockset_deck() -> Array[DepthTemplates]:
 
 func print_lockset_deck() -> void:
 	var pins := int($CountOption.value)
-	var deck := get_lockset_deck()
 	var total_depths := 0
-	for template in deck:
+	for template in _lockset_deck:
 		print(template.depth.depth_name)
 		if template.depth != Depths.EMPTY:
 			total_depths += template.total_depths_placed(pins)
@@ -46,9 +46,15 @@ func _ready() -> void:
 		$ArcOption.add_item(key, LockGenerator.GameArcs[key])
 	$ArcOption.select(1)
 	$ArcOption.item_selected.connect(get_arc)
+	$ArcOption.item_selected.connect(gen_lockset_deck)
+	
+	$HazardTarget.text_submitted.connect(gen_lockset_deck.unbind(1))
+	$TemplateTarget.text_submitted.connect(gen_lockset_deck.unbind(1))
 	
 	$HazardTarget.text = "10"
 	$TemplateTarget.text = "5"
 
 	$BaseDeckButton.pressed.connect(print_deck)
 	$LocksetDeckButton.pressed.connect(print_lockset_deck)
+	
+	gen_lockset_deck()

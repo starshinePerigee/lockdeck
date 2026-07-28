@@ -30,6 +30,8 @@ static func get_base_template_deck(arc: GameArcs) -> Array[DepthTemplates]:
 			deck.append(template)
 	return deck
 
+## Pulls a number of depth templates from the total list, returning a smaller
+## collection that can be used to build locks.
 static func get_lockset_deck(
 	arc: GameArcs,
 	target_hazard: int,
