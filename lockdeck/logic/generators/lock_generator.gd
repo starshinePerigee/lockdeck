@@ -46,7 +46,10 @@ static func get_lockset_deck(
 	
 	for template in base_deck:
 		lockset_deck.append(template)
-		current_hazard += template.net_hazard
+		if template.net_hazard > 0:
+			# negative hazards should affect lock building, but we don't wnat them
+			# to over-burden the actual deck at this stage
+			current_hazard += template.net_hazard
 		
 		if (
 			current_hazard >= target_hazard 
@@ -60,6 +63,26 @@ static func get_lockset_deck(
 	)
 		
 	return lockset_deck
+
+## Pulls templates from the lockset deck to build a lock deck.
+## Target hazard should be lower than 
+static func get_lock_deck(
+	lockset_deck: Array[DepthTemplates], target_hazard: int
+) -> Array[DepthTemplates]:
+	lockset_deck.shuffle()
+	
+	var current_hazard := 0
+	var lock_deck: Array[DepthTemplates] = []
+	
+	for template in lockset_deck:
+		lock_deck.append(template)
+		current_hazard += template.net_hazard
+		
+		if current_hazard >= target_hazard:
+			break 
+	
+	return lock_deck
+
 
 
 ### Pulls a number of depth templates from the total list, returning a smaller
