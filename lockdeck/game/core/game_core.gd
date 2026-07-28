@@ -6,7 +6,6 @@ signal continue_to_next
 
 #region game state variables
 @export var cylinder_count := 4
-@export var difficulty_mod := 1
 @export var deck_count := 10
 @export var hand_size := 3
 @export var countdown_time := 2
@@ -316,6 +315,10 @@ func load_deck(deck: Array[CardSpec]) -> void:
 	print("Loaded %s cards." % deck_count)
 	update_status_widget()
 
+## loads a lock
+func load_lock(lock: LockSpec) -> void:
+	$LockBody/CylinderMain.load_new_lock(lock)
+
 func add_random_cards(count: int = 1) -> void:
 	var cards := PickGenerator.get_many_base_cards(count)
 	$DeckMain.add_cards(cards)
@@ -327,9 +330,6 @@ func restart() -> void:
 	lock_input(false)
 	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
-	$LockBody/CylinderMain.load_new_pins(
-		PinGenerator.build_real_lock(cylinder_count, difficulty_mod)
-	)
 	$LockBody/CountdownMain.set_count(countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0

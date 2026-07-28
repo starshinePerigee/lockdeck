@@ -65,7 +65,7 @@ static func get_lockset_deck(
 	return lockset_deck
 
 ## Pulls templates from the lockset deck to build a lock deck.
-## Target hazard should be lower than 
+## Target hazard should be lower than the lockset deck
 static func get_lock_deck(
 	lockset_deck: Array[DepthTemplates], target_hazard: int
 ) -> Array[DepthTemplates]:
@@ -126,4 +126,4 @@ static func build_lock(
 			if placed > template.pin_count(pin_count):
 				break
 	
-	return LockSpec.new(deck, pins)
+	return LockSpec.new(pins, deck)

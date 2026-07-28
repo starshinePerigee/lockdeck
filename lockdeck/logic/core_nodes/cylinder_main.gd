@@ -43,10 +43,10 @@ func reset_all_pins() -> void:
 		pin.reset_pin()
 	$Cylinders.set_pin_specs(pins)
 
-## Load a new set of pin specs for a new level.
-func load_new_pins(new_pins: Array[PinSpec]) -> void:
-	pins = new_pins
-	$Cylinders.set_pin_specs(new_pins)
+## Load a new lock for a new level.
+func load_new_lock(new_lock: LockSpec) -> void:
+	pins = new_lock.pins
+	$Cylinders.set_pin_specs(new_lock.pins)
 	turn_number = 0
 	_hint_id = -1
 

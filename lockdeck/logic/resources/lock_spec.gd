@@ -9,8 +9,11 @@ var templates: Array[DepthTemplates]
 var pins: Array[PinSpec]
 
 func _init(
-	templates_: Array[DepthTemplates],
 	pins_: Array[PinSpec],
+	templates_: Array[DepthTemplates] = [],
 ):
-	templates = templates_
 	pins = pins_ 
+	if len(templates_) == 0:
+		templates = []
+	else:
+		templates = templates_
