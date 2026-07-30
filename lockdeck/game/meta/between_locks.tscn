@@ -20,11 +20,3 @@ offset_top = 186.0
 offset_right = 274.0
 offset_bottom = 205.0
 text = "Between lock summary page"
-
-[node name="ContinueButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 776.0
-offset_top = 444.0
-offset_right = 864.0
-offset_bottom = 471.0
-text = "Continue >"

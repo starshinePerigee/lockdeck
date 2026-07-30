@@ -15,7 +15,6 @@ signal display_cards(Array)
 	set(v):
 		show_icon = v
 		icon_selected = false
-		$DiscardIcon.visible = show_icon
 
 @export var icon_selected: bool = false:
 	set(v):
