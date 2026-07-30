@@ -198,6 +198,8 @@ layout_mode = 1
 [node name="GameCore" parent="." instance=ExtResource("2_51x2c")]
 visible = false
 layout_mode = 1
+offset_top = 1200.0
+offset_bottom = 660.0
 
 [node name="StrategyHub" parent="." instance=ExtResource("4_vpla2")]
 visible = false

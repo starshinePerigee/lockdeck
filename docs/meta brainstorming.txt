@@ -92,18 +92,15 @@ higher value offer more, better picks
 Coins are your reserve health - they're how you "heal", buying picks back up to a healthy number.
 
 
-## Coins and endgame
+## Coins
 
 All artifacts always have a "sell for 1 coin" option.
 
 You have a coin cap
 
-You are trying to get the n shards of yendor - these are sometimes rare loot (with pity mechanic)
+coins drop as loot as 1, 2 and 5
 
-and also sold by shopkeepers (primary way of acquiring them) - main gold sink
-
-bonus coins for finishing in a single pass?
-
+bonus coin for completing a lock in a single turn
 
 
 ### Gems
@@ -140,3 +137,9 @@ Sells:
 -- nail (crush crush jam jam jam / crush crush jam jam jam)
 -- hairpin (push push / push push / push push / jam jam)
 -- fishhook (push null reveal hint)
+
+## Endgame:
+
+each boss loots a "knuckle of the old man" and shows a x/5 indicator
+
+collect all five to win

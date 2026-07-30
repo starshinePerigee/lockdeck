@@ -1,0 +1,19 @@
+Depths should be introduced slowly - ideally not more than one new one per burglary.
+
+BUT
+
+They could be permanently unlocked across runs. The end endgame is to unlock every depth
+
+unlocked as an artifact, or as part of your calling card bit
+
+this should be revisited as we add more depths
+
+
+decks can also be permanently unlocked as an artifact: statutettes of wolf, raven, etc.
+
+
+modes:
+- standard
+- infinite
+- challenge (jump to hard, have a random deck and a pick break limit, you have to clear one boss lock)
+- draft sprint

@@ -28,3 +28,12 @@
 - saving and loading
 
 - deck select has a roll of lockpicks, and it rolls up after you click go
+
+- better completion animation: cards should slide down and hide
+
+calling card:
+- after the tutorial, you draw a calling card (ref https://www.youtube.com/watch?v=U_TGOgp5-pc)
+- after each loot, you place the drawing card (playing forward the drawn animation)
+- this pops up and shows you the depth unlocked
+-- maybe for the game, maybe forever
+-- possibly depths are drawn to counter your current deck?
