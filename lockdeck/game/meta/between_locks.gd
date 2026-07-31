@@ -17,3 +17,4 @@ func animate() -> void:
 
 func _ready() -> void:
 	pass
+
