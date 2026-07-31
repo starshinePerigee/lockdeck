@@ -9,11 +9,11 @@ The are shown at the top of the screen, with a hovertext guide.
 ex:
 - toothpick: break instead of a pick
 
-When you click one, the guide is shown, as well as "keep" and "sell: 1🪙"
+When you click one, the guide is shown, as well as "keep" and "sell: [artifact icon] 1🪙"
 
 If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out with a note why.
 
-on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact"
+on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact". the artifact icon is shown in-place as a preview
 
 
 ## Pick modifications
