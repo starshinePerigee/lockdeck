@@ -23,22 +23,30 @@ func spawn_coin() -> void:
 		return
 
 	var coin := RigidBody2D.new()
+	coin.input_pickable = true
 	coin.position = Vector2(randi_range(SPAWN_X_1, SPAWN_X_2), SPAWN_Y)
 	coin.rotation_degrees = randf_range(0, 360)
 	coin.physics_material_override = MATERIAL
 	var flavor := randi_range(-2, 2)
 	if flavor < 0:
 		flavor = 0
-	var texture := TextureButton.new()
-	texture.texture_normal = TEXTURES[flavor]
+	var texture := TextureRect.new()
+	texture.texture = TEXTURES[flavor]
 	texture.position = Vector2(-64, -64)
-	texture.pressed.connect(remove.bind(coin))
-	var mask := BitMap.new()
-	mask.create_from_image_alpha(TEXTURES[flavor].get_image())
-	texture.texture_click_mask = mask
+	texture.mouse_filter = MOUSE_FILTER_IGNORE
 	coin.add_child(texture)
-	coin.add_child(COLLIDERS[flavor].instantiate())
+	var collider := COLLIDERS[flavor].instantiate()
+	coin.add_child(collider)
 	add_child(coin)
+	if flavor == 2:
+		coin.input_event.connect(_handle_input.bind(coin))
+	else:
+		coin.mouse_entered.connect(remove.bind(coin))
+
+func _handle_input(viewport: Node, event: InputEvent, shape_idx: int, target: RigidBody2D) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			remove(target)
 
 func remove(target: RigidBody2D):
 	remove_child(target)
