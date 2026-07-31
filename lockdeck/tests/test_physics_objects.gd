@@ -19,10 +19,16 @@ static var COLLIDERS: Array[PackedScene] = [
 	preload("res://assets/loot/colliders/shape_coin_3.tscn"),
 ]
 
+var DISTRIBUTION: Array[int] = [
+	0, 0, 0, 0, 0, 0, 0, 0,
+	1, 1, 1,
+	2
+]
+
 static var MATERIAL := load("res://assets/loot/materials/metal_material.tres")
 
 func spawn_coin() -> void:
-	if get_child_count() > 50:
+	if get_child_count() > 60:
 		return
 
 	var coin := RigidBody2D.new()
@@ -30,9 +36,7 @@ func spawn_coin() -> void:
 	coin.position = Vector2(randi_range(SPAWN_X_1, SPAWN_X_2), SPAWN_Y)
 	coin.rotation_degrees = randf_range(0, 360)
 	coin.physics_material_override = MATERIAL
-	var flavor := randi_range(-2, 2)
-	if flavor < 0:
-		flavor = 0
+	var flavor: int = DISTRIBUTION.pick_random()
 	var texture := TextureRect.new()
 	texture.texture = TEXTURES[flavor]
 	texture.position = Vector2(-64, -64)
