@@ -19,8 +19,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bgtj1")
-torque = 10000.0
-force = 100.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -57,7 +55,7 @@ offset_bottom = 64.0
 color = Color(0.404167, 0.266835, 0.162841, 1)
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(480, -540)
+position = Vector2(480, -524)
 shape = SubResource("RectangleShape2D_bgtj1")
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D4"]
@@ -72,14 +70,14 @@ wait_time = 0.15
 autostart = true
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(701, 193)
+position = Vector2(173, -679)
 physics_material_override = ExtResource("2_tgug7")
 
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D"]
+[node name="TextureRect" type="TextureButton" parent="RigidBody2D"]
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
-texture = ExtResource("2_6273x")
+texture_normal = ExtResource("2_6273x")
 
 [node name="CollisionShape2D" parent="RigidBody2D" instance=ExtResource("3_tgug7")]

@@ -1,8 +1,5 @@
 extends Control
 
-@export var torque := 0.0
-@export var force := 0.0
-
 const SPAWN_Y := -284
 const SPAWN_X_1 := 256
 const SPAWN_X_2 := 960 - 256
@@ -32,12 +29,20 @@ func spawn_coin() -> void:
 	var flavor := randi_range(-2, 2)
 	if flavor < 0:
 		flavor = 0
-	var texture := TextureRect.new()
-	texture.texture = TEXTURES[flavor]
+	var texture := TextureButton.new()
+	texture.texture_normal = TEXTURES[flavor]
 	texture.position = Vector2(-64, -64)
+	texture.pressed.connect(remove.bind(coin))
+	var mask := BitMap.new()
+	mask.create_from_image_alpha(TEXTURES[flavor].get_image())
+	texture.texture_click_mask = mask
 	coin.add_child(texture)
 	coin.add_child(COLLIDERS[flavor].instantiate())
 	add_child(coin)
+
+func remove(target: RigidBody2D):
+	remove_child(target)
+	target.queue_free()
 
 func _ready() -> void:
 	$Timer.timeout.connect(spawn_coin)
