@@ -5,6 +5,7 @@ const SPAWN_X_1 := 256
 const SPAWN_X_2 := 960 - 256
 
 @export var eat_everything: bool = false
+@export var force := 400
 
 static var TEXTURES: Array[Resource] = [
 	load("res://assets/loot/coin_1.png"),
@@ -44,6 +45,7 @@ func spawn_coin() -> void:
 		coin.input_event.connect(_handle_input.bind(coin))
 	else:
 		coin.mouse_entered.connect(remove.bind(coin))
+	coin.apply_impulse.call_deferred(Vector2(randf_range(-force, force),  0))
 
 func _handle_input(viewport: Node, event: InputEvent, shape_idx: int, target: RigidBody2D) -> void:
 	if event is InputEventMouseButton:
