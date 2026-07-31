@@ -4,6 +4,8 @@ const SPAWN_Y := -284
 const SPAWN_X_1 := 256
 const SPAWN_X_2 := 960 - 256
 
+@export var eat_everything: bool = false
+
 static var TEXTURES: Array[Resource] = [
 	load("res://assets/loot/coin_1.png"),
 	load("res://assets/loot/coin_2.png"),
@@ -38,7 +40,7 @@ func spawn_coin() -> void:
 	var collider := COLLIDERS[flavor].instantiate()
 	coin.add_child(collider)
 	add_child(coin)
-	if flavor == 2:
+	if flavor == 2 and not eat_everything:
 		coin.input_event.connect(_handle_input.bind(coin))
 	else:
 		coin.mouse_entered.connect(remove.bind(coin))

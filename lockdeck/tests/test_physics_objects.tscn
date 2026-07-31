@@ -67,7 +67,7 @@ offset_bottom = 64.0
 color = Color(0.404167, 0.266835, 0.162841, 1)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.05
 autostart = true
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
