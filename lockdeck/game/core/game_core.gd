@@ -317,7 +317,16 @@ func load_deck(deck: Array[CardSpec]) -> void:
 
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
+	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
+
+## Loads non-lock parameters from the game spec and restarting the game.
+func load_game(game: GameSpec) -> void:
+	$GameStatus.coins = game.coins
+	$GameStatus.stage = game.difficulty
+	load_deck(game.current_deck.duplicate())
+	$TrashMain.reset()
+	restart()
 
 func add_random_cards(count: int = 1) -> void:
 	var cards := PickGenerator.get_many_base_cards(count)
