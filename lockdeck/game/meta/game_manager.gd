@@ -43,6 +43,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	difficulty = 0
 	current_deck = starter_deck
 	current_state = GameState.BETWEEN_LOCK
+	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 
 func lock_complete():
@@ -57,6 +58,7 @@ func lock_complete():
 			)
 	broken_picks.append_array(broken)
 	current_state = GameState.BETWEEN_LOCK
+	$BetweenLocks/SpeedBonusLabel.visible = $GameCore/LockBody/CountdownMain.count >= 2
 	$AnimationPlayer.play("lock to between")
 
 func next_lock() -> void:
