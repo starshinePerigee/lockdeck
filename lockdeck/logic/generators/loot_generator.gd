@@ -2,6 +2,7 @@
 class_name LootGenerator
 
 static var COIN_DECK: Array[Loots] = []
+static var BAR_DECK: Array[Loots] = []
 
 static func get_pile_with_value(
 	value: int,
@@ -29,7 +30,11 @@ static func get_pile_with_value(
 	return pile
 
 static func _static_init() -> void:
-	for coin in Loots.ALL_COINS:
-		for __ in coin.category_weight:
-			COIN_DECK.append(coin)
+	for l in Loots.ALL_COINS:
+		for __ in l.category_weight:
+			COIN_DECK.append(l)
+	
+	for l in Loots.ALL_BARS:
+		for __ in l.category_weight:
+			BAR_DECK.append(l)
 	

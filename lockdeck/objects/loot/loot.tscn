@@ -5,6 +5,9 @@
 
 [node name="Loot" type="RigidBody2D"]
 physics_material_override = ExtResource("1_ee6yc")
+gravity_scale = 1.4
+linear_damp = 0.2
+angular_damp = 0.4
 script = ExtResource("2_sxbhj")
 
 [node name="TextureRect" type="TextureRect" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://chd078g2xmw1u"]
+[gd_scene load_steps=8 format=3 uid="uid://chd078g2xmw1u"]
 
 [ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_loot.gd" id="1_1vtxi"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_7rxjp"]
+[ext_resource type="PhysicsMaterial" uid="uid://ctspjwr0e25uf" path="res://assets/loot/materials/metal_material.tres" id="3_7rxjp"]
 [ext_resource type="Texture2D" uid="uid://c5iihbutttl6b" path="res://assets/loot/debug_coin.png" id="3_l5t33"]
 [ext_resource type="PackedScene" uid="uid://cy1m5gg7u54iu" path="res://assets/loot/colliders/shape_debug_coin.tscn" id="4_k2mnv"]
 
@@ -76,14 +77,17 @@ color = Color(0.404167, 0.266835, 0.162841, 1)
 wait_time = 0.05
 autostart = true
 
-[node name="RigidBody2D" type="RigidBody2D" parent="Timer"]
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
 position = Vector2(359, -810)
+mass = 5.179
+physics_material_override = ExtResource("3_7rxjp")
+gravity_scale = 1.4
 
-[node name="TextureRect" type="TextureRect" parent="Timer/RigidBody2D"]
+[node name="TextureRect" type="TextureRect" parent="RigidBody2D"]
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
 texture = ExtResource("3_l5t33")
 
-[node name="CollisionPolygon2D" parent="Timer/RigidBody2D" instance=ExtResource("4_k2mnv")]
+[node name="CollisionPolygon2D" parent="RigidBody2D" instance=ExtResource("4_k2mnv")]

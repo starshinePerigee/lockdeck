@@ -27,6 +27,7 @@ func spawn_loot() -> void:
 	loot.rotation_degrees = randf_range(0, 360)
 	loot.apply_impulse.call_deferred(Vector2(randf_range(-force, force),  0))
 	loot.loot_hovered.connect(remove.bind(loot))
+	loot.loot_clicked.connect(remove.bind(loot))
 
 func remove(target: Loot):
 	print("REMOVE")
@@ -38,9 +39,14 @@ func print_pile(pile: Array[Loots]) -> void:
 		print(l.readable_name)
 
 func _ready() -> void:
-	print("~~~")
-	print_pile(LootGenerator.COIN_DECK)
-	print("~~~")
 	$Timer.timeout.connect(spawn_loot)
 	pending_loot = LootGenerator.get_pile_with_value(total_value, LootGenerator.COIN_DECK)
+	pending_loot.append_array(
+		LootGenerator.get_pile_with_value(
+			50,
+			LootGenerator.BAR_DECK
+		)
+	)
+	pending_loot.shuffle()
+
 	print_pile(pending_loot)

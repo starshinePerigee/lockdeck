@@ -11,9 +11,8 @@ const SELF_SCENE := preload("res://objects/loot/loot.tscn")
 static func new_loot(loots: Loots) -> Loot:
 	var scene: Loot = SELF_SCENE.instantiate()
 	var texture := scene.get_child(0)
-	
-	scene.linear_damp = loots.damp_linear
-	scene.angular_damp = loots.damp_rotation
+
+	scene.mass = loots.mass
 	if not loots.material == null:
 		scene.physics_material_override = loots.material
 	
