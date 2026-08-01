@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddr6m8p1i3c1n"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://ctspjwr0e25uf" path="res://assets/loot/materials/metal_material.tres" id="1_ee6yc"]
+[ext_resource type="Script" uid="uid://j2y0rp45ei86" path="res://objects/loot/loot.gd" id="2_sxbhj"]
+
+[node name="Loot" type="RigidBody2D"]
+physics_material_override = ExtResource("1_ee6yc")
+script = ExtResource("2_sxbhj")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2

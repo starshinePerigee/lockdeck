@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://chd078g2xmw1u"]
 
-[ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_physics_objects.gd" id="1_bgtj1"]
-[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vjkyc"]
-[ext_resource type="Texture2D" uid="uid://brdl2vw2bcmay" path="res://assets/loot/coin_6.png" id="3_tgug7"]
-[ext_resource type="PackedScene" uid="uid://5t16k68d71tn" path="res://assets/loot/colliders/shape_coin_6.tscn" id="4_30a1d"]
+[ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_loot.gd" id="1_1vtxi"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_7rxjp"]
+[ext_resource type="Texture2D" uid="uid://c5iihbutttl6b" path="res://assets/loot/debug_coin.png" id="3_l5t33"]
+[ext_resource type="PackedScene" uid="uid://cy1m5gg7u54iu" path="res://assets/loot/colliders/shape_debug_coin.tscn" id="4_k2mnv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyf46"]
 size = Vector2(128, 1208)
@@ -11,7 +11,7 @@ size = Vector2(128, 1208)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bgtj1"]
 size = Vector2(1088, 128)
 
-[node name="TestPhysicsObjects" type="Control"]
+[node name="TestLoot" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,13 +19,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_bgtj1")
+script = ExtResource("1_1vtxi")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_vjkyc")
+texture = ExtResource("2_7rxjp")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -84,6 +84,6 @@ offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
-texture = ExtResource("3_tgug7")
+texture = ExtResource("3_l5t33")
 
-[node name="CollisionPolygon2D" parent="Timer/RigidBody2D" instance=ExtResource("4_30a1d")]
+[node name="CollisionPolygon2D" parent="Timer/RigidBody2D" instance=ExtResource("4_k2mnv")]
