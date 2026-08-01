@@ -82,7 +82,11 @@ non-broken picks can be sold for 1
 
 ## Ingots: whole new randomly generated picks
 
-iron/copper/silver/gold
+orichalum: https://en.uesp.net/wiki/Lore:Orichalcum
+dwarven: https://en.uesp.net/wiki/Lore:Dwarven_Metal
+moonstone: https://en.uesp.net/wiki/Lore:Moonstone
+malachite: https://en.uesp.net/wiki/Lore:Malachite
+ebony: https://en.uesp.net/wiki/Lore:Ebony
 
 higher value offer more, better picks
 
