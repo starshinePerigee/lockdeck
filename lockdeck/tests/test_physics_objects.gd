@@ -9,7 +9,10 @@ const SPAWN_X_2 := 960 - 256
 
 static var TEXTURES: Array[Resource] = [
 	load("res://assets/loot/coin_1.png"),
+	load("res://assets/loot/coin_6.png"),
+	load("res://assets/loot/coin_5.png"),
 	load("res://assets/loot/coin_2.png"),
+	load("res://assets/loot/coin_4.png"),
 	load("res://assets/loot/coin_3.png"),
 	load("res://assets/loot/bar_1.png"),
 	load("res://assets/loot/bar_2.png"),
@@ -20,7 +23,10 @@ static var TEXTURES: Array[Resource] = [
 
 static var COLLIDERS: Array[PackedScene] = [
 	preload("res://assets/loot/colliders/shape_coin_1.tscn"),
+	preload("res://assets/loot/colliders/shape_coin_6.tscn"),
+	preload("res://assets/loot/colliders/shape_coin_5.tscn"),
 	preload("res://assets/loot/colliders/shape_coin_2.tscn"),
+	preload("res://assets/loot/colliders/shape_coin_4.tscn"),
 	preload("res://assets/loot/colliders/shape_coin_3.tscn"),
 	preload("res://assets/loot/colliders/shape_bar_1.tscn"),
 	preload("res://assets/loot/colliders/shape_bar_2.tscn"),
@@ -30,20 +36,23 @@ static var COLLIDERS: Array[PackedScene] = [
 ]
 
 var DISTRIBUTION: Array[int] = [
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	1, 1, 1, 1, 1,
-	2, 2,
+	0, 0, 0, 0, 0, 0, 0, # 0, 0, 0, 0, 0,
+	1, # 1, 1,
+	2, 2, 2,
 	3, 3,
-	4,
-	5,
+	4, 4,
+	5, 5,
 	6,
 	7,
+	8,
+	9,
+	10
 ]
 
 static var MATERIAL := load("res://assets/loot/materials/metal_material.tres")
 
 func spawn_coin() -> void:
-	if get_child_count() > 30:
+	if get_child_count() > 80:
 		return
 
 	var coin := RigidBody2D.new()
@@ -51,7 +60,7 @@ func spawn_coin() -> void:
 	coin.position = Vector2(randi_range(SPAWN_X_1, SPAWN_X_2), SPAWN_Y)
 	coin.rotation_degrees = randf_range(0, 360)
 	coin.physics_material_override = MATERIAL
-	var flavor: int = DISTRIBUTION.pick_random()
+	var flavor: int = min(DISTRIBUTION.pick_random(), DISTRIBUTION.pick_random())
 	var texture := TextureRect.new()
 	texture.texture = TEXTURES[flavor]
 	texture.position = -(texture.texture.get_size() / 2)
@@ -60,7 +69,7 @@ func spawn_coin() -> void:
 	var collider := COLLIDERS[flavor].instantiate()
 	coin.add_child(collider)
 	add_child(coin)
-	if flavor > 2 and not eat_everything:
+	if flavor > 5 and not eat_everything:
 		coin.input_event.connect(_handle_input.bind(coin))
 		coin.angular_damp = 1.0
 		coin.linear_damp = 0.5

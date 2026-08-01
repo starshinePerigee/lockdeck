@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://chd078g2xmw1u"]
+[gd_scene load_steps=7 format=3 uid="uid://chd078g2xmw1u"]
 
 [ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_physics_objects.gd" id="1_bgtj1"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vjkyc"]
+[ext_resource type="Texture2D" uid="uid://brdl2vw2bcmay" path="res://assets/loot/coin_6.png" id="3_tgug7"]
+[ext_resource type="PackedScene" uid="uid://5t16k68d71tn" path="res://assets/loot/colliders/shape_coin_6.tscn" id="4_30a1d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyf46"]
 size = Vector2(128, 1208)
@@ -71,5 +73,17 @@ offset_bottom = 64.0
 color = Color(0.404167, 0.266835, 0.162841, 1)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 autostart = true
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Timer"]
+position = Vector2(359, -810)
+
+[node name="TextureRect" type="TextureRect" parent="Timer/RigidBody2D"]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_tgug7")
+
+[node name="CollisionPolygon2D" parent="Timer/RigidBody2D" instance=ExtResource("4_30a1d")]
