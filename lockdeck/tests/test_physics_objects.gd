@@ -11,24 +11,39 @@ static var TEXTURES: Array[Resource] = [
 	load("res://assets/loot/coin_1.png"),
 	load("res://assets/loot/coin_2.png"),
 	load("res://assets/loot/coin_3.png"),
+	load("res://assets/loot/bar_1.png"),
+	load("res://assets/loot/bar_2.png"),
+	load("res://assets/loot/bar_3.png"),
+	load("res://assets/loot/bar_4.png"),
+	load("res://assets/loot/bar_5.png"),
 ]
 
 static var COLLIDERS: Array[PackedScene] = [
 	preload("res://assets/loot/colliders/shape_coin_1.tscn"),
 	preload("res://assets/loot/colliders/shape_coin_2.tscn"),
 	preload("res://assets/loot/colliders/shape_coin_3.tscn"),
+	preload("res://assets/loot/colliders/shape_bar_1.tscn"),
+	preload("res://assets/loot/colliders/shape_bar_2.tscn"),
+	preload("res://assets/loot/colliders/shape_bar_3.tscn"),
+	preload("res://assets/loot/colliders/shape_bar_4.tscn"),
+	preload("res://assets/loot/colliders/shape_bar_5.tscn"),
 ]
 
 var DISTRIBUTION: Array[int] = [
-	0, 0, 0, 0, 0, 0, 0, 0,
-	1, 1, 1,
-	2
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	1, 1, 1, 1, 1,
+	2, 2,
+	3, 3,
+	4,
+	5,
+	6,
+	7,
 ]
 
 static var MATERIAL := load("res://assets/loot/materials/metal_material.tres")
 
 func spawn_coin() -> void:
-	if get_child_count() > 25:
+	if get_child_count() > 30:
 		return
 
 	var coin := RigidBody2D.new()
@@ -39,14 +54,16 @@ func spawn_coin() -> void:
 	var flavor: int = DISTRIBUTION.pick_random()
 	var texture := TextureRect.new()
 	texture.texture = TEXTURES[flavor]
-	texture.position = Vector2(-64, -64)
+	texture.position = -(texture.texture.get_size() / 2)
 	texture.mouse_filter = MOUSE_FILTER_IGNORE
 	coin.add_child(texture)
 	var collider := COLLIDERS[flavor].instantiate()
 	coin.add_child(collider)
 	add_child(coin)
-	if flavor == 2 and not eat_everything:
+	if flavor > 2 and not eat_everything:
 		coin.input_event.connect(_handle_input.bind(coin))
+		coin.angular_damp = 1.0
+		coin.linear_damp = 0.5
 	else:
 		coin.mouse_entered.connect(remove.bind(coin))
 	coin.apply_impulse.call_deferred(Vector2(randf_range(-force, force),  0))

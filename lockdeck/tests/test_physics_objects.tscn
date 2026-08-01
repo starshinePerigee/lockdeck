@@ -1,19 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://chd078g2xmw1u"]
+[gd_scene load_steps=5 format=3 uid="uid://chd078g2xmw1u"]
 
 [ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_physics_objects.gd" id="1_bgtj1"]
-[ext_resource type="Texture2D" uid="uid://bj7ljrbtf5eij" path="res://assets/loot/coin_1.png" id="2_6273x"]
-[ext_resource type="PhysicsMaterial" uid="uid://ctspjwr0e25uf" path="res://assets/loot/materials/metal_material.tres" id="2_tgug7"]
-[ext_resource type="PackedScene" uid="uid://d0a1exgu2msyq" path="res://assets/loot/colliders/shape_coin_1.tscn" id="3_tgug7"]
-[ext_resource type="Texture2D" uid="uid://bxon6pm2kwnyg" path="res://assets/loot/bar_5.png" id="5_g7rnj"]
-[ext_resource type="PackedScene" uid="uid://bfgwac2difhx6" path="res://assets/loot/colliders/shape_bar_1.tscn" id="6_e5u22"]
-[ext_resource type="Texture2D" uid="uid://dnp4ix8l865dc" path="res://assets/loot/bar_4.png" id="6_k3r70"]
-[ext_resource type="Texture2D" uid="uid://yw1tny3wyqkw" path="res://assets/loot/bar_3.png" id="7_thqwp"]
-[ext_resource type="PackedScene" uid="uid://dbp4blkuunxt5" path="res://assets/loot/colliders/shape_bar_2.tscn" id="8_ohiwb"]
-[ext_resource type="Texture2D" uid="uid://2y8xqp812ymf" path="res://assets/loot/bar_2.png" id="8_xklcn"]
-[ext_resource type="Texture2D" uid="uid://yifdeter1lea" path="res://assets/loot/bar_1.png" id="9_7hl8d"]
-[ext_resource type="PackedScene" uid="uid://b4kv1xqula7ey" path="res://assets/loot/colliders/shape_bar_3.tscn" id="10_x3124"]
-[ext_resource type="PackedScene" uid="uid://b0cp17l71qum0" path="res://assets/loot/colliders/shape_bar_4.tscn" id="12_1piax"]
-[ext_resource type="PackedScene" uid="uid://w2urdtl72mmv" path="res://assets/loot/colliders/shape_bar_5.tscn" id="14_booo7"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_vjkyc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyf46"]
 size = Vector2(128, 1208)
@@ -30,6 +18,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_bgtj1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_vjkyc")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -79,97 +73,3 @@ color = Color(0.404167, 0.266835, 0.162841, 1)
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(173, -679)
-physics_material_override = ExtResource("2_tgug7")
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D"]
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
-mouse_filter = 2
-texture = ExtResource("2_6273x")
-
-[node name="CollisionShape2D" parent="RigidBody2D" instance=ExtResource("3_tgug7")]
-
-[node name="RigidBody2D2" type="RigidBody2D" parent="."]
-position = Vector2(144, 191)
-physics_material_override = ExtResource("2_tgug7")
-linear_damp = 1.0
-angular_damp = 1.0
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D2"]
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("9_7hl8d")
-
-[node name="CollisionPolygon2D" parent="RigidBody2D2" instance=ExtResource("6_e5u22")]
-
-[node name="RigidBody2D3" type="RigidBody2D" parent="."]
-position = Vector2(329, 34)
-physics_material_override = ExtResource("2_tgug7")
-linear_damp = 1.0
-angular_damp = 1.0
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D3"]
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("8_xklcn")
-
-[node name="CollisionPolygon2D" parent="RigidBody2D3" instance=ExtResource("8_ohiwb")]
-
-[node name="RigidBody2D4" type="RigidBody2D" parent="."]
-position = Vector2(402, 241)
-physics_material_override = ExtResource("2_tgug7")
-linear_damp = 1.0
-angular_damp = 1.0
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D4"]
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("7_thqwp")
-
-[node name="CollisionPolygon2D" parent="RigidBody2D4" instance=ExtResource("10_x3124")]
-
-[node name="RigidBody2D5" type="RigidBody2D" parent="."]
-position = Vector2(628, 84)
-physics_material_override = ExtResource("2_tgug7")
-linear_damp = 1.0
-angular_damp = 1.0
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D5"]
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("6_k3r70")
-
-[node name="CollisionPolygon2D" parent="RigidBody2D5" instance=ExtResource("12_1piax")]
-
-[node name="RigidBody2D6" type="RigidBody2D" parent="."]
-position = Vector2(659, 275)
-physics_material_override = ExtResource("2_tgug7")
-linear_damp = 1.0
-angular_damp = 1.0
-
-[node name="TextureRect" type="TextureRect" parent="RigidBody2D6"]
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("5_g7rnj")
-
-[node name="CollisionPolygon2D" parent="RigidBody2D6" instance=ExtResource("14_booo7")]
