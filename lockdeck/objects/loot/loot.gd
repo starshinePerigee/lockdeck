@@ -7,9 +7,11 @@ signal loot_clicked
 
 const SELF_SCENE := preload("res://objects/loot/loot.tscn")
 
+var spec: Loots 
 
 static func new_loot(loots: Loots) -> Loot:
 	var scene: Loot = SELF_SCENE.instantiate()
+	scene.spec = loots
 	var texture := scene.get_child(0)
 
 	scene.mass = loots.mass

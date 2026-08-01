@@ -26,11 +26,15 @@ func spawn_loot() -> void:
 	loot.position = Vector2(randi_range(SPAWN_X_1, SPAWN_X_2), SPAWN_Y)
 	loot.rotation_degrees = randf_range(0, 360)
 	loot.apply_impulse.call_deferred(Vector2(randf_range(-force, force),  0))
-	loot.loot_hovered.connect(remove.bind(loot))
-	loot.loot_clicked.connect(remove.bind(loot))
+	if loot.spec in Loots.ALL_COINS:
+		loot.loot_hovered.connect(remove.bind(loot))
+	else:
+		loot.loot_clicked.connect(remove.bind(loot))
 
 func remove(target: Loot):
-	print("REMOVE")
+	for friend in target.get_colliding_bodies():
+		if friend is RigidBody2D:
+			friend.sleeping = false
 	remove_child(target)
 	target.queue_free()
 
@@ -48,5 +52,6 @@ func _ready() -> void:
 		)
 	)
 	pending_loot.shuffle()
-
 	print_pile(pending_loot)
+	
+	$Loot.loot_clicked.connect(remove.bind($Loot))

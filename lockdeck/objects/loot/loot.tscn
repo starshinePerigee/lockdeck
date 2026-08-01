@@ -4,8 +4,11 @@
 [ext_resource type="Script" uid="uid://j2y0rp45ei86" path="res://objects/loot/loot.gd" id="2_sxbhj"]
 
 [node name="Loot" type="RigidBody2D"]
+input_pickable = true
 physics_material_override = ExtResource("1_ee6yc")
 gravity_scale = 1.4
+contact_monitor = true
+max_contacts_reported = 10
 linear_damp = 0.2
 angular_damp = 0.4
 script = ExtResource("2_sxbhj")
