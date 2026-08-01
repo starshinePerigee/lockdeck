@@ -28,7 +28,7 @@ var DISTRIBUTION: Array[int] = [
 static var MATERIAL := load("res://assets/loot/materials/metal_material.tres")
 
 func spawn_coin() -> void:
-	if get_child_count() > 20:
+	if get_child_count() > 25:
 		return
 
 	var coin := RigidBody2D.new()
