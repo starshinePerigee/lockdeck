@@ -42,7 +42,7 @@ static var SAYINGS: Array[String] = [
 	"Cha-ching",
 	"Just what I wanted",
 ]
-static var PUNCTUATION: Array[String] =[".", ".", "!", "~"]
+static var PUNCTUATION: Array[String] =[".", ".", "!", "!", "!", "~"]
 
 static func get_saying() -> String:
 	var saying: String = SAYINGS.pick_random()
