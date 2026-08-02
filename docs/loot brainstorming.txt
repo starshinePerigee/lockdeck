@@ -1,0 +1,75 @@
+Loot is the following options:
+
+- coins: used for repairs and buying at the shop
+- ingots: give you new picks
+- potions: repair broken picks
+- artifacts: single-use consumables
+- gems: pick effect upgrades
+- jewelry: pick special effects
+- bones: win the game
+
+
+Every loot claim window shows a picture of the loot with a label. This always takes 1 card worth of space.
+
+
+COINS: immediately claimed on hover
+
+INGOTS
+shows n cards plus the sell option. (max: 5 + sell)
+
+
+~~~
+
+Physics precautions:
+- keep a queue of loot and only drop up to a safe number. as things are claimed, grab more
+- loot tower is three screens tall and loot is scattered on both x and y axes. invisible walls are on all four sides
+- the viewport has a window - after the loot is dropped, after a bit of a pause, any loot that isn't touching that window is removed and re-queued
+- if you press the continue button twice, it loots all coins
+- if you press the disabled continue button three times, it pops up a "continue without looting everything" box
+
+~~~
+
+
+When loot is claimed, its replaced by a little floating word that vanishes after a bit. (use labels for now)
+
+Coins are claimed on mouse hover. everything else pops the context / decision window, which shows the loot. on completion then the loot is removed and the text happens
+
+- nice
+- shiny
+- don't mind if i do
+- thank you
+- for me?
+- you shouldn't have
+- dibs
+- lucky
+- mine now
+- gotcha
+- another one
+- cha-ching
+- just what I wanted
+
+~~~
+
+How much loot is there? 
+
+(note: all values have since been 5x'ed)
+
+Let's start with some fixed values. 
+- The minimum is one coin. 
+- Repairing a pick is baselined at 2
+- Breaking and repairing a pick twice is 5, thrice is 9
+
+Expect one or two breaks per lock. At a three lock set:
+- early game locks, 1 break / lock, means 6 coins repair fees
+- late game locks, 2 break / lock at already broken - ~20 coins repair fees
+
+So start at 10 coins, and end at 30, adding 5 each round. Artifacts, ingots, gems, and jewelry are all few coins (average 3)
+- earlygame (10): 5 coins, 1 gem, 1 artifact
+- midgame (20): 1 ingot (4), 2 gem (2ea), 1 jewelry (3), 2 artifacts (2ea), 11 coins
+- endgame (30): 2 ingots (4ea), 2 gem (2ea), 1 jewelry (3), 3 artifacts (2ea), 2 potions (2ea), 9 coins
+
+Start at 10 and add five each round up to 30, then add 2 per round after.
+
+~~~
+
+loot draft: start with a really basic hand, get a buch of loot to start

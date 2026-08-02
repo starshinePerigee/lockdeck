@@ -1,13 +1,12 @@
 When you beat a level, you unlock a chest. Treasure inside helps you refine your hand:
 
+
 ## Artifacts: single use consumables
 
 Artifacts are powerful single use consumables.
 
 The are shown at the top of the screen, with a hovertext guide.
 
-ex:
-- toothpick: break instead of a pick
 
 When you click one, the guide is shown, as well as "keep" and "sell: [artifact icon] 1🪙"
 
@@ -147,3 +146,12 @@ Sells:
 each boss loots a "knuckle of the old man" and shows a x/5 indicator
 
 collect all five to win
+
+knuckles aren't guaranteed - the normal game takes 8 levels and distributes 5 knuckles among them.
+
+the last stage with a knuckle gets it turned into a 50 -> 75 -> 90 -> 100 % chance of having a knuckle.
+
+stages without a knuckle can have one in a shop (50% chance) but if you buy the shop knuckle it doesn't show back up.
+
+Shortest path: 5 levels
+longest path: 11 levels

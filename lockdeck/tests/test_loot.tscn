@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://chd078g2xmw1u"]
+[gd_scene load_steps=9 format=3 uid="uid://chd078g2xmw1u"]
 
 [ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_loot.gd" id="1_1vtxi"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_7rxjp"]
 [ext_resource type="PackedScene" uid="uid://ddr6m8p1i3c1n" path="res://objects/loot/loot.tscn" id="3_7rxjp"]
 [ext_resource type="Texture2D" uid="uid://c5iihbutttl6b" path="res://assets/loot/debug_coin.png" id="3_l5t33"]
 [ext_resource type="PackedScene" uid="uid://cy1m5gg7u54iu" path="res://assets/loot/colliders/shape_debug_coin.tscn" id="4_k2mnv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7rxjp"]
+bounce = 0.2
+absorbent = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyf46"]
 size = Vector2(128, 1208)
@@ -29,6 +33,7 @@ offset_bottom = 40.0
 texture = ExtResource("2_7rxjp")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_7rxjp")
 
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_eyf46")
