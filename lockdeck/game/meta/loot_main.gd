@@ -3,20 +3,22 @@ extends Control
 
 signal continue_to_next
 
-func do_loot() -> void:
+func do_loot(value: int) -> void:
 	$ContinueButton.disabled = true
 	
-	var pending_loot: Array[Loots]
-	pending_loot = LootGenerator.get_pile_with_value(100, LootGenerator.COIN_DECK)
-	pending_loot.append_array(
-		LootGenerator.get_pile_with_value(40, LootGenerator.BAR_DECK)
-	)
-	pending_loot.shuffle()
-	for loot in pending_loot:
-		var real: Loot = Loot.new_loot(loot)
-		real.loot_hovered.connect(real.get_that_bag)
-		var real_loots: Array[Loot] = [real]
-		$LootDrop.queue_loot(real_loots)
+	var pending_loots: Array[Loots] = LootGenerator.get_standard_loot_with_total_value(value)
+	var real_loot: Array[Loot] = []
+	
+	for loots in pending_loots:
+		var real := Loot.new_loot(loots)
+		match loots.category:
+			Loots.LootsTypes.COIN:
+				real.loot_hovered.connect(real.get_that_bag)
+			Loots.LootsTypes.BAR:
+				real.loot_clicked.connect(real.get_that_bag)
+		real_loot.append(real)
+				
+	$LootDrop.queue_loot(real_loot)
 
 func _enable_continue() -> void:
 	$ContinueButton.disabled = false
@@ -27,4 +29,4 @@ func _ready() -> void:
 	
 	# if name == "__main__:
 	if get_tree().current_scene == self:
-		do_loot()
+		do_loot(100)

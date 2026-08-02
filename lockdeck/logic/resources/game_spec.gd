@@ -14,6 +14,12 @@ class_name GameSpec
 ## Holds every broken card
 @export var broken_picks: Array[CardSpec]
 
+func add_coins(count: int) -> void:
+	coins += count
+
+func add_pick(pick: CardSpec) -> void:
+	current_deck.append(pick)
+
 ## Marks a lock as complete, updating the difficulty
 func complete_lock() -> void:
 	difficulty += 1

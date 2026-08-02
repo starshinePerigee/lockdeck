@@ -3,8 +3,6 @@
 [ext_resource type="Script" uid="uid://c3dg1hkjjo2hu" path="res://objects/loot/loot_drop.gd" id="1_g4gmb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2o7sf"]
-bounce = 0.2
-absorbent = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4gmb"]
 size = Vector2(128, 2160)

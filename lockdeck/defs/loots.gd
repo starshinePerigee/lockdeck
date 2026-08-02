@@ -2,6 +2,11 @@
 ## Stores all the resource flavors as an enum
 class_name Loots
 
+enum LootsTypes {
+	COIN,
+	BAR
+}
+
 ## Name to display to the user
 var readable_name: String
 
@@ -10,6 +15,9 @@ var description: String
 
 ## The value of this loot, in coins. A pick repair is 10/15/20
 var value: int
+
+## The category this loot belongs to
+var category: LootsTypes
 
 ## The weight of this loot within its category
 var category_weight: int
@@ -163,7 +171,7 @@ static var BAR_4 := Loots.new(
 static var BAR_5 := Loots.new(
 	"bar_5",
 	"ebony ingot",
-	"Choose one of three rare lockpicks to add to your deck",
+	"Choose one of five lockpicks to add to your deck",
 	40,
 	6,
 	30,
@@ -176,3 +184,15 @@ static var ALL_BARS: Array[Loots] = [
 	BAR_4,
 	BAR_5
 ]
+
+## All of the loot, in a LootsTypes[Array[Loots)) dictionary.
+static var TYPE_DICT: Dictionary[LootsTypes, Array] = {
+	LootsTypes.COIN: ALL_COINS,
+	LootsTypes.BAR: ALL_BARS
+}
+
+static func _static_init() -> void:
+	print(TYPE_DICT.keys())
+	for t in LootsTypes.values():
+		for l in TYPE_DICT[t] as Array[Loots]:
+			l.category = t

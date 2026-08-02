@@ -1,0 +1,3 @@
+extends HBoxContainer
+
+signal close_popup

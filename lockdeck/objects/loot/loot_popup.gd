@@ -1,5 +1,6 @@
 extends Control
 ## This contains and displays the widget for each loot type
+## Note that the containing loot widget must contain and emit a close_popup signal.
 
 @onready var inner_container: MarginContainer = (
 	$PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/InnerContainer
@@ -32,6 +33,11 @@ func add_contents(
 		child.queue_free()
 	inner_container.add_child(contents)
 	center_container()
+
+func remove_and_close() -> void:
+	for child in inner_container.get_children():
+		child.queue_free()
+	visible = false
 
 func _ready() -> void:
 	center_container()

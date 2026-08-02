@@ -3,8 +3,8 @@ extends Control
 signal spawn_complete
 signal all_looted
 
-const SPAWN_Y_1 := -512
-const SPAWN_Y_2 := -256
+const SPAWN_Y_1 := -512 - 256
+const SPAWN_Y_2 := -256 - 256
 const SPAWN_X_1 := 256
 const SPAWN_X_2 := 960 - 256
 
@@ -59,16 +59,3 @@ func check_complete() -> void:
 
 func _ready() -> void:
 	$Timer.timeout.connect(spawn_loot)
-	
-	# if name == "__main__:
-	if get_tree().current_scene == self:
-		var pending_loot: Array[Loots]
-		pending_loot = LootGenerator.get_pile_with_value(1000, LootGenerator.COIN_DECK)
-		pending_loot.append_array(
-			LootGenerator.get_pile_with_value(400, LootGenerator.BAR_DECK)
-		)
-		pending_loot.shuffle()
-		for loot in pending_loot:
-			var real: Loot = Loot.new_loot(loot)
-			real.loot_hovered.connect(real.get_that_bag)
-			queue_loot([real])
