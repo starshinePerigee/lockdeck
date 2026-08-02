@@ -4,10 +4,11 @@ signal sell_clicked
 
 func do_sell() -> void:
 	sell_clicked.emit()
+	$DisplayCoin.claim_coin()
 
-	if len(get_children()) <= 1:
-		return
-	$Loot.get_that_bag()
+func reset() -> void:
+	$DisplayCoin.reset()
 	
 func _ready():
+	super._ready()
 	pressed.connect(do_sell)

@@ -89,6 +89,7 @@ func get_that_bag() -> void:
 	loot_grabbed.emit()
 
 func disable_physics() -> void:
+	freeze = true
 	collision_layer = 0
 	collision_mask = 0
 
