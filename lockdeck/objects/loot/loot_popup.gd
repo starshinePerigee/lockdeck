@@ -22,7 +22,7 @@ func center_container() -> void:
 		(size.y - $PanelContainer.size.y) / 2,
 	)
 
-func add_contents(
+func add_contents_and_show(
 	contents: Control,
 	loot: Loots,
 ):
@@ -32,12 +32,15 @@ func add_contents(
 	for child in inner_container.get_children():
 		child.queue_free()
 	inner_container.add_child(contents)
-	center_container()
+	center_container.call_deferred()
+	visible = true
+	mouse_filter = MOUSE_FILTER_STOP
 
 func remove_and_close() -> void:
 	for child in inner_container.get_children():
 		child.queue_free()
 	visible = false
+	mouse_filter = MOUSE_FILTER_IGNORE
 
 func _ready() -> void:
 	center_container()
@@ -47,4 +50,4 @@ func _ready() -> void:
 		var temp_contents := HBoxContainer.new()
 		for __ in range(3):
 			temp_contents.add_child(PickCard.build_from_template(PickTemplates.DEBUG))
-		add_contents(temp_contents, Loots.BAR_3)
+		add_contents_and_show(temp_contents, Loots.BAR_3)

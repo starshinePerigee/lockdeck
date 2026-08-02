@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b432wp5ei356c"]
+[gd_scene load_steps=5 format=3 uid="uid://b432wp5ei356c"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_ghiq6"]
 [ext_resource type="Script" uid="uid://c6qboikc3xanu" path="res://game/meta/loot_main.gd" id="2_g0c8q"]
 [ext_resource type="PackedScene" uid="uid://d0hjes7wdm1g3" path="res://objects/loot/loot_drop.tscn" id="3_g0c8q"]
+[ext_resource type="PackedScene" uid="uid://00aldiyo0880" path="res://objects/loot/loot_popup.tscn" id="4_cue86"]
 
 [node name="LootMain" type="Control"]
 layout_mode = 3
@@ -16,6 +17,10 @@ theme = ExtResource("1_ghiq6")
 script = ExtResource("2_g0c8q")
 
 [node name="LootDrop" parent="." instance=ExtResource("3_g0c8q")]
+layout_mode = 1
+
+[node name="LootPopup" parent="." instance=ExtResource("4_cue86")]
+visible = false
 layout_mode = 1
 
 [node name="ContinueButton" type="Button" parent="."]

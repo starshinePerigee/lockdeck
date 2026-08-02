@@ -5,7 +5,7 @@ class_name LootGenerator
 # are invalid (such as over-cost for the type budget)
 static var CATEGORY_DECKS: Dictionary[Loots.LootsTypes, Array] = {}
 static var CATEGORY_WEIGHTS: Dictionary[Loots.LootsTypes, int] = {
-	Loots.LootsTypes.COIN: 6,
+	Loots.LootsTypes.COIN: 3,
 	Loots.LootsTypes.BAR: 2
 }
 

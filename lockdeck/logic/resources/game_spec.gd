@@ -36,6 +36,15 @@ func break_picks(picks: Array[CardSpec]) -> void:
 			)
 	broken_picks.append_array(picks)
 
+static func get_in_progress_game() -> GameSpec:
+	var game := GameSpec.new()
+	game.coins = 14
+	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
+	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
+	game.broken_picks = PickGenerator.get_many_base_cards(4)
+	game.difficulty = 3
+	return game
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_deck = []
