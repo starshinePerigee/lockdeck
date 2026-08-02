@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm0780qqdh8g7"]
+[gd_scene load_steps=6 format=3 uid="uid://cm0780qqdh8g7"]
 
 [ext_resource type="Texture2D" uid="uid://cqpixqeatajej" path="res://assets/card/space.png" id="1_o8hyq"]
 [ext_resource type="Texture2D" uid="uid://b6tbqt8qq5i8v" path="res://assets/card/space_selected.png" id="2_1wkt0"]
 [ext_resource type="Texture2D" uid="uid://b8025j2hwxcnw" path="res://assets/loot/coin_4.png" id="2_h2c2a"]
+[ext_resource type="Texture2D" uid="uid://gmm6d0cdt4ho" path="res://assets/card/space_pressed.png" id="2_pywuf"]
+[ext_resource type="Script" uid="uid://c2rxjojwoo82b" path="res://objects/loot/sell_thing.gd" id="4_pywuf"]
 
 [node name="SellThing" type="TextureButton"]
 anchors_preset = 15
@@ -13,14 +15,16 @@ offset_bottom = -380.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_o8hyq")
+texture_pressed = ExtResource("2_pywuf")
 texture_hover = ExtResource("2_1wkt0")
+script = ExtResource("4_pywuf")
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 0
 offset_top = 44.0
 offset_right = 128.0
-offset_bottom = 63.0
+offset_bottom = 71.0
 mouse_filter = 1
 text = "Sell: +5 gold"
 horizontal_alignment = 1
