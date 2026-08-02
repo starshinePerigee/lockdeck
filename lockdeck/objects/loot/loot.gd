@@ -28,13 +28,19 @@ static func new_loot(loots: Loots) -> Loot:
 	
 
 static var SAYINGS: Array[String] = [
+	"Yoink",
+	"Yoink",
 	"Nice",
+	"Nice",
+	"Dibs",
+	"Dibs",
+	"You saw nothing",
+	"Easy",
 	"Shiny",
 	"Don't mind if I do",
 	"Thank you",
 	"For me?",
 	"You shouldn't have",
-	"Dibs",
 	"Lucky",
 	"Mine now",
 	"Gotcha",
@@ -53,9 +59,10 @@ static func get_saying() -> String:
 ## Claims the loot, playing the saying and then removing it from the scene tree.
 func get_that_bag() -> void:
 	# wake up all adjacent
-	for friend in get_colliding_bodies():
-		if friend is RigidBody2D:
-			friend.sleeping = false
+	if contact_monitor:
+		for friend in get_colliding_bodies():
+			if friend is RigidBody2D:
+				friend.sleeping = false
 	
 	# disable this one
 	disable_physics.call_deferred()

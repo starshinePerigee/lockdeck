@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0hjes7wdm1g3"]
+
+[ext_resource type="Script" uid="uid://c3dg1hkjjo2hu" path="res://objects/loot/loot_drop.gd" id="1_g4gmb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2o7sf"]
+bounce = 0.2
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4gmb"]
+size = Vector2(128, 2160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nssv"]
+size = Vector2(1088, 128)
+
+[node name="LootDrop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_g4gmb")
+
+[node name="Container" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_2o7sf")
+
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="Container"]
+position = Vector2(0, -476)
+shape = SubResource("RectangleShape2D_g4gmb")
+
+[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D1"]
+offset_left = -64.0
+offset_top = 476.0
+offset_right = 64.0
+offset_bottom = 1016.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Container"]
+position = Vector2(960, -476)
+shape = SubResource("RectangleShape2D_g4gmb")
+
+[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D2"]
+offset_left = -64.0
+offset_top = 476.0
+offset_right = 64.0
+offset_bottom = 1016.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Container"]
+position = Vector2(480, 540)
+shape = SubResource("RectangleShape2D_7nssv")
+
+[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D3"]
+offset_left = -544.0
+offset_top = -64.0
+offset_right = 544.0
+offset_bottom = 64.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Container"]
+position = Vector2(480, -1492)
+shape = SubResource("RectangleShape2D_7nssv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
