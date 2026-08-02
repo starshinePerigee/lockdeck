@@ -18,6 +18,7 @@ texture_normal = ExtResource("1_o8hyq")
 texture_pressed = ExtResource("2_pywuf")
 texture_hover = ExtResource("2_1wkt0")
 script = ExtResource("4_pywuf")
+metadata/_custom_type_script = "uid://ixfp56werwe2"
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(128, 0)
