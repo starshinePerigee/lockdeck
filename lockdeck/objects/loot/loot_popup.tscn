@@ -1,21 +1,29 @@
-[gd_scene format=3 uid="uid://00aldiyo0880"]
+[gd_scene load_steps=3 format=3 uid="uid://00aldiyo0880"]
+
+[ext_resource type="Script" uid="uid://cj5ys8ldfbl6c" path="res://objects/loot/loot_popup.gd" id="1_w7m61"]
+[ext_resource type="Texture2D" uid="uid://c5iihbutttl6b" path="res://assets/loot/debug_coin.png" id="2_v64f1"]
 
 [node name="LootPopup" type="Control"]
+z_index = 20
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w7m61")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+z_index = -2
+custom_minimum_size = Vector2(0, 288)
 layout_mode = 0
-offset_left = 235.0
-offset_top = 228.0
-offset_right = 747.0
-offset_bottom = 300.0
+offset_left = 162.0
+offset_top = 108.0
+offset_right = 806.0
+offset_bottom = 364.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+z_index = 2
 layout_mode = 2
 
 [node name="LootName" type="Label" parent="PanelContainer/VBoxContainer"]
@@ -25,7 +33,28 @@ text = "LOOT NAME"
 [node name="Description" type="Label" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 2
-text = "LOOT DESCRIPTION"
+text = "LOOT DESCRIPTION
+"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LootDisplay" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+z_index = -1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer/LootDisplay"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -43.0
+offset_right = 272.0
+offset_bottom = 213.0
+texture = ExtResource("2_v64f1")
+stretch_mode = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InnerContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 layout_mode = 2

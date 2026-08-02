@@ -5,6 +5,9 @@ class_name Loots
 ## Name to display to the user
 var readable_name: String
 
+## What to print at the top of the loot panel
+var description: String
+
 ## The value of this loot, in coins. A pick repair is 10/15/20
 var value: int
 
@@ -38,12 +41,14 @@ func _load_assets(asset_name) -> void:
 func _init(
 	asset_name: String,
 	readable_name_: String,
+	description_: String,
 	value_: int,
 	category_weight_: int,
 	mass_: int = 10
 ):
 	_load_assets(asset_name)
 	readable_name = readable_name_
+	description = description_
 	value = value_
 	category_weight = category_weight_
 	mass = mass_
@@ -51,9 +56,12 @@ func _init(
 
 #region coins
 
+const COIN_DESCRIPTION := "$$ Cash money $$! +%s gold."
+
 static var COIN_1 := Loots.new(
 	"coin_1",
 	"small copper coin",
+	COIN_DESCRIPTION % 1,
 	1,
 	6,
 	4,
@@ -62,6 +70,7 @@ static var COIN_1 := Loots.new(
 static var COIN_2 := Loots.new(
 	"coin_6",
 	"large copper coin",
+	COIN_DESCRIPTION % 2,
 	2,
 	2,
 	10,
@@ -70,6 +79,7 @@ static var COIN_2 := Loots.new(
 static var COIN_3 := Loots.new(
 	"coin_5",
 	"small silver coin",
+	COIN_DESCRIPTION % 3,
 	3,
 	3,
 	6,
@@ -78,6 +88,7 @@ static var COIN_3 := Loots.new(
 static var COIN_4 := Loots.new(
 	"coin_2",
 	"large silver coin",
+	COIN_DESCRIPTION % 4,
 	4,
 	1,
 	8,
@@ -86,6 +97,7 @@ static var COIN_4 := Loots.new(
 static var COIN_5 := Loots.new(
 	"coin_4",
 	"small gold coin",
+	COIN_DESCRIPTION % 5,
 	5,
 	2,
 	3,
@@ -94,6 +106,7 @@ static var COIN_5 := Loots.new(
 static var COIN_6 := Loots.new(
 	"coin_3",
 	"large gold coin",
+	COIN_DESCRIPTION % 10,
 	10,
 	1,
 	20,
@@ -114,6 +127,7 @@ static var ALL_COINS: Array[Loots] = [
 static var BAR_1 := Loots.new(
 	"bar_1",
 	"orichalum ingot",
+	"Add a random lockpick to your deck.",
 	20,
 	10,
 	20,
@@ -122,6 +136,7 @@ static var BAR_1 := Loots.new(
 static var BAR_2 := Loots.new(
 	"bar_2",
 	"dwarven metal ingot",
+	"Choose one of two lockpicks to add to your deck.",
 	25,
 	9,
 	20,
@@ -130,6 +145,7 @@ static var BAR_2 := Loots.new(
 static var BAR_3 := Loots.new(
 	"bar_3",
 	"moonstone ingot",
+	"Choose one of three lockpicks to add to your deck.",
 	30,
 	8,
 	10,
@@ -138,6 +154,7 @@ static var BAR_3 := Loots.new(
 static var BAR_4 := Loots.new(
 	"bar_4",
 	"malachite ingot",
+	"Choose one of four lockpicks to add to your deck.",
 	35,
 	7,
 	20,
@@ -146,6 +163,7 @@ static var BAR_4 := Loots.new(
 static var BAR_5 := Loots.new(
 	"bar_5",
 	"ebony ingot",
+	"Choose one of three rare lockpicks to add to your deck",
 	40,
 	6,
 	30,
