@@ -15,38 +15,29 @@ Every loot claim window shows a picture of the loot with a label. This always ta
 COINS: immediately claimed on hover
 
 INGOTS
-shows n cards plus the sell option. (max: 5 + sell)
+
+shows n cards plus the sell option. (max: 5 + sell). Hover to highlight, click to confirm
+
+
+POTIONS
+shows n cards plus the sell option. If you have insufficient broken cards, you get empties instead.
+
+
+ARTIFACTS
+shows the effect of the artifact, as well as all your open slots. clicking shows the replacement's description and a "sell and replace" option; clicking an empty slot does not require a confirm
+
+GEMS:
+shows the effect, and 3 picks to choose from.
 
 
 ~~~
 
 Physics precautions:
-- keep a queue of loot and only drop up to a safe number. as things are claimed, grab more
-- loot tower is three screens tall and loot is scattered on both x and y axes. invisible walls are on all four sides
+x keep a queue of loot and only drop up to a safe number. as things are claimed, grab more
+x loot tower is three screens tall and loot is scattered on both x and y axes. invisible walls are on all four sides
 - the viewport has a window - after the loot is dropped, after a bit of a pause, any loot that isn't touching that window is removed and re-queued
 - if you press the continue button twice, it loots all coins
 - if you press the disabled continue button three times, it pops up a "continue without looting everything" box
-
-~~~
-
-
-When loot is claimed, its replaced by a little floating word that vanishes after a bit. (use labels for now)
-
-Coins are claimed on mouse hover. everything else pops the context / decision window, which shows the loot. on completion then the loot is removed and the text happens
-
-- nice
-- shiny
-- don't mind if i do
-- thank you
-- for me?
-- you shouldn't have
-- dibs
-- lucky
-- mine now
-- gotcha
-- another one
-- cha-ching
-- just what I wanted
 
 ~~~
 

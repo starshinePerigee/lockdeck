@@ -4,10 +4,13 @@ class_name Loot
 
 signal loot_hovered
 signal loot_clicked
+signal loot_grabbed
 
 const SELF_SCENE := preload("res://objects/loot/loot.tscn")
 
-var spec: Loots 
+var spec: Loots
+
+var grabbed: bool = false
 
 static func new_loot(loots: Loots) -> Loot:
 	var scene: Loot = SELF_SCENE.instantiate()
@@ -58,6 +61,7 @@ static func get_saying() -> String:
 
 ## Claims the loot, playing the saying and then removing it from the scene tree.
 func get_that_bag() -> void:
+	grabbed = true
 	# wake up all adjacent
 	if contact_monitor:
 		for friend in get_colliding_bodies():
@@ -82,6 +86,7 @@ func get_that_bag() -> void:
 		0.6
 	)
 	label_tween.tween_callback(queue_free)
+	loot_grabbed.emit()
 
 func disable_physics() -> void:
 	collision_layer = 0
