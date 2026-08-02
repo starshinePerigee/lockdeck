@@ -32,11 +32,7 @@ func spawn_loot() -> void:
 		loot.loot_clicked.connect(remove.bind(loot))
 
 func remove(target: Loot):
-	for friend in target.get_colliding_bodies():
-		if friend is RigidBody2D:
-			friend.sleeping = false
-	remove_child(target)
-	target.queue_free()
+	target.get_that_bag()
 
 func print_pile(pile: Array[Loots]) -> void:
 	for l in pile:
