@@ -8,6 +8,7 @@ static var CATEGORY_WEIGHTS: Dictionary[Loots.LootsTypes, int] = {
 	Loots.LootsTypes.COIN: 3,
 	Loots.LootsTypes.BAR: 2
 }
+static var BONUS_WEIGHT := 1
 
 static var total_weight: float = 0.0
 
@@ -42,6 +43,9 @@ static func sum_pile(pile: Array[Loots]) -> int:
 		value += l.value
 	return value
 
+static func _get_weighted_value(total_value: int, weight: int) -> int:
+	return int(total_value * weight / total_weight)
+
 static func get_standard_loot_with_total_value(value: int) -> Array[Loots]:
 	var type_deck: Array[Loots.LootsTypes] = []
 	type_deck.assign(Loots.LootsTypes.values())
@@ -49,12 +53,11 @@ static func get_standard_loot_with_total_value(value: int) -> Array[Loots]:
 	
 	var total_loot: Array[Loots] = []
 	
-	var value_remainder := 0
+	var value_remainder := _get_weighted_value(value, BONUS_WEIGHT)
 	for loot_category in type_deck:
-		var allocated_value := int(
-			value * CATEGORY_WEIGHTS[loot_category] / total_weight
+		value_remainder += _get_weighted_value(
+			value, CATEGORY_WEIGHTS[loot_category]
 		)
-		value_remainder += allocated_value
 		var pile := get_pile_with_value(
 			value_remainder,
 			CATEGORY_DECKS[loot_category]
@@ -81,3 +84,4 @@ static func _static_init() -> void:
 	
 	for weight in CATEGORY_WEIGHTS.values():
 		total_weight += weight
+	total_weight += BONUS_WEIGHT
