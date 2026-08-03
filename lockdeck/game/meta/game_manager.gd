@@ -83,6 +83,10 @@ func do_victory() -> void:
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 
+## Show the failure screen - called from gamecore
+func do_failure() -> void:
+	$AnimationPlayer.play("lock to failure")
+
 func next_lock() -> void:
 	if _check_state(GameState.BETWEEN_LOCK):
 		return
@@ -103,7 +107,9 @@ func _ready() -> void:
 	$BetweenLocks.continue_to_next.connect(advance_from_between)
 	$LootMain.continue_to_next.connect(end_loot)
 	$GameCore.continue_to_next.connect(lock_complete)
+	$GameCore.continue_to_failure.connect(do_failure)
 	$StrategyHub.continue_to_next.connect(end_strategy)
+	$FailureScreen.continue_to_title.connect(end_game.emit)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:

@@ -3,6 +3,7 @@ extends Control
 signal game_fail
 signal game_win
 signal continue_to_next
+signal continue_to_failure
 
 #region game state variables
 @export var cylinder_count := 4
@@ -32,7 +33,8 @@ enum InputState {
 	ACTIVE_DRAG,
 	VIEW_ALL,
 	CARD_DISPLAY,
-	COMPLETE
+	COMPLETE,
+	FAILURE
 }
 var current_state := InputState.INACTIVE
 
@@ -129,6 +131,13 @@ func lock_input(state: bool = true) -> void:
 	else:
 		$HandMain/Hand.enable_all()
 
+func show_failure(state: bool = true) -> void:
+	$FailureButton.visible = state
+	if state:
+		$FailureButton.mouse_filter = MOUSE_FILTER_STOP
+	else:
+		$FailureButton.mouse_filter = MOUSE_FILTER_IGNORE
+
 func display_cards(cards: Array, header: String) -> void:
 	var cards_typed: Array[CardSpec] = []
 	cards_typed.assign(cards)
@@ -201,7 +210,8 @@ func break_pick(card: CardSpec) -> void:
 	$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		$Notifications.notify(Notifications.FAILURE)
-		set_state(InputState.COMPLETE)
+		lock_input()
+		show_failure()
 		game_fail.emit()
 
 func view_all_pins() -> void:
@@ -337,6 +347,7 @@ func add_random_cards(count: int = 1) -> void:
 
 func restart() -> void:
 	lock_input(false)
+	show_failure(false)
 	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(countdown_time)
@@ -356,6 +367,7 @@ func break_from_hand() -> void:
 
 func _ready() -> void:
 	$ContinueButton.pressed.connect(continue_to_next.emit)
+	$FailureButton.pressed.connect(continue_to_failure.emit)
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$HandMain.hand_selected.connect(pick_selected)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://bftgyem3nerxa"]
+
+[ext_resource type="Script" uid="uid://beakv6bjpbi5i" path="res://game/meta/failure_screen.gd" id="1_atfqw"]
+
+[node name="FailureScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_atfqw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 304.84
+offset_top = 193.073
+offset_right = 344.84
+offset_bottom = 212.073
+text = "with this character's death the thread of prophecy is severed"
+
+[node name="ReturnButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 273.0
+offset_right = 425.0
+offset_bottom = 300.0
+text = "return to title"

@@ -17,7 +17,9 @@ func spawn_loot() -> void:
 	
 	if len(pending_loot) == 0:
 		if refil:
-			pending_loot = LootGenerator.get_pile_with_value(total_value, LootGenerator.COIN_DECK)
+			pending_loot = LootGenerator.get_pile_with_value(
+				total_value, LootGenerator.CATEGORY_DECKS[Loots.LootsTypes.COIN]
+			)
 		else:
 			return
 
@@ -40,13 +42,7 @@ func print_pile(pile: Array[Loots]) -> void:
 
 func _ready() -> void:
 	$Timer.timeout.connect(spawn_loot)
-	pending_loot = LootGenerator.get_pile_with_value(total_value, LootGenerator.COIN_DECK)
-	pending_loot.append_array(
-		LootGenerator.get_pile_with_value(
-			50,
-			LootGenerator.BAR_DECK
-		)
-	)
+	pending_loot = LootGenerator.get_standard_loot_with_total_value(total_value)
 	pending_loot.shuffle()
 	print_pile(pending_loot)
 	
