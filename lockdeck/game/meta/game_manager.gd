@@ -41,6 +41,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game = GameSpec.new()
 	game.current_deck = starter_deck
 	current_state = GameState.BETWEEN_LOCK
+	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 

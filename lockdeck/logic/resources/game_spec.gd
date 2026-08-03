@@ -5,7 +5,7 @@ class_name GameSpec
 ## Current coin count
 @export var coins: int = 0
 
-## Current lock
+## Current lock. ONE INDEXED
 @export var lock_number: int = 1
 
 ## Holds the full set of live cards
@@ -44,7 +44,7 @@ func get_loot_value() -> int:
 	var base_value: int = LOOT_AMOUNTS[(lock_number - 1) / 3]
 	return int(randf_range(base_value * 0.9, base_value * 1.1))
 
-var _current_strat_floor := 3
+var _current_strat_floor := 4
 
 func heist_complete() -> bool:
 	if lock_number != _current_strat_floor:
