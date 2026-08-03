@@ -1,6 +1,8 @@
 extends Control
 ## This scene represents a single game and manages the transition between scenes
 
+signal end_game
+
 var game: GameSpec
 
 enum GameState {
@@ -57,7 +59,9 @@ func lock_complete():
 	game.complete_lock()
 
 func advance_from_between() -> void:
-	if game.heist_complete():
+	if game.game_complete():
+		do_victory()
+	elif game.heist_complete():
 		next_loot()
 	else:
 		next_lock()
@@ -67,10 +71,17 @@ func next_loot() -> void:
 	$AnimationPlayer.play("between to loot")
 
 func end_loot() -> void:
-	$AnimationPlayer.play("loot to strategy")
+	if game.game_complete():
+		end_game.emit()
+	else:
+		$AnimationPlayer.play("loot to strategy")
 
 func end_strategy() -> void:
 	$AnimationPlayer.play("strategy to between")
+
+func do_victory() -> void:
+	$LootMain.do_victory(game.coins)
+	$AnimationPlayer.play("between to loot")
 
 func next_lock() -> void:
 	if _check_state(GameState.BETWEEN_LOCK):

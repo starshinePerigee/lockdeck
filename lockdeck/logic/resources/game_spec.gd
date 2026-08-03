@@ -52,6 +52,10 @@ func heist_complete() -> bool:
 	_current_strat_floor += 3
 	return true
 
+func game_complete() -> bool:
+	# > not >= becuase lock number is 1-indexed
+	return lock_number > len(LOCK_SEQUENCE)
+
 ## Updates the broken_picks deck, removing the picks from the deck.
 func break_picks(picks: Array[CardSpec]) -> void:
 	for broke in picks:

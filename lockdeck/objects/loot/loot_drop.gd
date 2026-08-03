@@ -16,6 +16,14 @@ const force := 600
 var _spawn_emitted: bool = true
 var _grabbed_emitted: bool = true
 
+func empty_queue() -> void:
+	loot_queue.clear()
+
+func clear_all() -> void:
+	for child in get_children():
+		if child is Loot:
+			child.queue_free()
+
 func queue_loot(loot_array: Array[Loot]) -> void:
 	loot_queue.append_array(loot_array)
 	loot_queue.shuffle()

@@ -32,6 +32,7 @@ func _ready() -> void:
 		abandon_game_and_return_to_title,
 		true
 	)
+	$GameManager.end_game.connect(abandon_game_and_return_to_title)
 	$TopLevelMenus/Title.show_settings.connect($SettingsWidget.show_widget)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")

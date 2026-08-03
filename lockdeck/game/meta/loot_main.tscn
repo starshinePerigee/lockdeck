@@ -31,3 +31,15 @@ offset_right = 925.0
 offset_bottom = 520.0
 disabled = true
 text = "Continue >"
+
+[node name="VictoryLabel" type="Label" parent="."]
+visible = false
+z_index = 500
+layout_mode = 0
+offset_left = 370.0
+offset_top = 150.0
+offset_right = 567.0
+offset_bottom = 169.0
+text = "congradulations u won :v
+
+total coins: 99"
