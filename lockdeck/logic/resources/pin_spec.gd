@@ -44,6 +44,7 @@ func activate_and_get_depth() -> Depths:
 		return Depths.EXHAUSTED
 	else:
 		activated[pin_position] = true
+		reveal_position(pin_position)
 		return depths[pin_position]
 	# tutorialization guide: should emit a signal that triggers an explainer
 

@@ -145,7 +145,6 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 	else:
 		var depth := pin.activate_and_get_depth()
 		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
-		pin.reveal_position()
 
 func test_pin(pin_index: int, test_ahead: int) -> void:
 	if pins[pin_index].is_jammed():
