@@ -4,7 +4,7 @@ extends Control
 signal continue_to_next
 
 var game: GameSpec
-
+	
 func do_loot(value: int) -> void:
 	$ContinueButton.disabled = true
 	$LootPopup.remove_and_close()
@@ -24,7 +24,6 @@ func do_loot(value: int) -> void:
 	$LootDrop.queue_loot(real_loot)
 
 func do_coin(coin: Loot) -> void:
-	print("XX")
 	coin.get_that_bag()
 	game.add_coins(coin.spec.value)
 

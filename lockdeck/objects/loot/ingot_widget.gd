@@ -2,6 +2,16 @@ extends HBoxContainer
 ## This handles giving the choice of a pick
 class_name IngotWidget
 
+signal close_popup
+signal add_pick(CardSpec)
+signal add_coins(int)
+
+var _loots: Loots
+
+# write-only variable
+func set_loots(loots: Loots) -> void:
+	_loots = loots
+
 static var BAR_VALUES: Dictionary[Loots, int] = {
 	Loots.BAR_1: 1,
 	Loots.BAR_2: 2,
@@ -10,24 +20,26 @@ static var BAR_VALUES: Dictionary[Loots, int] = {
 	Loots.BAR_5: 5,
 }
 
-signal close_popup
-signal add_pick(CardSpec)
-signal add_coins(int)
-
 const SELF_SCENE := preload("res://objects/loot/ingot_widget.tscn")
-
 const SELL_THING := preload("res://objects/loot/sell_thing.tscn")
 
 static func unpack(bar: Loots) -> IngotWidget:
 	var widget := SELF_SCENE.instantiate()
-	for __ in BAR_VALUES[bar]:
-		var spec := PickGenerator.get_random_base_card()
-		var card := PickCard.build_from_spec(spec)
-		card.pressed.connect(widget.add_pick.emit.bind(spec))
-		card.pressed.connect(widget.close_popup.emit)
-		widget.add_child(card)
-	var sell_thing := SELL_THING.instantiate()
-	sell_thing.sell_clicked.connect(widget.add_coins.emit.bind(5))
-	sell_thing.sell_clicked.connect(widget.close_popup.emit)
-	widget.add_child(sell_thing)
+	widget.set_loots(bar)
 	return widget
+
+func _ready() -> void:
+	if _loots == null:
+		push_error("You must assign a Loots via set_loots()!")
+	
+	for __ in BAR_VALUES[_loots]:
+		var spec := PickGenerator.get_random_base_card()
+		var card := CardButton.build_from_spec(spec)
+		card.pressed.connect(add_pick.emit.bind(spec))
+		card.pressed.connect(close_popup.emit)
+		add_child(card)
+	
+	var sell_thing := SELL_THING.instantiate()
+	sell_thing.sell_clicked.connect(add_coins.emit.bind(5))
+	sell_thing.sell_clicked.connect(close_popup.emit)
+	add_child(sell_thing)
