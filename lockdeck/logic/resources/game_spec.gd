@@ -5,8 +5,8 @@ class_name GameSpec
 ## Current coin count
 @export var coins: int = 0
 
-## Current lock difficulty
-@export var difficulty: int = 0
+## Current lock
+@export var lock_number: int = 1
 
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
@@ -22,7 +22,35 @@ func add_pick(pick: CardSpec) -> void:
 
 ## Marks a lock as complete, updating the difficulty
 func complete_lock() -> void:
-	difficulty += 1
+	lock_number += 1
+
+static var LOCK_SEQUENCE := [
+	1, 1, 2,
+	2, 2, 3,
+	3, 3, 4,
+	4, 4, 5,
+	5, 6, 7,
+	8, 9, 10
+]
+
+static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
+
+## Gets the current difficulty
+func get_difficulty() -> int:
+	return LOCK_SEQUENCE[lock_number - 1]
+
+func get_loot_value() -> int:
+	@warning_ignore("integer_division")
+	var base_value: int = LOOT_AMOUNTS[(lock_number - 1) / 3]
+	return int(randf_range(base_value * 0.9, base_value * 1.1))
+
+var _current_strat_floor := 3
+
+func heist_complete() -> bool:
+	if lock_number != _current_strat_floor:
+		return false
+	_current_strat_floor += 3
+	return true
 
 ## Updates the broken_picks deck, removing the picks from the deck.
 func break_picks(picks: Array[CardSpec]) -> void:
@@ -42,7 +70,7 @@ static func get_in_progress_game() -> GameSpec:
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
 	game.broken_picks = PickGenerator.get_many_base_cards(4)
-	game.difficulty = 3
+	game.lock_number = 4
 	return game
 
 # Called when the node enters the scene tree for the first time.

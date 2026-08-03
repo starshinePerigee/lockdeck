@@ -323,7 +323,7 @@ func load_lock(lock: LockSpec) -> void:
 ## Loads non-lock parameters from the game spec and restarting the game.
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
-	$GameStatus.stage = game.difficulty
+	$GameStatus.stage = game.lock_number
 	load_deck(game.current_deck.duplicate())
 	$TrashMain.reset()
 	restart()

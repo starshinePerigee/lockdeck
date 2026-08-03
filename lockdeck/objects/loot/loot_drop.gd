@@ -21,7 +21,10 @@ func queue_loot(loot_array: Array[Loot]) -> void:
 	loot_queue.shuffle()
 	_spawn_emitted = false
 	_grabbed_emitted = false
-	$Timer.start()
+
+func drop_loot() -> void:
+	if len(loot_queue) > 0:
+		$Timer.start()
 
 func spawn_loot() -> void:
 	if get_child_count() > MAX_LOOT_COUNT:

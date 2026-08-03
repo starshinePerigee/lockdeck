@@ -53,14 +53,29 @@ func lock_complete():
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("lock to between")
+	game.complete_lock()
+
+func advance_from_between() -> void:
+	if game.heist_complete():
+		next_loot()
+	else:
+		next_lock()
+
+func next_loot() -> void:
+	$LootMain.do_loot(game.get_loot_value())
+	$AnimationPlayer.play("between to loot")
+
+func end_loot() -> void:
+	$AnimationPlayer.play("loot to strategy")
+
+func end_strategy() -> void:
+	$AnimationPlayer.play("strategy to between")
 
 func next_lock() -> void:
 	if _check_state(GameState.BETWEEN_LOCK):
 		return
-
-	game.complete_lock()
 	
-	$GameCore.load_lock(LockGenerator.get_next_level(game.difficulty))
+	$GameCore.load_lock(LockGenerator.get_next_level(game.get_difficulty()))
 	$GameCore.load_game(game)
 	
 	current_state = GameState.CORE_GAME
@@ -73,5 +88,11 @@ func abort_and_reset() -> void:
 
 func _ready() -> void:
 	global_position = Vector2(0, 0)
-	$BetweenLocks.continue_to_next.connect(next_lock)
+	$BetweenLocks.continue_to_next.connect(advance_from_between)
+	$LootMain.continue_to_next.connect(end_loot)
 	$GameCore.continue_to_next.connect(lock_complete)
+	$StrategyHub.continue_to_next.connect(end_strategy)
+
+	# if name == "__main__:
+	if get_tree().current_scene == self:
+		begin_new_game(DeckTemplates.STANDARD.deck_gen.call())

@@ -4,7 +4,10 @@ extends Control
 signal continue_to_next
 
 var game: GameSpec
-	
+
+func drop_loot() -> void:
+	$LootDrop.drop_loot()
+
 func do_loot(value: int) -> void:
 	$ContinueButton.disabled = true
 	$LootPopup.remove_and_close()
