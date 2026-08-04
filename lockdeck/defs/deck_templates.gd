@@ -70,7 +70,6 @@ static var POWERFUL := DeckTemplates.new(
 		PickTemplates.DIAMOND,
 		PickTemplates.DIAMOND,
 		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
 		PickTemplates.HOOK,
 		PickTemplates.HOOK,
 		PickTemplates.RAKE,
@@ -79,6 +78,7 @@ static var POWERFUL := DeckTemplates.new(
 		PickTemplates.LEVER,
 		PickTemplates.LEVER,
 		PickTemplates.LEVER,
+		PickTemplates.PRYBAR
 	])
 )
 

@@ -111,6 +111,12 @@ class Execution:
 				return effect
 		return execution_sentinel
 	
+	## Check the next effect for this pin, returning empty if none is present.
+	func peek_next_effect(pin_index: int) -> EffectSpec:
+		if len(self.pending_effects[pin_index]) > 0:
+			return self.pending_effects[pin_index][0]
+		return EffectSpec.new(Effects.EMPTY)
+	
 	## Adds effects to the top of the stack
 	func add_effect(pin_index: int, effect: EffectSpec, front: bool = true):
 		if front:
@@ -143,8 +149,9 @@ func advance_pin(pin_index: int, advance_by: int, ex: Execution) -> void:
 		ex.add_effect(pin_index, EffectSpec.new(Effects.OUT_OF_BOUNDS))
 		ex.add_effect(pin_index, EffectSpec.new(Effects.UNLOCK))
 	else:
-		var depth := pin.activate_and_get_depth()
-		ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
+		if not ex.peek_next_effect(pin_index).flavor in [Effects.PUSH, Effects.CRUSH]:
+			var depth := pin.activate_and_get_depth()
+			ex.add_effect(pin_index, EffectSpec.new(depth.effect, depth.value))
 
 func test_pin(pin_index: int, test_ahead: int) -> void:
 	if pins[pin_index].is_jammed():
@@ -311,6 +318,7 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 		ex.add_effect(effect.realized_pin, EffectSpec.new(Effects.UNLOCK))
 	else:
 		advance_pin(effect.realized_pin, depth_offset, ex)
+	effect.add_positions([pin.pin_position])
 
 func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]

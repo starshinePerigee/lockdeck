@@ -1,4 +1,4 @@
-﻿extends Resource
+extends Resource
 ## Result spec is a dataclass that holds a single pin's preview or previous turn
 class_name ResultSpec
 
@@ -36,7 +36,7 @@ func apply_effect(effect: EffectSpec) -> void:
 
 	match effect.flavor:
 		Effects.PUSH:
-			update(_position, Results.NONE)
+			update(_position, Results.HINT)
 			var hinted := advance(1)
 			for i in (effect.value - 1):
 				if hinted:
@@ -76,6 +76,17 @@ func finalize() -> void:
 	if _pin == null:
 		push_error("Failed to initailize pin spec!")
 		return
+	
+	## Downgrade multiple activations
+	var final_activate := -1
+	for i in results.keys():
+		if results[i] == Results.ACTIVATE:
+			final_activate = max(final_activate, i)
+	for i in results.keys():
+		if i == final_activate:
+			break
+		if results[i] == Results.ACTIVATE:
+			results[i] = Results.HINT 
 	
 	for i in results.keys():
 		if i >= PinSpec.PIN_DEPTH_COUNT:

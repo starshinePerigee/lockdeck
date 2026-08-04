@@ -19,6 +19,7 @@ var realized_positions: Dictionary[int, bool]
 ## used in tracking execution logic
 var realized_start: int = -1
 
+## Add given positions to this effect spec for tracking purposes
 func add_positions(positions: Array) -> void:
 	for position in positions:
 		realized_positions[position] = true

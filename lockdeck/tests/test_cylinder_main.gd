@@ -92,7 +92,7 @@ func _ready() -> void:
 	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
 	$CylinderMain/Cylinders.pin_activated.connect(do_click)
 	
-	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
+	$CylinderMain.load_new_lock(LockSpec.new(PinGenerator.build_test_lock(CYL_COUNT)))
 	for t in PickTemplates.valid_templates:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)

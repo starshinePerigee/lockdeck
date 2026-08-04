@@ -153,6 +153,16 @@ static var LEVER := PickTemplates.new(
 	}
 )
 
+static var PRYBAR := PickTemplates.new(
+	"prybar",
+	{
+		0: [
+			EffectSpec.new(Effects.CRUSH, 2),
+			EffectSpec.new(Effects.PUSH, 2),
+		]
+	}
+)
+
 
 static var valid_templates: Array[PickTemplates] = [
 	DIAMOND,
@@ -162,5 +172,6 @@ static var valid_templates: Array[PickTemplates] = [
 	RAKE,
 	SNAKE,
 	FORK,
-	LEVER
+	LEVER,
+	PRYBAR,
 ]
