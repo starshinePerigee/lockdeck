@@ -1,0 +1,4 @@
+skip icon looks like a shield
+
+we need a "reveal pointer" in addition to pin position that resets
+test, reveal, and skip (rename this) should push the reveal pointer but not the pin

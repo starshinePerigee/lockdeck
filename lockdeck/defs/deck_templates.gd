@@ -117,6 +117,7 @@ static var CAREFUL := DeckTemplates.new(
 		PickTemplates.RAKE,
 		PickTemplates.HOOK,
 		PickTemplates.HOOK,
+		PickTemplates.HOOK,
 		PickTemplates.PROBE,
 		PickTemplates.BALL,
 		PickTemplates.SNAKE,

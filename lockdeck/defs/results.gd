@@ -41,6 +41,9 @@ static var REVEAL := Results.new("reveal")
 ## Crush - by crush depth
 static var CRUSH := Results.new("crush")
 
+## Skip - by skip effect
+static var SKIP := Results.new("skip")
+
 ## out of bounds / pick break; subtype of activate (probably)
 static var BREAK := Results.new("break")
 

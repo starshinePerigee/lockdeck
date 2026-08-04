@@ -129,6 +129,18 @@ static var SNAKE := PickTemplates.new(
 	}
 )
 
+static var FISHHOOK := PickTemplates.new(
+	"fishhook",
+	{
+		0: [
+			EffectSpec.new(Effects.PUSH, 1),
+			EffectSpec.new(Effects.SKIP, 1),
+			EffectSpec.new(Effects.REVEAL, 1),
+			EffectSpec.new(Effects.TEST, 1),
+		]
+	}
+)
+
 static var FORK := PickTemplates.new(
 	"fork",
 	{
@@ -174,4 +186,5 @@ static var valid_templates: Array[PickTemplates] = [
 	FORK,
 	LEVER,
 	PRYBAR,
+	FISHHOOK
 ]

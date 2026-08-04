@@ -226,6 +226,8 @@ func evaluate_pin(
 			execute_jam(effect, ex)
 		Effects.CRUSH:
 			execute_crush(effect, ex)
+		Effects.SKIP:
+			execute_skip(effect, ex)
 		Effects.BOUNCE:
 			execute_bounce(effect, ex)
 		Effects.OUT_OF_BOUNDS:
@@ -319,6 +321,17 @@ func execute_crush(effect: EffectSpec, ex: Execution) -> void:
 	else:
 		advance_pin(effect.realized_pin, depth_offset, ex)
 	effect.add_positions([pin.pin_position])
+
+func execute_skip(effect: EffectSpec, ex: Execution) -> void:
+	var pin := pins[effect.realized_pin]
+	if pin.is_jammed():
+		_unjam_effect(effect)
+	else:
+		pin.advance_pin(effect.value)
+		effect.add_positions(range(
+			effect.realized_start,
+			effect.realized_start + effect.value
+		))
 
 func execute_bounce(effect: EffectSpec, ex: Execution) -> void:
 	var pin := pins[effect.realized_pin]
