@@ -1,14 +1,8 @@
-main screen
-- start -> deck select
-- settings -> show settings window (global scene)
-
-deck select
-- multiple decks, has tooltip and hover/select paradigm -> strategy hub
-
 ~ 🐦 ~
 
 strategy hub
 - shows current stage
+- shows next three stage's depths
 
 - deck -> deck viewer
 -- has deck counter (/20?)
@@ -34,17 +28,3 @@ shop scene
 - return button -> strategy hub
 
 (all three of the above - might use a popup confirm / info window instead?)
-
-game core
-x on unlock, show continue button -> loot scene
-x- continue button should be in the same place across all scenes (bottom center - over keyway? under latch?)
-- on fail, show end run button -> end of run scene
-
-loot scene
-- continue -> strategy hub
--- locked until all loot is looted
-- loot -> pops up a confirm window
-
-end of run
-- show statistics
-- after a bit, show the main menu button -> main menu

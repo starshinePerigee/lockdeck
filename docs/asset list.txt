@@ -12,7 +12,7 @@ x decks/piles prolly need their own art
 - like 10 pieces of treasure (can be color swapped)
 - like 10 artifacts, with icon versions
 - loot get sound
-- coin (with animation and sound)
+% coin (with animation and sound)
 % candle (with animation and sound)
 - chest background
 - shopkeep ui
@@ -21,7 +21,7 @@ x decks/piles prolly need their own art
 % keyway
 x gears
 % notification art (??) and effects (?)
-- item get pop ups (with sound)
+% item get pop ups (with sound)
 % previous turn button
 - splash screen
 - back of card art

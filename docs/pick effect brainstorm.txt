@@ -46,5 +46,6 @@ REVEAL
 - sets the pin if it reveals a key
 - always reveals the next unrevealed depth
 - reveals pins if this pick breaks
+- reveals a depth at random for each depth revealed
 
 NOTE: discard always draws 1.

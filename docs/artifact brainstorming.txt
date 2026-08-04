@@ -2,14 +2,27 @@ candlestick: add two segments to the candle
 chalice: draw five cards
 dagger: advance and set first unset pin
 spyglass: reveal next three depths for all pins
-crown: gain a coin for every broken pick this round
+crown: gain 5 gold for every broken pick this round
 hourglass: invincible for three turns
 scepter: jam 2 all pins (if special jam is available: do not block test and reveal)
 orb: skip this stage; does not work on boss locks
 silverware: gives you four toothpicks (pick with tooth on it) (force force test test / force test / force force test test, break after use)
-deed: not an artifact. everything in the shop is free (returns to normal cost after buy)
+deed: consumable in the shop. everything in the shop is free except knuckles
 perfume: hand size +1
-ancient coin: adds a random card to your hand. It stays part of your deck and ignores deck limit until next shop
-flute: 
-sugar:
-wine: 
+ancient coin: adds a random card to your hand. you get to keep it. (ignores deck limit until next shop since you pop it in-situ)
+flute: reveal half of all depths, randomly
+sugar: until you break a card, cards return to your hand after play (this can trap you forcing a break)
+wine: next 5 cards go back to your deck after being played
+kalidoscope: consumable in deck view. adds a gem to a random card five times
+tome: consumable in repair view: all repairs this break transform the pick
+flask: repairs cost 5 coins but add "next time this card breaks it is permanent"
+mask: consumable in strat view: pick a depth and re-roll it
+book: +1 deck limit permanently
+keys: +2 deck limit as long as this stays in your artifacts
+map: carry this to the next floor for +x (20?) coins
+orrery: regenerate the current lock. do not update current depths or revealed positions
+
+
+
+Do artifacts get consumed or do they just go on cooldown?
+if they go on cooldown, this opens the possibility for permanent artifacts

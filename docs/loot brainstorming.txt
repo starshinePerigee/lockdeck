@@ -9,15 +9,6 @@ Loot is the following options:
 - bones: win the game
 
 
-Every loot claim window shows a picture of the loot with a label. This always takes 1 card worth of space.
-
-
-COINS: immediately claimed on hover
-
-INGOTS
-
-shows n cards plus the sell option. (max: 5 + sell). Hover to highlight, click to confirm
-
 
 POTIONS
 shows n cards plus the sell option. If you have insufficient broken cards, you get empties instead.
@@ -29,15 +20,6 @@ shows the effect of the artifact, as well as all your open slots. clicking shows
 GEMS:
 shows the effect, and 3 picks to choose from.
 
-
-~~~
-
-Physics precautions:
-x keep a queue of loot and only drop up to a safe number. as things are claimed, grab more
-x loot tower is three screens tall and loot is scattered on both x and y axes. invisible walls are on all four sides
-- the viewport has a window - after the loot is dropped, after a bit of a pause, any loot that isn't touching that window is removed and re-queued
-- if you press the continue button twice, it loots all coins
-- if you press the disabled continue button three times, it pops up a "continue without looting everything" box
 
 ~~~
 
@@ -60,7 +42,3 @@ So start at 10 coins, and end at 30, adding 5 each round. Artifacts, ingots, gem
 - endgame (30): 2 ingots (4ea), 2 gem (2ea), 1 jewelry (3), 3 artifacts (2ea), 2 potions (2ea), 9 coins
 
 Start at 10 and add five each round up to 30, then add 2 per round after.
-
-~~~
-
-loot draft: start with a really basic hand, get a buch of loot to start
