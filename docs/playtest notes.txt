@@ -1,0 +1,8 @@
+defs needs more picks
+
+add three stats to loot (and persist them to strat screen)
+coins / picks / broken
+
+add debug: reveal
+
+track push cards - when you break under a target, "thread of prophecy" message?
