@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=3 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
+[ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_fro3h")
+script = ExtResource("2_1r8dw")
 
 [node name="DeckButton" type="Button" parent="."]
 layout_mode = 0
@@ -58,3 +60,11 @@ offset_top = -24.0
 offset_right = 68.0
 offset_bottom = -5.0
 text = "Coins: 0"
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 697.0
+offset_top = 390.0
+offset_right = 785.0
+offset_bottom = 417.0
+text = "Continue >"

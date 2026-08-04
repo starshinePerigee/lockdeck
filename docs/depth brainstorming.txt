@@ -14,6 +14,7 @@
 - crush trap: reads as safe, if you try to crush it, it breaks the crush
 - x: if you jam this pin, another pin resets
 - minima: if you test this depth, it pulls you to it
+- stuck: if you move past this depth, you don't
 - fumble: discards cards (percent of deck)
 - darkness: if you hit both, the lights go out
 - slippery: if you skip / test / reveal this pin, advance one

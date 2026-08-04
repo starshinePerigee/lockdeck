@@ -1,4 +1,4 @@
 - new depths
-- depth templates
+x depth templates
 - pick modification
-- starting decks
+x starting decks

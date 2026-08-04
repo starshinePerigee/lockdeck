@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.9.2"
+var VERSION_NUMBER := "v0.9.3"
 
 func start_game(starter_deck: Array[CardSpec]) -> void:
 	$MenuButton.visible = true
@@ -32,6 +32,7 @@ func _ready() -> void:
 		abandon_game_and_return_to_title,
 		true
 	)
+	$GameManager.end_game.connect(abandon_game_and_return_to_title)
 	$TopLevelMenus/Title.show_settings.connect($SettingsWidget.show_widget)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")

@@ -108,7 +108,7 @@ static var CAREFUL := DeckTemplates.new(
 	(
 		"The patient deck is perfect for the thief who names their picks "
 		+ "and can't stand the thought of losing even one.\n"
-		+ "There are no surprises after carefully mapping out the interior "
+		+ "There are no surprises when you map the the interior "
 		+ "of each lock before you make any moves."
 	),
 	func(): return _spec_templates([

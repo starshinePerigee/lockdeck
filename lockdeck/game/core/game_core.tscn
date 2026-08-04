@@ -155,6 +155,18 @@ offset_bottom = 324.0
 theme = ExtResource("6_3ctlq")
 text = "Continue >"
 
+[node name="FailureButton" type="Button" parent="."]
+visible = false
+z_index = 25
+layout_mode = 0
+offset_left = 426.0
+offset_top = 386.0
+offset_right = 532.0
+offset_bottom = 412.0
+mouse_filter = 2
+theme = ExtResource("6_3ctlq")
+text = "Give up >"
+
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
 z_index = 950
 layout_mode = 0

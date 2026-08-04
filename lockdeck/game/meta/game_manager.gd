@@ -1,9 +1,9 @@
 extends Control
 ## This scene represents a single game and manages the transition between scenes
 
-@export var difficulty := 0
-@export var current_deck: Array[CardSpec] = []
-@export var broken_picks: Array[CardSpec] = []
+signal end_game
+
+var game: GameSpec
 
 enum GameState {
 	INVALID,
@@ -40,59 +40,77 @@ func break_three() -> void:
 		$GameCore.break_from_hand()
 
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
-	difficulty = 0
-	current_deck = starter_deck
+	game = GameSpec.new()
+	game.current_deck = starter_deck
 	current_state = GameState.BETWEEN_LOCK
+	$LootMain.game = game
+	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 
 func lock_complete():
-	var broken: Array[CardSpec] = $GameCore/TrashMain.cards
-	for broke in broken:
-		if broke in current_deck:
-			current_deck.erase(broke)
-		else:
-			push_warning(
-				"Could not find broken pick %s (%s) in deck record!" 
-				% [broke.pick_name, broke.unique_id]
-			)
-	broken_picks.append_array(broken)
+	game.break_picks($GameCore/TrashMain.cards)
 	current_state = GameState.BETWEEN_LOCK
+	if $GameCore/LockBody/CountdownMain.count >= 2:
+		game.coins += 5
+		$BetweenLocks/SpeedBonusLabel.visible = true
+	else:
+		$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("lock to between")
+	game.complete_lock()
+
+func advance_from_between() -> void:
+	if game.game_complete():
+		do_victory()
+	elif game.heist_complete():
+		next_loot()
+	else:
+		next_lock()
+
+func next_loot() -> void:
+	$LootMain.do_loot(game.get_loot_value())
+	$AnimationPlayer.play("between to loot")
+
+func end_loot() -> void:
+	if game.game_complete():
+		end_game.emit()
+	else:
+		$AnimationPlayer.play("loot to strategy")
+
+func end_strategy() -> void:
+	$AnimationPlayer.play("strategy to between")
+
+func do_victory() -> void:
+	$LootMain.do_victory(game.coins)
+	$AnimationPlayer.play("between to loot")
+
+## Show the failure screen - called from gamecore
+func do_failure() -> void:
+	$AnimationPlayer.play("lock to failure")
 
 func next_lock() -> void:
 	if _check_state(GameState.BETWEEN_LOCK):
 		return
-
-	difficulty += 1
-	$GameCore/GameStatus.stage = difficulty
-	$GameCore.cylinder_count = min(difficulty, 5)
 	
-	var lockset_deck := LockGenerator.get_lockset_deck(
-		LockGenerator.GameArcs.MID,
-		difficulty + 5,
-		8
-	)
-	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, difficulty + 2)
-	var lock := LockGenerator.build_lock(lock_deck, $GameCore.cylinder_count, difficulty + 2) 
-	$GameCore.load_lock(lock)
-	
-	$GameCore.load_deck(current_deck.duplicate())
-	$GameCore/TrashMain.reset()
-	$GameCore.restart()
-	$GameCore/GameStatus.coins = 0
+	$GameCore.load_lock(LockGenerator.get_next_level(game.get_difficulty()))
+	$GameCore.load_game(game)
 	
 	current_state = GameState.CORE_GAME
 	$AnimationPlayer.play("between to lock")
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:
-	difficulty = 0
-	current_deck = []
-	broken_picks = []
 	current_state = GameState.INVALID
 	$AnimationPlayer.play("RESET")
 
 func _ready() -> void:
 	global_position = Vector2(0, 0)
-	$BetweenLocks.continue_to_next.connect(next_lock)
+	$BetweenLocks.continue_to_next.connect(advance_from_between)
+	$LootMain.continue_to_next.connect(end_loot)
 	$GameCore.continue_to_next.connect(lock_complete)
+	$GameCore.continue_to_failure.connect(do_failure)
+	$StrategyHub.continue_to_next.connect(end_strategy)
+	$FailureScreen.continue_to_title.connect(end_game.emit)
+
+	# if name == "__main__:
+	if get_tree().current_scene == self:
+		begin_new_game(DeckTemplates.STANDARD.deck_gen.call())

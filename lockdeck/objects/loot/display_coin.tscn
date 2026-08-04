@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cswtuur6co65u"]
+
+[ext_resource type="Script" uid="uid://dl75n4eunvi8u" path="res://objects/loot/display_coin.gd" id="1_h173k"]
+[ext_resource type="PackedScene" uid="uid://ddr6m8p1i3c1n" path="res://objects/loot/loot.tscn" id="2_qu0o7"]
+[ext_resource type="Texture2D" uid="uid://b8025j2hwxcnw" path="res://assets/loot/coin_4.png" id="3_di0l0"]
+[ext_resource type="PackedScene" uid="uid://bkq5k1s825kq0" path="res://assets/loot/colliders/shape_coin_4.tscn" id="3_qu0o7"]
+
+[node name="DisplayCoin" type="Control"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -896.0
+offset_bottom = -476.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_h173k")
+
+[node name="Loot" parent="." instance=ExtResource("2_qu0o7")]
+position = Vector2(32, 32)
+input_pickable = false
+can_sleep = false
+freeze = true
+contact_monitor = false
+
+[node name="CollisionShape2D" parent="Loot" instance=ExtResource("3_qu0o7")]
+visible = false
+
+[node name="TextureRect" parent="Loot" index="1"]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_di0l0")
+
+[editable path="Loot"]

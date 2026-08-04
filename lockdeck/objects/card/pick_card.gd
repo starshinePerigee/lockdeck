@@ -7,6 +7,10 @@ class_name PickCard
 		card_spec = v
 		_redraw()
 
+## Sets the background art
+func set_art(texture: Texture2D) -> void:
+	texture_normal = texture
+
 func _redraw() -> void:
 	if not is_node_ready() or card_spec == null:
 		return

@@ -1,5 +1,4 @@
 extends Control
-## This is the loot distribution scene
 
 signal continue_to_next
 

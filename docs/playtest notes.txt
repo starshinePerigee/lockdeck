@@ -1,0 +1,12 @@
+defs needs more picks
+
+add three stats to loot (and persist them to strat screen)
+coins / picks / broken
+
+good HEAVENS that is a lot of push depths
+can we get less push depths?
+- difficulty is tuned a little hard for current resources
+
+add debug: reveal
+
+track push cards - when you break under a target, "thread of prophecy" message?

@@ -1,19 +1,18 @@
 When you beat a level, you unlock a chest. Treasure inside helps you refine your hand:
 
+
 ## Artifacts: single use consumables
 
 Artifacts are powerful single use consumables.
 
 The are shown at the top of the screen, with a hovertext guide.
 
-ex:
-- toothpick: break instead of a pick
 
-When you click one, the guide is shown, as well as "keep" and "sell: 1🪙"
+When you click one, the guide is shown, as well as "keep" and "sell: [artifact icon] 1🪙"
 
 If you have more than three (?) artifacts, or already have that specific artifact, keep is greyed out with a note why.
 
-on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact"
+on pickup: show your artifact slots, plus a fourth "sell" space. If you select a space that has an artifact in it, sell lights up with the "sell: artifact". the artifact icon is shown in-place as a preview
 
 
 ## Pick modifications
@@ -57,11 +56,6 @@ Deck: view your deck. Lets you trash picks for free.
 Shop: see standard picks. Lets you buy picks for coins.
 Has one (?) random pick plus the standard spread. (Buying it shows another?)
 
-bonus picks (lost after next shop, cant be upgraded)
-- toothpick (1 coin, force / force / force force / force force / force force / jam jam)
-- needle (1 coin, force hint hint / hint hint)
-- nail (crush crush jam jam jam / crush crush jam jam jam)
-
 Also standard artifacts?
 
 ### Repairs
@@ -79,12 +73,6 @@ non-broken picks can be sold for 1
 - repair 3 random
 - repair last two broken
 - reset repair cost
-
-## Ingots: whole new randomly generated picks
-
-iron/copper/silver/gold
-
-higher value offer more, better picks
 
 
 ### Flow and balance
@@ -128,18 +116,28 @@ Jam: strange and weird. Probably has more jam-es than jam+s tbh.
 ## Shop:
 
 Sells:
-- one basic card (picked at random)
-- one weird card (has a number of gems pre-applied and maybe a jewelry)
-- one gem or jewelry
-- one artifact (50% chance of ancient coin)
-- temporary picks (1 coin) (all are lost after next burglary):
+- one card (picked at random, can have a number of gems pre-applied)
+- one loot (gem, jewelry)
+- one artifact (50% chance of ancient coin) (fingerbone per fingerbone logic) (two artifacts?)
+- 3?/6? temporary picks (1 coin) (all are lost after next burglary):
 -- needle ( hint / hint hint / push hint hint)
 -- nail (crush crush jam jam jam / crush crush jam jam jam)
 -- hairpin (push push / push push / push push / jam jam)
 -- fishhook (push null reveal hint)
+-- toothpick (push hint / push hint / push push hint / push
+-- key (push push push / jam jam jam / push push push)
 
 ## Endgame:
 
 each boss loots a "knuckle of the old man" and shows a x/5 indicator
 
 collect all five to win
+
+knuckles aren't guaranteed - the normal game takes 8 levels and distributes 5 knuckles among them.
+
+the last stage with a knuckle gets it turned into a 50 -> 75 -> 90 -> 100 % chance of having a knuckle.
+
+stages without a knuckle can have one in a shop (50% chance) but if you buy the shop knuckle it doesn't show back up.
+
+Shortest path: 5 levels
+longest path: 11 levels

@@ -30,6 +30,15 @@ movie_writer/movie_file="C:/git/lockdeck/footage.avi"
 
 theme/custom="uid://bil1vse61huyg"
 
+[physics]
+
+2d/sleep_threshold_linear=6.0
+2d/sleep_threshold_angular=0.610865
+2d/time_before_sleep=0.3
+2d/solver/solver_iterations=24
+2d/solver/contact_max_separation=2.0
+2d/solver/contact_max_allowed_penetration=0.5
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

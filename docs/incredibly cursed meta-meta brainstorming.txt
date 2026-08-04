@@ -16,4 +16,7 @@ modes:
 - standard
 - infinite
 - challenge (jump to hard, have a random deck and a pick break limit, you have to clear one boss lock)
-- draft sprint
+- loot draft: start with a really basic hand, get a buch of loot to start
+- darkness: all levels start with candle exhausted, but you earn way more coins. also start with extra broken picks
+- crushed: at the end of each lock, every pick used gets broken. earn way more coins at the end, and start with extra broken picks. Deck limit +x
+- picks can only be repaired once

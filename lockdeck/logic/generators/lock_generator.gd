@@ -127,3 +127,17 @@ static func build_lock(
 				break
 	
 	return LockSpec.new(pins, deck)
+
+## Build a level from a difficulty rating
+static func get_next_level(difficulty: int) -> LockSpec:
+	var pin_count: int = min(difficulty, 5)
+	var hazard_target := difficulty + 2
+	
+	var lockset_deck := LockGenerator.get_lockset_deck(
+		LockGenerator.GameArcs.MID,
+		difficulty + 5,
+		8
+	)
+	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, hazard_target)
+	var lock := LockGenerator.build_lock(lock_deck, pin_count, hazard_target)
+	return lock 
