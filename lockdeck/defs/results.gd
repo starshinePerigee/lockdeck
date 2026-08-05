@@ -44,6 +44,9 @@ static var CRUSH := Results.new("crush")
 ## Skip - by skip effect
 static var SKIP := Results.new("skip")
 
+## Home - the starting pin. overwritten by crush
+static var HOME := Results.new("home")
+
 ## out of bounds / pick break; subtype of activate (probably)
 static var BREAK := Results.new("break")
 
@@ -55,8 +58,10 @@ static var UNLOCK := Results.new("unlock")
 static var PRIORITY: Array[Results] = [
 	EMPTY,
 	NONE,
+	SKIP,
 	HINT,
 	REVEAL,
+	HOME,
 	ACTIVATE,
 	UNLOCK,
 	CRUSH,
@@ -64,6 +69,9 @@ static var PRIORITY: Array[Results] = [
 	DEBUG,
 ]
 
+## Returns true if result a is greater than result b
+static func gt(result_a: Results, result_b: Results) -> bool:
+	return PRIORITY.find(result_a) > PRIORITY.find(result_b)
 
 ## Compare two results, returning the highest priority one
 static func compare(result_a: Results, result_b: Results) -> Results:
