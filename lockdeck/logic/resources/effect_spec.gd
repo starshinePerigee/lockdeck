@@ -16,13 +16,27 @@ var realized_pin: int = -1
 ## used for displaying previous results. Dictionary as a set
 var realized_positions: Dictionary[int, bool]
 
-## used in tracking execution logic
-var realized_start: int = -1
+## track if this effect broke the pick for reasons other than oob
+var broke_pick: bool = false
+
+## track if this effect pushed pin out of bounds
+var oobed: bool = false
+
+## track if this effect unlocked the current pin
+var unlock_pin: bool = false
+
+func add_position(position: int) -> void:
+	realized_positions[position] = true
 
 ## Add given positions to this effect spec for tracking purposes
 func add_positions(positions: Array) -> void:
 	for position in positions:
 		realized_positions[position] = true
+
+## sets this effect as jammed
+func set_jammed(position: int) -> void:
+	add_position(position)
+	flavor = Effects.UNJAM
 
 func _init(flavor_: Effects = Effects.DEBUG, value_: int = 0):
 	flavor = flavor_
