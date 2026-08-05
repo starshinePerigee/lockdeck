@@ -145,7 +145,7 @@ func _push_crush(effect: EffectSpec) -> void:
 	
 	activation_pending = true
 	
-	for __ in effect.value:
+	for __ in remainder:
 		if effect.flavor == Effects.CRUSH:
 			crush_position()
 
