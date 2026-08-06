@@ -6,6 +6,9 @@ extends Control
 ## but are not present in the pins array.
 @export var pins: Array[PinSpec]
 
+## Used for simulation purposes
+var _shadow_pins: Array[PinSpec]
+
 ## Holds the current turn number
 static var turn_number := -1
 
@@ -46,24 +49,25 @@ func reset_all_pins() -> void:
 ## Load a new lock for a new level.
 func load_new_lock(new_lock: LockSpec) -> void:
 	pins = new_lock.pins
+	_shadow_pins = []
+	for i in len(pins):
+		_shadow_pins.append(PinSpec.new())
+		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)
 	turn_number = 0
 	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> void:
-	# TODO
-	pass
-#	var results: Array[ResultSpec] = []
-#	for i in len(pins):
-#		var effect_offset := index - i
-#		if effect_offset in card.effects:
-#			var effects: Array[EffectSpec] = []
-#			effects.assign(card.effects[effect_offset])
-#			results.append(calculate_preview(i, effects))
-#		else:
-#			results.append(ResultSpec.new())
-#	$Cylinders.set_results(results)
+	for i in len(pins):
+		pins[i].reset_shadow(_shadow_pins[i])
+	
+	execute(card, index, true)
+	
+	var results: Array[ResultSpec] = []
+	for pin in _shadow_pins:
+		results.append(pin.get_result_spec())
+	$Cylinders.set_results(results)
 
 ## Removes the current preview.
 func cancel_preview() -> void:
@@ -76,31 +80,38 @@ func get_current_drag_target() -> int:
 #region pick execution logic
 ## Loads a CardSpec, turning it into a dictionary of live duplicated effects
 ## and loading them into the relevant pins
-func load_card(card: CardSpec, card_index: int) -> void:
+func load_card(
+	card: CardSpec,
+	card_index: int,
+	target_pins: Array[PinSpec]
+) -> void:
 	for k in card.effects.keys():
 		var pin_index: int = card_index - k
 		if pin_index >= 0 and pin_index < len(pins):
 			for e in card.effects[k]:
 				var new_e := EffectSpec.new(e.flavor, e.value)
-				pins[pin_index].pending_effects.append(new_e)
+				target_pins[pin_index].pending_effects.append(new_e)
 
 ## Applies the cardspec at the specified index.
-func execute(card: CardSpec, card_index: int) -> EndStepSpec:
-	for pin in pins:
+func execute(card: CardSpec, card_index: int, shadow := false) -> EndStepSpec:
+	var target_pins := _shadow_pins
+	if not shadow:
+		target_pins = pins
+	
+	for pin in target_pins:
 		pin.end_step()
 	
-	load_card(card, card_index)
+	load_card(card, card_index, target_pins)
 	
 	var result := EndStepSpec.new()
 	
-	for pin_index in range(len(pins) - 1, -1, -1):
-		if len(pins[pin_index].pending_effects) > 0:
+	for pin_index in range(len(target_pins) - 1, -1, -1):
+		if len(target_pins[pin_index].pending_effects) > 0:
 			# print(
 			# 	"Executing pin %s with %s effects" 
 			# 	% [pin_index, len(pins[pin_index].pending_effects)]
 			# )
-			var executed_effects := pins[pin_index].execute()
-			print("ex %s" % len(executed_effects))
+			var executed_effects := target_pins[pin_index].execute()
 			for effect in executed_effects:
 				effect.realized_pin = pin_index
 				if effect.broke_pick:
@@ -108,10 +119,12 @@ func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 			result.effects[pin_index] = executed_effects
 			result.activations[pin_index] = pins[pin_index].activated
 	
-	result.last_hint = update_visibility()
 	result.lock_solved = lock_solved()
-	$Cylinders.set_pin_specs(pins)
-	
+	if not shadow:
+		result.last_hint = update_visibility()
+		$Cylinders.set_pin_specs(pins)
+		for i in len(pins):
+			pins[i].shadow_clone(_shadow_pins[i])
 	return result
 
 func lock_solved() -> bool:

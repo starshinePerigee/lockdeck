@@ -175,7 +175,7 @@ func execute_effect(effect) -> void:
 		Effects.UNLOCK:
 			unlock_pin(effect)
 		Effects.DEBUG:
-			push_error("DEBUG effect flavor called! Pin index %s" % effect.realized_pin)
+			push_error("DEBUG effect flavor called!")
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 	
@@ -243,7 +243,7 @@ func crush_pin(effect: EffectSpec) -> void:
 
 func _push_crush(effect: EffectSpec) -> void:
 	var remainder := push_jam(effect.value)
-	if remainder < 0:
+	if remainder <= 0:
 		effect.set_jammed(pin_position)
 		return
 	
@@ -389,12 +389,28 @@ func update_pin_visible(level: PinSpec.RevealLevel, hint: String):
 ## Gets a ResultsSpec for this pin's current configuration
 func get_result_spec() -> ResultSpec:
 	var result_spec := ResultSpec.new()
-	# I think this is right - I ain't reading resultspec's old code
-	result_spec.jam_depth = pin_position
+	var has_results := false
 	for i in len(results):
 		if Results.gt(results[i], Results.EMPTY):
+			has_results = true
 			result_spec.results[i] = results[i]
+	if jam_count > 0 and has_results:
+		result_spec.jam_depth = pin_position
 	return result_spec
+
+## Gets a copy of this pin, except with hidden depths set to empty
+## Used for running previews
+func shadow_clone(shadow: PinSpec) -> void:
+	for i in len(depths):
+		if reveals[i] == RevealLevel.REVEALED:
+			shadow.depths[i] = depths[i]
+		else:
+			shadow.depths[i] = Depths.EMPTY
+
+## Reset parameters after running a simulation
+func reset_shadow(shadow: PinSpec) -> void:
+	shadow.pin_position = pin_position
+	shadow.jam_count = jam_count
 
 ## Resets all single-execution values
 func end_step() -> void:
