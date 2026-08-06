@@ -31,12 +31,13 @@ func do_click(pin_index: int) -> void:
 func print_previouses(result: EndStepSpec) -> void:
 	for i in len($CylinderMain.pins):
 		var s := "Pin %s: " % i
-		var effects := result.effects[i]
-		for effect in effects:
-			s += "%s: " % effect.flavor.effect_name
-			for pos in effect.realized_positions:
-				s += "%s" % pos
-			s += " "
+		if i in result.effects.keys():
+			var effects := result.effects[i]
+			for effect in effects:
+				s += "%s: " % effect.flavor.effect_name
+				for pos in effect.realized_positions:
+					s += "%s" % pos
+				s += " "
 		print(s)
 
 func apply_card(card: CardSpec, card_index: int) -> void:

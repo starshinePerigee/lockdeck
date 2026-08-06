@@ -105,7 +105,7 @@ func update_result(new_result: Results, pos: int = -1) -> void:
 
 #region execution handling
 ## Process all effects in pending effects, evaluated recursively
-func evaluate() -> Array[EffectSpec]:
+func execute() -> Array[EffectSpec]:
 	executed_effects.append(get_home_effect())
 	
 	var iterations := 0
