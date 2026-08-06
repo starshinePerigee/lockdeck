@@ -93,9 +93,14 @@ func execute(card: CardSpec, card_index: int) -> EndStepSpec:
 	
 	var result := EndStepSpec.new()
 	
-	for pin_index in range(len(pins) - 1, 0, -1):
+	for pin_index in range(len(pins) - 1, -1, -1):
 		if len(pins[pin_index].pending_effects) > 0:
+			# print(
+			# 	"Executing pin %s with %s effects" 
+			# 	% [pin_index, len(pins[pin_index].pending_effects)]
+			# )
 			var executed_effects := pins[pin_index].execute()
+			print("ex %s" % len(executed_effects))
 			for effect in executed_effects:
 				effect.realized_pin = pin_index
 				if effect.broke_pick:

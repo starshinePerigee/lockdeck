@@ -109,7 +109,7 @@ func execute() -> Array[EffectSpec]:
 	executed_effects.append(get_home_effect())
 	
 	var iterations := 0
-	while iterations < 0:
+	while true:
 		iterations += 1
 		if iterations >= 1000:
 			push_error("Pin execution loop overflow!")
@@ -119,17 +119,25 @@ func execute() -> Array[EffectSpec]:
 		if activation_pending:
 			if (
 				len(pending_effects) == 0
-				or not pending_effects[0] in [Effects.PUSH, Effects.CRUSH]
+				or not pending_effects[0].flavor in [Effects.PUSH, Effects.CRUSH]
 			):
 				var depth := activate_and_get_depth()
+				# print(
+				# 	"Activating pin at depth %s with effect %s"
+				# 	% [pin_position, depth.effect.effect_name]
+				# )
 				pending_effects.push_front(EffectSpec.new(depth.effect, depth.value))
 		
 		if len(pending_effects) == 0:
 			break
 		
 		var executed_effect: EffectSpec = pending_effects.pop_front()
-		executed_effects.append(executed_effect)
+		# print(
+		# 	"Executing effect %s with value %s" 
+		# 	% [executed_effect.flavor.effect_name, executed_effect.value]
+		# )
 		execute_effect(executed_effect)
+		executed_effects.append(executed_effect)
 	
 	## anything after OOB gets discarded:
 	var return_effects := []
@@ -183,7 +191,7 @@ func execute_effect(effect) -> void:
 ## Get the first home effect
 func get_home_effect() -> EffectSpec:
 	update_result(Results.HOME)
-	var empty_effect := EffectSpec.new()
+	var empty_effect := EffectSpec.new(Effects.HOME)
 	empty_effect.add_position(pin_position)
 	return empty_effect
 
