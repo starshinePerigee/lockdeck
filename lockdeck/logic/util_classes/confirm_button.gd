@@ -1,0 +1,34 @@
+extends Button
+## This is a button that requires two presses, and has a Highlight child node
+class_name ConfirmButton
+
+signal pressed_confirmed
+
+func set_highlight(highlight: bool) -> void:
+	if highlight:
+		var s: int = get_theme_constant("outline_size")
+		add_theme_constant_override("outline_size", s * 2)
+		add_theme_color_override("font_outline_color", Color("bd4844"))
+	else:
+		remove_theme_constant_override("outline_size")
+		remove_theme_color_override("font_outline_color")
+
+var highlight := false:
+	set(v):
+		highlight = v
+		set_highlight(highlight)
+
+func _pressed():
+	if highlight:
+		highlight = false
+		pressed_confirmed.emit()
+	else:
+		highlight = true
+
+func unconfirm():
+	highlight = false
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if not get_global_rect().has_point(event.global_position):
+			unconfirm()

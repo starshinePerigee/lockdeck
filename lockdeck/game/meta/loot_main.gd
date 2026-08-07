@@ -37,16 +37,37 @@ func do_bar(bar: Loot) -> void:
 	$LootPopup.add_contents_and_show(widget, bar.spec)
 	$LootPopup.visible = true
 
+var _already_claimed := false
+
 func _enable_continue() -> void:
-	$ContinueButton.disabled = false
+	if not _already_claimed:
+		$ContinueButton.highlight = true
 
 const VICTORY_MESSAGE := (
 	"congradulations u won :v\n\ntotal coins: %s"
 )
 
+func claim_all() -> int:
+	var claimed_loot: Array[Loots] = []
+	for child in $LootDrop.get_children():
+		if child is Loot:
+			claimed_loot.append(child.spec)
+			child.get_that_bag()
+	for child in $LootDrop.loot_queue:
+		claimed_loot.append(child.spec)
+	$LootDrop.empty_queue()
+	
+	var loot_value := 0
+	for loot in claimed_loot:
+		if loot in Loots.ALL_COINS:
+			loot_value += loot.value
+		else:
+			loot_value += 5
+	return loot_value
+
 func do_victory(count: int) -> void:
 	reset()
-	_enable_continue()
+
 	$VictoryLabel.visible = true
 	$VictoryLabel.text = VICTORY_MESSAGE % count
 	
@@ -61,13 +82,20 @@ func do_victory(count: int) -> void:
 	$LootDrop.queue_loot(real_loot)
 
 func reset() -> void:
-	$ContinueButton.disabled = true
 	$LootPopup.remove_and_close()
 	$LootDrop.empty_queue()
 	$LootDrop.clear_all()
+	_already_claimed = false
+
+func claim_and_continue():
+	_already_claimed = true
+	var claimed := claim_all()
+	game.add_coins(claimed)
+	print("Claimed %s gold" % claimed)
+	continue_to_next.emit()
 
 func _ready() -> void:
-	$ContinueButton.pressed.connect(continue_to_next.emit)
+	$ContinueButton.pressed_confirmed.connect(claim_and_continue)
 	$LootDrop.all_looted.connect(_enable_continue)
 	
 	# if name == "__main__:
