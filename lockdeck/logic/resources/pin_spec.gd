@@ -372,6 +372,7 @@ func handle_break(effect: EffectSpec, oob := false) -> void:
 	if oob:
 		position = PIN_DEPTH_COUNT
 	update_result(Results.BREAK, position)
+	effect.broke_pick = true
 	effect.add_position(position)
 #endregion
 
