@@ -35,6 +35,7 @@ Animations
 
 cooler animations
 - all pins use the same base color, and icons get drawn on as an animation
+- while a pin is executing, each tested depth goes to a "test" depth graphic until the entire thing resolves and they update to a new graphic
 - hints also get drawn on
 - hints: character by character, wipe out
 - depth effect animation

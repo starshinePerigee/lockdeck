@@ -31,12 +31,13 @@ func do_click(pin_index: int) -> void:
 func print_previouses(result: EndStepSpec) -> void:
 	for i in len($CylinderMain.pins):
 		var s := "Pin %s: " % i
-		var effects := result.effects[i]
-		for effect in effects:
-			s += "%s: " % effect.flavor.effect_name
-			for pos in effect.realized_positions:
-				s += "%s" % pos
-			s += " "
+		if i in result.effects.keys():
+			var effects := result.effects[i]
+			for effect in effects:
+				s += "%s: " % effect.flavor.effect_name
+				for pos in effect.realized_positions:
+					s += "%s" % pos
+				s += " "
 		print(s)
 
 func apply_card(card: CardSpec, card_index: int) -> void:
@@ -92,7 +93,7 @@ func _ready() -> void:
 	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
 	$CylinderMain/Cylinders.pin_activated.connect(do_click)
 	
-	$CylinderMain.load_new_pins(PinGenerator.build_test_lock(CYL_COUNT))
+	$CylinderMain.load_new_lock(LockSpec.new(PinGenerator.build_test_lock(CYL_COUNT)))
 	for t in PickTemplates.valid_templates:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)

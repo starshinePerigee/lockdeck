@@ -1,3 +1,9 @@
+New effect: disable - disables depths for the next turn
+unlike crush, it leads - follows the sight pointer but does not advance it
+
+FUNDAMENTAL RULE: PIN EXECUTIONS ARE INDEPENDENT
+results can effect other pins, but these are evaluated *after* all pins and effects fire.
+
 - bind: locks this pin until another one is set (if no others, reset another one)
 - reset: resets another pin, or this one
 - hint/key: depth required to activate to unlock the pin
@@ -5,6 +11,7 @@
 - test 1 (anti-broad): if you test this depth twice without passing it, it breaks the test pick. (scans as safe)
 - test 2 (anti-narrow): if this is the only depth you test, it breaks the test pick
 - test 3 (landmine): if this depth is tested or revealed, it breaks the pick. revealed at start
+- anti-landmine: if this depth is skipped, it breaks the pick. revealed at start?
 - bomb (anti-reveal): if this is revealed, next turn you have to advance past it or the revealer breaks (also plays interesting with move into it, and move/jam!)
 - trap: a depth that breaks if you skip or activate it, but has an earlier depth that diffuses it (starts revealed)
 - super anti-reveal: if revealed, breaks pick. tests as safe
