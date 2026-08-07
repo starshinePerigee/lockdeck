@@ -8,5 +8,6 @@ can't click the top edge of a card?
 
 better cancel area handling
 - make sure you can click cancel out of end turn
+- also for end turn
 
 if you solve a five-pin level with the rightmost pin still extended, it covers the continue button

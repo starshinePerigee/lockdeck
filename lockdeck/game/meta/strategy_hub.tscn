@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=7 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
 [ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
 [ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_wxtsb"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -30,6 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 0.646
 offset_bottom = -310.0
 grow_horizontal = 2
+theme = ExtResource("4_wxtsb")
 theme_override_constants/separation = 16
 alignment = 1
 
@@ -82,11 +85,15 @@ offset_bottom = 281.0
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 837.0
-offset_top = 493.0
-offset_right = 925.0
-offset_bottom = 520.0
+offset_left = 821.0
+offset_top = 481.0
+offset_right = 928.0
+offset_bottom = 508.0
+theme = ExtResource("4_wxtsb")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Continue >"
+script = ExtResource("5_emvr5")
+metadata/_custom_type_script = "uid://dfck3u724ea4f"
 
 [node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
 layout_mode = 1
