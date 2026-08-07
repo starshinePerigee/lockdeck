@@ -1,15 +1,9 @@
-skip icon looks like a shield
 
 start icon in move and crush variants
 -- home icon result?
 
-skips aren't showing in preview correctly?
-preview DEFS isn't using sight pointers
+final result is doubled up on OOB break
 
-pins should store the effects themselves, and preview should just use a hidden set of resettable virtual pins and run it live
+empties are being added to the result effect list and shifting rightward
 
-pin shadow clone method
-
-realize effectspec.realized_pins after execution
-
-rework cylinder main top level logic
+crush > push should hint the final crush's depth
