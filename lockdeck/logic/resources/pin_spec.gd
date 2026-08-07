@@ -169,7 +169,7 @@ func execute_effect(effect) -> void:
 		Effects.BOUNCE:
 			bounce_pin(effect)
 		Effects.OUT_OF_BOUNDS:
-			handle_break(effect)
+			handle_break(effect, true)
 		Effects.BREAK:
 			handle_break(effect)
 		Effects.UNLOCK:
@@ -367,9 +367,12 @@ func unlock_pin(effect: EffectSpec) -> void:
 
 ## Handles a break effect
 ## Since breaks a property of the previous effect, this just updates tracking
-func handle_break(effect: EffectSpec) -> void:
-	update_result(Results.BREAK)
-	effect.add_position(pin_position)
+func handle_break(effect: EffectSpec, oob := false) -> void:
+	var position := pin_position
+	if oob:
+		position = PIN_DEPTH_COUNT
+	update_result(Results.BREAK, position)
+	effect.add_position(position)
 #endregion
 
 #region ending and cleanup methods

@@ -131,10 +131,15 @@ func clear_results() -> void:
 	$Stack/BreakResult.visible = false
 
 func load_previouses(effects: Array[EffectSpec]) -> void:
+	var offset := 0
 	for i in len(effects):
-		for d in effects[i].realized_positions.keys():
+		var effect := effects[i]
+		if effect.flavor in [Effects.EMPTY, Effects.BLANK]:
+			continue
+		for d in effect.realized_positions.keys():
 			if d < len(depth_refs):
-				depth_refs[d].add_previous_icon(i, effects[i].flavor)
+				depth_refs[d].add_previous_icon(offset, effect.flavor)
+		offset += 1
 
 func load_activations(activations: Array[bool]) -> void:
 	for i in len(activations):

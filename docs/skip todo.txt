@@ -1,3 +1,0 @@
-final result is doubled up on OOB break
-
-empties are being added to the result effect list and shifting rightward
