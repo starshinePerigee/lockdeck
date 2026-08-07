@@ -47,6 +47,9 @@ static var SKIP := Results.new("skip")
 ## Home - the starting pin. overwritten by crush
 static var HOME := Results.new("home")
 
+## Home crush - the starting pin, except you crushed it.
+static var HOME_CRUSH := Results.new("home_crush")
+
 ## out of bounds / pick break; subtype of activate (probably)
 static var BREAK := Results.new("break")
 
@@ -65,6 +68,7 @@ static var PRIORITY: Array[Results] = [
 	ACTIVATE,
 	UNLOCK,
 	CRUSH,
+	HOME_CRUSH,
 	BREAK,
 	DEBUG,
 ]

@@ -25,6 +25,7 @@ var oobed: bool = false
 ## track if this effect unlocked the current pin
 var unlock_pin: bool = false
 
+## Marks a position as touched by this effect. Can be called with the same value multiple times.
 func add_position(position: int) -> void:
 	realized_positions[position] = true
 

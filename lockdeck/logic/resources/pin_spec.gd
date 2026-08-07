@@ -190,7 +190,14 @@ func execute_effect(effect) -> void:
 #region effect handling
 ## Get the first home effect
 func get_home_effect() -> EffectSpec:
-	update_result(Results.HOME)
+	if (
+		len(pending_effects) > 0
+		and pending_effects[0].flavor == Effects.CRUSH
+		and depths[pin_position] not in Depths.UNCRUSHABLE
+	):
+		update_result(Results.HOME_CRUSH)
+	else:
+		update_result(Results.HOME)
 	var empty_effect := EffectSpec.new(Effects.HOME)
 	empty_effect.add_position(pin_position)
 	return empty_effect
@@ -230,7 +237,7 @@ func crush_position(pos: int = -1) -> void:
 		pos = pin_position
 	var depth := depths[pos]
 	reveal_position(pos)
-	if depth not in [Depths.FINAL, Depths.BASE]:
+	if depth not in Depths.UNCRUSHABLE:
 		depths[pos] = Depths.EMPTY
 		update_result(Results.CRUSH, pos)
 
@@ -252,6 +259,7 @@ func _push_crush(effect: EffectSpec) -> void:
 	for __ in remainder:
 		if effect.flavor == Effects.CRUSH:
 			crush_position()
+			effect.add_position(pin_position)
 
 		if advance_pin(1):
 			effect.oobed = true
@@ -264,10 +272,11 @@ func _push_crush(effect: EffectSpec) -> void:
 		if effect.broke_pick or effect.oobed:
 			break
 		
-		if effect.flavor == Effects.PUSH:
-			# we only need to test, since we will activate (which reveals) later
-			# based on activation_pending 
-			test_position(pin_position)
+		# we only need to test, since we will activate (which reveals) later
+		# based on activation_pending
+		# also - if we crush, we might crush (which reveals) on the next step
+		# which is fine. 
+		test_position(pin_position)
 
 ## Bounce the pin backwards
 func bounce_pin(effect: EffectSpec) -> void:
