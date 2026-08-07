@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=5 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
+[ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
+[ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -13,58 +15,69 @@ grow_vertical = 2
 theme = ExtResource("1_fro3h")
 script = ExtResource("2_1r8dw")
 
-[node name="DeckButton" type="Button" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 188.0
-offset_right = 224.0
-offset_bottom = 215.0
+offset_left = 245.0
+offset_top = 22.0
+offset_right = 661.0
+offset_bottom = 62.0
+theme_override_constants/separation = 16
+
+[node name="DeckButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
 text = "Deck"
 
-[node name="Label" type="Label" parent="DeckButton"]
-layout_mode = 0
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 68.0
-offset_bottom = -5.0
-text = "Picks; 0/20"
-
-[node name="RepairButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 365.0
-offset_top = 183.0
-offset_right = 421.0
-offset_bottom = 210.0
+[node name="RepairButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
 text = "Repair"
 
-[node name="Label" type="Label" parent="RepairButton"]
-layout_mode = 0
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 68.0
-offset_bottom = -5.0
-text = "Broken: 0"
-
-[node name="ShopButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 558.0
-offset_top = 188.0
-offset_right = 602.0
-offset_bottom = 215.0
+[node name="ShopButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
 text = "Shop"
 
-[node name="Label" type="Label" parent="ShopButton"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 68.0
-offset_bottom = -5.0
+offset_left = 58.0
+offset_top = 65.0
+offset_right = 141.0
+offset_bottom = 130.0
+
+[node name="BrokenLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Broken: 0"
+
+[node name="CoinsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "Coins: 0"
+
+[node name="PickLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Picks; 0/20"
+
+[node name="EffectCount" parent="." instance=ExtResource("3_ig3c4")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 58.0
+offset_top = 158.0
+offset_right = 159.0
+offset_bottom = 294.0
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 697.0
-offset_top = 390.0
-offset_right = 785.0
-offset_bottom = 417.0
+offset_left = 754.0
+offset_top = 459.0
+offset_right = 842.0
+offset_bottom = 486.0
 text = "Continue >"
+
+[node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
+layout_mode = 1
+offset_left = 828.0
+offset_top = 127.0
+offset_right = 828.0
+offset_bottom = 127.0

@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7lelt4l4x7xq"]
+
+[ext_resource type="Texture2D" uid="uid://b4umxa7lobfu1" path="res://assets/effects/icon_push.png" id="1_t34xj"]
+[ext_resource type="Texture2D" uid="uid://b07yp3221ixlb" path="res://assets/effects/icon_crush.png" id="2_2pd4w"]
+[ext_resource type="Texture2D" uid="uid://wye0kkasayvx" path="res://assets/effects/icon_test.png" id="3_d48is"]
+[ext_resource type="Texture2D" uid="uid://dk2jmcwo4q7ib" path="res://assets/effects/icon_reveal.png" id="4_717e1"]
+[ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="5_ug5td"]
+
+[node name="EffectCount" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -859.0
+offset_bottom = -404.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer1"]
+layout_mode = 2
+texture = ExtResource("1_t34xj")
+
+[node name="Label" type="Label" parent="HBoxContainer1"]
+layout_mode = 2
+text = "Push: 32"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("2_2pd4w")
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Crush: 11"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("3_d48is")
+
+[node name="Label" type="Label" parent="HBoxContainer3"]
+layout_mode = 2
+text = "Test: 22"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("4_717e1")
+
+[node name="Label" type="Label" parent="HBoxContainer4"]
+layout_mode = 2
+text = "Reveal: 4"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("5_ug5td")
+
+[node name="Label" type="Label" parent="HBoxContainer5"]
+layout_mode = 2
+text = "Jam: 8"
