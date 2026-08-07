@@ -20,6 +20,7 @@ func _redraw() -> void:
 	$PickArt.texture = card_spec.texture
 	$TitleBox/Title.text = card_spec.pick_name.capitalize()
 	# $TextBox/Text.text = card_spec.description
+	$Tallies.frame = min(card_spec.repair_count, 11)
 
 func _ready() -> void:
 	_redraw()

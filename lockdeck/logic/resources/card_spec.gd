@@ -14,6 +14,8 @@ class_name CardSpec
 # you haven't earned flavortext yet
 ## The pick art resource for this card.
 @export var texture: Resource
+## How many times this pick has been repaired
+@export var repair_count := 0
 
 ## Unique ID used for tracking specific cards
 var unique_id: int
