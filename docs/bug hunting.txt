@@ -13,3 +13,5 @@ better cancel area handling
 if you solve a five-pin level with the rightmost pin still extended, it covers the continue button
 
 deck selection does not reset on return to menu
+
+if you have a pick selected, then select another pick without unselecting, it doesn't update the current pick

@@ -72,7 +72,7 @@ static var EMPTY := Depths.new("empty", DangerLevel.CLEAR, Effects.EMPTY)
 static var EXHAUSTED := Depths.new("exhausted", DangerLevel.INVALID, Effects.EMPTY)
 
 ## Push effect
-static var PUSH := Depths.new("push", DangerLevel.DANGEROUS, Effects.PUSH, 2)
+static var PUSH := Depths.new("push", DangerLevel.INTERESTING, Effects.PUSH, 2)
 
 ## Jam effect
 static var JAM := Depths.new("jam", DangerLevel.INTERESTING, Effects.JAM, 3)

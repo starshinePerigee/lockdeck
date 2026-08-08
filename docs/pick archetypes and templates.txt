@@ -53,3 +53,5 @@ CRUSHES - used to deal with really hard combos
 
 
 when balancing, note that high push pins are way more likely to break. a jam/jam pick *cant* break through normal means but a 12-push is basically good for two uses
+
+Also note that a P/P/P/P is typically more risky than a PPPP, even if you're going deep into a pin
