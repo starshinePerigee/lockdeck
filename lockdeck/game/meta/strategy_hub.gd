@@ -13,6 +13,10 @@ const Y_OFFSET := 64 - 16
 
 var current_panel: Control
 
+func set_game(game: GameSpec) -> void:
+	_game = game
+	update_info()
+
 func do_repair(card: CardSpec) -> void:
 	var repair_cost := card.get_repair_cost()
 	if repair_cost > _game.coins:

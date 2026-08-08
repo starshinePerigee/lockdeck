@@ -42,6 +42,7 @@ func break_three() -> void:
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game = GameSpec.new()
 	game.current_deck = starter_deck
+	$StrategyHub.set_game(game)
 	current_state = GameState.BETWEEN_LOCK
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
@@ -74,6 +75,7 @@ func end_loot() -> void:
 	if game.game_complete():
 		end_game.emit()
 	else:
+		$StrategyHub.reset()
 		$AnimationPlayer.play("loot to strategy")
 
 func end_strategy() -> void:
