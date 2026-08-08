@@ -17,6 +17,22 @@ func set_game(game: GameSpec) -> void:
 	_game = game
 	update_info()
 
+# This could be consolidated... but we're on the perimiter of this game, so nah
+
+func do_buy(card: CardSpec) -> void:
+	var buy_cost := card.get_buy_cost()
+	if buy_cost > _game.coins:
+		push_error(
+			"Tried to buy card with cost %s and coins %s! Setting coins to 0."
+			% [buy_cost, _game.coins]
+		)
+		_game.coins = 0
+	else:
+		_game.coins -= buy_cost
+	_game.add_pick(card)
+	shop_widget.set_coins(_game.coins)
+	update_info()
+
 func do_repair(card: CardSpec) -> void:
 	var repair_cost := card.get_repair_cost()
 	if repair_cost > _game.coins:
@@ -91,8 +107,9 @@ func reset() -> void:
 	
 	for popover in [$DeckPopover, $RepairPopover, $ShopPopover]:
 		popover.position.y = HIDDEN_Y
-	
 	current_panel = null
+	
+	shop_widget.load_inventory(PickGenerator.get_many_base_cards(4))
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
@@ -104,6 +121,7 @@ func _ready() -> void:
 	repair_widget.repair_pick.connect(do_repair)
 	repair_widget.remove_pick_forever.connect(do_remove_forever)
 	repair_widget.repair_all.connect(do_repair_all)
+	shop_widget.card_bought.connect(do_buy)
 	
 	if get_parent() == get_tree().root:
 		_game = GameSpec.get_in_progress_game()
