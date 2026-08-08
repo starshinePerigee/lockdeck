@@ -4,14 +4,18 @@ class_name ConfirmButton
 
 signal pressed_confirmed
 
+@export var base_text := "Continue"
+
 func set_highlight(highlighted: bool) -> void:
 	if highlighted:
 		var s: int = get_theme_constant("outline_size")
 		add_theme_constant_override("outline_size", s * 2)
-		add_theme_color_override("font_outline_color", Color("bd4844"))
+		add_theme_color_override("font_outline_color", Color("e3773d"))
+		text = base_text + " ->"
 	else:
 		remove_theme_constant_override("outline_size")
 		remove_theme_color_override("font_outline_color")
+		text = base_text + " >"
 
 var highlight := false:
 	set(v):
