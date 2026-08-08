@@ -15,6 +15,8 @@ signal pressed_confirmed
 		label = v
 		%Label.text = label
 
+@export var confirm_label := "MONDY BUTTON?"
+
 @export var disabled := false:
 	set(v):
 		disabled = v
@@ -40,18 +42,13 @@ var _confirm := false:
 		if not is_node_ready():
 			return
 		
-		var highlight_color := Color("e3773d")
 		if removal:
 			%RemovalHighlight.visible = _confirm
-			highlight_color = Color("1b1a2b")
 		
 		if _confirm:
-			var s: int = %Label.get_theme_constant("outline_size")
-			%Label.add_theme_constant_override("outline_size", s * 2)
-			%Label.add_theme_color_override("font_outline_color", highlight_color)
+			%Label.text = confirm_label
 		else:
-			%Label.remove_theme_constant_override("outline_size")
-			%Label.remove_theme_color_override("font_outline_color")
+			%Label.text = label
 
 func _unconfirm() -> void:
 	_confirm = false
