@@ -1,6 +1,0 @@
-~ 🐦 ~
-
-shop scene
-- top panel: selected card / object, with description and buy button
-- bottom panel: all items for sale
-- return button -> strategy hub
