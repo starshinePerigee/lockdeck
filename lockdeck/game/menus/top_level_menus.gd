@@ -8,6 +8,9 @@ func show_deck_select() -> void:
 func deck_select_to_title() -> void:
 	$AnimationPlayer.play_backwards("go_deck_select")
 
+func reset() -> void:
+	$DeckSelect.reset()
+
 func _ready() -> void:
 	$Title.start_game.connect(show_deck_select)
 	$DeckSelect/ReturnButton.pressed.connect(deck_select_to_title)

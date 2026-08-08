@@ -58,15 +58,6 @@ Has one (?) random pick plus the standard spread. (Buying it shows another?)
 
 Also standard artifacts?
 
-### Repairs
-
-repairing a pick starts at 2, but increases by 1 each repair permanently
-junked picks can also be trashed forever
-
-
-### Selling
-non-broken picks can be sold for 1
-
 
 ## Potions: loot that repairs picks
 - repair one
@@ -74,21 +65,6 @@ non-broken picks can be sold for 1
 - repair last two broken
 - reset repair cost
 
-
-### Flow and balance
-
-Coins are your reserve health - they're how you "heal", buying picks back up to a healthy number.
-
-
-## Coins
-
-All artifacts always have a "sell for 1 coin" option.
-
-You have a coin cap
-
-coins drop as loot as 1, 2 and 5
-
-bonus coin for completing a lock in a single turn
 
 
 ### Gems

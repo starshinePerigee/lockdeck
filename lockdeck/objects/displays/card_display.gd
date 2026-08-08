@@ -2,9 +2,6 @@ extends Control
 
 signal closed()
 
-var grid: GridContainer
-var label: Label
-
 @export var header: String = "CARD_DISPLAY_HEADER":
 	set(v):
 		header = v
@@ -12,7 +9,7 @@ var label: Label
 		if not is_node_ready():
 			await ready
 		
-		label.text = header
+		%TitleLabel.text = header
 
 @export var cards: Array[CardSpec] = []
 
@@ -29,12 +26,14 @@ func redraw():
 	if not is_node_ready():
 		await ready
 	
-	for child in grid.get_children():
-		grid.remove_child(child)
+	for child in %GridContainer.get_children():
+		%GridContainer.remove_child(child)
 		child.queue_free()
 	
 	for card in cards:
-		grid.add_child(PickCard.build_from_spec(card))
+		%GridContainer.add_child(PickCard.build_from_spec(card))
+	
+	$Container/EmptyLabel.visible = len(cards) == 0
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -42,8 +41,6 @@ func _handle_input(event: InputEvent) -> void:
 			hide_display()
 
 func _ready() -> void:
-	grid = $Container/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
-	label = $Container/MarginContainer/VBoxContainer/Label
 	gui_input.connect(_handle_input)
 	redraw()
 	visible = false

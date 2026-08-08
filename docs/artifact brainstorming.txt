@@ -6,7 +6,7 @@ crown: gain 5 gold for every broken pick this round
 hourglass: invincible for three turns
 scepter: jam 2 all pins (if special jam is available: do not block test and reveal)
 orb: skip this stage; does not work on boss locks; does not give speed bonus
-silverware: gives you four toothpicks (pick with tooth on it) (force force test test / force test / force force test test, break after use)
+silverware: adds a fork, knife, and spoon to your hand. (break after use)
 deed: consumable in the shop. everything in the shop is free except knuckles
 perfume: hand size +1
 ancient coin: adds a random card to your hand. you get to keep it. (ignores deck limit until next shop since you pop it in-situ)

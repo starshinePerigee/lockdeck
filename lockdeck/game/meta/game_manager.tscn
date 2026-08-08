@@ -45,7 +45,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(960, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -473,6 +473,8 @@ libraries = {
 [node name="BetweenLocks" parent="." instance=ExtResource("3_51x2c")]
 z_index = -30
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
 mouse_filter = 2
 
 [node name="GameCore" parent="." instance=ExtResource("2_51x2c")]

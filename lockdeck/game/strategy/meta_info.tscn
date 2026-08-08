@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct3tci7mh7u6d"]
+
+[ext_resource type="Script" uid="uid://b1m7ixqjd46xm" path="res://game/strategy/meta_info.gd" id="1_pw138"]
+
+[node name="MetaInfo" type="VBoxContainer"]
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 99.0
+offset_bottom = 113.0
+script = ExtResource("1_pw138")
+
+[node name="CoinsLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Coins: 0"
+
+[node name="PickLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Picks; 0/20"
+
+[node name="BrokenLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Broken: 0"

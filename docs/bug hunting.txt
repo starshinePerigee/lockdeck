@@ -8,5 +8,10 @@ can't click the top edge of a card?
 
 better cancel area handling
 - make sure you can click cancel out of end turn
+- also for end turn
 
 if you solve a five-pin level with the rightmost pin still extended, it covers the continue button
+
+deck selection does not reset on return to menu
+
+if you have a pick selected, then select another pick without unselecting, it doesn't update the current pick

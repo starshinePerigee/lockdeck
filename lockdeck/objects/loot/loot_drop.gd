@@ -61,7 +61,7 @@ func check_complete() -> void:
 	
 	for child in get_children():
 		if child is Loot:
-			if not child.grabbed:
+			if not (child.spec in Loots.ALL_COINS or child.grabbed):
 				return
 	
 	_grabbed_emitted = true
