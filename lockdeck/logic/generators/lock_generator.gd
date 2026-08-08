@@ -108,6 +108,7 @@ static func build_lock(
 	for template in deck:
 		pin_selector.shuffle()
 		var placed := 0
+		var hazard := 0
 		for i in range(pin_count):
 			var target: int = pin_selector[i]
 			# place the template's depths at pin_selector[i]
@@ -125,6 +126,9 @@ static func build_lock(
 			placed += 1
 			if placed > template.pin_count(pin_count):
 				break
+		hazard += template.net_hazard
+		if hazard >= hazard_target:
+			break
 	
 	return LockSpec.new(pins, deck)
 

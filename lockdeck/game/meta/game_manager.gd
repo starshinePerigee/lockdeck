@@ -40,6 +40,7 @@ func break_three() -> void:
 		$GameCore.break_from_hand()
 
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
+	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.current_deck = starter_deck
 	$StrategyHub.set_game(game)
