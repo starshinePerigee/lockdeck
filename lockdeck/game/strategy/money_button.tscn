@@ -23,6 +23,7 @@ layout_mode = 2
 [node name="RemovalHighlight" type="TextureRect" parent="VBoxContainer/CardButton/PickCard" index="5"]
 unique_name_in_owner = true
 visible = false
+z_index = 55
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0

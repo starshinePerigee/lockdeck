@@ -70,10 +70,12 @@ func break_picks(picks: Array[CardSpec]) -> void:
 
 static func get_in_progress_game() -> GameSpec:
 	var game := GameSpec.new()
-	game.coins = 14
+	game.coins = 16
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
 	game.broken_picks = PickGenerator.get_many_base_cards(4)
+	for i in len(game.broken_picks):
+		game.broken_picks[i].repair_count = i
 	game.lock_number = 4
 	return game
 

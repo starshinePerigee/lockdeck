@@ -15,6 +15,8 @@ script = ExtResource("2_ab7xd")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="ModeButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -24,6 +26,7 @@ text = "Enable remove forever mode"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="CardGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true

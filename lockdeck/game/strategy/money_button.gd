@@ -1,6 +1,7 @@
 extends MarginContainer
 ## This acts as a combination of three button types: CardButton, ConfirmButton, 
 ## and TextureButtonWithLabel. 
+class_name MoneyButton
 
 signal pressed_confirmed
 
@@ -11,6 +12,7 @@ signal pressed_confirmed
 
 @export var label := "MONDY BOTTON":
 	set(v):
+		label = v
 		%Label.text = label
 
 @export var disabled := false:
@@ -115,3 +117,16 @@ func _ready() -> void:
 	%CardButton.mouse_exited.connect(_end_hover)
 	%CardButton.button_down.connect(_do_press)
 	%CardButton.button_up.connect(_end_press)
+
+const SELF_PACKED := preload("res://game/strategy/money_button.tscn")
+
+static func build_from_spec(
+	card_: CardSpec,
+	label_: String,
+	removal_: bool = false
+) -> MoneyButton:
+	var new_button := SELF_PACKED.instantiate()
+	new_button.card = card_
+	new_button.label = label_
+	new_button.removal = removal_
+	return new_button
