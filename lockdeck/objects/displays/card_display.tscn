@@ -61,7 +61,8 @@ theme_override_constants/margin_bottom = 8
 [node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "CARD DISPLAY HEADER"
 horizontal_alignment = 1
@@ -72,6 +73,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Container/MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

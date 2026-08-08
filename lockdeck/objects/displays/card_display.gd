@@ -2,9 +2,6 @@ extends Control
 
 signal closed()
 
-@onready var grid: GridContainer = $Container/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
-@onready var label: Label = $Container/MarginContainer/VBoxContainer/Label
-
 @export var header: String = "CARD_DISPLAY_HEADER":
 	set(v):
 		header = v
@@ -12,7 +9,7 @@ signal closed()
 		if not is_node_ready():
 			await ready
 		
-		label.text = header
+		%TitleLabel.text = header
 
 @export var cards: Array[CardSpec] = []
 
@@ -29,12 +26,12 @@ func redraw():
 	if not is_node_ready():
 		await ready
 	
-	for child in grid.get_children():
-		grid.remove_child(child)
+	for child in %GridContainer.get_children():
+		%GridContainer.remove_child(child)
 		child.queue_free()
 	
 	for card in cards:
-		grid.add_child(PickCard.build_from_spec(card))
+		%GridContainer.add_child(PickCard.build_from_spec(card))
 	
 	$Container/EmptyLabel.visible = len(cards) == 0
 
