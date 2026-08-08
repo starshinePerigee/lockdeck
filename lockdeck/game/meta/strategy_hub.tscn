@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=13 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_wxtsb"]
 [ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
+[ext_resource type="Texture2D" uid="uid://do040btpt70v4" path="res://assets/game/hand_full.png" id="7_8jrdt"]
 [ext_resource type="PackedScene" uid="uid://c0sa0jqmc66b2" path="res://game/strategy/strategy_popover.tscn" id="8_oohkw"]
 [ext_resource type="PackedScene" uid="uid://c33xyxumep28r" path="res://game/strategy/deck_widget.tscn" id="9_8jrdt"]
 [ext_resource type="PackedScene" uid="uid://b5e53sip1353w" path="res://game/strategy/shop_widget.tscn" id="9_f7am3"]
@@ -87,6 +88,15 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Continue >"
 script = ExtResource("5_emvr5")
 metadata/_custom_type_script = "uid://dfck3u724ea4f"
+
+[node name="FullTexture" type="TextureRect" parent="ContinueButton"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 120.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("7_8jrdt")
 
 [node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
 layout_mode = 1
