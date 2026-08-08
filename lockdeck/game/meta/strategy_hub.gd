@@ -63,7 +63,7 @@ func do_sell(card: CardSpec) -> void:
 	deck_widget.load_cards(_game.current_deck)
 	update_info()
 
-func show_panel(new_panel: Control) -> void:
+func show_panel(new_panel: StrategyPopover) -> void:
 	if current_panel != null:
 		var exit_tween := create_tween()
 		exit_tween.set_trans(Tween.TRANS_CUBIC)
