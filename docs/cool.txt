@@ -27,7 +27,11 @@
 
 - saving and loading
 
+- knuckles and artifacts are draggable pivotable physics objects in the strat hub
+- decks are represented by figurines, which are also always present in the strat hub
+
 - deck select has a roll of lockpicks, and it rolls up after you click go
+
 
 - better completion animation: cards should slide down and hide
 

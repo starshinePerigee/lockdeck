@@ -22,6 +22,12 @@ var unique_id: int
 
 static var last_id := 100
 
+func get_buy_cost() -> int:
+	return 20
+
+func get_repair_cost() -> int:
+	return 10 + repair_count * 5
+
 static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
 		template.pick_name,

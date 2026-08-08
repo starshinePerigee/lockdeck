@@ -5,13 +5,17 @@ class_name CardButton
 const NORMAL: Texture2D = preload("res://assets/card/card_bg.png")
 const HOVERED: Texture2D = preload("res://assets/card/card_bg_hover.png")
 const PRESSED: Texture2D = preload("res://assets/card/card_bg_pressed.png")
+const DISABLED: Texture2D = preload("res://assets/card/card_bg_disabled.png")
 
 var _mouse_over: bool = false
 
 func _do_hover() -> void:
 	_mouse_over = true
-	$PickCard.position = Vector2(0, -4)
-	$PickCard.set_art(HOVERED)
+	if not disabled:
+		$PickCard.position = Vector2(0, -4)
+		$PickCard.set_art(HOVERED)
+	else:
+		$PickCard.set_art(DISABLED)
 
 func _end_hover() -> void:
 	_mouse_over = false
@@ -19,6 +23,8 @@ func _end_hover() -> void:
 	$PickCard.set_art(NORMAL)
 
 func _do_press() -> void:
+	if disabled:
+		return
 	$PickCard.position = Vector2(0, -2)
 	$PickCard.set_art(PRESSED)
 
