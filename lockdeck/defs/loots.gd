@@ -136,7 +136,7 @@ static var BAR_1 := Loots.new(
 	"bar_1",
 	"orichalum ingot",
 	"Add a random lockpick to your deck.",
-	20,
+	10,
 	10,
 	20,
 )
@@ -145,7 +145,7 @@ static var BAR_2 := Loots.new(
 	"bar_2",
 	"dwarven metal ingot",
 	"Choose one of two lockpicks to add to your deck.",
-	25,
+	15,
 	9,
 	20,
 )
@@ -154,7 +154,7 @@ static var BAR_3 := Loots.new(
 	"bar_3",
 	"moonstone ingot",
 	"Choose one of three lockpicks to add to your deck.",
-	30,
+	20,
 	8,
 	10,
 )
@@ -163,7 +163,7 @@ static var BAR_4 := Loots.new(
 	"bar_4",
 	"malachite ingot",
 	"Choose one of four lockpicks to add to your deck.",
-	35,
+	25,
 	7,
 	20,
 )
@@ -172,7 +172,7 @@ static var BAR_5 := Loots.new(
 	"bar_5",
 	"ebony ingot",
 	"Choose one of five lockpicks to add to your deck",
-	40,
+	30,
 	6,
 	30,
 )

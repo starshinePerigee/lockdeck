@@ -146,12 +146,12 @@ static var FORK := PickTemplates.new(
 	{
 		1: [
 			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 2),
+			EffectSpec.new(Effects.JAM, 1),
 		],
 		0: [EffectSpec.new(Effects.PUSH, 1)],
 		-1: [
 			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 2),
+			EffectSpec.new(Effects.JAM, 1),
 		]
 	}
 )

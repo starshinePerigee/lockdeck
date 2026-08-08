@@ -29,11 +29,11 @@ var remove_forever_mode := false:
 	set(v):
 		remove_forever_mode = v
 		if remove_forever_mode:
-			%ModeButton.text = "Removing picks forever"
+			%ModeButton.text = "Removing picks"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.add_theme_color_override(override, Color("bd4844"))
 		else:
-			%ModeButton.text = "Remove forever mode"
+			%ModeButton.text = "Remove picks"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.remove_theme_color_override(override)
 		_set_button_removal(remove_forever_mode)

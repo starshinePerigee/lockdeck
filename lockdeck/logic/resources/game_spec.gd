@@ -17,6 +17,9 @@ class_name GameSpec
 func add_coins(count: int) -> void:
 	coins += count
 
+func spend_coins(count: int) -> void:
+	coins -= count
+
 func add_pick(pick: CardSpec) -> void:
 	current_deck.append(pick)
 
@@ -33,7 +36,9 @@ static var LOCK_SEQUENCE := [
 	8, 9, 10
 ]
 
-static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
+#static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
+static var LOOT_AMOUNTS := [20, 30, 40, 50, 60, 65, 70, 75, 80]
+
 
 ## Gets the current difficulty
 func get_difficulty() -> int:
@@ -42,7 +47,7 @@ func get_difficulty() -> int:
 func get_loot_value() -> int:
 	@warning_ignore("integer_division")
 	var base_value: int = LOOT_AMOUNTS[(lock_number - 1) / 3]
-	return int(randf_range(base_value * 0.9, base_value * 1.1))
+	return int(randf_range(base_value * 0.8, base_value * 1.2))
 
 var _current_strat_floor := 4
 

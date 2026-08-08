@@ -28,7 +28,7 @@ func do_buy(card: CardSpec) -> void:
 		)
 		_game.coins = 0
 	else:
-		_game.coins -= buy_cost
+		_game.spend_coins(buy_cost)
 	_game.add_pick(card)
 	shop_widget.set_coins(_game.coins)
 	update_info()
@@ -42,7 +42,7 @@ func do_repair(card: CardSpec) -> void:
 		)
 		_game.coins = 0
 	else:
-		_game.coins -= repair_cost
+		_game.spend_coins(repair_cost)
 	_game.repair_pick(card)
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
@@ -58,6 +58,8 @@ func do_repair_all() -> void:
 			% [repair_cost, _game.coins]
 		)
 		_game.coins = 0
+	else:
+		_game.spend_coins(repair_cost)
 	
 	# needed to avoid modifying array while in loop
 	var picks_to_repair: Array[CardSpec] = _game.broken_picks.duplicate()
