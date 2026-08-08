@@ -192,7 +192,6 @@ static var TYPE_DICT: Dictionary[LootsTypes, Array] = {
 }
 
 static func _static_init() -> void:
-	print(TYPE_DICT.keys())
 	for t in LootsTypes.values():
 		for l in TYPE_DICT[t] as Array[Loots]:
 			l.category = t

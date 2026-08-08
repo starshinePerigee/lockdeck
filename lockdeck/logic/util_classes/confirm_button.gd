@@ -4,12 +4,12 @@ class_name ConfirmButton
 
 signal pressed_confirmed
 
-@export var base_text := "Continue ->":
+@export var base_text := "Continue >":
 	set(v):
 		base_text = v
 		text = base_text
 
-@export var confirm_text := "Continue >"
+@export var confirm_text := "Continue ->"
 
 func set_highlight(highlighted: bool) -> void:
 	if highlighted:
