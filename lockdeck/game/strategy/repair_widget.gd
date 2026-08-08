@@ -2,16 +2,22 @@ extends VBoxContainer
 class_name RepairWidget
 
 signal repair_pick(CardSpec)
-
+signal repair_all()
 signal remove_pick_forever(CardSpec)
+
 
 var _coins := 0
 
 func set_coins(coins: int) -> void:
 	_coins = coins
+	var total_cost := 0
 	for button in %CardGrid.get_children():
 		if button is MoneyButton:
-			button.disabled = button.card.get_repair_cost() > _coins
+			var repair_cost: int = button.card.get_repair_cost()
+			button.disabled = repair_cost > _coins
+			total_cost += repair_cost
+	%RepairAllButton.base_text = "Repair all: %s g" % total_cost
+	%RepairAllButton.disabled = total_cost > _coins
 
 static var ALL_FONT_COLORS := [
 	"font_color",
@@ -23,11 +29,11 @@ var remove_forever_mode := false:
 	set(v):
 		remove_forever_mode = v
 		if remove_forever_mode:
-			%ModeButton.text = "Removing broken picks forever"
+			%ModeButton.text = "Removing picks forever"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.add_theme_color_override(override, Color("bd4844"))
 		else:
-			%ModeButton.text = "Enable remove forever mode"
+			%ModeButton.text = "Remove forever mode"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.remove_theme_color_override(override)
 		_set_button_removal(remove_forever_mode)
@@ -78,6 +84,7 @@ func reset(game: GameSpec) -> void:
 
 func _ready() -> void:
 	%ModeButton.pressed.connect(toggle_remove_forever)
+	%RepairAllButton.pressed_confirmed.connect(repair_all.emit)
 
 	if get_tree().current_scene == self:
 		var game := GameSpec.get_in_progress_game()

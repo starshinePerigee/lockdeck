@@ -78,6 +78,7 @@ func repair_pick(pick: CardSpec) -> void:
 		return
 	current_deck.append(pick)
 	broken_picks.erase(pick)
+	pick.repair_count += 1
 
 ## Removes a pick from the broken picks collection
 func remove_broken_pick_forever(pick: CardSpec) -> void:

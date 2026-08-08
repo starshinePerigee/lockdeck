@@ -473,6 +473,8 @@ libraries = {
 [node name="BetweenLocks" parent="." instance=ExtResource("3_51x2c")]
 z_index = -30
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
 mouse_filter = 2
 
 [node name="GameCore" parent="." instance=ExtResource("2_51x2c")]
@@ -489,8 +491,6 @@ offset_bottom = 2241.0
 
 [node name="StrategyHub" parent="." instance=ExtResource("4_vpla2")]
 layout_mode = 1
-offset_left = 960.0
-offset_right = 960.0
 
 [node name="FailureScreen" parent="." instance=ExtResource("6_84uwg")]
 visible = false

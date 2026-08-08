@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://1gm4g3xdvbqn"]
+[gd_scene load_steps=5 format=3 uid="uid://1gm4g3xdvbqn"]
 
 [ext_resource type="Script" uid="uid://cki0nimdndpo0" path="res://game/strategy/repair_widget.gd" id="2_yneyk"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="3_axmkd"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="3_yneyk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yneyk"]
 
 [node name="RepairWidget" type="VBoxContainer"]
 offset_right = 960.0
@@ -10,11 +13,39 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_yneyk")
 
-[node name="ModeButton" type="Button" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="VSeparatorLeft" type="VSeparator" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
+
+[node name="RepairAllButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_axmkd")
+text = "REPAIR ALL BUTTON"
+script = ExtResource("3_yneyk")
+base_text = "Repair all: 999 g"
+confirm_text = "Repair all?"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
+
+[node name="ModeButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_axmkd")
 text = "Enable remove forever mode"
+
+[node name="VSeparatorRight" type="VSeparator" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
