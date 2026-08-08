@@ -1,4 +1,5 @@
-extends ScrollContainer
+extends VBoxContainer
+class_name RepairWidget
 
 signal repair_pick(CardSpec)
 
@@ -47,6 +48,10 @@ func toggle_remove_forever() -> void:
 	remove_forever_mode = not remove_forever_mode
 
 func load_cards(cards: Array[CardSpec]) -> void:
+	for child in %CardGrid.get_children():
+		%CardGrid.remove_child(child)
+		child.queue_free()
+	
 	for card in cards:
 		var card_button := MoneyButton.build_from_spec(
 			card,
@@ -55,12 +60,19 @@ func load_cards(cards: Array[CardSpec]) -> void:
 		card_button.pressed_confirmed.connect(do_signal.bind(card))
 		%CardGrid.add_child(card_button)
 	set_coins(_coins)
+	remove_forever_mode = remove_forever_mode
 
 func do_signal(card: CardSpec) -> void:
 	if remove_forever_mode:
 		remove_pick_forever.emit(card)
 	else:
 		repair_pick.emit(card)
+
+func reset(game: GameSpec) -> void:
+	remove_forever_mode = false
+	load_cards(game.broken_picks)
+	set_coins(game.coins)
+	$ScrollContainer.scroll_vertical = 0
 
 func _ready() -> void:
 	%ModeButton.pressed.connect(toggle_remove_forever)

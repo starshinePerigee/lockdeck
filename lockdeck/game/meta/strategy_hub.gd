@@ -4,10 +4,32 @@ signal continue_to_next
 
 var _game: GameSpec
 
-const Y_OFFSET := 64
+@onready var repair_widget: RepairWidget = $RepairPopover.get_inside_node()
+
+const Y_OFFSET := 64 - 16
 @onready var HIDDEN_Y: int = get_viewport().size.y + Y_OFFSET
- 
+
 var current_panel: Control
+
+func do_repair(card: CardSpec) -> void:
+	var repair_cost := card.get_repair_cost()
+	if repair_cost > _game.coins:
+		push_error(
+			"Tried to repair pick with cost %s and coins %s! Setting coins to 0."
+			% [repair_cost, _game.coins]
+		)
+		_game.coins = 0
+	else:
+		_game.coins -= repair_cost
+	_game.repair_pick(card)
+	repair_widget.load_cards(_game.broken_picks)
+	repair_widget.set_coins(_game.coins)
+	update_info()
+
+func do_remove_forever(card: CardSpec) -> void:
+	_game.remove_broken_pick_forever(card)
+	repair_widget.load_cards(_game.broken_picks)
+	update_info()
 
 func show_panel(new_panel: Control) -> void:
 	if current_panel != null:
@@ -20,6 +42,7 @@ func show_panel(new_panel: Control) -> void:
 		current_panel = null
 	else:
 		new_panel.show()
+		new_panel.get_inside_node().reset(_game)
 		var enter_tween := create_tween()
 		if current_panel != null:
 			enter_tween.tween_interval(0.2)
@@ -32,8 +55,11 @@ func update_info() -> void:
 	$EffectCount.update_counts(_game.current_deck)
 
 func reset() -> void:
+	update_info()
+	
 	for popover in [$DeckPopover, $RepairPopover, $ShopPopover]:
 		popover.position.y = HIDDEN_Y
+	
 	current_panel = null
 
 func _ready() -> void:
@@ -42,8 +68,9 @@ func _ready() -> void:
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))
 	
-	reset()
+	repair_widget.repair_pick.connect(do_repair)
+	repair_widget.remove_pick_forever.connect(do_remove_forever)
 	
 	if get_parent() == get_tree().root:
 		_game = GameSpec.get_in_progress_game()
-		update_info()
+		reset()

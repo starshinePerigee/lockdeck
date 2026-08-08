@@ -8,7 +8,7 @@
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_wxtsb"]
 [ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
 [ext_resource type="PackedScene" uid="uid://c0sa0jqmc66b2" path="res://game/strategy/strategy_popover.tscn" id="8_oohkw"]
-[ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_screen.tscn" id="9_snyf0"]
+[ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_widget.tscn" id="9_snyf0"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -135,5 +135,6 @@ grow_horizontal = 1
 grow_vertical = 1
 title = "Pick Repair"
 
-[node name="RepairScreen" parent="RepairPopover" instance=ExtResource("9_snyf0")]
+[node name="RepairWidget" parent="RepairPopover" instance=ExtResource("9_snyf0")]
+unique_name_in_owner = true
 layout_mode = 2
