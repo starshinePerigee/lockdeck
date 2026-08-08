@@ -2,6 +2,8 @@ extends MarginContainer
 ## This acts as a combination of three button types: CardButton, ConfirmButton, 
 ## and TextureButtonWithLabel. 
 
+signal pressed_confirmed
+
 @export var card: CardSpec:
 	set(v):
 		card = v
@@ -14,12 +16,51 @@ extends MarginContainer
 @export var disabled := false:
 	set(v):
 		disabled = v
+		
+		if not is_node_ready():
+			return
+		
 		%CardButton.disabled = v
 		
 		if _mouse_over:
 			_do_hover()
 		else:
 			_end_hover()
+
+## indicates if this is a removal action (and you should show the X for confirm)
+## or a normal action (and you should only highlight the label for confirm)
+@export var removal := false
+
+var _confirm := false:
+	set(v):
+		_confirm = v
+		
+		if not is_node_ready():
+			return
+		
+		var highlight_color := Color("e3773d")
+		if removal:
+			%RemovalHighlight.visible = _confirm
+			highlight_color = Color("1b1a2b")
+		
+		if _confirm:
+			var s: int = %Label.get_theme_constant("outline_size")
+			%Label.add_theme_constant_override("outline_size", s * 2)
+			%Label.add_theme_color_override("font_outline_color", highlight_color)
+		else:
+			%Label.remove_theme_constant_override("outline_size")
+			%Label.remove_theme_color_override("font_outline_color")
+
+func _unconfirm() -> void:
+	_confirm = false
+
+func _pressed():
+	if _confirm:
+		_confirm = false
+		pressed_confirmed.emit()
+	else:
+		_confirm = true
+
 
 const NORMAL := Color("ffffff")
 const HOVERED := Color("ffbc57")
@@ -59,7 +100,17 @@ func _end_press() -> void:
 	else:
 		_color_label(NORMAL)
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if not %CardButton.get_global_rect().has_point(event.global_position):
+			_unconfirm()
+
 func _ready() -> void:
+	# effectively a redraw:
+	%CardButton.disabled = disabled
+	_end_hover()
+	
+	%CardButton.pressed.connect(_pressed)
 	%CardButton.mouse_entered.connect(_do_hover)
 	%CardButton.mouse_exited.connect(_end_hover)
 	%CardButton.button_down.connect(_do_press)
