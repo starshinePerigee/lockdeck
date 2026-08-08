@@ -6,6 +6,7 @@ var _game: GameSpec
 
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
+	$EffectCount.update_counts(_game.current_deck)
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
