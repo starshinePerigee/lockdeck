@@ -52,7 +52,7 @@ func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
 	current_state = GameState.BETWEEN_LOCK
 	if $GameCore/LockBody/CountdownMain.count >= 2:
-		game.coins += 5
+		game.add_coins(5)
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
@@ -79,6 +79,7 @@ func end_loot() -> void:
 		$AnimationPlayer.play("loot to strategy")
 
 func end_strategy() -> void:
+	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("strategy to between")
 
 func do_victory() -> void:

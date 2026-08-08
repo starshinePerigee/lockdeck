@@ -22,7 +22,7 @@ func load_cards(cards: Array[CardSpec]) -> void:
 		%CardGrid.add_child(card_button)
 
 func reset(game: GameSpec) -> void:
-	load_cards(game.broken_picks)
+	load_cards(game.current_deck)
 	$ScrollContainer.scroll_vertical = 0
 
 func _ready() -> void:
