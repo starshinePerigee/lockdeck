@@ -4,8 +4,8 @@ class_name ConfirmButton
 
 signal pressed_confirmed
 
-func set_highlight(highlight: bool) -> void:
-	if highlight:
+func set_highlight(highlighted: bool) -> void:
+	if highlighted:
 		var s: int = get_theme_constant("outline_size")
 		add_theme_constant_override("outline_size", s * 2)
 		add_theme_color_override("font_outline_color", Color("bd4844"))

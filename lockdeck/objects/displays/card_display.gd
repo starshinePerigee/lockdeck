@@ -2,8 +2,8 @@ extends Control
 
 signal closed()
 
-var grid: GridContainer
-var label: Label
+@onready var grid: GridContainer = $Container/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+@onready var label: Label = $Container/MarginContainer/VBoxContainer/Label
 
 @export var header: String = "CARD_DISPLAY_HEADER":
 	set(v):
@@ -35,6 +35,8 @@ func redraw():
 	
 	for card in cards:
 		grid.add_child(PickCard.build_from_spec(card))
+	
+	$Container/EmptyLabel.visible = len(cards) == 0
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -42,8 +44,6 @@ func _handle_input(event: InputEvent) -> void:
 			hide_display()
 
 func _ready() -> void:
-	grid = $Container/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
-	label = $Container/MarginContainer/VBoxContainer/Label
 	gui_input.connect(_handle_input)
 	redraw()
 	visible = false
