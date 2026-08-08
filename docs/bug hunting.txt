@@ -11,3 +11,5 @@ better cancel area handling
 - also for end turn
 
 if you solve a five-pin level with the rightmost pin still extended, it covers the continue button
+
+deck selection does not reset on return to menu

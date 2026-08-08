@@ -18,6 +18,7 @@ func abandon_game_and_return_to_title() -> void:
 	$SettingsWidget.remove_button("DEBUG: Solve level")
 	$SettingsWidget.remove_button("DEBUG: Break three")
 	
+	$TopLevelMenus.reset()
 	$TopLevelMenus/AnimationPlayer.play("return_to_title")
 	$GameManager.abort_and_reset()
 

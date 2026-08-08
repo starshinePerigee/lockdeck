@@ -100,7 +100,8 @@ func is_jammed() -> bool:
 func update_result(new_result: Results, pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
-	results[pos] = Results.compare(results[pos], new_result)
+	if pos >= 0 and pos < len(results):
+		results[pos] = Results.compare(results[pos], new_result)
 #endregion
 
 #region execution handling
@@ -113,6 +114,9 @@ func execute() -> Array[EffectSpec]:
 		iterations += 1
 		if iterations >= 1000:
 			push_error("Pin execution loop overflow!")
+			print(" Current stack:")
+			for effect in pending_effects:
+				print("  " + effect.flavor.effect_name)
 			break
 		
 		# check for activation:
@@ -170,8 +174,10 @@ func execute_effect(effect) -> void:
 			bounce_pin(effect)
 		Effects.OUT_OF_BOUNDS:
 			handle_break(effect, true)
+			return
 		Effects.BREAK:
 			handle_break(effect)
+			return
 		Effects.UNLOCK:
 			unlock_pin(effect)
 		Effects.DEBUG:

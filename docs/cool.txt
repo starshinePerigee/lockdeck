@@ -32,6 +32,9 @@
 
 - deck select has a roll of lockpicks, and it rolls up after you click go
 
+- all useful indicators are drawn on - starting draw animation (show lock, draw depths, pull hand up)
+
+- move card break tallies to side of card? make card break tallies more tears? put tallies over card name?
 
 - better completion animation: cards should slide down and hide
 
