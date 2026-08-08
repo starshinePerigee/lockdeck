@@ -1,12 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://1gm4g3xdvbqn"]
+[gd_scene load_steps=3 format=3 uid="uid://1gm4g3xdvbqn"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_rcgis"]
+[ext_resource type="Script" uid="uid://cki0nimdndpo0" path="res://game/strategy/repair_screen.gd" id="2_ab7xd"]
 
-[node name="RepairScreen" type="Control"]
-layout_mode = 3
+[node name="RepairScreen" type="ScrollContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_rcgis")
+script = ExtResource("2_ab7xd")
+
+[node name="CardGrid" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=10 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_wxtsb"]
 [ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
+[ext_resource type="PackedScene" uid="uid://c0sa0jqmc66b2" path="res://game/strategy/strategy_popover.tscn" id="8_oohkw"]
+[ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_screen.tscn" id="9_snyf0"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -90,3 +92,48 @@ offset_left = 864.0
 offset_top = 48.0
 offset_right = 944.0
 offset_bottom = 316.0
+
+[node name="DeckPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = -155.0
+offset_bottom = 491.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Current Deck"
+
+[node name="ShopPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = -155.0
+offset_bottom = 491.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Underground Shop"
+
+[node name="RepairPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = 805.0
+offset_bottom = 1031.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Pick Repair"
+
+[node name="RepairScreen" parent="RepairPopover" instance=ExtResource("9_snyf0")]
+layout_mode = 2
