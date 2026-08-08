@@ -105,7 +105,7 @@ static var RAKE := PickTemplates.new(
 			EffectSpec.new(Effects.TEST, 1)
 		],
 		0: [
-			EffectSpec.new(Effects.PUSH, 1),
+			EffectSpec.new(Effects.PUSH, 2),
 			EffectSpec.new(Effects.TEST, 1)
 		],
 		-1: [
