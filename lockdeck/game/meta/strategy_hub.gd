@@ -4,7 +4,9 @@ signal continue_to_next
 
 var _game: GameSpec
 
+@onready var deck_widget: DeckWidget = $DeckPopover.get_inside_node()
 @onready var repair_widget: RepairWidget = $RepairPopover.get_inside_node()
+@onready var shop_widget: ShopWidget = $ShopPopover.get_inside_node()
 
 const Y_OFFSET := 64 - 16
 @onready var HIDDEN_Y: int = get_viewport().size.y + Y_OFFSET
@@ -29,6 +31,12 @@ func do_repair(card: CardSpec) -> void:
 func do_remove_forever(card: CardSpec) -> void:
 	_game.remove_broken_pick_forever(card)
 	repair_widget.load_cards(_game.broken_picks)
+	update_info()
+
+func do_sell(card: CardSpec) -> void:
+	_game.remove_real_pick_forever(card)
+	_game.add_coins(5)
+	deck_widget.load_cards(_game.current_deck)
 	update_info()
 
 func show_panel(new_panel: Control) -> void:
@@ -68,6 +76,7 @@ func _ready() -> void:
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))
 	
+	deck_widget.card_sold.connect(do_sell)
 	repair_widget.repair_pick.connect(do_repair)
 	repair_widget.remove_pick_forever.connect(do_remove_forever)
 	

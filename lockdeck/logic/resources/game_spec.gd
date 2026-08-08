@@ -89,6 +89,15 @@ func remove_broken_pick_forever(pick: CardSpec) -> void:
 		return
 	broken_picks.erase(pick)
 
+func remove_real_pick_forever(pick: CardSpec) -> void:
+	if pick not in current_deck:
+		push_error(
+			"Tried to sell pick %s [%s] but not in current deck!"
+			% [pick.pick_name, pick.unique_id]
+		)
+		return
+	current_deck.erase(pick)
+
 static func get_in_progress_game() -> GameSpec:
 	var game := GameSpec.new()
 	game.coins = 28
