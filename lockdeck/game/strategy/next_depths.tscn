@@ -1,23 +1,54 @@
-[gd_scene load_steps=7 format=3 uid="uid://hrdpbeio1k83"]
+[gd_scene load_steps=8 format=3 uid="uid://hrdpbeio1k83"]
 
+[ext_resource type="Script" uid="uid://pu10itmrdwuk" path="res://game/strategy/next_depths.gd" id="1_0vn0b"]
 [ext_resource type="Texture2D" uid="uid://b3xpsjcb608gu" path="res://assets/depths/depth_warn.png" id="1_2s5q3"]
 [ext_resource type="Texture2D" uid="uid://dl2a23gxda2nw" path="res://assets/depths/depth_break.png" id="2_0vn0b"]
 [ext_resource type="Texture2D" uid="uid://bsoqichr5e4s4" path="res://assets/depths/depth_push.png" id="3_hjbq7"]
 [ext_resource type="Texture2D" uid="uid://by0wja7vcfwmi" path="res://assets/depths/depth_jam.png" id="4_gx0rq"]
 [ext_resource type="Texture2D" uid="uid://dyydr2uo4njee" path="res://assets/depths/depth_bounce.png" id="5_mufx7"]
-[ext_resource type="Texture2D" uid="uid://cjvviwmo3j66u" path="res://assets/depths/depth_trap.png" id="6_oafyx"]
+[ext_resource type="Texture2D" uid="uid://bb7l7ifipfmgf" path="res://assets/depths/depth_unlock.png" id="7_0vn0b"]
 
 [node name="NextDepths" type="VBoxContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_0vn0b")
+
+[node name="HeistLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Heist 5"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Max 
+pins: "
+horizontal_alignment = 1
+
+[node name="MaxCountLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "8"
 
 [node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(80, 32)
 layout_mode = 2
+size_flags_horizontal = 8
 text = "Upcoming
 depths:"
+horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 8
 theme_override_constants/separation = 8
 
 [node name="TextureRect1" type="TextureRect" parent="VBoxContainer"]
@@ -42,4 +73,4 @@ texture = ExtResource("5_mufx7")
 
 [node name="TextureRect6" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("6_oafyx")
+texture = ExtResource("7_0vn0b")

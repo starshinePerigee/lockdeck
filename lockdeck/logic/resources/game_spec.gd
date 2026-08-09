@@ -44,9 +44,13 @@ static var LOOT_AMOUNTS := [20, 30, 40, 50, 60, 65, 70, 75, 80]
 func get_difficulty() -> int:
 	return LOCK_SEQUENCE[lock_number - 1]
 
-func get_loot_value() -> int:
+## Gets the current heist - 1 indexed
+func get_heist() -> int:
 	@warning_ignore("integer_division")
-	var base_value: int = LOOT_AMOUNTS[(lock_number - 1) / 3]
+	return int((lock_number - 1) / 3) + 1
+
+func get_loot_value() -> int:
+	var base_value: int = LOOT_AMOUNTS[get_heist() - 1]
 	return int(randf_range(base_value * 0.8, base_value * 1.2))
 
 var _current_strat_floor := 4
