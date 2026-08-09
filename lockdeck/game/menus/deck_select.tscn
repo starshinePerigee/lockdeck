@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cophugyta6nde"]
+[gd_scene load_steps=2 format=3 uid="uid://cophugyta6nde"]
 
 [ext_resource type="Script" uid="uid://7vqr4q1k1vi8" path="res://game/menus/deck_select.gd" id="1_1dibr"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="2_tpu8j"]
 
 [node name="DeckSelect" type="Control"]
 layout_mode = 3
@@ -21,38 +20,32 @@ offset_bottom = 352.127
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Tutorial
 "
 alignment = 0
 
 [node name="Standard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Standard"
 alignment = 0
 
 [node name="Daring" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Daring"
 alignment = 0
 
 [node name="Clever" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Clever"
 alignment = 0
 
 [node name="Patient" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Patient"
 alignment = 0
 
 [node name="Random" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Random
 "
 alignment = 0
@@ -71,7 +64,6 @@ offset_left = 69.0
 offset_top = 416.0
 offset_right = 241.0
 offset_bottom = 449.0
-theme = ExtResource("2_tpu8j")
 text = "< return to menu"
 
 [node name="Panel" type="PanelContainer" parent="."]
