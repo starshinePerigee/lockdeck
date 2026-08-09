@@ -4,7 +4,3 @@ Panels:
 - major game construct - purple 2+2px line with blue accents (match card backs) (default UI panel)
 - minor game construct - purple without blue accents but 2+2px line
 - tooltips??
-
-
-- all of strat hub
--- prices?

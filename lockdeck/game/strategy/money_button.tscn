@@ -14,6 +14,7 @@ script = ExtResource("1_h5a62")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="CardButton" parent="VBoxContainer" instance=ExtResource("2_tww1t")]
 unique_name_in_owner = true
@@ -28,10 +29,17 @@ offset_right = 128.0
 offset_bottom = 160.0
 texture = ExtResource("3_tww1t")
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(128, 26)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Control"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+offset_left = -32.0
+offset_right = 160.0
+offset_bottom = 26.0
 text = "MONDY BTN"
 horizontal_alignment = 1
 
