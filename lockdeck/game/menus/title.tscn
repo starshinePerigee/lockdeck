@@ -28,7 +28,6 @@ offset_top = 187.0
 offset_right = 250.0
 offset_bottom = 214.0
 text = "Start Game"
-flat = true
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 0
@@ -38,5 +37,4 @@ offset_right = 250.0
 offset_bottom = 277.0
 theme = ExtResource("3_caluf")
 text = "Settings"
-flat = true
 alignment = 0

@@ -18,42 +18,36 @@ offset_left = 146.349
 offset_top = 134.127
 offset_right = 248.349
 offset_bottom = 352.127
-theme = ExtResource("2_tpu8j")
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Tutorial
 "
-flat = true
 alignment = 0
 
 [node name="Standard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Standard"
-flat = true
 alignment = 0
 
 [node name="Daring" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Daring"
-flat = true
 alignment = 0
 
 [node name="Clever" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Clever"
-flat = true
 alignment = 0
 
 [node name="Patient" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Patient"
-flat = true
 alignment = 0
 
 [node name="Random" type="Button" parent="VBoxContainer"]
@@ -61,7 +55,6 @@ layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Random
 "
-flat = true
 alignment = 0
 
 [node name="Label" type="Label" parent="."]
@@ -74,41 +67,41 @@ text = "Choose your deck:"
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 482.0
-offset_right = 229.0
-offset_bottom = 508.0
+offset_left = 69.0
+offset_top = 416.0
+offset_right = 241.0
+offset_bottom = 449.0
 theme = ExtResource("2_tpu8j")
 text = "< return to menu"
-flat = true
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 426.0
-offset_top = 190.0
-offset_right = 781.0
-offset_bottom = 358.0
+offset_left = 495.0
+offset_top = 143.0
+offset_right = 879.0
+offset_bottom = 331.0
+theme_type_variation = &"PaperPanel"
 
 [node name="Info" type="Label" parent="Panel"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 6.0
-offset_top = 7.0
-offset_right = 349.0
-offset_bottom = 127.0
+custom_minimum_size = Vector2(256, 144)
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"CardText"
 theme_override_constants/line_spacing = 0
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 autowrap_mode = 2
 text_overrun_behavior = 3
 
-[node name="GoButton" type="Button" parent="Panel"]
+[node name="GoButton" type="Button" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 6.0
-offset_top = 185.0
-offset_right = 342.0
-offset_bottom = 218.0
-text = "Sounds good, let's get started."
+layout_mode = 2
+offset_left = 495.0
+offset_top = 416.0
+offset_right = 854.0
+offset_bottom = 449.0
+text = "sounds good, let's get started >"
+flat = true
 
 [node name="StartHint" type="Label" parent="."]
 layout_mode = 0

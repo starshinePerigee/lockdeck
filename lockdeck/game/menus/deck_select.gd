@@ -21,7 +21,7 @@ func select_deck(template: DeckTemplates) -> void:
 	current_deck = template
 	%Info.text = template.description
 	%GoButton.disabled = false
-	%GoButton.text = "Sounds good, let's get started. >"
+	%GoButton.text = "sounds good, let's get started >"
 
 func reset() -> void:
 	current_deck = null
@@ -44,7 +44,6 @@ func _ready() -> void:
 	for deck_template in DeckTemplates.ALL_DECKS:
 		var button := Button.new()
 		button.text = deck_template.deck_name.capitalize()
-		button.flat = true
 		button.alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
 		button.pressed.connect(select_deck.bind(deck_template))
 		$VBoxContainer.add_child(button)

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -8,13 +8,32 @@
 [ext_resource type="StyleBox" uid="uid://7myvv546ratb" path="res://assets/themes/basic_button_press_stylebox.tres" id="2_43re0"]
 [ext_resource type="StyleBox" uid="uid://cyueqxmpy54gq" path="res://assets/themes/paper_stylebox.tres" id="5_7vbbg"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gc3fe"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqxeh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ihrsd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_er1qq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_43re0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6a5y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vbbg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2srw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n2srw"]
 
 [resource]
 default_font = ExtResource("1_2dmma")
 default_font_size = 32
+BoxButton/base_type = &"Button"
+BoxButton/styles/disabled = ExtResource("1_c6a5y")
+BoxButton/styles/focus = SubResource("StyleBoxEmpty_hqxeh")
+BoxButton/styles/hover = ExtResource("1_er1qq")
+BoxButton/styles/hover_pressed = ExtResource("2_43re0")
+BoxButton/styles/normal = ExtResource("1_ihrsd")
+BoxButton/styles/pressed = ExtResource("2_43re0")
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 Button/colors/font_disabled_color = Color(0.219608, 0.258824, 0.231373, 1)
 Button/colors/font_hover_color = Color(1, 0.737255, 0.341176, 1)
@@ -22,12 +41,12 @@ Button/colors/font_outline_color = Color(0, 0, 0, 1)
 Button/colors/font_pressed_color = Color(0.890196, 0.466667, 0.239216, 1)
 Button/constants/line_spacing = -6
 Button/constants/outline_size = 4
-Button/styles/disabled = ExtResource("1_c6a5y")
-Button/styles/focus = SubResource("StyleBoxEmpty_gc3fe")
-Button/styles/hover = ExtResource("1_er1qq")
-Button/styles/hover_pressed = ExtResource("2_43re0")
-Button/styles/normal = ExtResource("1_ihrsd")
-Button/styles/pressed = ExtResource("2_43re0")
+Button/styles/disabled = SubResource("StyleBoxEmpty_ihrsd")
+Button/styles/focus = SubResource("StyleBoxEmpty_er1qq")
+Button/styles/hover = SubResource("StyleBoxEmpty_43re0")
+Button/styles/hover_pressed = SubResource("StyleBoxEmpty_c6a5y")
+Button/styles/normal = SubResource("StyleBoxEmpty_7vbbg")
+Button/styles/pressed = SubResource("StyleBoxEmpty_n2srw")
 CardText/base_type = &"Label"
 CardText/colors/font_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
 CardText/constants/line_spacing = -6
