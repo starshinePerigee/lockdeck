@@ -18,7 +18,7 @@ offset_left = 134.0
 offset_top = 116.0
 offset_right = 346.0
 offset_bottom = 135.0
-text = "Handful of Lockpicks TITLE"
+text = "Handful of Lockpicks"
 
 [node name="StartGameButton" type="Button" parent="."]
 layout_mode = 0

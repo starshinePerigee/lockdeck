@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.11.0"
+var VERSION_NUMBER := "v0.11.1"
 
 func start_game(starter_deck: Array[CardSpec]) -> void:
 	$MenuButton.visible = true
