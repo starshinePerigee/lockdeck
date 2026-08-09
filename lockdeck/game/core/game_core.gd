@@ -264,6 +264,11 @@ func solve_lock() -> void:
 	set_state(InputState.INACTIVE)
 	set_state(InputState.COMPLETE)
 
+func reveal_lock() -> void:
+	for pin in $LockBody/CylinderMain.pins:
+		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
+	$LockBody/CylinderMain.redraw_pins()
+
 func discard_pick() -> void:
 	$HandMain.deselect()
 	$HandMain.remove_card(active_card)

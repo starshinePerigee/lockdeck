@@ -1,12 +1,13 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.10.2"
+var VERSION_NUMBER := "v0.11.0"
 
 func start_game(starter_deck: Array[CardSpec]) -> void:
 	$MenuButton.visible = true
 	$GameManager.visible = true
 	$SettingsWidget.add_button("DEBUG: Solve level", $GameManager.auto_complete_level, true)
+	$SettingsWidget.add_button("DEBUG: Reveal lock", $GameManager.reveal_level, true)
 	$SettingsWidget.add_button("DEBUG: Break three", $GameManager.break_three) 
 	
 	$TopLevelMenus/AnimationPlayer.play("start_game")

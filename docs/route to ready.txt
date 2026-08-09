@@ -1,4 +1,7 @@
-- basic meta (ingots and repairs)
+- fix drag bug
 - basic theme with panels
+- key assets
+- settings
 - music
 - sound
+- basic tutorializer

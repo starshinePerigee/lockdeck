@@ -32,6 +32,11 @@ func auto_complete_level() -> void:
 	
 	$GameCore.solve_lock()
 
+func reveal_level() -> void:
+	if _check_state(GameState.CORE_GAME):
+		return
+	$GameCore.reveal_lock()
+
 func break_three() -> void:
 	if _check_state(GameState.CORE_GAME):
 		return
