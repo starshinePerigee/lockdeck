@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://rccuomam3kp"]
+[gd_scene load_steps=3 format=3 uid="uid://rccuomam3kp"]
 
 [ext_resource type="Script" uid="uid://d3ix22cqb8lv1" path="res://objects/displays/card_display.gd" id="1_37sm2"]
 [ext_resource type="Texture2D" uid="uid://b26sita8dy6qp" path="res://assets/game/flat bg.png" id="2_hye1w"]
-[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_ltrma"]
 
 [node name="CardDisplay" type="Control"]
 z_index = 120
@@ -76,7 +75,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("3_ltrma")
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
