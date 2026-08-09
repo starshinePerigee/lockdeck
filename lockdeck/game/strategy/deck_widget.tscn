@@ -13,10 +13,11 @@ size_flags_vertical = 3
 script = ExtResource("1_5qisc")
 
 [node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 theme_type_variation = &"SmallText"
-text = "Click to sell"
-horizontal_alignment = 1
+text = "Click to sell        "
+horizontal_alignment = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

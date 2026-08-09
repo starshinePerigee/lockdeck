@@ -11,6 +11,7 @@ offset_bottom = 41.0
 script = ExtResource("2_yneyk")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
@@ -47,7 +48,7 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(612, 0)
+custom_minimum_size = Vector2(630, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
