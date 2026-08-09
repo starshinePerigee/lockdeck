@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cophugyta6nde"]
+[gd_scene load_steps=3 format=3 uid="uid://cophugyta6nde"]
 
 [ext_resource type="Script" uid="uid://7vqr4q1k1vi8" path="res://game/menus/deck_select.gd" id="1_1dibr"]
 [ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="2_tpu8j"]
-[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_454oq"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="4_hg6os"]
 
 [node name="DeckSelect" type="Control"]
 layout_mode = 3
@@ -17,9 +15,9 @@ script = ExtResource("1_1dibr")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 146.349
-offset_top = 190.127
-offset_right = 186.349
-offset_bottom = 230.127
+offset_top = 134.127
+offset_right = 248.349
+offset_bottom = 352.127
 theme = ExtResource("2_tpu8j")
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
@@ -27,30 +25,35 @@ layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Tutorial
 "
+flat = true
 alignment = 0
 
 [node name="Standard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Standard"
+flat = true
 alignment = 0
 
 [node name="Daring" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Daring"
+flat = true
 alignment = 0
 
 [node name="Clever" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Clever"
+flat = true
 alignment = 0
 
 [node name="Patient" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Patient"
+flat = true
 alignment = 0
 
 [node name="Random" type="Button" parent="VBoxContainer"]
@@ -58,15 +61,15 @@ layout_mode = 2
 theme = ExtResource("2_tpu8j")
 text = "Random
 "
+flat = true
 alignment = 0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 64.0
-offset_right = 252.0
-offset_bottom = 83.0
-theme = ExtResource("3_454oq")
+offset_left = 146.0
+offset_top = 82.0
+offset_right = 332.0
+offset_bottom = 108.0
 text = "Choose your deck:"
 
 [node name="ReturnButton" type="Button" parent="."]
@@ -77,6 +80,7 @@ offset_right = 229.0
 offset_bottom = 508.0
 theme = ExtResource("2_tpu8j")
 text = "< return to menu"
+flat = true
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -86,6 +90,7 @@ offset_right = 781.0
 offset_bottom = 358.0
 
 [node name="Info" type="Label" parent="Panel"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 6.0
 offset_top = 7.0
@@ -96,19 +101,20 @@ text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 autowrap_mode = 2
 text_overrun_behavior = 3
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="GoButton" type="Button" parent="Panel"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 90.0
-offset_top = 133.0
-offset_right = 343.0
-offset_bottom = 160.0
+offset_left = 6.0
+offset_top = 185.0
+offset_right = 342.0
+offset_bottom = 218.0
 text = "Sounds good, let's get started."
 
 [node name="StartHint" type="Label" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 197.0
-offset_right = 139.0
-offset_bottom = 216.0
-theme = ExtResource("4_hg6os")
+offset_left = 69.0
+offset_top = 143.0
+offset_right = 141.0
+offset_bottom = 162.0
+theme_type_variation = &"TinyAccentText"
 text = "Start here! ->"
