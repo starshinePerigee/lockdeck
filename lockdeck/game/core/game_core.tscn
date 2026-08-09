@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=16 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -8,14 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://bvv5brbe2kjwk" path="res://objects/play_area/artifacts_interface.tscn" id="3_q6sjy"]
 [ext_resource type="PackedScene" uid="uid://8g06i7q85pmo" path="res://objects/interface/notifications.tscn" id="4_l83s3"]
 [ext_resource type="PackedScene" uid="uid://c22d8h8h4h4tg" path="res://logic/core_nodes/hand_main.tscn" id="5_8ewdi"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="6_3ctlq"]
 [ext_resource type="PackedScene" uid="uid://cfrit88c6c1oy" path="res://logic/core_nodes/deck_main.tscn" id="6_i4qfg"]
 [ext_resource type="Texture2D" uid="uid://dxduwrhshxgbw" path="res://assets/lock/active box.png" id="6_o5sbf"]
 [ext_resource type="PackedScene" uid="uid://5io01qsv1qby" path="res://logic/core_nodes/discard_main.tscn" id="7_rrevw"]
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
-[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="12_ralr2"]
 [ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="15_gg2qb"]
 
 [node name="GameCore" type="Control"]
@@ -100,16 +98,17 @@ offset_bottom = 474.0
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
 offset_left = 791.0
-offset_top = 472.0
+offset_top = 448.0
 offset_right = 791.0
-offset_bottom = 472.0
+offset_bottom = 448.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
+custom_minimum_size = Vector2(128, 24)
 layout_mode = 1
-offset_left = 804.0
-offset_top = 506.0
-offset_right = 916.0
-offset_bottom = 532.0
+offset_left = 803.0
+offset_top = 498.0
+offset_right = 931.0
+offset_bottom = 531.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
@@ -125,7 +124,6 @@ offset_left = -192.0
 offset_top = 385.0
 offset_right = 123.0
 offset_bottom = 414.0
-theme = ExtResource("12_ralr2")
 text = "LAST HINT LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -152,7 +150,7 @@ offset_left = 640.0
 offset_top = 298.0
 offset_right = 746.0
 offset_bottom = 324.0
-theme = ExtResource("6_3ctlq")
+theme_type_variation = &"BoxButton"
 text = "Continue >"
 
 [node name="FailureButton" type="Button" parent="."]
@@ -164,7 +162,6 @@ offset_top = 386.0
 offset_right = 532.0
 offset_bottom = 412.0
 mouse_filter = 2
-theme = ExtResource("6_3ctlq")
 text = "Give up >"
 
 [node name="Notifications" parent="." instance=ExtResource("4_l83s3")]
