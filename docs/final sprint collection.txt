@@ -1,6 +1,0 @@
-- core interface finalization
-- basic meta framework
-- new depths and level gen
-- assets sprint (including sound!)
-- playtesting, balance, more stuff, and refinement
-- tutorialization

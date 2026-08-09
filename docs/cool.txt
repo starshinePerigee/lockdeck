@@ -22,3 +22,25 @@
 - do something with the indicator pick on discard
 
 - if you decide to have a deck limit, let you put cards in your deck over the limit but you can't click the continue button and it says "Hand full!"
+
+- when locking out a scene (such as CardDisplay or SettingsWidget) do you want to dither over the entire bg with a border?
+
+- saving and loading
+
+- knuckles and artifacts are draggable pivotable physics objects in the strat hub
+- decks are represented by figurines, which are also always present in the strat hub
+
+- deck select has a roll of lockpicks, and it rolls up after you click go
+
+- all useful indicators are drawn on - starting draw animation (show lock, draw depths, pull hand up)
+
+- move card break tallies to side of card? make card break tallies more tears? put tallies over card name?
+
+- better completion animation: cards should slide down and hide
+
+calling card:
+- after the tutorial, you draw a calling card (ref https://www.youtube.com/watch?v=U_TGOgp5-pc)
+- after each loot, you place the drawing card (playing forward the drawn animation)
+- this pops up and shows you the depth unlocked
+-- maybe for the game, maybe forever
+-- possibly depths are drawn to counter your current deck?

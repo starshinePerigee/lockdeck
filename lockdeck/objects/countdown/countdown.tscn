@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1hem81ie6tbe"]
+[gd_scene load_steps=4 format=3 uid="uid://l7ni6t1vva7j"]
 
 [ext_resource type="Script" uid="uid://bia6khmvpk3xy" path="res://objects/countdown/countdown.gd" id="1_gnwly"]
 [ext_resource type="Texture2D" uid="uid://dd2nfcgysxxii" path="res://assets/countdown/cd_highlight.png" id="2_ceg5m"]
 [ext_resource type="Texture2D" uid="uid://ch24c0crkib1y" path="res://assets/countdown/countdown_2.png" id="2_toqrs"]
 
-[node name="Countdown" type="Control"]
+[node name="Countdown" type="TextureButton"]
 custom_minimum_size = Vector2(128, 256)
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,23 +13,20 @@ offset_right = -832.0
 offset_bottom = -284.0
 grow_horizontal = 2
 grow_vertical = 2
+texture_normal = ExtResource("2_toqrs")
 script = ExtResource("1_gnwly")
 count = -1
+metadata/_custom_type_script = "uid://ixfp56werwe2"
 
 [node name="Highlight" type="TextureRect" parent="."]
 visible = false
+z_index = -1
 layout_mode = 0
 offset_left = -3.0
 offset_top = 211.0
 offset_right = 141.0
 offset_bottom = 275.0
 texture = ExtResource("2_ceg5m")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("2_toqrs")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

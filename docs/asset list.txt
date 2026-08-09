@@ -12,7 +12,7 @@ x decks/piles prolly need their own art
 - like 10 pieces of treasure (can be color swapped)
 - like 10 artifacts, with icon versions
 - loot get sound
-- coin (with animation and sound)
+% coin (with animation and sound)
 % candle (with animation and sound)
 - chest background
 - shopkeep ui
@@ -21,7 +21,7 @@ x decks/piles prolly need their own art
 % keyway
 x gears
 % notification art (??) and effects (?)
-- item get pop ups (with sound)
+% item get pop ups (with sound)
 % previous turn button
 - splash screen
 - back of card art
@@ -35,6 +35,7 @@ Animations
 
 cooler animations
 - all pins use the same base color, and icons get drawn on as an animation
+- while a pin is executing, each tested depth goes to a "test" depth graphic until the entire thing resolves and they update to a new graphic
 - hints also get drawn on
 - hints: character by character, wipe out
 - depth effect animation

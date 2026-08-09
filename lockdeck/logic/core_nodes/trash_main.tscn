@@ -1,20 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmo5cgmd68fwu"]
+[gd_scene load_steps=3 format=3 uid="uid://dmo5cgmd68fwu"]
 
 [ext_resource type="Script" uid="uid://cx4icem1s4ps8" path="res://logic/core_nodes/trash_main.gd" id="1_goswl"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="1_tenfn"]
 
-[node name="TrashMain" type="Control"]
-layout_mode = 3
+[node name="TrashMain" type="Button"]
+custom_minimum_size = Vector2(112, 24)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -960.0
-offset_bottom = -540.0
+offset_right = -848.0
+offset_bottom = -514.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_goswl")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 126.0
-offset_bottom = 26.0
+theme = ExtResource("1_tenfn")
 text = "Broken: 99"
+script = ExtResource("1_goswl")

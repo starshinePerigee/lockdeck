@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://chd078g2xmw1u"]
+
+[ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_loot.gd" id="1_1vtxi"]
+[ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_7rxjp"]
+[ext_resource type="PackedScene" uid="uid://ddr6m8p1i3c1n" path="res://objects/loot/loot.tscn" id="3_7rxjp"]
+[ext_resource type="Texture2D" uid="uid://c5iihbutttl6b" path="res://assets/loot/debug_coin.png" id="3_l5t33"]
+[ext_resource type="PackedScene" uid="uid://cy1m5gg7u54iu" path="res://assets/loot/colliders/shape_debug_coin.tscn" id="4_k2mnv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7rxjp"]
+bounce = 0.2
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyf46"]
+size = Vector2(128, 1208)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgtj1"]
+size = Vector2(1088, 128)
+
+[node name="TestLoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_1vtxi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_7rxjp")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_7rxjp")
+
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_eyf46")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D1"]
+offset_left = -64.0
+offset_top = -604.0
+offset_right = 64.0
+offset_bottom = 604.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(960, 0)
+shape = SubResource("RectangleShape2D_eyf46")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D2"]
+offset_left = -64.0
+offset_top = -604.0
+offset_right = 64.0
+offset_bottom = 604.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(480, 540)
+shape = SubResource("RectangleShape2D_bgtj1")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D3"]
+offset_left = -544.0
+offset_top = -64.0
+offset_right = 544.0
+offset_bottom = 64.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(480, -524)
+shape = SubResource("RectangleShape2D_bgtj1")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D4"]
+offset_left = -544.0
+offset_top = -64.0
+offset_right = 544.0
+offset_bottom = 64.0
+color = Color(0.404167, 0.266835, 0.162841, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="Loot" parent="." instance=ExtResource("3_7rxjp")]
+position = Vector2(213, 216)
+
+[node name="TextureRect" parent="Loot" index="0"]
+offset_left = -61.0
+offset_top = -64.0
+offset_right = 67.0
+offset_bottom = 64.0
+texture = ExtResource("3_l5t33")
+
+[node name="CollisionPolygon2D" parent="Loot" instance=ExtResource("4_k2mnv")]
+
+[editable path="Loot"]

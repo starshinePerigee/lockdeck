@@ -1,4 +1,7 @@
-push depth is danger level
+only activate one depth per pin?
+- a lot of the bullshit breaks come from push chains
+- it's also vastly more complicated
 
-crush + push only activates a pin once
+show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
+s/jam/bind

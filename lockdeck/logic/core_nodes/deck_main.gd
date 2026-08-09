@@ -4,6 +4,8 @@ extends Control
 ## Emitted if more cards are drawn than are present in the deck
 signal draw_empty
 
+signal display_cards(Array)
+
 @export var cards: Array[CardSpec]
 
 func count() -> int:
@@ -31,8 +33,21 @@ func add_cards(new_cards: Array[CardSpec]) -> void:
 func clear_all() -> void:
 	cards.clear()
 
+func sort_card_id(a: CardSpec, b:CardSpec) -> bool:
+	if a.unique_id < b.unique_id:
+		return true
+	return false
+
+func load_display() -> void:
+	var cards_sorted := cards.duplicate()
+	cards_sorted.sort_custom(sort_card_id)
+	display_cards.emit(cards_sorted)
+
 ## Redraw the deck
 func redraw():
 	var c := count()
 	$CardPile.count = c
-	$Label.text = "Deck: %s" % c
+	$DeckLabel.text = "Deck: %s" % c
+
+func _ready() -> void:
+	$DeckLabel.pressed.connect(load_display)

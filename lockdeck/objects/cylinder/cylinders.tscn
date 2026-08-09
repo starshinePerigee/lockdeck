@@ -7,8 +7,9 @@
 custom_minimum_size = Vector2(464, 672)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 464.0
+offset_right = 528.0
 offset_bottom = 672.0
+mouse_filter = 2
 script = ExtResource("1_3tpfd")
 
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
@@ -16,24 +17,30 @@ custom_minimum_size = Vector2(464, 672)
 layout_mode = 0
 offset_right = 464.0
 offset_bottom = 672.0
+mouse_filter = 2
 theme_override_constants/separation = 32
 
 [node name="Pin1" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+mouse_filter = 0
 visible_ = false
 
 [node name="Pin2" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+mouse_filter = 0
 visible_ = false
 
 [node name="Pin3" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+mouse_filter = 0
 visible_ = false
 
 [node name="Pin4" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+mouse_filter = 0
 visible_ = false
 
 [node name="Pin5" parent="CylinderHBox" instance=ExtResource("1_jelwg")]
 layout_mode = 2
+mouse_filter = 0
 visible_ = false

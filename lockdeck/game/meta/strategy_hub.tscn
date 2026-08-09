@@ -1,0 +1,159 @@
+[gd_scene load_steps=13 format=3 uid="uid://t14tg1tt2anv"]
+
+[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_fro3h"]
+[ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
+[ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
+[ext_resource type="PackedScene" uid="uid://ct3tci7mh7u6d" path="res://game/strategy/meta_info.tscn" id="4_8p2bt"]
+[ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
+[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="4_wxtsb"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
+[ext_resource type="Texture2D" uid="uid://do040btpt70v4" path="res://assets/game/hand_full.png" id="7_8jrdt"]
+[ext_resource type="PackedScene" uid="uid://c0sa0jqmc66b2" path="res://game/strategy/strategy_popover.tscn" id="8_oohkw"]
+[ext_resource type="PackedScene" uid="uid://c33xyxumep28r" path="res://game/strategy/deck_widget.tscn" id="9_8jrdt"]
+[ext_resource type="PackedScene" uid="uid://b5e53sip1353w" path="res://game/strategy/shop_widget.tscn" id="9_f7am3"]
+[ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_widget.tscn" id="9_snyf0"]
+
+[node name="StrategyHub" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fro3h")
+script = ExtResource("2_1r8dw")
+
+[node name="MenuCutout" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 116.0
+offset_bottom = 40.0
+
+[node name="TabButtonBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.015
+anchor_right = 1.0
+anchor_bottom = 0.646
+offset_bottom = -310.0
+grow_horizontal = 2
+theme = ExtResource("4_wxtsb")
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="DeckButton" type="Button" parent="TabButtonBox"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Deck"
+
+[node name="RepairButton" type="Button" parent="TabButtonBox"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Repair"
+
+[node name="ShopButton" type="Button" parent="TabButtonBox"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Shop"
+
+[node name="MetaInfo" parent="." instance=ExtResource("4_8p2bt")]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 91.0
+offset_bottom = 121.0
+
+[node name="EffectCount" parent="." instance=ExtResource("3_ig3c4")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 16.0
+offset_top = 145.0
+offset_right = 117.0
+offset_bottom = 281.0
+
+[node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
+layout_mode = 1
+offset_left = 864.0
+offset_top = 48.0
+offset_right = 953.0
+offset_bottom = 362.0
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 821.0
+offset_top = 481.0
+offset_right = 928.0
+offset_bottom = 508.0
+theme = ExtResource("4_wxtsb")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Continue >"
+script = ExtResource("5_emvr5")
+metadata/_custom_type_script = "uid://dfck3u724ea4f"
+
+[node name="FullTexture" type="TextureRect" parent="ContinueButton"]
+visible = false
+layout_mode = 0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 120.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("7_8jrdt")
+
+[node name="DeckPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = -155.0
+offset_bottom = 491.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Manage Deck"
+
+[node name="DeckWidget" parent="DeckPopover" instance=ExtResource("9_8jrdt")]
+layout_mode = 2
+
+[node name="ShopPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = -155.0
+offset_bottom = 491.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Underground Shop"
+
+[node name="ShopWidget" parent="ShopPopover" instance=ExtResource("9_f7am3")]
+layout_mode = 2
+
+[node name="RepairPopover" parent="." instance=ExtResource("8_oohkw")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = 805.0
+offset_bottom = 1031.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Pick Repair"
+
+[node name="RepairWidget" parent="RepairPopover" instance=ExtResource("9_snyf0")]
+unique_name_in_owner = true
+layout_mode = 2

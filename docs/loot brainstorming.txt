@@ -1,0 +1,44 @@
+Loot is the following options:
+
+- coins: used for repairs and buying at the shop
+- ingots: give you new picks
+- potions: repair broken picks
+- artifacts: single-use consumables
+- gems: pick effect upgrades
+- jewelry: pick special effects
+- bones: win the game
+
+
+
+POTIONS
+shows n cards plus the sell option. If you have insufficient broken cards, you get empties instead.
+
+
+ARTIFACTS
+shows the effect of the artifact, as well as all your open slots. clicking shows the replacement's description and a "sell and replace" option; clicking an empty slot does not require a confirm
+
+GEMS:
+shows the effect, and 3 picks to choose from.
+
+
+~~~
+
+How much loot is there? 
+
+(note: all values have since been 5x'ed)
+
+Let's start with some fixed values. 
+- The minimum is one coin. 
+- Repairing a pick is baselined at 2
+- Breaking and repairing a pick twice is 5, thrice is 9
+
+Expect one or two breaks per lock. At a three lock set:
+- early game locks, 1 break / lock, means 6 coins repair fees
+- late game locks, 2 break / lock at already broken - ~20 coins repair fees
+
+So start at 10 coins, and end at 30, adding 5 each round. Artifacts, ingots, gems, and jewelry are all few coins (average 3)
+- earlygame (10): 5 coins, 1 gem, 1 artifact
+- midgame (20): 1 ingot (4), 2 gem (2ea), 1 jewelry (3), 2 artifacts (2ea), 11 coins
+- endgame (30): 2 ingots (4ea), 2 gem (2ea), 1 jewelry (3), 3 artifacts (2ea), 2 potions (2ea), 9 coins
+
+Start at 10 and add five each round up to 30, then add 2 per round after.

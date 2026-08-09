@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://rccuomam3kp"]
+
+[ext_resource type="Script" uid="uid://d3ix22cqb8lv1" path="res://objects/displays/card_display.gd" id="1_37sm2"]
+[ext_resource type="Texture2D" uid="uid://b26sita8dy6qp" path="res://assets/game/flat bg.png" id="2_hye1w"]
+[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="3_jld0d"]
+[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_ltrma"]
+
+[node name="CardDisplay" type="Control"]
+z_index = 120
+custom_minimum_size = Vector2(960, 540)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_37sm2")
+
+[node name="Container" type="Control" parent="."]
+custom_minimum_size = Vector2(568, 416)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -284.0
+offset_top = -200.0
+offset_right = 284.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hye1w")
+patch_margin_left = 64
+patch_margin_top = 64
+patch_margin_right = 64
+patch_margin_bottom = 64
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CARD DISPLAY HEADER"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Container/MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_ltrma")
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="Label2" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_jld0d")
+text = "Click or tap outside the window to close."
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.568627, 0.533333, 0.568627, 1)
+text = "No cards here right now."
+horizontal_alignment = 1
+vertical_alignment = 1

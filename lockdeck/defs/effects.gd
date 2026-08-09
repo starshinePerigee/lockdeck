@@ -30,6 +30,9 @@ static var BLANK := Effects.new("blank")
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 
+## used to mark the starting point for execution
+static var HOME := Effects.new("home")
+
 ## move the pin, triggering the depth at the destination and hinting everything between
 static var PUSH := Effects.new("push")
 
@@ -47,6 +50,9 @@ static var TEST := Effects.new("test")
 
 ## Destroy the affected depth, replacing it with a blank
 static var CRUSH := Effects.new("crush")
+
+## Card effect - advance the pin without activating. 
+static var SKIP := Effects.new("skip")
 
 ## Depth effect - hint at the next danger or sets the pin to clear
 static var HINT := Effects.new("hint")

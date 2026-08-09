@@ -9,7 +9,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_agct7"]
 radius = 22.0
-height = 628.0
+height = 546.0
 
 [node name="Pin" type="Control"]
 custom_minimum_size = Vector2(80, 672)
@@ -94,7 +94,7 @@ vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea"]
 visible = false
-position = Vector2(40, 332)
+position = Vector2(40, 276)
 shape = SubResource("CapsuleShape2D_agct7")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]

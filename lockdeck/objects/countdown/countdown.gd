@@ -1,4 +1,4 @@
-extends Control
+extends TextureButtonWithLabel
 ## The countdown clock/candle
 
 signal candle_clicked()
@@ -31,36 +31,31 @@ var show_end := false:
 		
 		if count > 4:
 			_label_text = "%s turns remain"
-			$TextureRect.texture = CD_TWO
+			texture_normal = CD_TWO
 		elif count == 4:
 			_label_text = "four turns remain"
-			$TextureRect.texture = CD_TWO
+			texture_normal = CD_TWO
 		elif count == 3:
 			_label_text = "three turns remain"
-			$TextureRect.texture = CD_TWO
+			texture_normal = CD_TWO
 		elif count == 2:
 			_label_text = "two turns remain"
-			$TextureRect.texture = CD_TWO
+			texture_normal = CD_TWO
 		elif count == 1:
 			_label_text = "one turn remains"
-			$TextureRect.texture = CD_ONE
+			texture_normal = CD_ONE
 		elif count == 0:
 			_label_text = "no turns remain"
-			$TextureRect.texture = CD_ZERO
+			texture_normal = CD_ZERO
 		else:
 			_label_text = "darkness looms"
-			$TextureRect.texture = CD_SKULL
+			texture_normal = CD_SKULL
 		$Label.text = _label_text
 		$Label.position = _label_pos
 
 func reset_text() -> void:
 	$Label.text = _label_text
 
-func _handle_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			candle_clicked.emit()
-
 func _ready() -> void:
-	gui_input.connect(_handle_input)
+	pressed.connect(candle_clicked.emit)
 	_label_pos = $Label.position

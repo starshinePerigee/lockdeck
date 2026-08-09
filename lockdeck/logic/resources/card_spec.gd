@@ -14,11 +14,19 @@ class_name CardSpec
 # you haven't earned flavortext yet
 ## The pick art resource for this card.
 @export var texture: Resource
+## How many times this pick has been repaired
+@export var repair_count := 0
 
 ## Unique ID used for tracking specific cards
 var unique_id: int
 
 static var last_id := 100
+
+func get_buy_cost() -> int:
+	return 20
+
+func get_repair_cost() -> int:
+	return 10 + repair_count * 5
 
 static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(

@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b4kv1xqula7ey"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D"]
+polygon = PackedVector2Array(-122, 118, -127, 110, -78, 55, 32, -56, 102, -121, 109, -124, 115, -118, 113, -111, 49, -35, -63, 78, -111, 122)
