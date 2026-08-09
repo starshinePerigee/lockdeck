@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0sa0jqmc66b2"]
+[gd_scene load_steps=2 format=3 uid="uid://c0sa0jqmc66b2"]
 
-[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="1_lvst8"]
 [ext_resource type="Script" uid="uid://8dhi7i1p6cpq" path="res://game/strategy/strategy_popover.gd" id="2_brs4a"]
 
 [node name="StrategyPopover" type="PanelContainer"]
@@ -9,7 +8,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_lvst8")
 script = ExtResource("2_brs4a")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

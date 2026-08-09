@@ -1,16 +1,10 @@
 Panels:
 - button - 2+2px outline with context-sensitive color and transparent bg
-- readme - page with torn outline
-- major game construct - purple 2+2px line with blue accents (match card backs)
+- readme - page with torn outline (informative, do not interact)
+- major game construct - purple 2+2px line with blue accents (match card backs) (default UI panel)
 - minor game construct - purple without blue accents but 2+2px line
+- tooltips??
 
 
-- pin highlight text has an outline
-- click to close on card display is not using the correct themeing
-- top menu version
-- loot drop continue button
-- loot popup text
-- loot widget?
 - all of strat hub
--- strat hub buttons
--- repair widget
+-- prices?

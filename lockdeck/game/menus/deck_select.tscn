@@ -82,16 +82,15 @@ offset_right = 879.0
 offset_bottom = 331.0
 theme_type_variation = &"PaperPanel"
 
-[node name="Info" type="Label" parent="Panel"]
+[node name="Info" type="RichTextLabel" parent="Panel"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 144)
 layout_mode = 2
 size_flags_vertical = 3
-theme_type_variation = &"CardText"
-theme_override_constants/line_spacing = 0
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+scroll_active = false
 autowrap_mode = 2
-text_overrun_behavior = 3
+shortcut_keys_enabled = false
 
 [node name="GoButton" type="Button" parent="."]
 unique_name_in_owner = true

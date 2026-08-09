@@ -10,12 +10,12 @@ signal pressed_confirmed
 		card = v
 		%CardButton.set_card_spec(card)
 
-@export var label := "MONDY BOTTON":
+@export var label := "MONDY BTN":
 	set(v):
 		label = v
 		%Label.text = label
 
-@export var confirm_label := "MONDY BUTTON?"
+@export var confirm_label := "MONDY BTN?"
 
 @export var disabled := false:
 	set(v):

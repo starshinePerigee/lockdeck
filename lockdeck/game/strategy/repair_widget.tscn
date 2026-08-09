@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://1gm4g3xdvbqn"]
+[gd_scene load_steps=4 format=3 uid="uid://1gm4g3xdvbqn"]
 
 [ext_resource type="Script" uid="uid://cki0nimdndpo0" path="res://game/strategy/repair_widget.gd" id="2_yneyk"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="3_axmkd"]
 [ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="3_yneyk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yneyk"]
@@ -25,7 +24,8 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
 [node name="RepairAllButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme = ExtResource("3_axmkd")
+theme_type_variation = &"BoxButton"
+theme_override_font_sizes/font_size = 0
 text = "REPAIR ALL BUTTON"
 script = ExtResource("3_yneyk")
 base_text = "Repair all: 999 g"
@@ -39,7 +39,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_yneyk")
 [node name="ModeButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme = ExtResource("3_axmkd")
+theme_type_variation = &"BoxButton"
 text = "Enable remove forever mode"
 
 [node name="VSeparatorRight" type="VSeparator" parent="HBoxContainer"]

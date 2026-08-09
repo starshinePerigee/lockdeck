@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -24,6 +24,8 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n2srw"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m4rbl"]
+
 [resource]
 default_font = ExtResource("1_2dmma")
 default_font_size = 32
@@ -34,6 +36,7 @@ BoxButton/styles/hover = ExtResource("1_er1qq")
 BoxButton/styles/hover_pressed = ExtResource("2_43re0")
 BoxButton/styles/normal = ExtResource("1_ihrsd")
 BoxButton/styles/pressed = ExtResource("2_43re0")
+BoxContainer/constants/separation = 8
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 Button/colors/font_disabled_color = Color(0.219608, 0.258824, 0.231373, 1)
 Button/colors/font_hover_color = Color(1, 0.737255, 0.341176, 1)
@@ -47,16 +50,40 @@ Button/styles/hover = SubResource("StyleBoxEmpty_43re0")
 Button/styles/hover_pressed = SubResource("StyleBoxEmpty_c6a5y")
 Button/styles/normal = SubResource("StyleBoxEmpty_7vbbg")
 Button/styles/pressed = SubResource("StyleBoxEmpty_n2srw")
+CardRich/base_type = &"RichTextLabel"
+CardRich/font_sizes/bold_font_size = 16
+CardRich/font_sizes/bold_italics_font_size = 16
+CardRich/font_sizes/mono_font_size = 16
+CardRich/font_sizes/normal_font_size = 16
 CardText/base_type = &"Label"
 CardText/colors/font_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
 CardText/constants/line_spacing = -6
 CardText/constants/outline_size = 0
+CardText/font_sizes/font_size = 16
 Label/colors/font_outline_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
 Label/constants/line_spacing = -6
 Label/constants/outline_size = 4
+LargeMargin/base_type = &"MarginContainer"
+LargeMargin/constants/margin_bottom = 16
+LargeMargin/constants/margin_left = 16
+LargeMargin/constants/margin_right = 16
+LargeMargin/constants/margin_top = 16
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
 Panel/styles/panel = SubResource("StyleBoxTexture_n2srw")
 PaperPanel/base_type = &"Panel"
 PaperPanel/styles/panel = ExtResource("5_7vbbg")
+RichTextLabel/colors/default_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
+RichTextLabel/font_sizes/bold_font_size = 32
+RichTextLabel/font_sizes/bold_italics_font_size = 32
+RichTextLabel/font_sizes/italics_font_size = 32
+RichTextLabel/font_sizes/mono_font_size = 32
+RichTextLabel/font_sizes/normal_font_size = 32
+RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_m4rbl")
+SmallText/base_type = &"Label"
+SmallText/font_sizes/font_size = 16
 TinyAccentText/base_type = &"Label"
 TinyAccentText/colors/font_color = Color(0.568627, 0.533333, 0.568627, 1)
 TinyAccentText/constants/line_spacing = -8
