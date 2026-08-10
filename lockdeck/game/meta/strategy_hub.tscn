@@ -71,17 +71,18 @@ layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 2.5
-offset_top = 188.0
-offset_right = 130.5
-offset_bottom = 350.0
+offset_left = 824.0
+offset_top = 56.0
+offset_right = 952.0
+offset_bottom = 218.0
 
 [node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
+visible = false
 layout_mode = 1
-offset_left = 864.0
+offset_left = 863.0
 offset_top = 48.0
-offset_right = 953.0
-offset_bottom = 362.0
+offset_right = 943.0
+offset_bottom = 422.0
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 0

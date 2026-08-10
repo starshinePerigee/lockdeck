@@ -10,8 +10,8 @@
 
 [node name="NextDepths" type="VBoxContainer"]
 offset_top = 1.0
-offset_right = 92.0
-offset_bottom = 363.0
+offset_right = 80.0
+offset_bottom = 375.0
 script = ExtResource("1_0vn0b")
 
 [node name="HeistLabel" type="Label" parent="."]
@@ -43,7 +43,7 @@ text = "8"
 custom_minimum_size = Vector2(80, 32)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "Upcoming
+text = "Next
 depths:"
 horizontal_alignment = 1
 
