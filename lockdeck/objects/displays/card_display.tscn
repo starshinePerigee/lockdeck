@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://rccuomam3kp"]
+[gd_scene load_steps=2 format=3 uid="uid://rccuomam3kp"]
 
 [ext_resource type="Script" uid="uid://d3ix22cqb8lv1" path="res://objects/displays/card_display.gd" id="1_37sm2"]
-[ext_resource type="Texture2D" uid="uid://b26sita8dy6qp" path="res://assets/game/flat bg.png" id="2_hye1w"]
 
 [node name="CardDisplay" type="Control"]
 z_index = 120
@@ -14,8 +13,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_37sm2")
 
-[node name="Container" type="Control" parent="."]
-custom_minimum_size = Vector2(568, 416)
+[node name="Container" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(568, 432)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,41 +22,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -284.0
-offset_top = -200.0
+offset_top = -208.0
 offset_right = 284.0
-offset_bottom = 200.0
+offset_bottom = 208.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Container"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_hye1w")
-patch_margin_left = 64
-patch_margin_top = 64
-patch_margin_right = 64
-patch_margin_bottom = 64
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Container"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="TitleLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -87,12 +63,7 @@ horizontal_alignment = 1
 
 [node name="EmptyLabel" type="Label" parent="Container"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_colors/font_color = Color(0.568627, 0.533333, 0.568627, 1)
 text = "No cards here right now."
 horizontal_alignment = 1

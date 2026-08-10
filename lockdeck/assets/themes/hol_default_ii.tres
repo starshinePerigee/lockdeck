@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=17 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://cwl26cdxdc1cd" path="res://assets/themes/basic_button_normal_stylebox.tres" id="1_ihrsd"]
 [ext_resource type="StyleBox" uid="uid://7myvv546ratb" path="res://assets/themes/basic_button_press_stylebox.tres" id="2_43re0"]
 [ext_resource type="StyleBox" uid="uid://cyueqxmpy54gq" path="res://assets/themes/paper_stylebox.tres" id="5_7vbbg"]
+[ext_resource type="StyleBox" uid="uid://0fxvcokvdj1g" path="res://assets/themes/purple_flat_stylebox.tres" id="5_n2srw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqxeh"]
 
@@ -73,8 +74,11 @@ MarginContainer/constants/margin_left = 8
 MarginContainer/constants/margin_right = 8
 MarginContainer/constants/margin_top = 8
 Panel/styles/panel = SubResource("StyleBoxTexture_n2srw")
+PanelContainer/styles/panel = ExtResource("5_n2srw")
 PaperPanel/base_type = &"Panel"
 PaperPanel/styles/panel = ExtResource("5_7vbbg")
+PurplePanel/base_type = &"Panel"
+PurplePanel/styles/panel = ExtResource("5_n2srw")
 RichTextLabel/colors/default_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
 RichTextLabel/font_sizes/bold_font_size = 32
 RichTextLabel/font_sizes/bold_italics_font_size = 32
