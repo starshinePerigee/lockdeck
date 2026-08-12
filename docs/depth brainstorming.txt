@@ -14,6 +14,7 @@ results can effect other pins, but these are evaluated *after* all pins and effe
 - anti-landmine: if this depth is skipped, it breaks the pick. revealed at start?
 - bomb (anti-reveal): if this is revealed, next turn you have to advance past it or the revealer breaks (also plays interesting with move into it, and move/jam!)
 - trap: a depth that breaks if you skip or activate it, but has an earlier depth that diffuses it (starts revealed)
+- fog: possibly a modifier? means you can't test/reveal (or just can't test/reveal past it)
 - super anti-reveal: if revealed, breaks pick. tests as safe
 - stuck: if this is tested or revealed, if you break a pick this turn this pick is also broken
 - x: a depth that resets the pin if you skip it without crush
@@ -25,6 +26,7 @@ results can effect other pins, but these are evaluated *after* all pins and effe
 - fumble: discards cards (percent of deck)
 - darkness: if you hit both, the lights go out
 - slippery: if you skip / test / reveal this pin, advance one
+- spike: revealed from the start. breaks.
 - surprise: break without warning
 
 

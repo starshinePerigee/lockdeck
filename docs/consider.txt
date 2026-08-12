@@ -5,3 +5,51 @@ only activate one depth per pin?
 show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
 s/jam/bind
+
+
+COST REBALANCING:
+Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+
+make cost 20 + 10/break
+
+update denominations: 
+small copper: 1
+big copper: 2
+small silver: 3
+big silver: 5
+small gold: 10
+big gold: 20
+
+
+
+THE BIG TWO QUESTIONS:
+
+ONE: DO DEPTHS RE-TRIGGER?
+This only affects push and bounce depths. Right now, Push is quite dangerous - especially because the current density, you wind up with push chains. Additionally, push/bounce structures represent the current hurdle in the game - push push bounce bounce requires a crush depth, another line up, and a 3 push to clear. All the most bewildering things to happen are push/bounce chain related.
+
+The cost of this mechanic:
+- a latent riskiness and fuzziness
+- a lot more complexity.
+
+What's the return?
+- possible emergent complexity (although I'm not sure you couldn't recreate any push/bounce structure with another one with extra break depths - this does encourage new depths)
+
+This does make push a helpful depth (especially if you remove it's break on oob), and aligns it with bounce. Bounce is less effected, because half the time it does nothing - bouncing back to beginning.
+
+
+DO DEPTHS FIRE AFTER TEST/REVEAL/JAM?
+If the above resolves "no", then the follow-on: do you delay activation until after your whole pick executes? 
+
+First, acknowledge: this is painful. You've done a lot of work to support this in a way that's cool and effective. You can both be sad, but also respect what has happened.
+
+But let's talk about what you get and what you lose. 
+
+Gain: very easy explanation of things. You use a pick, it does all its things. Then every pin that's touched activates. Done.
+
+Lose: some jam mechanics (but only for the jam depth)
+
+
+SHOULD YOU REMOVE EARLY UNLOCKS?
+(or replace them with a super-push)
+
+- yes, probably
