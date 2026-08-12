@@ -75,7 +75,7 @@ static var EXHAUSTED := Depths.new("exhausted", DangerLevel.INVALID, Effects.EMP
 static var PUSH := Depths.new("push", DangerLevel.CLEAR, Effects.SAFE_PUSH, 2)
 
 ## Jam effect
-static var JAM := Depths.new("jam", DangerLevel.INTERESTING, Effects.JAM, 2)
+static var JAM := Depths.new("jam", DangerLevel.INTERESTING, Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
 static var UNLOCK := Depths.new("unlock", DangerLevel.CLEAR, Effects.UNLOCK)
@@ -86,8 +86,9 @@ static var HINT := Depths.new("hint", DangerLevel.CLEAR, Effects.HINT)  # TODO
 ## Breaks the pick. Bad.
 static var BREAK := Depths.new("break", DangerLevel.DANGEROUS, Effects.BREAK)
 
-## Locks pin if skipped, does nothing if activated.
-static var TRAP := Depths.new("trap", DangerLevel.INTERESTING, Effects.EMPTY)
+# ## Locks pin if skipped, does nothing if activated.
+## extra fun bonus break
+static var TRAP := Depths.new("trap", DangerLevel.DANGEROUS, Effects.BREAK)
 
 ## Locks the cylinder until another pin is set
 static var BIND := Depths.new("bind", DangerLevel.INTERESTING, Effects.BIND)

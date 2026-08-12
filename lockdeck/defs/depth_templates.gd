@@ -87,7 +87,7 @@ static var EMPTY := DepthTemplates.new(
 
 static var PUSH := DepthTemplates.new(
 	Depths.PUSH,
-	2,
+	0,
 	[4, 3, 3],
 	4
 )
@@ -121,11 +121,19 @@ static var UNLOCK := DepthTemplates.new(
 	2
 )
 
+static var TRAP := DepthTemplates.new(
+	Depths.TRAP,
+	5,
+	[1, 2, 3],
+	3
+)
+
 static var ALL_TEMPLATES := [
 	# EMPTY,
 	PUSH,
 #	DOUBLE_PUSH,
 	JAM,
 	BOUNCE,
-	UNLOCK
+	UNLOCK,
+	TRAP
 ]

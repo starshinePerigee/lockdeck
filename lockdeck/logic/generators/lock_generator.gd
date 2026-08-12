@@ -105,10 +105,10 @@ static func build_lock(
 	
 	var pin_selector := range(0, pin_count)
 	
+	var hazard := 0
 	for template in deck:
 		pin_selector.shuffle()
 		var placed := 0
-		var hazard := 0
 		for i in range(pin_count):
 			var target: int = pin_selector[i]
 			# place the template's depths at pin_selector[i]
@@ -129,13 +129,14 @@ static func build_lock(
 		hazard += template.net_hazard
 		if hazard >= hazard_target:
 			break
+	print("Lock generated! Hazard %s / %s" % [hazard, hazard_target])
 	
 	return LockSpec.new(pins, deck)
 
 ## Build a level from a difficulty rating
 static func get_next_level(difficulty: int) -> LockSpec:
 	var pin_count: int = min(difficulty, 5)
-	var hazard_target := difficulty + 2
+	var hazard_target := difficulty + 3
 	
 	var lockset_deck := LockGenerator.get_lockset_deck(
 		LockGenerator.GameArcs.MID,
