@@ -15,6 +15,7 @@ static func get_known_test_pin() -> PinSpec:
 	spec.depths[4] = Depths.UNLOCK
 	spec.depths[5] = Depths.BOUNCE
 	spec.depths[6] = Depths.BREAK
+	spec.depths[7] = Depths.PUSH
 	return spec
 
 static var FILLER_DEPTHS: Array[Depths] = [

@@ -158,6 +158,8 @@ func execute_effect(effect) -> void:
 			pass
 		Effects.PUSH:
 			push_pin(effect)
+		Effects.SAFE_PUSH:
+			push_pin_safe(effect)
 		Effects.TEST:
 			test_pin(effect)
 		Effects.REVEAL:
@@ -252,7 +254,10 @@ func push_pin(effect: EffectSpec) -> void:
 func crush_pin(effect: EffectSpec) -> void:
 	_push_crush(effect)
 
-func _push_crush(effect: EffectSpec) -> void:
+func push_pin_safe(effect: EffectSpec) -> void:
+	_push_crush(effect, true)
+
+func _push_crush(effect: EffectSpec, safe := false) -> void:
 	var remainder := push_jam(effect.value)
 	if remainder <= 0:
 		effect.set_jammed(pin_position)
@@ -266,8 +271,9 @@ func _push_crush(effect: EffectSpec) -> void:
 			effect.add_position(pin_position)
 
 		if advance_pin(1):
-			effect.oobed = true
-			update_result(Results.BREAK, PIN_DEPTH_COUNT)
+			if not safe:
+				effect.oobed = true
+				update_result(Results.BREAK, PIN_DEPTH_COUNT)
 			activation_pending = false
 			if pin_position == PIN_DEPTH_COUNT - 1:
 				effect.unlock_pin = true
