@@ -24,9 +24,13 @@ x gears
 % item get pop ups (with sound)
 % previous turn button
 - splash screen
+- home screen
 - back of card art
+- touch up previous button to match new theme
+- between scene locks (locks and boss locks)
 
 Animations
+- between scene animation 
 - opening animation
 - pin execution
 - broken pick flicks

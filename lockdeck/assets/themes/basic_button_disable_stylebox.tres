@@ -1,0 +1,15 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://b5g08s0367sks"]
+
+[ext_resource type="Texture2D" uid="uid://cvxs8tvrlubuu" path="res://assets/interface/button_stylebox_disable.png" id="1_jnjlk"]
+
+[resource]
+texture = ExtResource("1_jnjlk")
+texture_margin_left = 5.0
+texture_margin_top = 2.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

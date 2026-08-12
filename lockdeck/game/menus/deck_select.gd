@@ -19,15 +19,14 @@ func do_start() -> void:
 
 func select_deck(template: DeckTemplates) -> void:
 	current_deck = template
-	$Panel/Info.text = template.description
-	$Panel/Button.disabled = false
-	$Panel/Button.text = "Sounds good, let's get started. >"
+	%Info.text = template.description
+	%GoButton.visible = true
+	%GoButton.text = "sounds good, let's get started >"
 
 func reset() -> void:
 	current_deck = null
-	$Panel/Info.text = ""
-	$Panel/Button.disabled = true
-	$Panel/Button.text = "Select a deck."
+	%Info.text = "Select a deck."
+	%GoButton.visible = false
 
 func _print_cards(cards: Array[CardSpec]):
 	for card in cards:
@@ -48,7 +47,7 @@ func _ready() -> void:
 		button.pressed.connect(select_deck.bind(deck_template))
 		$VBoxContainer.add_child(button)
 	
-	$Panel/Button.pressed.connect(do_start)
+	%GoButton.pressed.connect(do_start)
 	$ReturnButton.pressed.connect(return_to_menu.emit)
 	
 	if get_parent() == get_tree().root:

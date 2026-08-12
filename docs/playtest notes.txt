@@ -12,3 +12,6 @@ starter decks, more than anything else, suffer for a lack of push
 - a 3 pin deck needs 24 flat push, not counting bounce / jam
 
 theme jam as torque wrenches and show them as the opposite angle
+replace "jam" with "bind"?
+
+income balance feels ok but you need to figure out how to add more coins? (multiply everything by 2 again? repair is 20/30/40 and pick buying starts at 40?)

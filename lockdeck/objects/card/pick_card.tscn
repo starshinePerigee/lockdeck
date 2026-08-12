@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://3tt7yy0bstia"]
+[gd_scene load_steps=17 format=3 uid="uid://3tt7yy0bstia"]
 
 [ext_resource type="Texture2D" uid="uid://v0438wjnd4w0" path="res://assets/card/card_bg.png" id="1_0dxge"]
 [ext_resource type="Texture2D" uid="uid://csrnajdiivx3q" path="res://assets/card/card_back.png" id="2_0dxge"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://un4p6k1icu2m" path="res://assets/picks/pick_debug_card.png" id="6_0dxge"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://dbweirtd3gtdb" path="res://assets/card/card_textbox.png" id="8_ll2st"]
-[ext_resource type="Theme" uid="uid://xavbwam5wwcy" path="res://assets/themes/card_text.tres" id="8_v2bqt"]
 [ext_resource type="Texture2D" uid="uid://6p18c7vtuqf5" path="res://assets/card/card_titlebox.png" id="8_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://emq27xou47ft" path="res://assets/card/tallies.png" id="10_xpvy4"]
 
@@ -81,7 +80,7 @@ offset_left = 17.0
 offset_top = 135.0
 offset_right = 111.0
 offset_bottom = 152.0
-theme = ExtResource("8_v2bqt")
+theme_type_variation = &"CardText"
 text = "Debug"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -100,8 +99,7 @@ offset_top = 89.0
 offset_right = 119.0
 offset_bottom = 128.0
 mouse_filter = 1
-theme = ExtResource("8_v2bqt")
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_type_variation = &"CardRich"
 bbcode_enabled = true
 text = "If you see this, please tell starshine."
 fit_content = true

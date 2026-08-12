@@ -1,9 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cophugyta6nde"]
+[gd_scene load_steps=2 format=3 uid="uid://cophugyta6nde"]
 
 [ext_resource type="Script" uid="uid://7vqr4q1k1vi8" path="res://game/menus/deck_select.gd" id="1_1dibr"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="2_tpu8j"]
-[ext_resource type="Theme" uid="uid://bil1vse61huyg" path="res://assets/themes/hol_default.tres" id="3_454oq"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="4_hg6os"]
 
 [node name="DeckSelect" type="Control"]
 layout_mode = 3
@@ -17,98 +14,91 @@ script = ExtResource("1_1dibr")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 146.349
-offset_top = 190.127
-offset_right = 186.349
-offset_bottom = 230.127
-theme = ExtResource("2_tpu8j")
+offset_top = 134.127
+offset_right = 248.349
+offset_bottom = 352.127
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Tutorial
 "
 alignment = 0
 
 [node name="Standard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Standard"
 alignment = 0
 
 [node name="Daring" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Daring"
 alignment = 0
 
 [node name="Clever" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Clever"
 alignment = 0
 
 [node name="Patient" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Patient"
 alignment = 0
 
 [node name="Random" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_tpu8j")
 text = "Random
 "
 alignment = 0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 64.0
-offset_right = 252.0
-offset_bottom = 83.0
-theme = ExtResource("3_454oq")
+offset_left = 146.0
+offset_top = 82.0
+offset_right = 332.0
+offset_bottom = 108.0
 text = "Choose your deck:"
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 482.0
-offset_right = 229.0
-offset_bottom = 508.0
-theme = ExtResource("2_tpu8j")
+offset_left = 69.0
+offset_top = 416.0
+offset_right = 241.0
+offset_bottom = 449.0
 text = "< return to menu"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 426.0
-offset_top = 190.0
-offset_right = 781.0
-offset_bottom = 358.0
+offset_left = 495.0
+offset_top = 143.0
+offset_right = 879.0
+offset_bottom = 331.0
+theme_type_variation = &"PaperPanel"
 
-[node name="Info" type="Label" parent="Panel"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 7.0
-offset_right = 349.0
-offset_bottom = 127.0
-theme_override_constants/line_spacing = 0
+[node name="Info" type="RichTextLabel" parent="Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 144)
+layout_mode = 2
+size_flags_vertical = 3
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+scroll_active = false
 autowrap_mode = 2
-text_overrun_behavior = 3
+shortcut_keys_enabled = false
 
-[node name="Button" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 90.0
-offset_top = 133.0
-offset_right = 343.0
-offset_bottom = 160.0
-text = "Sounds good, let's get started."
+[node name="GoButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 495.0
+offset_top = 416.0
+offset_right = 854.0
+offset_bottom = 449.0
+text = "sounds good, let's get started >"
+flat = true
 
 [node name="StartHint" type="Label" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 197.0
-offset_right = 139.0
-offset_bottom = 216.0
-theme = ExtResource("4_hg6os")
+offset_left = 69.0
+offset_top = 143.0
+offset_right = 141.0
+offset_bottom = 162.0
+theme_type_variation = &"TinyAccentText"
 text = "Start here! ->"

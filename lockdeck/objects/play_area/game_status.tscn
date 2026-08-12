@@ -18,8 +18,10 @@ offset_bottom = 40.0
 
 [node name="LockCount" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Lock: 99"
 
 [node name="PickCount" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Picks; 99"
+theme_override_font_sizes/font_size = 32
+text = "Picks: 99"

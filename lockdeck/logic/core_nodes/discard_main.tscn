@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://5io01qsv1qby"]
+[gd_scene load_steps=6 format=3 uid="uid://5io01qsv1qby"]
 
 [ext_resource type="Script" uid="uid://cbws7n2egd8ao" path="res://logic/core_nodes/discard_main.gd" id="1_0x64h"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_50n1f"]
 [ext_resource type="Texture2D" uid="uid://c2l3enbuq6eol" path="res://assets/hand/discard_deselected.png" id="3_4350w"]
 [ext_resource type="Script" uid="uid://dav8nvvk1pkcv" path="res://logic/core_nodes/discard_icon.gd" id="4_4350w"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="5_wu67t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ngcg"]
 size = Vector2(125.75, 100)
@@ -49,11 +48,11 @@ shape = SubResource("RectangleShape2D_1ngcg")
 
 [node name="DiscardLabel" type="Button" parent="."]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 4.0
-offset_right = 128.0
-offset_bottom = 30.0
-theme = ExtResource("5_wu67t")
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 140.0
+offset_bottom = 43.0
+theme_type_variation = &"BoxButton"
 text = "Discard: 99"
 
 [editable path="CardPile"]

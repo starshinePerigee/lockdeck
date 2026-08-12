@@ -58,7 +58,4 @@ size_flags_horizontal = 3
 
 [node name="InnerContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_type_variation = &"LargeMargin"
