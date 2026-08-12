@@ -99,7 +99,7 @@ func _ready() -> void:
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
-	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DIAMOND)
+	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.TINY_HOOK)
 
 	for i in range(CYL_COUNT, PinSpec.CYLINDER_COUNT_MAX):
 		$CardHBox.get_child(i).disabled = true

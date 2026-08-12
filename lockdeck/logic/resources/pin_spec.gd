@@ -119,19 +119,6 @@ func execute() -> Array[EffectSpec]:
 				print("  " + effect.flavor.effect_name)
 			break
 		
-		# check for activation:
-		if activation_pending:
-			if (
-				len(pending_effects) == 0
-				or not pending_effects[0].flavor in [Effects.PUSH, Effects.CRUSH]
-			):
-				var depth := activate_and_get_depth()
-				# print(
-				# 	"Activating pin at depth %s with effect %s"
-				# 	% [pin_position, depth.effect.effect_name]
-				# )
-				pending_effects.push_front(EffectSpec.new(depth.effect, depth.value))
-		
 		if len(pending_effects) == 0:
 			break
 		
@@ -142,6 +129,17 @@ func execute() -> Array[EffectSpec]:
 		# )
 		execute_effect(executed_effect)
 		executed_effects.append(executed_effect)
+	
+	# activate the pin:
+	if activation_pending:
+		var depth := activate_and_get_depth()
+		var activation_effect := EffectSpec.new(depth.effect, depth.value)
+		# print(
+		# 	"Activating pin at depth %s with effect %s"
+		# 	% [pin_position, activation_effect.effect_name]
+		# )
+		execute_effect(activation_effect)
+		executed_effects.append(activation_effect)
 	
 	## anything after OOB gets discarded:
 	var return_effects := []
