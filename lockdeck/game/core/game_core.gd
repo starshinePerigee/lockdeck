@@ -400,5 +400,5 @@ func _ready() -> void:
 	if get_tree().current_scene == self:
 		print("Running in debug mode.")
 		DEBUG_MODE = true
-		$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
+		$DeckMain.add_cards(PickGenerator.get_many_base_cards(deck_count))
 		restart()

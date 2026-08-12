@@ -25,60 +25,59 @@ func _init(
 static var TUTORIAL := DeckTemplates.new(
 	"Tutorial",
 	(
-		"Learn how to play Handful of Lockpicks.\n"
-		+ "Selecting this deck will enable tutorial mode, which will walk you through "
+		"Learn how to play Handful of Lockpicks."
+		+ "\n\nSelecting this deck will enable tutorial mode, which will walk you through "
 		+ "the game's basic mechanics."
 	),
 	func(): return _spec_templates([
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
+		PickTemplates.TINY_HOOK,
+		PickTemplates.TINY_HOOK,
+		PickTemplates.TINY_HOOK,
 	])
 )
 
-# TODO: consider removing probe, force people to puzzle.
 static var STANDARD := DeckTemplates.new(
 	"Standard",
 	(
-		"A reliable, well rounded deck, capable of opening almost any lock. "
-		+ "The standard deck features copies of every basic card and has access "
-		+ "to all five card effects."
+		"A reliable, well rounded deck."
+		+ "\n\nThe standard deck is capable of opening almost any lock"
+		+ " and making use of any pick you find."
 	),
 	func(): return _spec_templates([
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.HOOK,
-		PickTemplates.HOOK,
-		PickTemplates.SNAKE,
-		PickTemplates.RAKE,
-		PickTemplates.BALL,
-		PickTemplates.FORK,  # Might replace this
-		PickTemplates.LEVER,
-		PickTemplates.PROBE
+		PickTemplates.ONE_ONE_FLAT_RAKE,
+		PickTemplates.BROAD_PUSH_REVEAL_RAKE,
+		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
+		PickTemplates.TWO_FOUR_TWO_DIAMOND,
+		PickTemplates.TWO_FOUR_TWO_DIAMOND,
+		PickTemplates.THREE_STACK_CRUSH,
+		PickTemplates.CLASSIC_HOOK,
+		PickTemplates.CLASSIC_HOOK,
+		PickTemplates.ONE_TWO_JAM,
+		PickTemplates.FORK_JAM
 	])
 )
 
 static var POWERFUL := DeckTemplates.new(
 	"Daring",
 	(
-		"A deck for the smash and grab. "
-		+ "This deck features large picks with big effects, "
-		+ "and can tear through basic locks. It might struggle against "
+		"A deck for the smash and grab."
+		+ "\n\nThis deck features large picks with big effects. "
+		+ "It might struggle against "
 		+ "breakage, but that's why you've brought a few extras."
 	),
 	func() : return _spec_templates([
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.HOOK,
-		PickTemplates.HOOK,
-		PickTemplates.RAKE,
-		PickTemplates.RAKE,
-		PickTemplates.PROBE,
-		PickTemplates.LEVER,
-		PickTemplates.LEVER,
-		PickTemplates.LEVER,
-		PickTemplates.PRYBAR
+		PickTemplates.EIGHT_PUSH_DEEP_BOMB_RAKE,
+		PickTemplates.TWO_ONE_FLAT_RAKE,
+		PickTemplates.TWO_ONE_FLAT_RAKE,
+		PickTemplates.NOISY_FOUR_PUSH_RAKE,
+		PickTemplates.NOISY_FOUR_PUSH_RAKE,
+		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
+		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
+		PickTemplates.TRIANGLE_CRUSH_DIAMOND,
+		PickTemplates.TRIANGLE_CRUSH_DIAMOND,
+		PickTemplates.LARGE_TEST_DIAMOND,
+		PickTemplates.PUSH_CRUSH,
+		PickTemplates.PUSH_JAM_RAKE,
 	])
 )
 
@@ -86,20 +85,19 @@ static var TRICKY := DeckTemplates.new(
 	"Clever",
 	(
 		"The clever deck makes heavy use of Jam to precisely break down "
-		+ "locks pin-by-pin."
-		+ "TBR"  # TODO
+		+ "locks pin-by-pin, shaping it's valuable rakes to prevent surprise damage."
 	),
 	func(): return _spec_templates([
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.DIAMOND,
-		PickTemplates.RAKE,
-		PickTemplates.LEVER,
-		PickTemplates.PROBE,
-		PickTemplates.PROBE,
-		PickTemplates.FORK,
-		PickTemplates.BALL,
-		PickTemplates.BALL,
+		PickTemplates.DEEP_REVEAL_RAKE,
+		PickTemplates.TEST_ACROSS_WITH_JAM_RAKE,
+		PickTemplates.NOISY_FOUR_PUSH_RAKE,
+		PickTemplates.TWO_ONE_FLAT_RAKE,
+		PickTemplates.TWO_ONE_FLAT_RAKE,
+		PickTemplates.OFFSET_FINISHER_DIAMOND,
+		PickTemplates.OFFSET_FINISHER_DIAMOND,
+		PickTemplates.LARGE_TEST_DIAMOND,
+		PickTemplates.ONE_TWO_JAM,
+		PickTemplates.FORK_JAM
 	])
 )
 
@@ -107,21 +105,20 @@ static var CAREFUL := DeckTemplates.new(
 	"Patient",
 	(
 		"The patient deck is perfect for the thief who names their picks "
-		+ "and can't stand the thought of losing even one.\n"
-		+ "There are no surprises when you map the the interior "
-		+ "of each lock before you make any moves."
+		+ "and can't stand the thought of losing even one."
+		+ "\n\nThere are no surprises when you bring this much Test."
 	),
 	func(): return _spec_templates([
-		PickTemplates.DIAMOND,
-		PickTemplates.RAKE,
-		PickTemplates.RAKE,
-		PickTemplates.HOOK,
-		PickTemplates.HOOK,
-		PickTemplates.HOOK,
-		PickTemplates.PROBE,
-		PickTemplates.BALL,
-		PickTemplates.SNAKE,
-		PickTemplates.SNAKE,
+		PickTemplates.THREE_REVEAL_RAKE,
+		PickTemplates.DARK_TEST_RAKE,
+		PickTemplates.DARK_TEST_RAKE,
+		PickTemplates.PUSH_JAM_RAKE,
+		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
+		PickTemplates.BONUS_REVEAL_HOOK,
+		PickTemplates.CLASSIC_HOOK,
+		PickTemplates.CLASSIC_HOOK,
+		PickTemplates.THREE_TEST_HOOK,
+		PickTemplates.FOCUS_LENS_JAM,
 	])
 )
 

@@ -29,6 +29,7 @@ func _init(
 	texture = _get_texture(pick_name_)
 
 
+## JJJ/DDDDDDDD/*PPPPTTTR/RRR
 static var DEBUG := PickTemplates.new(
 	"debug", 
 	{
@@ -68,6 +69,7 @@ static var DEBUG := PickTemplates.new(
 # PUSH FOCUSED RAKES
 # typically have peaks
 
+## PPT/PPTT/PPT/*PPTT/PPT
 static var TEN_PUSH_MONSTER_RAKE := PickTemplates.new(
 	"pinnacle rake",
 	{
@@ -94,6 +96,7 @@ static var TEN_PUSH_MONSTER_RAKE := PickTemplates.new(
 	}
 )
 
+## PTT/PPP/*PPP/PTT
 static var EIGHT_PUSH_DEEP_BOMB_RAKE := PickTemplates.new(
 	"jag rake",
 	{
@@ -110,6 +113,7 @@ static var EIGHT_PUSH_DEEP_BOMB_RAKE := PickTemplates.new(
 	}
 )
 
+## PPT/PPT/*PPT/PPT
 static var TWO_ONE_FLAT_RAKE := PickTemplates.new(
 	"four peak rake",
 	{
@@ -132,6 +136,7 @@ static var TWO_ONE_FLAT_RAKE := PickTemplates.new(
 	}
 )
 
+## P/P/PT/*PT/P
 static var FIVE_ACROSS_RAKE := PickTemplates.new(
 	"stretched rake",
 	{
@@ -149,6 +154,7 @@ static var FIVE_ACROSS_RAKE := PickTemplates.new(
 	}
 )
 
+## C/C/C/*CC/C
 static var CRUSH_RAKE := PickTemplates.new(
 	"spike rake",
 	{
@@ -160,6 +166,7 @@ static var CRUSH_RAKE := PickTemplates.new(
 	}
 )
 
+## CC/P/*CC/P
 static var ALTERNATING_CRUSH_RAKE := PickTemplates.new(
 	"rip rake",
 	{
@@ -173,6 +180,7 @@ static var ALTERNATING_CRUSH_RAKE := PickTemplates.new(
 # TEST FOCUSED RAKES
 # typically have wiggles and rolls
 
+## P/TT/*PTTT/PT
 static var DARK_TEST_RAKE := PickTemplates.new(
 	"camel rake",
 	{
@@ -189,6 +197,7 @@ static var DARK_TEST_RAKE := PickTemplates.new(
 	}
 )
 
+## TT/PTTT/*PTTT/TT
 static var EXTRA_DARK_TEST_RAKE := PickTemplates.new(
 	"wave rake",
 	{
@@ -205,6 +214,7 @@ static var EXTRA_DARK_TEST_RAKE := PickTemplates.new(
 	}
 )
 
+## .T/.T/..T/*.T/..T
 static var PUSHLESS_GAP_RAKE := PickTemplates.new(
 	"city rake",
 	{
@@ -232,6 +242,7 @@ static var PUSHLESS_GAP_RAKE := PickTemplates.new(
 )
 
 # semi-random gap rake
+## P.T/PT/*P..TT/..T
 static var SCATTERED_GAP_RAKE := PickTemplates.new(
 	"chatter rake",
 	{
@@ -256,6 +267,7 @@ static var SCATTERED_GAP_RAKE := PickTemplates.new(
 	}
 )
 
+## P/PR/PR/*PR/P
 static var BROAD_PUSH_REVEAL_RAKE := PickTemplates.new(
 	"snake rake",
 	{
@@ -277,6 +289,7 @@ static var BROAD_PUSH_REVEAL_RAKE := PickTemplates.new(
 )
 
 # has standard jam synergy
+## P/PP/*RRR/PP
 static var DEEP_REVEAL_RAKE := PickTemplates.new(
 	"wyrm rake",
 	{
@@ -288,6 +301,7 @@ static var DEEP_REVEAL_RAKE := PickTemplates.new(
 )
 
 # hybrid
+## T/TT/PTT/*PPTT/PT
 static var NOISY_FOUR_PUSH_RAKE := PickTemplates.new(
 	"diamond rake",
 	{
@@ -308,6 +322,7 @@ static var NOISY_FOUR_PUSH_RAKE := PickTemplates.new(
 	}
 )
 
+## PT/PT/*PT/PT
 static var ONE_ONE_FLAT_RAKE := PickTemplates.new(
 	"two peak rake",
 	{
@@ -330,6 +345,7 @@ static var ONE_ONE_FLAT_RAKE := PickTemplates.new(
 	}
 )
 
+## TT/PP/TT/*PP/TT
 static var ALTERNATING_RAKE := PickTemplates.new(
 	"toothed rake",
 	{
@@ -341,6 +357,7 @@ static var ALTERNATING_RAKE := PickTemplates.new(
 	}
 )
 
+## R/R/RP/*PP/PP
 static var THREE_REVEAL_RAKE := PickTemplates.new(
 	"worm rake",
 	{
@@ -357,6 +374,7 @@ static var THREE_REVEAL_RAKE := PickTemplates.new(
 
 
 # jam rakes
+## TT/TT/*TTJ/T
 static var JAM_FLAVORED_PROBE_RAKE := PickTemplates.new(
 	"broad rake",
 	{
@@ -371,6 +389,7 @@ static var JAM_FLAVORED_PROBE_RAKE := PickTemplates.new(
 )
 
 # close test with weird jam pattern
+## T/T/JT/*T/JT
 static var TEST_ACROSS_WITH_JAM_RAKE := PickTemplates.new(
 	"spine rake",
 	{
@@ -388,6 +407,7 @@ static var TEST_ACROSS_WITH_JAM_RAKE := PickTemplates.new(
 	}
 )
 
+## P/PJ/PTJ/*PTTJ
 static var PUSH_JAM_BLANKET_RAKE := PickTemplates.new(
 	"blanket rake",
 	{
@@ -409,6 +429,7 @@ static var PUSH_JAM_BLANKET_RAKE := PickTemplates.new(
 	}
 )
 
+## PJ/PJ/*PTT/PTT
 static var PUSH_JAM_RAKE := PickTemplates.new(
 	"tension rake",
 	{
@@ -441,6 +462,7 @@ static var PUSH_JAM_RAKE := PickTemplates.new(
 # often have limited test
 
 # PUSH FOCUSED
+## T/PT/*PPPT/P
 static var MEDIUM_FOUR_REACH_DIAMOND := PickTemplates.new(
 	"large diamond",
 	{
@@ -457,6 +479,7 @@ static var MEDIUM_FOUR_REACH_DIAMOND := PickTemplates.new(
 	}
 )
 
+## P/*PPT
 static var SMALL_THREE_REACH_DIAMOND := PickTemplates.new(
 	"small diamond",
 	{
@@ -468,6 +491,7 @@ static var SMALL_THREE_REACH_DIAMOND := PickTemplates.new(
 	}
 )
 
+## P/PPT/*CPPPT/P
 static var EIGHT_MOVEMENT_DEEP_DIAMOND := PickTemplates.new(
 	"slice wedge",
 	{
@@ -486,6 +510,7 @@ static var EIGHT_MOVEMENT_DEEP_DIAMOND := PickTemplates.new(
 )
 
 # new default diamond?
+## PT/*PPTT/PT
 static var TWO_FOUR_TWO_DIAMOND := PickTemplates.new(
 	"quick diamond",
 	{
@@ -504,6 +529,7 @@ static var TWO_FOUR_TWO_DIAMOND := PickTemplates.new(
 	}
 )
 
+## T/TT/*PPP/P
 static var OFFSET_FINISHER_DIAMOND := PickTemplates.new(
 	"offset wedge",
 	{
@@ -514,6 +540,7 @@ static var OFFSET_FINISHER_DIAMOND := PickTemplates.new(
 	}
 )
 
+## PR/*PPR/P
 static var REVEAL_DIAMOND := PickTemplates.new(
 	"black diamond",
 	{
@@ -530,6 +557,7 @@ static var REVEAL_DIAMOND := PickTemplates.new(
 )
 
 # weird block (crush?) wedge
+## T/CC/*CCTT/T
 static var BLOCK_CRUSH_DIAMOND := PickTemplates.new(
 	"block wedge",
 	{
@@ -544,6 +572,7 @@ static var BLOCK_CRUSH_DIAMOND := PickTemplates.new(
 )
 
 # block wedge
+## P/PPTT/*PPTT
 static var FLAT_BLOCK_DIAMOND := PickTemplates.new(
 	"flattop",
 	{
@@ -561,6 +590,7 @@ static var FLAT_BLOCK_DIAMOND := PickTemplates.new(
 
 
 # crushes
+## C/CC/*CCC
 static var TRIANGLE_CRUSH_DIAMOND := PickTemplates.new(
 	"bruiser wedge",
 	{
@@ -570,6 +600,7 @@ static var TRIANGLE_CRUSH_DIAMOND := PickTemplates.new(
 	}
 )
 
+## PT/CPT/*CCC/P
 static var THREE_CRUSH_STACKED_DIAMOND := PickTemplates.new(
 	"desert wedge",
 	{
@@ -587,6 +618,7 @@ static var THREE_CRUSH_STACKED_DIAMOND := PickTemplates.new(
 	}
 )
 
+## PT/*CCPT
 static var SPILLOVER_CRUSH := PickTemplates.new(
 	"powder wedge",
 	{
@@ -603,6 +635,7 @@ static var SPILLOVER_CRUSH := PickTemplates.new(
 )
 
 # test focused
+## PT/*PTT
 static var SMALL_TEST_DIAMOND := PickTemplates.new(
 	"soft wedge",
 	{
@@ -617,6 +650,7 @@ static var SMALL_TEST_DIAMOND := PickTemplates.new(
 	}
 )
 
+## P/PT/*PTTT
 static var LARGE_TEST_DIAMOND := PickTemplates.new(
 	"senses wedge",
 	{
@@ -632,6 +666,7 @@ static var LARGE_TEST_DIAMOND := PickTemplates.new(
 	}
 )
 
+## P/PT/*..TTT/PT
 static var FIVE_RANGE_PROBE_DIAMOND := PickTemplates.new(
 	"false diamond",
 	{
@@ -651,6 +686,7 @@ static var FIVE_RANGE_PROBE_DIAMOND := PickTemplates.new(
 	}
 )
 
+## PR/*PRR
 static var THREE_REVEAL_DIAMOND := PickTemplates.new(
 	"oracle wedge",
 	{
@@ -665,6 +701,7 @@ static var THREE_REVEAL_DIAMOND := PickTemplates.new(
 	}
 )
 
+## P/PT/*PRT/T
 static var PUSH_TEST_REVEAL_DIAMOND := PickTemplates.new(
 	"perfect diamond",
 	{
@@ -684,6 +721,7 @@ static var PUSH_TEST_REVEAL_DIAMOND := PickTemplates.new(
 
 
 # jam flavored
+## *PPPJJ/JJ
 static var THREE_FOUR_JAM_FINISHER := PickTemplates.new(
 	"curse diamond",
 	{
@@ -695,6 +733,7 @@ static var THREE_FOUR_JAM_FINISHER := PickTemplates.new(
 	}
 )
 
+## PTJ/*PPTJ
 static var BLEND_JAM_DIAMOND := PickTemplates.new(
 	"twist wedge",
 	{
@@ -716,6 +755,7 @@ static var BLEND_JAM_DIAMOND := PickTemplates.new(
 # affects a single pin, but rarely has significant movement
 
 # invincible but questionable deck slot
+## *PT
 static var TINY_HOOK := PickTemplates.new(
 	"tiny hook",
 	{
@@ -727,6 +767,7 @@ static var TINY_HOOK := PickTemplates.new(
 )
 
 # exceptionally situational but invincible
+## *R
 static var ONE_REVEAL_HOOK := PickTemplates.new(
 	"wire hook",
 	{
@@ -735,6 +776,7 @@ static var ONE_REVEAL_HOOK := PickTemplates.new(
 )
 
 # single target diffuser
+## *.T
 static var SKIP_TEST_DIFFUSER_HOOK := PickTemplates.new(
 	"trap hook",
 	{
@@ -746,6 +788,7 @@ static var SKIP_TEST_DIFFUSER_HOOK := PickTemplates.new(
 )
 
 # push focused
+## *PPTT
 static var CLASSIC_HOOK := PickTemplates.new(
 	"classic hook",
 	{
@@ -756,6 +799,7 @@ static var CLASSIC_HOOK := PickTemplates.new(
 	}
 )
 
+## *PPR
 static var PUSH_REVEAL_HOOK := PickTemplates.new(
 	"feeler hook",
 	{
@@ -767,6 +811,7 @@ static var PUSH_REVEAL_HOOK := PickTemplates.new(
 )
 
 # jam hook
+## *CCTJ
 static var CRUSH_JAM_HOOK := PickTemplates.new(
 	"crook",
 	{
@@ -779,6 +824,7 @@ static var CRUSH_JAM_HOOK := PickTemplates.new(
 )
 
 # two into three combo hook
+## *PP..T
 static var FIVE_DEEP_SINGLE_HOOK := PickTemplates.new(
 	"wary hook",
 	{
@@ -790,6 +836,7 @@ static var FIVE_DEEP_SINGLE_HOOK := PickTemplates.new(
 	}
 )
 
+## *P...R
 static var BONUS_REVEAL_HOOK := PickTemplates.new(
 	"hat hook",
 	{
@@ -804,6 +851,7 @@ static var BONUS_REVEAL_HOOK := PickTemplates.new(
 # test focused
 
 # good test hook with a dependency
+## P/*RTT
 static var DEPENDENCY_HOOK := PickTemplates.new(
 	"canted hook",
 	{
@@ -816,6 +864,7 @@ static var DEPENDENCY_HOOK := PickTemplates.new(
 )
 
 # awkwardly deep test hook
+## *.TTTT
 static var FOUR_DARK_HOOK := PickTemplates.new(
 	"shepard hook",
 	{
@@ -826,6 +875,7 @@ static var FOUR_DARK_HOOK := PickTemplates.new(
 	}
 )
 
+## *..TT
 static var SKIP_TEST_HOOK := PickTemplates.new(
 	"guide hook",
 	{
@@ -837,6 +887,7 @@ static var SKIP_TEST_HOOK := PickTemplates.new(
 )
 
 # more limited deep test
+## *P.TTT
 static var FIVE_DARK_HOOK := PickTemplates.new(
 	"pirate hook",
 	{
@@ -849,6 +900,7 @@ static var FIVE_DARK_HOOK := PickTemplates.new(
 )
 
 # super deep test
+## *PP..TT
 static var SIX_DARK_GONZO_HOOK := PickTemplates.new(
 	"gonzo hook",
 	{
@@ -860,6 +912,7 @@ static var SIX_DARK_GONZO_HOOK := PickTemplates.new(
 	}
 )
 
+## *TTT
 static var THREE_TEST_HOOK := PickTemplates.new(
 	"spring hook",
 	{
@@ -870,6 +923,7 @@ static var THREE_TEST_HOOK := PickTemplates.new(
 # crush flavored
 
 # standard crush
+## *CCC
 static var THREE_STACK_CRUSH := PickTemplates.new(
 	"lever",
 	{
@@ -877,6 +931,7 @@ static var THREE_STACK_CRUSH := PickTemplates.new(
 	}
 )
 
+## *CCPP
 static var PUSH_CRUSH := PickTemplates.new(
 	"prybar",
 	{
@@ -891,6 +946,7 @@ static var PUSH_CRUSH := PickTemplates.new(
 #region JAMS
 # used for tricks and safekeeping
 
+## PJ/*JJ
 static var ONE_TWO_JAM := PickTemplates.new(
 	"standard wrench",
 	{
@@ -902,6 +958,7 @@ static var ONE_TWO_JAM := PickTemplates.new(
 	}
 )
 
+## JJJJ/*TTJJ
 static var FOUR_TWO_JAM := PickTemplates.new(
 	"monster wrench",
 	{
@@ -913,6 +970,7 @@ static var FOUR_TWO_JAM := PickTemplates.new(
 	}
 )
 
+## JJ/*JJ/P
 static var TWO_TWO_BLOCK_JAM := PickTemplates.new(
 	"column wrench",
 	{
@@ -922,6 +980,7 @@ static var TWO_TWO_BLOCK_JAM := PickTemplates.new(
 	}
 )
 
+## JJ/J/J/*T/PT
 static var ISOLATION_SHELF_JAM := PickTemplates.new(
 	"shelf wrench",
 	{
@@ -937,6 +996,7 @@ static var ISOLATION_SHELF_JAM := PickTemplates.new(
 )
 
 # very light trick jam
+## *TTJ
 static var TWO_TEST_JAM := PickTemplates.new(
 	"trick wrench",
 	{
@@ -947,6 +1007,7 @@ static var TWO_TEST_JAM := PickTemplates.new(
 	}
 )
 
+## P/J/JJ/*J/P
 static var COMPLETION_JAM := PickTemplates.new(
 	"table wrench",
 	{
@@ -959,6 +1020,7 @@ static var COMPLETION_JAM := PickTemplates.new(
 )
 
 # single pin jam with strange offset
+## *T/JJJ
 static var NARROW_THREE_JAM := PickTemplates.new(
 	"narrow wrench",
 	{
@@ -967,6 +1029,7 @@ static var NARROW_THREE_JAM := PickTemplates.new(
 	}
 )
 
+## J/J/PT/*PT/J
 static var FOCUS_LENS_JAM := PickTemplates.new(
 	"focus wrench",
 	{
@@ -984,6 +1047,7 @@ static var FOCUS_LENS_JAM := PickTemplates.new(
 	}
 )
 
+## PT/*JJJ/PT
 static var COLUMN_LOCKDOWN_JAM := PickTemplates.new(
 	"lockup wrench",
 	{
@@ -999,6 +1063,7 @@ static var COLUMN_LOCKDOWN_JAM := PickTemplates.new(
 	}
 )
 
+## JJ/*JJJ
 static var TWO_THREE_JAM := PickTemplates.new(
 	"heavy wrench",
 	{
@@ -1007,6 +1072,7 @@ static var TWO_THREE_JAM := PickTemplates.new(
 	}
 )
 
+## *J
 static var ONE_ONLY_JAM := PickTemplates.new(
 	"feather wrench",
 	{
@@ -1016,6 +1082,7 @@ static var ONE_ONLY_JAM := PickTemplates.new(
 
 
 # weird
+## CJ/*CCJ/CJ
 static var CRUSH_JAM := PickTemplates.new(
 	"mangler",
 	{
@@ -1034,6 +1101,7 @@ static var CRUSH_JAM := PickTemplates.new(
 	}
 )
 
+## TTJ/*P/TTJ
 static var FORK_JAM := PickTemplates.new(
 	"fork",
 	{
@@ -1049,6 +1117,7 @@ static var FORK_JAM := PickTemplates.new(
 	}
 )
 
+## P/*RJJJ
 static var REVEAL_JAM := PickTemplates.new(
 	"workshop wrench",
 	{
@@ -1064,6 +1133,7 @@ static var REVEAL_JAM := PickTemplates.new(
 
 #region special use picks
 
+## T/TT/*PTT
 static var NEEDLE := PickTemplates.new(
 	"needle",
 	{
@@ -1076,6 +1146,7 @@ static var NEEDLE := PickTemplates.new(
 	}
 )
 
+## CCJJJ/*CCJJJ
 static var NAIL := PickTemplates.new(
 	"nail",
 	{
@@ -1090,6 +1161,7 @@ static var NAIL := PickTemplates.new(
 	}
 )
 
+## *P.RT
 static var FISHHOOK := PickTemplates.new(
 	"fishhook",
 	{
@@ -1102,6 +1174,7 @@ static var FISHHOOK := PickTemplates.new(
 	}
 )
 
+## PP/PP/*PP/JJ
 static var HAIRPIN := PickTemplates.new(
 	"hairpin",
 	{
@@ -1112,6 +1185,7 @@ static var HAIRPIN := PickTemplates.new(
 	}
 )
 
+## PT/PT/*PPT/P
 static var TOOTHPICK := PickTemplates.new(
 	"toothpick",
 	{
@@ -1131,6 +1205,7 @@ static var TOOTHPICK := PickTemplates.new(
 	}
 )
 
+## PPP/*JJJ/PPP
 static var OLD_KEY := PickTemplates.new(
 	"old key",
 	{
