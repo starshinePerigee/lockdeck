@@ -87,6 +87,7 @@ RichTextLabel/font_sizes/mono_font_size = 32
 RichTextLabel/font_sizes/normal_font_size = 32
 RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_m4rbl")
 SmallText/base_type = &"Label"
+SmallText/constants/line_spacing = 0
 SmallText/font_sizes/font_size = 16
 TinyAccentText/base_type = &"Label"
 TinyAccentText/colors/font_color = Color(0.568627, 0.533333, 0.568627, 1)

@@ -95,6 +95,7 @@ text = "sounds good, let's get started >"
 flat = true
 
 [node name="StartHint" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 69.0
 offset_top = 143.0
@@ -102,3 +103,14 @@ offset_right = 141.0
 offset_bottom = 162.0
 theme_type_variation = &"TinyAccentText"
 text = "Start here! ->"
+
+[node name="ReadyLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 151.0
+offset_right = 209.0
+offset_bottom = 177.0
+rotation = -0.336849
+theme_type_variation = &"SmallText"
+theme_override_colors/font_color = Color(0.945098, 0.313726, 0.294118, 1)
+text = "not ready yet!"

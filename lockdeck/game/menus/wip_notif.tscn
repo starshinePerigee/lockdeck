@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0x4a02iuivck"]
+
+[ext_resource type="Script" uid="uid://5rosdn4jw5xc" path="res://game/menus/wip_notif.gd" id="1_p6hlh"]
+
+[node name="WipNotif" type="PanelContainer"]
+custom_minimum_size = Vector2(384, 256)
+script = ExtResource("1_p6hlh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Welcome to handful of lockpicks!"
+horizontal_alignment = 1
+autowrap_mode = 2
+text_overrun_behavior = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_type_variation = &"SmallText"
+text = "Thank you for checking out my game! Be aware this is still very much a work in progress - I'm mostly updating on itch to make sure things keep working and let me playtest on my phone during my lunch breaks.
+
+You are welcome to explore and try to figure things out, but I encourage you to come back once it's all the way released and I have a tutorial - things are currently both complicated and obtuse.
+
+Sorry, and thanks again!
+
+ps. if you do play, let me know how it goes - comment, itch dm, or on discord at @featherwings!
+"
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+text = "Sounds good, let me in!"
