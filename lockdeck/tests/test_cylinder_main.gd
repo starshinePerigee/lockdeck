@@ -46,7 +46,6 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
 	
 	print_previouses(result)
-	$CylinderMain/Cylinders.load_previouses(result)
 	
 	if result.pick_broke:
 		break_pick()
@@ -108,5 +107,3 @@ func _ready() -> void:
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
 	$RevealButton.pressed.connect(reveal_all)
-
-	$CylinderMain/Cylinders.set_previouses_visibility(true)

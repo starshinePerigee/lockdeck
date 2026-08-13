@@ -101,8 +101,8 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 			effects.append(new_e)
 		
 #		print(
-#			"Executing pin %s with %s effects" 
-#			% [pin_index, len(effects)]
+#			"Executing pin %s with %s effects (shadow: %s)" 
+#			% [pin_index, len(effects), shadow]
 #		)
 		pin.execute(effects)
 		if not pin.is_exhausted():

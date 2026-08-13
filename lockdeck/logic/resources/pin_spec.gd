@@ -346,7 +346,7 @@ func shadow_clone(shadow: PinSpec) -> void:
 func reset_shadow(shadow: PinSpec) -> void:
 	shadow.pin_position = pin_position
 	shadow.jam_count = jam_count
-	shadow.activated = activated
+	shadow.activated.assign(activated)
 
 ## Resets all single-execution values
 func end_step() -> void:
