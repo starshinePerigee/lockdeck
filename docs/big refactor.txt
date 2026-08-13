@@ -1,6 +1,8 @@
 x clean up pin spec
 x double check activation/exhaustion logic
 -- does test from an unactivated depth activate?
+x show exhausted in game
+- activate all pins every turn
 - new pick templates and pick template logic
 x show previous only shows results
 -- verify oob break indication

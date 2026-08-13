@@ -26,15 +26,10 @@ const PREV_SPACING := 12
 		exhausted = v
 		_update_exhaust()
 
-@export var show_exhausted: bool = false:
-	set(v):
-		show_exhausted = v
-		_update_exhaust()
-
 func _update_exhaust() -> void:
 	# TODO: this should be a shader to replace the normal background texture
 	# as modulation breaks the color limitations
-	if exhausted and show_exhausted:
+	if exhausted:
 		$DepthTexture.modulate = Color("B4B4B4")
 	else:
 		$DepthTexture.modulate = Color("ffffff")

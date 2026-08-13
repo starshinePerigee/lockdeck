@@ -354,19 +354,25 @@ func end_step() -> void:
 	checked.fill(false)
 	sight_pointer = 0
 
+func reset_exhaustion() -> void:
+	activated.fill(false)
+	activated[0] = true
+	activated[-1] = true
+
 ## Performs the end of turn actions
 func end_turn_and_fall() -> void:
 	if is_jammed():
 		clear_jam()
 	else:
 		advance_pin(0, 0)
-	activated.fill(false)
+	reset_exhaustion()
 	end_step()
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
+	reset_exhaustion()
 	end_step()
 #endregion
 

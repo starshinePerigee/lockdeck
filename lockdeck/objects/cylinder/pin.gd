@@ -96,6 +96,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 		
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
+		depth_refs[i].exhausted = pin_spec.activated[i]
 		var reveal_level := pin_spec.reveals[i]
 		if reveal_level in [
 			PinSpec.RevealLevel.DANGEROUS,
@@ -107,7 +108,6 @@ func load_spec(pin_spec: PinSpec) -> void:
 			depth_refs[i].set_hints("")
 		depth_refs[i].result = Results.EMPTY
 	
-	load_activations(pin_spec.activated)
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
 	_key_visible = pin_spec.is_solved()
@@ -130,10 +130,6 @@ func clear_results() -> void:
 		depth.result = Results.EMPTY
 		depth.show_jam_result = false
 	$Stack/BreakResult.visible = false
-
-func load_activations(activations: Array[bool]) -> void:
-	for i in len(activations):
-		depth_refs[i].exhausted = activations[i]
 #endregion
 
 #region input logic
