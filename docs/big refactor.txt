@@ -1,5 +1,5 @@
-- clean up pin spec
-- double check activation/exhaustion logic
+x clean up pin spec
+x double check activation/exhaustion logic
 -- does test from an unactivated depth activate?
 - new pick templates and pick template logic
 - show previous only shows results

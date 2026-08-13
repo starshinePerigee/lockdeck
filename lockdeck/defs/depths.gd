@@ -101,10 +101,3 @@ static var WARN := Depths.new("warn", DangerLevel.CLEAR, Effects.EMPTY)
 
 ## Bounces up four (or to the edge)
 static var BOUNCE := Depths.new("bounce", DangerLevel.INTERESTING, Effects.BOUNCE, 4)
-
-
-## Holds all depths which count as solves
-static var SOLVE_DEPTHS: Array[Depths] = [
-	FINAL, 
-	UNLOCK
-]
