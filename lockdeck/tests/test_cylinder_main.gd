@@ -40,14 +40,16 @@ func print_previouses(result: EndStepSpec) -> void:
 				s += " "
 		print(s)
 
+@onready var _last_result := EndStepSpec.new()
+
 func apply_card(card: CardSpec, card_index: int) -> void:
 	$BreakLabel.visible = false
 	print("Applying pick %s on cylinder %s" % [card.pick_name, card_index])
-	var result: EndStepSpec = $CylinderMain.execute(card, card_index)
+	_last_result = $CylinderMain.execute(card, card_index)
 	
-	print_previouses(result)
+	print_previouses(_last_result)
 	
-	if result.pick_broke:
+	if _last_result.pick_broke:
 		break_pick()
 
 func break_pick() -> void:
@@ -62,22 +64,26 @@ func end_drag() -> void:
 func do_highlight(pin_index: int) -> void:
 	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
 	$CylinderMain/Anchor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
+	$CylinderMain.cancel_preview()
 	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_highlight() -> void:
 	$CylinderMain/Anchor/HighlightPos.text = "-1"
 	$CylinderMain/Anchor/Dot.position = Vector2()
 	$CylinderMain.cancel_preview()
+	$CylinderMain/Cylinders.set_results(_last_result.results)
 
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
 	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
+	$CylinderMain.cancel_preview()
 	$CylinderMain.preview($CardSpace.card_spec, pin_index)
 
 func clear_cursor() -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
 	$CylinderMain/AnchorCursor/Dot.position = Vector2()
 	$CylinderMain.cancel_preview()
+	$CylinderMain/Cylinders.set_results(_last_result.results)
 
 func reveal_all() -> void:
 	print("The world unfolds before your eyes.")

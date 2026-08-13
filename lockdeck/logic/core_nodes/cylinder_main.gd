@@ -114,6 +114,9 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 				result.pick_broke = true
 		result.effects[pin_index] = effects
 	
+	for pin in target_pins:
+		result.results.append(pin.results.duplicate())
+	
 	result.lock_solved = lock_solved()
 	if not shadow:
 		result.last_hint = update_visibility()

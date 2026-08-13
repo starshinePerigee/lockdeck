@@ -10,5 +10,10 @@ class_name EndStepSpec
 ## Holds all effects as a Dictionary[pin position, Array[EffectSpec))
 @export var effects: Dictionary[int, Array]
 
+## Holds all results
+@export var results: Array[ResultSpec]
+
 func _init() -> void:
 	effects = {}
+	results = []
+
