@@ -166,8 +166,6 @@ func execute_effect(effect) -> void:
 			reveal_pin(effect)
 		Effects.JAM:
 			add_jam(effect)
-		Effects.CRUSH:
-			crush_pin(effect)
 		Effects.SKIP:
 			skip_pin_forward(effect)
 		Effects.BOUNCE:
@@ -196,14 +194,7 @@ func execute_effect(effect) -> void:
 #region effect handling
 ## Get the first home effect
 func get_home_effect() -> EffectSpec:
-	if (
-		len(pending_effects) > 0
-		and pending_effects[0].flavor == Effects.CRUSH
-		and depths[pin_position] not in Depths.UNCRUSHABLE
-	):
-		update_result(Results.HOME_CRUSH)
-	else:
-		update_result(Results.HOME)
+	update_result(Results.HOME)
 	var empty_effect := EffectSpec.new(Effects.HOME)
 	empty_effect.add_position(pin_position)
 	return empty_effect
@@ -236,28 +227,14 @@ func reveal_position(pos: int = -1) -> void:
 	update_result(Results.REVEAL, pos)
 	hint_tracks[pos] = ""
 
-## Crush (set depth to empty and reveal) a depth (or current depth if none provided)
-## returns true if this breaks the pick, and false otherwise
-func crush_position(pos: int = -1) -> void:
-	if pos == -1:
-		pos = pin_position
-	var depth := depths[pos]
-	reveal_position(pos)
-	if depth not in Depths.UNCRUSHABLE:
-		depths[pos] = Depths.EMPTY
-		update_result(Results.CRUSH, pos)
-
 ## Handle jam and move the pin accordingly
 func push_pin(effect: EffectSpec) -> void:
-	_push_crush(effect)
-
-func crush_pin(effect: EffectSpec) -> void:
-	_push_crush(effect)
+	_push_pin(effect)
 
 func push_pin_safe(effect: EffectSpec) -> void:
-	_push_crush(effect, true)
+	_push_pin(effect, true)
 
-func _push_crush(effect: EffectSpec, safe := false) -> void:
+func _push_pin(effect: EffectSpec, safe := false) -> void:
 	var remainder := push_jam(effect.value)
 	if remainder <= 0:
 		effect.set_jammed(pin_position)
@@ -266,10 +243,6 @@ func _push_crush(effect: EffectSpec, safe := false) -> void:
 	activation_pending = true
 	
 	for __ in remainder:
-		if effect.flavor == Effects.CRUSH:
-			crush_position()
-			effect.add_position(pin_position)
-
 		if advance_pin(1):
 			if not safe:
 				effect.oobed = true
@@ -283,9 +256,7 @@ func _push_crush(effect: EffectSpec, safe := false) -> void:
 			break
 		
 		# we only need to test, since we will activate (which reveals) later
-		# based on activation_pending
-		# also - if we crush, we might crush (which reveals) on the next step
-		# which is fine. 
+		# based on activation_pending 
 		test_position(pin_position)
 
 ## Bounce the pin backwards

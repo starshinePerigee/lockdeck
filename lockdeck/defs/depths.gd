@@ -108,9 +108,3 @@ static var SOLVE_DEPTHS: Array[Depths] = [
 	FINAL, 
 	UNLOCK
 ]
-
-## Holds depths which resist crush
-static var UNCRUSHABLE: Array[Depths] = [
-	FINAL,
-	BASE
-]

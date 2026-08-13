@@ -29,7 +29,7 @@ static var EMPTY := Results.new("empty")
 ## No result - different than empty. Used for like, hinting an revealed space.
 static var NONE := Results.new("none")
 
-## Activated - typically by push or crush
+## Activated - the depth that the pin ends on
 static var ACTIVATE := Results.new("activate")
 
 ## Hinted - typically by test or multiple push
@@ -38,17 +38,11 @@ static var HINT := Results.new("hint")
 ## Revealed - by reveal depth
 static var REVEAL := Results.new("reveal")
 
-## Crush - by crush depth
-static var CRUSH := Results.new("crush")
-
 ## Skip - by skip effect
 static var SKIP := Results.new("skip")
 
-## Home - the starting pin. overwritten by crush
+## Home - the starting pin
 static var HOME := Results.new("home")
-
-## Home crush - the starting pin, except you crushed it.
-static var HOME_CRUSH := Results.new("home_crush")
 
 ## out of bounds / pick break; subtype of activate (probably)
 static var BREAK := Results.new("break")
@@ -67,8 +61,6 @@ static var PRIORITY: Array[Results] = [
 	HOME,
 	ACTIVATE,
 	UNLOCK,
-	CRUSH,
-	HOME_CRUSH,
 	BREAK,
 	DEBUG,
 ]
