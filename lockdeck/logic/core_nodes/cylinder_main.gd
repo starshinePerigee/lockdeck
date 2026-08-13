@@ -163,9 +163,5 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		if pin.is_jammed():
-			pin.clear_jam() 
-		else:
-			pin.advance_pin(0, 0)
-		pin.end_step()
+		pin.end_turn_and_fall()
 	$Cylinders.set_pin_specs(pins)

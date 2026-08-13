@@ -41,8 +41,6 @@ enum RevealLevel {
 @export var pending_effects: Array[EffectSpec]
 ## Holds all effects that were executed this turn
 @export var executed_effects: Array[EffectSpec]
-## Tracks if the pin has moved and thus is due for activation
-@export var activation_pending: bool
 ## Tracks the current test/reveal hint pointer. Measures positions beyond current position.
 @export var sight_pointer: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -131,15 +129,14 @@ func execute() -> Array[EffectSpec]:
 		executed_effects.append(executed_effect)
 	
 	# activate the pin:
-	if activation_pending:
-		var depth := activate_and_get_depth()
-		var activation_effect := EffectSpec.new(depth.effect, depth.value)
-		# print(
-		# 	"Activating pin at depth %s with effect %s"
-		# 	% [pin_position, activation_effect.effect_name]
-		# )
-		execute_effect(activation_effect)
-		executed_effects.append(activation_effect)
+	var depth := activate_and_get_depth()
+	var activation_effect := EffectSpec.new(depth.effect, depth.value)
+	# print(
+	# 	"Activating pin at depth %s with effect %s"
+	# 	% [pin_position, activation_effect.effect_name]
+	# )
+	execute_effect(activation_effect)
+	executed_effects.append(activation_effect)
 	
 	## anything after OOB gets discarded:
 	var return_effects := []
@@ -202,7 +199,6 @@ func get_home_effect() -> EffectSpec:
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
 func activate_and_get_depth() -> Depths:
-	activation_pending = false
 	if activated[pin_position]:
 		return Depths.EXHAUSTED
 	else:
@@ -239,15 +235,12 @@ func _push_pin(effect: EffectSpec, safe := false) -> void:
 	if remainder <= 0:
 		effect.set_jammed(pin_position)
 		return
-	
-	activation_pending = true
-	
+		
 	for __ in remainder:
 		if advance_pin(1):
 			if not safe:
 				effect.oobed = true
 				update_result(Results.BREAK, PIN_DEPTH_COUNT)
-			activation_pending = false
 			if pin_position == PIN_DEPTH_COUNT - 1:
 				effect.unlock_pin = true
 		
@@ -261,7 +254,6 @@ func _push_pin(effect: EffectSpec, safe := false) -> void:
 
 ## Bounce the pin backwards
 func bounce_pin(effect: EffectSpec) -> void:
-	activation_pending = true
 	for __ in effect.value:
 		var oob := advance_pin(-1)
 		effect.add_position(pin_position)
@@ -410,11 +402,18 @@ func reset_shadow(shadow: PinSpec) -> void:
 func end_step() -> void:
 	results.fill(Results.EMPTY)
 	checked.fill(false)
-	activated.fill(false)
-	activation_pending = false
 	pending_effects = []
 	executed_effects = []
 	sight_pointer = 0
+
+## Performs the end of turn actions
+func end_turn_and_fall() -> void:
+	if is_jammed():
+		clear_jam()
+	else:
+		advance_pin(0, 0)
+	activated.fill(false)
+	end_step()
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:

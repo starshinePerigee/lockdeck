@@ -107,6 +107,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 			depth_refs[i].set_hints("")
 		depth_refs[i].result = Results.EMPTY
 	
+	load_activations(pin_spec.activated)
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
 	_key_visible = pin_spec.is_solved()
