@@ -62,12 +62,13 @@ func preview(card: CardSpec, index: int) -> void:
 	for i in len(pins):
 		pins[i].reset_shadow(_shadow_pins[i])
 	
-	execute(card, index, true)
+	var end_step := execute(card, index, true)
 	
-	var results: Array[ResultSpec] = []
-	for pin in _shadow_pins:
-		results.append(pin.get_result_spec())
-	$Cylinders.set_results(results)
+	show_preview(end_step)
+
+## Loads a preview
+func show_preview(end_step: EndStepSpec) -> void:
+	$Cylinders.set_results(end_step.results)
 
 ## Removes the current preview.
 func cancel_preview() -> void:
@@ -115,7 +116,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 		result.effects[pin_index] = effects
 	
 	for pin in target_pins:
-		result.results.append(pin.results.duplicate())
+		result.results.append(pin.get_result_spec())
 	
 	result.lock_solved = lock_solved()
 	if not shadow:

@@ -102,6 +102,7 @@ func set_state(state: InputState) -> void:
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
+			$LockBody/CylinderMain.show_preview(_result)
 			$PreviousButton.show_see_prev = false
 			$PreviousButton/LastHint.visible = true
 			dis_en_able_buttons()
@@ -229,26 +230,28 @@ func bg_cancel() -> void:
 	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
+@onready var _result := EndStepSpec.new()
+
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
-	var result: EndStepSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
-	if result.pick_broke or break_next:
+	if _result.pick_broke or break_next:
 		break_pick(card)
 	else:
 		$DiscardMain.add_card(card)
 	
-	if result.last_hint:
-		$PreviousButton/LastHint.text = "Last hint: %s" % result.last_hint
+	if _result.last_hint:
+		$PreviousButton/LastHint.text = "Last hint: %s" % _result.last_hint
 	else:
 		$PreviousButton/LastHint.text = "No hints last turn"
 	
-	if result.lock_solved:
+	if _result.lock_solved:
 		solve_lock()
 	else:
 		cleanup_step()

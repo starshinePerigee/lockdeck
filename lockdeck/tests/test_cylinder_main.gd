@@ -71,7 +71,7 @@ func clear_highlight() -> void:
 	$CylinderMain/Anchor/HighlightPos.text = "-1"
 	$CylinderMain/Anchor/Dot.position = Vector2()
 	$CylinderMain.cancel_preview()
-	$CylinderMain/Cylinders.set_results(_last_result.results)
+	$CylinderMain.show_preview(_last_result)
 
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
@@ -83,7 +83,7 @@ func clear_cursor() -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = "-1"
 	$CylinderMain/AnchorCursor/Dot.position = Vector2()
 	$CylinderMain.cancel_preview()
-	$CylinderMain/Cylinders.set_results(_last_result.results)
+	$CylinderMain.show_preview(_last_result)
 
 func reveal_all() -> void:
 	print("The world unfolds before your eyes.")
