@@ -2,14 +2,14 @@ x clean up pin spec
 x double check activation/exhaustion logic
 -- does test from an unactivated depth activate?
 x show exhausted in game
-- activate all pins every turn
+x activate all pins every turn
 - new pick templates and pick template logic
 x show previous only shows results
 x- restore unlock results
--- show homes
+x- show homes
 x- verify oob break indication
 -- still showing test when revealed
-- lucky depth is now push 4
+x lucky depth is now push 4
 - remove crush from docs
 - on card select and start drag, force recalculate
 

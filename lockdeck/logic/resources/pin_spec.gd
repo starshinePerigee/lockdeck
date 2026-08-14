@@ -153,6 +153,8 @@ func execute_effect(effect) -> void:
 			skip_pin_forward(effect)
 		Effects.BOUNCE:
 			bounce_pin(effect)
+		Effects.LUCKY:
+			lucky_boost(effect)
 		Effects.BREAK:
 			handle_break(effect)
 			return
@@ -228,6 +230,11 @@ func bounce_pin(effect: EffectSpec) -> void:
 		effect.add_position(pin_position)
 		if oob:
 			return
+
+func lucky_boost(effect: EffectSpec) -> void:
+	clear_jam()
+	advance_pin(PIN_DEPTH_COUNT)
+	effect.add_position(pin_position)
 
 ## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed.
 func advance_pin(relative: int = 0, absolute: int = -1) -> bool:

@@ -39,6 +39,9 @@ static var PUSH := Effects.new("push")
 ## like push, but doesn't break on OOB
 static var SAFE_PUSH := Effects.new("safe_push")
 
+## Advance 5 but don't hint anything
+static var LUCKY := Effects.new("lucky")
+
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new("reveal")
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb7l7ifipfmgf"
-path="res://.godot/imported/depth_unlock.png-4726d4e4d0229afa20a2a8c00303e29f.ctex"
+uid="uid://dlahkubiss3qm"
+path="res://.godot/imported/depth_lucky.png-5aee486d0e7125f01ca1edb80094f571.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/depths/depth_unlock.png"
-dest_files=["res://.godot/imported/depth_unlock.png-4726d4e4d0229afa20a2a8c00303e29f.ctex"]
+source_file="res://assets/depths/depth_lucky.png"
+dest_files=["res://.godot/imported/depth_lucky.png-5aee486d0e7125f01ca1edb80094f571.ctex"]
 
 [params]
 

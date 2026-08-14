@@ -115,7 +115,7 @@ static var BOUNCE := DepthTemplates.new(
 )
 
 static var UNLOCK := DepthTemplates.new(
-	Depths.UNLOCK,
+	Depths.LUCKY,
 	-2,
 	[0, 2, 1],
 	2

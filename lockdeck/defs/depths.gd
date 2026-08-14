@@ -78,7 +78,7 @@ static var PUSH := Depths.new("push", DangerLevel.CLEAR, Effects.SAFE_PUSH, 2)
 static var JAM := Depths.new("jam", DangerLevel.INTERESTING, Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
-static var UNLOCK := Depths.new("unlock", DangerLevel.CLEAR, Effects.UNLOCK)
+static var LUCKY := Depths.new("lucky", DangerLevel.CLEAR, Effects.LUCKY,)
 
 ## Reveals the next hazard (if one) or sets the pin as clear
 static var HINT := Depths.new("hint", DangerLevel.CLEAR, Effects.HINT)  # TODO
