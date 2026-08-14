@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bsoqichr5e4s4" path="res://assets/depths/depth_push.png" id="3_hjbq7"]
 [ext_resource type="Texture2D" uid="uid://by0wja7vcfwmi" path="res://assets/depths/depth_jam.png" id="4_gx0rq"]
 [ext_resource type="Texture2D" uid="uid://dyydr2uo4njee" path="res://assets/depths/depth_bounce.png" id="5_mufx7"]
-[ext_resource type="Texture2D" uid="uid://bb7l7ifipfmgf" path="res://assets/depths/depth_unlock.png" id="7_0vn0b"]
+[ext_resource type="Texture2D" uid="uid://dlahkubiss3qm" path="res://assets/depths/depth_lucky.png" id="7_0vn0b"]
 
 [node name="NextDepths" type="VBoxContainer"]
 offset_top = 1.0
