@@ -76,7 +76,7 @@ func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
 
 ## Get if the pin is currently revealed
 func get_revealed(idx: int) -> bool:
-	return reveals[idx] == RevealLevel.REVEALED
+	return reveals[idx] <= RevealLevel.REVEALED
 
 ## Get if the pin was checked (and not revealed)
 func get_checked(idx: int) -> bool:
@@ -106,12 +106,19 @@ func update_result(new_result: Results, pos: int = -1) -> void:
 ## Process a series of effects
 ## This will update effects in-place with execution info
 func execute(pending_effects: Array[EffectSpec]) -> void:
+	update_result(Results.HOME)
 	for effect in pending_effects:
 		# print(
 		# 	"Executing effect %s with value %s" 
 		# 	% [effect.flavor.effect_name, effect.value]
 		# )
 		execute_effect(effect)
+	
+	if is_exhausted():
+		update_result(Results.EXHAUSTED)
+	else:
+		update_result(Results.ACTIVATE)
+
 
 ## Activates the pin, doing the effect for the depth it is on
 func activate() -> EffectSpec:
@@ -161,27 +168,35 @@ func execute_effect(effect) -> void:
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
 func activate_and_get_depth() -> Depths:
-	reveal_position(pin_position)
+	reveal_position(pin_position, true)
 	if activated[pin_position]:
 		return Depths.EXHAUSTED
 	else:
 		activated[pin_position] = true
-		update_result(Results.ACTIVATE)
+		update_result(Results.AUTO)
 		return depths[pin_position]
 
 ## Checks a depth (or the current depth is none is provided), if it's not revealed
 func test_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
+	
+	if get_revealed(pos):
+		update_result(Results.NONE, pos)
+		return
+	
 	checked[pos] = true
 	update_result(Results.HINT, pos)
 
 ## Reveals a depth (or the current depth if none is provided)
-func reveal_position(pos: int = -1) -> void:
+func reveal_position(pos: int = -1, hide_result := false) -> void:
 	if pos == -1:
 		pos = pin_position
 	
-	if reveals[pos] > RevealLevel.REVEALED:
+	if get_revealed(pos):
+		if not hide_result:
+			update_result(Results.NONE, pos)
+	else:
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
 		hint_tracks[pos] = ""
@@ -194,6 +209,8 @@ func push_pin(effect: EffectSpec, safe := false) -> void:
 		return
 		
 	for __ in remainder:
+		test_position(pin_position)
+		
 		effect.add_position(pin_position + 1)
 		if advance_pin(1):
 			effect.add_position(PIN_DEPTH_COUNT)
@@ -201,10 +218,8 @@ func push_pin(effect: EffectSpec, safe := false) -> void:
 				effect.broke_pick = true
 				update_result(Results.BREAK, PIN_DEPTH_COUNT)
 				break
-		
-		# we only need to test, since we will activate (which reveals) later
-		# based on activation_pending 
-		test_position(pin_position)
+		if is_solved():
+			update_result(Results.UNLOCK)
 
 ## Bounce the pin backwards
 func bounce_pin(effect: EffectSpec) -> void:

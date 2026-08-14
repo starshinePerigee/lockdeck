@@ -32,6 +32,12 @@ static var NONE := Results.new("none")
 ## Activated - the depth that the pin ends on
 static var ACTIVATE := Results.new("activate")
 
+## Exhausted - if the pin lands on an already activated depth
+static var EXHAUSTED := Results.new("exhausted")
+
+## Auto - if a depth is going to auto-activate
+static var AUTO := Results.new("auto")
+
 ## Hinted - typically by test or multiple push
 static var HINT := Results.new("hint")
 
@@ -55,11 +61,13 @@ static var UNLOCK := Results.new("unlock")
 static var PRIORITY: Array[Results] = [
 	EMPTY,
 	NONE,
+	HOME,
 	SKIP,
 	HINT,
 	REVEAL,
-	HOME,
+	AUTO,
 	ACTIVATE,
+	EXHAUSTED,
 	UNLOCK,
 	BREAK,
 	DEBUG,

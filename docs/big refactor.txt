@@ -5,7 +5,8 @@ x show exhausted in game
 - activate all pins every turn
 - new pick templates and pick template logic
 x show previous only shows results
--- restore unlock results
+x- restore unlock results
+-- show homes
 x- verify oob break indication
 -- still showing test when revealed
 - lucky depth is now push 4
