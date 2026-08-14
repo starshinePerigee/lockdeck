@@ -1,4 +1,4 @@
-﻿extends Resource
+extends Resource
 ## This is a very simple dataclass to pass the result of a pin execution
 class_name EndStepSpec
 
@@ -13,7 +13,18 @@ class_name EndStepSpec
 ## Holds all results
 @export var results: Array[ResultSpec]
 
+func record_effect(effect: EffectSpec, realized_pin: int) -> void:
+	if effect.flavor in [Effects.EMPTY]:
+		return
+	if effect.broke_pick:
+		pick_broke = true
+	effect.realized_pin = realized_pin
+	
+	if realized_pin not in effects:
+		effects[realized_pin] = [effect]
+	else:
+		effects[realized_pin].append(effect)
+
 func _init() -> void:
 	effects = {}
 	results = []
-

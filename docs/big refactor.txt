@@ -5,7 +5,12 @@ x show exhausted in game
 - activate all pins every turn
 - new pick templates and pick template logic
 x show previous only shows results
--- verify oob break indication
+-- restore unlock results
+x- verify oob break indication
+-- still showing test when revealed
 - lucky depth is now push 4
 - remove crush from docs
 - on card select and start drag, force recalculate
+
+- results currently broken with reveal
+- show "nothing" steps in results somehow

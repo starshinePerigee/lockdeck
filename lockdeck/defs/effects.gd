@@ -30,6 +30,9 @@ static var BLANK := Effects.new("blank")
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 
+## also do nothing.
+static var EXHAUSTED := Effects.new("exhausted")
+
 ## move the pin, triggering the depth at the destination and hinting everything between
 static var PUSH := Effects.new("push")
 

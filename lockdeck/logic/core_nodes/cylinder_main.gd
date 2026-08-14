@@ -81,6 +81,7 @@ func get_current_drag_target() -> int:
 #region pick execution logic
 ## Applies the cardspec at the specified index.
 func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec:
+	# setup
 	var target_pins := _shadow_pins
 	if not shadow:
 		target_pins = pins
@@ -90,6 +91,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	
 	var result := EndStepSpec.new()
 	
+	# execute the card's effects
 	for pin_index in range(len(target_pins) - 1, -1, -1):
 		var pin := target_pins[pin_index]
 		var card_index = pin_index - card_position
@@ -106,15 +108,16 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 #			% [pin_index, len(effects), shadow]
 #		)
 		pin.execute(effects)
-		if not pin.is_exhausted():
-			effects.append(pin.activate())
 		
 		for effect in effects:
-			effect.realized_pin = pin_index
-			if effect.broke_pick:
-				result.pick_broke = true
-		result.effects[pin_index] = effects
+			result.record_effect(effect, pin_index)
 	
+	# activate every pin
+	for pin_index in len(target_pins):
+		var effect := target_pins[pin_index].activate()
+		result.record_effect(effect, pin_index)
+	
+	# clean up and record
 	for pin in target_pins:
 		result.results.append(pin.get_result_spec())
 	

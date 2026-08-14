@@ -161,11 +161,11 @@ func execute_effect(effect) -> void:
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
 func activate_and_get_depth() -> Depths:
+	reveal_position(pin_position)
 	if activated[pin_position]:
 		return Depths.EXHAUSTED
 	else:
 		activated[pin_position] = true
-		reveal_position(pin_position)
 		update_result(Results.ACTIVATE)
 		return depths[pin_position]
 
@@ -180,9 +180,11 @@ func test_position(pos: int = -1) -> void:
 func reveal_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
-	reveals[pos] = RevealLevel.REVEALED
-	update_result(Results.REVEAL, pos)
-	hint_tracks[pos] = ""
+	
+	if reveals[pos] > RevealLevel.REVEALED:
+		reveals[pos] = RevealLevel.REVEALED
+		update_result(Results.REVEAL, pos)
+		hint_tracks[pos] = ""
 
 ## Handle jam and move the pin accordingly
 func push_pin(effect: EffectSpec, safe := false) -> void:
@@ -344,8 +346,10 @@ func shadow_clone(shadow: PinSpec) -> void:
 
 ## Reset parameters after running a simulation
 func reset_shadow(shadow: PinSpec) -> void:
+	shadow.end_step()
 	shadow.pin_position = pin_position
 	shadow.jam_count = jam_count
+	shadow.reveals.assign(reveals)
 	shadow.activated.assign(activated)
 
 ## Resets all single-execution values

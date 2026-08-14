@@ -51,6 +51,8 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	
 	if _last_result.pick_broke:
 		break_pick()
+		
+	do_cursor(card_index)
 
 func break_pick() -> void:
 	print("Pick break!")
