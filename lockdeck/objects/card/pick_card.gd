@@ -11,6 +11,22 @@ class_name PickCard
 func set_art(texture: Texture2D) -> void:
 	texture_normal = texture
 
+## Updates the column size to make cards fit
+func _squash_columns() -> void:
+	var available_size: int
+	if $TextBox.visible:
+		available_size = 78
+	else:
+		available_size = 120
+	
+	var icon_count := $EffectBar.get_child(3).get_child_count()
+	@warning_ignore("integer_division")
+	var separation := (available_size / icon_count) - 24
+	if separation < EffectStack.ICON_SEPARATION:
+		print("Squashing! new sep: %s" % separation)
+		for stack in $EffectBar.get_children():
+			stack.add_theme_constant_override("separation", separation)
+
 func _redraw() -> void:
 	if not is_node_ready() or card_spec == null:
 		return
@@ -22,6 +38,7 @@ func _redraw() -> void:
 	$TextBox/Text.text = card_spec.ability.description
 	$TextBox.visible = card_spec.ability != Abilities.NONE
 	$Tallies.frame = min(card_spec.repair_count, 11)
+	_squash_columns()
 
 func _ready() -> void:
 	_redraw()

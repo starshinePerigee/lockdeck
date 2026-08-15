@@ -1043,6 +1043,11 @@ static var rarity_catalog: Dictionary[Rarities, Array] = {
 	Rarities.GREAT: [],
 }
 
+static var ALL_PICKS: Array[PickTemplates] = [PickTemplates.DEBUG]
+
 static func _static_init() -> void:
 	for template in valid_templates:
 		rarity_catalog[template.rarity].append(template)
+
+	ALL_PICKS.append_array(PickTemplates.valid_templates)
+	ALL_PICKS.append_array(PickTemplates.temporary_picks)
