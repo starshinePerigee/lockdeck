@@ -18,6 +18,8 @@ class_name CardSpec
 @export var repair_count := 0
 ## Base shop value for this pick
 @export var shop_value := 0
+## Pick ability
+@export var ability := Abilities.NONE
 
 ## Unique ID used for tracking specific cards
 var unique_id: int

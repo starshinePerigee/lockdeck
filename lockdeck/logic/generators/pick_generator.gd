@@ -19,6 +19,18 @@ static func get_card_with_rarity(rarity: PickTemplates.Rarities) -> CardSpec:
 		PickTemplates.rarity_catalog[rarity].pick_random()
 	)
 
+static func get_temporary_cards(count: int) -> Array[CardSpec]:
+	var new_cards: Array[CardSpec] = []
+	
+	PickTemplates.temporary_picks.shuffle()
+	for i in count:
+		new_cards.append(CardSpec.from_template(PickTemplates.temporary_picks[i]))
+	
+	for card in new_cards:
+		card.ability = Abilities.TEMPORARY
+	
+	return new_cards
+
 static func get_rarity_set_with_template_value(
 	count: int, 
 	template_value: int
@@ -49,11 +61,7 @@ static func get_n_cards_with_template_value(
 	return new_cards
 
 static func get_shop_spread() -> Array[CardSpec]:
-	var new_cards: Array[CardSpec] = []
-	
-	PickTemplates.temporary_picks.shuffle()
-	for i in 3:
-		new_cards.append(CardSpec.from_template(PickTemplates.temporary_picks[i]))
+	var new_cards: Array[CardSpec] = get_temporary_cards(3)
 	
 	for rarity in PickTemplates.rarity_catalog.keys():
 		new_cards.append(get_card_with_rarity(rarity))
