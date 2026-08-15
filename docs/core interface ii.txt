@@ -23,5 +23,3 @@ small polish asset list:
 - convert depths to transparent on second background
 -- make exhausted depths use a different darker base instead of modulating
 - on pin set, raise by 8px and exhaust
-
-- how the fuck do early unlocks work

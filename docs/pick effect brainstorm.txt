@@ -22,6 +22,7 @@ PUSH
 - draw a card for each unrevealed, untested depth activated
 - repair costs start at 0
 - repair cost is always 2
+- break after use but free to repair
 - will skip revealed active depths
 - does not affect jam
 - clears all jam

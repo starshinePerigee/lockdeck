@@ -13,6 +13,12 @@ Loot is the following options:
 POTIONS
 shows n cards plus the sell option. If you have insufficient broken cards, you get empties instead.
 
+- repair one chosen from n
+- repair 3 random
+- repair last two broken
+- repair and reset repair cost from smaller n
+
+
 
 ARTIFACTS
 shows the effect of the artifact, as well as all your open slots. clicking shows the replacement's description and a "sell and replace" option; clicking an empty slot does not require a confirm
