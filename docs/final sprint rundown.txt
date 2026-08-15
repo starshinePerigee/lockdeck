@@ -1,13 +1,12 @@
-- build out rough meta elements
-	any future playtesting will now serve dual purpose and you need to calibrate your internal sense of balance
 - core game expansion (strategy sprint)
 	new depths, depth template building
 - basic economy sprint
 - sound
-- animation sprint
-- input sprint
+- animation sprint (between locks, push effects)
+- final major assets (home screen, load screen, strat hub?)
+- input sprint (fix the input bugs frfr)
 - meta expansion (artifacts, other meta)
-- animation sprint 2
 - tutorial
+- animation sprint 2 (drawing on, opening animation
 - balance pass
 - final polish
