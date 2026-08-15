@@ -1,6 +1,3 @@
-only activate one depth per pin?
-- a lot of the bullshit breaks come from push chains
-- it's also vastly more complicated
 
 show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
@@ -23,16 +20,3 @@ big gold: 20
 
 also: pull picks from the starter decks and make the player buy more? (requires more picks in the shop)
 
-
-
-
-SHOULD YOU REMOVE EARLY UNLOCKS?
-(or replace them with a super-push)
-
-- yes, probably
-
-
-SHOULD DEPTHS EXHAUST UNTIL RESET
-- this does funny things to crush
-- do we even need crush anymore?
--- probably not

@@ -1,6 +1,3 @@
-New effect: disable - disables depths for the next turn
-unlike crush, it leads - follows the sight pointer but does not advance it
-
 FUNDAMENTAL RULE: PIN EXECUTIONS ARE INDEPENDENT
 results can effect other pins, but these are evaluated *after* all pins and effects fire.
 
@@ -17,9 +14,8 @@ results can effect other pins, but these are evaluated *after* all pins and effe
 - fog: possibly a modifier? means you can't test/reveal (or just can't test/reveal past it)
 - super anti-reveal: if revealed, breaks pick. tests as safe
 - stuck: if this is tested or revealed, if you break a pick this turn this pick is also broken
-- x: a depth that resets the pin if you skip it without crush
+- x: a depth that resets the pin if you skip it without exhausting it
 - x: a depth that breaks if you reveal it (without activating it)
-- crush trap: reads as safe, if you try to crush it, it breaks the crush
 - x: if you jam this pin, another pin resets
 - minima: if you test this depth, it pulls you to it
 - stuck: if you move past this depth, you don't
