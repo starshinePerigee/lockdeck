@@ -12,8 +12,6 @@ x- verify oob break indication
 x- still showing test when revealed
 x lucky depth is now push 4
 x remove crush from docs
-- on card select and start drag, force recalculate
-- click and then mouse over pin - broken
 
 
 - rebalance economy

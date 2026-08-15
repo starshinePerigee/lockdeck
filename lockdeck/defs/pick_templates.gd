@@ -146,7 +146,7 @@ static var DEBUG := PickTemplates.new(
 
 ## PPT[PPT[PPT]PPT
 static var RAKE_BULK_PUSH_BASIC := PickTemplates.new(
-	"rake_bulk_push_basic",
+	"four peak rake",
 	Families.RAKE,
 	Archetypes.BULK_PUSH,
 	Rarities.BASIC,
@@ -155,7 +155,7 @@ static var RAKE_BULK_PUSH_BASIC := PickTemplates.new(
 
 ## PPTT[PPTT[PPTT[PPPR]PPPR
 static var RAKE_BULK_PUSH_GREAT := PickTemplates.new(
-	"rake_bulk_push_great",
+	"pinnacle",
 	Families.RAKE,
 	Archetypes.BULK_PUSH,
 	Rarities.GREAT,
@@ -164,7 +164,7 @@ static var RAKE_BULK_PUSH_GREAT := PickTemplates.new(
 
 ## PP[P[PP[PP]PP
 static var RAKE_BULK_PUSH_TRASH := PickTemplates.new(
-	"rake_bulk_push_trash",
+	"spine",
 	Families.RAKE,
 	Archetypes.BULK_PUSH,
 	Rarities.TRASH,
@@ -173,7 +173,7 @@ static var RAKE_BULK_PUSH_TRASH := PickTemplates.new(
 
 ## PPT[PPTT[PPT[PPTT]PPT
 static var RAKE_BULK_PUSH_COMMON := PickTemplates.new(
-	"rake_bulk_push_common",
+	"five peaks",
 	Families.RAKE,
 	Archetypes.BULK_PUSH,
 	Rarities.COMMON,
@@ -182,7 +182,7 @@ static var RAKE_BULK_PUSH_COMMON := PickTemplates.new(
 
 ## TT[PPP[TT[PPP]TT
 static var RAKE_BULK_PUSH_RARE := PickTemplates.new(
-	"rake_bulk_push_rare",
+	"toothy",
 	Families.RAKE,
 	Archetypes.BULK_PUSH,
 	Rarities.RARE,
@@ -191,7 +191,7 @@ static var RAKE_BULK_PUSH_RARE := PickTemplates.new(
 
 ## TT[TT[TTTJ]T
 static var RAKE_BULK_TEST_BASIC := PickTemplates.new(
-	"rake_bulk_test_basic",
+	"snake rake",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.BASIC,
@@ -200,7 +200,7 @@ static var RAKE_BULK_TEST_BASIC := PickTemplates.new(
 
 ## TT[TT[RR[PPRR]TT
 static var RAKE_BULK_TEST_GREAT := PickTemplates.new(
-	"rake_bulk_test_great",
+	"wyrm",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.GREAT,
@@ -209,7 +209,7 @@ static var RAKE_BULK_TEST_GREAT := PickTemplates.new(
 
 ## TTT[PTT[PTT]TTT
 static var RAKE_BULK_TEST_TRASH := PickTemplates.new(
-	"rake_bulk_test_trash",
+	"wave",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.TRASH,
@@ -218,7 +218,7 @@ static var RAKE_BULK_TEST_TRASH := PickTemplates.new(
 
 ## TT[PTTT[PTTT
 static var RAKE_BULK_TEST_COMMON := PickTemplates.new(
-	"rake_bulk_test_common",
+	"curl rake",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.COMMON,
@@ -227,7 +227,7 @@ static var RAKE_BULK_TEST_COMMON := PickTemplates.new(
 
 ## PJ[PJ[PTT]PTT
 static var RAKE_BULK_TEST_RARE := PickTemplates.new(
-	"rake_bulk_test_rare",
+	"twist",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.RARE,
@@ -236,7 +236,7 @@ static var RAKE_BULK_TEST_RARE := PickTemplates.new(
 
 ## PT[PT[PR]PT
 static var RAKE_HYBRID_S_BASIC := PickTemplates.new(
-	"rake_hybrid_s_basic",
+	"city rake",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.BASIC,
@@ -245,7 +245,7 @@ static var RAKE_HYBRID_S_BASIC := PickTemplates.new(
 
 ## PT[PR[PT[PRT]RT
 static var RAKE_HYBRID_S_GREAT := PickTemplates.new(
-	"rake_hybrid_s_great",
+	"blanket",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.GREAT,
@@ -254,7 +254,7 @@ static var RAKE_HYBRID_S_GREAT := PickTemplates.new(
 
 ## T[T[P[P]T
 static var RAKE_HYBRID_S_TRASH := PickTemplates.new(
-	"rake_hybrid_s_trash",
+	"camel",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.TRASH,
@@ -263,7 +263,7 @@ static var RAKE_HYBRID_S_TRASH := PickTemplates.new(
 
 ## P[P[PT[PT]P
 static var RAKE_HYBRID_S_COMMON := PickTemplates.new(
-	"rake_hybrid_s_common",
+	"broad rake",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.COMMON,
@@ -272,7 +272,7 @@ static var RAKE_HYBRID_S_COMMON := PickTemplates.new(
 
 ## P[TT[PTTT]PT
 static var RAKE_HYBRID_S_RARE := PickTemplates.new(
-	"rake_hybrid_s_rare",
+	"spike",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.RARE,
@@ -281,7 +281,7 @@ static var RAKE_HYBRID_S_RARE := PickTemplates.new(
 
 ## P.T[P.T[P.T]P.T
 static var RAKE_GAPS_BASIC := PickTemplates.new(
-	"rake_gaps_basic",
+	"gap rake",
 	Families.RAKE,
 	Archetypes.GAPS,
 	Rarities.BASIC,
@@ -290,7 +290,7 @@ static var RAKE_GAPS_BASIC := PickTemplates.new(
 
 ## P.RT[P.RT[P.RT]P.RT
 static var RAKE_GAPS_GREAT := PickTemplates.new(
-	"rake_gaps_great",
+	"oracle",
 	Families.RAKE,
 	Archetypes.GAPS,
 	Rarities.GREAT,
@@ -299,7 +299,7 @@ static var RAKE_GAPS_GREAT := PickTemplates.new(
 
 ## .T[..T[.T]..T
 static var RAKE_GAPS_TRASH := PickTemplates.new(
-	"rake_gaps_trash",
+	"chatter",
 	Families.RAKE,
 	Archetypes.GAPS,
 	Rarities.TRASH,
@@ -308,7 +308,7 @@ static var RAKE_GAPS_TRASH := PickTemplates.new(
 
 ## P.TT[P.RR]P.TT
 static var RAKE_GAPS_COMMON := PickTemplates.new(
-	"rake_gaps_common",
+	"pop rake",
 	Families.RAKE,
 	Archetypes.GAPS,
 	Rarities.COMMON,
@@ -317,7 +317,7 @@ static var RAKE_GAPS_COMMON := PickTemplates.new(
 
 ## P.T[PT[P..TT]..T
 static var RAKE_GAPS_RARE := PickTemplates.new(
-	"rake_gaps_rare",
+	"wanderer",
 	Families.RAKE,
 	Archetypes.GAPS,
 	Rarities.RARE,
@@ -335,7 +335,7 @@ static var RAKE_GAPS_RARE := PickTemplates.new(
 
 ## PP[PPPP
 static var DIAMOND_DARK_BASIC := PickTemplates.new(
-	"diamond_dark_basic",
+	"offset diamond",
 	Families.DIAMOND,
 	Archetypes.DARK,
 	Rarities.BASIC,
@@ -344,7 +344,7 @@ static var DIAMOND_DARK_BASIC := PickTemplates.new(
 
 ## PT[PPTT[PPPPJ
 static var DIAMOND_DARK_GREAT := PickTemplates.new(
-	"diamond_dark_great",
+	"black diamond",
 	Families.DIAMOND,
 	Archetypes.DARK,
 	Rarities.GREAT,
@@ -353,7 +353,7 @@ static var DIAMOND_DARK_GREAT := PickTemplates.new(
 
 ## PPJ[P[PPPP]P
 static var DIAMOND_DARK_TRASH := PickTemplates.new(
-	"diamond_dark_trash",
+	"soul gem",
 	Families.DIAMOND,
 	Archetypes.DARK,
 	Rarities.TRASH,
@@ -362,7 +362,7 @@ static var DIAMOND_DARK_TRASH := PickTemplates.new(
 
 ## P[PPT[PPPP]PT
 static var DIAMOND_DARK_COMMON := PickTemplates.new(
-	"diamond_dark_common",
+	"full diamond",
 	Families.DIAMOND,
 	Archetypes.DARK,
 	Rarities.COMMON,
@@ -371,7 +371,7 @@ static var DIAMOND_DARK_COMMON := PickTemplates.new(
 
 ## PTT[PPPP[PPPP]PTT
 static var DIAMOND_DARK_RARE := PickTemplates.new(
-	"diamond_dark_rare",
+	"block diamond",
 	Families.DIAMOND,
 	Archetypes.DARK,
 	Rarities.RARE,
@@ -380,7 +380,7 @@ static var DIAMOND_DARK_RARE := PickTemplates.new(
 
 ## PT[PPT[PPPT
 static var DIAMOND_THREE_PUSH_BASIC := PickTemplates.new(
-	"diamond_three_push_basic",
+	"half diamond",
 	Families.DIAMOND,
 	Archetypes.THREE_PUSH,
 	Rarities.BASIC,
@@ -389,7 +389,7 @@ static var DIAMOND_THREE_PUSH_BASIC := PickTemplates.new(
 
 ## PTT[PPPTT
 static var DIAMOND_THREE_PUSH_GREAT := PickTemplates.new(
-	"diamond_three_push_great",
+	"perfect diamond",
 	Families.DIAMOND,
 	Archetypes.THREE_PUSH,
 	Rarities.GREAT,
@@ -398,7 +398,7 @@ static var DIAMOND_THREE_PUSH_GREAT := PickTemplates.new(
 
 ## P[PP[PPP]P
 static var DIAMOND_THREE_PUSH_TRASH := PickTemplates.new(
-	"diamond_three_push_trash",
+	"rough gem",
 	Families.DIAMOND,
 	Archetypes.THREE_PUSH,
 	Rarities.TRASH,
@@ -407,25 +407,25 @@ static var DIAMOND_THREE_PUSH_TRASH := PickTemplates.new(
 
 ## T[TT[PPP]P
 static var DIAMOND_THREE_PUSH_COMMON := PickTemplates.new(
-	"diamond_three_push_common",
+	"small diamond",
 	Families.DIAMOND,
 	Archetypes.THREE_PUSH,
 	Rarities.COMMON,
 	"T[TT[PPP]P"
 )
 
-## TT[PPP[TT[PPP]TT
+## PTT[PPJ[PPPTTT]P
 static var DIAMOND_THREE_PUSH_RARE := PickTemplates.new(
-	"diamond_three_push_rare",
+	"lost diamond",
 	Families.DIAMOND,
 	Archetypes.THREE_PUSH,
 	Rarities.RARE,
-	"TT[PPP[TT[PPP]TT"
+	"PTT[PPJ[PPPTTT]P"
 )
 
 ## PTT[PPJJ]JJ
 static var DIAMOND_FINISHER_BASIC := PickTemplates.new(
-	"diamond_finisher_basic",
+	"finisher",
 	Families.DIAMOND,
 	Archetypes.FINISHER,
 	Rarities.BASIC,
@@ -434,7 +434,7 @@ static var DIAMOND_FINISHER_BASIC := PickTemplates.new(
 
 ## T[PTT[PPPJJ]J
 static var DIAMOND_FINISHER_GREAT := PickTemplates.new(
-	"diamond_finisher_great",
+	"getaway",
 	Families.DIAMOND,
 	Archetypes.FINISHER,
 	Rarities.GREAT,
@@ -443,7 +443,7 @@ static var DIAMOND_FINISHER_GREAT := PickTemplates.new(
 
 ## PPJ[PPPJ
 static var DIAMOND_FINISHER_TRASH := PickTemplates.new(
-	"diamond_finisher_trash",
+	"curse wedge",
 	Families.DIAMOND,
 	Archetypes.FINISHER,
 	Rarities.TRASH,
@@ -452,7 +452,7 @@ static var DIAMOND_FINISHER_TRASH := PickTemplates.new(
 
 ## P[PPJJ
 static var DIAMOND_FINISHER_COMMON := PickTemplates.new(
-	"diamond_finisher_common",
+	"desert wedge",
 	Families.DIAMOND,
 	Archetypes.FINISHER,
 	Rarities.COMMON,
@@ -461,7 +461,7 @@ static var DIAMOND_FINISHER_COMMON := PickTemplates.new(
 
 ## TT[PPPJJ]JJ
 static var DIAMOND_FINISHER_RARE := PickTemplates.new(
-	"diamond_finisher_rare",
+	"biter",
 	Families.DIAMOND,
 	Archetypes.FINISHER,
 	Rarities.RARE,
@@ -470,7 +470,7 @@ static var DIAMOND_FINISHER_RARE := PickTemplates.new(
 
 ## PR[PRR
 static var DIAMOND_REVEAL_BASIC := PickTemplates.new(
-	"diamond_reveal_basic",
+	"feeler wedge",
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.BASIC,
@@ -479,7 +479,7 @@ static var DIAMOND_REVEAL_BASIC := PickTemplates.new(
 
 ## PR[P.R[PP.RR
 static var DIAMOND_REVEAL_GREAT := PickTemplates.new(
-	"diamond_reveal_great",
+	"sense wedge",
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.GREAT,
@@ -488,7 +488,7 @@ static var DIAMOND_REVEAL_GREAT := PickTemplates.new(
 
 ## P[RT]P
 static var DIAMOND_REVEAL_TRASH := PickTemplates.new(
-	"diamond_reveal_trash",
+	"false diamond",
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.TRASH,
@@ -497,7 +497,7 @@ static var DIAMOND_REVEAL_TRASH := PickTemplates.new(
 
 ## R[R[RP[PP]PP
 static var DIAMOND_REVEAL_COMMON := PickTemplates.new(
-	"diamond_reveal_common",
+	"drag wedge",
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.COMMON,
@@ -506,7 +506,7 @@ static var DIAMOND_REVEAL_COMMON := PickTemplates.new(
 
 ## P[PP[RRR]P
 static var DIAMOND_REVEAL_RARE := PickTemplates.new(
-	"diamond_reveal_rare",
+	"hollow diamond",
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.RARE,
@@ -520,7 +520,7 @@ static var DIAMOND_REVEAL_RARE := PickTemplates.new(
 
 ## PT
 static var HOOK_PRECISE_BASIC := PickTemplates.new(
-	"hook_precise_basic",
+	"short hook",
 	Families.HOOK,
 	Archetypes.PRECISE,
 	Rarities.BASIC,
@@ -529,7 +529,7 @@ static var HOOK_PRECISE_BASIC := PickTemplates.new(
 
 ## PRT
 static var HOOK_PRECISE_GREAT := PickTemplates.new(
-	"hook_precise_great",
+	"crescent hook",
 	Families.HOOK,
 	Archetypes.PRECISE,
 	Rarities.GREAT,
@@ -538,7 +538,7 @@ static var HOOK_PRECISE_GREAT := PickTemplates.new(
 
 ## P
 static var HOOK_PRECISE_TRASH := PickTemplates.new(
-	"hook_precise_trash",
+	"tiny",
 	Families.HOOK,
 	Archetypes.PRECISE,
 	Rarities.TRASH,
@@ -547,7 +547,7 @@ static var HOOK_PRECISE_TRASH := PickTemplates.new(
 
 ## T[PTT
 static var HOOK_PRECISE_COMMON := PickTemplates.new(
-	"hook_precise_common",
+	"scooped hook",
 	Families.HOOK,
 	Archetypes.PRECISE,
 	Rarities.COMMON,
@@ -556,7 +556,7 @@ static var HOOK_PRECISE_COMMON := PickTemplates.new(
 
 ## P.RTJ
 static var HOOK_PRECISE_RARE := PickTemplates.new(
-	"hook_precise_rare",
+	"spring hook",
 	Families.HOOK,
 	Archetypes.PRECISE,
 	Rarities.RARE,
@@ -565,7 +565,7 @@ static var HOOK_PRECISE_RARE := PickTemplates.new(
 
 ## PPTTT
 static var HOOK_PUSHY_BASIC := PickTemplates.new(
-	"hook_pushy_basic",
+	"classic hook",
 	Families.HOOK,
 	Archetypes.PUSHY,
 	Rarities.BASIC,
@@ -574,7 +574,7 @@ static var HOOK_PUSHY_BASIC := PickTemplates.new(
 
 ## PPP.TT
 static var HOOK_PUSHY_GREAT := PickTemplates.new(
-	"hook_pushy_great",
+	"gonzo hook",
 	Families.HOOK,
 	Archetypes.PUSHY,
 	Rarities.GREAT,
@@ -583,7 +583,7 @@ static var HOOK_PUSHY_GREAT := PickTemplates.new(
 
 ## PP..T
 static var HOOK_PUSHY_TRASH := PickTemplates.new(
-	"hook_pushy_trash",
+	"crook",
 	Families.HOOK,
 	Archetypes.PUSHY,
 	Rarities.TRASH,
@@ -592,7 +592,7 @@ static var HOOK_PUSHY_TRASH := PickTemplates.new(
 
 ## PPP
 static var HOOK_PUSHY_COMMON := PickTemplates.new(
-	"hook_pushy_common",
+	"prybar",
 	Families.HOOK,
 	Archetypes.PUSHY,
 	Rarities.COMMON,
@@ -601,7 +601,7 @@ static var HOOK_PUSHY_COMMON := PickTemplates.new(
 
 ## PP.R
 static var HOOK_PUSHY_RARE := PickTemplates.new(
-	"hook_pushy_rare",
+	"pirate's hook",
 	Families.HOOK,
 	Archetypes.PUSHY,
 	Rarities.RARE,
@@ -610,7 +610,7 @@ static var HOOK_PUSHY_RARE := PickTemplates.new(
 
 ## P.TTT
 static var HOOK_JUMP_TEST_BASIC := PickTemplates.new(
-	"hook_jump_test_basic",
+	"jump hook",
 	Families.HOOK,
 	Archetypes.JUMP_TEST,
 	Rarities.BASIC,
@@ -619,7 +619,7 @@ static var HOOK_JUMP_TEST_BASIC := PickTemplates.new(
 
 ## ..RRTT
 static var HOOK_JUMP_TEST_GREAT := PickTemplates.new(
-	"hook_jump_test_great",
+	"moon hook",
 	Families.HOOK,
 	Archetypes.JUMP_TEST,
 	Rarities.GREAT,
@@ -628,7 +628,7 @@ static var HOOK_JUMP_TEST_GREAT := PickTemplates.new(
 
 ## .T
 static var HOOK_JUMP_TEST_TRASH := PickTemplates.new(
-	"hook_jump_test_trash",
+	"tap",
 	Families.HOOK,
 	Archetypes.JUMP_TEST,
 	Rarities.TRASH,
@@ -637,7 +637,7 @@ static var HOOK_JUMP_TEST_TRASH := PickTemplates.new(
 
 ## .TTTT
 static var HOOK_JUMP_TEST_COMMON := PickTemplates.new(
-	"hook_jump_test_common",
+	"bend",
 	Families.HOOK,
 	Archetypes.JUMP_TEST,
 	Rarities.COMMON,
@@ -646,7 +646,7 @@ static var HOOK_JUMP_TEST_COMMON := PickTemplates.new(
 
 ## PP..TT
 static var HOOK_JUMP_TEST_RARE := PickTemplates.new(
-	"hook_jump_test_rare",
+	"hat hook",
 	Families.HOOK,
 	Archetypes.JUMP_TEST,
 	Rarities.RARE,
@@ -655,7 +655,7 @@ static var HOOK_JUMP_TEST_RARE := PickTemplates.new(
 
 ## TTT
 static var HOOK_CLOSE_TEST_BASIC := PickTemplates.new(
-	"hook_close_test_basic",
+	"trap hook",
 	Families.HOOK,
 	Archetypes.CLOSE_TEST,
 	Rarities.BASIC,
@@ -664,7 +664,7 @@ static var HOOK_CLOSE_TEST_BASIC := PickTemplates.new(
 
 ## RRTTT
 static var HOOK_CLOSE_TEST_GREAT := PickTemplates.new(
-	"hook_close_test_great",
+	"guide hook",
 	Families.HOOK,
 	Archetypes.CLOSE_TEST,
 	Rarities.GREAT,
@@ -673,7 +673,7 @@ static var HOOK_CLOSE_TEST_GREAT := PickTemplates.new(
 
 ## R
 static var HOOK_CLOSE_TEST_TRASH := PickTemplates.new(
-	"hook_close_test_trash",
+	"wire hook",
 	Families.HOOK,
 	Archetypes.CLOSE_TEST,
 	Rarities.TRASH,
@@ -682,7 +682,7 @@ static var HOOK_CLOSE_TEST_TRASH := PickTemplates.new(
 
 ## P[RTTT
 static var HOOK_CLOSE_TEST_COMMON := PickTemplates.new(
-	"hook_close_test_common",
+	"crabclaw",
 	Families.HOOK,
 	Archetypes.CLOSE_TEST,
 	Rarities.COMMON,
@@ -691,7 +691,7 @@ static var HOOK_CLOSE_TEST_COMMON := PickTemplates.new(
 
 ## TTT[.TTT
 static var HOOK_CLOSE_TEST_RARE := PickTemplates.new(
-	"hook_close_test_rare",
+	"shepard's hook",
 	Families.HOOK,
 	Archetypes.CLOSE_TEST,
 	Rarities.RARE,
@@ -705,7 +705,7 @@ static var HOOK_CLOSE_TEST_RARE := PickTemplates.new(
 
 ## J[JJ
 static var WRENCH_END_TURN_BASIC := PickTemplates.new(
-	"wrench_end_turn_basic",
+	"basic wrench",
 	Families.WRENCH,
 	Archetypes.END_TURN,
 	Rarities.BASIC,
@@ -714,7 +714,7 @@ static var WRENCH_END_TURN_BASIC := PickTemplates.new(
 
 ## JJ[JJ]JJ
 static var WRENCH_END_TURN_GREAT := PickTemplates.new(
-	"wrench_end_turn_great",
+	"rib bone",
 	Families.WRENCH,
 	Archetypes.END_TURN,
 	Rarities.GREAT,
@@ -723,7 +723,7 @@ static var WRENCH_END_TURN_GREAT := PickTemplates.new(
 
 ## PJ[PJ
 static var WRENCH_END_TURN_TRASH := PickTemplates.new(
-	"wrench_end_turn_trash",
+	"table wrench",
 	Families.WRENCH,
 	Archetypes.END_TURN,
 	Rarities.TRASH,
@@ -732,7 +732,7 @@ static var WRENCH_END_TURN_TRASH := PickTemplates.new(
 
 ## T[T[TJ[T]TJ
 static var WRENCH_END_TURN_COMMON := PickTemplates.new(
-	"wrench_end_turn_common",
+	"top wrench",
 	Families.WRENCH,
 	Archetypes.END_TURN,
 	Rarities.COMMON,
@@ -741,7 +741,7 @@ static var WRENCH_END_TURN_COMMON := PickTemplates.new(
 
 ## P[PJ[PTJ[PTTJ
 static var WRENCH_END_TURN_RARE := PickTemplates.new(
-	"wrench_end_turn_rare",
+	"workshop wrench",
 	Families.WRENCH,
 	Archetypes.END_TURN,
 	Rarities.RARE,
@@ -750,7 +750,7 @@ static var WRENCH_END_TURN_RARE := PickTemplates.new(
 
 ## JJJJ[TTJJ
 static var WRENCH_LOCK_N_BLOCK_BASIC := PickTemplates.new(
-	"wrench_lock_n_block_basic",
+	"lock n' block",
 	Families.WRENCH,
 	Archetypes.LOCK_N_BLOCK,
 	Rarities.BASIC,
@@ -759,7 +759,7 @@ static var WRENCH_LOCK_N_BLOCK_BASIC := PickTemplates.new(
 
 ## JJJJJ
 static var WRENCH_LOCK_N_BLOCK_GREAT := PickTemplates.new(
-	"wrench_lock_n_block_great",
+	"monster wrench",
 	Families.WRENCH,
 	Archetypes.LOCK_N_BLOCK,
 	Rarities.GREAT,
@@ -768,7 +768,7 @@ static var WRENCH_LOCK_N_BLOCK_GREAT := PickTemplates.new(
 
 ## P[PJJ]P
 static var WRENCH_LOCK_N_BLOCK_TRASH := PickTemplates.new(
-	"wrench_lock_n_block_trash",
+	"mangler",
 	Families.WRENCH,
 	Archetypes.LOCK_N_BLOCK,
 	Rarities.TRASH,
@@ -777,7 +777,7 @@ static var WRENCH_LOCK_N_BLOCK_TRASH := PickTemplates.new(
 
 ## P[JJJ
 static var WRENCH_LOCK_N_BLOCK_COMMON := PickTemplates.new(
-	"wrench_lock_n_block_common",
+	"canted wrench",
 	Families.WRENCH,
 	Archetypes.LOCK_N_BLOCK,
 	Rarities.COMMON,
@@ -786,7 +786,7 @@ static var WRENCH_LOCK_N_BLOCK_COMMON := PickTemplates.new(
 
 ## PT[JJJ]PT
 static var WRENCH_LOCK_N_BLOCK_RARE := PickTemplates.new(
-	"wrench_lock_n_block_rare",
+	"valley wrench",
 	Families.WRENCH,
 	Archetypes.LOCK_N_BLOCK,
 	Rarities.RARE,
@@ -795,7 +795,7 @@ static var WRENCH_LOCK_N_BLOCK_RARE := PickTemplates.new(
 
 ## TTJ[P]TTJ
 static var WRENCH_ISOLATION_BASIC := PickTemplates.new(
-	"wrench_isolation_basic",
+	"fork",
 	Families.WRENCH,
 	Archetypes.ISOLATION,
 	Rarities.BASIC,
@@ -804,7 +804,7 @@ static var WRENCH_ISOLATION_BASIC := PickTemplates.new(
 
 ## J[J[JJ[RTT]JJ
 static var WRENCH_ISOLATION_GREAT := PickTemplates.new(
-	"wrench_isolation_great",
+	"shadow",
 	Families.WRENCH,
 	Archetypes.ISOLATION,
 	Rarities.GREAT,
@@ -813,7 +813,7 @@ static var WRENCH_ISOLATION_GREAT := PickTemplates.new(
 
 ## JJ[P
 static var WRENCH_ISOLATION_TRASH := PickTemplates.new(
-	"wrench_isolation_trash",
+	"dog ear",
 	Families.WRENCH,
 	Archetypes.ISOLATION,
 	Rarities.TRASH,
@@ -822,7 +822,7 @@ static var WRENCH_ISOLATION_TRASH := PickTemplates.new(
 
 ## J[J[PT[PT]J
 static var WRENCH_ISOLATION_COMMON := PickTemplates.new(
-	"wrench_isolation_common",
+	"focus wrench",
 	Families.WRENCH,
 	Archetypes.ISOLATION,
 	Rarities.COMMON,
@@ -831,7 +831,7 @@ static var WRENCH_ISOLATION_COMMON := PickTemplates.new(
 
 ## JJ[J[J[T]PT
 static var WRENCH_ISOLATION_RARE := PickTemplates.new(
-	"wrench_isolation_rare",
+	"shelf wrench",
 	Families.WRENCH,
 	Archetypes.ISOLATION,
 	Rarities.RARE,
@@ -840,7 +840,7 @@ static var WRENCH_ISOLATION_RARE := PickTemplates.new(
 
 ## TJ[TJ
 static var WRENCH_TRICKS_BASIC := PickTemplates.new(
-	"wrench_tricks_basic",
+	"trick wrench",
 	Families.WRENCH,
 	Archetypes.TRICKS,
 	Rarities.BASIC,
@@ -849,7 +849,7 @@ static var WRENCH_TRICKS_BASIC := PickTemplates.new(
 
 ## TT[J[J]TT
 static var WRENCH_TRICKS_GREAT := PickTemplates.new(
-	"wrench_tricks_great",
+	"solution",
 	Families.WRENCH,
 	Archetypes.TRICKS,
 	Rarities.GREAT,
@@ -858,7 +858,7 @@ static var WRENCH_TRICKS_GREAT := PickTemplates.new(
 
 ## J
 static var WRENCH_TRICKS_TRASH := PickTemplates.new(
-	"wrench_tricks_trash",
+	"feather wrench",
 	Families.WRENCH,
 	Archetypes.TRICKS,
 	Rarities.TRASH,
@@ -867,7 +867,7 @@ static var WRENCH_TRICKS_TRASH := PickTemplates.new(
 
 ## TTJ
 static var WRENCH_TRICKS_COMMON := PickTemplates.new(
-	"wrench_tricks_common",
+	"narrow wrench",
 	Families.WRENCH,
 	Archetypes.TRICKS,
 	Rarities.COMMON,
@@ -876,7 +876,7 @@ static var WRENCH_TRICKS_COMMON := PickTemplates.new(
 
 ## P[J[JJ[J]P
 static var WRENCH_TRICKS_RARE := PickTemplates.new(
-	"wrench_tricks_rare",
+	"frost bolt",
 	Families.WRENCH,
 	Archetypes.TRICKS,
 	Rarities.RARE,
