@@ -9,8 +9,8 @@ class_name Abilities
 func _init(description_: String):
 	description = description_
 
-static var NONE := Depths.new("")
+static var NONE := Abilities.new("")
 
-static var DEBUG := Depths.new("Tell starshine you saw this!")
+static var DEBUG := Abilities.new("Tell starshine you saw this!")
 
-static var TEMPORARY := Depths.new("Breaks after this heist.")
+static var TEMPORARY := Abilities.new("Breaks after this heist.")

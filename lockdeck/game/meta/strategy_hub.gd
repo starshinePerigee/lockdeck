@@ -108,6 +108,13 @@ func update_info() -> void:
 	$ContinueButton.disabled = hand_full
 	$ContinueButton/FullTexture.visible = hand_full
 
+func break_temporary_picks() -> void:
+	var to_break: Array[CardSpec] = []
+	for pick in _game.current_deck:
+		if pick.ability == Abilities.TEMPORARY:
+			to_break.append(pick)
+	_game.break_picks(to_break)
+
 func reset() -> void:
 	update_info()
 	
@@ -116,6 +123,7 @@ func reset() -> void:
 	current_panel = null
 	
 	shop_widget.load_inventory(PickGenerator.get_shop_spread())
+	break_temporary_picks()
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)

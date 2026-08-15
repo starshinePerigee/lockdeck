@@ -19,7 +19,8 @@ func _redraw() -> void:
 	$EffectBar.redraw()
 	$PickArt.texture = card_spec.texture
 	$TitleBox/Title.text = card_spec.pick_name.capitalize()
-	# $TextBox/Text.text = card_spec.description
+	$TextBox/Text.text = card_spec.ability.description
+	$TextBox.visible = card_spec.ability != Abilities.NONE
 	$Tallies.frame = min(card_spec.repair_count, 11)
 
 func _ready() -> void:
