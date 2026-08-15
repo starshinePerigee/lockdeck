@@ -16,6 +16,8 @@ class_name CardSpec
 @export var texture: Resource
 ## How many times this pick has been repaired
 @export var repair_count := 0
+## Base shop value for this pick
+@export var shop_value := 0
 
 ## Unique ID used for tracking specific cards
 var unique_id: int
@@ -23,24 +25,26 @@ var unique_id: int
 static var last_id := 100
 
 func get_buy_cost() -> int:
-	return 20
+	return shop_value
 
 func get_repair_cost() -> int:
-	return 10 + repair_count * 5
+	return 20 + repair_count * 10
 
 static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
 		template.pick_name,
 		"",
 		template.texture,
-		template.effects
+		template.effects,
+		template.rarity
 	)
 
 func _init(
 	pick_name_: String,
 	description_: String,
 	texture_: Resource,
-	effects_: Dictionary[int, Array]
+	effects_: Dictionary[int, Array],
+	rarity: int
 ):
 	unique_id = last_id
 	last_id += 1
@@ -49,3 +53,4 @@ func _init(
 	description = description_
 	texture = texture_
 	effects.assign(effects_)
+	shop_value = 10 + 5 * rarity

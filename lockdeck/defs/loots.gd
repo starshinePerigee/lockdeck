@@ -97,7 +97,7 @@ static var COIN_4 := Loots.new(
 	"coin_2",
 	"large silver coin",
 	COIN_DESCRIPTION % 4,
-	4,
+	5,
 	1,
 	8,
 )
@@ -106,7 +106,7 @@ static var COIN_5 := Loots.new(
 	"coin_4",
 	"small gold coin",
 	COIN_DESCRIPTION % 5,
-	5,
+	10,
 	2,
 	3,
 )
@@ -115,7 +115,7 @@ static var COIN_6 := Loots.new(
 	"coin_3",
 	"large gold coin",
 	COIN_DESCRIPTION % 10,
-	10,
+	20,
 	1,
 	20,
 )

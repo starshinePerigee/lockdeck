@@ -1,0 +1,17 @@
+- Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+
+- make repair cost 20 + 10/break
+
+- update denominations: 
+small copper: 1
+big copper: 2
+small silver: 3
+big silver: 5
+small gold: 10
+big gold: 20
+
+- twice as much money per drop
+
+- pick loot values
+- update ingot logic
+- new shop

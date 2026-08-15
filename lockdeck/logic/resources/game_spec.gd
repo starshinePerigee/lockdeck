@@ -37,7 +37,7 @@ static var LOCK_SEQUENCE := [
 ]
 
 #static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
-static var LOOT_AMOUNTS := [20, 30, 40, 50, 60, 65, 70, 75, 80]
+static var LOOT_AMOUNTS := [40, 60, 80, 100, 120, 130, 140, 150, 160]
 
 
 ## Gets the current difficulty

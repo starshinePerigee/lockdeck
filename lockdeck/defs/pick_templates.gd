@@ -31,13 +31,13 @@ enum Archetypes {
 }
 
 enum Rarities {
-	DEBUG,
-	BASIC,
-	GREAT,
-	TRASH,
-	COMMON,
-	RARE,
-	TEMPORARY,
+	DEBUG = -1,
+	BASIC = 3,
+	GREAT = 5,
+	TRASH = 1,
+	COMMON = 2,
+	RARE = 4,
+	TEMPORARY = 0,
 }
 
 static func _get_texture(n: String) -> Resource:
