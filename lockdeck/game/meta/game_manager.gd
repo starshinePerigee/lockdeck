@@ -31,6 +31,7 @@ func auto_complete_level() -> void:
 		return
 	
 	$GameCore.solve_lock()
+	$GameCore.continue_to_next.emit()
 
 func reveal_level() -> void:
 	if _check_state(GameState.CORE_GAME):
