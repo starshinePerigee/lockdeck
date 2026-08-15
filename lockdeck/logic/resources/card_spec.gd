@@ -53,4 +53,4 @@ func _init(
 	description = description_
 	texture = texture_
 	effects.assign(effects_)
-	shop_value = 10 + 5 * rarity
+	shop_value = 15 + 5 * rarity

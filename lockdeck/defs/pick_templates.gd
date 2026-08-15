@@ -31,13 +31,13 @@ enum Archetypes {
 }
 
 enum Rarities {
-	DEBUG = -1,
-	BASIC = 3,
-	GREAT = 5,
-	TRASH = 1,
-	COMMON = 2,
-	RARE = 4,
-	TEMPORARY = 0,
+	DEBUG = -2,  # 5
+	BASIC = 2,  # 25
+	GREAT = 4,  # 35
+	TRASH = 0,  # 15
+	COMMON = 1,  # 20
+	RARE = 3,  # 30
+	TEMPORARY = -1, # 10
 }
 
 static func _get_texture(n: String) -> Resource:
@@ -1033,3 +1033,16 @@ static var temporary_picks: Array[PickTemplates] = [
 	TOOTHPICK,
 	OLD_KEY,
 ]
+
+## Stores every standard pick by rarity
+static var rarity_catalog: Dictionary[Rarities, Array] = {
+	Rarities.TRASH: [],
+	Rarities.COMMON: [],
+	Rarities.BASIC: [],
+	Rarities.RARE: [],
+	Rarities.GREAT: [],
+}
+
+static func _static_init() -> void:
+	for template in valid_templates:
+		rarity_catalog[template.rarity].append(template)

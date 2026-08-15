@@ -115,7 +115,7 @@ func reset() -> void:
 		popover.position.y = HIDDEN_Y
 	current_panel = null
 	
-	shop_widget.load_inventory(PickGenerator.get_many_base_cards(4))
+	shop_widget.load_inventory(PickGenerator.get_shop_spread())
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
