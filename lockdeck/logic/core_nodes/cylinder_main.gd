@@ -94,7 +94,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	# execute the card's effects
 	for pin_index in range(len(target_pins) - 1, -1, -1):
 		var pin := target_pins[pin_index]
-		var card_index = pin_index - card_position
+		var card_index = card_position - pin_index
 		if card_index not in card.effects.keys():
 			continue
 		
