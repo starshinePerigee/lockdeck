@@ -40,7 +40,7 @@ static var STANDARD := DeckTemplates.new(
 	"Standard",
 	(
 		"A balanced set of picks. It can tackle any early lock, and can use most picks you find."
-		+ "\n\nIt's biggest weakness is a lack of push - add picks quickly or be locked out."
+		+ "\n\nIts biggest weakness is a lack of push. Add picks quickly or be locked out."
 	),
 	func(): return _spec_templates([
 		PickTemplates.RAKE_BULK_TEST_BASIC,
@@ -58,7 +58,7 @@ static var POWERFUL := DeckTemplates.new(
 	"Daring",
 	(
 		"A deck full of powerful rakes, designed for the quick heist or smash-and-grab."
-		+ "\n\nIts biggest weakness is a lack of push - add picks quickly or be locked out."
+		+ "\n\nMake sure you grab every speed bonus - you'll need the extra gold for repairs."
 	),
 	func() : return _spec_templates([
 		PickTemplates.RAKE_BULK_PUSH_BASIC,
@@ -95,7 +95,7 @@ static var TRICKY := DeckTemplates.new(
 	"Clever",
 	(
 		"Careful manipulation of jam will let you turn your heavy rakes and diamonds into surgical instruments."
-		+ "\n\nDon't get reckless - you only have four of them."
+		+ "\n\nYou only have four of them, so don't be reckless!"
 	),
 	func(): return _spec_templates([
 		PickTemplates.HOOK_JUMP_TEST_BASIC,
@@ -112,8 +112,8 @@ static var TRICKY := DeckTemplates.new(
 static var RANDOM := DeckTemplates.new(
 	"Random",
 	(
-		"Grab a random handful of lockpicks and get started.\n"
-		+ "Maybe it'll work out this time?"
+		"Grab a random handful of lockpicks and get started."
+		+ "\n\nMaybe it'll work out this time?"
 	),
 	PickGenerator.get_many_base_cards.bind(10)
 )
