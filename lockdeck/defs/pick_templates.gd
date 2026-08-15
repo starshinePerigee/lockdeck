@@ -2,6 +2,44 @@ extends Resource
 ## Contains the defined data collections for predefined pick cards
 class_name PickTemplates
 
+enum Families {
+	NONE,
+	RAKE,
+	DIAMOND,
+	HOOK,
+	WRENCH,
+}
+
+enum Archetypes {
+	WEIRD,
+	BULK_PUSH,
+	BULK_TEST,
+	HYBRID_S,
+	GAPS,
+	DARK,
+	THREE_PUSH,
+	FINISHER,
+	REVEAL,
+	PRECISE,
+	PUSHY,
+	JUMP_TEST,
+	CLOSE_TEST,
+	END_TURN,
+	LOCK_N_BLOCK,
+	ISOLATION,
+	TRICKS
+}
+
+enum Rarities {
+	DEBUG,
+	BASIC,
+	GREAT,
+	TRASH,
+	COMMON,
+	RARE,
+	TEMPORARY,
+}
+
 static func _get_texture(n: String) -> Resource:
 	var res_str := "res://assets/picks/pick_%s.png" % [n]
 	if ResourceLoader.exists(res_str):
@@ -11,41 +49,81 @@ static func _get_texture(n: String) -> Resource:
 	
 ## Human readable pick name, lowercase
 var pick_name: String
+
+## pick metadata
+var family: Families
+var archetype: Archetypes
+var rarity: Rarities
+
 ## Pick effect dictionary. Type is dict[int, Array[EffectSpec]]
 var effects: Dictionary[int, Array]
 ## Card art texture
 var texture: Resource
-## Pick description or flavortext (vestigial)
-var description: String = ""
+
+static func parse_effect_substring(substring: String) -> Array[EffectSpec]:
+	var sub_effects: Array[EffectSpec] = []
 	
+	var effect_count := {
+		"P": 0,
+		".": 0,
+		"T": 0,
+		"R": 0,
+		"J": 0,
+	}
+	
+	for chr in substring:
+		effect_count[chr] += 1
+	
+	for e in effect_count.keys():
+		if effect_count[e] > 0:
+			var effect := Effects.DEBUG 
+			match e:
+				"P": effect = Effects.PUSH
+				".": effect = Effects.SKIP
+				"T": effect = Effects.TEST
+				"R": effect = Effects.REVEAL
+				"J": effect = Effects.JAM
+			sub_effects.append(EffectSpec.new(effect, effect_count[e]))
+	
+	return sub_effects
+
+static func parse_effects_string(effect_string: String) -> Dictionary[int, Array]:
+	var new_effects: Dictionary[int, Array] = {}
+	if effect_string.contains("]"):
+		var tip_split: PackedStringArray = effect_string.split("]")
+		effect_string = tip_split[0]
+		new_effects[-1] = parse_effect_substring(tip_split[1])
+	
+	var main_split: PackedStringArray = effect_string.split("[")
+	for i in len(main_split):
+		new_effects[i] = parse_effect_substring(
+			main_split[len(main_split) - i - 1]
+		)
+	
+	return new_effects
+
 func _init(
 	pick_name_: String,
-	effects_: Dictionary[int, Array] = {},
-	description_: String = "",
+	family_: Families,
+	archetype_: Archetypes,
+	rarity_: Rarities,
+	effect_string: String,
 ):
 	pick_name = pick_name_
-	description = description_
-	effects = effects_
+	family = family_
+	archetype = archetype_
+	rarity = rarity_
+	effects = parse_effects_string(effect_string)
 	texture = _get_texture(pick_name_)
 
 
-## JJJ/DDDDDDDD/*PPPPTTTR/RRR
+## JJJ/DDDDDDDD/PPPPTTTR\RRR
 static var DEBUG := PickTemplates.new(
 	"debug", 
-	{
-		-1: [EffectSpec.new(Effects.REVEAL, 3)],
-		0: [
-			EffectSpec.new(Effects.PUSH, 4), 
-			EffectSpec.new(Effects.TEST, 3),
-			EffectSpec.new(Effects.REVEAL, 1)
-		],
-		2: [EffectSpec.new(Effects.DEBUG, 8)],
-		3: [
-			EffectSpec.new(Effects.JAM, 3),
-			EffectSpec.new(Effects.DEBUG, 0)
-		]
-	},
-	"If you see this, please tell starshine.",
+	Families.NONE,
+	Archetypes.WEIRD,
+	Rarities.DEBUG,
+	"JJJ[........[PPPPTTTR]RRR"
 )
 
 #region RAKES
@@ -66,390 +144,184 @@ static var DEBUG := PickTemplates.new(
 
 # rakes almost always have a bad 1: to make tipping less effective
 
-# PUSH FOCUSED RAKES
-# typically have peaks
-
-## PPT/PPTT/PPT/*PPTT/PPT
-static var TEN_PUSH_MONSTER_RAKE := PickTemplates.new(
-	"pinnacle rake",
-	{
-		3: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		2: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PPT[PPT[PPT]PPT
+static var RAKE_BULK_PUSH_BASIC := PickTemplates.new(
+	"rake_bulk_push_basic",
+	Families.RAKE,
+	Archetypes.BULK_PUSH,
+	Rarities.BASIC,
+	"PPT[PPT[PPT]PPT"
 )
 
-## PTT/PPP/*PPP/PTT
-static var EIGHT_PUSH_DEEP_BOMB_RAKE := PickTemplates.new(
-	"jag rake",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		1: [EffectSpec.new(Effects.PUSH, 3)],
-		0: [EffectSpec.new(Effects.PUSH, 3)],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## PPTT[PPTT[PPTT[PPPR]PPPR
+static var RAKE_BULK_PUSH_GREAT := PickTemplates.new(
+	"rake_bulk_push_great",
+	Families.RAKE,
+	Archetypes.BULK_PUSH,
+	Rarities.GREAT,
+	"PPTT[PPTT[PPTT[PPPR]PPPR"
 )
 
-## PPT/PPT/*PPT/PPT
-static var TWO_ONE_FLAT_RAKE := PickTemplates.new(
-	"four peak rake",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PP[P[PP[PP]PP
+static var RAKE_BULK_PUSH_TRASH := PickTemplates.new(
+	"rake_bulk_push_trash",
+	Families.RAKE,
+	Archetypes.BULK_PUSH,
+	Rarities.TRASH,
+	"PP[P[PP[PP]PP"
 )
 
-## P/P/PT/*PT/P
-static var FIVE_ACROSS_RAKE := PickTemplates.new(
-	"stretched rake",
-	{
-		3: [EffectSpec.new(Effects.PUSH, 1)],
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PPT[PPTT[PPT[PPTT]PPT
+static var RAKE_BULK_PUSH_COMMON := PickTemplates.new(
+	"rake_bulk_push_common",
+	Families.RAKE,
+	Archetypes.BULK_PUSH,
+	Rarities.COMMON,
+	"PPT[PPTT[PPT[PPTT]PPT"
 )
 
-## C/C/C/*CC/C
-static var CRUSH_RAKE := PickTemplates.new(
-	"spike rake",
-	{
-		3: [EffectSpec.new(Effects.PUSH, 1)],
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [EffectSpec.new(Effects.PUSH, 1)],
-		0: [EffectSpec.new(Effects.PUSH, 2)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## TT[PPP[TT[PPP]TT
+static var RAKE_BULK_PUSH_RARE := PickTemplates.new(
+	"rake_bulk_push_rare",
+	Families.RAKE,
+	Archetypes.BULK_PUSH,
+	Rarities.RARE,
+	"TT[PPP[TT[PPP]TT"
 )
 
-## CC/P/*CC/P
-static var ALTERNATING_CRUSH_RAKE := PickTemplates.new(
-	"rip rake",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 2)],
-		1: [EffectSpec.new(Effects.PUSH, 1)],
-		0: [EffectSpec.new(Effects.PUSH, 2)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## TT[TT[TTTJ]T
+static var RAKE_BULK_TEST_BASIC := PickTemplates.new(
+	"rake_bulk_test_basic",
+	Families.RAKE,
+	Archetypes.BULK_TEST,
+	Rarities.BASIC,
+	"TT[TT[TTTJ]T"
 )
 
-# TEST FOCUSED RAKES
-# typically have wiggles and rolls
-
-## P/TT/*PTTT/PT
-static var DARK_TEST_RAKE := PickTemplates.new(
-	"camel rake",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [EffectSpec.new(Effects.TEST, 2)],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 3),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## TT[TT[RR[PPRR]TT
+static var RAKE_BULK_TEST_GREAT := PickTemplates.new(
+	"rake_bulk_test_great",
+	Families.RAKE,
+	Archetypes.BULK_TEST,
+	Rarities.GREAT,
+	"TT[TT[RR[PPRR]TT"
 )
 
-## TT/PTTT/*PTTT/TT
-static var EXTRA_DARK_TEST_RAKE := PickTemplates.new(
-	"wave rake",
-	{
-		2: [EffectSpec.new(Effects.TEST, 2)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 3),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 3),
-		],
-		-1: [EffectSpec.new(Effects.TEST, 2)]
-	}
+## TTT[PTT[PTT]TTT
+static var RAKE_BULK_TEST_TRASH := PickTemplates.new(
+	"rake_bulk_test_trash",
+	Families.RAKE,
+	Archetypes.BULK_TEST,
+	Rarities.TRASH,
+	"TTT[PTT[PTT]TTT"
 )
 
-## .T/.T/..T/*.T/..T
-static var PUSHLESS_GAP_RAKE := PickTemplates.new(
-	"city rake",
-	{
-		3: [
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		2: [
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## TT[PTTT[PTTT
+static var RAKE_BULK_TEST_COMMON := PickTemplates.new(
+	"rake_bulk_test_common",
+	Families.RAKE,
+	Archetypes.BULK_TEST,
+	Rarities.COMMON,
+	"TT[PTTT[PTTT"
 )
 
-# semi-random gap rake
-## P.T/PT/*P..TT/..T
-static var SCATTERED_GAP_RAKE := PickTemplates.new(
-	"chatter rake",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PJ[PJ[PTT]PTT
+static var RAKE_BULK_TEST_RARE := PickTemplates.new(
+	"rake_bulk_test_rare",
+	Families.RAKE,
+	Archetypes.BULK_TEST,
+	Rarities.RARE,
+	"PJ[PJ[PTT]PTT"
 )
 
-## P/PR/PR/*PR/P
-static var BROAD_PUSH_REVEAL_RAKE := PickTemplates.new(
-	"snake rake",
-	{
-		3: [EffectSpec.new(Effects.PUSH, 1)],
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PT[PT[PR]PT
+static var RAKE_HYBRID_S_BASIC := PickTemplates.new(
+	"rake_hybrid_s_basic",
+	Families.RAKE,
+	Archetypes.HYBRID_S,
+	Rarities.BASIC,
+	"PT[PT[PR]PT"
 )
 
-# has standard jam synergy
-## P/PP/*RRR/PP
-static var DEEP_REVEAL_RAKE := PickTemplates.new(
-	"wyrm rake",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [EffectSpec.new(Effects.PUSH, 2)],
-		0: [EffectSpec.new(Effects.REVEAL, 3)],
-		-1: [EffectSpec.new(Effects.PUSH, 2)]
-	}
+## PT[PR[PT[PRT]RT
+static var RAKE_HYBRID_S_GREAT := PickTemplates.new(
+	"rake_hybrid_s_great",
+	Families.RAKE,
+	Archetypes.HYBRID_S,
+	Rarities.GREAT,
+	"PT[PR[PT[PRT]RT"
 )
 
-# hybrid
-## T/TT/PTT/*PPTT/PT
-static var NOISY_FOUR_PUSH_RAKE := PickTemplates.new(
-	"diamond rake",
-	{
-		3: [EffectSpec.new(Effects.TEST, 1)],
-		2: [EffectSpec.new(Effects.TEST, 2)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## T[T[P[P]T
+static var RAKE_HYBRID_S_TRASH := PickTemplates.new(
+	"rake_hybrid_s_trash",
+	Families.RAKE,
+	Archetypes.HYBRID_S,
+	Rarities.TRASH,
+	"T[T[P[P]T"
 )
 
-## PT/PT/*PT/PT
-static var ONE_ONE_FLAT_RAKE := PickTemplates.new(
-	"two peak rake",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## P[P[PT[PT]P
+static var RAKE_HYBRID_S_COMMON := PickTemplates.new(
+	"rake_hybrid_s_common",
+	Families.RAKE,
+	Archetypes.HYBRID_S,
+	Rarities.COMMON,
+	"P[P[PT[PT]P"
 )
 
-## TT/PP/TT/*PP/TT
-static var ALTERNATING_RAKE := PickTemplates.new(
-	"toothed rake",
-	{
-		3: [EffectSpec.new(Effects.TEST, 2)],
-		2: [EffectSpec.new(Effects.PUSH, 2)],
-		1: [EffectSpec.new(Effects.TEST, 2)],
-		0: [EffectSpec.new(Effects.PUSH, 2)],
-		-1: [EffectSpec.new(Effects.TEST, 2)]
-	}
+## P[TT[PTTT]PT
+static var RAKE_HYBRID_S_RARE := PickTemplates.new(
+	"rake_hybrid_s_rare",
+	Families.RAKE,
+	Archetypes.HYBRID_S,
+	Rarities.RARE,
+	"P[TT[PTTT]PT"
 )
 
-## R/R/RP/*PP/PP
-static var THREE_REVEAL_RAKE := PickTemplates.new(
-	"worm rake",
-	{
-		3: [EffectSpec.new(Effects.REVEAL, 1)],
-		2: [EffectSpec.new(Effects.REVEAL, 1)],
-		1: [
-			EffectSpec.new(Effects.REVEAL, 1),
-			EffectSpec.new(Effects.PUSH, 1),
-		],
-		0: [EffectSpec.new(Effects.PUSH, 2)],
-		-1: [EffectSpec.new(Effects.PUSH, 2)]
-	}
+## P.T[P.T[P.T]P.T
+static var RAKE_GAPS_BASIC := PickTemplates.new(
+	"rake_gaps_basic",
+	Families.RAKE,
+	Archetypes.GAPS,
+	Rarities.BASIC,
+	"P.T[P.T[P.T]P.T"
 )
 
-
-# jam rakes
-## TT/TT/*TTJ/T
-static var JAM_FLAVORED_PROBE_RAKE := PickTemplates.new(
-	"broad rake",
-	{
-		2: [EffectSpec.new(Effects.TEST, 2)],
-		1: [EffectSpec.new(Effects.TEST, 2)],
-		0: [
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		-1: [EffectSpec.new(Effects.TEST, 1)]
-	}
+## P.RT[P.RT[P.RT]P.RT
+static var RAKE_GAPS_GREAT := PickTemplates.new(
+	"rake_gaps_great",
+	Families.RAKE,
+	Archetypes.GAPS,
+	Rarities.GREAT,
+	"P.RT[P.RT[P.RT]P.RT"
 )
 
-# close test with weird jam pattern
-## T/T/JT/*T/JT
-static var TEST_ACROSS_WITH_JAM_RAKE := PickTemplates.new(
-	"spine rake",
-	{
-		3: [EffectSpec.new(Effects.TEST, 1)],
-		2: [EffectSpec.new(Effects.TEST, 1)],
-		1: [
-			EffectSpec.new(Effects.JAM, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [EffectSpec.new(Effects.TEST, 1)],
-		-1: [
-			EffectSpec.new(Effects.JAM, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## .T[..T[.T]..T
+static var RAKE_GAPS_TRASH := PickTemplates.new(
+	"rake_gaps_trash",
+	Families.RAKE,
+	Archetypes.GAPS,
+	Rarities.TRASH,
+	".T[..T[.T]..T"
 )
 
-## P/PJ/PTJ/*PTTJ
-static var PUSH_JAM_BLANKET_RAKE := PickTemplates.new(
-	"blanket rake",
-	{
-		3: [EffectSpec.new(Effects.PUSH, 1)],
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## P.TT[P.RR]P.TT
+static var RAKE_GAPS_COMMON := PickTemplates.new(
+	"rake_gaps_common",
+	Families.RAKE,
+	Archetypes.GAPS,
+	Rarities.COMMON,
+	"P.TT[P.RR]P.TT"
 )
 
-## PJ/PJ/*PTT/PTT
-static var PUSH_JAM_RAKE := PickTemplates.new(
-	"tension rake",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## P.T[PT[P..TT]..T
+static var RAKE_GAPS_RARE := PickTemplates.new(
+	"rake_gaps_rare",
+	Families.RAKE,
+	Archetypes.GAPS,
+	Rarities.RARE,
+	"P.T[PT[P..TT]..T"
 )
 #endregion
 
@@ -461,843 +333,696 @@ static var PUSH_JAM_RAKE := PickTemplates.new(
 # can have no 1: for tip purposes - this is the decider for flavors? (diamond / wedge)
 # often have limited test
 
-# PUSH FOCUSED
-## T/PT/*PPPT/P
-static var MEDIUM_FOUR_REACH_DIAMOND := PickTemplates.new(
-	"large diamond",
-	{
-		2: [EffectSpec.new(Effects.TEST, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 3),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PP[PPPP
+static var DIAMOND_DARK_BASIC := PickTemplates.new(
+	"diamond_dark_basic",
+	Families.DIAMOND,
+	Archetypes.DARK,
+	Rarities.BASIC,
+	"PP[PPPP"
 )
 
-## P/*PPT
-static var SMALL_THREE_REACH_DIAMOND := PickTemplates.new(
-	"small diamond",
-	{
-		1: [EffectSpec.new(Effects.PUSH, 1)],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PT[PPTT[PPPPJ
+static var DIAMOND_DARK_GREAT := PickTemplates.new(
+	"diamond_dark_great",
+	Families.DIAMOND,
+	Archetypes.DARK,
+	Rarities.GREAT,
+	"PT[PPTT[PPPPJ"
 )
 
-## P/PPT/*CPPPT/P
-static var EIGHT_MOVEMENT_DEEP_DIAMOND := PickTemplates.new(
-	"slice wedge",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.PUSH, 3),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PPJ[P[PPPP]P
+static var DIAMOND_DARK_TRASH := PickTemplates.new(
+	"diamond_dark_trash",
+	Families.DIAMOND,
+	Archetypes.DARK,
+	Rarities.TRASH,
+	"PPJ[P[PPPP]P"
 )
 
-# new default diamond?
-## PT/*PPTT/PT
-static var TWO_FOUR_TWO_DIAMOND := PickTemplates.new(
-	"quick diamond",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## P[PPT[PPPP]PT
+static var DIAMOND_DARK_COMMON := PickTemplates.new(
+	"diamond_dark_common",
+	Families.DIAMOND,
+	Archetypes.DARK,
+	Rarities.COMMON,
+	"P[PPT[PPPP]PT"
 )
 
-## T/TT/*PPP/P
-static var OFFSET_FINISHER_DIAMOND := PickTemplates.new(
-	"offset wedge",
-	{
-		2: [EffectSpec.new(Effects.TEST, 1)],
-		1: [EffectSpec.new(Effects.TEST, 2)],
-		0: [EffectSpec.new(Effects.PUSH, 3)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PTT[PPPP[PPPP]PTT
+static var DIAMOND_DARK_RARE := PickTemplates.new(
+	"diamond_dark_rare",
+	Families.DIAMOND,
+	Archetypes.DARK,
+	Rarities.RARE,
+	"PTT[PPPP[PPPP]PTT"
 )
 
-## PR/*PPR/P
-static var REVEAL_DIAMOND := PickTemplates.new(
-	"black diamond",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PT[PPT[PPPT
+static var DIAMOND_THREE_PUSH_BASIC := PickTemplates.new(
+	"diamond_three_push_basic",
+	Families.DIAMOND,
+	Archetypes.THREE_PUSH,
+	Rarities.BASIC,
+	"PT[PPT[PPPT"
 )
 
-# weird block (crush?) wedge
-## T/CC/*CCTT/T
-static var BLOCK_CRUSH_DIAMOND := PickTemplates.new(
-	"block wedge",
-	{
-		2: [EffectSpec.new(Effects.TEST, 1)],
-		1: [EffectSpec.new(Effects.PUSH, 2)],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		-1: [EffectSpec.new(Effects.TEST, 1)]
-	}
+## PTT[PPPTT
+static var DIAMOND_THREE_PUSH_GREAT := PickTemplates.new(
+	"diamond_three_push_great",
+	Families.DIAMOND,
+	Archetypes.THREE_PUSH,
+	Rarities.GREAT,
+	"PTT[PPPTT"
 )
 
-# block wedge
-## P/PPTT/*PPTT
-static var FLAT_BLOCK_DIAMOND := PickTemplates.new(
-	"flattop",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## P[PP[PPP]P
+static var DIAMOND_THREE_PUSH_TRASH := PickTemplates.new(
+	"diamond_three_push_trash",
+	Families.DIAMOND,
+	Archetypes.THREE_PUSH,
+	Rarities.TRASH,
+	"P[PP[PPP]P"
 )
 
-
-# crushes
-## C/CC/*CCC
-static var TRIANGLE_CRUSH_DIAMOND := PickTemplates.new(
-	"bruiser wedge",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [EffectSpec.new(Effects.PUSH, 2)],
-		0: [EffectSpec.new(Effects.PUSH, 3)]
-	}
+## T[TT[PPP]P
+static var DIAMOND_THREE_PUSH_COMMON := PickTemplates.new(
+	"diamond_three_push_common",
+	Families.DIAMOND,
+	Archetypes.THREE_PUSH,
+	Rarities.COMMON,
+	"T[TT[PPP]P"
 )
 
-## PT/CPT/*CCC/P
-static var THREE_CRUSH_STACKED_DIAMOND := PickTemplates.new(
-	"desert wedge",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [EffectSpec.new(Effects.PUSH, 3)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## TT[PPP[TT[PPP]TT
+static var DIAMOND_THREE_PUSH_RARE := PickTemplates.new(
+	"diamond_three_push_rare",
+	Families.DIAMOND,
+	Archetypes.THREE_PUSH,
+	Rarities.RARE,
+	"TT[PPP[TT[PPP]TT"
 )
 
-## PT/*CCPT
-static var SPILLOVER_CRUSH := PickTemplates.new(
-	"powder wedge",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PTT[PPJJ]JJ
+static var DIAMOND_FINISHER_BASIC := PickTemplates.new(
+	"diamond_finisher_basic",
+	Families.DIAMOND,
+	Archetypes.FINISHER,
+	Rarities.BASIC,
+	"PTT[PPJJ]JJ"
 )
 
-# test focused
-## PT/*PTT
-static var SMALL_TEST_DIAMOND := PickTemplates.new(
-	"soft wedge",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## T[PTT[PPPJJ]J
+static var DIAMOND_FINISHER_GREAT := PickTemplates.new(
+	"diamond_finisher_great",
+	Families.DIAMOND,
+	Archetypes.FINISHER,
+	Rarities.GREAT,
+	"T[PTT[PPPJJ]J"
 )
 
-## P/PT/*PTTT
-static var LARGE_TEST_DIAMOND := PickTemplates.new(
-	"senses wedge",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 3),
-		]
-	}
+## PPJ[PPPJ
+static var DIAMOND_FINISHER_TRASH := PickTemplates.new(
+	"diamond_finisher_trash",
+	Families.DIAMOND,
+	Archetypes.FINISHER,
+	Rarities.TRASH,
+	"PPJ[PPPJ"
 )
 
-## P/PT/*..TTT/PT
-static var FIVE_RANGE_PROBE_DIAMOND := PickTemplates.new(
-	"false diamond",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 3),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## P[PPJJ
+static var DIAMOND_FINISHER_COMMON := PickTemplates.new(
+	"diamond_finisher_common",
+	Families.DIAMOND,
+	Archetypes.FINISHER,
+	Rarities.COMMON,
+	"P[PPJJ"
 )
 
-## PR/*PRR
-static var THREE_REVEAL_DIAMOND := PickTemplates.new(
-	"oracle wedge",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 2),
-		]
-	}
+## TT[PPPJJ]JJ
+static var DIAMOND_FINISHER_RARE := PickTemplates.new(
+	"diamond_finisher_rare",
+	Families.DIAMOND,
+	Archetypes.FINISHER,
+	Rarities.RARE,
+	"TT[PPPJJ]JJ"
 )
 
-## P/PT/*PRT/T
-static var PUSH_TEST_REVEAL_DIAMOND := PickTemplates.new(
-	"perfect diamond",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [EffectSpec.new(Effects.TEST, 1)]
-	}
+## PR[PRR
+static var DIAMOND_REVEAL_BASIC := PickTemplates.new(
+	"diamond_reveal_basic",
+	Families.DIAMOND,
+	Archetypes.REVEAL,
+	Rarities.BASIC,
+	"PR[PRR"
 )
 
-
-# jam flavored
-## *PPPJJ/JJ
-static var THREE_FOUR_JAM_FINISHER := PickTemplates.new(
-	"curse diamond",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 3),
-			EffectSpec.new(Effects.JAM, 2),
-		],
-		-1: [EffectSpec.new(Effects.JAM, 2)]
-	}
+## PR[P.R[PP.RR
+static var DIAMOND_REVEAL_GREAT := PickTemplates.new(
+	"diamond_reveal_great",
+	Families.DIAMOND,
+	Archetypes.REVEAL,
+	Rarities.GREAT,
+	"PR[P.R[PP.RR"
 )
 
-## PTJ/*PPTJ
-static var BLEND_JAM_DIAMOND := PickTemplates.new(
-	"twist wedge",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## P[RT]P
+static var DIAMOND_REVEAL_TRASH := PickTemplates.new(
+	"diamond_reveal_trash",
+	Families.DIAMOND,
+	Archetypes.REVEAL,
+	Rarities.TRASH,
+	"P[RT]P"
 )
+
+## R[R[RP[PP]PP
+static var DIAMOND_REVEAL_COMMON := PickTemplates.new(
+	"diamond_reveal_common",
+	Families.DIAMOND,
+	Archetypes.REVEAL,
+	Rarities.COMMON,
+	"R[R[RP[PP]PP"
+)
+
+## P[PP[RRR]P
+static var DIAMOND_REVEAL_RARE := PickTemplates.new(
+	"diamond_reveal_rare",
+	Families.DIAMOND,
+	Archetypes.REVEAL,
+	Rarities.RARE,
+	"P[PP[RRR]P"
+)
+
 #endregion
 
 #region HOOKS
 # affects a single pin, but rarely has significant movement
 
-# invincible but questionable deck slot
-## *PT
-static var TINY_HOOK := PickTemplates.new(
-	"tiny hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PT
+static var HOOK_PRECISE_BASIC := PickTemplates.new(
+	"hook_precise_basic",
+	Families.HOOK,
+	Archetypes.PRECISE,
+	Rarities.BASIC,
+	"PT"
 )
 
-# exceptionally situational but invincible
-## *R
-static var ONE_REVEAL_HOOK := PickTemplates.new(
-	"wire hook",
-	{
-		0: [EffectSpec.new(Effects.REVEAL, 1)]
-	}
+## PRT
+static var HOOK_PRECISE_GREAT := PickTemplates.new(
+	"hook_precise_great",
+	Families.HOOK,
+	Archetypes.PRECISE,
+	Rarities.GREAT,
+	"PRT"
 )
 
-# single target diffuser
-## *.T
-static var SKIP_TEST_DIFFUSER_HOOK := PickTemplates.new(
-	"trap hook",
-	{
-		0: [
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## P
+static var HOOK_PRECISE_TRASH := PickTemplates.new(
+	"hook_precise_trash",
+	Families.HOOK,
+	Archetypes.PRECISE,
+	Rarities.TRASH,
+	"P"
 )
 
-# push focused
-## *PPTT
-static var CLASSIC_HOOK := PickTemplates.new(
-	"classic hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## T[PTT
+static var HOOK_PRECISE_COMMON := PickTemplates.new(
+	"hook_precise_common",
+	Families.HOOK,
+	Archetypes.PRECISE,
+	Rarities.COMMON,
+	"T[PTT"
 )
 
-## *PPR
-static var PUSH_REVEAL_HOOK := PickTemplates.new(
-	"feeler hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.REVEAL, 1),
-		]
-	}
+## P.RTJ
+static var HOOK_PRECISE_RARE := PickTemplates.new(
+	"hook_precise_rare",
+	Families.HOOK,
+	Archetypes.PRECISE,
+	Rarities.RARE,
+	"P.RTJ"
 )
 
-# jam hook
-## *CCTJ
-static var CRUSH_JAM_HOOK := PickTemplates.new(
-	"crook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## PPTTT
+static var HOOK_PUSHY_BASIC := PickTemplates.new(
+	"hook_pushy_basic",
+	Families.HOOK,
+	Archetypes.PUSHY,
+	Rarities.BASIC,
+	"PPTTT"
 )
 
-# two into three combo hook
-## *PP..T
-static var FIVE_DEEP_SINGLE_HOOK := PickTemplates.new(
-	"wary hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## PPP.TT
+static var HOOK_PUSHY_GREAT := PickTemplates.new(
+	"hook_pushy_great",
+	Families.HOOK,
+	Archetypes.PUSHY,
+	Rarities.GREAT,
+	"PPP.TT"
 )
 
-## *P...R
-static var BONUS_REVEAL_HOOK := PickTemplates.new(
-	"hat hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.SKIP, 3),
-			EffectSpec.new(Effects.REVEAL, 1),
-		]
-	}
+## PP..T
+static var HOOK_PUSHY_TRASH := PickTemplates.new(
+	"hook_pushy_trash",
+	Families.HOOK,
+	Archetypes.PUSHY,
+	Rarities.TRASH,
+	"PP..T"
 )
 
-# test focused
-
-# good test hook with a dependency
-## P/*RTT
-static var DEPENDENCY_HOOK := PickTemplates.new(
-	"canted hook",
-	{
-		1: [EffectSpec.new(Effects.PUSH, 1)],
-		0: [
-			EffectSpec.new(Effects.REVEAL, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## PPP
+static var HOOK_PUSHY_COMMON := PickTemplates.new(
+	"hook_pushy_common",
+	Families.HOOK,
+	Archetypes.PUSHY,
+	Rarities.COMMON,
+	"PPP"
 )
 
-# awkwardly deep test hook
-## *.TTTT
-static var FOUR_DARK_HOOK := PickTemplates.new(
-	"shepard hook",
-	{
-		0: [
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 4),
-		]
-	}
+## PP.R
+static var HOOK_PUSHY_RARE := PickTemplates.new(
+	"hook_pushy_rare",
+	Families.HOOK,
+	Archetypes.PUSHY,
+	Rarities.RARE,
+	"PP.R"
 )
 
-## *..TT
-static var SKIP_TEST_HOOK := PickTemplates.new(
-	"guide hook",
-	{
-		0: [
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## P.TTT
+static var HOOK_JUMP_TEST_BASIC := PickTemplates.new(
+	"hook_jump_test_basic",
+	Families.HOOK,
+	Archetypes.JUMP_TEST,
+	Rarities.BASIC,
+	"P.TTT"
 )
 
-# more limited deep test
-## *P.TTT
-static var FIVE_DARK_HOOK := PickTemplates.new(
-	"pirate hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.TEST, 3),
-		]
-	}
+## ..RRTT
+static var HOOK_JUMP_TEST_GREAT := PickTemplates.new(
+	"hook_jump_test_great",
+	Families.HOOK,
+	Archetypes.JUMP_TEST,
+	Rarities.GREAT,
+	"..RRTT"
 )
 
-# super deep test
-## *PP..TT
-static var SIX_DARK_GONZO_HOOK := PickTemplates.new(
-	"gonzo hook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.SKIP, 2),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+## .T
+static var HOOK_JUMP_TEST_TRASH := PickTemplates.new(
+	"hook_jump_test_trash",
+	Families.HOOK,
+	Archetypes.JUMP_TEST,
+	Rarities.TRASH,
+	".T"
 )
 
-## *TTT
-static var THREE_TEST_HOOK := PickTemplates.new(
-	"spring hook",
-	{
-		0: [EffectSpec.new(Effects.TEST, 3)]
-	}
+## .TTTT
+static var HOOK_JUMP_TEST_COMMON := PickTemplates.new(
+	"hook_jump_test_common",
+	Families.HOOK,
+	Archetypes.JUMP_TEST,
+	Rarities.COMMON,
+	".TTTT"
 )
 
-# crush flavored
-
-# standard crush
-## *CCC
-static var THREE_STACK_CRUSH := PickTemplates.new(
-	"lever",
-	{
-		0: [EffectSpec.new(Effects.PUSH, 3)]
-	}
+## PP..TT
+static var HOOK_JUMP_TEST_RARE := PickTemplates.new(
+	"hook_jump_test_rare",
+	Families.HOOK,
+	Archetypes.JUMP_TEST,
+	Rarities.RARE,
+	"PP..TT"
 )
 
-## *CCPP
-static var PUSH_CRUSH := PickTemplates.new(
-	"prybar",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.PUSH, 2),
-		]
-	}
+## TTT
+static var HOOK_CLOSE_TEST_BASIC := PickTemplates.new(
+	"hook_close_test_basic",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.BASIC,
+	"TTT"
 )
+
+## RRTTT
+static var HOOK_CLOSE_TEST_GREAT := PickTemplates.new(
+	"hook_close_test_great",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.GREAT,
+	"RRTTT"
+)
+
+## R
+static var HOOK_CLOSE_TEST_TRASH := PickTemplates.new(
+	"hook_close_test_trash",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.TRASH,
+	"R"
+)
+
+## P[RTTT
+static var HOOK_CLOSE_TEST_COMMON := PickTemplates.new(
+	"hook_close_test_common",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.COMMON,
+	"P[RTTT"
+)
+
+## TTT[.TTT
+static var HOOK_CLOSE_TEST_RARE := PickTemplates.new(
+	"hook_close_test_rare",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.RARE,
+	"TTT[.TTT"
+)
+
 #endregion
 
 #region JAMS
 # used for tricks and safekeeping
 
-## PJ/*JJ
-static var ONE_TWO_JAM := PickTemplates.new(
-	"standard wrench",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [EffectSpec.new(Effects.JAM, 2)]
-	}
+## J[JJ
+static var WRENCH_END_TURN_BASIC := PickTemplates.new(
+	"wrench_end_turn_basic",
+	Families.WRENCH,
+	Archetypes.END_TURN,
+	Rarities.BASIC,
+	"J[JJ"
 )
 
-## JJJJ/*TTJJ
-static var FOUR_TWO_JAM := PickTemplates.new(
-	"monster wrench",
-	{
-		1: [EffectSpec.new(Effects.JAM, 4)],
-		0: [
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 2),
-		]
-	}
+## JJ[JJ]JJ
+static var WRENCH_END_TURN_GREAT := PickTemplates.new(
+	"wrench_end_turn_great",
+	Families.WRENCH,
+	Archetypes.END_TURN,
+	Rarities.GREAT,
+	"JJ[JJ]JJ"
 )
 
-## JJ/*JJ/P
-static var TWO_TWO_BLOCK_JAM := PickTemplates.new(
-	"column wrench",
-	{
-		1: [EffectSpec.new(Effects.JAM, 2)],
-		0: [EffectSpec.new(Effects.JAM, 2)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## PJ[PJ
+static var WRENCH_END_TURN_TRASH := PickTemplates.new(
+	"wrench_end_turn_trash",
+	Families.WRENCH,
+	Archetypes.END_TURN,
+	Rarities.TRASH,
+	"PJ[PJ"
 )
 
-## JJ/J/J/*T/PT
-static var ISOLATION_SHELF_JAM := PickTemplates.new(
-	"shelf wrench",
-	{
-		3: [EffectSpec.new(Effects.JAM, 2)],
-		2: [EffectSpec.new(Effects.JAM, 1)],
-		1: [EffectSpec.new(Effects.JAM, 1)],
-		0: [EffectSpec.new(Effects.TEST, 1)],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## T[T[TJ[T]TJ
+static var WRENCH_END_TURN_COMMON := PickTemplates.new(
+	"wrench_end_turn_common",
+	Families.WRENCH,
+	Archetypes.END_TURN,
+	Rarities.COMMON,
+	"T[T[TJ[T]TJ"
 )
 
-# very light trick jam
-## *TTJ
-static var TWO_TEST_JAM := PickTemplates.new(
-	"trick wrench",
-	{
-		0: [
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## P[PJ[PTJ[PTTJ
+static var WRENCH_END_TURN_RARE := PickTemplates.new(
+	"wrench_end_turn_rare",
+	Families.WRENCH,
+	Archetypes.END_TURN,
+	Rarities.RARE,
+	"P[PJ[PTJ[PTTJ"
 )
 
-## P/J/JJ/*J/P
-static var COMPLETION_JAM := PickTemplates.new(
-	"table wrench",
-	{
-		3: [EffectSpec.new(Effects.PUSH, 1)],
-		2: [EffectSpec.new(Effects.JAM, 1)],
-		1: [EffectSpec.new(Effects.JAM, 2)],
-		0: [EffectSpec.new(Effects.JAM, 1)],
-		-1: [EffectSpec.new(Effects.PUSH, 1)]
-	}
+## JJJJ[TTJJ
+static var WRENCH_LOCK_N_BLOCK_BASIC := PickTemplates.new(
+	"wrench_lock_n_block_basic",
+	Families.WRENCH,
+	Archetypes.LOCK_N_BLOCK,
+	Rarities.BASIC,
+	"JJJJ[TTJJ"
 )
 
-# single pin jam with strange offset
-## *T/JJJ
-static var NARROW_THREE_JAM := PickTemplates.new(
-	"narrow wrench",
-	{
-		0: [EffectSpec.new(Effects.TEST, 1)],
-		-1: [EffectSpec.new(Effects.JAM, 3)]
-	}
+## JJJJJ
+static var WRENCH_LOCK_N_BLOCK_GREAT := PickTemplates.new(
+	"wrench_lock_n_block_great",
+	Families.WRENCH,
+	Archetypes.LOCK_N_BLOCK,
+	Rarities.GREAT,
+	"JJJJJ"
 )
 
-## J/J/PT/*PT/J
-static var FOCUS_LENS_JAM := PickTemplates.new(
-	"focus wrench",
-	{
-		3: [EffectSpec.new(Effects.JAM, 1)],
-		2: [EffectSpec.new(Effects.JAM, 1)],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		-1: [EffectSpec.new(Effects.JAM, 1)]
-	}
+## P[PJJ]P
+static var WRENCH_LOCK_N_BLOCK_TRASH := PickTemplates.new(
+	"wrench_lock_n_block_trash",
+	Families.WRENCH,
+	Archetypes.LOCK_N_BLOCK,
+	Rarities.TRASH,
+	"P[PJJ]P"
 )
 
-## PT/*JJJ/PT
-static var COLUMN_LOCKDOWN_JAM := PickTemplates.new(
-	"lockup wrench",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		],
-		0: [EffectSpec.new(Effects.JAM, 3)],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+## P[JJJ
+static var WRENCH_LOCK_N_BLOCK_COMMON := PickTemplates.new(
+	"wrench_lock_n_block_common",
+	Families.WRENCH,
+	Archetypes.LOCK_N_BLOCK,
+	Rarities.COMMON,
+	"P[JJJ"
 )
 
-## JJ/*JJJ
-static var TWO_THREE_JAM := PickTemplates.new(
-	"heavy wrench",
-	{
-		1: [EffectSpec.new(Effects.JAM, 2)],
-		0: [EffectSpec.new(Effects.JAM, 3)]
-	}
+## PT[JJJ]PT
+static var WRENCH_LOCK_N_BLOCK_RARE := PickTemplates.new(
+	"wrench_lock_n_block_rare",
+	Families.WRENCH,
+	Archetypes.LOCK_N_BLOCK,
+	Rarities.RARE,
+	"PT[JJJ]PT"
 )
 
-## *J
-static var ONE_ONLY_JAM := PickTemplates.new(
-	"feather wrench",
-	{
-		0: [EffectSpec.new(Effects.JAM, 1)]
-	}
+## TTJ[P]TTJ
+static var WRENCH_ISOLATION_BASIC := PickTemplates.new(
+	"wrench_isolation_basic",
+	Families.WRENCH,
+	Archetypes.ISOLATION,
+	Rarities.BASIC,
+	"TTJ[P]TTJ"
 )
 
-
-# weird
-## CJ/*CCJ/CJ
-static var CRUSH_JAM := PickTemplates.new(
-	"mangler",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		-1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## J[J[JJ[RTT]JJ
+static var WRENCH_ISOLATION_GREAT := PickTemplates.new(
+	"wrench_isolation_great",
+	Families.WRENCH,
+	Archetypes.ISOLATION,
+	Rarities.GREAT,
+	"J[J[JJ[RTT]JJ"
 )
 
-## TTJ/*P/TTJ
-static var FORK_JAM := PickTemplates.new(
-	"fork",
-	{
-		1: [
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		],
-		0: [EffectSpec.new(Effects.PUSH, 1)],
-		-1: [
-			EffectSpec.new(Effects.TEST, 2),
-			EffectSpec.new(Effects.JAM, 1),
-		]
-	}
+## JJ[P
+static var WRENCH_ISOLATION_TRASH := PickTemplates.new(
+	"wrench_isolation_trash",
+	Families.WRENCH,
+	Archetypes.ISOLATION,
+	Rarities.TRASH,
+	"JJ[P"
 )
 
-## P/*RJJJ
-static var REVEAL_JAM := PickTemplates.new(
-	"workshop wrench",
-	{
-		1: [EffectSpec.new(Effects.PUSH, 1)],
-		0: [
-			EffectSpec.new(Effects.REVEAL, 1),
-			EffectSpec.new(Effects.JAM, 3),
-		]
-	}
+## J[J[PT[PT]J
+static var WRENCH_ISOLATION_COMMON := PickTemplates.new(
+	"wrench_isolation_common",
+	Families.WRENCH,
+	Archetypes.ISOLATION,
+	Rarities.COMMON,
+	"J[J[PT[PT]J"
 )
+
+## JJ[J[J[T]PT
+static var WRENCH_ISOLATION_RARE := PickTemplates.new(
+	"wrench_isolation_rare",
+	Families.WRENCH,
+	Archetypes.ISOLATION,
+	Rarities.RARE,
+	"JJ[J[J[T]PT"
+)
+
+## TJ[TJ
+static var WRENCH_TRICKS_BASIC := PickTemplates.new(
+	"wrench_tricks_basic",
+	Families.WRENCH,
+	Archetypes.TRICKS,
+	Rarities.BASIC,
+	"TJ[TJ"
+)
+
+## TT[J[J]TT
+static var WRENCH_TRICKS_GREAT := PickTemplates.new(
+	"wrench_tricks_great",
+	Families.WRENCH,
+	Archetypes.TRICKS,
+	Rarities.GREAT,
+	"TT[J[J]TT"
+)
+
+## J
+static var WRENCH_TRICKS_TRASH := PickTemplates.new(
+	"wrench_tricks_trash",
+	Families.WRENCH,
+	Archetypes.TRICKS,
+	Rarities.TRASH,
+	"J"
+)
+
+## TTJ
+static var WRENCH_TRICKS_COMMON := PickTemplates.new(
+	"wrench_tricks_common",
+	Families.WRENCH,
+	Archetypes.TRICKS,
+	Rarities.COMMON,
+	"TTJ"
+)
+
+## P[J[JJ[J]P
+static var WRENCH_TRICKS_RARE := PickTemplates.new(
+	"wrench_tricks_rare",
+	Families.WRENCH,
+	Archetypes.TRICKS,
+	Rarities.RARE,
+	"P[J[JJ[J]P"
+)
+
 #endregion
-
 
 #region special use picks
 
-## T/TT/*PTT
+## T[TT[PTT
 static var NEEDLE := PickTemplates.new(
 	"needle",
-	{
-		2: [EffectSpec.new(Effects.TEST, 1)],
-		1: [EffectSpec.new(Effects.TEST, 2)],
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 2),
-		]
-	}
+	Families.NONE,
+	Archetypes.BULK_TEST,
+	Rarities.TEMPORARY,
+	"T[TT[PTT"
 )
 
-## CCJJJ/*CCJJJ
+## PPJJJ[PPJJJ
 static var NAIL := PickTemplates.new(
 	"nail",
-	{
-		1: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.JAM, 3)
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.JAM, 3)
-		]
-	}
+	Families.NONE,
+	Archetypes.END_TURN,
+	Rarities.TEMPORARY,
+	"PPJJJ[PPJJJ"
 )
 
-## *P.RT
+## P.RT
 static var FISHHOOK := PickTemplates.new(
 	"fishhook",
-	{
-		0: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.SKIP, 1),
-			EffectSpec.new(Effects.REVEAL, 1),
-			EffectSpec.new(Effects.TEST, 1),
-		]
-	}
+	Families.NONE,
+	Archetypes.JUMP_TEST,
+	Rarities.TEMPORARY,
+	"P.RT"
 )
 
-## PP/PP/*PP/JJ
+## P[PP[PPP]JJ
 static var HAIRPIN := PickTemplates.new(
 	"hairpin",
-	{
-		2: [EffectSpec.new(Effects.PUSH, 2)],
-		1: [EffectSpec.new(Effects.PUSH, 2)],
-		0: [EffectSpec.new(Effects.PUSH, 2)],
-		-1: [EffectSpec.new(Effects.JAM, 2)],
-	}
+	Families.NONE,
+	Archetypes.THREE_PUSH,
+	Rarities.TEMPORARY,
+	"P[PP[PPP]JJ"
 )
 
-## PT/PT/*PPT/P
+## PT[PT[PPT]P
 static var TOOTHPICK := PickTemplates.new(
 	"toothpick",
-	{
-		2: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1)
-		],
-		1: [
-			EffectSpec.new(Effects.PUSH, 1),
-			EffectSpec.new(Effects.TEST, 1)
-		],
-		0: [
-			EffectSpec.new(Effects.PUSH, 2),
-			EffectSpec.new(Effects.TEST, 1)
-		],
-		-1: [EffectSpec.new(Effects.PUSH, 1)],
-	}
+	Families.NONE,
+	Archetypes.BULK_PUSH,
+	Rarities.TEMPORARY,
+	"PT[PT[PPT]P"
 )
 
-## PPP/*JJJ/PPP
+## PPP[JJJ]PPP
 static var OLD_KEY := PickTemplates.new(
 	"old key",
-	{
-		1: [EffectSpec.new(Effects.PUSH, 3)],
-		0: [EffectSpec.new(Effects.JAM, 3)],
-		-1: [EffectSpec.new(Effects.PUSH, 3)],
-	}
+	Families.NONE,
+	Archetypes.ISOLATION,
+	Rarities.TEMPORARY,
+	"PPP[JJJ]PPP"
 )
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [
-	# push rakes
-	TEN_PUSH_MONSTER_RAKE, ###
-	EIGHT_PUSH_DEEP_BOMB_RAKE, ###
-	TWO_ONE_FLAT_RAKE, ##
-	FIVE_ACROSS_RAKE, #
-	CRUSH_RAKE, ###
-	ALTERNATING_CRUSH_RAKE, ##
-	# test rakes
-	DARK_TEST_RAKE, ##
-	EXTRA_DARK_TEST_RAKE, ##
-	PUSHLESS_GAP_RAKE, ##
-	SCATTERED_GAP_RAKE, ###
-	BROAD_PUSH_REVEAL_RAKE, ##
-	DEEP_REVEAL_RAKE, ###
-	# hybrid rakes
-	NOISY_FOUR_PUSH_RAKE, #
-	ONE_ONE_FLAT_RAKE, #
-	ALTERNATING_RAKE, ##
-	THREE_REVEAL_RAKE, ##  - precision deck icon
-	# jam rakes
-	JAM_FLAVORED_PROBE_RAKE, ##
-	TEST_ACROSS_WITH_JAM_RAKE, #
-	PUSH_JAM_BLANKET_RAKE, ###
-	PUSH_JAM_RAKE, ##
-	# push diamonds
-	MEDIUM_FOUR_REACH_DIAMOND, #
-	SMALL_THREE_REACH_DIAMOND, ##
-	EIGHT_MOVEMENT_DEEP_DIAMOND, ###
-	TWO_FOUR_TWO_DIAMOND, #
-	OFFSET_FINISHER_DIAMOND, ##
-	REVEAL_DIAMOND, ###
-	# crush diamonds
-	BLOCK_CRUSH_DIAMOND, ###
-	FLAT_BLOCK_DIAMOND, ##
-	TRIANGLE_CRUSH_DIAMOND, ##
-	THREE_CRUSH_STACKED_DIAMOND, ###
-	SPILLOVER_CRUSH, ###
-	# test diamonds
-	SMALL_TEST_DIAMOND, ##
-	LARGE_TEST_DIAMOND, #
-	FIVE_RANGE_PROBE_DIAMOND, ###
-	THREE_REVEAL_DIAMOND, ##
-	PUSH_TEST_REVEAL_DIAMOND, ###
-	# jam diamonds
-	THREE_FOUR_JAM_FINISHER, ###
-	BLEND_JAM_DIAMOND, ###
-	# small hooks
-	TINY_HOOK, ##
-	ONE_REVEAL_HOOK, ##
-	SKIP_TEST_DIFFUSER_HOOK, ##
-	# push hooks
-	CLASSIC_HOOK, #
-	PUSH_REVEAL_HOOK, ##
-	CRUSH_JAM_HOOK, ##
-	FIVE_DEEP_SINGLE_HOOK, ##
-	BONUS_REVEAL_HOOK, ##
-	# test hooks
-	DEPENDENCY_HOOK, ##
-	FOUR_DARK_HOOK, ##
-	SKIP_TEST_HOOK, #
-	FIVE_DARK_HOOK, ###
-	SIX_DARK_GONZO_HOOK, ###
-	THREE_TEST_HOOK, ##
-	# crush hooks
-	THREE_STACK_CRUSH, #
-	PUSH_CRUSH, ##
-	# jams
-	ONE_TWO_JAM, #
-	FOUR_TWO_JAM, ###
-	TWO_TWO_BLOCK_JAM, ##
-	ISOLATION_SHELF_JAM, ###
-	TWO_TEST_JAM, ##
-	COMPLETION_JAM, ###
-	NARROW_THREE_JAM, ##
-	FOCUS_LENS_JAM, ##
-	COLUMN_LOCKDOWN_JAM, ##
-	TWO_THREE_JAM, ##
-	ONE_ONLY_JAM, ###
-	CRUSH_JAM, ##
-	FORK_JAM, #
-	REVEAL_JAM, ###
+	RAKE_BULK_PUSH_BASIC,
+	RAKE_BULK_PUSH_GREAT,
+	RAKE_BULK_PUSH_TRASH,
+	RAKE_BULK_PUSH_COMMON,
+	RAKE_BULK_PUSH_RARE,
+	RAKE_BULK_TEST_BASIC,
+	RAKE_BULK_TEST_GREAT,
+	RAKE_BULK_TEST_TRASH,
+	RAKE_BULK_TEST_COMMON,
+	RAKE_BULK_TEST_RARE,
+	RAKE_HYBRID_S_BASIC,
+	RAKE_HYBRID_S_GREAT,
+	RAKE_HYBRID_S_TRASH,
+	RAKE_HYBRID_S_COMMON,
+	RAKE_HYBRID_S_RARE,
+	RAKE_GAPS_BASIC,
+	RAKE_GAPS_GREAT,
+	RAKE_GAPS_TRASH,
+	RAKE_GAPS_COMMON,
+	RAKE_GAPS_RARE,
+	DIAMOND_DARK_BASIC,
+	DIAMOND_DARK_GREAT,
+	DIAMOND_DARK_TRASH,
+	DIAMOND_DARK_COMMON,
+	DIAMOND_DARK_RARE,
+	DIAMOND_THREE_PUSH_BASIC,
+	DIAMOND_THREE_PUSH_GREAT,
+	DIAMOND_THREE_PUSH_TRASH,
+	DIAMOND_THREE_PUSH_COMMON,
+	DIAMOND_THREE_PUSH_RARE,
+	DIAMOND_FINISHER_BASIC,
+	DIAMOND_FINISHER_GREAT,
+	DIAMOND_FINISHER_TRASH,
+	DIAMOND_FINISHER_COMMON,
+	DIAMOND_FINISHER_RARE,
+	DIAMOND_REVEAL_BASIC,
+	DIAMOND_REVEAL_GREAT,
+	DIAMOND_REVEAL_TRASH,
+	DIAMOND_REVEAL_COMMON,
+	DIAMOND_REVEAL_RARE,
+	HOOK_PRECISE_BASIC,
+	HOOK_PRECISE_GREAT,
+	HOOK_PRECISE_TRASH,
+	HOOK_PRECISE_COMMON,
+	HOOK_PRECISE_RARE,
+	HOOK_PUSHY_BASIC,
+	HOOK_PUSHY_GREAT,
+	HOOK_PUSHY_TRASH,
+	HOOK_PUSHY_COMMON,
+	HOOK_PUSHY_RARE,
+	HOOK_JUMP_TEST_BASIC,
+	HOOK_JUMP_TEST_GREAT,
+	HOOK_JUMP_TEST_TRASH,
+	HOOK_JUMP_TEST_COMMON,
+	HOOK_JUMP_TEST_RARE,
+	HOOK_CLOSE_TEST_BASIC,
+	HOOK_CLOSE_TEST_GREAT,
+	HOOK_CLOSE_TEST_TRASH,
+	HOOK_CLOSE_TEST_COMMON,
+	HOOK_CLOSE_TEST_RARE,
+	WRENCH_END_TURN_BASIC,
+	WRENCH_END_TURN_GREAT,
+	WRENCH_END_TURN_TRASH,
+	WRENCH_END_TURN_COMMON,
+	WRENCH_END_TURN_RARE,
+	WRENCH_LOCK_N_BLOCK_BASIC,
+	WRENCH_LOCK_N_BLOCK_GREAT,
+	WRENCH_LOCK_N_BLOCK_TRASH,
+	WRENCH_LOCK_N_BLOCK_COMMON,
+	WRENCH_LOCK_N_BLOCK_RARE,
+	WRENCH_ISOLATION_BASIC,
+	WRENCH_ISOLATION_GREAT,
+	WRENCH_ISOLATION_TRASH,
+	WRENCH_ISOLATION_COMMON,
+	WRENCH_ISOLATION_RARE,
+	WRENCH_TRICKS_BASIC,
+	WRENCH_TRICKS_GREAT,
+	WRENCH_TRICKS_TRASH,
+	WRENCH_TRICKS_COMMON,
+	WRENCH_TRICKS_RARE,
 ]
 
 static var temporary_picks: Array[PickTemplates] = [

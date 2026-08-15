@@ -30,95 +30,82 @@ static var TUTORIAL := DeckTemplates.new(
 		+ "the game's basic mechanics."
 	),
 	func(): return _spec_templates([
-		PickTemplates.TINY_HOOK,
-		PickTemplates.TINY_HOOK,
-		PickTemplates.TINY_HOOK,
+		PickTemplates.HOOK_PRECISE_BASIC,
+		PickTemplates.HOOK_PRECISE_BASIC,
+		PickTemplates.HOOK_PRECISE_BASIC,
 	])
 )
 
 static var STANDARD := DeckTemplates.new(
 	"Standard",
 	(
-		"A reliable, well rounded deck."
-		+ "\n\nThe standard deck is capable of opening almost any lock"
-		+ " and making use of any pick you find."
+		"A balanced set of picks. It can tackle any early lock, and can use most picks you find."
+		+ "\n\nIt's biggest weakness is a lack of push - add picks quickly or be locked out."
 	),
 	func(): return _spec_templates([
-		PickTemplates.ONE_ONE_FLAT_RAKE,
-		PickTemplates.BROAD_PUSH_REVEAL_RAKE,
-		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
-		PickTemplates.TWO_FOUR_TWO_DIAMOND,
-		PickTemplates.TWO_FOUR_TWO_DIAMOND,
-		PickTemplates.THREE_STACK_CRUSH,
-		PickTemplates.CLASSIC_HOOK,
-		PickTemplates.CLASSIC_HOOK,
-		PickTemplates.ONE_TWO_JAM,
-		PickTemplates.FORK_JAM
+		PickTemplates.RAKE_BULK_TEST_BASIC,
+		PickTemplates.RAKE_HYBRID_S_BASIC,
+		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_REVEAL_BASIC,
+		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.WRENCH_END_TURN_BASIC
 	])
 )
 
 static var POWERFUL := DeckTemplates.new(
 	"Daring",
 	(
-		"A deck for the smash and grab."
-		+ "\n\nThis deck features large picks with big effects. "
-		+ "It might struggle against "
-		+ "breakage, but that's why you've brought a few extras."
+		"A deck full of powerful rakes, designed for the quick heist or smash-and-grab."
+		+ "\n\nIts biggest weakness is a lack of push - add picks quickly or be locked out."
 	),
 	func() : return _spec_templates([
-		PickTemplates.EIGHT_PUSH_DEEP_BOMB_RAKE,
-		PickTemplates.TWO_ONE_FLAT_RAKE,
-		PickTemplates.TWO_ONE_FLAT_RAKE,
-		PickTemplates.NOISY_FOUR_PUSH_RAKE,
-		PickTemplates.NOISY_FOUR_PUSH_RAKE,
-		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
-		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
-		PickTemplates.TRIANGLE_CRUSH_DIAMOND,
-		PickTemplates.TRIANGLE_CRUSH_DIAMOND,
-		PickTemplates.LARGE_TEST_DIAMOND,
-		PickTemplates.PUSH_CRUSH,
-		PickTemplates.PUSH_JAM_RAKE,
-	])
-)
-
-static var TRICKY := DeckTemplates.new(
-	"Clever",
-	(
-		"The clever deck makes heavy use of Jam to precisely break down "
-		+ "locks pin-by-pin, shaping it's valuable rakes to prevent surprise damage."
-	),
-	func(): return _spec_templates([
-		PickTemplates.DEEP_REVEAL_RAKE,
-		PickTemplates.TEST_ACROSS_WITH_JAM_RAKE,
-		PickTemplates.NOISY_FOUR_PUSH_RAKE,
-		PickTemplates.TWO_ONE_FLAT_RAKE,
-		PickTemplates.TWO_ONE_FLAT_RAKE,
-		PickTemplates.OFFSET_FINISHER_DIAMOND,
-		PickTemplates.OFFSET_FINISHER_DIAMOND,
-		PickTemplates.LARGE_TEST_DIAMOND,
-		PickTemplates.ONE_TWO_JAM,
-		PickTemplates.FORK_JAM
+		PickTemplates.RAKE_BULK_PUSH_BASIC,
+		PickTemplates.RAKE_BULK_PUSH_BASIC,
+		PickTemplates.RAKE_GAPS_BASIC,
+		PickTemplates.RAKE_BULK_TEST_BASIC,
+		PickTemplates.RAKE_HYBRID_S_BASIC,
+		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.DIAMOND_DARK_BASIC,
+		PickTemplates.WRENCH_ISOLATION_BASIC
 	])
 )
 
 static var CAREFUL := DeckTemplates.new(
 	"Patient",
 	(
-		"The patient deck is perfect for the thief who names their picks "
-		+ "and can't stand the thought of losing even one."
-		+ "\n\nThere are no surprises when you bring this much Test."
+		"The hooks in this deck let you approch each lock carefully, tackling one pin at a time."
+		+ "\n\nSave your torsion wrench for the end of the turn, as this strategy takes time."
 	),
 	func(): return _spec_templates([
-		PickTemplates.THREE_REVEAL_RAKE,
-		PickTemplates.DARK_TEST_RAKE,
-		PickTemplates.DARK_TEST_RAKE,
-		PickTemplates.PUSH_JAM_RAKE,
-		PickTemplates.MEDIUM_FOUR_REACH_DIAMOND,
-		PickTemplates.BONUS_REVEAL_HOOK,
-		PickTemplates.CLASSIC_HOOK,
-		PickTemplates.CLASSIC_HOOK,
-		PickTemplates.THREE_TEST_HOOK,
-		PickTemplates.FOCUS_LENS_JAM,
+		PickTemplates.RAKE_GAPS_BASIC,
+		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_FINISHER_BASIC,
+		PickTemplates.HOOK_PRECISE_BASIC,
+		PickTemplates.HOOK_PRECISE_BASIC,
+		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.HOOK_CLOSE_TEST_BASIC,
+		PickTemplates.WRENCH_TRICKS_BASIC,
+	])
+)
+
+static var TRICKY := DeckTemplates.new(
+	"Clever",
+	(
+		"Careful manipulation of jam will let you turn your heavy rakes and diamonds into surgical instruments."
+		+ "\n\nDon't get reckless - you only have four of them."
+	),
+	func(): return _spec_templates([
+		PickTemplates.HOOK_JUMP_TEST_BASIC,
+		PickTemplates.WRENCH_LOCK_N_BLOCK_BASIC,
+		PickTemplates.WRENCH_ISOLATION_BASIC,
+		PickTemplates.WRENCH_TRICKS_BASIC,
+		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_DARK_BASIC,
+		PickTemplates.RAKE_BULK_PUSH_BASIC,
+		PickTemplates.RAKE_BULK_PUSH_BASIC
 	])
 )
 
@@ -128,7 +115,7 @@ static var RANDOM := DeckTemplates.new(
 		"Grab a random handful of lockpicks and get started.\n"
 		+ "Maybe it'll work out this time?"
 	),
-	PickGenerator.get_many_base_cards.bind(12)
+	PickGenerator.get_many_base_cards.bind(10)
 )
 
 static var ALL_DECKS: Array[DeckTemplates] = [
