@@ -59,7 +59,7 @@ func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
 	current_state = GameState.BETWEEN_LOCK
 	if $GameCore/LockBody/CountdownMain.count >= 2:
-		game.add_coins(5)
+		game.add_coins(10)
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false

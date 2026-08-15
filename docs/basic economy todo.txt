@@ -1,5 +1,7 @@
 - Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
 
-- pick loot values
-- update ingot logic
-- new shop
+x pick loot values
+x update ingot logic
+x new shop
+
+- temp picks have textbox covered by icons

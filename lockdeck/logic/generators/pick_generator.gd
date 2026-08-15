@@ -37,17 +37,25 @@ static func get_rarity_set_with_template_value(
 ) -> Array[PickTemplates.Rarities]:
 	var rarity_set: Array[PickTemplates.Rarities] = []
 	var final_delta := -999_999
-	for i in 10:
+	var iterations := 0
+	var set_value := 0
+	while iterations < 3:
+		iterations += 1
 		var new_rarity_set: Array[PickTemplates.Rarities] = []
 		for j in count:
 			new_rarity_set.append(PickTemplates.rarity_catalog.keys().pick_random())
-		var current_delta: int = new_rarity_set.reduce(func(sum, r): return sum + r, 0)
+		set_value = new_rarity_set.reduce(func(sum, r): return sum + r, 0)
+		var current_delta := set_value - template_value
 		if abs(current_delta) < abs(final_delta):
 			final_delta = current_delta
 			rarity_set = new_rarity_set
 		if current_delta == 0:
 			break
-			
+	
+#	print(
+#		"Generated rarity set %s with value %s from count %s and value %s after %s iterations"
+#		% [rarity_set, set_value, count, template_value, iterations]
+#	)
 	return rarity_set
 
 ## Gets n cards with total template value (trash=0, great=4, etc)

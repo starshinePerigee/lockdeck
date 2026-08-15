@@ -77,7 +77,7 @@ func do_remove_forever(card: CardSpec) -> void:
 
 func do_sell(card: CardSpec) -> void:
 	_game.remove_real_pick_forever(card)
-	_game.add_coins(5)
+	_game.add_coins(10)
 	deck_widget.load_cards(_game.current_deck)
 	update_info()
 
