@@ -70,7 +70,6 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.show_see_prev = true
 			$PreviousButton/LastHint.visible = false
 			$LockBody/CylinderMain.cancel_preview()
-			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(false)
 			reset_countdown()
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
@@ -103,9 +102,9 @@ func set_state(state: InputState) -> void:
 			)
 			$HandMain/Hand.hide_hand()
 			$HandMain/Hand.disable_all()
+			$LockBody/CylinderMain.show_preview(_result)
 			$PreviousButton.show_see_prev = false
 			$PreviousButton/LastHint.visible = true
-			$LockBody/CylinderMain/Cylinders.set_previouses_visibility(true)
 			dis_en_able_buttons()
 		InputState.CARD_DISPLAY:
 			$Notifications.clear()
@@ -231,27 +230,28 @@ func bg_cancel() -> void:
 	set_state(InputState.REFRESH_PENDING)
 	set_state(InputState.INACTIVE)
 
+@onready var _result := EndStepSpec.new()
+
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
-	var result: EndStepSpec = $LockBody/CylinderMain.execute(card, cylinder)
+	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
-	if result.pick_broke or break_next:
+	if _result.pick_broke or break_next:
 		break_pick(card)
 	else:
 		$DiscardMain.add_card(card)
 	
-	$LockBody/CylinderMain/Cylinders.load_previouses(result)
-	if result.last_hint:
-		$PreviousButton/LastHint.text = "Last hint: %s" % result.last_hint
+	if _result.last_hint:
+		$PreviousButton/LastHint.text = "Last hint: %s" % _result.last_hint
 	else:
 		$PreviousButton/LastHint.text = "No hints last turn"
 	
-	if result.lock_solved:
+	if _result.lock_solved:
 		solve_lock()
 	else:
 		cleanup_step()
@@ -400,5 +400,5 @@ func _ready() -> void:
 	if get_tree().current_scene == self:
 		print("Running in debug mode.")
 		DEBUG_MODE = true
-		$DeckMain.add_cards(PickGenerator.get_standard_test_hand(deck_count))
+		$DeckMain.add_cards(PickGenerator.get_many_base_cards(deck_count))
 		restart()

@@ -96,6 +96,7 @@ func load_spec(pin_spec: PinSpec) -> void:
 		
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
+		depth_refs[i].exhausted = pin_spec.activated[i]
 		var reveal_level := pin_spec.reveals[i]
 		if reveal_level in [
 			PinSpec.RevealLevel.DANGEROUS,
@@ -129,39 +130,6 @@ func clear_results() -> void:
 		depth.result = Results.EMPTY
 		depth.show_jam_result = false
 	$Stack/BreakResult.visible = false
-
-func load_previouses(effects: Array[EffectSpec]) -> void:
-	var offset := 0
-	for i in len(effects):
-		var effect := effects[i]
-		if effect.flavor in [Effects.EMPTY, Effects.BLANK]:
-			continue
-		for d in effect.realized_positions.keys():
-			if d < len(depth_refs):
-				depth_refs[d].add_previous_icon(offset, effect.flavor)
-		offset += 1
-
-func load_activations(activations: Array[bool]) -> void:
-	for i in len(activations):
-		depth_refs[i].exhausted = activations[i]
-
-func clear_previouses() -> void:
-	for depth in depth_refs:
-		depth.clear_previous_icons()
-		depth.exhausted = false
-
-## Show all the previously loaded previous icons
-func set_previouses_visibility(show_previous: bool) -> void:
-	for depth in depth_refs:
-		depth.show_previous = show_previous
-		depth.show_exhausted = show_previous
-	if show_previous:
-		$JamIndicator.visible = false
-		$KeyIndicator.visible = false
-	else:
-		$JamIndicator.visible = jam_count > 0
-		$KeyIndicator.visible = _key_visible
-
 #endregion
 
 #region input logic

@@ -1,0 +1,17 @@
+﻿family,archetype,basic,great,trash,common,rare
+rake,bulk_push,PPT[PPT[PPT]PPT,PPTT[PPTT[PPTT[PPPR]PPPR,PP[P[PP[PP]PP,PPT[PPTT[PPT[PPTT]PPT,TT[PPP[TT[PPP]TT
+rake,bulk_test,TT[TT[TTTJ]T,TT[TT[RR[PPRR]TT,TTT[PTT[PTT]TTT,TT[PTTT[PTTT,PJ[PJ[PTT]PTT
+rake,hybrid_s,PT[PT[PR]PT,PT[PR[PT[PRT]RT,T[T[P[P]T,P[P[PT[PT]P,P[TT[PTTT]PT
+rake,gaps,P.T[P.T[P.T]P.T,P.RT[P.RT[P.RT]P.RT,.T[..T[.T]..T,P.TT[P.RR]P.TT,P.T[PT[P..TT]..T
+diamond,dark,PP[PPPP,PT[PPTT[PPPPJ,PPJ[P[PPPP]P,P[PPT[PPPP]PT,PTT[PPPP[PPPP]PTT
+diamond,three_push,PT[PPT[PPPT,PTT[PPPTT,P[PP[PPP]P,T[TT[PPP]P,TT[PPP[TT[PPP]TT
+diamond,finisher,PTT[PPJJ]JJ,T[PTT[PPPJJ]J,PPJ[PPPJ,P[PPJJ,TT[PPPJJ]JJ
+diamond,reveal,PR[PRR,PR[P.R[PP.RR,P[RT]P,R[R[RP[PP]PP,P[PP[RRR]P
+hook,precise,PT,PRT,P,T[PTT,P.RTJ
+hook,pushy,PPTTT,PPP.TT,PP..T,PPP,PP.R
+hook,jump_test,P.TTT,..RRTT,.T,.TTTT,PP..TT
+hook,close_test,TTT,RRTTT,R,P[RTTT,TTT[.TTT
+wrench,end_turn,J[JJ,JJ[JJ]JJ,PJ[PJ,T[T[TJ[T]TJ,P[PJ[PTJ[PTTJ
+wrench,lock_n_block,JJJJ[TTJJ,JJJJJ,P[PJJ]P,P[JJJ,PT[JJJ]PT
+wrench,isolation,TTJ[P]TTJ,J[J[JJ[RTT]JJ,JJ[P,J[J[PT[PT]J,JJ[J[J[T]PT
+wrench,tricks,TJ[TJ,TT[J[J]TT,J,TTJ,P[J[JJ[J]P

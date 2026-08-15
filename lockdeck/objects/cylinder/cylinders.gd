@@ -53,25 +53,6 @@ func set_results(pin_results: Array[ResultSpec]) -> void:
 func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
-
-## Loads a new set of effects into pins:
-func load_previouses(spec: EndStepSpec):
-	for pin in pin_refs:
-		pin.clear_previouses()
-	for pin in spec.effects.keys():
-		var effects: Array[EffectSpec] = []
-		effects.assign(spec.effects[pin])
-		pin_refs[pin].load_previouses(effects)
-	for pin in spec.activations.keys():
-		var activations: Array[bool] = []
-		activations.assign(spec.activations[pin])
-		pin_refs[pin].load_activations(activations)
-
-## Show all the previously loaded previous icons
-func set_previouses_visibility(show_previous: bool) -> void:
-	for pin in pin_refs:
-		pin.set_previouses_visibility(show_previous)
-		
 #endregion
 
 #region input logic
@@ -116,7 +97,17 @@ func _handle_cursor_enter_pin(pin_index: int) -> void:
 		_last_cursor = pin_index
 		new_pin_cursored.emit(pin_index)
 
+## _gets the rectangle that includes only active pins
+func get_pin_rect() -> Rect2:
+	var rect := pin_refs[0].get_global_rect()
+	for pin in pin_refs:
+		if pin.visible_:
+			rect.end = pin.get_global_rect().end
+	return rect
+
 func _handle_cursor_exit() -> void:
+	if get_pin_rect().has_point(get_global_mouse_position()):
+		return
 	_last_cursor = -1
 	pin_no_longer_cursored.emit()
 
@@ -136,7 +127,7 @@ func _ready() -> void:
 		pin_refs[i].card_entered_pin.connect(_handle_card_enter_pin.bind(i))
 		pin_refs[i].card_exited_pin.connect(_handle_card_exit_pin.bind(i))
 		pin_refs[i].mouse_entered.connect(_handle_cursor_enter_pin.bind(i))
-	mouse_exited.connect(_handle_cursor_exit)
+		pin_refs[i].mouse_exited.connect(_handle_cursor_exit)
 
 func _init() -> void:
 	pin_refs = []

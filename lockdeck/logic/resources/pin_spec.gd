@@ -26,7 +26,7 @@ enum RevealLevel {
 @export var depths: Array[Depths]
 ## Revealed status array.
 @export var reveals: Array[RevealLevel]
-## Checks if depths have been tested this turn
+## Checks if depths have been tested this execution
 @export var checked: Array[bool]
 ## Checks if depths have been activated this turn
 @export var activated: Array[bool]
@@ -37,12 +37,6 @@ enum RevealLevel {
 @export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
-## Holds all pending effects
-@export var pending_effects: Array[EffectSpec]
-## Holds all effects that were executed this turn
-@export var executed_effects: Array[EffectSpec]
-## Tracks if the pin has moved and thus is due for activation
-@export var activation_pending: bool
 ## Tracks the current test/reveal hint pointer. Measures positions beyond current position.
 @export var sight_pointer: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
@@ -82,7 +76,7 @@ func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
 
 ## Get if the pin is currently revealed
 func get_revealed(idx: int) -> bool:
-	return reveals[idx] == RevealLevel.REVEALED
+	return reveals[idx] <= RevealLevel.REVEALED
 
 ## Get if the pin was checked (and not revealed)
 func get_checked(idx: int) -> bool:
@@ -90,11 +84,15 @@ func get_checked(idx: int) -> bool:
 
 ## Returns true if the pin is currently solved.
 func is_solved() -> bool:
-	return depths[pin_position] in Depths.SOLVE_DEPTHS
+	return pin_position == PIN_DEPTH_COUNT - 1
 
 ## Returns true if the pin is currently jammed
 func is_jammed() -> bool:
 	return jam_count > 0
+
+## Returns true if the current depth has been activated
+func is_exhausted() -> bool:
+	return activated[pin_position]
 
 ## Update the results tracking for this specific pin
 func update_result(new_result: Results, pos: int = -1) -> void:
@@ -105,51 +103,34 @@ func update_result(new_result: Results, pos: int = -1) -> void:
 #endregion
 
 #region execution handling
-## Process all effects in pending effects, evaluated recursively
-func execute() -> Array[EffectSpec]:
-	executed_effects.append(get_home_effect())
-	
-	var iterations := 0
-	while true:
-		iterations += 1
-		if iterations >= 1000:
-			push_error("Pin execution loop overflow!")
-			print(" Current stack:")
-			for effect in pending_effects:
-				print("  " + effect.flavor.effect_name)
-			break
-		
-		# check for activation:
-		if activation_pending:
-			if (
-				len(pending_effects) == 0
-				or not pending_effects[0].flavor in [Effects.PUSH, Effects.CRUSH]
-			):
-				var depth := activate_and_get_depth()
-				# print(
-				# 	"Activating pin at depth %s with effect %s"
-				# 	% [pin_position, depth.effect.effect_name]
-				# )
-				pending_effects.push_front(EffectSpec.new(depth.effect, depth.value))
-		
-		if len(pending_effects) == 0:
-			break
-		
-		var executed_effect: EffectSpec = pending_effects.pop_front()
+## Process a series of effects
+## This will update effects in-place with execution info
+func execute(pending_effects: Array[EffectSpec]) -> void:
+	update_result(Results.HOME)
+	for effect in pending_effects:
 		# print(
 		# 	"Executing effect %s with value %s" 
-		# 	% [executed_effect.flavor.effect_name, executed_effect.value]
+		# 	% [effect.flavor.effect_name, effect.value]
 		# )
-		execute_effect(executed_effect)
-		executed_effects.append(executed_effect)
+		execute_effect(effect)
 	
-	## anything after OOB gets discarded:
-	var return_effects := []
-	for effect in executed_effects:
-		return_effects.append(effect)
-		if effect.flavor == Effects.OUT_OF_BOUNDS:
-			break
-	return executed_effects
+	if is_exhausted():
+		update_result(Results.EXHAUSTED)
+	else:
+		update_result(Results.ACTIVATE)
+
+
+## Activates the pin, doing the effect for the depth it is on
+func activate() -> EffectSpec:
+	# activate the pin:
+	var depth := activate_and_get_depth()
+	var effect := EffectSpec.new(depth.effect, depth.value)
+	# print(
+	# 	"Activating pin at depth %s with effect %s"
+	# 	% [pin_position, effect.effect_name]
+	# )
+	execute_effect(effect)
+	return effect
 
 ## Execute a single effect
 func execute_effect(effect) -> void:
@@ -160,21 +141,20 @@ func execute_effect(effect) -> void:
 			pass
 		Effects.PUSH:
 			push_pin(effect)
+		Effects.SAFE_PUSH:
+			push_pin(effect, true)
 		Effects.TEST:
 			test_pin(effect)
 		Effects.REVEAL:
 			reveal_pin(effect)
 		Effects.JAM:
 			add_jam(effect)
-		Effects.CRUSH:
-			crush_pin(effect)
 		Effects.SKIP:
 			skip_pin_forward(effect)
 		Effects.BOUNCE:
 			bounce_pin(effect)
-		Effects.OUT_OF_BOUNDS:
-			handle_break(effect, true)
-			return
+		Effects.LUCKY:
+			lucky_boost(effect)
 		Effects.BREAK:
 			handle_break(effect)
 			return
@@ -184,114 +164,77 @@ func execute_effect(effect) -> void:
 			push_error("DEBUG effect flavor called!")
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
-	
-	if effect.broke_pick:
-		pending_effects.push_front(EffectSpec.new(Effects.BREAK))
-	if effect.oobed:
-		pending_effects.push_front(EffectSpec.new(Effects.OUT_OF_BOUNDS))
-	if effect.unlock_pin:
-		pending_effects.push_front(EffectSpec.new(Effects.UNLOCK))
 #endregion
 
 #region effect handling
-## Get the first home effect
-func get_home_effect() -> EffectSpec:
-	if (
-		len(pending_effects) > 0
-		and pending_effects[0].flavor == Effects.CRUSH
-		and depths[pin_position] not in Depths.UNCRUSHABLE
-	):
-		update_result(Results.HOME_CRUSH)
-	else:
-		update_result(Results.HOME)
-	var empty_effect := EffectSpec.new(Effects.HOME)
-	empty_effect.add_position(pin_position)
-	return empty_effect
-
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
 func activate_and_get_depth() -> Depths:
-	activation_pending = false
+	reveal_position(pin_position, true)
 	if activated[pin_position]:
 		return Depths.EXHAUSTED
 	else:
 		activated[pin_position] = true
-		reveal_position(pin_position)
-		update_result(Results.ACTIVATE)
+		update_result(Results.AUTO)
 		return depths[pin_position]
-	# tutorialization guide: should emit a signal that triggers an explainer
 
 ## Checks a depth (or the current depth is none is provided), if it's not revealed
 func test_position(pos: int = -1) -> void:
 	if pos == -1:
 		pos = pin_position
+	
+	if get_revealed(pos):
+		update_result(Results.NONE, pos)
+		return
+	
 	checked[pos] = true
 	update_result(Results.HINT, pos)
 
 ## Reveals a depth (or the current depth if none is provided)
-func reveal_position(pos: int = -1) -> void:
+func reveal_position(pos: int = -1, hide_result := false) -> void:
 	if pos == -1:
 		pos = pin_position
-	reveals[pos] = RevealLevel.REVEALED
-	update_result(Results.REVEAL, pos)
-	hint_tracks[pos] = ""
-
-## Crush (set depth to empty and reveal) a depth (or current depth if none provided)
-## returns true if this breaks the pick, and false otherwise
-func crush_position(pos: int = -1) -> void:
-	if pos == -1:
-		pos = pin_position
-	var depth := depths[pos]
-	reveal_position(pos)
-	if depth not in Depths.UNCRUSHABLE:
-		depths[pos] = Depths.EMPTY
-		update_result(Results.CRUSH, pos)
+	
+	if get_revealed(pos):
+		if not hide_result:
+			update_result(Results.NONE, pos)
+	else:
+		reveals[pos] = RevealLevel.REVEALED
+		update_result(Results.REVEAL, pos)
+		hint_tracks[pos] = ""
 
 ## Handle jam and move the pin accordingly
-func push_pin(effect: EffectSpec) -> void:
-	_push_crush(effect)
-
-func crush_pin(effect: EffectSpec) -> void:
-	_push_crush(effect)
-
-func _push_crush(effect: EffectSpec) -> void:
+func push_pin(effect: EffectSpec, safe := false) -> void:
 	var remainder := push_jam(effect.value)
 	if remainder <= 0:
 		effect.set_jammed(pin_position)
 		return
-	
-	activation_pending = true
-	
+		
 	for __ in remainder:
-		if effect.flavor == Effects.CRUSH:
-			crush_position()
-			effect.add_position(pin_position)
-
-		if advance_pin(1):
-			effect.oobed = true
-			update_result(Results.BREAK, PIN_DEPTH_COUNT)
-			activation_pending = false
-			if pin_position == PIN_DEPTH_COUNT - 1:
-				effect.unlock_pin = true
-		
-		effect.add_position(pin_position)
-		if effect.broke_pick or effect.oobed:
-			break
-		
-		# we only need to test, since we will activate (which reveals) later
-		# based on activation_pending
-		# also - if we crush, we might crush (which reveals) on the next step
-		# which is fine. 
 		test_position(pin_position)
+		
+		effect.add_position(pin_position + 1)
+		if advance_pin(1):
+			effect.add_position(PIN_DEPTH_COUNT)
+			if not safe:
+				effect.broke_pick = true
+				update_result(Results.BREAK, PIN_DEPTH_COUNT)
+				break
+		if is_solved():
+			update_result(Results.UNLOCK)
 
 ## Bounce the pin backwards
 func bounce_pin(effect: EffectSpec) -> void:
-	activation_pending = true
 	for __ in effect.value:
 		var oob := advance_pin(-1)
 		effect.add_position(pin_position)
 		if oob:
 			return
+
+func lucky_boost(effect: EffectSpec) -> void:
+	clear_jam()
+	advance_pin(PIN_DEPTH_COUNT)
+	effect.add_position(pin_position)
 
 ## Move the pin forward (if positive) or backwards (if negative), returning true if oob'ed.
 func advance_pin(relative: int = 0, absolute: int = -1) -> bool:
@@ -373,13 +316,10 @@ func unlock_pin(effect: EffectSpec) -> void:
 
 ## Handles a break effect
 ## Since breaks a property of the previous effect, this just updates tracking
-func handle_break(effect: EffectSpec, oob := false) -> void:
-	var position := pin_position
-	if oob:
-		position = PIN_DEPTH_COUNT
-	update_result(Results.BREAK, position)
+func handle_break(effect: EffectSpec) -> void:
+	update_result(Results.BREAK, pin_position)
 	effect.broke_pick = true
-	effect.add_position(position)
+	effect.add_position(pin_position)
 #endregion
 
 #region ending and cleanup methods
@@ -428,23 +368,37 @@ func shadow_clone(shadow: PinSpec) -> void:
 
 ## Reset parameters after running a simulation
 func reset_shadow(shadow: PinSpec) -> void:
+	shadow.end_step()
 	shadow.pin_position = pin_position
 	shadow.jam_count = jam_count
+	shadow.reveals.assign(reveals)
+	shadow.activated.assign(activated)
 
 ## Resets all single-execution values
 func end_step() -> void:
 	results.fill(Results.EMPTY)
 	checked.fill(false)
-	activated.fill(false)
-	activation_pending = false
-	pending_effects = []
-	executed_effects = []
 	sight_pointer = 0
+
+func reset_exhaustion() -> void:
+	activated.fill(false)
+	activated[0] = true
+	activated[-1] = true
+
+## Performs the end of turn actions
+func end_turn_and_fall() -> void:
+	if is_jammed():
+		clear_jam()
+	else:
+		advance_pin(0, 0)
+	reset_exhaustion()
+	end_step()
 
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
+	reset_exhaustion()
 	end_step()
 #endregion
 
@@ -468,9 +422,6 @@ func _init(fill: Depths = Depths.DEBUG):
 	activated = []
 	activated.resize(PIN_DEPTH_COUNT)
 	activated.fill(false)
-	
-	pending_effects = []
-	executed_effects = []
 	
 	results = []
 	results.resize(PIN_DEPTH_COUNT + 1)

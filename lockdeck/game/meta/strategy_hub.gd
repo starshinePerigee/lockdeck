@@ -52,7 +52,7 @@ func do_repair_all() -> void:
 	var repair_cost := 0
 	for card in _game.broken_picks:
 		repair_cost += card.get_repair_cost()
-	if repair_cost >= _game.coins:
+	if repair_cost > _game.coins:
 		push_error(
 			"Tried to repair all with total cost %s and coins %s! Setting coins to 0."
 			% [repair_cost, _game.coins]

@@ -11,13 +11,6 @@ JAM
 - can test/reveal through this jam
 - return to your hand once
 
-CRUSH
-- clears all jam
-- crushes the result depth after it activates (crushes any depth it activates)
-- doesn't crush safe depths
-- draw a card for each interesting depth crushed
-- sets the pin if this pick breaks
-
 PUSH
 - immune to bounce / push
 - doesn't trigger non-break traps (worse idea than above)
@@ -31,6 +24,9 @@ PUSH
 - repair cost is always 2
 - will skip revealed active depths
 - does not affect jam
+- clears all jam
+- exhausts the results depth after it activates
+- sets the pin if break
 
 TEST
 - advance if the next one is safe

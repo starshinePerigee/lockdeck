@@ -16,14 +16,8 @@ var realized_pin: int = -1
 ## used for displaying previous results. Dictionary as a set
 var realized_positions: Dictionary[int, bool]
 
-## track if this effect broke the pick for reasons other than oob
+## track if this effect broke the pick, including as part of oob
 var broke_pick: bool = false
-
-## track if this effect pushed pin out of bounds
-var oobed: bool = false
-
-## track if this effect unlocked the current pin
-var unlock_pin: bool = false
 
 ## Marks a position as touched by this effect. Can be called with the same value multiple times.
 func add_position(position: int) -> void:

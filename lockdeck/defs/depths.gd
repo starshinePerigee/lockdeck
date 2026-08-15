@@ -72,13 +72,13 @@ static var EMPTY := Depths.new("empty", DangerLevel.CLEAR, Effects.EMPTY)
 static var EXHAUSTED := Depths.new("exhausted", DangerLevel.INVALID, Effects.EMPTY)
 
 ## Push effect
-static var PUSH := Depths.new("push", DangerLevel.INTERESTING, Effects.PUSH, 2)
+static var PUSH := Depths.new("push", DangerLevel.CLEAR, Effects.SAFE_PUSH, 2)
 
 ## Jam effect
 static var JAM := Depths.new("jam", DangerLevel.INTERESTING, Effects.JAM, 3)
 
 ## Unlock depth, needed to win.
-static var UNLOCK := Depths.new("unlock", DangerLevel.CLEAR, Effects.UNLOCK)
+static var LUCKY := Depths.new("lucky", DangerLevel.CLEAR, Effects.LUCKY,)
 
 ## Reveals the next hazard (if one) or sets the pin as clear
 static var HINT := Depths.new("hint", DangerLevel.CLEAR, Effects.HINT)  # TODO
@@ -86,8 +86,9 @@ static var HINT := Depths.new("hint", DangerLevel.CLEAR, Effects.HINT)  # TODO
 ## Breaks the pick. Bad.
 static var BREAK := Depths.new("break", DangerLevel.DANGEROUS, Effects.BREAK)
 
-## Locks pin if skipped, does nothing if activated.
-static var TRAP := Depths.new("trap", DangerLevel.INTERESTING, Effects.EMPTY)
+# ## Locks pin if skipped, does nothing if activated.
+## extra fun bonus break
+static var TRAP := Depths.new("trap", DangerLevel.DANGEROUS, Effects.BREAK)
 
 ## Locks the cylinder until another pin is set
 static var BIND := Depths.new("bind", DangerLevel.INTERESTING, Effects.BIND)
@@ -100,16 +101,3 @@ static var WARN := Depths.new("warn", DangerLevel.CLEAR, Effects.EMPTY)
 
 ## Bounces up four (or to the edge)
 static var BOUNCE := Depths.new("bounce", DangerLevel.INTERESTING, Effects.BOUNCE, 4)
-
-
-## Holds all depths which count as solves
-static var SOLVE_DEPTHS: Array[Depths] = [
-	FINAL, 
-	UNLOCK
-]
-
-## Holds depths which resist crush
-static var UNCRUSHABLE: Array[Depths] = [
-	FINAL,
-	BASE
-]

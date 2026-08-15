@@ -10,7 +10,10 @@ better cancel area handling
 - make sure you can click cancel out of end turn
 - also for end turn
 
-if you solve a five-pin level with the rightmost pin still extended, it covers the continue button
+click to select also weird right now:
+- on card select and start drag, force recalculate
+- click and then mouse over pin - broken
+
 
 deck selection does not reset on return to menu
 

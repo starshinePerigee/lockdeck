@@ -30,11 +30,17 @@ static var BLANK := Effects.new("blank")
 ## do nothing. Depth / pick effect  
 static var EMPTY := Effects.new("empty")
 
-## used to mark the starting point for execution
-static var HOME := Effects.new("home")
+## also do nothing.
+static var EXHAUSTED := Effects.new("exhausted")
 
 ## move the pin, triggering the depth at the destination and hinting everything between
 static var PUSH := Effects.new("push")
+
+## like push, but doesn't break on OOB
+static var SAFE_PUSH := Effects.new("safe_push")
+
+## Advance 5 but don't hint anything
+static var LUCKY := Effects.new("lucky")
 
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new("reveal")
@@ -47,9 +53,6 @@ static var UNJAM := Effects.new("unjam")
 
 ## Test the next depths, indicating if there is a hazard or not
 static var TEST := Effects.new("test")
-
-## Destroy the affected depth, replacing it with a blank
-static var CRUSH := Effects.new("crush")
 
 ## Card effect - advance the pin without activating. 
 static var SKIP := Effects.new("skip")

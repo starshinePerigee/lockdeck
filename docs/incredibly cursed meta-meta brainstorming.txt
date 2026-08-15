@@ -20,3 +20,4 @@ modes:
 - darkness: all levels start with candle exhausted, but you earn way more coins. also start with extra broken picks
 - crushed: at the end of each lock, every pick used gets broken. earn way more coins at the end, and start with extra broken picks. Deck limit +x
 - picks can only be repaired once
+- attached: picks auto-repair after each level but your deck size is 16 and you have a break limit

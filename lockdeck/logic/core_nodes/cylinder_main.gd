@@ -62,12 +62,13 @@ func preview(card: CardSpec, index: int) -> void:
 	for i in len(pins):
 		pins[i].reset_shadow(_shadow_pins[i])
 	
-	execute(card, index, true)
+	var end_step := execute(card, index, true)
 	
-	var results: Array[ResultSpec] = []
-	for pin in _shadow_pins:
-		results.append(pin.get_result_spec())
-	$Cylinders.set_results(results)
+	show_preview(end_step)
+
+## Loads a preview
+func show_preview(end_step: EndStepSpec) -> void:
+	$Cylinders.set_results(end_step.results)
 
 ## Removes the current preview.
 func cancel_preview() -> void:
@@ -78,22 +79,9 @@ func get_current_drag_target() -> int:
 	return $Cylinders.current_active_pin()
 
 #region pick execution logic
-## Loads a CardSpec, turning it into a dictionary of live duplicated effects
-## and loading them into the relevant pins
-func load_card(
-	card: CardSpec,
-	card_index: int,
-	target_pins: Array[PinSpec]
-) -> void:
-	for k in card.effects.keys():
-		var pin_index: int = card_index - k
-		if pin_index >= 0 and pin_index < len(pins):
-			for e in card.effects[k]:
-				var new_e := EffectSpec.new(e.flavor, e.value)
-				target_pins[pin_index].pending_effects.append(new_e)
-
 ## Applies the cardspec at the specified index.
-func execute(card: CardSpec, card_index: int, shadow := false) -> EndStepSpec:
+func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec:
+	# setup
 	var target_pins := _shadow_pins
 	if not shadow:
 		target_pins = pins
@@ -101,23 +89,37 @@ func execute(card: CardSpec, card_index: int, shadow := false) -> EndStepSpec:
 	for pin in target_pins:
 		pin.end_step()
 	
-	load_card(card, card_index, target_pins)
-	
 	var result := EndStepSpec.new()
 	
+	# execute the card's effects
 	for pin_index in range(len(target_pins) - 1, -1, -1):
-		if len(target_pins[pin_index].pending_effects) > 0:
-			# print(
-			# 	"Executing pin %s with %s effects" 
-			# 	% [pin_index, len(pins[pin_index].pending_effects)]
-			# )
-			var executed_effects := target_pins[pin_index].execute()
-			for effect in executed_effects:
-				effect.realized_pin = pin_index
-				if effect.broke_pick:
-					result.pick_broke = true
-			result.effects[pin_index] = executed_effects
-			result.activations[pin_index] = pins[pin_index].activated
+		var pin := target_pins[pin_index]
+		var card_index = card_position - pin_index
+		if card_index not in card.effects.keys():
+			continue
+		
+		var effects: Array[EffectSpec] = []
+		for e in card.effects[card_index]:
+			var new_e := EffectSpec.new(e.flavor, e.value)
+			effects.append(new_e)
+		
+#		print(
+#			"Executing pin %s with %s effects (shadow: %s)" 
+#			% [pin_index, len(effects), shadow]
+#		)
+		pin.execute(effects)
+		
+		for effect in effects:
+			result.record_effect(effect, pin_index)
+	
+	# activate every pin
+	for pin_index in len(target_pins):
+		var effect := target_pins[pin_index].activate()
+		result.record_effect(effect, pin_index)
+	
+	# clean up and record
+	for pin in target_pins:
+		result.results.append(pin.get_result_spec())
 	
 	result.lock_solved = lock_solved()
 	if not shadow:
@@ -163,9 +165,5 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		if pin.is_jammed():
-			pin.clear_jam() 
-		else:
-			pin.advance_pin(0, 0)
-		pin.end_step()
+		pin.end_turn_and_fall()
 	$Cylinders.set_pin_specs(pins)

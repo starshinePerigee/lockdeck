@@ -71,7 +71,7 @@ layout_mode = 0
 offset_left = 495.0
 offset_top = 143.0
 offset_right = 879.0
-offset_bottom = 331.0
+offset_bottom = 382.0
 theme_type_variation = &"PaperPanel"
 
 [node name="Info" type="RichTextLabel" parent="Panel"]

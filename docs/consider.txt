@@ -1,7 +1,22 @@
-only activate one depth per pin?
-- a lot of the bullshit breaks come from push chains
-- it's also vastly more complicated
 
 show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
 s/jam/bind
+
+
+COST REBALANCING:
+Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+
+make cost 20 + 10/break
+
+update denominations: 
+small copper: 1
+big copper: 2
+small silver: 3
+big silver: 5
+small gold: 10
+big gold: 20
+
+
+also: pull picks from the starter decks and make the player buy more? (requires more picks in the shop)
+

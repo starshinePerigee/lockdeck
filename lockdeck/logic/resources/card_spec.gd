@@ -31,7 +31,7 @@ func get_repair_cost() -> int:
 static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
 		template.pick_name,
-		template.description,
+		"",
 		template.texture,
 		template.effects
 	)
