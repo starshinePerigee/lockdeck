@@ -30,12 +30,12 @@ func do_coin(coin: Loot) -> void:
 
 func do_bar(bar: Loot) -> void:
 	var widget := IngotWidget.unpack(bar.spec)
-	widget.close_popup.connect(bar.get_that_bag)
 	widget.close_popup.connect($LootPopup.remove_and_close)
 	widget.add_coins.connect(game.add_coins)
 	widget.add_pick.connect(game.add_pick)
 	$LootPopup.add_contents_and_show(widget, bar.spec)
 	$LootPopup.visible = true
+	bar.get_that_bag()
 
 var _already_claimed := false
 
@@ -101,4 +101,4 @@ func _ready() -> void:
 	# if name == "__main__:
 	if get_tree().current_scene == self:
 		game = GameSpec.get_in_progress_game()
-		do_loot(100)
+		do_loot(200)

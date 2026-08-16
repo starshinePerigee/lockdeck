@@ -14,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_w7m61")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 z_index = -2
 custom_minimum_size = Vector2(0, 288)
 layout_mode = 0
@@ -27,10 +28,12 @@ z_index = 2
 layout_mode = 2
 
 [node name="LootName" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "LOOT NAME"
 
 [node name="Description" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = "LOOT DESCRIPTION
@@ -43,11 +46,12 @@ layout_mode = 2
 z_index = -1
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer/LootDisplay"]
+[node name="LootTexture" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer/LootDisplay"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 16.0
+offset_left = -56.0
 offset_top = -43.0
-offset_right = 272.0
+offset_right = 200.0
 offset_bottom = 213.0
 texture = ExtResource("2_v64f1")
 stretch_mode = 3
@@ -57,5 +61,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="InnerContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"LargeMargin"
