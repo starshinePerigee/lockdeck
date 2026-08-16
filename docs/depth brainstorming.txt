@@ -1,31 +1,64 @@
 FUNDAMENTAL RULE: PIN EXECUTIONS ARE INDEPENDENT
 results can effect other pins, but these are evaluated *after* all pins and effects fire.
 
+NICE
+- breather: draw two cards
+- info: tests a random depth
+- slippery: if you test / reveal this pin, advance one
+
+JAM DEPTHS (jammed: picks break if a lock is moved)
 - bind: locks this pin until another one is set (if no others, reset another one)
+- jammed: jams this pin for a turn
+- x: jams this pin until it breaks a pin, or end of turn.
+
+ANNOYING
 - reset: resets another pin, or this one
-- hint/key: depth required to activate to unlock the pin
+- hint/key: depth required to activate to unlock the pin; hint reveals it (maybe weird without clear
+- x: a depth that resets the pin if you skip it without exhausting it
+- minima: if you test this depth, it pulls you to it
+- stall: discards cards (percent of deck)
+- fumble: discards your hand
+
+ANTI-SKIP
+- stuck: if you move past this depth, you don't
+- stuck 2: if you move past this depth, subtract one movement
+
+ANTI-JAM
 - jam: jam trap. If you are below this depth and jam, the jamming pick breaks
+- x: if you jam this pin, another pin resets
+
+ANTI-TEST/REVEAL
 - test 1 (anti-broad): if you test this depth twice without passing it, it breaks the test pick. (scans as safe)
 - test 2 (anti-narrow): if this is the only depth you test, it breaks the test pick
-- test 3 (landmine): if this depth is tested or revealed, it breaks the pick. revealed at start
-- anti-landmine: if this depth is skipped, it breaks the pick. revealed at start?
 - bomb (anti-reveal): if this is revealed, next turn you have to advance past it or the revealer breaks (also plays interesting with move into it, and move/jam!)
-- trap: a depth that breaks if you skip or activate it, but has an earlier depth that diffuses it (starts revealed)
-- fog: possibly a modifier? means you can't test/reveal (or just can't test/reveal past it)
 - super anti-reveal: if revealed, breaks pick. tests as safe
-- stuck: if this is tested or revealed, if you break a pick this turn this pick is also broken
-- x: a depth that resets the pin if you skip it without exhausting it
-- x: a depth that breaks if you reveal it (without activating it)
-- x: if you jam this pin, another pin resets
-- minima: if you test this depth, it pulls you to it
-- stuck: if you move past this depth, you don't
-- fumble: discards cards (percent of deck)
-- darkness: if you hit both, the lights go out
-- slippery: if you skip / test / reveal this pin, advance one
+
+REVEALED AT START
+- test 3 (landmine): if this depth is tested or revealed, it breaks the pick. revealed at start
 - spike: revealed from the start. breaks.
+- anti-landmine: if this depth is skipped, it breaks the pick. revealed at start?
+- trap: a depth that breaks if you skip or activate it, but has an earlier depth that diffuses it (starts revealed)
+
+MOTHERFUCKERS
 - surprise: break without warning
+- x: break from your deck (unless it's empty)
 
 
-Does every pin have a break?
 
-A lot of the cardplay revolves around future hidden breaks to punish the most simple strategy of just pushing to the end. I don't think the above depths include viable replacements
+Initial pass:
+safe:
+- breather (draw two random from your discard, or deck if it's empty)
+- hint (shows a safe, or tags everything dangerous)
+- slip (reveal and advance on test/reveal)
+- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)
+- labrynth (breaks if revealed via reveal)
+interesting:
+- fumble (discards hand)
+- unset (if you jam this pin, another pin resets)
+- bomb (advance past or die)
+- twist (discard 1 from deck when tested; does not reveal)
+danger:
+- surprise (break from deck without warning)
+n/a:
+- spike (revealed break)
+- trap (breaks if tested / revealed, but revealed at start)
