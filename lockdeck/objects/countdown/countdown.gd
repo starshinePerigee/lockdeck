@@ -12,6 +12,13 @@ var _label_text := "CANDLE_TEXT"
 var _label_pos: Vector2
 const _END_TEXT_OFFSET := 32
 
+var game_over := false:
+	set(v):
+		game_over = v
+		if game_over:
+			_label_text = "Out of picks,\nout of time."
+			texture_normal = CD_SKULL
+
 var show_end := false:
 	set(v):
 		show_end = v
@@ -52,9 +59,6 @@ var show_end := false:
 			texture_normal = CD_SKULL
 		$Label.text = _label_text
 		$Label.position = _label_pos
-
-func reset_text() -> void:
-	$Label.text = _label_text
 
 func _ready() -> void:
 	pressed.connect(candle_clicked.emit)

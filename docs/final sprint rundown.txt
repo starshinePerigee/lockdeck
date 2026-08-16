@@ -1,6 +1,6 @@
 - core game expansion (strategy sprint)
 	new depths, depth template building
-- basic economy sprint
+x basic economy sprint
 - settings
 - sound
 - saving and loading

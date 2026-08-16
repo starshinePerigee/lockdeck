@@ -40,11 +40,13 @@ func end_turn() -> bool:
 		$Countdown.count = -1
 		return true
 	else:
-		early_lockout = false
 		break_bag.append(true)
 		$Countdown.count = 0
 		return false
 
+func game_over() -> void:
+	$Countdown.game_over = true
+	button_disable = true
 #endregion
 
 #region interface code
@@ -58,7 +60,7 @@ var _is_hovered := false
 
 func _draw_label() -> void:
 	var font_color := Color("#ffffff")
-	if button_disable or early_lockout:
+	if button_disable:
 		font_color = Color("#918891")
 	elif _is_hovered:
 		font_color = Color("#ffbc57")
@@ -78,15 +80,10 @@ func set_hovered(hovered: bool) -> void:
 		$Countdown/Highlight.visible = suggest
 		$Countdown.show_end = suggest
 
-var early_lockout := false:
-	set(v):
-		early_lockout = v
-		_draw_label()
-
 func count_down() -> void:
 	if count <= 0:
+		push_error("Countdown less than 0! Count: %s" % count)
 		break_bag = [true]
-		early_lockout = true
 		return
 	if count == 1:
 		count = 0
@@ -97,12 +94,12 @@ func count_down() -> void:
 
 func set_count(new_count: int) -> void:
 	count = new_count
+	$Countdown.game_over = false
 	$Countdown.count = count
-	early_lockout = false
 	reset_odds()
 
 func handle_press() -> void:
-	if button_disable or early_lockout:
+	if button_disable:
 		return
 	if suggest:
 		countdown_triggered.emit()

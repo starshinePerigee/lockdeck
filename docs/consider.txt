@@ -2,5 +2,3 @@
 show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
 s/jam/bind
-
-if you can't win with the candle out in one turn, end the game

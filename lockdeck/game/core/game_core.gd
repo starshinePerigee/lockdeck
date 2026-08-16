@@ -115,7 +115,11 @@ func set_state(state: InputState) -> void:
 
 # Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
-		$LockBody/CountdownMain.button_disable = state or _lock_input
+		$LockBody/CountdownMain.button_disable = (
+			state 
+			or _lock_input
+			or $LockBody/CountdownMain.count <= 0
+		)
 		$TrashMain.disabled = state
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
@@ -137,6 +141,14 @@ func show_failure(state: bool = true) -> void:
 	else:
 		$FailureButton.mouse_filter = MOUSE_FILTER_IGNORE
 
+func game_over() -> void:
+	print("Game over.")
+	$Notifications.notify(Notifications.FAILURE)
+	$LockBody/CountdownMain.game_over()
+	lock_input()
+	show_failure()
+	game_fail.emit()
+
 func display_cards(cards: Array, header: String) -> void:
 	var cards_typed: Array[CardSpec] = []
 	cards_typed.assign(cards)
@@ -152,7 +164,10 @@ func display_cards(cards: Array, header: String) -> void:
 	set_state(InputState.CARD_DISPLAY)
 
 func reset_countdown():
-	$LockBody/CountdownMain.suggest = $HandMain.count() + $DeckMain.count() == 0 
+	$LockBody/CountdownMain.suggest = (
+		$HandMain.count() + $DeckMain.count() == 0
+		and $LockBody/CountdownMain.count > 0
+	)
 
 func pick_selected(card: CardSpec) -> void:
 	if current_state == InputState.INACTIVE and not _lock_input:
@@ -212,10 +227,7 @@ func break_pick(card: CardSpec) -> void:
 	$TrashMain.add_card(card)
 	$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
-		$Notifications.notify(Notifications.FAILURE)
-		lock_input()
-		show_failure()
-		game_fail.emit()
+		game_over()
 
 func view_all_pins() -> void:
 	if current_state != InputState.INACTIVE:
@@ -285,7 +297,11 @@ func discard_pick() -> void:
 
 func cleanup_step() -> void:
 	draw_to_five()
-	break_next = $LockBody/CountdownMain.end_turn()
+	if len($HandMain.cards) == 0 and $LockBody/CountdownMain.count <= 0:
+		# You are out of extra time
+		game_over()
+	else:
+		break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
 	update_status_widget()
 
