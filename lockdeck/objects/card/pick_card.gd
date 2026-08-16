@@ -23,7 +23,6 @@ func _squash_columns() -> void:
 	@warning_ignore("integer_division")
 	var separation := (available_size / icon_count) - 24
 	if separation < EffectStack.ICON_SEPARATION:
-		print("Squashing! new sep: %s" % separation)
 		for stack in $EffectBar.get_children():
 			stack.add_theme_constant_override("separation", separation)
 

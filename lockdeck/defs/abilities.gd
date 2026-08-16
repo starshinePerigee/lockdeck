@@ -13,4 +13,4 @@ static var NONE := Abilities.new("")
 
 static var DEBUG := Abilities.new("Tell starshine you saw this!")
 
-static var TEMPORARY := Abilities.new("Breaks after this heist.")
+static var TEMPORARY := Abilities.new("Abandoned after this heist.")

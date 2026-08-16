@@ -73,6 +73,7 @@ func do_repair_all() -> void:
 func do_remove_forever(card: CardSpec) -> void:
 	_game.remove_broken_pick_forever(card)
 	repair_widget.load_cards(_game.broken_picks)
+	repair_widget.load_trash(_game.removed_forever_picks)
 	update_info()
 
 func do_sell(card: CardSpec) -> void:
@@ -114,6 +115,9 @@ func break_temporary_picks() -> void:
 		if pick.ability == Abilities.TEMPORARY:
 			to_break.append(pick)
 	_game.break_picks(to_break)
+	for pick in _game.broken_picks.duplicate():
+		if pick.ability == Abilities.TEMPORARY:
+			_game.remove_broken_pick_forever(pick)
 
 func reset() -> void:
 	update_info()
