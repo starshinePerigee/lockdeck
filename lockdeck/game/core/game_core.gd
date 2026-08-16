@@ -154,9 +154,8 @@ func display_cards(cards: Array, header: String) -> void:
 	cards_typed.assign(cards)
 	$CardDisplay.header = header
 	$CardDisplay.cards = cards
-	if "discard" in header.to_lower():
-		$CardDisplay.has_sections = true
-		$CardDisplay.cards_2 = _already_broken
+	$CardDisplay.cards_2 = _already_broken
+	$CardDisplay.has_sections = "broken" in header.to_lower()
 	
 	$CardDisplay.redraw()
 	$CardDisplay.show_display()
