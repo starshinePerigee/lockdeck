@@ -13,6 +13,10 @@ signal closed()
 
 @export var cards: Array[CardSpec] = []
 
+@export var has_sections := false
+
+@export var cards_2: Array[CardSpec] = []
+
 func show_display():
 	global_position = Vector2(0, 0)
 	visible = true
@@ -29,11 +33,24 @@ func redraw():
 	for child in %GridContainer.get_children():
 		%GridContainer.remove_child(child)
 		child.queue_free()
+		
+	for child in %GridContainer2.get_children():
+		%GridContainer2.remove_child(child)
+		child.queue_free()
 	
 	for card in cards:
 		%GridContainer.add_child(PickCard.build_from_spec(card))
 	
-	$Container/EmptyLabel.visible = len(cards) == 0
+	for card in cards_2:
+		%GridContainer2.add_child(PickCard.build_from_spec(card))
+	
+	%EmptyLabel.visible = len(cards) == 0
+	
+	%HSeparator.visible = has_sections
+	%Title2.visible = has_sections
+	%GridContainer2.visible = has_sections
+	
+	%EmptyLabel2.visible = len(cards_2) == 0 and has_sections
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

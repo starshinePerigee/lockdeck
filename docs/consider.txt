@@ -4,8 +4,6 @@ show total number of each depth in lock ("X remaining") - means depth reference 
 s/jam/bind
 
 
-in broken picks, a broken forever section
-
 yoink ingots before the popup
 
 show broken picks in game status 
