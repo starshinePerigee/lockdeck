@@ -14,17 +14,18 @@ mouse_force_pass_scroll_events = false
 script = ExtResource("1_atfqw")
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 304.84
-offset_top = 193.073
-offset_right = 344.84
-offset_bottom = 212.073
-text = "with this character's death the thread of prophecy is severed"
+layout_mode = 1
+offset_left = 137.0
+offset_top = 165.0
+offset_right = 809.0
+offset_bottom = 191.0
+text = "With this character's death, the thread of prophecy is severed."
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 302.0
+offset_left = 385.0
 offset_top = 273.0
-offset_right = 425.0
-offset_bottom = 300.0
-text = "return to title"
+offset_right = 565.0
+offset_bottom = 306.0
+theme_type_variation = &"BoxButton"
+text = "< return to title"

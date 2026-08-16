@@ -4,6 +4,7 @@ x basic economy sprint
 - settings
 - sound
 - saving and loading
+- post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback)
 - meta 0 (knucklebones, drawing new depths)
 - potions
