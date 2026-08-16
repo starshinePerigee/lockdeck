@@ -17,7 +17,7 @@ func load_cards(cards: Array[CardSpec]) -> void:
 			"",
 			true
 		)
-		card_button.confirm_label = "Sell for 5 g?"
+		card_button.confirm_label = "Sell for 10 g?"
 		card_button.pressed_confirmed.connect(do_sell.bind(card))
 		%CardGrid.add_child(card_button)
 

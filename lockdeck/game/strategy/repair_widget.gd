@@ -5,7 +5,6 @@ signal repair_pick(CardSpec)
 signal repair_all()
 signal remove_pick_forever(CardSpec)
 
-
 var _coins := 0
 
 func set_coins(coins: int) -> void:
@@ -29,11 +28,11 @@ var remove_forever_mode := false:
 	set(v):
 		remove_forever_mode = v
 		if remove_forever_mode:
-			%ModeButton.text = "Removing picks"
+			%ModeButton.text = "Abandoning picks"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.add_theme_color_override(override, Color("bd4844"))
 		else:
-			%ModeButton.text = "Remove picks"
+			%ModeButton.text = "Abandon picks"
 			for override in ALL_FONT_COLORS:
 				%ModeButton.remove_theme_color_override(override)
 		_set_button_removal(remove_forever_mode)
@@ -60,6 +59,8 @@ func load_cards(cards: Array[CardSpec]) -> void:
 		%CardGrid.remove_child(child)
 		child.queue_free()
 	
+	%NoBreaks.visible = len(cards) == 0
+	
 	for card in cards:
 		var card_button := MoneyButton.build_from_spec(
 			card,
@@ -70,6 +71,18 @@ func load_cards(cards: Array[CardSpec]) -> void:
 	set_coins(_coins)
 	remove_forever_mode = remove_forever_mode
 
+func load_trash(cards: Array[CardSpec]) -> void:
+	for child in %GoneGrid.get_children():
+		%GoneGrid.remove_child(child)
+		child.queue_free()
+	
+	%NoRemovals.visible = len(cards) == 0
+	
+	for card in cards:
+		var pick_card := PickCard.build_from_spec(card)
+		print("adding %s" % card)
+		%GoneGrid.add_child(pick_card) 
+
 func do_signal(card: CardSpec) -> void:
 	if remove_forever_mode:
 		remove_pick_forever.emit(card)
@@ -79,6 +92,7 @@ func do_signal(card: CardSpec) -> void:
 func reset(game: GameSpec) -> void:
 	remove_forever_mode = false
 	load_cards(game.broken_picks)
+	load_trash(game.removed_forever_picks)
 	set_coins(game.coins)
 	$ScrollContainer.scroll_vertical = 0
 
@@ -87,6 +101,4 @@ func _ready() -> void:
 	%RepairAllButton.pressed_confirmed.connect(repair_all.emit)
 
 	if get_tree().current_scene == self:
-		var game := GameSpec.get_in_progress_game()
-		load_cards(game.broken_picks)
-		set_coins(game.coins)
+		reset(GameSpec.get_in_progress_game())

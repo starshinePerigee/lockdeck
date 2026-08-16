@@ -40,4 +40,4 @@ func reset(game: GameSpec) -> void:
 
 func _ready() -> void:
 	if get_tree().current_scene == self:
-		load_inventory(PickGenerator.get_many_base_cards(4))
+		load_inventory(PickGenerator.get_shop_spread())

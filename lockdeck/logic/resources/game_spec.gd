@@ -14,6 +14,9 @@ class_name GameSpec
 ## Holds every broken card
 @export var broken_picks: Array[CardSpec]
 
+## Holds picks removed forever
+@export var removed_forever_picks: Array[CardSpec]
+
 func add_coins(count: int) -> void:
 	coins += count
 
@@ -37,7 +40,7 @@ static var LOCK_SEQUENCE := [
 ]
 
 #static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
-static var LOOT_AMOUNTS := [20, 30, 40, 50, 60, 65, 70, 75, 80]
+static var LOOT_AMOUNTS := [40, 60, 80, 100, 120, 130, 140, 150, 160]
 
 
 ## Gets the current difficulty
@@ -89,7 +92,7 @@ func repair_pick(pick: CardSpec) -> void:
 	broken_picks.erase(pick)
 	pick.repair_count += 1
 
-## Removes a pick from the broken picks collection
+## Removes a pick from the broken picks collection, but keeps it
 func remove_broken_pick_forever(pick: CardSpec) -> void:
 	if pick not in broken_picks:
 		push_error(
@@ -97,6 +100,7 @@ func remove_broken_pick_forever(pick: CardSpec) -> void:
 			% [pick.pick_name, pick.unique_id]
 		)
 		return
+	removed_forever_picks.append(pick)
 	broken_picks.erase(pick)
 
 func remove_real_pick_forever(pick: CardSpec) -> void:
@@ -113,7 +117,8 @@ static func get_in_progress_game() -> GameSpec:
 	game.coins = 28
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
-	game.broken_picks = PickGenerator.get_many_base_cards(7)
+#	game.broken_picks = PickGenerator.get_many_base_cards(7)
+#	game.removed_forever_picks = PickGenerator.get_many_base_cards(2)
 	for i in len(game.broken_picks):
 		game.broken_picks[i].repair_count = i
 	game.lock_number = 4
@@ -123,3 +128,4 @@ static func get_in_progress_game() -> GameSpec:
 func _ready() -> void:
 	current_deck = []
 	broken_picks = []
+	removed_forever_picks = []

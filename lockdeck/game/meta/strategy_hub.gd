@@ -73,11 +73,12 @@ func do_repair_all() -> void:
 func do_remove_forever(card: CardSpec) -> void:
 	_game.remove_broken_pick_forever(card)
 	repair_widget.load_cards(_game.broken_picks)
+	repair_widget.load_trash(_game.removed_forever_picks)
 	update_info()
 
 func do_sell(card: CardSpec) -> void:
 	_game.remove_real_pick_forever(card)
-	_game.add_coins(5)
+	_game.add_coins(10)
 	deck_widget.load_cards(_game.current_deck)
 	update_info()
 
@@ -108,6 +109,16 @@ func update_info() -> void:
 	$ContinueButton.disabled = hand_full
 	$ContinueButton/FullTexture.visible = hand_full
 
+func break_temporary_picks() -> void:
+	var to_break: Array[CardSpec] = []
+	for pick in _game.current_deck:
+		if pick.ability == Abilities.TEMPORARY:
+			to_break.append(pick)
+	_game.break_picks(to_break)
+	for pick in _game.broken_picks.duplicate():
+		if pick.ability == Abilities.TEMPORARY:
+			_game.remove_broken_pick_forever(pick)
+
 func reset() -> void:
 	update_info()
 	
@@ -115,7 +126,8 @@ func reset() -> void:
 		popover.position.y = HIDDEN_Y
 	current_panel = null
 	
-	shop_widget.load_inventory(PickGenerator.get_many_base_cards(4))
+	shop_widget.load_inventory(PickGenerator.get_shop_spread())
+	break_temporary_picks()
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)

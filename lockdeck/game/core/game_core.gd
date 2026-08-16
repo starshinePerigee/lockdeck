@@ -142,6 +142,10 @@ func display_cards(cards: Array, header: String) -> void:
 	cards_typed.assign(cards)
 	$CardDisplay.header = header
 	$CardDisplay.cards = cards
+	if "discard" in header.to_lower():
+		$CardDisplay.has_sections = true
+		$CardDisplay.cards_2 = _already_broken
+	
 	$CardDisplay.redraw()
 	$CardDisplay.show_display()
 	set_state(InputState.INACTIVE)
@@ -335,11 +339,14 @@ func load_lock(lock: LockSpec) -> void:
 	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
 
+var _already_broken: Array[CardSpec]
+
 ## Loads non-lock parameters from the game spec and restarting the game.
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
 	$GameStatus.stage = game.lock_number
 	load_deck(game.current_deck.duplicate())
+	_already_broken = game.broken_picks
 	$TrashMain.reset()
 	restart()
 
