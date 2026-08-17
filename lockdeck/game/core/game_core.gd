@@ -269,6 +269,8 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	if _result.lock_solved:
 		solve_lock()
 	else:
+		if _result.breaths_taken > 0:
+			draw_cards(_result.breaths_taken + 1)
 		cleanup_step()
 
 func solve_lock() -> void:
@@ -284,13 +286,17 @@ func reveal_lock() -> void:
 		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
 	$LockBody/CylinderMain.redraw_pins()
 
+func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
+	for card in cards:
+		$HandMain.remove_card(card)
+		$DiscardMain.add_card(card)
+
 func discard_pick() -> void:
 	$HandMain.deselect()
-	$HandMain.remove_card(active_card)
 	if break_next:
 		break_pick(active_card)
-	else:
-		$DiscardMain.add_card(active_card)
+	move_cards_from_hand_to_discard([active_card])
+	
 	cleanup_step()
 	set_state(InputState.INACTIVE)
 
@@ -307,20 +313,21 @@ func cleanup_step() -> void:
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
 
+func draw_cards(count: int) -> void:
+	var cards: Array[CardSpec] = $DeckMain.draw_cards(count)
+	$HandMain.add_cards(cards)
+	print("draw! %s" % $HandMain.count())
+
 func draw_to_five() -> void:
 	var cards_to_draw: int = hand_size - $HandMain.count()
 	if cards_to_draw <= 0:
 		return
-	$HandMain.add_cards($DeckMain.draw_cards(cards_to_draw))
+	draw_cards(cards_to_draw)
 
 ## Discards the current hand and draws up to five cards
 func draw_new_hand() -> void:
-	var extra_cards: Array[CardSpec] = $HandMain.load_new_hand(
-		$DeckMain.draw_cards(hand_size)
-	)
-	if len(extra_cards) > 0:
-		push_warning("%s extra cards in hand after drawing.")
-		$DiscardMain.add_cards(extra_cards)
+	move_cards_from_hand_to_discard($HandMain.cards)
+	draw_cards(hand_size)
 
 ## Move discard back into deck
 func reload_deck() -> void:

@@ -44,6 +44,11 @@ MOTHERFUCKERS
 - x: break from your deck (unless it's empty)
 
 
+SUPPORT ARCS IN LOCK GENERATOR
+
+fix hand layout with > 3 cards
+breath should draw from discard
+
 
 Initial pass:
 safe:

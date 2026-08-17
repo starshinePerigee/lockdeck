@@ -113,6 +113,13 @@ static var UNLOCK := DepthTemplates.new(
 	2
 )
 
+static var BREATH := DepthTemplates.new(
+	Depths.BREATH,
+	-1,
+	[1, 100, 3],
+	2
+)
+
 static var SPIKE := DepthTemplates.new(
 	Depths.SPIKE,
 	2,
@@ -139,6 +146,7 @@ static var ALL_TEMPLATES := [
 	JAM,
 	BOUNCE,
 	UNLOCK,
+	BREATH,
 #	EMPTY,
 	SPIKE,
 	TRAP,

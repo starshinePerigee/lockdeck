@@ -157,6 +157,9 @@ func execute_effect(effect) -> void:
 			bounce_pin(effect)
 		Effects.LUCKY:
 			lucky_boost(effect)
+		Effects.DRAW_FROM_DISCARD:
+			# handled in end_step_spec
+			pass
 		Effects.BREAK:
 			handle_break(effect)
 			return

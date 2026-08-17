@@ -134,7 +134,8 @@ static var HINT := Depths.new(
 
 static var BREATH := Depths.new(
 	"breath", DangerLevel.CLEAR, Effects.DRAW_FROM_DISCARD,
-	"Take a deep breath and draw two cards from the discard pile, or the deck if the discard is empty."
+	"Take a deep breath and draw two cards from the discard pile, or the deck if the discard is empty.",
+	2
 )
 
 static var TWIST := Depths.new(
