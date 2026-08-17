@@ -75,16 +75,31 @@ static var SAFE_PUSH := Effects.new("safe_push")
 ## Advance to the end but don't hint anything
 static var LUCKY := Effects.new("lucky")
 
-## Depth effect - hint at the next danger or sets the pin to clear
-static var HINT := Effects.new("hint")
-
 ## Depth effect - unlock the current pin
 static var UNLOCK := Effects.new("unlock")
 
-## Depth effect - break the current pin
+## Depth effect - break the current pick
 static var BREAK := Effects.new("break")
+
+## Breaks from deck (unless it's empty)
+static var BREAK_FROM_DECK := Effects.new("break_from_deck")
 
 ## Depth effect - bounces up four, or to top. Triggers landing spot.
 static var BOUNCE := Effects.new("bounce")
+
+## Draw cards from discard (or deck)
+static var DRAW_FROM_DISCARD := Effects.new("draw_from_discard")
+
+## Depth effect - hint at the next danger or sets the pin to clear
+static var HINT := Effects.new("hint")
+
+## Depth effect - discard your hand
+static var DISCARD_HAND := Effects.new("discard_hand")
+
+## Starts the bomb countdown
+static var BOMB := Effects.new("bomb")
+
+## Unlocks the gate
+static var GATE_UNLOCK := Effects.new("gate_unlock")
 
 #endregion

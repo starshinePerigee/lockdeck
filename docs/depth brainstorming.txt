@@ -47,18 +47,18 @@ MOTHERFUCKERS
 
 Initial pass:
 safe:
-%- breather (draw two random from your discard, or deck if it's empty)
-%- hint (shows a safe, or tags everything dangerous)
-%- slip (reveal and advance on test/reveal)
-%- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)
-%- labrynth (breaks if revealed via reveal)
+d- breather (draw two random from your discard, or deck if it's empty)
+d- hint (shows a safe, or tags everything dangerous)
+d- slip (reveal and advance on test/reveal)
+d- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)
+d- labrynth (breaks if revealed via reveal)
 interesting:
-%- fumble (discards hand)
-c- unset (if you jam this pin, the next pin resets)
-%- bomb (advance past or die)
-%- twist (discard 1 from deck when tested; does not reveal)
+d- fumble (discards hand)
+d- bomb (advance past or die)
+d- twist (discard 1 from deck when tested; does not reveal)
 danger:
-%- surprise (break from deck without warning)
+d- surprise (break from deck without warning)
 n/a:
-% spike (revealed break)
-%- trap (breaks if tested / revealed, but revealed at start)
+d spike (revealed break)
+d- trap (breaks if tested / revealed, but revealed at start)
+d- gate / gate key
