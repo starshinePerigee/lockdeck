@@ -71,20 +71,20 @@ text = "-2"
 metadata/_edit_use_anchors_ = true
 
 [node name="ResetButton" type="Button" parent="."]
-offset_left = 127.0
-offset_top = 392.0
-offset_right = 178.0
-offset_bottom = 423.0
+offset_left = 126.0
+offset_top = 395.0
+offset_right = 194.0
+offset_bottom = 428.0
+theme_type_variation = &"BoxButton"
 text = "Reset"
-metadata/_edit_use_anchors_ = true
 
 [node name="FallButton" type="Button" parent="."]
 offset_left = 34.0
 offset_top = 391.0
 offset_right = 85.0
 offset_bottom = 422.0
+theme_type_variation = &"BoxButton"
 text = "Fall"
-metadata/_edit_use_anchors_ = true
 
 [node name="BreakLabel" type="Label" parent="."]
 visible = false
@@ -97,30 +97,72 @@ text = "BREAK"
 
 [node name="DemoButton" type="Button" parent="."]
 offset_left = 31.0
-offset_top = 478.0
-offset_right = 82.0
-offset_bottom = 509.0
+offset_top = 466.0
+offset_right = 121.0
+offset_bottom = 499.0
+theme_type_variation = &"BoxButton"
 text = "testpos"
-metadata/_edit_use_anchors_ = true
 
-[node name="RevealButton" type="Button" parent="."]
-offset_left = 125.0
-offset_top = 478.0
-offset_right = 176.0
-offset_bottom = 509.0
-text = "reveal"
-metadata/_edit_use_anchors_ = true
+[node name="RevealButton" type="CheckButton" parent="."]
+offset_left = 26.0
+offset_top = 223.0
+offset_right = 136.0
+offset_bottom = 256.0
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+text = "reveal:"
 
 [node name="CardSpace" parent="." instance=ExtResource("3_3xowv")]
-offset_left = 25.0
-offset_top = 104.0
-offset_right = 153.0
-offset_bottom = 264.0
+offset_left = 206.0
+offset_top = 76.0
+offset_right = 334.0
+offset_bottom = 236.0
 metadata/_edit_use_anchors_ = true
 
 [node name="CardSelectionOption" type="OptionButton" parent="."]
-offset_left = 41.0
-offset_top = 43.0
-offset_right = 73.0
-offset_bottom = 63.0
+offset_left = 228.0
+offset_top = 36.0
+offset_right = 260.0
+offset_bottom = 56.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Difficulty" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -189.0
+offset_top = -93.0
+offset_right = -149.0
+offset_bottom = -53.0
+
+[node name="Label" type="Label" parent="Difficulty"]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 108.0
+offset_right = 314.0
+offset_bottom = 134.0
+text = "Difficulty:"
+
+[node name="Input" type="TextEdit" parent="Difficulty"]
+offset_left = 214.0
+offset_top = 150.0
+offset_right = 292.0
+offset_bottom = 198.0
+text = "5"
+
+[node name="DoTest" type="CheckButton" parent="Difficulty"]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 212.0
+offset_right = 345.0
+offset_bottom = 238.0
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+button_pressed = true
+text = "Test pins: "
+
+[node name="Button" type="Button" parent="Difficulty"]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 252.0
+offset_right = 327.0
+offset_bottom = 292.0
+theme_type_variation = &"BoxButton"
+text = "regenerate"

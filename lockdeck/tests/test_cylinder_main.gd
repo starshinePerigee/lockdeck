@@ -1,7 +1,5 @@
 extends Node2D
 
-static var CYL_COUNT := 5
-
 func set_testpos() -> void:
 	var pins: Array[PinSpec] = $CylinderMain.pins
 	pins[0].pin_position = 0
@@ -88,10 +86,38 @@ func clear_cursor() -> void:
 	$CylinderMain.show_preview(_last_result)
 
 func reveal_all() -> void:
-	print("The world unfolds before your eyes.")
-	for pin in $CylinderMain.pins:
-		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
-	$CylinderMain.redraw_pins()
+	if $RevealButton.button_pressed:
+		print("The world unfolds before your eyes.")
+		for pin in $CylinderMain.pins:
+			pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
+		$CylinderMain.redraw_pins()
+
+
+static func get_known_test_pin() -> PinSpec:
+	var spec := PinSpec.new()
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
+		spec.depths[i] = Depths.EMPTY
+	spec.depths[1] = Depths.EMPTY
+	spec.depths[2] = Depths.EMPTY
+	spec.depths[3] = Depths.PUSH
+	spec.depths[4] = Depths.EMPTY
+	spec.depths[5] = Depths.LABRIYNTH
+	spec.depths[6] = Depths.EMPTY
+	spec.depths[7] = Depths.SPIKE
+	spec.finalize()
+	return spec
+
+func gen_new_lock() -> void:
+	var difficulty := int($Difficulty/Input.text)
+	var lock := LockGenerator.get_next_level(difficulty)
+	
+	if $Difficulty/DoTest.button_pressed:
+		for i in 3:
+			lock.pins[i] = get_known_test_pin()
+	
+	$CylinderMain.load_new_lock(lock)
+	reveal_all()
+	
 
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
@@ -99,17 +125,15 @@ func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
 	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
 	$CylinderMain/Cylinders.pin_activated.connect(do_click)
+	$Difficulty/Button.pressed.connect(gen_new_lock)
 	
-	$CylinderMain.load_new_lock(LockSpec.new(PinGenerator.build_test_lock(CYL_COUNT)))
+	gen_new_lock()
 	for t in PickTemplates.valid_templates:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
 	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DEBUG)
-
-	for i in range(CYL_COUNT, PinSpec.CYLINDER_COUNT_MAX):
-		$CardHBox.get_child(i).disabled = true
 	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
