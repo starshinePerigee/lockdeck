@@ -131,6 +131,9 @@ static func build_lock(
 			break
 	print("Lock generated! Hazard %s / %s" % [hazard, hazard_target])
 	
+	for pin in pins:
+		pin.finalize()
+	
 	return LockSpec.new(pins, deck)
 
 ## Build a level from a difficulty rating

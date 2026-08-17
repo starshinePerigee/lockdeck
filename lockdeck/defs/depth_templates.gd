@@ -81,7 +81,7 @@ static var BREAK := DepthTemplates.new(
 static var EMPTY := DepthTemplates.new(
 	Depths.EMPTY,
 	-1,
-	[5, 4, 3],
+	[0, 1, 3],
 	3,
 )
 
@@ -91,14 +91,6 @@ static var PUSH := DepthTemplates.new(
 	[4, 3, 3],
 	4
 )
-
-#static var DOUBLE_PUSH := DepthTemplates.new(
-#	Depths.PUSH,
-#	3,
-#	[0, 1, 2],
-#	2,
-#	Depths.PUSH
-#)
 
 static var JAM := DepthTemplates.new(
 	Depths.JAM,
@@ -121,19 +113,18 @@ static var UNLOCK := DepthTemplates.new(
 	2
 )
 
-static var TRAP := DepthTemplates.new(
-	Depths.TRAP,
-	5,
-	[1, 2, 3],
+static var SPIKE := DepthTemplates.new(
+	Depths.SPIKE,
+	3,
+	[2, 2, 2],
 	3
 )
 
 static var ALL_TEMPLATES := [
-	# EMPTY,
 	PUSH,
-#	DOUBLE_PUSH,
 	JAM,
 	BOUNCE,
 	UNLOCK,
-	TRAP
+#	EMPTY,
+	SPIKE,
 ]

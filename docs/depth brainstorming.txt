@@ -59,6 +59,6 @@ d- twist (discard 1 from deck when tested; does not reveal)
 danger:
 d- surprise (break from deck without warning)
 n/a:
-d spike (revealed break)
+x- spike (revealed break)
 d- trap (breaks if tested / revealed, but revealed at start)
 d- gate / gate key

@@ -396,6 +396,12 @@ func end_turn_and_fall() -> void:
 	reset_exhaustion()
 	end_step()
 
+## Called after generation
+func finalize() -> void:
+	for i in PIN_DEPTH_COUNT:
+		if depths[i] in Depths.REVEALED_AT_START:
+			reveals[i] = RevealLevel.REVEALED
+
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
@@ -414,8 +420,6 @@ func _init(fill: Depths = Depths.DEBUG):
 	reveals = []
 	reveals.resize(PIN_DEPTH_COUNT)
 	reveals.fill(RevealLevel.UNKNOWN)
-	reveals[0] = RevealLevel.REVEALED
-	reveals[-1] = RevealLevel.REVEALED
 	
 	checked = []
 	checked.resize(PIN_DEPTH_COUNT)

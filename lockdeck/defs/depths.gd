@@ -242,6 +242,8 @@ static var KEY := Depths.new(
 #endregion
 
 static var REVEALED_AT_START: Array[Depths] = [
+	BASE,
+	FINAL,
 	TRAP,
 	SPIKE,
 	GATE_LOCKED
