@@ -60,5 +60,5 @@ danger:
 d- surprise (break from deck without warning)
 n/a:
 x- spike (revealed break)
-d- trap (breaks if tested / revealed, but revealed at start)
+x- trap (breaks if tested / revealed, but revealed at start)
 d- gate / gate key

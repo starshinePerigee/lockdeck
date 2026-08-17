@@ -167,20 +167,33 @@ func execute_effect(effect) -> void:
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
+## Update records for a triggered depth
+func trigger_depth(pos: int, effect: EffectSpec, break_pick := false) -> void:
+	activated[pos] = true
+	reveal_position(pos, effect, true)
+	
+	if break_pick:
+		update_result(Results.BREAK, pos)
+		if effect != null:
+			effect.broke_pick = true
+	else:
+		update_result(Results.TRIGGERED, pos)
+
 ## Called on each depth tested - used for on-test hooks
 func on_test_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
+		Depths.TRAP:
+			trigger_depth(pos, effect, true)
 		_:
 			pass
 
 ## Called on each 
 func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
+		Depths.TRAP:
+			trigger_depth(pos, effect, true)
 		Depths.LABYRINTH:
-			reveal_position(pos, effect, true)
-			update_result(Results.TRIGGERED, pos)
-			if effect != null:
-				effect.broke_pick = true
+			trigger_depth(pos, effect, true)
 		_:
 			pass
 
@@ -225,11 +238,12 @@ func test_position(pos: int = -1, effect: EffectSpec = null) -> void:
 	if pos == -1:
 		pos = pin_position
 	
+	on_test_trigger(pos, effect)
+	
 	if get_revealed(pos):
 		update_result(Results.NONE, pos)
 		return
 	
-	on_test_trigger(pos, effect)
 	checked[pos] = true
 	update_result(Results.HINT, pos)
 
@@ -242,12 +256,13 @@ func reveal_position(
 	if pos == -1:
 		pos = pin_position
 	
+	if not from_activate:
+		on_reveal_trigger(pos, effect)
+	
 	if get_revealed(pos):
 		if not from_activate:
 			update_result(Results.NONE, pos)
 	else:
-		if not from_activate:
-			on_reveal_trigger(pos, effect)
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
 		hint_tracks[pos] = ""

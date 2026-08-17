@@ -115,16 +115,23 @@ static var UNLOCK := DepthTemplates.new(
 
 static var SPIKE := DepthTemplates.new(
 	Depths.SPIKE,
-	3,
+	2,
 	[2, 2, 2],
 	3
 )
 
 static var LABYRINTH := DepthTemplates.new(
 	Depths.LABYRINTH,
-	2,
+	3,
 	[0, 1, 2],
-	4
+	2
+)
+
+static var TRAP := DepthTemplates.new(
+	Depths.TRAP,
+	2,
+	[1, 2, 2],
+	2
 )
 
 static var ALL_TEMPLATES := [
@@ -134,4 +141,5 @@ static var ALL_TEMPLATES := [
 	UNLOCK,
 #	EMPTY,
 	SPIKE,
+	TRAP,
 ]
