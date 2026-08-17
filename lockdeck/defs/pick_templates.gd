@@ -227,7 +227,7 @@ static var RAKE_BULK_TEST_COMMON := PickTemplates.new(
 
 ## PJ[PJ[PTT]PTT
 static var RAKE_BULK_TEST_RARE := PickTemplates.new(
-	"twist",
+	"sideways rake",
 	Families.RAKE,
 	Archetypes.BULK_TEST,
 	Rarities.RARE,
@@ -272,7 +272,7 @@ static var RAKE_HYBRID_S_COMMON := PickTemplates.new(
 
 ## P[TT[PTTT]PT
 static var RAKE_HYBRID_S_RARE := PickTemplates.new(
-	"spike",
+	"campsite rake",
 	Families.RAKE,
 	Archetypes.HYBRID_S,
 	Rarities.RARE,

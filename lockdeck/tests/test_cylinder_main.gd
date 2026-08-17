@@ -27,16 +27,7 @@ func do_click(pin_index: int) -> void:
 	apply_card($CardSpace.card_spec, pin_index)
 
 func print_previouses(result: EndStepSpec) -> void:
-	for i in len($CylinderMain.pins):
-		var s := "Pin %s: " % i
-		if i in result.effects.keys():
-			var effects := result.effects[i]
-			for effect in effects:
-				s += "%s: " % effect.flavor.effect_name
-				for pos in effect.realized_positions:
-					s += "%s" % pos
-				s += " "
-		print(s)
+	result.print()
 
 @onready var _last_result := EndStepSpec.new()
 
@@ -47,14 +38,9 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	
 	print_previouses(_last_result)
 	
-	if _last_result.pick_broke:
-		break_pick()
+	$BreakLabel.visible = _last_result.pick_broke
 		
 	do_cursor(card_index)
-
-func break_pick() -> void:
-	print("Pick break!")
-	$BreakLabel.visible = true
 
 func end_drag() -> void:
 	var target: int = $CylinderMain.get_current_drag_target()

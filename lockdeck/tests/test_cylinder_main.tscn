@@ -88,10 +88,10 @@ text = "Fall"
 
 [node name="BreakLabel" type="Label" parent="."]
 visible = false
-offset_left = 997.0
-offset_top = 150.0
-offset_right = 1048.0
-offset_bottom = 173.0
+offset_left = 273.0
+offset_top = 335.0
+offset_right = 348.0
+offset_bottom = 367.0
 theme_override_font_sizes/font_size = 40
 text = "BREAK"
 
