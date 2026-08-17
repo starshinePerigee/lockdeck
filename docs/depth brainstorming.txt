@@ -51,7 +51,7 @@ d- breather (draw two random from your discard, or deck if it's empty)
 d- hint (shows a safe, or tags everything dangerous)
 d- slip (reveal and advance on test/reveal)
 d- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)
-d- labrynth (breaks if revealed via reveal)
+x- labyrinth (breaks if revealed via reveal)
 interesting:
 d- fumble (discards hand)
 d- bomb (advance past or die)

@@ -142,7 +142,8 @@ static var TWIST := Depths.new(
 	"Discards a card from your deck whenever you test or reveal this depth."
 )
 
-static var LABRIYNTH := Depths.new(
+# Labyrinth
+static var LABYRINTH := Depths.new(
 	"labyrinth", DangerLevel.CLEAR, Effects.DISARM,
 	"Revealing this depth with a reveal pick breaks that pick." 
 )

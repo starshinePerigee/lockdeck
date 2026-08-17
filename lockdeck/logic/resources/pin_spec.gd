@@ -176,7 +176,7 @@ func on_test_trigger(pos: int, effect: EffectSpec) -> void:
 ## Called on each 
 func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
-		Depths.LABRIYNTH:
+		Depths.LABYRINTH:
 			reveal_position(pos, effect, true)
 			update_result(Results.TRIGGERED, pos)
 			if effect != null:

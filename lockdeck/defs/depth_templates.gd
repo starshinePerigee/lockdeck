@@ -120,6 +120,13 @@ static var SPIKE := DepthTemplates.new(
 	3
 )
 
+static var LABYRINTH := DepthTemplates.new(
+	Depths.LABYRINTH,
+	2,
+	[0, 1, 2],
+	4
+)
+
 static var ALL_TEMPLATES := [
 	PUSH,
 	JAM,

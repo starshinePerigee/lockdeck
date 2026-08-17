@@ -101,7 +101,7 @@ static func get_known_test_pin() -> PinSpec:
 	spec.depths[2] = Depths.EMPTY
 	spec.depths[3] = Depths.PUSH
 	spec.depths[4] = Depths.EMPTY
-	spec.depths[5] = Depths.LABRIYNTH
+	spec.depths[5] = Depths.LABYRINTH
 	spec.depths[6] = Depths.EMPTY
 	spec.depths[7] = Depths.SPIKE
 	spec.finalize()
