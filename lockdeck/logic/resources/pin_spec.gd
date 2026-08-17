@@ -139,6 +139,8 @@ func execute_effect(effect) -> void:
 		# (BALATRO REFERENCE LMAO)
 		Effects.EMPTY:
 			pass
+		Effects.DISARM:
+			pass
 		Effects.PUSH:
 			push_pin(effect)
 		Effects.SAFE_PUSH:

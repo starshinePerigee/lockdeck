@@ -20,6 +20,7 @@ func _init(name: String):
 	self.effect_name = name
 	self.texture = _get_texture(name)
 
+#region utility effects
 
 ## Debug effect. should not be used.
 static var DEBUG := Effects.new("debug")
@@ -27,20 +28,27 @@ static var DEBUG := Effects.new("debug")
 ## Blank effect - needed for a display hack when composing cards :c
 static var BLANK := Effects.new("blank")
 
-## do nothing. Depth / pick effect  
-static var EMPTY := Effects.new("empty")
-
 ## also do nothing.
 static var EXHAUSTED := Effects.new("exhausted")
+
+## used to record effects blocked by jam
+static var UNJAM := Effects.new("unjam")
+
+## Depth effect - pick out of bounds (typically breaks)
+static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
+
+## stop evaluating current card. Used as a sentinel value in execution.
+static var END_EXECUTION := Effects.new("end_execution")
+
+#endregion
+
+#region card effects
 
 ## move the pin, triggering the depth at the destination and hinting everything between
 static var PUSH := Effects.new("push")
 
-## like push, but doesn't break on OOB
-static var SAFE_PUSH := Effects.new("safe_push")
-
-## Advance 5 but don't hint anything
-static var LUCKY := Effects.new("lucky")
+## Test the next depths, indicating if there is a hazard or not
+static var TEST := Effects.new("test")
 
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new("reveal")
@@ -48,14 +56,24 @@ static var REVEAL := Effects.new("reveal")
 ## apply jam
 static var JAM := Effects.new("jam")
 
-## used to record effects blocked by jam
-static var UNJAM := Effects.new("unjam")
-
-## Test the next depths, indicating if there is a hazard or not
-static var TEST := Effects.new("test")
-
 ## Card effect - advance the pin without activating. 
 static var SKIP := Effects.new("skip")
+
+#endregion
+
+#region depth effects
+
+## do nothing. Depth / pick effect  
+static var EMPTY := Effects.new("empty")
+
+## Do nothing but record it.
+static var DISARM := Effects.new("disarm")
+
+## like push, but doesn't break on OOB
+static var SAFE_PUSH := Effects.new("safe_push")
+
+## Advance to the end but don't hint anything
+static var LUCKY := Effects.new("lucky")
 
 ## Depth effect - hint at the next danger or sets the pin to clear
 static var HINT := Effects.new("hint")
@@ -63,20 +81,10 @@ static var HINT := Effects.new("hint")
 ## Depth effect - unlock the current pin
 static var UNLOCK := Effects.new("unlock")
 
-## Depth effect - lock spin until other pin is set
-static var BIND := Effects.new("bind")
-
 ## Depth effect - break the current pin
 static var BREAK := Effects.new("break")
-
-## Depth effect - resets another pin (if set) or this one
-static var RESET := Effects.new("reset")
 
 ## Depth effect - bounces up four, or to top. Triggers landing spot.
 static var BOUNCE := Effects.new("bounce")
 
-## Depth effect - pick out of bounds (typically breaks)
-static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
-
-## stop evaluating current card. Used as a sentinel value in execution.
-static var END_EXECUTION := Effects.new("end_execution")
+#endregion
