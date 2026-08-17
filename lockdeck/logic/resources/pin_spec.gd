@@ -166,19 +166,54 @@ func execute_effect(effect) -> void:
 			push_error("DEBUG effect flavor called!")
 		_:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
+
+## Called on each depth tested - used for on-test hooks
+func on_test_trigger(pos: int) -> void:
+	match get_live_depth(pos):
+		_:
+			pass
+
+## Called on each 
+func on_reveal_trigger(pos: int) -> void:
+	match get_live_depth(pos):
+		_:
+			pass
+
+## Called when a pin is advanced past
+func on_advance_trigger(pos: int) -> void:
+	match get_live_depth(pos):
+		_:
+			pass
+
+## Called immediately when a pin is activated.
+## Typical depth activation effects should be handled by cylinder_main
+func on_activate_trigger(pos: int) -> void:
+	match get_live_depth(pos):
+		_:
+			pass
+
 #endregion
 
 #region effect handling
+## Gets the depth for a position if it is not exhausted, or EXHAUSTED otherwise
+func get_live_depth(pos: int) -> Depths:
+	if activated[pos]:
+		return Depths.EXHAUSTED
+	return depths[pos]
+
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
 func activate_and_get_depth() -> Depths:
 	reveal_position(pin_position, true)
-	if activated[pin_position]:
-		return Depths.EXHAUSTED
-	else:
+	
+	var depth := get_live_depth(pin_position)
+	
+	if depth != Depths.EXHAUSTED:
+		on_activate_trigger(pin_position)
 		activated[pin_position] = true
 		update_result(Results.AUTO)
-		return depths[pin_position]
+	
+	return depth
 
 ## Checks a depth (or the current depth is none is provided), if it's not revealed
 func test_position(pos: int = -1) -> void:
@@ -189,18 +224,21 @@ func test_position(pos: int = -1) -> void:
 		update_result(Results.NONE, pos)
 		return
 	
+	on_test_trigger(pos)
 	checked[pos] = true
 	update_result(Results.HINT, pos)
 
 ## Reveals a depth (or the current depth if none is provided)
-func reveal_position(pos: int = -1, hide_result := false) -> void:
+func reveal_position(pos: int = -1, from_activate := false) -> void:
 	if pos == -1:
 		pos = pin_position
 	
 	if get_revealed(pos):
-		if not hide_result:
+		if not from_activate:
 			update_result(Results.NONE, pos)
 	else:
+		if not from_activate:
+			on_reveal_trigger(pos)
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
 		hint_tracks[pos] = ""
