@@ -144,7 +144,7 @@ static var TWIST := Depths.new(
 
 static var LABRIYNTH := Depths.new(
 	"labyrinth", DangerLevel.CLEAR, Effects.DISARM,
-	"Revealing this depth without activating it breaks your pick." 
+	"Revealing this depth with a reveal pick breaks that pick." 
 )
 
 static var CATCH := Depths.new(

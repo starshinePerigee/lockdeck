@@ -38,6 +38,9 @@ static var EXHAUSTED := Results.new("exhausted")
 ## Auto - if a depth is going to auto-activate
 static var AUTO := Results.new("auto")
 
+## Triggered - if a depth is triggered by that depth's shennanigans
+static var TRIGGERED := Results.new("triggered")
+
 ## Hinted - typically by test or multiple push
 static var HINT := Results.new("hint")
 
@@ -67,6 +70,7 @@ static var PRIORITY: Array[Results] = [
 	REVEAL,
 	AUTO,
 	ACTIVATE,
+	TRIGGERED,
 	EXHAUSTED,
 	UNLOCK,
 	BREAK,

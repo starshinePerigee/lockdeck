@@ -168,26 +168,31 @@ func execute_effect(effect) -> void:
 			push_warning("Undefined effect flavor effect: %s" % effect.flavor)
 
 ## Called on each depth tested - used for on-test hooks
-func on_test_trigger(pos: int) -> void:
+func on_test_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		_:
 			pass
 
 ## Called on each 
-func on_reveal_trigger(pos: int) -> void:
+func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
+		Depths.LABRIYNTH:
+			reveal_position(pos, effect, true)
+			update_result(Results.TRIGGERED, pos)
+			if effect != null:
+				effect.broke_pick = true
 		_:
 			pass
 
 ## Called when a pin is advanced past
-func on_advance_trigger(pos: int) -> void:
+func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		_:
 			pass
 
 ## Called immediately when a pin is activated.
 ## Typical depth activation effects should be handled by cylinder_main
-func on_activate_trigger(pos: int) -> void:
+func on_activate_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		_:
 			pass
@@ -203,20 +208,20 @@ func get_live_depth(pos: int) -> Depths:
 
 ## Get the depth flavor that the pin is currently set to
 ## (if it hasn't been activated yet)
-func activate_and_get_depth() -> Depths:
-	reveal_position(pin_position, true)
+func activate_and_get_depth(effect: EffectSpec = null) -> Depths:
+	reveal_position(pin_position, effect, true)
 	
 	var depth := get_live_depth(pin_position)
 	
 	if depth != Depths.EXHAUSTED:
-		on_activate_trigger(pin_position)
+		on_activate_trigger(pin_position, effect)
 		activated[pin_position] = true
 		update_result(Results.AUTO)
 	
 	return depth
 
 ## Checks a depth (or the current depth is none is provided), if it's not revealed
-func test_position(pos: int = -1) -> void:
+func test_position(pos: int = -1, effect: EffectSpec = null) -> void:
 	if pos == -1:
 		pos = pin_position
 	
@@ -224,12 +229,16 @@ func test_position(pos: int = -1) -> void:
 		update_result(Results.NONE, pos)
 		return
 	
-	on_test_trigger(pos)
+	on_test_trigger(pos, effect)
 	checked[pos] = true
 	update_result(Results.HINT, pos)
 
 ## Reveals a depth (or the current depth if none is provided)
-func reveal_position(pos: int = -1, from_activate := false) -> void:
+func reveal_position(
+	pos: int = -1,
+	effect: EffectSpec = null,
+	from_activate := false
+) -> void:
 	if pos == -1:
 		pos = pin_position
 	
@@ -238,7 +247,7 @@ func reveal_position(pos: int = -1, from_activate := false) -> void:
 			update_result(Results.NONE, pos)
 	else:
 		if not from_activate:
-			on_reveal_trigger(pos)
+			on_reveal_trigger(pos, effect)
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
 		hint_tracks[pos] = ""
@@ -345,9 +354,9 @@ func _test_skip_reveal(effect: EffectSpec) -> void:
 		effect.add_position(target)
 		# it's a little cursed having this in here:
 		if effect.flavor == Effects.TEST:
-			test_position(target)
+			test_position(target, effect)
 		elif effect.flavor == Effects.REVEAL:
-			reveal_position(target)
+			reveal_position(target, effect)
 
 ## Handle an unlock effect
 func unlock_pin(effect: EffectSpec) -> void:

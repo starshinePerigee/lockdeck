@@ -9,13 +9,14 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
-	spec.depths[1] = Depths.PUSH
-	spec.depths[2] = Depths.JAM
+	spec.depths[1] = Depths.EMPTY
+	spec.depths[2] = Depths.EMPTY
 	spec.depths[3] = Depths.PUSH
-	spec.depths[4] = Depths.LUCKY
-	spec.depths[5] = Depths.BOUNCE
-	spec.depths[6] = Depths.BREAK
-	spec.depths[7] = Depths.PUSH
+	spec.depths[4] = Depths.EMPTY
+	spec.depths[5] = Depths.LABRIYNTH
+	spec.depths[6] = Depths.EMPTY
+	spec.depths[7] = Depths.SPIKE
+	spec.finalize()
 	return spec
 
 static var FILLER_DEPTHS: Array[Depths] = [
@@ -77,6 +78,7 @@ static func get_random_base_pin(difficulty_mod: int = 0) -> PinSpec:
 		if spec.depths[i] == Depths.PUSH and i > PinSpec.PIN_DEPTH_COUNT - 3:
 			spec.depths[i] = Depths.EMPTY 
 	
+	spec.finalize()
 	return spec
 
 static func build_test_lock(cylinders: int = 4) -> Array[PinSpec]:
