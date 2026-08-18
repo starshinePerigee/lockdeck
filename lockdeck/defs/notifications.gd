@@ -32,5 +32,8 @@ static var UNLOCK := Notifications.new("unlock")
 ## Stage failed
 static var FAILURE := Notifications.new("failure")
 
-## Deck reloaded (vestigial)
+## Deck reloaded
 static var RELOAD := Notifications.new("reload")
+
+## Broken from deck
+static var SURPRISE := Notifications.new("surprise")

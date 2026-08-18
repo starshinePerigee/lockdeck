@@ -222,9 +222,12 @@ func discard_clicked() -> void:
 		return
 	discard_pick()
 
-func break_pick(card: CardSpec) -> void:
+func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
-	$Notifications.notify(Notifications.BREAK)
+	if surprise:
+		$Notifications.notify(Notifications.SURPRISE)
+	else:
+		$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
 
@@ -283,7 +286,7 @@ func post_pick() -> void:
 	if deck_breaks > 0:
 		var broken_cards = $DeckMain.draw_cards(deck_breaks)
 		for card in broken_cards:
-			break_pick(card)
+			break_pick(card, true)
 	
 	cleanup_step()
 
