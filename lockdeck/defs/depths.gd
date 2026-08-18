@@ -237,8 +237,8 @@ static var GATE_UNLOCKED := Depths.new(
 	1, "unlocked gate"
 )
 
-static var KEY := Depths.new(
-	"key", DangerLevel.CLEAR, Effects.GATE_UNLOCK,
+static var GATE_KEY := Depths.new(
+	"gate_key", DangerLevel.CLEAR, Effects.GATE_UNLOCK,
 	"Unlocks the gate, permanently disabling it."
 )
 

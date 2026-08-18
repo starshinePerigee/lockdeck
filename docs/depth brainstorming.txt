@@ -64,4 +64,4 @@ x- surprise (break from deck without warning)
 n/a:
 x- spike (revealed break)
 x- trap (breaks if tested / revealed, but revealed at start)
-d- gate / gate key
+x- gate / gate key

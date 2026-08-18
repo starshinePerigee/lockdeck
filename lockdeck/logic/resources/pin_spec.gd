@@ -161,6 +161,8 @@ func execute_effect(effect) -> void:
 			lucky_boost(effect)
 		Effects.HINT:
 			do_hint()
+		Effects.GATE_UNLOCK:
+			do_gate_unlock()
 		Effects.DRAW_FROM_DISCARD:
 			# handled in end_step_spec
 			pass
@@ -217,6 +219,9 @@ func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 ## Called when a pin is advanced past
 func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
+		Depths.GATE_LOCKED:
+			effect.broke_pick = true
+			update_result(Results.BREAK, pos)
 		_:
 			pass
 
@@ -292,6 +297,7 @@ func push_pin(effect: EffectSpec, safe := false) -> void:
 		return
 		
 	for __ in remainder:
+		on_advance_trigger(pin_position, effect)
 		test_position(pin_position)
 		
 		effect.add_position(pin_position + 1)
@@ -413,6 +419,14 @@ func do_hint() -> void:
 		if not get_revealed(i) and depths[i].tests_as == Depths.DangerLevel.CLEAR:
 			reveals[i] = RevealLevel.REVEALED
 			return
+
+func do_gate_unlock() -> void:
+	for i in PIN_DEPTH_COUNT:
+		if depths[i] == Depths.GATE_LOCKED:
+			depths[i] = Depths.GATE_UNLOCKED
+			activated[i] = true
+			return
+	push_error("gate unlocked without a gate?")
 #endregion
 
 #region ending and cleanup methods

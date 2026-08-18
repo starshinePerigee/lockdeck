@@ -157,17 +157,25 @@ static var SPIKE := DepthTemplates.new(
 	3
 )
 
-static var LABYRINTH := DepthTemplates.new(
-	Depths.LABYRINTH,
-	3,
-	[0, 1, 2],
-	2
-)
-
 static var TRAP := DepthTemplates.new(
 	Depths.TRAP,
 	2,
 	[1, 2, 2],
+	2
+)
+
+static var GATE := DepthTemplates.new(
+	Depths.GATE_LOCKED,
+	5,
+	[1, 1, 1],
+	3,
+	Depths.GATE_KEY
+)
+
+static var LABYRINTH := DepthTemplates.new(
+	Depths.LABYRINTH,
+	3,
+	[0, 1, 2],
 	2
 )
 
@@ -196,4 +204,5 @@ static var ALL_TEMPLATES := [
 	LABYRINTH,
 	TRAP,
 	SURPRISE,
+	GATE,
 ]
