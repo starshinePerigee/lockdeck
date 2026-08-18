@@ -12,16 +12,15 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.0
-offset_left = 121.0
-offset_top = 39.0
-offset_right = 633.0
-offset_bottom = 199.0
+offset_left = 15.0
+offset_top = 48.0
+offset_right = 938.0
+offset_bottom = 208.0
 grow_vertical = 1
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="HandMain"]
-layout_mode = 0
-offset_right = 512.0
-offset_bottom = 160.0
+custom_minimum_size = Vector2(768, 160)
+layout_mode = 2
 mouse_filter = 2
 editor_only = false
 

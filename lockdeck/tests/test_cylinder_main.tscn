@@ -142,6 +142,7 @@ offset_bottom = 134.0
 text = "Difficulty:"
 
 [node name="Input" type="TextEdit" parent="Difficulty"]
+layout_mode = 0
 offset_left = 214.0
 offset_top = 150.0
 offset_right = 292.0

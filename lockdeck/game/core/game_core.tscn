@@ -83,9 +83,9 @@ stretch_mode = 2
 
 [node name="HandMain" parent="." instance=ExtResource("5_8ewdi")]
 layout_mode = 1
-offset_left = 231.0
+offset_left = 99.0
 offset_top = 415.0
-offset_right = 743.0
+offset_right = 867.0
 offset_bottom = 575.0
 
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]

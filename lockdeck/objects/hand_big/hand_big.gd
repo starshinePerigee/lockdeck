@@ -10,7 +10,7 @@ signal card_dropped(card_area: Area2D, card_index: int)
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
-const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
+const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 
 var current_card: int = -1
@@ -105,6 +105,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		var space := CARD_SPACE.instantiate()
 		space.card_spec = spec
 		space.has_card = true
+		space.z_index = 100 * i
 		$Hand.add_child(space)
 		space.card_tapped.connect(card_tap.bind(i))
 		space.card_picked_up.connect(card_pick_up.bind(i))
@@ -118,6 +119,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 	)
 	var separation: int = SIZE_SCALE[sep_index]
 	$Hand.add_theme_constant_override("separation", separation)
+	size = $Hand.size
 
 func ready() -> void:
 	redraw([])
