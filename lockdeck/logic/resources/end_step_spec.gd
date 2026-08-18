@@ -5,6 +5,7 @@ class_name EndStepSpec
 @export var pick_broke := false
 @export var lock_solved := false
 @export var breaths_taken := 0
+@export var decks_broken := 0
 @export var turn_number := -1
 @export var last_hint := ""
 
@@ -23,6 +24,8 @@ func record_effect(effect: EffectSpec, realized_pin: int) -> void:
 	match effect.flavor:
 		Effects.DRAW_FROM_DISCARD:
 			breaths_taken += effect.value
+		Effects.BREAK_FROM_DECK:
+			decks_broken += effect.value
 		_:
 			pass
 	
@@ -60,7 +63,9 @@ func print() -> void:
 		print("Lock solved!")
 	if breaths_taken:
 		print("%s breaths taken." % breaths_taken)
-	if not (pick_broke or lock_solved or breaths_taken):
+	if decks_broken:
+		print("%s decks broken" % decks_broken)
+	if not (pick_broke or lock_solved or breaths_taken or decks_broken):
 		print("No major effects.")
 
 func _init() -> void:

@@ -59,7 +59,7 @@ d- fumble (discards hand)
 d- bomb (advance past or die)
 d- twist (discard 1 from deck when tested; does not reveal)
 danger:
-d- surprise (break from deck without warning)
+x- surprise (break from deck without warning)
 n/a:
 x- spike (revealed break)
 x- trap (breaks if tested / revealed, but revealed at start)

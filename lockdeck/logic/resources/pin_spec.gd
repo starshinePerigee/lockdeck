@@ -160,6 +160,9 @@ func execute_effect(effect) -> void:
 		Effects.DRAW_FROM_DISCARD:
 			# handled in end_step_spec
 			pass
+		Effects.BREAK_FROM_DECK:
+			# handled in end_step_spec
+			pass
 		Effects.BREAK:
 			handle_break(effect)
 			return

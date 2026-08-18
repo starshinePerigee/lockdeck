@@ -216,7 +216,8 @@ static var TRAP := Depths.new(
 
 static var SURPRISE := Depths.new(
 	"surprise", DangerLevel.DANGEROUS, Effects.BREAK_FROM_DECK,
-	("Breaks the top card of your deck. Does nothing if your deck is empty.")
+	("Breaks the top card of your deck. Does nothing if your deck is empty."),
+	1
 )
 
 static var SPIKE := Depths.new(

@@ -141,6 +141,13 @@ static var TRAP := DepthTemplates.new(
 	2
 )
 
+static var SURPRISE := DepthTemplates.new(
+	Depths.SURPRISE,
+	1,
+	[0, 1, 2],
+	4
+)
+
 static var ALL_TEMPLATES := [
 	PUSH,
 	JAM,
@@ -150,4 +157,5 @@ static var ALL_TEMPLATES := [
 #	EMPTY,
 	SPIKE,
 	TRAP,
+	SURPRISE
 ]

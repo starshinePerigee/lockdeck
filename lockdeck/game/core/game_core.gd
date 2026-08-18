@@ -269,13 +269,23 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	if _result.lock_solved:
 		solve_lock()
 	else:
-		var breaths := _result.breaths_taken
-		if breaths > 0:
-			# replace the card you just played
-			var discard_count: int = min(breaths, $DiscardMain.count())			
-			draw_from_discard(discard_count)
-			draw_cards(breaths - discard_count + 1)
-		cleanup_step()
+		post_pick()
+
+func post_pick() -> void:
+	var breaths := _result.breaths_taken
+	if breaths > 0:
+		# replace the card you just played
+		var discard_count: int = min(breaths, $DiscardMain.count())			
+		draw_from_discard(discard_count)
+		draw_cards(breaths - discard_count + 1)
+	
+	var deck_breaks := _result.decks_broken
+	if deck_breaks > 0:
+		var broken_cards = $DeckMain.draw_cards(deck_breaks)
+		for card in broken_cards:
+			break_pick(card)
+	
+	cleanup_step()
 
 func solve_lock() -> void:
 	$ContinueButton.visible = true	
