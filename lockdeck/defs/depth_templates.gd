@@ -116,7 +116,7 @@ static var UNLOCK := DepthTemplates.new(
 static var BREATH := DepthTemplates.new(
 	Depths.BREATH,
 	-1,
-	[1, 100, 3],
+	[1, 1, 3],
 	2
 )
 

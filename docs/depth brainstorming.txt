@@ -46,13 +46,10 @@ MOTHERFUCKERS
 
 SUPPORT ARCS IN LOCK GENERATOR
 
-fix hand layout with > 3 cards
-breath should draw from discard
-
 
 Initial pass:
 safe:
-d- breather (draw two random from your discard, or deck if it's empty)
+x- breather (draw two random from your discard, or deck if it's empty)
 d- hint (shows a safe, or tags everything dangerous)
 d- slip (reveal and advance on test/reveal)
 d- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)

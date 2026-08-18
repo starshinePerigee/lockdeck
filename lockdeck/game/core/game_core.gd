@@ -269,8 +269,12 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	if _result.lock_solved:
 		solve_lock()
 	else:
-		if _result.breaths_taken > 0:
-			draw_cards(_result.breaths_taken + 1)
+		var breaths := _result.breaths_taken
+		if breaths > 0:
+			# replace the card you just played
+			var discard_count: int = min(breaths, $DiscardMain.count())			
+			draw_from_discard(discard_count)
+			draw_cards(breaths - discard_count + 1)
 		cleanup_step()
 
 func solve_lock() -> void:
@@ -313,10 +317,17 @@ func cleanup_step() -> void:
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
 
+func draw_from_discard(count: int) -> void:
+	var discard_count: int = min(count, $DiscardMain.count())
+	var discard_shuffled: Array[CardSpec] = $DiscardMain.cards.duplicate()
+	discard_shuffled.shuffle()
+	var dis_cards: Array[CardSpec] = discard_shuffled.slice(0, discard_count)
+	$DiscardMain.remove_cards(dis_cards)
+	$HandMain.add_cards(dis_cards)
+
 func draw_cards(count: int) -> void:
 	var cards: Array[CardSpec] = $DeckMain.draw_cards(count)
 	$HandMain.add_cards(cards)
-	print("draw! %s" % $HandMain.count())
 
 func draw_to_five() -> void:
 	var cards_to_draw: int = hand_size - $HandMain.count()
@@ -371,13 +382,6 @@ func load_game(game: GameSpec) -> void:
 	_already_broken = game.broken_picks
 	$TrashMain.reset()
 	restart()
-
-func add_random_cards(count: int = 1) -> void:
-	var cards := PickGenerator.get_many_base_cards(count)
-	$DeckMain.add_cards(cards)
-	for card in cards:
-		print("Added new pick: %s." % card.pick_name)
-	update_status_widget()
 
 func restart() -> void:
 	lock_input(false)
