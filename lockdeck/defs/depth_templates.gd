@@ -106,6 +106,13 @@ static var BOUNCE := DepthTemplates.new(
 	3
 )
 
+static var FUMBLE := DepthTemplates.new(
+	Depths.FUMBLE,
+	3,
+	[1, 2, 2],
+	3
+)
+
 static var UNLOCK := DepthTemplates.new(
 	Depths.LUCKY,
 	-2,
@@ -143,15 +150,16 @@ static var TRAP := DepthTemplates.new(
 
 static var SURPRISE := DepthTemplates.new(
 	Depths.SURPRISE,
-	1,
+	4,
 	[0, 1, 2],
-	4
+	1
 )
 
 static var ALL_TEMPLATES := [
 	PUSH,
 	JAM,
 	BOUNCE,
+	FUMBLE,
 	UNLOCK,
 	BREATH,
 #	EMPTY,

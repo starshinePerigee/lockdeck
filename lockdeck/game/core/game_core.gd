@@ -275,6 +275,10 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		post_pick()
 
 func post_pick() -> void:
+	if _result.hand_fumbled:
+		$Notifications.notify(Notifications.FUMBLE)
+		move_cards_from_hand_to_discard($HandMain.cards.duplicate())
+	
 	var breaths := _result.breaths_taken
 	if breaths > 0:
 		# replace the card you just played
