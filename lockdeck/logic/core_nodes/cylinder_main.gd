@@ -120,6 +120,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	# clean up and record
 	for pin in target_pins:
 		result.results.append(pin.get_result_spec())
+		result.picks_twisted += pin.twist_count
 	
 	result.lock_solved = lock_solved()
 	if not shadow:

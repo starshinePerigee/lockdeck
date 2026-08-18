@@ -113,6 +113,13 @@ static var FUMBLE := DepthTemplates.new(
 	3
 )
 
+static var TWIST := DepthTemplates.new(
+	Depths.TWIST,
+	2,
+	[0, 0, 3],
+	2
+)
+
 static var UNLOCK := DepthTemplates.new(
 	Depths.LUCKY,
 	-2,
@@ -165,5 +172,6 @@ static var ALL_TEMPLATES := [
 #	EMPTY,
 	SPIKE,
 	TRAP,
-	SURPRISE
+	SURPRISE,
+	TWIST
 ]

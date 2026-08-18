@@ -292,6 +292,10 @@ func post_pick() -> void:
 		for card in broken_cards:
 			break_pick(card, true)
 	
+	for __ in _result.picks_twisted:
+		$Notifications.notify(Notifications.TWIST)
+		discard_from_deck()
+	
 	cleanup_step()
 
 func solve_lock() -> void:
@@ -320,6 +324,10 @@ func discard_pick() -> void:
 	
 	cleanup_step()
 	set_state(InputState.INACTIVE)
+
+func discard_from_deck() -> void:
+	if $DeckMain.count() > 0:
+		$DiscardMain.add_cards($DeckMain.draw_cards(1))
 
 func cleanup_step() -> void:
 	draw_to_five()

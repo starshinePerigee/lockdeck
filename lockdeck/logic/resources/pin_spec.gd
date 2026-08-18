@@ -33,6 +33,8 @@ enum RevealLevel {
 ## Holds the results objects for this pin activation
 ## Size is ONE PLUS the size of depths to handle the overrun result
 @export var results: Array[Results]
+## Holds how many twist depths are triggered this execution
+@export var twist_count: int
 ## Holds the checked tracking letters
 @export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
@@ -193,6 +195,8 @@ func on_test_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		Depths.TRAP:
 			trigger_depth(pos, effect, true)
+		Depths.TWIST:
+			twist_count += 1
 		_:
 			pass
 
@@ -203,6 +207,8 @@ func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 			trigger_depth(pos, effect, true)
 		Depths.LABYRINTH:
 			trigger_depth(pos, effect, true)
+		Depths.TWIST:
+			twist_count += 1
 		_:
 			pass
 
@@ -452,6 +458,7 @@ func end_step() -> void:
 	results.fill(Results.EMPTY)
 	checked.fill(false)
 	sight_pointer = 0
+	twist_count = 0
 
 func reset_exhaustion() -> void:
 	activated.fill(false)
