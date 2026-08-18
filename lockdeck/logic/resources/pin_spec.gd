@@ -159,6 +159,8 @@ func execute_effect(effect) -> void:
 			bounce_pin(effect)
 		Effects.LUCKY:
 			lucky_boost(effect)
+		Effects.HINT:
+			do_hint()
 		Effects.DRAW_FROM_DISCARD:
 			# handled in end_step_spec
 			pass
@@ -399,6 +401,18 @@ func handle_break(effect: EffectSpec) -> void:
 	update_result(Results.BREAK, pin_position)
 	effect.broke_pick = true
 	effect.add_position(pin_position)
+
+func do_hint() -> void:
+	# i can't believe range returns an untyped array
+	# godot is not a serious language
+	var check_order: Array = (
+		range(pin_position, PIN_DEPTH_COUNT, 1)
+		+ range(0, pin_position, 1)
+	)
+	for i in check_order:
+		if not get_revealed(i) and depths[i].tests_as == Depths.DangerLevel.CLEAR:
+			reveals[i] = RevealLevel.REVEALED
+			return
 #endregion
 
 #region ending and cleanup methods

@@ -77,6 +77,7 @@ static var BREAK := DepthTemplates.new(
 	Depths.WARN
 )
 
+#region friendly
 ## Intentionally place empties
 static var EMPTY := DepthTemplates.new(
 	Depths.EMPTY,
@@ -84,6 +85,31 @@ static var EMPTY := DepthTemplates.new(
 	[0, 1, 3],
 	3,
 )
+
+static var UNLOCK := DepthTemplates.new(
+	Depths.LUCKY,
+	-3,
+	[0, 2, 1],
+	2
+)
+
+static var BREATH := DepthTemplates.new(
+	Depths.BREATH,
+	-1,
+	[1, 1, 3],
+	2
+)
+
+static var HINT := DepthTemplates.new(
+	Depths.HINT,
+	-2,
+	[2, 2, 2],
+	4,
+)
+
+#endregion
+
+#region interesting
 
 static var PUSH := DepthTemplates.new(
 	Depths.PUSH,
@@ -120,19 +146,9 @@ static var TWIST := DepthTemplates.new(
 	2
 )
 
-static var UNLOCK := DepthTemplates.new(
-	Depths.LUCKY,
-	-2,
-	[0, 2, 1],
-	2
-)
+#endregion
 
-static var BREATH := DepthTemplates.new(
-	Depths.BREATH,
-	-1,
-	[1, 1, 3],
-	2
-)
+#region breaks
 
 static var SPIKE := DepthTemplates.new(
 	Depths.SPIKE,
@@ -162,16 +178,22 @@ static var SURPRISE := DepthTemplates.new(
 	1
 )
 
+#endregion
+
 static var ALL_TEMPLATES := [
+	EMPTY,
+	UNLOCK,
+	BREATH,
+	HINT,
+	
 	PUSH,
 	JAM,
 	BOUNCE,
 	FUMBLE,
-	UNLOCK,
-	BREATH,
-#	EMPTY,
+	TWIST,
+	
 	SPIKE,
+	LABYRINTH,
 	TRAP,
 	SURPRISE,
-	TWIST
 ]
