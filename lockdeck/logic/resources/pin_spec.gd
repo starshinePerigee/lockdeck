@@ -237,6 +237,22 @@ func on_activate_trigger(pos: int, effect: EffectSpec) -> void:
 		_:
 			pass
 
+func on_jam_trigger(pos: int, effect: EffectSpec) -> void:
+	# handle catch logic
+	if Depths.CATCH in depths:
+		var catch_pos := -1
+		for i in range(0, pos, 1):
+			if get_live_depth(i) == Depths.CATCH:
+				catch_pos = i
+				break
+		
+		if catch_pos > 0:
+			trigger_depth(catch_pos, effect, true)
+	
+	match get_live_depth(pos):
+		_:
+			pass
+
 #endregion
 
 #region effect handling
@@ -362,6 +378,7 @@ func add_jam(effect: EffectSpec) -> void:
 		push_warning("Attempted negative jam application. This is deprecated!")
 		return
 	
+	on_jam_trigger(pin_position, effect)
 	jam_count += effect.value
 	effect.add_position(pin_position)
 

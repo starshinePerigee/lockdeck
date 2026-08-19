@@ -146,12 +146,19 @@ static var TWIST := DepthTemplates.new(
 	2
 )
 
-static var SLIP := DepthTemplates.new(
+static var SLIP_2 := DepthTemplates.new(
 	Depths.SLIP,
 	2,
-	[0, 2, 2],
+	[0, 1, 1],
 	1,
 	Depths.SLIP
+)
+
+static var SLIP_1 := DepthTemplates.new(
+	Depths.SLIP,
+	1,
+	[0, 1, 1],
+	3,
 )
 
 #endregion
@@ -172,6 +179,13 @@ static var TRAP := DepthTemplates.new(
 	2
 )
 
+static var LABYRINTH := DepthTemplates.new(
+	Depths.LABYRINTH,
+	3,
+	[0, 1, 2],
+	2
+)
+
 static var GATE := DepthTemplates.new(
 	Depths.GATE_LOCKED,
 	5,
@@ -180,11 +194,11 @@ static var GATE := DepthTemplates.new(
 	Depths.GATE_KEY
 )
 
-static var LABYRINTH := DepthTemplates.new(
-	Depths.LABYRINTH,
-	3,
-	[0, 1, 2],
-	2
+static var CATCH := DepthTemplates.new(
+	Depths.CATCH,
+	2,
+	[0, 1, 3],
+	3
 )
 
 static var SURPRISE := DepthTemplates.new(
@@ -207,11 +221,13 @@ static var ALL_TEMPLATES := [
 	BOUNCE,
 	FUMBLE,
 	TWIST,
-	SLIP,
+	SLIP_1,
+	SLIP_2,
 	
 	SPIKE,
-	LABYRINTH,
 	TRAP,
-	SURPRISE,
+	LABYRINTH,
 	GATE,
+	CATCH,
+	SURPRISE,
 ]
