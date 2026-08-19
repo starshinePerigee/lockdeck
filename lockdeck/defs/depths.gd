@@ -185,7 +185,8 @@ static var BOUNCE := Depths.new(
 
 static var BOMB := Depths.new(
 	"bomb", DangerLevel.INTERESTING, Effects.BOMB,
-	"Once revealed, you have one turn to advance past Bomb or it breaks your pick."
+	("Activating, testing, or revealing Bomb will cause it to light."
+	+ "Once lit, you have one turn to advance past Bomb or it explodes, breaking your pick.")
 )
 
 static var FUMBLE := Depths.new(

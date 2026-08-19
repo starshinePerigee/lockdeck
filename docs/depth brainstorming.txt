@@ -47,7 +47,6 @@ MOTHERFUCKERS
 support decks in lock generation
 SUPPORT ARCS IN LOCK GENERATOR
 tooltips
-balance and redo level generation
 "next lock" preview in strat hub
 
 Initial pass:
