@@ -52,10 +52,10 @@ Initial pass:
 safe:
 x- breather (draw two random from your discard, or deck if it's empty)
 x- hint (shows a safe, or tags everything dangerous)
-d- slip (reveal and advance on test/reveal)
 d- catch (unless this pin is exhausted, if you are below this depth and jam, the jamming pick breaks. does nothing if activated)
 x- labyrinth (breaks if revealed via reveal)
 interesting:
+x- slip (reveal and advance on test/reveal)
 x- fumble (discards hand)
 d- bomb (advance past or die)
 x- twist (discard 1 from deck when tested; does not reveal)

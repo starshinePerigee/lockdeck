@@ -35,6 +35,8 @@ enum RevealLevel {
 @export var results: Array[Results]
 ## Holds how many twist depths are triggered this execution
 @export var twist_count: int
+## holds how much more push is pending in a push action
+var _push_pending: int
 ## Holds the checked tracking letters
 @export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
@@ -222,6 +224,9 @@ func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
 		Depths.GATE_LOCKED:
 			effect.broke_pick = true
 			update_result(Results.BREAK, pos)
+		Depths.SLIP:
+			trigger_depth(pos, effect)
+			_push_pending += 1
 		_:
 			pass
 
@@ -295,18 +300,20 @@ func push_pin(effect: EffectSpec, safe := false) -> void:
 	if remainder <= 0:
 		effect.set_jammed(pin_position)
 		return
-		
-	for __ in remainder:
+	
+	_push_pending += remainder
+	while _push_pending > 0:
 		on_advance_trigger(pin_position, effect)
 		test_position(pin_position)
 		
 		effect.add_position(pin_position + 1)
+		_push_pending -= 1
 		if advance_pin(1):
+			_push_pending = 0
 			effect.add_position(PIN_DEPTH_COUNT)
 			if not safe:
 				effect.broke_pick = true
 				update_result(Results.BREAK, PIN_DEPTH_COUNT)
-				break
 		if is_solved():
 			update_result(Results.UNLOCK)
 
@@ -487,6 +494,7 @@ func end_step() -> void:
 	checked.fill(false)
 	sight_pointer = 0
 	twist_count = 0
+	_push_pending = 0
 
 func reset_exhaustion() -> void:
 	activated.fill(false)

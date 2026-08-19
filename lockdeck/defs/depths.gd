@@ -156,6 +156,12 @@ static var CATCH := Depths.new(
 	)
 )
 
+static var SLIP := Depths.new(
+	"slip", DangerLevel.CLEAR, Effects.DISARM,
+	"When you push past slip, the pin advances one more depth.",
+	1
+)
+
 #endregion
 
 #region interesting depths
@@ -185,11 +191,6 @@ static var BOMB := Depths.new(
 static var FUMBLE := Depths.new(
 	"fumble", DangerLevel.INTERESTING, Effects.DISCARD_HAND,
 	"Discards your current hand. Whoops!"
-)
-
-static var SLIP := Depths.new(
-	"slip", DangerLevel.INTERESTING, Effects.PUSH,
-	"When you test, reveal, or activate Slip, the advances one more depth."
 )
 
 #endregion

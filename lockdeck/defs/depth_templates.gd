@@ -146,6 +146,14 @@ static var TWIST := DepthTemplates.new(
 	2
 )
 
+static var SLIP := DepthTemplates.new(
+	Depths.SLIP,
+	2,
+	[0, 2, 2],
+	1,
+	Depths.SLIP
+)
+
 #endregion
 
 #region breaks
@@ -199,6 +207,7 @@ static var ALL_TEMPLATES := [
 	BOUNCE,
 	FUMBLE,
 	TWIST,
+	SLIP,
 	
 	SPIKE,
 	LABYRINTH,

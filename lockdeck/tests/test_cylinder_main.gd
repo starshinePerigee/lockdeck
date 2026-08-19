@@ -83,13 +83,13 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
-	spec.depths[1] = Depths.EMPTY
+	spec.depths[1] = Depths.SLIP
 	spec.depths[2] = Depths.EMPTY
-	spec.depths[3] = Depths.PUSH
-	spec.depths[4] = Depths.EMPTY
-	spec.depths[5] = Depths.LABYRINTH
-	spec.depths[6] = Depths.EMPTY
-	spec.depths[7] = Depths.SPIKE
+	spec.depths[3] = Depths.EMPTY
+	spec.depths[4] = Depths.SLIP
+	spec.depths[5] = Depths.SLIP
+	spec.depths[6] = Depths.SPIKE
+	spec.depths[7] = Depths.EMPTY
 	spec.finalize()
 	return spec
 
