@@ -25,6 +25,9 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 	PinSpec.RevealLevel.DANGEROUS: Color("#f1504b"),
 }
 
+const BOMB_LIVE := preload("res://assets/pin/its_a_bomb.png")
+const BOMB_DEAD := preload("res://assets/pin/bomb_defused.png")
+
 #region display logic
 ## If this pin is "locked" - displayed as greyed out.
 @export var pin_locked: bool = false:
@@ -89,6 +92,14 @@ var SPRING_POSITION: Vector2
 
 var _key_visible := false
 
+func _draw_bomb(defused := false) -> void:
+	if not $Stack/BombIndicator.visible:
+		return
+	if defused:
+		$Stack/BombIndicator/BombIcon.texture = BOMB_DEAD
+	else:
+		$Stack/BombIndicator/BombIcon.texture = BOMB_LIVE
+
 ## Load a PinSpec into this pin, setting all parameters.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
@@ -110,6 +121,14 @@ func load_spec(pin_spec: PinSpec) -> void:
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
+	
+	if pin_spec.bomb_pos >= 0:
+		$Stack/BombIndicator.visible = true
+		$Stack/BombIndicator.position.y = DEPTH_VHEIGHT * pin_spec.bomb_pos
+	else:
+		$Stack/BombIndicator.visible = false
+	_draw_bomb()
+	
 	_key_visible = pin_spec.is_solved()
 	$KeyIndicator.visible = _key_visible
 
@@ -124,12 +143,14 @@ func load_results(results: ResultSpec) -> void:
 		len(depth_refs) in results.results
 		and results.results[len(depth_refs)] == Results.BREAK
 	)
+	_draw_bomb(results.bomb_defused)
 
 func clear_results() -> void:
 	for depth in depth_refs:
 		depth.result = Results.EMPTY
 		depth.show_jam_result = false
 	$Stack/BreakResult.visible = false
+	_draw_bomb()
 #endregion
 
 #region input logic

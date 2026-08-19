@@ -37,6 +37,9 @@ static var UNJAM := Effects.new("unjam")
 ## Depth effect - pick out of bounds (typically breaks)
 static var OUT_OF_BOUNDS := Effects.new("out_of_bounds")
 
+## Used for tracking bomb status
+static var BOMB_DEFUSED := Effects.new("bomb_defused")
+
 ## stop evaluating current card. Used as a sentinel value in execution.
 static var END_EXECUTION := Effects.new("end_execution")
 

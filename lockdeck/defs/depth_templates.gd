@@ -208,6 +208,13 @@ static var SURPRISE := DepthTemplates.new(
 	1
 )
 
+static var BOMB := DepthTemplates.new(
+	Depths.BOMB,
+	3,
+	[1, 2, 3],
+	2
+)
+
 #endregion
 
 static var ALL_TEMPLATES := [
@@ -230,4 +237,5 @@ static var ALL_TEMPLATES := [
 	GATE,
 	CATCH,
 	SURPRISE,
+	BOMB
 ]

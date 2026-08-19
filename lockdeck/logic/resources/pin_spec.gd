@@ -45,6 +45,10 @@ var _push_pending: int
 @export var sight_pointer: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
+## If there is a currently active bomb, what depth it is - otherwise -1
+@export var bomb_pos: int
+## Used for results display
+var _bomb_defused: bool
 
 #region tracking modifiers
 ## Get the visible depth for a pin, or the current one (default)
@@ -108,8 +112,33 @@ func update_result(new_result: Results, pos: int = -1) -> void:
 
 #region execution handling
 ## Process a series of effects
-## This will update effects in-place with execution info
-func execute(pending_effects: Array[EffectSpec]) -> void:
+## This will update effects in-place with execution info,
+## And return any new effects to record
+func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
+	var old_bomb := bomb_pos
+	bomb_pos = -1
+	
+	if len(pending_effects) > 0:
+		_execute_effects(pending_effects)
+	
+	var additional_effects: Array[EffectSpec] = []
+	
+	if old_bomb >= 0:
+		var bomb_effect: EffectSpec
+		if old_bomb >= pin_position:
+			# boom
+			update_result(Results.BREAK, old_bomb)
+			bomb_effect = EffectSpec.new(Effects.BREAK)
+			bomb_effect.broke_pick = true
+		else:
+			bomb_effect = EffectSpec.new(Effects.BOMB_DEFUSED)
+			_bomb_defused = true
+		bomb_effect.add_position(old_bomb)
+		additional_effects.append(bomb_effect)
+	
+	return additional_effects
+
+func _execute_effects(pending_effects: Array[EffectSpec]) -> void:
 	update_result(Results.HOME)
 	for effect in pending_effects:
 		# print(
@@ -122,7 +151,6 @@ func execute(pending_effects: Array[EffectSpec]) -> void:
 		update_result(Results.EXHAUSTED)
 	else:
 		update_result(Results.ACTIVATE)
-
 
 ## Activates the pin, doing the effect for the depth it is on
 func activate() -> EffectSpec:
@@ -165,6 +193,8 @@ func execute_effect(effect) -> void:
 			do_hint()
 		Effects.GATE_UNLOCK:
 			do_gate_unlock()
+		Effects.BOMB:
+			do_bomb(pin_position)
 		Effects.DRAW_FROM_DISCARD:
 			# handled in end_step_spec
 			pass
@@ -203,6 +233,8 @@ func on_test_trigger(pos: int, effect: EffectSpec) -> void:
 			trigger_depth(pos, effect, true)
 		Depths.TWIST:
 			twist_count += 1
+		Depths.BOMB:
+			start_bomb(pos, effect)
 		_:
 			pass
 
@@ -215,11 +247,15 @@ func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 			trigger_depth(pos, effect, true)
 		Depths.TWIST:
 			twist_count += 1
+		Depths.BOMB:
+			start_bomb(pos, effect)
 		_:
 			pass
 
 ## Called when a pin is advanced past
 func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
+	if pos > bomb_pos:
+		bomb_pos = -1
 	match get_live_depth(pos):
 		Depths.GATE_LOCKED:
 			effect.broke_pick = true
@@ -227,6 +263,8 @@ func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
 		Depths.SLIP:
 			trigger_depth(pos, effect)
 			_push_pending += 1
+		Depths.BOMB:
+			trigger_depth(pos, effect)
 		_:
 			pass
 
@@ -253,6 +291,9 @@ func on_jam_trigger(pos: int, effect: EffectSpec) -> void:
 		_:
 			pass
 
+func start_bomb(pos: int, effect: EffectSpec) -> void:
+	do_bomb(pos)
+	trigger_depth(pos, effect)
 #endregion
 
 #region effect handling
@@ -451,6 +492,9 @@ func do_gate_unlock() -> void:
 			activated[i] = true
 			return
 	push_error("gate unlocked without a gate?")
+
+func do_bomb(pos) -> void:
+	bomb_pos = pos
 #endregion
 
 #region ending and cleanup methods
@@ -486,6 +530,7 @@ func get_result_spec() -> ResultSpec:
 			result_spec.results[i] = results[i]
 	if jam_count > 0 and has_results:
 		result_spec.jam_depth = pin_position
+	result_spec.bomb_defused = _bomb_defused
 	return result_spec
 
 ## Gets a copy of this pin, except with hidden depths set to empty
@@ -502,6 +547,7 @@ func reset_shadow(shadow: PinSpec) -> void:
 	shadow.end_step()
 	shadow.pin_position = pin_position
 	shadow.jam_count = jam_count
+	shadow.bomb_pos = bomb_pos
 	shadow.reveals.assign(reveals)
 	shadow.activated.assign(activated)
 
@@ -512,6 +558,7 @@ func end_step() -> void:
 	sight_pointer = 0
 	twist_count = 0
 	_push_pending = 0
+	_bomb_defused = false
 
 func reset_exhaustion() -> void:
 	activated.fill(false)
@@ -537,6 +584,7 @@ func finalize() -> void:
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
+	bomb_pos = -1
 	reset_exhaustion()
 	end_step()
 #endregion

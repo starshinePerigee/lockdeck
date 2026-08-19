@@ -44,9 +44,11 @@ MOTHERFUCKERS
 - x: break from your deck (unless it's empty)
 
 
+support decks in lock generation
 SUPPORT ARCS IN LOCK GENERATOR
 tooltips
 balance and redo level generation
+"next lock" preview in strat hub
 
 Initial pass:
 safe:
@@ -57,7 +59,7 @@ x- labyrinth (breaks if revealed via reveal)
 interesting:
 x- slip (reveal and advance on test/reveal)
 x- fumble (discards hand)
-d- bomb (advance past or die)
+x- bomb (advance past or die)
 x- twist (discard 1 from deck when tested; does not reveal)
 danger:
 x- surprise (break from deck without warning)
