@@ -1,0 +1,37 @@
+- support decks in lock generation
+- support arcs in lock generator? (or some kind of depth unlocking mechanic)
+- "next lock" preview in strat hub
+
+All depth templates fall in one of three categories:
+- Helpful
+- Annoying
+- Critical
+
+The key break between annoying and critical is how much brainspace they take: a critical depth should be considered before any lock, but you can play annoying and helpful depths reactively. (A Jam is annoying and pushing into a Jam isn't too bad, and you'll only think about it when you pop a Caution, whereas a Labyrinth is something you have to think about every single pick with reveal)
+
+The depths per five should be tweaked per template to keep them balanced within their bands. 
+
+
+Level gen should start with a target number of templates, and then "bump" it a number of times to distribute difficulty. Bumps take the following:
+-1 helpful
++1 annoy
+-1 annoy +1 critical
+nothing (lucky!)
+
+if the req isn't available, that bump is skipped.
+
+
+crit	annoy	empty	help	bump	total
+	1	8	1	0	0
+	1	8	1	1	1
+1	0	8	1	1	2
+1	1	7	1	1	3
+1	1	6	2	3	4
+1	2	5	2	3	5
+1	2	5	2	4	6
+2	2	3	3	4	7
+2	2	3	3	5	8
+2	2	3	3	6	9
+2	3	2	3	6	10
+3	2	2	3	6	11
+3	3	1	3	6	12

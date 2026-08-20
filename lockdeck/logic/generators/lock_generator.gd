@@ -1,102 +1,132 @@
 ## Handles generating sets of locks
 class_name LockGenerator
 
-enum GameArcs {
-	EARLY = 0,
-	MID = 1,
-	LATE = 2
+class DifficultyArray:
+	const TOTAL_TEMPLATES := 10
+	
+	var critical: int
+	var annoying: int
+	var helpful: int
+	var empty: int
+	var bumps_todo: int
+	
+	func _init(
+		critical_: int, 
+		annoying_: int, 
+		helpful_: int, 
+		bumps_: int = 0
+	) -> void:
+		critical = critical_
+		annoying = annoying_
+		helpful = helpful_
+		empty = TOTAL_TEMPLATES - (critical + annoying + helpful)
+		bumps_todo = bumps_
+	
+	func copy() -> DifficultyArray:
+		return DifficultyArray.new(critical, annoying, helpful, bumps_todo)
+	
+	func try_bump() -> bool:
+		match randi_range(0, 3):
+			0:
+				if helpful > 0:
+					helpful -= 1
+					empty += 1
+					return true
+			1:
+				if empty > 0:
+					empty -= 1
+					annoying += 1
+					return true
+			2:
+				if annoying > 0:
+					annoying -= 1
+					critical += 1
+					return true
+			3:
+				# lucky!
+				return true
+		return false
+	
+	func do_bumps(count: int = -99) -> void:
+		if count == -99:
+			count = bumps_todo
+		
+		while count > 0:
+			if try_bump():
+				count -= 1
+
+static var arc_deck_parameters: Dictionary[LockDeck.GameArcs, DifficultyArray] = {
+	LockDeck.GameArcs.EARLY: DifficultyArray.new(2, 3, 2),
+	LockDeck.GameArcs.MID: DifficultyArray.new(3, 4, 3),
+	LockDeck.GameArcs.LATE: DifficultyArray.new(5, 5, 4)
 }
-
-## Maximum amount of extra hazard to accumulate trying to get target count
-const HAZARD_MARGIN := 5
-
-## How many times to skip before just accepting the current configuration
-const SKIP_THRESHOLD := 3
-
-static func get_template_weight(template: DepthTemplates, arc: GameArcs) -> int:
-	match arc:
-		GameArcs.EARLY:
-			return template.early_weight
-		GameArcs.MID:
-			return template.mid_weight
-		GameArcs.LATE:
-			return template.late_weight
-	return 0
-
-static func get_base_template_deck(arc: GameArcs) -> Array[DepthTemplates]:
-	var deck: Array[DepthTemplates] = []
-	for template in DepthTemplates.ALL_TEMPLATES:
-		for __ in get_template_weight(template, arc):
-			deck.append(template)
-	return deck
 
 ## Pulls a number of depth templates from the total list, returning a smaller
 ## collection that can be used to build locks. This collection will have at least
 ## the target hazard and count.
 static func get_lockset_deck(
-	arc: GameArcs,
-	target_hazard: int,
-	target_count: int
-) -> Array[DepthTemplates]:
-	var base_deck := get_base_template_deck(arc)
-	base_deck.shuffle()
-	
-	var current_hazard := 0
-	var lockset_deck: Array[DepthTemplates] = []
-	
-	for template in base_deck:
-		lockset_deck.append(template)
-		if template.net_hazard > 0:
-			# negative hazards should affect lock building, but we don't wnat them
-			# to over-burden the actual deck at this stage
-			current_hazard += template.net_hazard
-		
-		if (
-			current_hazard >= target_hazard 
-			and len(lockset_deck) >= target_count
-		):
-			break 
-	
-	print(
-		"Generated lockset deck. Count: %s vs target %s, hazard: %s vs target %s"
-		% [len(lockset_deck), target_count, current_hazard, target_hazard]
+	arc: LockDeck.GameArcs
+) -> LockDeck:
+	var base_deck := LockDeck.base_template_deck_catalog[arc]
+	var parameters := arc_deck_parameters[arc]
+	return LockDeck.build_deck(
+		base_deck,
+		parameters.critical,
+		parameters.annoying, 
+		parameters.helpful
 	)
-		
-	return lockset_deck
+
+static var difficulty_parameters: Dictionary[int, DifficultyArray] = {
+	0: DifficultyArray.new(0, 1, 1, 0),
+	1: DifficultyArray.new(0, 1, 1, 1),
+	2: DifficultyArray.new(1, 0, 1, 1),
+	3: DifficultyArray.new(1, 1, 1, 1),
+	4: DifficultyArray.new(1, 1, 2, 3),
+	5: DifficultyArray.new(1, 2, 2, 3),
+	6: DifficultyArray.new(1, 2, 2, 4),
+	7: DifficultyArray.new(2, 2, 3, 4),
+	8: DifficultyArray.new(2, 2, 3, 5),
+	9: DifficultyArray.new(2, 2, 3, 6),
+	10: DifficultyArray.new(2, 3, 3, 6),
+	11: DifficultyArray.new(3, 2, 3, 6),
+	12: DifficultyArray.new(3, 3, 3, 6),
+}
+
+static func get_difficulty_parameter(difficulty: int) -> DifficultyArray:
+	if difficulty in difficulty_parameters:
+		return difficulty_parameters[difficulty]
+	else:
+		var last_difficulty: int = difficulty_parameters.keys()[-1]
+		var d_a := difficulty_parameters[last_difficulty]
+		d_a.bumps_todo += difficulty - last_difficulty
+		return d_a
 
 ## Pulls templates from the lockset deck to build a lock deck.
 ## Target hazard should be lower than the lockset deck
 static func get_lock_deck(
-	lockset_deck: Array[DepthTemplates], target_hazard: int
-) -> Array[DepthTemplates]:
-	lockset_deck.shuffle()
+	lockset_deck: LockDeck, difficulty: int
+) -> LockDeck:
 	
-	var current_hazard := 0
-	# Always include a break:
-	var lock_deck: Array[DepthTemplates] = [DepthTemplates.BREAK]
+	var parameters := get_difficulty_parameter(difficulty).copy()
+	parameters.do_bumps()
 	
-	for template in lockset_deck:
-		lock_deck.append(template)
-		current_hazard += template.net_hazard
-		
-		if current_hazard >= target_hazard:
-			break 
-	
-	return lock_deck
+	return LockDeck.build_deck(
+		lockset_deck,
+		parameters.critical,
+		parameters.annoying, 
+		parameters.helpful
+	)
 
 ## Generate a lock_spec given a lock deck and some parameters
 static func build_lock(
-	deck: Array[DepthTemplates], pin_count: int, hazard_target: int
+	deck: LockDeck, pin_count: int, hazard_target: int
 ) -> LockSpec:
 	var pins: Array[PinSpec] = []
 	# Array[Array[int))
 	var open: Array[Array]
+	deck.reset()
 	
-	# pop Break, shuffle, and re-add it at the front
-	deck.erase(DepthTemplates.BREAK)
-	deck.shuffle()
-	deck.insert(0, DepthTemplates.BREAK)
-	
+	# TODO TODO TODO TODO
 	for i in pin_count:
 		pins.append(PinSpec.new(Depths.EMPTY))
 		var pin_open := range(1, PinSpec.PIN_DEPTH_COUNT - 1)
@@ -134,18 +164,15 @@ static func build_lock(
 	for pin in pins:
 		pin.finalize()
 	
-	return LockSpec.new(pins, deck)
+	return LockSpec.new(pins, [])
 
 ## Build a level from a difficulty rating
 static func get_next_level(difficulty: int) -> LockSpec:
 	var pin_count: int = min(difficulty, 5)
-	var hazard_target := difficulty + 3
 	
 	var lockset_deck := LockGenerator.get_lockset_deck(
-		LockGenerator.GameArcs.MID,
-		difficulty + 5,
-		8
+		LockDeck.GameArcs.MID
 	)
-	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, hazard_target)
-	var lock := LockGenerator.build_lock(lock_deck, pin_count, hazard_target)
+	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, difficulty)
+	var lock := LockGenerator.build_lock(lock_deck, pin_count, difficulty)
 	return lock 

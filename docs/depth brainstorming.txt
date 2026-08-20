@@ -44,10 +44,7 @@ MOTHERFUCKERS
 - x: break from your deck (unless it's empty)
 
 
-support decks in lock generation
-SUPPORT ARCS IN LOCK GENERATOR
 tooltips
-"next lock" preview in strat hub
 
 Initial pass:
 safe:
