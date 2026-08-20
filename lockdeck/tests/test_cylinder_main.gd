@@ -95,7 +95,11 @@ static func get_known_test_pin() -> PinSpec:
 
 func gen_new_lock() -> void:
 	var difficulty := int($Difficulty/Input.text)
-	var lock := LockGenerator.get_next_level(difficulty)
+	var lock := LockGenerator.get_next_level(
+		difficulty,
+		LockDeck.GameArcs.MID,
+		5
+	)
 	
 	if $Difficulty/DoTest.button_pressed:
 		for i in 3:

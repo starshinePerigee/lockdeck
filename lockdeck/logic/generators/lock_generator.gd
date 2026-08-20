@@ -2,7 +2,7 @@
 class_name LockGenerator
 
 class DifficultyArray:
-	const TOTAL_TEMPLATES := 10
+	const TOTAL_TEMPLATES := 7
 	
 	var critical: int
 	var annoying: int
@@ -44,6 +44,9 @@ class DifficultyArray:
 					return true
 			3:
 				# lucky!
+				if helpful == 0 and empty > 0:
+					helpful += 1
+					empty -= 1
 				return true
 		return false
 	
@@ -51,9 +54,19 @@ class DifficultyArray:
 		if count == -99:
 			count = bumps_todo
 		
+		var old_count := count
+		var iterations := 0
 		while count > 0:
 			if try_bump():
 				count -= 1
+			iterations += 1
+		print("Did %s bumps after %s iterations" % [old_count, iterations])
+	
+	func as_str() -> String:
+		return (
+			"crit: %s, annoy: %s, help: %s, empty: %s (bump: %s)"
+			% [critical, annoying, helpful, empty, bumps_todo]
+		)
 
 static var arc_deck_parameters: Dictionary[LockDeck.GameArcs, DifficultyArray] = {
 	LockDeck.GameArcs.EARLY: DifficultyArray.new(2, 3, 2),
@@ -94,49 +107,51 @@ static var difficulty_parameters: Dictionary[int, DifficultyArray] = {
 
 static func get_difficulty_parameter(difficulty: int) -> DifficultyArray:
 	if difficulty in difficulty_parameters:
-		return difficulty_parameters[difficulty]
+		return difficulty_parameters[difficulty].copy()
 	else:
 		var last_difficulty: int = difficulty_parameters.keys()[-1]
-		var d_a := difficulty_parameters[last_difficulty]
+		var d_a := difficulty_parameters[last_difficulty].copy()
 		d_a.bumps_todo += difficulty - last_difficulty
 		return d_a
+
+static func get_difficulty_parameters(difficulty: int) -> DifficultyArray:
+	var parameters := get_difficulty_parameter(difficulty).copy()
+	parameters.do_bumps()
+	return parameters
 
 ## Pulls templates from the lockset deck to build a lock deck.
 ## Target hazard should be lower than the lockset deck
 static func get_lock_deck(
-	lockset_deck: LockDeck, difficulty: int
+	lockset_deck: LockDeck, difficulties: DifficultyArray
 ) -> LockDeck:
-	
-	var parameters := get_difficulty_parameter(difficulty).copy()
-	parameters.do_bumps()
 	
 	return LockDeck.build_deck(
 		lockset_deck,
-		parameters.critical,
-		parameters.annoying, 
-		parameters.helpful
+		difficulties.critical,
+		difficulties.annoying, 
+		difficulties.helpful
 	)
 
-## Generate a lock_spec given a lock deck and some parameters
+## Generate a lock_spec given a lock deck and a pin count
 static func build_lock(
-	deck: LockDeck, pin_count: int, hazard_target: int
+	deck: LockDeck, pin_count: int
 ) -> LockSpec:
 	var pins: Array[PinSpec] = []
 	# Array[Array[int))
 	var open: Array[Array]
-	deck.reset()
 	
-	# TODO TODO TODO TODO
+	# Build the open array (lists of depths per pin in random order)
+	# This will determine the order depths are placed in each pin
 	for i in pin_count:
 		pins.append(PinSpec.new(Depths.EMPTY))
 		var pin_open := range(1, PinSpec.PIN_DEPTH_COUNT - 1)
 		pin_open.shuffle()
 		open.append(pin_open)
 	
+	# The pin selector is a deck that choses which pins get the depths in a template
 	var pin_selector := range(0, pin_count)
 	
-	var hazard := 0
-	for template in deck:
+	for template in deck.draw_all():
 		pin_selector.shuffle()
 		var placed := 0
 		for i in range(pin_count):
@@ -156,10 +171,6 @@ static func build_lock(
 			placed += 1
 			if placed > template.pin_count(pin_count):
 				break
-		hazard += template.net_hazard
-		if hazard >= hazard_target:
-			break
-	print("Lock generated! Hazard %s / %s" % [hazard, hazard_target])
 	
 	for pin in pins:
 		pin.finalize()
@@ -167,12 +178,20 @@ static func build_lock(
 	return LockSpec.new(pins, [])
 
 ## Build a level from a difficulty rating
-static func get_next_level(difficulty: int) -> LockSpec:
-	var pin_count: int = min(difficulty, 5)
+static func get_next_level(
+	difficulty: int,
+	arc: LockDeck.GameArcs = LockDeck.GameArcs.MID,
+	pin_count: int = -1
+) -> LockSpec:
+	if pin_count < 0:
+		pin_count = min(difficulty, 5)
 	
-	var lockset_deck := LockGenerator.get_lockset_deck(
-		LockDeck.GameArcs.MID
-	)
-	var lock_deck := LockGenerator.get_lock_deck(lockset_deck, difficulty)
-	var lock := LockGenerator.build_lock(lock_deck, pin_count, difficulty)
+	print("\n        Generating new lock")
+	var lockset_deck := get_lockset_deck(arc)
+	var parameters := get_difficulty_parameter(difficulty)
+	parameters.do_bumps()
+	print(parameters.as_str())
+	var lock_deck := get_lock_deck(lockset_deck, parameters)
+	lock_deck.print()
+	var lock := build_lock(lock_deck, pin_count)
 	return lock 

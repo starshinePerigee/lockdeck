@@ -1,4 +1,4 @@
-﻿extends Resource
+extends Resource
 ## This is a deck of depth templates with helper methods 
 class_name LockDeck
 
@@ -13,7 +13,7 @@ enum GameArcs {
 	LATE = 2
 }
 
-func draw(difficulty: DepthTemplates.Difficulty) -> DeckTemplates:
+func draw(difficulty: DepthTemplates.Difficulty) -> DepthTemplates:
 	_pointers[difficulty] += 1
 	if _pointers[difficulty] >= len(deck[difficulty]):
 		deck[difficulty].shuffle()
@@ -22,9 +22,30 @@ func draw(difficulty: DepthTemplates.Difficulty) -> DeckTemplates:
 	return deck[difficulty][_pointers[difficulty]]
 
 func reset() -> void:
-	for difficulty in DepthTemplates.Difficulty:
+	for difficulty in DepthTemplates.Difficulty.values():
 		_pointers[difficulty] = -1
 		deck[difficulty].shuffle()
+
+func print() -> void:
+	for difficulty in DepthTemplates.Difficulty:
+		print(difficulty)
+		for template in deck[DepthTemplates.Difficulty[difficulty]]:
+			print("    %s" % template.as_str())
+
+func draw_all() -> Array[DepthTemplates]:
+	reset()
+	
+	var drawn_templates: Array[DepthTemplates] = []
+	for difficulty in [
+		DepthTemplates.Difficulty.ESSENTIAL,
+		DepthTemplates.Difficulty.CRITICAL,
+		DepthTemplates.Difficulty.HELPFUL,
+		DepthTemplates.Difficulty.ANNOYING,
+		DepthTemplates.Difficulty.EMPTY,
+	]:
+		drawn_templates.append_array(deck[difficulty])
+	
+	return drawn_templates
 
 static func get_template_weight(template: DepthTemplates, arc: GameArcs) -> int:
 	match arc:
