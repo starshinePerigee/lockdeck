@@ -44,9 +44,9 @@ class DifficultyArray:
 					return true
 			3:
 				# lucky!
-				if helpful == 0 and empty > 0:
-					helpful += 1
-					empty -= 1
+#				if helpful == 0 and empty > 0:
+#					helpful += 1
+#					empty -= 1
 				return true
 		return false
 	

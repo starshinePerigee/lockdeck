@@ -6,7 +6,12 @@ class_name GameSpec
 @export var coins: int = 0
 
 ## Current lock. ONE INDEXED
-@export var lock_number: int = 1
+@export var lock_number: int = 0
+
+## Current heist, ONE INDEXED
+@export var heist_number: int = 1
+
+@export var current_stage: int = -1
 
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
@@ -26,47 +31,74 @@ func spend_coins(count: int) -> void:
 func add_pick(pick: CardSpec) -> void:
 	current_deck.append(pick)
 
-## Marks a lock as complete, updating the difficulty
-func complete_lock() -> void:
-	lock_number += 1
+const LOCK := LevelSpec.Stages.LOCK
+const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
+const VICTORY := LevelSpec.Stages.VICTORY
 
-static var LOCK_SEQUENCE := [
-	1, 1, 2,
-	2, 2, 3,
-	3, 3, 4,
-	4, 4, 5,
-	5, 6, 7,
-	8, 9, 10
+const EARLY := LockDeck.GameArcs.EARLY
+const MID := LockDeck.GameArcs.MID
+const LATE := LockDeck.GameArcs.LATE
+
+static var GAME_SEQUENCE: Array[LevelSpec] = [
+	LevelSpec.new(EARLY, LOCK, 1, 1),
+	LevelSpec.new(EARLY, LOCK, 1, 2),
+	LevelSpec.new(EARLY, LOCK, 2, 1),
+	LevelSpec.new(EARLY, LOOT_STRAT, 40),
+	
+	LevelSpec.new(MID, LOCK, 2, 2),
+	LevelSpec.new(MID, LOCK, 2, 3),
+	LevelSpec.new(MID, LOCK, 3, 2),
+	LevelSpec.new(MID, LOOT_STRAT, 60),
+	
+	LevelSpec.new(MID, LOCK, 3, 3),
+	LevelSpec.new(MID, LOCK, 3, 4),
+	LevelSpec.new(MID, LOCK, 4, 3),
+	LevelSpec.new(MID, LOOT_STRAT, 80),
+	
+	LevelSpec.new(LATE, LOCK, 4, 3),
+	LevelSpec.new(LATE, LOCK, 4, 4),
+	LevelSpec.new(LATE, LOCK, 5, 3),
+	LevelSpec.new(LATE, LOOT_STRAT, 100),
+	
+	LevelSpec.new(LATE, LOCK, 4, 5),
+	LevelSpec.new(LATE, LOCK, 5, 4),
+	LevelSpec.new(LATE, LOCK, 5, 5),
+	LevelSpec.new(LATE, LOOT_STRAT, 120),
+	
+	LevelSpec.new(LATE, LOCK, 5, 6),
+	LevelSpec.new(LATE, LOCK, 5, 7),
+	LevelSpec.new(LATE, LOCK, 5, 8),
+	LevelSpec.new(LATE, VICTORY),
 ]
 
-#static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
-static var LOOT_AMOUNTS := [40, 60, 80, 100, 120, 130, 140, 150, 160]
-
-
-## Gets the current difficulty
-func get_difficulty() -> int:
-	return LOCK_SEQUENCE[lock_number - 1]
-
-## Gets the current heist - 1 indexed
-func get_heist() -> int:
-	@warning_ignore("integer_division")
-	return int((lock_number - 1) / 3) + 1
-
-func get_loot_value() -> int:
-	var base_value: int = LOOT_AMOUNTS[get_heist() - 1]
-	return int(randf_range(base_value * 0.8, base_value * 1.2))
-
-var _current_strat_floor := 4
-
-func heist_complete() -> bool:
-	if lock_number != _current_strat_floor:
-		return false
-	_current_strat_floor += 3
-	return true
+func get_next_level() -> LevelSpec:
+	if not game_complete():
+		current_stage += 1
+	
+	var next_stage: LevelSpec = GAME_SEQUENCE[current_stage]
+	
+	match next_stage.stage:
+		LOCK:
+			lock_number += 1
+		LOOT_STRAT:
+			heist_number += 1
+		_:
+			pass
+	
+	return next_stage
 
 func game_complete() -> bool:
-	# > not >= becuase lock number is 1-indexed
-	return lock_number > len(LOCK_SEQUENCE)
+	return current_stage >= len(GAME_SEQUENCE) - 1
+
+func get_max_pin_count() -> int:
+	var pin_count := 0
+	var stage := current_stage + 1
+	
+	for level in GAME_SEQUENCE.slice(stage, -1):
+		if level.stage != LOCK:
+			break
+		pin_count = max(pin_count, level.pin_count)
+	return pin_count
 
 ## Updates the broken_picks deck, removing the picks from the deck.
 func break_picks(picks: Array[CardSpec]) -> void:
@@ -114,6 +146,9 @@ func remove_real_pick_forever(pick: CardSpec) -> void:
 
 static func get_in_progress_game() -> GameSpec:
 	var game := GameSpec.new()
+	game.heist_number = 2
+	game.lock_number = 4
+	game.current_stage = 5
 	game.coins = 28
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
