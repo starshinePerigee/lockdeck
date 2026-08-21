@@ -3,17 +3,23 @@
 x basic economy sprint
 - settings
 - sound
-- saving and loading
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback)
 - meta 0 (knucklebones, drawing new depths)
-- potions
 - final major assets (home screen, load screen, strat hub?)
 - input sprint (fix the input bugs frfr)
 - tutorial
-- boss picks
+- saving and loading
+- balance pass 1
+- final polish 1
+
+---
+
+- meta-meta 1 (unlocking depths)
+- potions
+- boss locks
 - meta expansion (pick modifiers, pick effects)
 - animation sprint 2 (drawing on, opening animation, broken pick pop, new break counter)
-- balance pass
-- final polish
+- balance pass 2
+- final polish 2
 - meta expansion 2 (artifacts, metagame)

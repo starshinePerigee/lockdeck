@@ -5,43 +5,14 @@ signal end_game
 
 var game: GameSpec
 
-enum GameState {
-	INVALID,
-	BETWEEN_LOCK,
-	CORE_GAME
-}
-
-var current_state := GameState.INVALID
-
-func _check_state(desired_state: GameState) -> bool:
-	if current_state == desired_state:
-		return false
-	else:
-		push_warning(
-			"Invalid state: %s, expected: %s" 
-			% [
-				GameState.keys()[current_state],
-				GameState.keys()[desired_state]
-			]
-		)
-		return true
-
 func auto_complete_level() -> void:
-	if _check_state(GameState.CORE_GAME):
-		return
-	
 	$GameCore.solve_lock()
 	$GameCore.continue_to_next.emit()
 
 func reveal_level() -> void:
-	if _check_state(GameState.CORE_GAME):
-		return
 	$GameCore.reveal_lock()
 
 func break_three() -> void:
-	if _check_state(GameState.CORE_GAME):
-		return
-
 	for __ in 3:
 		$GameCore.break_from_hand()
 
@@ -50,32 +21,31 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game = GameSpec.new()
 	game.current_deck = starter_deck
 	$StrategyHub.set_game(game)
-	current_state = GameState.BETWEEN_LOCK
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
-	current_state = GameState.BETWEEN_LOCK
 	if $GameCore/LockBody/CountdownMain.count >= 2:
 		game.add_coins(10)
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("lock to between")
-	game.complete_lock()
 
 func advance_from_between() -> void:
-	if game.game_complete():
-		do_victory()
-	elif game.heist_complete():
-		next_loot()
-	else:
-		next_lock()
+	var next_level: LevelSpec = game.get_next_level()
+	match next_level.stage:
+		LevelSpec.Stages.VICTORY:
+			do_victory()
+		LevelSpec.Stages.LOOT_STRAT:
+			next_loot(next_level.loot)
+		LevelSpec.Stages.LOCK:
+			next_lock(next_level)
 
-func next_loot() -> void:
-	$LootMain.do_loot(game.get_loot_value())
+func next_loot(loot_value: int) -> void:
+	$LootMain.do_loot(loot_value)
 	$AnimationPlayer.play("between to loot")
 
 func end_loot() -> void:
@@ -97,19 +67,20 @@ func do_victory() -> void:
 func do_failure() -> void:
 	$AnimationPlayer.play("lock to failure")
 
-func next_lock() -> void:
-	if _check_state(GameState.BETWEEN_LOCK):
-		return
-	
-	$GameCore.load_lock(LockGenerator.get_next_level(game.get_difficulty()))
+func next_lock(level: LevelSpec) -> void:
+	$GameCore.load_lock(
+		LockGenerator.get_next_level(
+			level.difficulty,
+			level.arc,
+			level.pin_count
+		)
+	)
 	$GameCore.load_game(game)
 	
-	current_state = GameState.CORE_GAME
 	$AnimationPlayer.play("between to lock")
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:
-	current_state = GameState.INVALID
 	$AnimationPlayer.play("RESET")
 
 func _ready() -> void:

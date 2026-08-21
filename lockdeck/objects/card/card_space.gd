@@ -71,11 +71,14 @@ func clear_selected() -> void:
 
 @export var z_boost: bool:
 	set(v):
+		if z_boost == v:
+			return
+		
 		z_boost = v
 		if z_boost:
-			z_index = 200
+			z_index += 2000
 		else:
-			z_index = 0
+			z_index -= 2000
 
 @export var card_spec: CardSpec: 
 	set(v):

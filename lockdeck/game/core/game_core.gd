@@ -222,9 +222,12 @@ func discard_clicked() -> void:
 		return
 	discard_pick()
 
-func break_pick(card: CardSpec) -> void:
+func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
-	$Notifications.notify(Notifications.BREAK)
+	if surprise:
+		$Notifications.notify(Notifications.SURPRISE)
+	else:
+		$Notifications.notify(Notifications.BREAK)
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
 
@@ -269,7 +272,31 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	if _result.lock_solved:
 		solve_lock()
 	else:
-		cleanup_step()
+		post_pick()
+
+func post_pick() -> void:
+	if _result.hand_fumbled:
+		$Notifications.notify(Notifications.FUMBLE)
+		move_cards_from_hand_to_discard($HandMain.cards.duplicate())
+	
+	var breaths := _result.breaths_taken
+	if breaths > 0:
+		# replace the card you just played
+		var discard_count: int = min(breaths, $DiscardMain.count())			
+		draw_from_discard(discard_count)
+		draw_cards(breaths - discard_count + 1)
+	
+	var deck_breaks := _result.decks_broken
+	if deck_breaks > 0:
+		var broken_cards = $DeckMain.draw_cards(deck_breaks)
+		for card in broken_cards:
+			break_pick(card, true)
+	
+	for __ in _result.picks_twisted:
+		$Notifications.notify(Notifications.TWIST)
+		discard_from_deck()
+	
+	cleanup_step()
 
 func solve_lock() -> void:
 	$ContinueButton.visible = true	
@@ -284,15 +311,23 @@ func reveal_lock() -> void:
 		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
 	$LockBody/CylinderMain.redraw_pins()
 
+func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
+	for card in cards:
+		$HandMain.remove_card(card)
+		$DiscardMain.add_card(card)
+
 func discard_pick() -> void:
 	$HandMain.deselect()
-	$HandMain.remove_card(active_card)
 	if break_next:
 		break_pick(active_card)
-	else:
-		$DiscardMain.add_card(active_card)
+	move_cards_from_hand_to_discard([active_card])
+	
 	cleanup_step()
 	set_state(InputState.INACTIVE)
+
+func discard_from_deck() -> void:
+	if $DeckMain.count() > 0:
+		$DiscardMain.add_cards($DeckMain.draw_cards(1))
 
 func cleanup_step() -> void:
 	draw_to_five()
@@ -307,20 +342,28 @@ func cleanup_step() -> void:
 func discard_hand() -> void:
 	$DiscardMain.add_cards($HandMain.load_new_hand())
 
+func draw_from_discard(count: int) -> void:
+	var discard_count: int = min(count, $DiscardMain.count())
+	var discard_shuffled: Array[CardSpec] = $DiscardMain.cards.duplicate()
+	discard_shuffled.shuffle()
+	var dis_cards: Array[CardSpec] = discard_shuffled.slice(0, discard_count)
+	$DiscardMain.remove_cards(dis_cards)
+	$HandMain.add_cards(dis_cards)
+
+func draw_cards(count: int) -> void:
+	var cards: Array[CardSpec] = $DeckMain.draw_cards(count)
+	$HandMain.add_cards(cards)
+
 func draw_to_five() -> void:
 	var cards_to_draw: int = hand_size - $HandMain.count()
 	if cards_to_draw <= 0:
 		return
-	$HandMain.add_cards($DeckMain.draw_cards(cards_to_draw))
+	draw_cards(cards_to_draw)
 
 ## Discards the current hand and draws up to five cards
 func draw_new_hand() -> void:
-	var extra_cards: Array[CardSpec] = $HandMain.load_new_hand(
-		$DeckMain.draw_cards(hand_size)
-	)
-	if len(extra_cards) > 0:
-		push_warning("%s extra cards in hand after drawing.")
-		$DiscardMain.add_cards(extra_cards)
+	move_cards_from_hand_to_discard($HandMain.cards)
+	draw_cards(hand_size)
 
 ## Move discard back into deck
 func reload_deck() -> void:
@@ -364,13 +407,6 @@ func load_game(game: GameSpec) -> void:
 	_already_broken = game.broken_picks
 	$TrashMain.reset()
 	restart()
-
-func add_random_cards(count: int = 1) -> void:
-	var cards := PickGenerator.get_many_base_cards(count)
-	$DeckMain.add_cards(cards)
-	for card in cards:
-		print("Added new pick: %s." % card.pick_name)
-	update_status_widget()
 
 func restart() -> void:
 	lock_input(false)

@@ -1,7 +1,5 @@
 extends Node2D
 
-static var CYL_COUNT := 5
-
 func set_testpos() -> void:
 	var pins: Array[PinSpec] = $CylinderMain.pins
 	pins[0].pin_position = 0
@@ -29,16 +27,7 @@ func do_click(pin_index: int) -> void:
 	apply_card($CardSpace.card_spec, pin_index)
 
 func print_previouses(result: EndStepSpec) -> void:
-	for i in len($CylinderMain.pins):
-		var s := "Pin %s: " % i
-		if i in result.effects.keys():
-			var effects := result.effects[i]
-			for effect in effects:
-				s += "%s: " % effect.flavor.effect_name
-				for pos in effect.realized_positions:
-					s += "%s" % pos
-				s += " "
-		print(s)
+	result.print()
 
 @onready var _last_result := EndStepSpec.new()
 
@@ -49,14 +38,9 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	
 	print_previouses(_last_result)
 	
-	if _last_result.pick_broke:
-		break_pick()
+	$BreakLabel.visible = _last_result.pick_broke
 		
 	do_cursor(card_index)
-
-func break_pick() -> void:
-	print("Pick break!")
-	$BreakLabel.visible = true
 
 func end_drag() -> void:
 	var target: int = $CylinderMain.get_current_drag_target()
@@ -88,10 +72,42 @@ func clear_cursor() -> void:
 	$CylinderMain.show_preview(_last_result)
 
 func reveal_all() -> void:
-	print("The world unfolds before your eyes.")
-	for pin in $CylinderMain.pins:
-		pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
-	$CylinderMain.redraw_pins()
+	if $RevealButton.button_pressed:
+		print("The world unfolds before your eyes.")
+		for pin in $CylinderMain.pins:
+			pin.reveals.fill(PinSpec.RevealLevel.REVEALED)
+		$CylinderMain.redraw_pins()
+
+
+static func get_known_test_pin() -> PinSpec:
+	var spec := PinSpec.new()
+	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
+		spec.depths[i] = Depths.EMPTY
+	spec.depths[1] = Depths.BOMB
+	spec.depths[2] = Depths.EMPTY
+	spec.depths[3] = Depths.EMPTY
+	spec.depths[4] = Depths.BOMB
+	spec.depths[5] = Depths.EMPTY
+	spec.depths[6] = Depths.SPIKE
+	spec.depths[7] = Depths.EMPTY
+	spec.finalize()
+	return spec
+
+func gen_new_lock() -> void:
+	var difficulty := int($Difficulty/Input.text)
+	var lock := LockGenerator.get_next_level(
+		difficulty,
+		LockDeck.GameArcs.MID,
+		5
+	)
+	
+	if $Difficulty/DoTest.button_pressed:
+		for i in 3:
+			lock.pins[i] = get_known_test_pin()
+	
+	$CylinderMain.load_new_lock(lock)
+	reveal_all()
+	
 
 func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
@@ -99,17 +115,15 @@ func _ready() -> void:
 	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
 	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
 	$CylinderMain/Cylinders.pin_activated.connect(do_click)
+	$Difficulty/Button.pressed.connect(gen_new_lock)
 	
-	$CylinderMain.load_new_lock(LockSpec.new(PinGenerator.build_test_lock(CYL_COUNT)))
+	gen_new_lock()
 	for t in PickTemplates.valid_templates:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
 	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DEBUG)
-
-	for i in range(CYL_COUNT, PinSpec.CYLINDER_COUNT_MAX):
-		$CardHBox.get_child(i).disabled = true
 	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)

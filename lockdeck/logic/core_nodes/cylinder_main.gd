@@ -95,20 +95,19 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	for pin_index in range(len(target_pins) - 1, -1, -1):
 		var pin := target_pins[pin_index]
 		var card_index = card_position - pin_index
-		if card_index not in card.effects.keys():
-			continue
-		
 		var effects: Array[EffectSpec] = []
-		for e in card.effects[card_index]:
-			var new_e := EffectSpec.new(e.flavor, e.value)
-			effects.append(new_e)
+		
+		if card_index in card.effects.keys():
+			for e in card.effects[card_index]:
+				var new_e := EffectSpec.new(e.flavor, e.value)
+				effects.append(new_e)
 		
 #		print(
 #			"Executing pin %s with %s effects (shadow: %s)" 
 #			% [pin_index, len(effects), shadow]
 #		)
-		pin.execute(effects)
-		
+		effects.append_array(pin.execute(effects))
+
 		for effect in effects:
 			result.record_effect(effect, pin_index)
 	
@@ -120,6 +119,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	# clean up and record
 	for pin in target_pins:
 		result.results.append(pin.get_result_spec())
+		result.picks_twisted += pin.twist_count
 	
 	result.lock_solved = lock_solved()
 	if not shadow:
