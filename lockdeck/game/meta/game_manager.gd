@@ -91,6 +91,11 @@ func _ready() -> void:
 	$GameCore.continue_to_failure.connect(do_failure)
 	$StrategyHub.continue_to_next.connect(end_strategy)
 	$FailureScreen.continue_to_title.connect(end_game.emit)
+	
+	$MenuButton.pressed.connect($MenuMain.show_menu)
+	$MenuMain.auto_complete_level.connect(auto_complete_level)
+	$MenuMain.reveal_level.connect(reveal_level)
+	$MenuMain.break_three.connect(break_three)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:

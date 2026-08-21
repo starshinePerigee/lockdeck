@@ -22,11 +22,13 @@ theme_type_variation = &"TitleLabel"
 text = "Handful of Lockpicks"
 
 [node name="LoadGameButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 134.0
 offset_top = 171.0
 offset_right = 250.0
 offset_bottom = 198.0
 text = "Load Game"
+alignment = 0
 
 [node name="NewGameButton" type="Button" parent="."]
 layout_mode = 0
@@ -34,7 +36,8 @@ offset_left = 134.0
 offset_top = 235.0
 offset_right = 250.0
 offset_bottom = 262.0
-text = "Start Game"
+text = "New Game"
+alignment = 0
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 0

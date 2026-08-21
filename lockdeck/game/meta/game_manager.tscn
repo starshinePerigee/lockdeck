@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcnnwbxmgrvx2"]
+[gd_scene load_steps=17 format=3 uid="uid://dcnnwbxmgrvx2"]
 
 [ext_resource type="Script" uid="uid://bj3uatmntqbfg" path="res://game/meta/game_manager.gd" id="1_hcbws"]
 [ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/core/game_core.tscn" id="2_51x2c"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b432wp5ei356c" path="res://game/meta/loot_main.tscn" id="4_bujib"]
 [ext_resource type="PackedScene" uid="uid://t14tg1tt2anv" path="res://game/meta/strategy_hub.tscn" id="4_vpla2"]
 [ext_resource type="PackedScene" uid="uid://bftgyem3nerxa" path="res://game/meta/failure_screen.tscn" id="6_84uwg"]
+[ext_resource type="PackedScene" uid="uid://biji5i2a33xn5" path="res://game/meta/menu_main.tscn" id="7_msycn"]
 
 [sub_resource type="Animation" id="Animation_vpla2"]
 resource_name = "RESET"
@@ -499,3 +500,16 @@ visible = false
 layout_mode = 1
 offset_left = 1920.0
 offset_right = 1920.0
+
+[node name="MenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 74.0
+offset_bottom = 41.0
+theme_type_variation = &"BoxButton"
+text = "Menu"
+
+[node name="MenuMain" parent="." instance=ExtResource("7_msycn")]
+visible = false
+layout_mode = 1

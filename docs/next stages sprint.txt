@@ -1,0 +1,3 @@
+- next stages widget
+- depth decks
+- pre-gen locks

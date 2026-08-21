@@ -4,24 +4,15 @@ extends Control
 var VERSION_NUMBER := "v0.13.3"
 
 func start_game(starter_deck: Array[CardSpec]) -> void:
-	$MenuButton.visible = true
 	$GameManager.visible = true
-	$SettingsWidget.add_button("DEBUG: Solve level", $GameManager.auto_complete_level, true)
-	$SettingsWidget.add_button("DEBUG: Reveal lock", $GameManager.reveal_level, true)
-	$SettingsWidget.add_button("DEBUG: Break three", $GameManager.break_three) 
 	
 	$TopLevelMenus/AnimationPlayer.play("start_game")
 	$GameManager.begin_new_game(starter_deck)
 
-func abandon_game_and_return_to_title() -> void:
-	$MenuButton.visible = false
-	$GameManager.visible = false
-	$SettingsWidget.remove_button("DEBUG: Solve level")
-	$SettingsWidget.remove_button("DEBUG: Break three")
-	$SettingsWidget.remove_button("DEBUG: Reveal lock")
-	
+func return_to_title() -> void:
 	$TopLevelMenus.reset()
 	$TopLevelMenus/AnimationPlayer.play("return_to_title")
+	$GameManager.visible = false
 	$GameManager.abort_and_reset()
 
 static func _get_major_version(version: String) -> String:
@@ -50,18 +41,15 @@ func load_saves() -> void:
 
 func _ready() -> void:
 	load_saves()
+	# TODO
+	$TopLevelMenus/Title/LoadGameButton.disabled = true
 	
 	$Version.text = VERSION_NUMBER
-	$MenuButton.visible = false
 	$GameManager.visible = false
 	
-	$MenuButton.pressed.connect($SettingsWidget.show_widget)
-	$SettingsWidget.add_button(
-		"Abort game and return to title",
-		abandon_game_and_return_to_title,
-		true
-	)
-	$GameManager.end_game.connect(abandon_game_and_return_to_title)
-	$TopLevelMenus/Title.show_settings.connect($SettingsWidget.show_widget)
+	$GameManager.end_game.connect(return_to_title)
+	$TopLevelMenus/Title.show_settings.connect($SettingsMain.show_settings)
+	$GameManager/MenuMain.open_settings.connect($SettingsMain.show_settings)
+	$GameManager/MenuMain.return_to_title.connect(return_to_title)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
