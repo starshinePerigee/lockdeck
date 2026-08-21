@@ -1,15 +1,16 @@
-- core game expansion (strategy sprint)
+x core game expansion (strategy sprint)
 	new depths, depth template building
 x basic economy sprint
+- saving and loading
 - settings
 - sound
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback)
 - meta 0 (knucklebones, drawing new depths)
+- twisted depth
 - final major assets (home screen, load screen, strat hub?)
 - input sprint (fix the input bugs frfr)
 - tutorial
-- saving and loading
 - balance pass 1
 - final polish 1
 
