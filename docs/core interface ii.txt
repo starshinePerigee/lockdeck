@@ -1,14 +1,16 @@
 - global settings object
 - debug mode
 x menu (return to title, etc)
-- see current depths
--- the reference needs to show what the depth "tests as" (so a bounce "tests as interesting")
--- in the tooltips, instead of using icons, just use [ ! ] [ok ] [ X ] with the color highlights
 - update panel themes
 - fix panel theming
 -- scrollbars
 
-- pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label)
+references:
+- depth tooltips
+- pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label) (also show remaining count?)
+- upcoming depths in strat hub
+-- the reference needs to show what the depth "tests as" (so a bounce "tests as interesting")
+-- in the tooltips, instead of using icons, just use [ ! ] [ok ] [ X ] with the color highlights
 - pullout pick reference (small ? next to the deck)
 - artifact tooltip
 
