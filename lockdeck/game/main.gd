@@ -25,7 +25,11 @@ func abandon_game_and_return_to_title() -> void:
 	$GameManager.abort_and_reset()
 
 func _ready() -> void:
-	$Version.text = VERSION_NUMBER
+	var save := GameInfo.instance()
+	save.start_count += 1
+	GameInfo.save()
+	
+	$Version.text = "%s#%s" % [VERSION_NUMBER, save.start_count]
 	$MenuButton.visible = false
 	$GameManager.visible = false
 	

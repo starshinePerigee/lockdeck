@@ -3,11 +3,13 @@
 importer="csv_translation"
 type="Translation"
 uid="uid://634irh0vp0m7"
-valid=false
 
 [deps]
 
+files=["res://defs/pick_template_template.archetype.translation", "res://defs/pick_template_template.basic.translation", "res://defs/pick_template_template.great.translation", "res://defs/pick_template_template.trash.translation", "res://defs/pick_template_template.common.translation", "res://defs/pick_template_template.rare.translation"]
+
 source_file="res://defs/pick_template_template.csv"
+dest_files=["res://defs/pick_template_template.archetype.translation", "res://defs/pick_template_template.basic.translation", "res://defs/pick_template_template.great.translation", "res://defs/pick_template_template.trash.translation", "res://defs/pick_template_template.common.translation", "res://defs/pick_template_template.rare.translation"]
 
 [params]
 

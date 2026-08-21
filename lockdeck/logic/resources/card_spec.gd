@@ -22,7 +22,7 @@ class_name CardSpec
 @export var ability := Abilities.NONE
 
 ## Unique ID used for tracking specific cards
-var unique_id: int
+@export var unique_id: int
 
 static var last_id := 100
 
