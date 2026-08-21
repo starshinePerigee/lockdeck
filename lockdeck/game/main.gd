@@ -24,12 +24,34 @@ func abandon_game_and_return_to_title() -> void:
 	$TopLevelMenus/AnimationPlayer.play("return_to_title")
 	$GameManager.abort_and_reset()
 
-func _ready() -> void:
+static func _get_major_version(version: String) -> String:
+	return version.substr(0, version.rfind("."))
+
+func load_saves() -> void:
 	var save := GameInfo.instance()
-	save.start_count += 1
-	GameInfo.save()
 	
-	$Version.text = "%s#%s" % [VERSION_NUMBER, save.start_count]
+	if save.last_version:
+		print("Last loaded from version %s#%s" % [save.last_version, save.start_count])
+		var load_major_version := _get_major_version(save.last_version)
+		var current_major_version := _get_major_version(VERSION_NUMBER)
+		
+		if load_major_version != current_major_version:
+			push_warning(
+				"Save version mismatch! Save: %s vs current: %s"
+				% [save.last_version, VERSION_NUMBER]
+			)
+			save = GameInfo.reset()
+	else:
+		print("No save data detected. Creating new save.")
+	
+	save.start_count += 1
+	save.last_version = VERSION_NUMBER
+	GameInfo.save()
+
+func _ready() -> void:
+	load_saves()
+	
+	$Version.text = VERSION_NUMBER
 	$MenuButton.visible = false
 	$GameManager.visible = false
 	

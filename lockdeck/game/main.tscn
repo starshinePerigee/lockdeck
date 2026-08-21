@@ -58,6 +58,7 @@ theme_type_variation = &"TinyAccentText"
 text = "v0.0.0"
 
 [node name="WipNotif" parent="." instance=ExtResource("6_dgpao")]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -12,5 +12,5 @@ func reset() -> void:
 	$DeckSelect.reset()
 
 func _ready() -> void:
-	$Title.start_game.connect(show_deck_select)
+	$Title.new_game.connect(show_deck_select)
 	$DeckSelect/ReturnButton.pressed.connect(deck_select_to_title)
