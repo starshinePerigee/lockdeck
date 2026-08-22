@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=32 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=31 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -11,13 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://cchmvxf1gwmew" path="res://assets/interface/grabber_bead.png" id="5_48upd"]
 [ext_resource type="Texture2D" uid="uid://boh3hp3begdeh" path="res://assets/interface/hscroll.png" id="5_grsu0"]
 [ext_resource type="StyleBox" uid="uid://0fxvcokvdj1g" path="res://assets/themes/purple_flat_stylebox.tres" id="5_n2srw"]
-[ext_resource type="Texture2D" uid="uid://bjsjpkoptbd2j" path="res://assets/interface/hscroll_highlight.png" id="6_a6h1d"]
 [ext_resource type="Texture2D" uid="uid://xhfsqc71isax" path="res://assets/interface/grabber_bead_shade.png" id="6_nvhkk"]
 [ext_resource type="Texture2D" uid="uid://bpnl1881dxd85" path="res://assets/interface/grabber_bead_highlight.png" id="7_xdxd8"]
 [ext_resource type="StyleBox" uid="uid://c7fs0ln360opk" path="res://assets/interface/grabber.tres" id="8_m4rbl"]
 [ext_resource type="Texture2D" uid="uid://b0nsu6xtj6orn" path="res://assets/interface/tick_mark.png" id="8_nvhkk"]
 [ext_resource type="Texture2D" uid="uid://dqgh8g6m87mus" path="res://assets/interface/grabber_highlight.png" id="9_6iba6"]
 [ext_resource type="Texture2D" uid="uid://hs6w6dse5sfj" path="res://assets/interface/scroll.png" id="10_6iba6"]
+[ext_resource type="StyleBox" uid="uid://dw2eg4vnyhcr1" path="res://assets/interface/hscroll_highlight.tres" id="10_nvhkk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqxeh"]
 
@@ -35,17 +35,6 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ctidt"]
 texture = ExtResource("5_grsu0")
-texture_margin_left = 10.0
-texture_margin_top = 1.0
-texture_margin_right = 8.0
-texture_margin_bottom = 1.0
-expand_margin_top = 3.0
-expand_margin_bottom = 3.0
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48upd"]
-texture = ExtResource("6_a6h1d")
 texture_margin_left = 10.0
 texture_margin_top = 1.0
 texture_margin_right = 8.0
@@ -125,8 +114,11 @@ HSlider/icons/grabber_disabled = ExtResource("6_nvhkk")
 HSlider/icons/grabber_highlight = ExtResource("7_xdxd8")
 HSlider/icons/tick = ExtResource("8_nvhkk")
 HSlider/styles/grabber_area = SubResource("StyleBoxTexture_ctidt")
-HSlider/styles/grabber_area_highlight = SubResource("StyleBoxTexture_48upd")
+HSlider/styles/grabber_area_highlight = ExtResource("10_nvhkk")
 HSlider/styles/slider = ExtResource("5_2yxal")
+HSliderForceHighlight/base_type = &"HSlider"
+HSliderForceHighlight/icons/grabber = ExtResource("7_xdxd8")
+HSliderForceHighlight/styles/grabber_area = ExtResource("10_nvhkk")
 HeaderLabel/base_type = &"TitleLabel"
 HeaderLabel/font_sizes/font_size = 22
 Label/colors/font_outline_color = Color(0.0352941, 0.0352941, 0.0588235, 1)

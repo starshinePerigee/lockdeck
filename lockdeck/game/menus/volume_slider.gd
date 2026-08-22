@@ -1,5 +1,7 @@
 extends Control
 
+signal setting_updated(float)
+
 @export var texture_normal: Texture2D = null
 @export var texture_highlight: Texture2D = null
 @export var texture_disabled: Texture2D = null
@@ -23,10 +25,21 @@ func toggle_mute() -> void:
 	if _muted:
 		_prev_pos = $HSlider.value
 		$HSlider.value = 0.0
-		$Status.texture = effect_mute_highlight
 	else:
 		$HSlider.value = _prev_pos
+	show_mute(_muted)
+	setting_updated.emit($HSlider.value)
+
+func show_mute(muted: bool) -> void:
+	if muted:
+		$Status.texture = effect_mute_highlight
+	else:
 		$Status.texture = effect_hover
+
+func update_value(value: float) -> void:
+	_muted = $HSlider.value == 0.0
+	show_mute(_muted)
+	setting_updated.emit($HSlider.value)
 
 func _do_hover() -> void:
 	$Label.add_theme_color_override("font_color", HOVERED)
@@ -35,7 +48,7 @@ func _do_hover() -> void:
 		$Status.texture = effect_mute_highlight
 	else:
 		$Status.texture = effect_hover
-	$HSlider.notification(Control.NOTIFICATION_MOUSE_ENTER)
+	$HSlider.theme_type_variation = "HSliderForceHighlight"
 
 func _end_hover() -> void:
 	if _muted:
@@ -46,12 +59,12 @@ func _end_hover() -> void:
 		$Label.add_theme_color_override("font_color", NORMAL)
 		$VolumeIcon.texture = texture_normal
 		$Status.texture = effect_normal
-	$HSlider.notification(Control.NOTIFICATION_MOUSE_EXIT)
+	$HSlider.theme_type_variation = "HSlider"
 
 func _ready() -> void:
 	$Label.text = sound_name
 	_end_hover()
 	$VolumeIcon.clicked.connect(toggle_mute)
+	$HSlider.value_changed.connect(update_value)
 	mouse_entered.connect(_do_hover)
 	mouse_exited.connect(_end_hover)
-	
