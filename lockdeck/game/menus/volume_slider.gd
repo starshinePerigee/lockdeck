@@ -13,7 +13,7 @@ const effect_hover: Texture2D = preload("res://assets/interface/sound_status_hig
 const effect_mute: Texture2D = preload("res://assets/interface/sound_status_mute.png")
 const effect_mute_highlight: Texture2D = preload("res://assets/interface/sound_status_mute_highlight.png")
 
-const NORMAL := Color("757575")
+const NORMAL := Color("FFFFFF")
 const HOVERED := Color("ffbc57")
 const DISABLED := Color("575651")
 
