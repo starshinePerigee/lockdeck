@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cs66l0gfop52l"]
+
+[ext_resource type="Texture2D" uid="uid://btsx7yanxkuoe" path="res://assets/interface/checkbox_checked_normal.png" id="1_2a73p"]
+[ext_resource type="Script" uid="uid://cd4tp2tkl41ag" path="res://logic/util_classes/label_toggle_box.gd" id="1_xq7uw"]
+[ext_resource type="Texture2D" uid="uid://c4abiklhixt1d" path="res://assets/interface/checkbox_checked_pressed.png" id="2_xq7uw"]
+[ext_resource type="Texture2D" uid="uid://c3m48x3yajeq8" path="res://assets/interface/checkbox_checked_disabled.png" id="3_sdycq"]
+[ext_resource type="Script" uid="uid://ixfp56werwe2" path="res://logic/util_classes/texture_button_with_label.gd" id="4_ddcc5"]
+
+[node name="LabelToggleBox" type="MarginContainer"]
+offset_right = 48.0
+offset_bottom = 48.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("1_xq7uw")
+label_text = "Toggle box label"
+
+[node name="ActiveRowToggle" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("1_2a73p")
+texture_pressed = ExtResource("2_xq7uw")
+texture_disabled = ExtResource("3_sdycq")
+script = ExtResource("4_ddcc5")
+metadata/_custom_type_script = "uid://ixfp56werwe2"
+
+[node name="Label" type="Label" parent="ActiveRowToggle"]
+layout_mode = 2
+offset_left = 57.0
+offset_top = 11.0
+offset_right = 245.0
+offset_bottom = 37.0
+text = "TOGGLE BOX LABEL"

@@ -428,7 +428,14 @@ func break_from_hand() -> void:
 	break_next = true
 	discard_pick()
 
+func toggle_active_row(show_row: bool) -> void:
+	$LockBody/ActiveBox.visible = show_row
+
 func _ready() -> void:
+	var settings := GameSettings.instance()
+	toggle_active_row(settings.highlight_active_row)
+	settings.highlight_active_row_changed.connect(toggle_active_row)
+	
 	$ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 

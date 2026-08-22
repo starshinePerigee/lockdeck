@@ -1,9 +1,10 @@
 extends Control
-## This is a popover to manage settings
+## This is a popover that can dynamically add/remove buttons, used for the in-game menu
 
 signal closed()
 
-var _button_holder: VBoxContainer
+@export var title := ""
+
 var _button_table: Dictionary[String, Button] = {}
 
 func call_callable(callable: Callable, close_after: bool):
@@ -22,7 +23,7 @@ func add_button(button_text: String, callable: Callable, close_after: bool = fal
 	
 	button.text = button_text
 	button.pressed.connect(call_callable.bind(callable.call, close_after))
-	_button_holder.add_child(button)
+	%ButtonHolder.add_child(button)
 
 func remove_button(button_text: String) -> void:
 	if not button_text in _button_table.keys():
@@ -30,13 +31,14 @@ func remove_button(button_text: String) -> void:
 		return
 	
 	var button := _button_table[button_text]
-	_button_holder.remove_child(button)
+	%ButtonHolder.remove_child(button)
 	_button_table.erase(button_text)
 	button.queue_free()
 
 func show_widget():
+	global_position = Vector2(0, 0)
 	visible = true
-	z_index = 120
+	z_index = 1200
 
 func hide_widget():
 	visible = false
@@ -49,9 +51,8 @@ func _handle_input(event: InputEvent) -> void:
 			hide_widget()
 
 func _ready() -> void:
-	_button_holder = $Panel/VBoxContainer/MarginContainer/ButtonHolder
+	%Title.text = title
 	gui_input.connect(_handle_input)
-	global_position = Vector2(0, 0)
 	visible = false
 
 	if get_parent() == get_tree().root:

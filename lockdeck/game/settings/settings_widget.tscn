@@ -1,0 +1,119 @@
+[gd_scene load_steps=11 format=3 uid="uid://dkq3il3r6ml37"]
+
+[ext_resource type="Script" uid="uid://cdit5w5i1jbf8" path="res://game/settings/settings_widget.gd" id="1_bwvwk"]
+[ext_resource type="PackedScene" uid="uid://cs66l0gfop52l" path="res://logic/util_classes/label_toggle_box.tscn" id="2_86042"]
+[ext_resource type="PackedScene" uid="uid://2iep7077ownw" path="res://game/menus/volume_slider.tscn" id="3_2ctpv"]
+[ext_resource type="Texture2D" uid="uid://rhvj62lif8gu" path="res://assets/interface/sound_music.png" id="4_ia2ei"]
+[ext_resource type="Texture2D" uid="uid://dj45160lq3ukh" path="res://assets/interface/sound_music_highlight.png" id="5_7cjqq"]
+[ext_resource type="Texture2D" uid="uid://bbl3rfp0x3qm" path="res://assets/interface/sound_music_shade.png" id="6_bhomn"]
+[ext_resource type="Texture2D" uid="uid://cnv5estb3qayj" path="res://assets/interface/sound_effects.png" id="7_s0sos"]
+[ext_resource type="Texture2D" uid="uid://cw2afwagak04u" path="res://assets/interface/sound_effect_highlight.png" id="8_jthw3"]
+[ext_resource type="Texture2D" uid="uid://38mrxxqnpryv" path="res://assets/interface/sound_effect_shade.png" id="9_p82ga"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="10_ia2ei"]
+
+[node name="SettingsWidget" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.998902, 0.997276)
+script = ExtResource("1_bwvwk")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -52.0
+offset_right = 108.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Game Settings"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 0
+
+[node name="ButtonHolder" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 408)
+layout_mode = 2
+
+[node name="ActiveRowToggle" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("2_86042")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+label_text = "Highlight active row"
+button_pressed = true
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="AmbianceSlider" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("3_2ctpv")]
+unique_name_in_owner = true
+layout_mode = 2
+sound_name = "Ambiance"
+
+[node name="MusicSlider" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("3_2ctpv")]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("4_ia2ei")
+texture_highlight = ExtResource("5_7cjqq")
+texture_disabled = ExtResource("6_bhomn")
+sound_name = "Music"
+
+[node name="EffectSlider" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("3_2ctpv")]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("7_s0sos")
+texture_highlight = ExtResource("8_jthw3")
+texture_disabled = ExtResource("9_p82ga")
+sound_name = "Effects"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ResetTutorialButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Reset Tutorial"
+autowrap_mode = 2
+script = ExtResource("10_ia2ei")
+base_text = "Reset Tutorial"
+confirm_text = "This will erase all your tutorial data. Are you sure?"
+metadata/_custom_type_script = "uid://dfck3u724ea4f"
+
+[node name="ClearTutorialButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Clear Tutorial"
+autowrap_mode = 1
+script = ExtResource("10_ia2ei")
+base_text = "Clear Tutorial"
+confirm_text = "This will erase all your tutorial data. Are you sure?"
+metadata/_custom_type_script = "uid://dfck3u724ea4f"
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"TinyAccentText"
+text = "Click or tap outside the window to close."
+horizontal_alignment = 1

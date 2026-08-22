@@ -11,7 +11,7 @@
 
 - unknown font as accents on cards
 
-- notifications fade out and rise
+- notifications rise before vanishing
 
 - need a shadowboard effect for pick art (use dark green that's already the bg offcolor)
 
