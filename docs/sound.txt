@@ -24,4 +24,4 @@ Music pulls randomly from the collection of "songs"
 
 When you open the in-game menu, the music gets ducked.
 
-Once you start playing with sounds, all channels get ducked all the way so samples can be played.
+Once you start playing with sounds, music gets ducked all the way. Music and effects get sample sounds, but ambience just uses the backing ambiance track (this way it also works in main menu)
