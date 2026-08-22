@@ -44,12 +44,12 @@ func set_highlight_active_row(setting: bool) -> void:
 	highlight_active_row_changed.emit(highlight_active_row)
 
 
-signal ambiance_volume_changed(float)
-@export var ambiance_volume: float = 7.0
+signal ambience_volume_changed(float)
+@export var ambience_volume: float = 7.0
 
-func set_ambiance_volume(setting: float) -> void:
-	ambiance_volume = setting
-	ambiance_volume_changed.emit(ambiance_volume)
+func set_ambience_volume(setting: float) -> void:
+	ambience_volume = setting
+	ambience_volume_changed.emit(ambience_volume)
 
 
 signal music_volume_changed(float)

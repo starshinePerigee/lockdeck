@@ -7,9 +7,9 @@ func set_highlight_active_row(setting: bool) -> void:
 	var settings := GameSettings.instance()
 	settings.set_highlight_active_row(setting)
 
-func set_ambiance_volume(setting: float) -> void:
+func set_ambience_volume(setting: float) -> void:
 	var settings := GameSettings.instance()
-	settings.set_ambiance_volume(setting)
+	settings.set_ambience_volume(setting)
 
 func set_music_volume(setting: float) -> void:
 	var settings := GameSettings.instance()
@@ -39,13 +39,13 @@ func _ready() -> void:
 	
 	var settings := GameSettings.instance()
 	%ActiveRowToggle.button_pressed = settings.highlight_active_row
-	%AmbianceSlider.set_value(settings.ambiance_volume)
+	%AmbienceSlider.set_value(settings.ambience_volume)
 	%MusicSlider.set_value(settings.music_volume)
 	%EffectSlider.set_value(settings.effect_volume)
 	
 	closed.connect(settings.save)
 	%ActiveRowToggle.toggled.connect(set_highlight_active_row)
-	%AmbianceSlider.setting_updated.connect(set_ambiance_volume)
+	%AmbienceSlider.setting_updated.connect(set_ambience_volume)
 	%MusicSlider.setting_updated.connect(set_music_volume)
 	%EffectSlider.setting_updated.connect(set_effect_volume)
 
