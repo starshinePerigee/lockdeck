@@ -37,8 +37,33 @@ static func _load_from_disk() -> GameSettings:
 
 
 signal highlight_active_row_changed(bool)
-@export var highlight_active_row: bool
+@export var highlight_active_row: bool = true
 
 func set_highlight_active_row(setting: bool) -> void:
 	highlight_active_row = setting
 	highlight_active_row_changed.emit(highlight_active_row)
+
+
+signal ambiance_volume_changed(float)
+@export var ambiance_volume: float = 7.0
+
+func set_ambiance_volume(setting: float) -> void:
+	ambiance_volume = setting
+	ambiance_volume_changed.emit(ambiance_volume)
+
+
+signal music_volume_changed(float)
+@export var music_volume: float = 7.0
+
+func set_music_volume(setting: float) -> void:
+	music_volume = setting
+	music_volume_changed.emit(music_volume)
+
+
+signal effect_volume_changed(float)
+@export var effect_volume: float = 7.0
+
+func set_effect_volume(setting: float) -> void:
+	effect_volume = setting
+	effect_volume_changed.emit(effect_volume)
+

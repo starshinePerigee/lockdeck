@@ -20,6 +20,12 @@ const DISABLED := Color("575651")
 var _prev_pos: float
 var _muted: bool
 
+func set_value(value: float) -> void:
+	$HSlider.value = value
+	_prev_pos = value
+	_muted = value == 0.0
+	show_mute(_muted)
+
 func toggle_mute() -> void:
 	_muted = not _muted
 	if _muted:
