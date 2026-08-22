@@ -1,5 +1,5 @@
 x split menu (which shows during the game) and settings (which is part of top level)
-- settings object and life cycle
+x settings object and life cycle
 x menu object and life cycle
 - update game spec and game manager to save/load
 - effects, music, ambiance bool / slider

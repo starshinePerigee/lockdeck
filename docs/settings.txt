@@ -7,7 +7,5 @@
 
 - active row highlight
 
-- advanced pin previous indicators
-
 - reset tutorial
 - disable tutorial
