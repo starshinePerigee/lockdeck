@@ -1,4 +1,3 @@
-- figure out styles and fonts
 - convert to animated sprites for depths
 - candle flicker
 - pin push

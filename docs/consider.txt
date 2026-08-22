@@ -4,3 +4,12 @@ show total number of each depth in lock ("X remaining") - means depth reference 
 s/jam/bind
 
 remove hint letters
+
+
+pick art: each archetype has its own shape, but then the highlight color changes with rarity
+(orc, dwarven, glass, malachite, ebony) ->
+- trash: dark grey
+- common: orange
+- basic: light yellow
+- rare: green
+- great: white

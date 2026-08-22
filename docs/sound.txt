@@ -1,0 +1,27 @@
+Sound is composed of ambience, music, and effects
+
+Ambience: three channels
+- softly crackling torch
+- bugs 1
+- bugs 2
+
+ambience is always running, with crackle on a loop.
+
+shortly after the game starts, one of the bugs comes in - from then on, we have a random (5-15 second) check for both bugs channels:
+- if no bugs are playing, pick a bugs at random and go
+- if a bugs is already playing, 1/3 chance of picking a different bugs and going 
+
+Music: one channel
+
+Music matches the game state:
+- menus: no music
+- game: bass
+- strats: guitar
+
+like bugs, music has a random clock (after each pulse, look ahead 5-15 seconds). If the music doesn't match the current state, fade the current track and queue the correct one.
+
+Music pulls randomly from the collection of "songs"
+
+When you open the in-game menu, the music gets ducked.
+
+Once you start playing with sounds, all channels get ducked all the way so samples can be played.

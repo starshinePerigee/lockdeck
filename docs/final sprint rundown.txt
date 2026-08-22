@@ -7,7 +7,7 @@ x settings
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback)
 - meta 0 (knucklebones, unlocking new depths)
-- final major assets (home screen, load screen, strat hub?)
+- final major assets (picks, home screen, load screen, strat hub?)
 - input sprint (fix the input bugs frfr)
 - tutorial
 - balance pass 1

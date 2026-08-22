@@ -33,3 +33,10 @@
 - better completion animation: cards should slide down and hide
 
 - is the strat hub a space (skyrim thieves guild?)
+-- a table, featuring:
+--- candle
+--- handful of cards (deck)
+--- bag with coins (shop)
+--- tools and picks (repair)
+--- map (next heist)
+-- each object changes with relevance - as you get more coins, the bag goes through one of three states. The map gets more complicated.
