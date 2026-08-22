@@ -2,7 +2,7 @@ x core game expansion (strategy sprint)
 	new depths, depth template building
 x basic economy sprint
 - saving and loading
-- settings
+x settings
 - sound
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback)
@@ -15,9 +15,10 @@ x basic economy sprint
 
 ---
 
-- potions
+- pick modifiers (gems)
+- potions 
 - boss locks
-- meta expansion (pick modifiers, pick effects)
+- pick effects (jewelry / artifacts?)
 - animation sprint 2 (drawing on, opening animation, broken pick pop, new break counter)
 - balance pass 2
 - final polish 2

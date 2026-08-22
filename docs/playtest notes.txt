@@ -1,0 +1,8 @@
+Game is still HARD
+
+trap is an MF vs standard hook / the standard deck
+- trap imposes a "push more than you test" requirement to approach and for standard that means relying on the diamonds only
+
+previous turn should disable the click / jam indicators
+
+springs stick out the top of the lock on lock failure
