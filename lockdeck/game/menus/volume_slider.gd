@@ -24,7 +24,7 @@ func set_value(value: float) -> void:
 	$HSlider.value = value
 	_prev_pos = value
 	_muted = value == 0.0
-	show_mute(_muted)
+	_end_hover()
 
 func toggle_mute() -> void:
 	_muted = not _muted
