@@ -1,15 +1,12 @@
 extends Control
 
+# honestly i'm not sure why this class still exists with all the logic in settings_widget
+# dont harm no-one tho
+
 ## Show the settings. Hiding them will be handled by settings widget itself.
 func show_settings():
 	visible = true
-	$MenuWidget.show_widget()
-
-func do_nothing():
-	pass
+	$SettingsWidget.show_widget()
 
 func _ready() -> void:
-	$MenuWidget.closed.connect(hide)
-	$MenuWidget.add_button("Button 1", do_nothing)
-	$MenuWidget.add_button("Button 2", do_nothing)
-	$MenuWidget.add_button("Button 3", do_nothing, true)
+	$SettingsWidget.closed.connect(hide)

@@ -4,6 +4,9 @@ x menu (return to title, etc)
 - update panel themes
 - fix panel theming
 -- scrollbars
+-- toggle buttons
+
+settings tooltips
 
 references:
 - depth tooltips

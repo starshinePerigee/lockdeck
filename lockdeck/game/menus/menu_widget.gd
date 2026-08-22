@@ -1,5 +1,5 @@
 extends Control
-## This is a popover to manage settings
+## This is a popover that can dynamically add/remove buttons, used for the in-game menu
 
 signal closed()
 

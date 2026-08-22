@@ -30,7 +30,7 @@ static func _load_from_disk() -> GameInfo:
 
 	# "Force a fresh read from disk"
 	var load_res: Resource = ResourceLoader.load(
-		SAVE_PATH, "GameState", ResourceLoader.CACHE_MODE_IGNORE
+		SAVE_PATH, "GameInfo", ResourceLoader.CACHE_MODE_IGNORE
 	)
 
 	if load_res is GameInfo:
