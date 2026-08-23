@@ -1,0 +1,13 @@
+basic sound plan:
+
+looping bgm:
+- main screen
+- 2 early game (ambient)
+- 2 late game (driving)
+- strat hub
+
+non-looping:
+- end game (failure)
+- end game (victory)
+
+also ambience and bugs
