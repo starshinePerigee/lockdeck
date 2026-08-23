@@ -491,7 +491,6 @@ func do_gate_unlock() -> void:
 			depths[i] = Depths.GATE_UNLOCKED
 			activated[i] = true
 			return
-	push_error("gate unlocked without a gate?")
 
 func do_bomb(pos) -> void:
 	bomb_pos = pos

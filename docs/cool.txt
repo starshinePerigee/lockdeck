@@ -39,4 +39,5 @@
 --- bag with coins (shop)
 --- tools and picks (repair)
 --- map (next heist)
--- each object changes with relevance - as you get more coins, the bag goes through one of three states. The map gets more complicated.
+--- doorway (continue)
+-- each object changes with relevance - as you get more coins, the bag goes through one of three states. The map gets more complicated, and once you review it, it gets marked. Doorway shines more light once you're out of coins and have reviewed the map

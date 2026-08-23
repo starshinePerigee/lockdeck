@@ -25,3 +25,45 @@ Music pulls randomly from the collection of "songs"
 When you open the in-game menu, the music gets ducked.
 
 Once you start playing with sounds, music gets ducked all the way. Music and effects get sample sounds, but ambience just uses the backing ambiance track (this way it also works in main menu)
+
+
+
+
+cicada solo after candle is out
+
+
+refs:
+- 128 kbps for fx, 160 kbps for music
+- https://docs.godotengine.org/en/4.4/classes/class_audiostreaminteractive.html
+- https://www.reddit.com/r/godot/comments/1ftjgsm/adaptive_music_made_simple_with_godot_43s_new/
+
+
+
+https://freesound.org/people/Satoration/sounds/58498/
+https://freesound.org/people/Attia.phonatics/sounds/829810/
+https://freesound.org/people/johnnydekk/sounds/626180/
+https://freesound.org/people/mycompasstv/sounds/480902/
+https://freesound.org/people/kvgarlic/sounds/246537/
+https://freesound.org/people/wgwgsa/sounds/755333/
+https://freesound.org/people/wildsolution/sounds/20319/?
+
+
+https://freesound.org/people/ra_gun/sounds/81266/
+https://freesound.org/people/o_ciz/sounds/475424/
+https://freesound.org/people/ABloemarts242029/sounds/765165/
+https://freesound.org/people/TreadheadRad/sounds/527799/
+https://freesound.org/people/SyntaxSeed/sounds/244772/
+https://freesound.org/people/F.M.Audio/sounds/555149/
+https://freesound.org/people/F.M.Audio/sounds/555142/
+https://freesound.org/people/F.M.Audio/sounds/555146/
+https://freesound.org/people/F.M.Audio/sounds/555139/
+https://freesound.org/people/F.M.Audio/sounds/555151/
+https://freesound.org/people/holisoysilvi/sounds/610179/
+https://freesound.org/people/Wigglesworth/sounds/830152/
+https://freesound.org/people/MrFossy/sounds/523282/
+https://freesound.org/people/alukahn/sounds/171234/
+https://freesound.org/people/jerry.berumen/sounds/769506/
+https://freesound.org/people/LamaMakesMusic/sounds/403587/
+https://freesound.org/people/InfamousJase/sounds/325535/
+https://freesound.org/people/21100267/sounds/591287/
+https://freesound.org/people/miksmusic/sounds/160657/

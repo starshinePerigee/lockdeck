@@ -3,11 +3,11 @@ x core game expansion (strategy sprint)
 x basic economy sprint
 - saving and loading
 x settings
-- sound
+- ambience and music
 - post game screen
-- animation sprint (between locks, push effects, card draw and flow, card snapback)
+- animation sprint (between locks, push effects, card draw and flow, card snapback, sound effects 1)
 - meta 0 (knucklebones, unlocking new depths)
-- final major assets (picks, home screen, load screen, strat hub?)
+- final major assets (picks, home screen, load screen, strat hub, loot chest)
 - input sprint (fix the input bugs frfr)
 - tutorial
 - balance pass 1
