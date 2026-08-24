@@ -105,10 +105,10 @@ func play_end(victory: bool) -> void:
 	if victory:
 		crossfade_track(VICTORY_BGM, 0.5)
 	else:
-		crossfade_track(FAILURE_BGM, 0.0)
+		crossfade_track(FAILURE_BGM, 1.0)
 
 func queue_main_menu() -> void:
-	crossfade_track(LATE_TITLE, 20.0)
+	crossfade_track(LATE_TITLE, 0.0)
 
 func _ready() -> void:
 	queue_main_menu()
