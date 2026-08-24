@@ -3,12 +3,22 @@ extends Control
 static var BASS_1: AudioStreamMP3 = preload("res://assets/bgm/bass_4_easy_loop.mp3")
 static var GUITAR_1: AudioStreamMP3 = preload("res://assets/bgm/guitar_1_minor_mel_loop.mp3")
 
-func _play_bass_1() -> void:
-	$BgmMain/MusicManager.crossfade_track(BASS_1)
+@export var heist = 0
 
-func _play_guitar_1() -> void:
-	$BgmMain/MusicManager.crossfade_track(GUITAR_1)
+func next_heist() -> void:
+	heist += 1
+	$HeistLabel.text = "Heist: %s" % heist
+	$BgmMain.lock_start(heist)
+
+func main_menu() -> void:
+	heist = 0
+	$HeistLabel.text = "Heist: %s" % heist
+	$BgmMain.title_screen()
 
 func _ready() -> void:
-	$Bass1Button.pressed.connect(_play_bass_1)
-	$Guitar1Button.pressed.connect(_play_guitar_1)
+	$Stack/MenuButton.pressed.connect(main_menu)
+	$Stack/LockButton.pressed.connect(next_heist)
+	$Stack/StratButton.pressed.connect($BgmMain.strat_start)
+	$Stack/VictoryButton.pressed.connect($BgmMain.victory_start)
+	$Stack/FailureButton.pressed.connect($BgmMain.fail_start)
+

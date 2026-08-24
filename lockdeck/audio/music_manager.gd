@@ -25,6 +25,16 @@ static var LATE_TITLE: AudioStreamMP3 = preload("res://assets/bgm/guitar_2_lost_
 static var VICTORY_BGM: AudioStreamMP3 = preload("res://assets/bgm/bass_6_higher_loop.mp3")
 static var FAILURE_BGM: AudioStreamMP3 = preload("res://assets/bgm/guitar_4_ending.mp3")
 
+static func _get_random_track_index(tracks: Array[AudioStreamMP3], current_index: int) -> int:
+	var count := len(tracks)
+	if count <= 1:
+		return 0
+	
+	var new_index := randi_range(0, count - 2)
+	if new_index >= current_index:
+		new_index += 1
+	return new_index
+
 var _current_stream_is_bgm_1 := false
 var bgm_1_fader: Tween
 var bgm_2_fader: Tween
@@ -80,13 +90,22 @@ func _start_track(player: AudioStreamPlayer, track: AudioStreamMP3) -> void:
 	player.play()
 
 func play_bass(intense: bool) -> void:
-	pass
+	if not intense:
+		_current_chill = _get_random_track_index(CHILL_BASS, _current_chill)
+		crossfade_track(CHILL_BASS[_current_chill])
+	else:
+		_current_hype = _get_random_track_index(CHILL_BASS, _current_hype)
+		crossfade_track(HYPE_BASS[_current_hype])
 
 func play_shop() -> void:
-	pass
+	_current_shop = _get_random_track_index(SHOP_GUITAR, _current_shop)
+	crossfade_track(SHOP_GUITAR[_current_shop])
 
 func play_end(victory: bool) -> void:
-	pass
+	if victory:
+		crossfade_track(VICTORY_BGM, 0.5)
+	else:
+		crossfade_track(FAILURE_BGM, 0.0)
 
 func queue_main_menu() -> void:
 	crossfade_track(LATE_TITLE, 20.0)

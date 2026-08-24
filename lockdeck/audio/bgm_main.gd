@@ -10,19 +10,19 @@ enum MUSIC_STATES {
 }
 
 func title_screen() -> void:
-	pass
+	$MusicManager.queue_main_menu()
 
-func lock_start() -> void:
-	pass
+func lock_start(heist_number: int = 0) -> void:
+	$MusicManager.play_bass(heist_number > 2)
 
 func strat_start() -> void:
-	pass
+	$MusicManager.play_shop()
 
 func fail_start() -> void:
-	pass
+	$MusicManager.play_end(false)
 
 func victory_start() -> void:
-	pass
+	$MusicManager.play_end(true)
 
 func settings_open() -> void:
 	pass

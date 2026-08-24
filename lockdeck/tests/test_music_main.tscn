@@ -14,18 +14,53 @@ script = ExtResource("1_6hyun")
 
 [node name="BgmMain" parent="." instance=ExtResource("1_x0c0l")]
 
-[node name="Bass1Button" type="Button" parent="."]
+[node name="Stack" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 382.0
-offset_top = 39.0
-offset_right = 504.0
-offset_bottom = 79.0
-text = "Play bass 1"
+offset_left = 80.0
+offset_top = 107.0
+offset_right = 188.0
+offset_bottom = 269.0
 
-[node name="Guitar1Button" type="Button" parent="."]
+[node name="MenuButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Main Menu
+"
+alignment = 0
+
+[node name="LockButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Start Lock"
+alignment = 0
+
+[node name="StratButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Strat Hub"
+alignment = 0
+
+[node name="VictoryButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Victory
+"
+alignment = 0
+
+[node name="FailureButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Failure"
+alignment = 0
+
+[node name="HeistLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 382.0
-offset_top = 97.0
-offset_right = 518.0
-offset_bottom = 137.0
-text = "Play guitar 1"
+offset_left = 218.0
+offset_top = 141.0
+offset_right = 296.0
+offset_bottom = 167.0
+text = "Heist: 0"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 49.0
+offset_right = 327.0
+offset_bottom = 94.0
+theme_type_variation = &"TitleLabel"
+text = "Sound Test"
