@@ -36,7 +36,7 @@ refs:
 - 128 kbps for fx, 160 kbps for music
 - https://docs.godotengine.org/en/4.4/classes/class_audiostreaminteractive.html
 - https://www.reddit.com/r/godot/comments/1ftjgsm/adaptive_music_made_simple_with_godot_43s_new/
-
+- https://www.youtube.com/watch?v=aFkRmtGiZCw
 
 
 https://freesound.org/people/Satoration/sounds/58498/
