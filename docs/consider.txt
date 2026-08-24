@@ -15,3 +15,6 @@ pick art: each archetype has its own shape, but then the highlight color changes
 - basic: light yellow
 - rare: green
 - great: white
+
+
+put between locks after lock before loot

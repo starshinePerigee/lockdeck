@@ -103,9 +103,9 @@ func play_shop() -> void:
 
 func play_end(victory: bool) -> void:
 	if victory:
-		crossfade_track(VICTORY_BGM, 0.5)
+		crossfade_track(VICTORY_BGM, 1.5)
 	else:
-		crossfade_track(FAILURE_BGM, 1.0)
+		crossfade_track(FAILURE_BGM, 3.0)
 
 func queue_main_menu() -> void:
 	crossfade_track(LATE_TITLE, 0.0)

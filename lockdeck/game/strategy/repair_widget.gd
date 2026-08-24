@@ -44,7 +44,7 @@ func _set_button_removal(removal: bool) -> void:
 			if removal:
 				button.disabled = false
 				button.label = ""
-				button.confirm_label = "Remove forever?"
+				button.confirm_label = "Remove?"
 			else:
 				button.label = "[ %s ]" % button.card.get_repair_cost()
 				button.confirm_label = "Repair for %s?" % button.card.get_repair_cost()

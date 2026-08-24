@@ -51,5 +51,11 @@ func _ready() -> void:
 	$TopLevelMenus/Title.show_settings.connect($SettingsMain.show_settings)
 	$GameManager/MenuMain.open_settings.connect($SettingsMain.show_settings)
 	$GameManager/MenuMain.return_to_title.connect(return_to_title)
+	$GameManager/MenuMain.return_to_title.connect($BgmMain.title_screen)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
+	
+	$GameManager.lock_start.connect($BgmMain.lock_start)
+	$GameManager.shop_start.connect($BgmMain.strat_start)
+	$GameManager.failure_start.connect($BgmMain.fail_start)
+	$GameManager.victory_start.connect($BgmMain.victory_start)
