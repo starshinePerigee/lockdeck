@@ -16,3 +16,5 @@ non-looping:
 - end game (victory)
 
 also ambience and bugs
+
+victory plays through title screen

@@ -1,36 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3f67mok2yg5s"]
+[gd_scene load_steps=4 format=3 uid="uid://b3f67mok2yg5s"]
 
 [ext_resource type="Script" uid="uid://bt8rh8mc2bwhm" path="res://audio/bgm_main.gd" id="1_acbw0"]
-[ext_resource type="AudioStream" uid="uid://c3boamacwdfw3" path="res://assets/bgm/crackle_ambiance.mp3" id="1_yplti"]
-[ext_resource type="Script" uid="uid://lrfakyjyi5e4" path="res://audio/ambience.gd" id="2_8i3f2"]
-[ext_resource type="AudioStream" uid="uid://d2g3vx4bn3ixm" path="res://assets/bgm/wind_ambience.mp3" id="2_cfc75"]
-[ext_resource type="AudioStream" uid="uid://di24bp67s6fee" path="res://assets/bgm/bass_1_default_loop.mp3" id="3_32gun"]
-[ext_resource type="AudioStream" uid="uid://c2ti226cn4nwi" path="res://assets/bgm/guitar_1_minor_mel_loop.mp3" id="4_cdtdr"]
-[ext_resource type="Script" uid="uid://csmky4xyeb4sn" path="res://audio/music.gd" id="5_jrtfk"]
+[ext_resource type="PackedScene" uid="uid://c54em4deecn5y" path="res://audio/ambience_manager.tscn" id="2_32gun"]
+[ext_resource type="PackedScene" uid="uid://c7dpl6x6dqhck" path="res://audio/music_manager.tscn" id="3_cdtdr"]
 
-[node name="BgmMain" type="Node2D"]
+[node name="BgmMain" type="Node"]
 script = ExtResource("1_acbw0")
 
-[node name="Ambience" type="Node2D" parent="."]
-script = ExtResource("2_8i3f2")
+[node name="AmbienceManager" parent="." instance=ExtResource("2_32gun")]
 
-[node name="CracklePlayer" type="AudioStreamPlayer2D" parent="Ambience"]
-stream = ExtResource("1_yplti")
-autoplay = true
-bus = &"Ambience"
-
-[node name="WindPlayer" type="AudioStreamPlayer2D" parent="Ambience"]
-stream = ExtResource("2_cfc75")
-autoplay = true
-bus = &"Ambience"
-
-[node name="Music" type="Node2D" parent="."]
-script = ExtResource("5_jrtfk")
-
-[node name="BassBGM" type="AudioStreamPlayer2D" parent="Music"]
-stream = ExtResource("3_32gun")
-volume_db = 6.0
-bus = &"Music"
-
-[node name="OtherBGM" type="AudioStreamPlayer2D" parent="Music"]
-stream = ExtResource("4_cdtdr")
+[node name="MusicManager" parent="." instance=ExtResource("3_cdtdr")]

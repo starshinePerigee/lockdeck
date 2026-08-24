@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7dpl6x6dqhck"]
+
+[ext_resource type="Script" uid="uid://csmky4xyeb4sn" path="res://audio/music_manager.gd" id="1_1826a"]
+[ext_resource type="AudioStream" uid="uid://bcxmuuijujn4r" path="res://assets/bgm/bass_4_easy_loop.mp3" id="2_8vo66"]
+
+[node name="Music" type="Node"]
+script = ExtResource("1_1826a")
+
+[node name="BGM_1" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="BGM_2" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="SettingsTest" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8vo66")
+bus = &"Music"

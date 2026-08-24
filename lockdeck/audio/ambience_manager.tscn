@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c54em4deecn5y"]
+
+[ext_resource type="Script" uid="uid://lrfakyjyi5e4" path="res://audio/ambience_manager.gd" id="1_eudcm"]
+[ext_resource type="AudioStream" uid="uid://c3boamacwdfw3" path="res://assets/bgm/crackle_ambiance.mp3" id="2_p7b0y"]
+[ext_resource type="AudioStream" uid="uid://d2g3vx4bn3ixm" path="res://assets/bgm/wind_ambience.mp3" id="3_hf3ph"]
+
+[node name="AmbienceManager" type="Node"]
+script = ExtResource("1_eudcm")
+
+[node name="CracklePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_p7b0y")
+volume_db = -12.0
+autoplay = true
+bus = &"Ambience"
+
+[node name="WindPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_hf3ph")
+volume_db = -6.0
+autoplay = true
+bus = &"Ambience"

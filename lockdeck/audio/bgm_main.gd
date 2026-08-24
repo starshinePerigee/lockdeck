@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 ## Manages all background (non-effect) audio
 
 func title_screen() -> void:
@@ -7,25 +7,13 @@ func title_screen() -> void:
 func lock_start() -> void:
 	pass
 
-func lock_end() -> void:
-	pass
-
 func strat_start() -> void:
-	pass
-
-func strat_end() -> void:
 	pass
 
 func fail_start() -> void:
 	pass
 
-func fail_end() -> void:
-	pass
-
 func victory_start() -> void:
-	pass
-
-func victory_end() -> void:
 	pass
 
 func settings_open() -> void:

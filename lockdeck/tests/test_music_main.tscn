@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://drpkq250olmj8"]
+
+[ext_resource type="Script" uid="uid://bpqhuf6eytwbi" path="res://tests/test_music_main.gd" id="1_6hyun"]
+[ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="1_x0c0l"]
+
+[node name="TestMusicMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6hyun")
+
+[node name="BgmMain" parent="." instance=ExtResource("1_x0c0l")]
+
+[node name="Bass1Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 39.0
+offset_right = 504.0
+offset_bottom = 79.0
+text = "Play bass 1"
+
+[node name="Guitar1Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 97.0
+offset_right = 518.0
+offset_bottom = 137.0
+text = "Play guitar 1"
