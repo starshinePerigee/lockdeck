@@ -5,36 +5,35 @@ static var CHILL_BASS: Array[AudioStreamMP3] = [
 	preload("res://assets/bgm/bass_4_easy_loop.mp3"),
 	preload("res://assets/bgm/bass_3_chill_loop.mp3"),
 ]
+var _current_chill := -1
 
 static var HYPE_BASS: Array[AudioStreamMP3] = [
 	preload("res://assets/bgm/bass_1_default_loop.mp3"),
 	preload("res://assets/bgm/bass_2_alt_loop.mp3"),
 	preload("res://assets/bgm/bass_5_doubles_loop.mp3"),
 ]
+var _current_hype := -1
 
 static var SHOP_GUITAR: Array[AudioStreamMP3] = [
 	preload("res://assets/bgm/guitar_1_minor_mel_loop.mp3"),
 	preload("res://assets/bgm/guitar_3_singsong_loop.mp3")
 ]
+var _current_shop := -1
 
 static var LATE_TITLE: AudioStreamMP3 = preload("res://assets/bgm/guitar_2_lost_loop.mp3")
 
 static var VICTORY_BGM: AudioStreamMP3 = preload("res://assets/bgm/bass_6_higher_loop.mp3")
 static var FAILURE_BGM: AudioStreamMP3 = preload("res://assets/bgm/guitar_4_ending.mp3")
 
-enum MUSIC_STATES {
-	SILENCE,
-	LOCK,
-	SHOP,
-	LATE_TITLE,
-	END
-}
-
 var _current_stream_is_bgm_1 := false
 var bgm_1_fader: Tween
 var bgm_2_fader: Tween
 
-func crossfade_track(track: AudioStreamMP3) -> void:
+func crossfade_track(
+	track: AudioStreamMP3,
+	delay: float = 1.5,
+	fade_out: float = 12.0,
+) -> void:
 	var playing_player: AudioStreamPlayer
 	var playing_fader: Tween
 	var quiet_player: AudioStreamPlayer
@@ -51,8 +50,6 @@ func crossfade_track(track: AudioStreamMP3) -> void:
 		quiet_player = $BGM_1
 		quiet_fader = bgm_1_fader
 	
-	_current_stream_is_bgm_1 = not _current_stream_is_bgm_1
-	
 	if quiet_fader:
 		quiet_fader.kill()
 	if playing_fader:
@@ -61,25 +58,39 @@ func crossfade_track(track: AudioStreamMP3) -> void:
 	# this should already be stopped but just in case
 	quiet_fader = get_tree().create_tween()
 	quiet_fader.tween_property(quiet_player, "volume_db", -80, 1.0)
-	quiet_fader.tween_interval(2.5)
+	quiet_fader.tween_interval(delay)
 	quiet_fader.tween_callback(_start_track.bind(quiet_player, track))
 	
 	playing_fader = get_tree().create_tween()
-	playing_fader.tween_property(playing_player, "volume_db", -80, 5.0)
+	playing_fader.tween_property(playing_player, "volume_db", -80, fade_out)
 	playing_fader.tween_callback(playing_player.stop)
+	
+	if _current_stream_is_bgm_1:
+		bgm_1_fader = playing_fader
+		bgm_2_fader = quiet_fader
+	else:
+		bgm_1_fader = quiet_fader
+		bgm_2_fader = playing_fader
+	_current_stream_is_bgm_1 = not _current_stream_is_bgm_1
 
 ## All of our music has built-in intros, so we don't need to fade in tracks.
 func _start_track(player: AudioStreamPlayer, track: AudioStreamMP3) -> void:
-	player.stop()
 	player.volume_db = 0.0
 	player.stream = track
 	player.play()
 
-func play_game_track(intense: bool) -> void:
+func play_bass(intense: bool) -> void:
 	pass
 
+func play_shop() -> void:
+	pass
+
+func play_end(victory: bool) -> void:
+	pass
+
+func queue_main_menu() -> void:
+	crossfade_track(LATE_TITLE, 20.0)
+
 func _ready() -> void:
-	bgm_1_fader = get_tree().create_tween()
-	bgm_1_fader.tween_interval(20.0)
-	bgm_1_fader.tween_callback(_start_track.bind($BGM_1, LATE_TITLE))
+	queue_main_menu()
 	

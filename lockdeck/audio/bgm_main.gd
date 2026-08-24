@@ -1,6 +1,14 @@
 extends Node
 ## Manages all background (non-effect) audio
 
+enum MUSIC_STATES {
+	SILENCE,
+	LOCK,
+	SHOP,
+	LATE_TITLE,
+	END
+}
+
 func title_screen() -> void:
 	pass
 
