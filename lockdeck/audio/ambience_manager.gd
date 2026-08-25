@@ -201,12 +201,12 @@ func settings_open() -> void:
 	if _settings_tween:
 		_settings_tween.kill()
 	
-	if _bug_1_tween:
+	if _bug_1_tween.is_valid():
 		_bug_1_tween.pause()
-		_bug_1_db_cache = $BugPlayer1.volume_db
-	if _bug_2_tween:
+	_bug_1_db_cache = $BugPlayer1.volume_db
+	if _bug_2_tween.is_valid():
 		_bug_2_tween.pause()
-		_bug_2_db_cache = $BugPlayer2.volume_db
+	_bug_2_db_cache = $BugPlayer2.volume_db
 	
 	_settings_tween = get_tree().create_tween()
 	_settings_tween.parallel()
@@ -238,9 +238,9 @@ func settings_close() -> void:
 	_settings_tween.tween_property($BugPlayer1, "volume_db", _bug_1_db_cache, 1.0)
 	_settings_tween.parallel().tween_property($BugPlayer2, "volume_db", _bug_2_db_cache, 1.0)
 	
-	if _bug_1_tween:
+	if _bug_1_tween.is_valid():
 		_settings_tween.tween_callback(_bug_1_tween.play)
-	if _bug_2_tween:
+	if _bug_2_tween.is_valid():
 		_settings_tween.tween_callback(_bug_2_tween.play)
 
 func _ready() -> void:

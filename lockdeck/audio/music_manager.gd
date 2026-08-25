@@ -119,12 +119,12 @@ func settings_open() -> void:
 	if _settings_tween:
 		_settings_tween.kill()
 	
-	if bgm_1_fader:
+	if bgm_1_fader.is_valid():
 		bgm_1_fader.pause()
-		_bgm_1_db_cache = $BGM_1.volume_db
-	if bgm_2_fader:
+	_bgm_1_db_cache = $BGM_1.volume_db
+	if bgm_2_fader.is_valid():
 		bgm_2_fader.pause()
-		_bgm_2_db_cache = $BGM_2.volume_db
+	_bgm_2_db_cache = $BGM_2.volume_db
 	
 	_settings_tween = get_tree().create_tween()
 	_settings_tween.parallel()
@@ -156,9 +156,9 @@ func settings_close() -> void:
 	_settings_tween.tween_property($BGM_1, "volume_db", _bgm_1_db_cache, 1.0)
 	_settings_tween.parallel().tween_property($BGM_2, "volume_db", _bgm_2_db_cache, 1.0)
 	
-	if bgm_1_fader:
+	if bgm_1_fader.is_valid():
 		_settings_tween.tween_callback(bgm_1_fader.play)
-	if bgm_2_fader:
+	if bgm_2_fader.is_valid():
 		_settings_tween.tween_callback(bgm_2_fader.play)
 
 
