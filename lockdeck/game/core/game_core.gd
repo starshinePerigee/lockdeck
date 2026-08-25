@@ -4,6 +4,7 @@ signal game_fail
 signal game_win
 signal continue_to_next
 signal continue_to_failure
+signal final_turn
 
 #region game state variables
 @export var cylinder_count := 4
@@ -440,6 +441,7 @@ func _ready() -> void:
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
+	$LockBody/CountdownMain.countdown_ended.connect(final_turn.emit)
 	$HandMain.hand_selected.connect(pick_selected)
 	$HandMain.hand_untapped.connect(pick_deselected)
 	$HandMain.hand_dragged.connect(pick_dragged)

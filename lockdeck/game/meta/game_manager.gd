@@ -1,6 +1,7 @@
 extends Control
 ## This scene represents a single game and manages the transition between scenes
 
+signal heist_start
 signal lock_start
 signal shop_start
 signal failure_start
@@ -29,7 +30,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
-	lock_start.emit(1)
+	heist_start.emit(1)
 
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
@@ -48,6 +49,7 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.LOOT_STRAT:
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
+			lock_start.emit()
 			next_lock(next_level)
 
 func next_loot(loot_value: int) -> void:
@@ -65,7 +67,7 @@ func end_loot() -> void:
 func end_strategy() -> void:
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("strategy to between")
-	lock_start.emit(game.heist_number)
+	heist_start.emit(game.heist_number)
 
 func do_victory() -> void:
 	$LootMain.do_victory(game.coins)

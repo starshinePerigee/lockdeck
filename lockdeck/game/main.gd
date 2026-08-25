@@ -55,7 +55,9 @@ func _ready() -> void:
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
 	
-	$GameManager.lock_start.connect($BgmMain.lock_start)
+	$GameManager.heist_start.connect($BgmMain.heist_start)
+	$GameManager.lock_start.connect($BgmMain.new_lock)
+	$GameManager/GameCore.final_turn.connect($BgmMain.final_turn)
 	$GameManager.shop_start.connect($BgmMain.strat_start)
 	$GameManager.failure_start.connect($BgmMain.fail_start)
 	$GameManager.victory_start.connect($BgmMain.victory_start)

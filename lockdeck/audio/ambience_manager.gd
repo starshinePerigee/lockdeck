@@ -175,14 +175,20 @@ func shift_bugs() -> void:
 
 func stop_bugs() -> void:
 	set_night(false, 0.0)
-	_bug_1_tween.kill()
+	
+	if _bug_1_tween:
+		_bug_1_tween.kill()
 	_bug_1_tween = get_tree().create_tween()
 	_bug_1_tween.tween_property($BugPlayer1, "volume_db", -60, 4.0)
 	_bug_1_tween.tween_callback($BugPlayer1.stop)
-	_bug_2_tween.kill()
+	bug_1 = null
+	
+	if _bug_2_tween:
+		_bug_2_tween.kill()
 	_bug_2_tween = get_tree().create_tween()
 	_bug_2_tween.tween_property($BugPlayer2, "volume_db", -60, 4.0)
 	_bug_2_tween.tween_callback($BugPlayer2.stop)
+	bug_2 = null
 
 func play_final_turn() -> void:
 	$BugSoloPlayer.play()

@@ -11,27 +11,28 @@ script = ExtResource("1_eudcm")
 
 [node name="CracklePlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_p7b0y")
-volume_db = -12.0
+volume_db = -9.0
 bus = &"Ambience"
 
 [node name="WindPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hf3ph")
-volume_db = -8.0
+volume_db = -6.0
 bus = &"Ambience"
 
 [node name="NightPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_p7b0y")
+volume_db = 2.0
 bus = &"Ambience"
 
 [node name="BugPlayer1" type="AudioStreamPlayer" parent="."]
-volume_db = -15.0
+volume_db = -11.0
 bus = &"Ambience"
 
 [node name="BugPlayer2" type="AudioStreamPlayer" parent="."]
-volume_db = -6.0
+volume_db = -11.0
 bus = &"Ambience"
 
 [node name="BugSoloPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_hf3ph")
-volume_db = -1.857
+volume_db = -3.0
 bus = &"Ambience"

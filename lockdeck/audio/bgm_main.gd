@@ -12,12 +12,16 @@ enum MUSIC_STATES {
 func title_screen() -> void:
 	$MusicManager.queue_main_menu()
 	$AmbienceManager.title_screen()
+	$AmbienceManager.stop_bugs()
 
-func lock_start(heist_number: int = 0) -> void:
+func heist_start(heist_number: int = 0) -> void:
 	$MusicManager.play_bass(heist_number > 2)
 	$AmbienceManager.set_fire(false)
 	$AmbienceManager.set_wind(true)
 	$AmbienceManager.start_bugs()
+
+func new_lock() -> void:
+	$AmbienceManager.shift_bugs()
 
 func strat_start() -> void:
 	$MusicManager.play_shop()
@@ -35,6 +39,9 @@ func victory_start() -> void:
 	$MusicManager.play_end(true)
 	$AmbienceManager.set_wind(false)
 	$AmbienceManager.stop_bugs()
+
+func final_turn() -> void:
+	$AmbienceManager.play_final_turn()
 
 func settings_open() -> void:
 	pass

@@ -8,7 +8,7 @@ static var GUITAR_1: AudioStreamMP3 = preload("res://assets/bgm/guitar_1_minor_m
 func next_heist() -> void:
 	heist += 1
 	$HeistLabel.text = "Heist: %s" % heist
-	$BgmMain.lock_start(heist)
+	$BgmMain.heist_start(heist)
 
 func main_menu() -> void:
 	heist = 0
