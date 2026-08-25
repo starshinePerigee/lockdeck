@@ -3,7 +3,7 @@ x basic economy sprint
 - next depths and depth deck flow
 - saving and loading
 x settings
-- ambience and music
+x ambience and music
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback, sound effects 1)
 - meta 0 (knucklebones, unlocking new depths)
@@ -14,7 +14,7 @@ x settings
 - final polish 1
 
 SCHEDULE:
-by Friday: finish music/ambience, depth flow, saving/loading, post game screen, input fixes, and meta 0
+by Friday: depth flow, saving/loading, post game screen, input fixes, and meta 0
 Saturday: start animation, do final assets
 Sunday: tutorial, balance, polish, bugfixes
 

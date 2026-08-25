@@ -21,3 +21,6 @@ put between locks after lock before loot
 
 
 bomb - you only have to land on it
+
+
+use paper panel style for strat hub
