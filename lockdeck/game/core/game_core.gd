@@ -44,6 +44,8 @@ var _lock_input := false
 
 ## Holds the most recent active card (even if a card isn't active)
 var active_card: CardSpec
+
+@onready var _NULL_PICK := CardSpec.from_template(PickTemplates.NULL)
 #endregion
 
 ## used for moving the lock body
@@ -225,6 +227,8 @@ func discard_clicked() -> void:
 
 func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
+	if card in $HandMain.cards:
+		$HandMain.remove_card(card)
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)
 	else:
@@ -252,7 +256,7 @@ func bg_cancel() -> void:
 @onready var _result := EndStepSpec.new()
 
 ## Handle all steps from pick activation
-func do_pick(card: CardSpec, cylinder: int) -> void:
+func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> void:
 	# main pick logic lives here:
 	if DEBUG_MODE:
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
@@ -260,8 +264,12 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 	
 	$HandMain.deselect()
 	$HandMain.remove_card(card)
+	
 	if _result.pick_broke or break_next:
-		break_pick(card)
+		if break_instead:
+			break_pick(break_instead)
+		else:
+			break_pick(card)
 	else:
 		$DiscardMain.add_card(card)
 	
@@ -274,7 +282,9 @@ func do_pick(card: CardSpec, cylinder: int) -> void:
 		solve_lock()
 	else:
 		post_pick()
+		cleanup_step()
 
+## Perform all the local actions for pick effects
 func post_pick() -> void:
 	if _result.hand_fumbled:
 		$Notifications.notify(Notifications.FUMBLE)
@@ -296,8 +306,6 @@ func post_pick() -> void:
 	for __ in _result.picks_twisted:
 		$Notifications.notify(Notifications.TWIST)
 		discard_from_deck()
-	
-	cleanup_step()
 
 func solve_lock() -> void:
 	$ContinueButton.visible = true	
@@ -317,11 +325,29 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
 
+func preview_discard() -> void:
+	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
+	if preview_step.pick_broke:
+		$TrashMain.bump_label()
+	else:
+		$DiscardMain.bump_label()
+	# I am not handling any other effects here. by god.
+
+func unpreview_discard() -> void:
+	$LockBody/CylinderMain.cancel_preview()
+	$DiscardMain.update_label()
+	$TrashMain.update_label()
+
 func discard_pick() -> void:
 	$HandMain.deselect()
-	if break_next:
-		break_pick(active_card)
-	move_cards_from_hand_to_discard([active_card])
+	do_pick(
+		_NULL_PICK,
+		0,
+		active_card
+	)
+	
+	if active_card in $HandMain.cards:
+		move_cards_from_hand_to_discard([active_card])
 	
 	cleanup_step()
 	set_state(InputState.INACTIVE)
@@ -330,6 +356,7 @@ func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:
 		$DiscardMain.add_cards($DeckMain.draw_cards(1))
 
+## Handle game actions
 func cleanup_step() -> void:
 	draw_to_five()
 	if len($HandMain.cards) == 0 and $LockBody/CountdownMain.count <= 0:
@@ -450,6 +477,8 @@ func _ready() -> void:
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
 	$DiscardMain.discard_pressed.connect(discard_clicked)
+	$DiscardMain.discard_hovered.connect(preview_discard)
+	$DiscardMain.discard_unhovered.connect(unpreview_discard)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	
 	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))

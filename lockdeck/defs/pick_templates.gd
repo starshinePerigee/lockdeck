@@ -126,6 +126,14 @@ static var DEBUG := PickTemplates.new(
 	"JJJ[........[PPPPTTTR]RRR"
 )
 
+static var NULL := PickTemplates.new(
+	"null",
+	Families.NONE,
+	Archetypes.WEIRD,
+	Rarities.DEBUG,
+	"["
+)
+
 #region RAKES
 
 # Rakes affect many pins. 

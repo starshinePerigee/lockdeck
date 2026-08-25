@@ -58,13 +58,14 @@ func load_new_lock(new_lock: LockSpec) -> void:
 	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
-func preview(card: CardSpec, index: int) -> void:
+func preview(card: CardSpec, index: int) -> EndStepSpec:
 	for i in len(pins):
 		pins[i].reset_shadow(_shadow_pins[i])
 	
 	var end_step := execute(card, index, true)
 	
 	show_preview(end_step)
+	return end_step
 
 ## Loads a preview
 func show_preview(end_step: EndStepSpec) -> void:

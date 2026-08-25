@@ -6,6 +6,8 @@ const DISCARD_DESELECTED := preload("res://assets/hand/discard_deselected.png")
 
 ## Discard pile pressed
 signal discard_pressed()
+signal discard_hovered()
+signal discard_unhovered()
 
 signal display_cards(Array)
 
@@ -21,10 +23,10 @@ signal display_cards(Array)
 		icon_selected = v
 		if icon_selected:
 			$DiscardIcon.texture = DISCARD_SELECTED
-			update_label(count() + 1)
+			discard_hovered.emit()
 		else:
 			$DiscardIcon.texture = DISCARD_DESELECTED
-			update_label()
+			discard_unhovered.emit()
 
 ## Both listening_for_ variables might be unnecessary actually
 @export var listening_for_mouse: bool = false
@@ -81,6 +83,9 @@ func empty_deck() -> Array[CardSpec]:
 	$CardPile.count = 0
 	update_label()
 	return old_cards
+
+func bump_label() -> void:
+	update_label(count() + 1)
 
 func update_label(n: int = -1) -> void:
 	if n == -1:
