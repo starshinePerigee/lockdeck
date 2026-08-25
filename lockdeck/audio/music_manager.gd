@@ -41,7 +41,7 @@ var bgm_2_fader: Tween
 
 func crossfade_track(
 	track: AudioStreamMP3,
-	delay: float = 0.0,
+	delay: float = 1.5,
 	fade_out: float = 12.0,
 ) -> void:
 	var playing_player: AudioStreamPlayer
@@ -71,7 +71,7 @@ func crossfade_track(
 	quiet_fader.tween_interval(delay)
 	quiet_fader.tween_callback(_start_track.bind(quiet_player, track))
 	quiet_fader.tween_property(quiet_player, "volume_db", -12.0, 0.0)
-	quiet_fader.tween_property(quiet_player, "volume_db", 0.0, 0.5)
+	quiet_fader.tween_property(quiet_player, "volume_db", 0.0, 0.2)
 	
 	playing_fader = get_tree().create_tween()
 	playing_fader.tween_property(playing_player, "volume_db", -60, fade_out)
@@ -103,12 +103,20 @@ func play_shop() -> void:
 
 func play_end(victory: bool) -> void:
 	if victory:
-		crossfade_track(VICTORY_BGM, 0.5)
+		crossfade_track(VICTORY_BGM, 1.0)
 	else:
-		crossfade_track(FAILURE_BGM, 1.0)
+		crossfade_track(FAILURE_BGM, 2.0)
+
+var _first_menu := true
 
 func queue_main_menu() -> void:
-	crossfade_track(LATE_TITLE, 2.0)
+	var delay
+	if _first_menu:
+		_first_menu = false
+		delay = 0.0
+	else:
+		delay = 1.0
+	crossfade_track(LATE_TITLE, delay)
 
 
 var _settings_tween: Tween

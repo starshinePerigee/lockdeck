@@ -1,5 +1,7 @@
 discarding with a bomb active does nothing
 
+note that if you're manually rolling _input handling from event: InputEvent, this fires even if you're not visible. use is_visible_in_tree()
+
 re-confirm that jumping over final depth still unlocks
 
 superdrag still shows issues (superdrag to right, then left, stays on right)
