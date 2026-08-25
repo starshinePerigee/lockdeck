@@ -20,8 +20,12 @@ func _squash_columns() -> void:
 		available_size = 120
 	
 	var icon_count := $EffectBar.get_child(3).get_child_count()
-	@warning_ignore("integer_division")
-	var separation := (available_size / icon_count) - 24
+	var separation: int
+	if icon_count > 0:
+		@warning_ignore("integer_division")
+		separation = (available_size / icon_count) - 24
+	else:
+		separation = available_size
 	if separation < EffectStack.ICON_SEPARATION:
 		for stack in $EffectBar.get_children():
 			stack.add_theme_constant_override("separation", separation)

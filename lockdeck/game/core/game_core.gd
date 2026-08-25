@@ -271,7 +271,8 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		else:
 			break_pick(card)
 	else:
-		$DiscardMain.add_card(card)
+		if card != _NULL_PICK:
+			$DiscardMain.add_card(card)
 	
 	if _result.last_hint:
 		$PreviousButton/LastHint.text = "Last hint: %s" % _result.last_hint
