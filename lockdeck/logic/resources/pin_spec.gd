@@ -274,6 +274,9 @@ func on_activate_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		_:
 			pass
+	# shhh compiler it's ok:
+	if effect:
+		pass
 
 func on_jam_trigger(pos: int, effect: EffectSpec) -> void:
 	# handle catch logic
