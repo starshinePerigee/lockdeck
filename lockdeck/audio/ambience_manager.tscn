@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c54em4deecn5y"]
+[gd_scene load_steps=5 format=3 uid="uid://c54em4deecn5y"]
 
 [ext_resource type="Script" uid="uid://lrfakyjyi5e4" path="res://audio/ambience_manager.gd" id="1_eudcm"]
 [ext_resource type="AudioStream" uid="uid://cw11k7febvh28" path="res://assets/ambience/crackle_ambiance.mp3" id="2_p7b0y"]
 [ext_resource type="AudioStream" uid="uid://cdbowqbag74mk" path="res://assets/ambience/wind_ambience.mp3" id="3_hf3ph"]
+[ext_resource type="AudioStream" uid="uid://c1trjl202wq6y" path="res://assets/ambience/night_ambience.mp3" id="4_p7b0y"]
 
 [node name="AmbienceManager" type="Node"]
 script = ExtResource("1_eudcm")
@@ -14,5 +15,15 @@ bus = &"Ambience"
 
 [node name="WindPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hf3ph")
-volume_db = -6.0
+volume_db = -8.0
+bus = &"Ambience"
+
+[node name="NightPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_p7b0y")
+bus = &"Ambience"
+
+[node name="BugPlayer1" type="AudioStreamPlayer" parent="."]
+bus = &"Ambience"
+
+[node name="BugPlayer2" type="AudioStreamPlayer" parent="."]
 bus = &"Ambience"

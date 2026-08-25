@@ -21,9 +21,10 @@ Sounds:
 
 * Fire ambiance is (Fireplace 1 by Deweak)\[https://freesound.org/people/Deweak/sounds/462916/], CC0
 * Wind ambiance is (wind light calm soft breeze deep big gusty.flac by kyles), \[https://freesound.org/people/kyles/sounds/454360/?], CC0
-* Night 1 is (night\_clear by smllfrey84)\[https://freesound.org/people/smllfrey84/sounds/709725/]
-* Night 2 is (Forest atmosphere at night with cicada, cricket, city hum very far away, recorded in Amazon rainforest by felix.blume)\[https://freesound.org/people/felix.blume/sounds/672318/]
+* Night ambiance is (Forest atmosphere at night with cicada, cricket, city hum very far away, recorded in Amazon rainforest by felix.blume)\[https://freesound.org/people/felix.blume/sounds/672318/]
 * Cicada 1 is (steady\_crickets.wav by joedeshon)\[https://freesound.org/people/joedeshon/sounds/78372/], Attribution 4.0
+* Cicada 2 is (crickets by rucisko)\[https://freesound.org/people/rucisko/sounds/250355/], Attribution 4.0
+* Cicada 3 is (night\_clear by smllfrey84)\[https://freesound.org/people/smllfrey84/sounds/709725/]
 * Cricket 1 is (Crickets\_Clean.wav by johnnydekk)\[https://freesound.org/people/johnnydekk/sounds/626180/], CC0
 * Cricket 2 is (LoneCricketInFallBasement.wav by kvgarlic)\[https://freesound.org/people/kvgarlic/sounds/246537/], CC0
 * Cricket 3 is (single\_cricket\_chirping by wgwgsa)\[https://freesound.org/people/wgwgsa/sounds/755333/]

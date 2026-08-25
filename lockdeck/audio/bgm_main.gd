@@ -17,19 +17,24 @@ func lock_start(heist_number: int = 0) -> void:
 	$MusicManager.play_bass(heist_number > 2)
 	$AmbienceManager.set_fire(false)
 	$AmbienceManager.set_wind(true)
+	$AmbienceManager.start_bugs()
 
 func strat_start() -> void:
 	$MusicManager.play_shop()
 	$AmbienceManager.set_fire(true)
 	$AmbienceManager.set_wind(false)
+	$AmbienceManager.stop_bugs()
 
 func fail_start() -> void:
 	$AmbienceManager.set_fire(false)
 	$MusicManager.play_end(false)
+	$AmbienceManager.stop_bugs()
+	$AmbienceManager.set_night(true, -12.0)
 
 func victory_start() -> void:
 	$MusicManager.play_end(true)
 	$AmbienceManager.set_wind(false)
+	$AmbienceManager.stop_bugs()
 
 func settings_open() -> void:
 	pass

@@ -67,9 +67,11 @@ func crossfade_track(
 	
 	# this should already be stopped but just in case
 	quiet_fader = get_tree().create_tween()
-	quiet_fader.tween_property(quiet_player, "volume_db", -80, 1.0)
+	quiet_fader.tween_property(quiet_player, "volume_db", -80.0, 1.0)
 	quiet_fader.tween_interval(delay)
 	quiet_fader.tween_callback(_start_track.bind(quiet_player, track))
+	quiet_fader.tween_property(quiet_player, "volume_db", -12.0, 0.0)
+	quiet_fader.tween_property(quiet_player, "volume_db", 0.0, 0.5)
 	
 	playing_fader = get_tree().create_tween()
 	playing_fader.tween_property(playing_player, "volume_db", -80, fade_out)
@@ -83,9 +85,7 @@ func crossfade_track(
 		bgm_2_fader = playing_fader
 	_current_stream_is_bgm_1 = not _current_stream_is_bgm_1
 
-## All of our music has built-in intros, so we don't need to fade in tracks.
 func _start_track(player: AudioStreamPlayer, track: AudioStreamMP3) -> void:
-	player.volume_db = 0.0
 	player.stream = track
 	player.play()
 
@@ -108,7 +108,7 @@ func play_end(victory: bool) -> void:
 		crossfade_track(FAILURE_BGM, 3.0)
 
 func queue_main_menu() -> void:
-	crossfade_track(LATE_TITLE, 0.0)
+	crossfade_track(LATE_TITLE, 8.0)
 
 func _ready() -> void:
 	queue_main_menu()
