@@ -12,6 +12,6 @@ bus = &"Music"
 [node name="BGM_2" type="AudioStreamPlayer" parent="."]
 bus = &"Music"
 
-[node name="SettingsTest" type="AudioStreamPlayer" parent="."]
+[node name="SettingsMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_8vo66")
 bus = &"Music"

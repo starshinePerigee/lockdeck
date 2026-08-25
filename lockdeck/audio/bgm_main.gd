@@ -44,15 +44,27 @@ func final_turn() -> void:
 	$AmbienceManager.play_final_turn()
 
 func settings_open() -> void:
-	pass
+	$AmbienceManager.settings_open()
 
 func settings_closed() -> void:
-	pass
+	$AmbienceManager.settings_close()
+
+func start_sample_ambience() -> void:
+	$AmbienceManager.settings_play()
+
+func stop_sample_ambience() -> void:
+	$AmbienceManager.settings_stop()
 
 func start_sample_music() -> void:
 	pass
 
 func stop_sample_music() -> void:
+	pass
+
+func start_sample_effects() -> void:
+	pass
+
+func stop_sample_effects() -> void:
 	pass
 
 func _ready() -> void:

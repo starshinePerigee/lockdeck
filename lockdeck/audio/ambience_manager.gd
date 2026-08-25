@@ -193,6 +193,56 @@ func stop_bugs() -> void:
 func play_final_turn() -> void:
 	$BugSoloPlayer.play()
 
+var _settings_tween: Tween
+var _bug_1_db_cache: float
+var _bug_2_db_cache: float
+
+func settings_open() -> void:
+	if _settings_tween:
+		_settings_tween.kill()
+	
+	if _bug_1_tween:
+		_bug_1_tween.pause()
+		_bug_1_db_cache = $BugPlayer1.volume_db
+	if _bug_2_tween:
+		_bug_2_tween.pause()
+		_bug_2_db_cache = $BugPlayer2.volume_db
+	
+	_settings_tween = get_tree().create_tween()
+	_settings_tween.parallel()
+	_settings_tween.tween_property($BugPlayer1, "volume_db", -60, 1.0)
+	_settings_tween.tween_property($BugPlayer2, "volume_db", -60, 1.0)
+
+var _sub_settings_tween: Tween
+
+func settings_play() -> void:
+	if _sub_settings_tween:
+		_sub_settings_tween.kill()
+	_sub_settings_tween = get_tree().create_tween()
+	$SettingsAmbience.volume_db = -60
+	$SettingsAmbience.play()
+	_sub_settings_tween.tween_property($SettingsAmbience, "volume_db", bug_db, 0.5)
+
+func settings_stop() -> void:
+	if _sub_settings_tween:
+		_sub_settings_tween.kill()
+	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween.tween_property($SettingsAmbience, "volume_db", -60, 0.5)
+	_sub_settings_tween.tween_callback($SettingsAmbience.stop)
+
+func settings_close() -> void:
+	if _settings_tween:
+		_settings_tween.kill()
+	_settings_tween = get_tree().create_tween()
+	
+	_settings_tween.tween_property($BugPlayer1, "volume_db", _bug_1_db_cache, 1.0)
+	_settings_tween.parallel().tween_property($BugPlayer2, "volume_db", _bug_2_db_cache, 1.0)
+	
+	if _bug_1_tween:
+		_settings_tween.tween_callback(_bug_1_tween.play)
+	if _bug_2_tween:
+		_settings_tween.tween_callback(_bug_2_tween.play)
+
 func _ready() -> void:
 	title_screen()
 	
