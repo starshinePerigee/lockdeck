@@ -327,7 +327,7 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 
 func preview_discard() -> void:
 	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
-	if preview_step.pick_broke:
+	if preview_step.pick_broke or preview_step.decks_broken > 0:
 		$TrashMain.bump_label()
 	else:
 		$DiscardMain.bump_label()
