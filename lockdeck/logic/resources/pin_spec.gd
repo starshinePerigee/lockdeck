@@ -274,6 +274,9 @@ func on_activate_trigger(pos: int, effect: EffectSpec) -> void:
 	match get_live_depth(pos):
 		_:
 			pass
+	# shhh compiler it's ok:
+	if effect:
+		pass
 
 func on_jam_trigger(pos: int, effect: EffectSpec) -> void:
 	# handle catch logic
@@ -491,7 +494,6 @@ func do_gate_unlock() -> void:
 			depths[i] = Depths.GATE_UNLOCKED
 			activated[i] = true
 			return
-	push_error("gate unlocked without a gate?")
 
 func do_bomb(pos) -> void:
 	bomb_pos = pos

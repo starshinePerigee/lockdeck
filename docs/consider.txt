@@ -6,6 +6,8 @@ s/jam/bind
 remove hint letters
 
 
+less options on ingots
+
 pick art: each archetype has its own shape, but then the highlight color changes with rarity
 (orc, dwarven, glass, malachite, ebony) ->
 - trash: dark grey
@@ -13,3 +15,9 @@ pick art: each archetype has its own shape, but then the highlight color changes
 - basic: light yellow
 - rare: green
 - great: white
+
+
+put between locks after lock before loot
+
+
+bomb - you only have to land on it

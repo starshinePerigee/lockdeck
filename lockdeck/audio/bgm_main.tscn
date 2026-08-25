@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3f67mok2yg5s"]
+
+[ext_resource type="Script" uid="uid://bt8rh8mc2bwhm" path="res://audio/bgm_main.gd" id="1_acbw0"]
+[ext_resource type="PackedScene" uid="uid://c54em4deecn5y" path="res://audio/ambience_manager.tscn" id="2_32gun"]
+[ext_resource type="PackedScene" uid="uid://c7dpl6x6dqhck" path="res://audio/music_manager.tscn" id="3_cdtdr"]
+
+[node name="BgmMain" type="Node"]
+script = ExtResource("1_acbw0")
+
+[node name="AmbienceManager" parent="." instance=ExtResource("2_32gun")]
+
+[node name="MusicManager" parent="." instance=ExtResource("3_cdtdr")]

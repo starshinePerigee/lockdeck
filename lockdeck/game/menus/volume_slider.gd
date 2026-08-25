@@ -1,6 +1,8 @@
 extends Control
 
 signal setting_updated(float)
+signal hovered_start()
+signal hovered_stop()
 
 @export var texture_normal: Texture2D = null
 @export var texture_highlight: Texture2D = null
@@ -55,6 +57,7 @@ func _do_hover() -> void:
 	else:
 		$Status.texture = effect_hover
 	$HSlider.theme_type_variation = "HSliderForceHighlight"
+	hovered_start.emit()
 
 func _end_hover() -> void:
 	if _muted:
@@ -66,11 +69,23 @@ func _end_hover() -> void:
 		$VolumeIcon.texture = texture_normal
 		$Status.texture = effect_normal
 	$HSlider.theme_type_variation = "HSlider"
+	hovered_stop.emit()
+
+func _update_bus(value: float) -> void:
+	AudioServer.set_bus_volume_db(
+		bus_index,
+		linear_to_db(value) 
+	) 
+
+var bus_index: int
 
 func _ready() -> void:
 	$Label.text = sound_name
+	bus_index = AudioServer.get_bus_index(sound_name)
+	
 	_end_hover()
 	$VolumeIcon.clicked.connect(toggle_mute)
 	$HSlider.value_changed.connect(update_value)
+	$HSlider.value_changed.connect(_update_bus)
 	mouse_entered.connect(_do_hover)
 	mouse_exited.connect(_end_hover)

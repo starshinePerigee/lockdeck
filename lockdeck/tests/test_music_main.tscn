@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://drpkq250olmj8"]
+
+[ext_resource type="Script" uid="uid://bpqhuf6eytwbi" path="res://tests/test_music_main.gd" id="1_6hyun"]
+[ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="1_x0c0l"]
+
+[node name="TestMusicMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6hyun")
+
+[node name="BgmMain" parent="." instance=ExtResource("1_x0c0l")]
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 107.0
+offset_right = 188.0
+offset_bottom = 269.0
+
+[node name="MenuButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Main Menu
+"
+alignment = 0
+
+[node name="LockButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Start Lock"
+alignment = 0
+
+[node name="StratButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Strat Hub"
+alignment = 0
+
+[node name="VictoryButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Victory
+"
+alignment = 0
+
+[node name="FailureButton" type="Button" parent="Stack"]
+layout_mode = 2
+text = "Failure"
+alignment = 0
+
+[node name="Effects" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 368.0
+offset_top = 107.0
+offset_right = 476.0
+offset_bottom = 133.0
+
+[node name="FinalTurnButton" type="Button" parent="Effects"]
+layout_mode = 2
+text = "Final Turn"
+alignment = 0
+
+[node name="StartBugsButton" type="Button" parent="Effects"]
+layout_mode = 2
+text = "Start Bugs"
+alignment = 0
+
+[node name="ShiftBugsButton" type="Button" parent="Effects"]
+layout_mode = 2
+text = "Shift Bugs"
+alignment = 0
+
+[node name="EndBugsButton" type="Button" parent="Effects"]
+layout_mode = 2
+text = "End Bugs"
+alignment = 0
+
+[node name="HeistLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 141.0
+offset_right = 296.0
+offset_bottom = 167.0
+text = "Heist: 0"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 49.0
+offset_right = 327.0
+offset_bottom = 94.0
+theme_type_variation = &"TitleLabel"
+text = "Sound Test"

@@ -45,7 +45,7 @@ func set_highlight_active_row(setting: bool) -> void:
 
 
 signal ambience_volume_changed(float)
-@export var ambience_volume: float = 7.0
+@export var ambience_volume: float = 0.6
 
 func set_ambience_volume(setting: float) -> void:
 	ambience_volume = setting
@@ -53,7 +53,7 @@ func set_ambience_volume(setting: float) -> void:
 
 
 signal music_volume_changed(float)
-@export var music_volume: float = 7.0
+@export var music_volume: float = 0.6
 
 func set_music_volume(setting: float) -> void:
 	music_volume = setting
@@ -61,7 +61,7 @@ func set_music_volume(setting: float) -> void:
 
 
 signal effect_volume_changed(float)
-@export var effect_volume: float = 7.0
+@export var effect_volume: float = 0.6
 
 func set_effect_volume(setting: float) -> void:
 	effect_volume = setting

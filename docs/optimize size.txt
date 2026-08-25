@@ -1,0 +1,1 @@
+https://docs.godotengine.org/en/stable/engine_details/development/compiling/optimizing_for_size.html#doc-optimizing-for-size

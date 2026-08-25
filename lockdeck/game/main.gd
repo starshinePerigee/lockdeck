@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.13.4"
+var VERSION_NUMBER := "v0.13.5"
 
 func start_game(starter_deck: Array[CardSpec]) -> void:
 	$GameManager.visible = true
@@ -51,5 +51,22 @@ func _ready() -> void:
 	$TopLevelMenus/Title.show_settings.connect($SettingsMain.show_settings)
 	$GameManager/MenuMain.open_settings.connect($SettingsMain.show_settings)
 	$GameManager/MenuMain.return_to_title.connect(return_to_title)
+	$GameManager/MenuMain.return_to_title.connect($BgmMain.title_screen)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
+	
+	$SettingsMain/SettingsWidget.opened.connect($BgmMain.settings_open)
+	$SettingsMain/SettingsWidget.closed.connect($BgmMain.settings_closed)
+	$SettingsMain/SettingsWidget.ambience_hovered_start.connect($BgmMain.start_sample_ambience)
+	$SettingsMain/SettingsWidget.ambience_hovered_end.connect($BgmMain.stop_sample_ambience)
+	$SettingsMain/SettingsWidget.music_hovered_start.connect($BgmMain.start_sample_music)
+	$SettingsMain/SettingsWidget.music_hovered_end.connect($BgmMain.stop_sample_music)
+	$SettingsMain/SettingsWidget.effects_hovered_start.connect($BgmMain.start_sample_effects)
+	$SettingsMain/SettingsWidget.effects_hovered_end.connect($BgmMain.stop_sample_effects)
+	
+	$GameManager.heist_start.connect($BgmMain.heist_start)
+	$GameManager.lock_start.connect($BgmMain.new_lock)
+	$GameManager/GameCore.final_turn.connect($BgmMain.final_turn)
+	$GameManager.shop_start.connect($BgmMain.strat_start)
+	$GameManager.failure_start.connect($BgmMain.fail_start)
+	$GameManager.victory_start.connect($BgmMain.victory_start)

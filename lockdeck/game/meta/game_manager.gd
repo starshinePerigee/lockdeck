@@ -1,6 +1,12 @@
 extends Control
 ## This scene represents a single game and manages the transition between scenes
 
+signal heist_start
+signal lock_start
+signal shop_start
+signal failure_start
+signal victory_start
+
 signal end_game
 
 var game: GameSpec
@@ -24,6 +30,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
+	heist_start.emit(1)
 
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
@@ -42,11 +49,13 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.LOOT_STRAT:
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
+			lock_start.emit()
 			next_lock(next_level)
 
 func next_loot(loot_value: int) -> void:
 	$LootMain.do_loot(loot_value)
 	$AnimationPlayer.play("between to loot")
+	shop_start.emit()
 
 func end_loot() -> void:
 	if game.game_complete():
@@ -58,14 +67,17 @@ func end_loot() -> void:
 func end_strategy() -> void:
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("strategy to between")
+	heist_start.emit(game.heist_number)
 
 func do_victory() -> void:
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
+	victory_start.emit()
 
 ## Show the failure screen - called from gamecore
 func do_failure() -> void:
 	$AnimationPlayer.play("lock to failure")
+	failure_start.emit()
 
 func next_lock(level: LevelSpec) -> void:
 	$GameCore.load_lock(
