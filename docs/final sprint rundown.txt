@@ -1,6 +1,6 @@
 x core game expansion (strategy sprint)
-	new depths, depth template building
 x basic economy sprint
+- next depths and depth deck flow
 - saving and loading
 x settings
 - ambience and music
@@ -12,6 +12,11 @@ x settings
 - tutorial
 - balance pass 1
 - final polish 1
+
+SCHEDULE:
+by Friday: finish music/ambience, depth flow, saving/loading, post game screen, input fixes, and meta 0
+Saturday: start animation, do final assets
+Sunday: tutorial, balance, polish, bugfixes
 
 ---
 

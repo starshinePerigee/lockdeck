@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bpqhuf6eytwbi" path="res://tests/test_music_main.gd" id="1_6hyun"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="1_x0c0l"]
 
-[node name="TestMusicMain" type="Control"]
+[node name="2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
