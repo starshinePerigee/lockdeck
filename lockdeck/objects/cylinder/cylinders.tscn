@@ -4,19 +4,24 @@
 [ext_resource type="PackedScene" uid="uid://bkcikxm7qtgka" path="res://objects/cylinder/pin.tscn" id="1_jelwg"]
 
 [node name="Cylinders" type="Control"]
-custom_minimum_size = Vector2(464, 672)
+clip_contents = true
+custom_minimum_size = Vector2(560, 776)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 528.0
-offset_bottom = 672.0
+offset_left = -16.0
+offset_top = -136.0
+offset_right = 544.0
+offset_bottom = 640.0
 mouse_filter = 2
 script = ExtResource("1_3tpfd")
 
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(464, 672)
 layout_mode = 0
-offset_right = 464.0
-offset_bottom = 672.0
+offset_left = 16.0
+offset_top = 136.0
+offset_right = 544.0
+offset_bottom = 808.0
 mouse_filter = 2
 theme_override_constants/separation = 32
 
