@@ -20,3 +20,7 @@ deck selection does not reset on return to menu
 if you have a pick selected, then select another pick without unselecting, it doesn't update the current pick
 
 if your final pick locks you out and solves the lock, the game softlocks if you press continue
+
+
+
+clicking a volume slider and holding the mouse down while going away from hover is jank af

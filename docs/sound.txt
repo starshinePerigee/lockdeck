@@ -1,51 +1,9 @@
-Sound is composed of ambience, music, and effects
-
-Ambience: three channels
-- softly crackling torch
-- bugs 1
-- bugs 2
-
-ambience is always running, with crackle on a loop.
-
-shortly after the game starts, one of the bugs comes in - from then on, we have a random (5-15 second) check for both bugs channels:
-- if no bugs are playing, pick a bugs at random and go
-- if a bugs is already playing, 1/3 chance of picking a different bugs and going 
-
-Music: one channel
-
-Music matches the game state:
-- menus: no music
-- game: bass
-- strats: guitar
-
-like bugs, music has a random clock (after each pulse, look ahead 5-15 seconds). If the music doesn't match the current state, fade the current track and queue the correct one.
-
-Music pulls randomly from the collection of "songs"
-
-When you open the in-game menu, the music gets ducked.
-
-Once you start playing with sounds, music gets ducked all the way. Music and effects get sample sounds, but ambience just uses the backing ambiance track (this way it also works in main menu)
-
-
-
-
-cicada solo after candle is out
 
 
 refs:
 - 128 kbps for fx, 160 kbps for music
 - https://docs.godotengine.org/en/4.4/classes/class_audiostreaminteractive.html
 - https://www.reddit.com/r/godot/comments/1ftjgsm/adaptive_music_made_simple_with_godot_43s_new/
-- https://www.youtube.com/watch?v=aFkRmtGiZCw
-
-
-https://freesound.org/people/Satoration/sounds/58498/
-https://freesound.org/people/Attia.phonatics/sounds/829810/
-https://freesound.org/people/johnnydekk/sounds/626180/
-https://freesound.org/people/mycompasstv/sounds/480902/
-https://freesound.org/people/kvgarlic/sounds/246537/
-https://freesound.org/people/wgwgsa/sounds/755333/
-https://freesound.org/people/wildsolution/sounds/20319/?
 
 
 https://freesound.org/people/ra_gun/sounds/81266/

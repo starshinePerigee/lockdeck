@@ -110,6 +110,58 @@ func play_end(victory: bool) -> void:
 func queue_main_menu() -> void:
 	crossfade_track(LATE_TITLE, 3.0)
 
+
+var _settings_tween: Tween
+var _bgm_1_db_cache: float
+var _bgm_2_db_cache: float
+
+func settings_open() -> void:
+	if _settings_tween:
+		_settings_tween.kill()
+	
+	if bgm_1_fader:
+		bgm_1_fader.pause()
+		_bgm_1_db_cache = $BGM_1.volume_db
+	if bgm_2_fader:
+		bgm_2_fader.pause()
+		_bgm_2_db_cache = $BGM_2.volume_db
+	
+	_settings_tween = get_tree().create_tween()
+	_settings_tween.parallel()
+	_settings_tween.tween_property($BGM_1, "volume_db", -60, 1.0)
+	_settings_tween.tween_property($BGM_2, "volume_db", -60, 1.0)
+
+var _sub_settings_tween: Tween
+
+func settings_play() -> void:
+	if _sub_settings_tween:
+		_sub_settings_tween.kill()
+	_sub_settings_tween = get_tree().create_tween()
+	$SettingsMusic.volume_db = -60
+	$SettingsMusic.play()
+	_sub_settings_tween.tween_property($SettingsMusic, "volume_db", 0.0, 0.5)
+
+func settings_stop() -> void:
+	if _sub_settings_tween:
+		_sub_settings_tween.kill()
+	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween.tween_property($SettingsMusic, "volume_db", -60, 0.5)
+	_sub_settings_tween.tween_callback($SettingsMusic.stop)
+
+func settings_close() -> void:
+	if _settings_tween:
+		_settings_tween.kill()
+	_settings_tween = get_tree().create_tween()
+	
+	_settings_tween.tween_property($BGM_1, "volume_db", _bgm_1_db_cache, 1.0)
+	_settings_tween.parallel().tween_property($BGM_2, "volume_db", _bgm_2_db_cache, 1.0)
+	
+	if bgm_1_fader:
+		_settings_tween.tween_callback(bgm_1_fader.play)
+	if bgm_2_fader:
+		_settings_tween.tween_callback(bgm_2_fader.play)
+
+
 func _ready() -> void:
 	queue_main_menu()
 	
