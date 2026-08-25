@@ -39,31 +39,33 @@ const EARLY := LockDeck.GameArcs.EARLY
 const MID := LockDeck.GameArcs.MID
 const LATE := LockDeck.GameArcs.LATE
 
+static var LOOT_SEQUENCE: Array[int] = [50, 75, 100, 125, 150, 160, 170, 180]
+
 static var GAME_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(EARLY, LOCK, 1, 1),
 	LevelSpec.new(EARLY, LOCK, 1, 2),
 	LevelSpec.new(EARLY, LOCK, 2, 1),
-	LevelSpec.new(EARLY, LOOT_STRAT, 40),
+	LevelSpec.new(EARLY, LOOT_STRAT, LOOT_SEQUENCE[0]),
 	
 	LevelSpec.new(MID, LOCK, 2, 2),
 	LevelSpec.new(MID, LOCK, 2, 3),
 	LevelSpec.new(MID, LOCK, 3, 2),
-	LevelSpec.new(MID, LOOT_STRAT, 60),
+	LevelSpec.new(MID, LOOT_STRAT, LOOT_SEQUENCE[1]),
 	
 	LevelSpec.new(MID, LOCK, 3, 3),
 	LevelSpec.new(MID, LOCK, 3, 4),
 	LevelSpec.new(MID, LOCK, 4, 3),
-	LevelSpec.new(MID, LOOT_STRAT, 80),
+	LevelSpec.new(MID, LOOT_STRAT, LOOT_SEQUENCE[2]),
 	
 	LevelSpec.new(LATE, LOCK, 4, 3),
 	LevelSpec.new(LATE, LOCK, 4, 4),
 	LevelSpec.new(LATE, LOCK, 5, 3),
-	LevelSpec.new(LATE, LOOT_STRAT, 100),
+	LevelSpec.new(LATE, LOOT_STRAT, LOOT_SEQUENCE[3]),
 	
 	LevelSpec.new(LATE, LOCK, 4, 5),
 	LevelSpec.new(LATE, LOCK, 5, 4),
 	LevelSpec.new(LATE, LOCK, 5, 5),
-	LevelSpec.new(LATE, LOOT_STRAT, 120),
+	LevelSpec.new(LATE, LOOT_STRAT, LOOT_SEQUENCE[4]),
 	
 	LevelSpec.new(LATE, LOCK, 5, 6),
 	LevelSpec.new(LATE, LOCK, 5, 7),
