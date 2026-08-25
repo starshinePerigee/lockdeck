@@ -22,3 +22,7 @@ func _ready() -> void:
 	$Stack/VictoryButton.pressed.connect($BgmMain.victory_start)
 	$Stack/FailureButton.pressed.connect($BgmMain.fail_start)
 
+	$Effects/FinalTurnButton.pressed.connect($BgmMain/AmbienceManager.play_final_turn)
+	$Effects/StartBugsButton.pressed.connect($BgmMain/AmbienceManager.start_bugs)
+	$Effects/ShiftBugsButton.pressed.connect($BgmMain/AmbienceManager.shift_bugs)
+	$Effects/EndBugsButton.pressed.connect($BgmMain/AmbienceManager.stop_bugs)
