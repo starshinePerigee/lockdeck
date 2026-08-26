@@ -3,8 +3,10 @@ extends Resource
 class_name LockDeck
 
 ## All the cards in a Difficulty: Array[DepthTemplate) dictionary
-var deck: Dictionary[DepthTemplates.Difficulty, Array]
+@export var deck: Dictionary[DepthTemplates.Difficulty, Array]
 
+## used to track your position in the deck while you are drawing cards
+## (decks are not shuffled between each card draw; only once exhausted)
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
 
 enum GameArcs {

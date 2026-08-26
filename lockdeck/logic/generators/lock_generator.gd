@@ -1,6 +1,27 @@
 ## Handles generating sets of locks
 class_name LockGenerator
 
+# Here is the process for building a lock
+
+# 0: build a catalog of weighted copies of every depth in base_template_deck_catalog
+
+# 1: build your "lockset deck", a sub-deck of depths that is used to build each 
+# lock in a heist.
+# 1a: get a DifficultyArray (a list of how many of each difficulty should be present)
+# for the future lockset deck based on the current arc. This difficulty array 
+# 1b: draw from the arc-catalog until you have the required number of depths for your lockset deck
+
+# 2: draw your lock deck from the lockset deck
+# 2a: get a DifficultyArray based on the current lock difficulty (separate from it's arc)
+# 2b: "bump" the lock's DifficultyArray, modifying its contents in a controlled, limited fashion
+# 2c: draw a lock deck from the lockset deck based on the bumped difficulty array
+
+# 3: draw depths from the lock deck to fill out pinspecs
+
+# Saving and loading:
+# You should only need two things: the current hiest's lockset deck,
+# and the current lock's lock deck. Regen the lock on load
+
 class DifficultyArray:
 	const TOTAL_TEMPLATES := 7
 	
