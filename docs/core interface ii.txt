@@ -12,13 +12,11 @@ references:
 - pullout pick reference (small ? next to the deck)
 - artifact tooltip
 
-- split settings into "menu" and "settings" where menu can open the settings
 - return to title should have confirm
 
 
 small polish asset list:
 - clean up carddisplay windows and areas
-- fix spring compression
 - clean up lock details
 - convert depths to transparent on second background
 -- make exhausted depths use a different darker base instead of modulating

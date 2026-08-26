@@ -1,0 +1,8 @@
+- intermediate deck handling
+- game saving with decks
+- depth description widget
+- next depth window in strat hub
+- possible depths reference in game
+- return to start confirm
+
+"These are the depths that might appear; but this is not a guarantee they are present."
