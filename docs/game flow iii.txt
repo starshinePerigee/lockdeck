@@ -1,4 +1,4 @@
-- intermediate deck handling
+x intermediate deck handling
 - game saving with decks
 - depth description widget
 - next depth window in strat hub

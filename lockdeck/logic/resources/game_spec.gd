@@ -22,6 +22,14 @@ class_name GameSpec
 ## Holds picks removed forever
 @export var removed_forever_picks: Array[CardSpec]
 
+@export var current_arc: LockDeck.GameArcs 
+
+## Holds the current lockset deck
+@export var lockset_deck: LockDeck
+
+## Holds the deck for the next lock
+@export var next_lock_deck: LockDeck
+
 func add_coins(count: int) -> void:
 	coins += count
 
@@ -35,42 +43,38 @@ const LOCK := LevelSpec.Stages.LOCK
 const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
 const VICTORY := LevelSpec.Stages.VICTORY
 
-const EARLY := LockDeck.GameArcs.EARLY
-const MID := LockDeck.GameArcs.MID
-const LATE := LockDeck.GameArcs.LATE
-
 static var LOOT_SEQUENCE: Array[int] = [50, 75, 100, 125, 150, 160, 170, 180]
 
 static var GAME_SEQUENCE: Array[LevelSpec] = [
-	LevelSpec.new(EARLY, LOCK, 1, 1),
-	LevelSpec.new(EARLY, LOCK, 1, 2),
-	LevelSpec.new(EARLY, LOCK, 2, 1),
-	LevelSpec.new(EARLY, LOOT_STRAT, LOOT_SEQUENCE[0]),
+	LevelSpec.new(LOCK, 1, 1),
+	LevelSpec.new(LOCK, 1, 2),
+	LevelSpec.new(LOCK, 2, 1),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[0], LockDeck.GameArcs.MID),
 	
-	LevelSpec.new(MID, LOCK, 2, 2),
-	LevelSpec.new(MID, LOCK, 2, 3),
-	LevelSpec.new(MID, LOCK, 3, 2),
-	LevelSpec.new(MID, LOOT_STRAT, LOOT_SEQUENCE[1]),
+	LevelSpec.new(LOCK, 2, 2),
+	LevelSpec.new(LOCK, 2, 3),
+	LevelSpec.new(LOCK, 3, 2),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1], LockDeck.GameArcs.MID),
 	
-	LevelSpec.new(MID, LOCK, 3, 3),
-	LevelSpec.new(MID, LOCK, 3, 4),
-	LevelSpec.new(MID, LOCK, 4, 3),
-	LevelSpec.new(MID, LOOT_STRAT, LOOT_SEQUENCE[2]),
+	LevelSpec.new(LOCK, 3, 3),
+	LevelSpec.new(LOCK, 3, 4),
+	LevelSpec.new(LOCK, 4, 3),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2], LockDeck.GameArcs.LATE),
 	
-	LevelSpec.new(LATE, LOCK, 4, 3),
-	LevelSpec.new(LATE, LOCK, 4, 4),
-	LevelSpec.new(LATE, LOCK, 5, 3),
-	LevelSpec.new(LATE, LOOT_STRAT, LOOT_SEQUENCE[3]),
+	LevelSpec.new(LOCK, 4, 3),
+	LevelSpec.new(LOCK, 4, 4),
+	LevelSpec.new(LOCK, 5, 3),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3], LockDeck.GameArcs.LATE),
 	
-	LevelSpec.new(LATE, LOCK, 4, 5),
-	LevelSpec.new(LATE, LOCK, 5, 4),
-	LevelSpec.new(LATE, LOCK, 5, 5),
-	LevelSpec.new(LATE, LOOT_STRAT, LOOT_SEQUENCE[4]),
+	LevelSpec.new(LOCK, 4, 5),
+	LevelSpec.new(LOCK, 5, 4),
+	LevelSpec.new(LOCK, 5, 5),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4], LockDeck.GameArcs.LATE),
 	
-	LevelSpec.new(LATE, LOCK, 5, 6),
-	LevelSpec.new(LATE, LOCK, 5, 7),
-	LevelSpec.new(LATE, LOCK, 5, 8),
-	LevelSpec.new(LATE, VICTORY),
+	LevelSpec.new(LOCK, 5, 6),
+	LevelSpec.new(LOCK, 5, 7),
+	LevelSpec.new(LOCK, 5, 8),
+	LevelSpec.new(VICTORY),
 ]
 
 func get_next_level() -> LevelSpec:
@@ -88,6 +92,14 @@ func get_next_level() -> LevelSpec:
 			pass
 	
 	return next_stage
+
+func build_new_lockset_deck(arc: LockDeck.GameArcs) -> void:
+	lockset_deck = LockGenerator.get_lockset_deck(arc)
+
+func build_new_lock_deck(difficulty: int) -> void:
+	var difficulty_params := LockGenerator.get_difficulty_parameters(difficulty, lockset_deck)
+	print(difficulty_params.as_str())
+	next_lock_deck = LockGenerator.get_lock_deck(lockset_deck, difficulty_params)
 
 func game_complete() -> bool:
 	return current_stage >= len(GAME_SEQUENCE) - 1

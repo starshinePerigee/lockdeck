@@ -418,7 +418,6 @@ func load_deck(deck: Array[CardSpec]) -> void:
 	reload_deck()
 	$DeckMain.clear_all()
 	$DeckMain.add_cards(deck)
-	print("Loaded %s cards." % deck_count)
 	update_status_widget()
 
 ## loads a lock

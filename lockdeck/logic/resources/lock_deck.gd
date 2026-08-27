@@ -10,6 +10,7 @@ class_name LockDeck
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
 
 enum GameArcs {
+	INVALID = -1,
 	EARLY = 0,
 	MID = 1,
 	LATE = 2

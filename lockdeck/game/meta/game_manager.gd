@@ -26,6 +26,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.current_deck = starter_deck
+	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
@@ -39,6 +40,7 @@ func lock_complete():
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
+	game.next_lock_deck = null
 	$AnimationPlayer.play("lock to between")
 
 func advance_from_between() -> void:
@@ -47,6 +49,7 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
 		LevelSpec.Stages.LOOT_STRAT:
+			game.build_new_lockset_deck(next_level.arc)
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
@@ -80,10 +83,12 @@ func do_failure() -> void:
 	failure_start.emit()
 
 func next_lock(level: LevelSpec) -> void:
+	if not game.next_lock_deck:
+		game.build_new_lock_deck(level.difficulty)
+	
 	$GameCore.load_lock(
-		LockGenerator.get_next_level(
-			level.difficulty,
-			level.arc,
+		LockGenerator.build_lock(
+			game.next_lock_deck,
 			level.pin_count
 		)
 	)
