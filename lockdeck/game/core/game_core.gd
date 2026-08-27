@@ -263,7 +263,8 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	$HandMain.deselect()
-	$HandMain.remove_card(card)
+	if card != _NULL_PICK:
+		$HandMain.remove_card(card)
 	
 	if _result.pick_broke or break_next:
 		if break_instead:

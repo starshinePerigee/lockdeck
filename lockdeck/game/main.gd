@@ -13,7 +13,7 @@ func check_saved_game() -> void:
 func load_saved_game() -> void:
 	_saved_game.reify()
 	$GameManager.visible = true
-	$TopLevelMenus/AnimationPlayer.play("start_game")
+	$TopLevelMenus/AnimationPlayer.play("direct_load")
 	$GameManager.load_saved_game(_saved_game)
 
 func start_game(starter_deck: Array[CardSpec]) -> void:

@@ -13,7 +13,7 @@ func show_menu():
 
 func _ready() -> void:
 	$MenuWidget.closed.connect(hide)
-	$MenuWidget.add_button("Save and return to title", return_to_title.emit, true)
+	$MenuWidget.return_to_title.connect(return_to_title.emit)
 	$MenuWidget.add_button("Game settings", open_settings.emit, true)
 	$MenuWidget.add_button("DEBUG: Solve level", auto_complete_level.emit, true)
 	$MenuWidget.add_button("DEBUG: Reveal lock", reveal_level.emit, true)

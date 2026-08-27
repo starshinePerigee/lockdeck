@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp8xcmfhs3rs2"]
+[gd_scene load_steps=3 format=3 uid="uid://dp8xcmfhs3rs2"]
 
 [ext_resource type="Script" uid="uid://dr0iub7t31pwq" path="res://game/menus/menu_widget.gd" id="1_m2v1s"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="2_o0a0n"]
 
 [node name="MenuWidget" type="Control"]
 layout_mode = 3
@@ -45,6 +46,15 @@ theme_override_constants/margin_bottom = 32
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 16
+
+[node name="ToTopMenuButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 26)
+layout_mode = 2
+script = ExtResource("2_o0a0n")
+base_text = "Save and return to title"
+confirm_text = "This will reset the current lock. Continue?"
+metadata/_custom_type_script = "uid://dfck3u724ea4f"
 
 [node name="Label2" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2

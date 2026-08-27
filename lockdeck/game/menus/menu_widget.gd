@@ -2,6 +2,7 @@ extends Control
 ## This is a popover that can dynamically add/remove buttons, used for the in-game menu
 
 signal closed()
+signal return_to_title
 
 @export var title := ""
 
@@ -44,6 +45,9 @@ func hide_widget():
 	visible = false
 	closed.emit()
 
+func do_return_to_title() -> void:
+	return_to_title.emit()
+	hide_widget()
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -52,6 +56,7 @@ func _handle_input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	%Title.text = title
+	%ToTopMenuButton.pressed_confirmed.connect(do_return_to_title)
 	gui_input.connect(_handle_input)
 	visible = false
 
