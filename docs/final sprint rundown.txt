@@ -14,7 +14,7 @@ x ambience and music
 - final polish 1
 
 SCHEDULE:
-by Friday: depth flow, saving/loading, post game screen, input fixes, and meta 0
+by Friday: depth flow, post game screen, input fixes, and meta 0
 Saturday: start animation, do final assets
 Sunday: tutorial, balance, polish, bugfixes
 

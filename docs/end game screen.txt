@@ -1,0 +1,11 @@
+- most used pick
+- most broken pick
+- most expensive pick (cost + repairs)
+(if same pick is multiple, show multiple labels under it)
+
+- total value looted
+- current money (confiscated on arrest, scoring 0)
+- deck value
+total score: 5*deck + 10*current + total loot
+
+rank: (score > oblivion ranks)
