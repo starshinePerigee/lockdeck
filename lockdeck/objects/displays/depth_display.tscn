@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://rb37djdo7e66"]
+
+[ext_resource type="Script" uid="uid://bq0ctss4ydw8f" path="res://objects/displays/depth_display.gd" id="1_3q4qd"]
+[ext_resource type="PackedScene" uid="uid://br6rlbw57vk25" path="res://objects/cylinder/depth.tscn" id="2_brr0s"]
+
+[node name="DepthDisplay" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 120.0
+grow_horizontal = 2
+script = ExtResource("1_3q4qd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Depth" parent="HBoxContainer" instance=ExtResource("2_brr0s")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DepthName" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " DEBUG"
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="TestsAs" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[ ? ]"
+
+[node name="Description" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 16)
+layout_mode = 2
+text = "  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
+autowrap_mode = 2

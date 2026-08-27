@@ -1,6 +1,7 @@
 - most used pick
-- most broken pick
+- most broken pick (used tiebreaks)
 - most expensive pick (cost + repairs)
+- special friend (most repaired / used non-starter pick)
 (if same pick is multiple, show multiple labels under it)
 
 - total value looted
