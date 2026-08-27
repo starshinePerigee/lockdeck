@@ -27,11 +27,21 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game = GameSpec.new()
 	game.current_deck = starter_deck
 	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(1)
+
+func load_saved_game(saved_game: GameSpec):
+	$AnimationPlayer.play("RESET")
+	game = saved_game
+	$StrategyHub.set_game(game)
+	$LootMain.game = game
+	$BetweenLocks/SpeedBonusLabel.visible = false
+	$AnimationPlayer.play("first lock")
+	heist_start.emit(game.heist_number)
 
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
@@ -41,6 +51,7 @@ func lock_complete():
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	game.next_lock_deck = null
+	game.save()
 	$AnimationPlayer.play("lock to between")
 
 func advance_from_between() -> void:
@@ -68,17 +79,20 @@ func end_loot() -> void:
 		$AnimationPlayer.play("loot to strategy")
 
 func end_strategy() -> void:
+	game.save()
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("strategy to between")
 	heist_start.emit(game.heist_number)
 
 func do_victory() -> void:
+	GameSpec.clear_save()
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 	victory_start.emit()
 
 ## Show the failure screen - called from gamecore
 func do_failure() -> void:
+	GameSpec.clear_save()
 	$AnimationPlayer.play("lock to failure")
 	failure_start.emit()
 

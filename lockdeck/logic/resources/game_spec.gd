@@ -2,6 +2,12 @@
 ## GameSpec tracks the status of the current game - decks, coins, etc.
 class_name GameSpec
 
+const SAVE_PATH := "user://game_save.tres"
+
+## Used to "clear" a current save
+@export var invalid_save := false
+@export var last_card_spec_id := 100
+
 ## Current coin count
 @export var coins: int = 0
 
@@ -172,6 +178,44 @@ static func get_in_progress_game() -> GameSpec:
 		game.broken_picks[i].repair_count = i
 	game.lock_number = 4
 	return game
+
+func save() -> void:
+	last_card_spec_id = CardSpec.last_id
+	var ret := ResourceSaver.save(self, SAVE_PATH)
+	if ret != OK:
+		push_error("Failed to save! path: %s, error: %d" % [SAVE_PATH, ret])
+
+static func clear_save() -> void:
+	var bad_spec := GameSpec.new()
+	bad_spec.invalid_save = true
+	bad_spec.save()
+
+## Loads a save game, or returns null if one does not exist.
+static func load_save() -> GameSpec:
+	if not ResourceLoader.exists(SAVE_PATH):
+		return null
+	
+	var load_res: Resource = ResourceLoader.load(
+		SAVE_PATH, "GameSpec", ResourceLoader.CACHE_MODE_IGNORE
+	)
+
+	if load_res is GameSpec:
+		if load_res.invalid_save:
+			return null
+		else:
+			CardSpec.last_id = load_res.last_card_spec_id
+			return load_res
+	else:
+		clear_save()
+		return null
+
+func reify() -> void:
+	for deck in [current_deck, broken_picks, removed_forever_picks]:
+		for card in deck:
+			card.reify()
+	for deck in [lockset_deck, next_lock_deck]:
+		if deck:
+			deck.reify()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

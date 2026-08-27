@@ -6,8 +6,13 @@ class_name Abilities
 
 @export var description: String = ""
 
-func _init(description_: String):
+static var static_registry: Dictionary[String, Abilities] = {}
+
+func _init(description_: String = "Null ability"):
 	description = description_
+	
+	if description != "Null ability":
+		static_registry[description] = self
 
 static var NONE := Abilities.new("")
 

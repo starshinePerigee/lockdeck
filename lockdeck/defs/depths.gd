@@ -18,22 +18,24 @@ static func _get_texture(n: String) -> Resource:
 		return load("res://assets/depths/depth_debug.png")
 
 ## Internal depth name used for texture lookup
-var depth_name: String
+@export var depth_name: String
 ## Human readable name of this depth, in lower case.
 var english_name: String
 ## Tooltip description for this depth
-var description
+var description: String
 ## Depth texture (as seen in a pin)
 var texture: Resource
 ## Effect flavor
 var effect: Effects
 ## What the depth tests as
-var tests_as
+var tests_as: DangerLevel
 ## Default effect value
 var value: int
 
+static var static_registry: Dictionary[String, Depths] = {}
+
 func _init(
-	depth_name_: String,
+	depth_name_: String = "",
 	tests_as_: DangerLevel = DangerLevel.INVALID,
 	effect_: Effects = Effects.DEBUG,
 	description_: String = "",
@@ -50,6 +52,9 @@ func _init(
 		english_name = english_name_ 
 	else:
 		english_name = depth_name
+	
+	if depth_name != "":
+		static_registry[depth_name] = self
 
 #region fake depths
 ## Debug depth. Should not be used.

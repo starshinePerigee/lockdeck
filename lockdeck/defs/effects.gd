@@ -10,15 +10,18 @@ static func _get_texture(n: String) -> Resource:
 		return load("res://assets/effects/icon_activate.png")
 
 ## Human readable name of this effect, in lower case.
-var effect_name: String
+@export var effect_name: String
 ## Large texture, such as used for indicators and help.
 var texture: Resource
-## Small texture, such as used on a pick card.
-var texture_small: Resource
 
-func _init(name: String):
-	self.effect_name = name
-	self.texture = _get_texture(name)
+static var static_registry: Dictionary[String, Effects] = {}
+
+func _init(name_: String = ""):
+	effect_name = name_
+	texture = _get_texture(name_)
+	
+	if effect_name:
+		static_registry[effect_name] = self
 
 #region utility effects
 

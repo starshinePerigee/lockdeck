@@ -62,6 +62,11 @@ static func get_template_weight(template: DepthTemplates, arc: GameArcs) -> int:
 
 static var base_template_deck_catalog: Dictionary[GameArcs, LockDeck]
 
+func reify() -> void:
+	for key in deck.keys():
+		for template in deck[key]:
+			template.reify()
+
 func _init() -> void:
 	deck = {}
 	for difficulty in DepthTemplates.Difficulty.values():
