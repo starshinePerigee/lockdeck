@@ -15,9 +15,13 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Rect" type="Control" parent="."]
+[node name="Rect" type="Panel" parent="."]
 unique_name_in_owner = true
-anchors_preset = 0
+z_index = 3499
+z_as_relative = false
+layout_mode = 0
+mouse_filter = 1
+theme_type_variation = &"OutlinePanel"
 
 [node name="Tooltip" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -26,6 +30,7 @@ z_as_relative = false
 layout_mode = 0
 offset_right = 272.0
 offset_bottom = 52.0
+mouse_filter = 2
 theme_type_variation = &"PaperPanelContainer"
 
 [node name="Label" type="Label" parent="Tooltip"]

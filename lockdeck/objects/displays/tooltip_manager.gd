@@ -3,9 +3,8 @@ extends Control
 ## Exactly one instance of this class should be created on the top level scene.
 class_name TooltipManager
 
-const X_LIMIT := 620
-const Y_LIMIT := 320
-const TOOLTIP_MARGIN := 32
+const TOOLTIP_MARGIN := -4
+const RECT_MARGIN := 2
 
 static var _instance: TooltipManager
 
@@ -30,19 +29,25 @@ func _request_widget_internal(rect: Rect2, widget: Control) -> void:
 	_request_internal(rect)
 
 func _request_internal(rect: Rect2) -> void:
-	%Tooltip.global_position = _get_tooltip_pos(rect, %Label.size)
+	%Tooltip.size = Vector2()
+	call_deferred("_finalize", rect)
+
+func _finalize(rect: Rect2) -> void:
+	%Tooltip.global_position = _get_tooltip_pos(rect, %Tooltip.size)
 	%Tooltip.show()
-	%Rect.global_position = rect.position
-	%Rect.size = rect.size
+	%Rect.global_position = rect.position - Vector2(RECT_MARGIN, RECT_MARGIN)
+	%Rect.size = rect.size + Vector2(RECT_MARGIN, RECT_MARGIN)
 
 func _get_tooltip_pos(rect: Rect2, tooltip_size: Vector2) -> Vector2:
-	var right_bias := X_LIMIT - rect.position.x
-	var left_bias := rect.end.x - X_LIMIT
+	var window: Vector2 = get_viewport().size
+	# each bias is "how much space is there between the specified border and the rect" 
+	var left_bias := rect.position.x
+	var right_bias := window.x - rect.end.x
 	var show_left := right_bias < left_bias
 	
-	var top_bias := Y_LIMIT - rect.position.y
-	var bottom_bias := rect.end.y - Y_LIMIT
-	var show_top := top_bias < bottom_bias
+	var top_bias := rect.position.y
+	var bottom_bias := window.y - rect.end.y
+	var show_top := bottom_bias < top_bias
 	
 	var x: float
 	if show_left:
@@ -88,14 +93,15 @@ func _destroy_non_label_children() -> void:
 			%Tooltip.remove_child(child)
 			child.queue_free()
 
-func _show_tooltip() -> void:
-	pass
-
 func _hide_tooltip() -> void:
-	pass
+	%Tooltip.hide()
+	%Tooltip.position = Vector2()
+	%Rect.position = Vector2()
+	%Rect.size = Vector2()
 
 func _ready() -> void:
 	if _instance:
 		push_error("Static global tooltip manager already initialized!")
 	else:
 		_instance = self
+	%Rect.mouse_exited.connect(_hide_tooltip)

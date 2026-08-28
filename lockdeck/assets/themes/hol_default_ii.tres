@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=31 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=33 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dqgh8g6m87mus" path="res://assets/interface/grabber_highlight.png" id="9_6iba6"]
 [ext_resource type="Texture2D" uid="uid://hs6w6dse5sfj" path="res://assets/interface/scroll.png" id="10_6iba6"]
 [ext_resource type="StyleBox" uid="uid://dw2eg4vnyhcr1" path="res://assets/interface/hscroll_highlight.tres" id="10_nvhkk"]
+[ext_resource type="Texture2D" uid="uid://bjhdwge0fxcj2" path="res://assets/interface/button_stylebox_purble.png" id="12_xdxd8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqxeh"]
 
@@ -41,6 +42,18 @@ texture_margin_right = 8.0
 texture_margin_bottom = 1.0
 expand_margin_top = 3.0
 expand_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qcjvr"]
+texture = ExtResource("12_xdxd8")
+texture_margin_left = 5.0
+texture_margin_top = 2.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
@@ -133,6 +146,8 @@ MarginContainer/constants/margin_bottom = 8
 MarginContainer/constants/margin_left = 8
 MarginContainer/constants/margin_right = 8
 MarginContainer/constants/margin_top = 8
+OutlinePanel/base_type = &"Panel"
+OutlinePanel/styles/panel = SubResource("StyleBoxTexture_qcjvr")
 Panel/styles/panel = SubResource("StyleBoxTexture_n2srw")
 PanelContainer/styles/panel = ExtResource("5_n2srw")
 PaperPanel/base_type = &"Panel"
