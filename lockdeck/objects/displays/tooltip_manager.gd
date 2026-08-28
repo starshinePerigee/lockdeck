@@ -33,10 +33,6 @@ func _request_internal(rect: Rect2, widget: Control, text: String) -> void:
 
 
 func _redraw() -> void:
-	if _current_widget:
-		_current_widget.queue_free()
-		_current_widget = null
-
 	if _request_widget:
 		%Label.visible = false
 		_current_widget = _request_widget
@@ -87,9 +83,13 @@ func _process(_delta: float) -> void:
 			_exit_tooltip()
 
 func _hide_tooltip() -> void:
+	if _current_widget:
+		_current_widget.queue_free()
+		_current_widget = null
 	$Timer.stop()
 	%Tooltip.hide()
 	%Tooltip.position = Vector2()
+	%Tooltip.size = Vector2()
 	%Rect.hide()
 	%Rect.position = Vector2()
 	%Rect.size = Vector2()

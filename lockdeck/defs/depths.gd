@@ -229,7 +229,7 @@ static var SURPRISE := Depths.new(
 
 static var SPIKE := Depths.new(
 	"spike", DangerLevel.DANGEROUS, Effects.BREAK,
-	"Breaks your pick. Spike is at the start of a lock."
+	"Breaks your pick. Spike is revealed at the start of a lock."
 )
 
 static var GATE_LOCKED := Depths.new(

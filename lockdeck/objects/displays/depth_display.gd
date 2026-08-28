@@ -3,19 +3,18 @@ extends VBoxContainer
 @export var depth: Depths:
 	set(v):
 		depth = v
-		%Depth.flavor = depth
 		
-		%DepthName.text = " " + depth.depth_name
+		%DepthName.text = "  " + depth.english_name.capitalize()
 		%Description.text = "  " + depth.description
 		
 		var tests_as_text: String
 		var tests_as_color: Color
 		match depth.tests_as:
 			Depths.DangerLevel.INVALID:
-				tests_as_text = "[   ]"
-				tests_as_color = Color("ffffff")
+				tests_as_text = "[ ? ]"
+				tests_as_color = Color("918891")
 			Depths.DangerLevel.CLEAR:
-				tests_as_text = "[ ok]"
+				tests_as_text = "[ok ]"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.CLEAR]
 			Depths.DangerLevel.INTERESTING:
 				tests_as_text = "[ ! ]"
