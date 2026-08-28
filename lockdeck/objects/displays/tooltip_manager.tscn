@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://iioqp46sx2bt"]
+
+[ext_resource type="Script" uid="uid://bate6qrwhjhsb" path="res://objects/displays/tooltip_manager.gd" id="1_d72k1"]
+
+[node name="TooltipManager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d72k1")
+
+[node name="TimeoutCornerForBadWidgets" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Rect" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[node name="Tooltip" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+z_index = 3500
+z_as_relative = false
+layout_mode = 0
+offset_right = 272.0
+offset_bottom = 52.0
+theme_type_variation = &"PaperPanelContainer"
+
+[node name="Label" type="Label" parent="Tooltip"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
+autowrap_mode = 2

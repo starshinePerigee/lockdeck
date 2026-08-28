@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4nktv0wsa7s3"]
+[gd_scene load_steps=9 format=3 uid="uid://4nktv0wsa7s3"]
 
 [ext_resource type="Script" uid="uid://c5aim8ml7s4kv" path="res://game/main.gd" id="1_xtpaf"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_emt18"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b0shtp3l3acc8" path="res://game/menus/settings_main.tscn" id="5_dgpao"]
 [ext_resource type="PackedScene" uid="uid://d0x4a02iuivck" path="res://game/menus/wip_notif.tscn" id="6_dgpao"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="7_wjctj"]
+[ext_resource type="PackedScene" uid="uid://iioqp46sx2bt" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -63,3 +64,5 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BgmMain" parent="." instance=ExtResource("7_wjctj")]
+
+[node name="TooltipManager" parent="." instance=ExtResource("8_xkbyp")]

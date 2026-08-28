@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://lffsubdtdqqi"]
+
+[ext_resource type="Script" uid="uid://d326minmhow1y" path="res://tests/test_tooltips.gd" id="1_003cx"]
+[ext_resource type="PackedScene" uid="uid://iioqp46sx2bt" path="res://objects/displays/tooltip_manager.tscn" id="1_n78pt"]
+
+[node name="TestTooltips" type="Node2D"]
+script = ExtResource("1_003cx")
+
+[node name="TooltipManager" parent="." instance=ExtResource("1_n78pt")]
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 240.0
+offset_bottom = 440.0
