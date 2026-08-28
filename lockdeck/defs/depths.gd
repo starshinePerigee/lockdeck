@@ -156,7 +156,7 @@ static var LABYRINTH := Depths.new(
 
 static var CATCH := Depths.new(
 	"catch", DangerLevel.CLEAR, Effects.DISARM,
-	("If you are below this depth and jam this pin, it breaks your pick."
+	("If you are below this depth and jam this pin, it breaks your pick. "
 	+ "Like all pins, it does nothing if exhausted, so activating it disarms it."
 	)
 )
@@ -190,8 +190,8 @@ static var BOUNCE := Depths.new(
 
 static var BOMB := Depths.new(
 	"bomb", DangerLevel.INTERESTING, Effects.BOMB,
-	("Activating, testing, or revealing Bomb will cause it to light."
-	+ "Once lit, you have one turn to advance past Bomb or it explodes, breaking your pick.")
+	("Activating, testing, or revealing a bomb will cause it to light."
+	+ "Once lit, you have one turn to advance past the bomb or it explodes, breaking your pick.")
 )
 
 static var FUMBLE := Depths.new(
@@ -217,8 +217,8 @@ static var WARN := Depths.new(
 
 static var TRAP := Depths.new(
 	"trap", DangerLevel.INVALID, Effects.DISARM,
-	("Breaks your pick if you try to test or reveal Trap, including if you push past it."
-	+ "Like all pins, it does nothing if exhausted, so activating it disarms it.")
+	("Breaks your pick if you try to test or reveal it, including if you push past it. "
+	+ "Like all depths, it does nothing if exhausted, so activating it disarms it.")
 )
 
 static var SURPRISE := Depths.new(
@@ -229,12 +229,12 @@ static var SURPRISE := Depths.new(
 
 static var SPIKE := Depths.new(
 	"spike", DangerLevel.DANGEROUS, Effects.BREAK,
-	"Breaks your pick. Spike is revealed at the start of a lock."
+	"Breaks your pick. This depth is revealed at the start of a lock."
 )
 
 static var GATE_LOCKED := Depths.new(
 	"gate_locked", DangerLevel.DANGEROUS, Effects.BREAK,
-	"Gate breaks your pick if you move past it. Find the Key to unlock it.",
+	"This breaks your pick if you move past it. Find the Key to unlock it.",
 	1, "locked gate"
 )
 

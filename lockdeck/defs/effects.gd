@@ -56,15 +56,18 @@ static var END_EXECUTION := Effects.new("end_execution")
 ## move the pin, triggering the depth at the destination and hinting everything between
 static var PUSH := Effects.new(
 	"push",
-	"Pushes the pin upward. Push the pin to the top to unlock the lock."
+	(
+		"Pushes the pin upward. Push the pin to the top to unlock the lock. "
+		+ "If you push past the end of the pin, your pick will break."
+	)
 )
 
 ## Test the next depths, indicating if there is a hazard or not
 static var TEST := Effects.new(
 	"test",
 	(
-		"Tests this depth. "
-		+ "All tested depths will be evaluated together "
+		"Tests this depth, telling you if there are threats ahead. "
+		+ "All tested depths are evaluated together, "
 		+ "and the worst case depth (safe, caution, or dangerous) will be "
 		+ "indicated."
 	)
@@ -73,7 +76,7 @@ static var TEST := Effects.new(
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new(
 	"reveal",
-	"Shows the exact contents of this depth."
+	"Reveals the exact contents of this depth."
 )
 
 ## apply jam
