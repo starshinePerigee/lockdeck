@@ -124,7 +124,7 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	
 	result.lock_solved = lock_solved()
 	if not shadow:
-		result.last_hint = update_visibility()
+		update_visibility(result)
 		$Cylinders.set_pin_specs(pins)
 		for i in len(pins):
 			pins[i].shadow_clone(_shadow_pins[i])
@@ -136,17 +136,19 @@ func lock_solved() -> bool:
 			return false
 	return true
 
-func update_visibility() -> String:
+func update_visibility(result: EndStepSpec):
 	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		new_level = max(new_level, pin.get_reveal_level())
 	if new_level == PinSpec.RevealLevel.REVEALED:
-		# we didn't hint anything
-		return ""
+		# we didn't hint anything, leave endstepspec as the defaults
+		return
 	increment_hint()
 	for pin in pins:
 		pin.update_pin_visible(new_level, String.chr(_hint_id))
-	return String.chr(_hint_id)
+	
+	result.last_reveal = new_level
+	result.last_hint = String.chr(_hint_id)
 
 func update_turn_number() -> int:
 	if turn_number < 0:

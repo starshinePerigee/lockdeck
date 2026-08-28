@@ -21,6 +21,7 @@ theme_type_variation = &"OutlinePanel"
 
 [node name="Tooltip" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 3500
 z_as_relative = false
 layout_mode = 0
@@ -42,6 +43,7 @@ wait_time = 1.2
 one_shot = true
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

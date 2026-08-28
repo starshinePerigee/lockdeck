@@ -71,7 +71,6 @@ func set_state(state: InputState) -> void:
 			$LockBody.position = LOCK_BODY_HOME
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
-			$PreviousButton/LastHint.visible = false
 			$LockBody/CylinderMain.cancel_preview()
 			reset_countdown()
 			dis_en_able_buttons(false)
@@ -107,7 +106,6 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.disable_all()
 			$LockBody/CylinderMain.show_preview(_result)
 			$PreviousButton.show_see_prev = false
-			$PreviousButton/LastHint.visible = true
 			dis_en_able_buttons()
 		InputState.CARD_DISPLAY:
 			$Notifications.clear()
@@ -275,10 +273,11 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		if card != _NULL_PICK:
 			$DiscardMain.add_card(card)
 	
-	if _result.last_hint:
-		$PreviousButton/LastHint.text = "Last hint: %s" % _result.last_hint
+	if Effects.TEST in card.get_unique_list():
+		$LastTest.update(_result.last_reveal, _result.last_hint)
 	else:
-		$PreviousButton/LastHint.text = "No hints last turn"
+		$LastTest.update()
+		$LastTest.visible = false
 	
 	if _result.lock_solved:
 		solve_lock()
@@ -342,6 +341,7 @@ func unpreview_discard() -> void:
 
 func discard_pick() -> void:
 	$HandMain.deselect()
+	$LastTest.visible = false
 	do_pick(
 		_NULL_PICK,
 		0,
@@ -401,9 +401,10 @@ func reload_deck() -> void:
 		$DeckMain.add_cards($DiscardMain.empty_deck())
 		$Notifications.notify(Notifications.RELOAD)
 
-## perform the end of turn step once the player clicks the discard (if it's valid)
+## perform the end of turn step once the player clicks the turn candle (if it's valid)
 func end_turn(count_down: bool = true) -> void:
 	$Notifications.clear()
+	$LastTest.visible = false
 	if count_down:
 		$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
@@ -440,6 +441,7 @@ func load_game(game: GameSpec) -> void:
 func restart() -> void:
 	lock_input(false)
 	show_failure(false)
+	$LastTest.visible = false
 	$ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(countdown_time)
@@ -447,7 +449,6 @@ func restart() -> void:
 	turn_count = 0
 	end_turn(false)
 	$Notifications.clear()
-	$PreviousButton/LastHint.text = "No picks yet"
 
 func break_from_hand() -> void:
 	if $HandMain.count() == 0:

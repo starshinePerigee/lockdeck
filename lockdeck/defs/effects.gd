@@ -13,11 +13,14 @@ static func _get_texture(n: String) -> Resource:
 @export var effect_name: String
 ## Large texture, such as used for indicators and help.
 var texture: Resource
+## Used for tooltips
+var description: String
 
 static var static_registry: Dictionary[String, Effects] = {}
 
-func _init(name_: String = ""):
+func _init(name_: String = "", description_: String = ""):
 	effect_name = name_
+	description = description_
 	texture = _get_texture(name_)
 	
 	if effect_name:
@@ -26,7 +29,7 @@ func _init(name_: String = ""):
 #region utility effects
 
 ## Debug effect. should not be used.
-static var DEBUG := Effects.new("debug")
+static var DEBUG := Effects.new("debug", "If you see this tell starshine!")
 
 ## Blank effect - needed for a display hack when composing cards :c
 static var BLANK := Effects.new("blank")
@@ -51,19 +54,47 @@ static var END_EXECUTION := Effects.new("end_execution")
 #region card effects
 
 ## move the pin, triggering the depth at the destination and hinting everything between
-static var PUSH := Effects.new("push")
+static var PUSH := Effects.new(
+	"push",
+	"Pushes the pin upward. Push the pin to the top to unlock the lock."
+)
 
 ## Test the next depths, indicating if there is a hazard or not
-static var TEST := Effects.new("test")
+static var TEST := Effects.new(
+	"test",
+	(
+		"Tests this depth. "
+		+ "All tested depths will be evaluated together "
+		+ "and the worst case depth (safe, caution, or dangerous) will be "
+		+ "indicated."
+	)
+)
 
 ## reveal the next depth but do not advance the pin
-static var REVEAL := Effects.new("reveal")
+static var REVEAL := Effects.new(
+	"reveal",
+	"Shows the exact contents of this depth."
+)
 
 ## apply jam
-static var JAM := Effects.new("jam")
+static var JAM := Effects.new(
+	"jam",
+	(
+		"\"Jams\" the pin. "
+		+ "Each point of jam requires one push to undo, "
+		+ "and jammed pins can't be tested or revealed. "
+		+ "Jammed pins don't reset at the end of a turn."
+	)
+)
 
 ## Card effect - advance the pin without activating. 
-static var SKIP := Effects.new("skip")
+static var SKIP := Effects.new(
+	"skip",
+	(
+		"Skips this depth, doing nothing except moving future "
+		+ "test or reveal effects down the pin."
+	)
+)
 
 #endregion
 
