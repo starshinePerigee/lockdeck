@@ -8,39 +8,46 @@ const RECT_MARGIN := 2
 
 static var _instance: TooltipManager
 
+var _request_rect: Rect2
+var _request_widget: Control = null
+var _request_text: String = ""
+
+var _current_widget: Control = null
+
+
 ## Shows a text-only tooltip.
 static func request_tooltip(rect: Rect2, text: String) -> void:
-	_instance._request_label_internal(rect, text)
-
-func _request_label_internal(rect: Rect2, text: String) -> void:
-	_hide_tooltip()
-	$Timer.timeout.connect(_request_label_for_real.bind(rect, text))
-	$Timer.start()
-
-func _request_label_for_real(rect: Rect2, text: String) -> void:
-	_retrieve_label()
-	%Label.text = text
-	_request_internal(rect)
+	_instance._request_internal(rect, null, text)
 
 ## Shows a specific widget as a tooltip 
 ## This widget should have a minimum width of 256 px or less
 static func request_widget_tooltip(rect: Rect2, widget: Control) -> void:
-	_instance._request_widget_internal(rect, widget)
+	_instance._request_internal(rect, widget, "")
 
-func _request_widget_internal(rect: Rect2, widget: Control) -> void:
+func _request_internal(rect: Rect2, widget: Control, text: String) -> void:
 	_hide_tooltip()
-	$Timer.timeout.connect(_request_widget_for_real.bind(rect, widget))
+	_request_rect = rect
+	_request_widget = widget
+	_request_text = text
 	$Timer.start()
 
-func _request_widget_for_real(rect: Rect2, widget: Control) -> void:
-	_stash_label()
-	%Tooltip.add_child(widget)
-	widget.position = Vector2()
-	_request_internal(rect)
 
-func _request_internal(rect: Rect2) -> void:
+func _redraw() -> void:
+	if _current_widget:
+		_current_widget.queue_free()
+		_current_widget = null
+
+	if _request_widget:
+		%Label.visible = false
+		_current_widget = _request_widget
+		%Tooltip.add_child(_current_widget)
+		_current_widget.position = Vector2()
+	else:
+		%Label.text = _request_text
+		%Label.visible = true
+
 	%Tooltip.size = Vector2()
-	call_deferred("_finalize", rect)
+	call_deferred("_finalize", _request_rect)
 
 func _finalize(rect: Rect2) -> void:
 	%Tooltip.global_position = _get_tooltip_pos(rect, %Tooltip.size)
@@ -74,34 +81,12 @@ func _get_tooltip_pos(rect: Rect2, tooltip_size: Vector2) -> Vector2:
 	
 	return Vector2(x, y)
 
-
-func _stash_label() -> void:
-	_destroy_non_label_children()
-	if %Label not in %Tooltip.get_children():
-		return
-	%Tooltip.remove_child(%Label)
-	%TimeoutCornerForBadWidgets.add_child(%Label)
-	%Label.position = Vector2()
-	%Label.visible = false
-
-func _retrieve_label() -> void:
-	_destroy_non_label_children()
-	if %Label not in %TimeoutCornerForBadWidgets.get_children():
-		return
-	%Tooltip.remove_child(%Label)
-	%Tooltip.add_child(%Label)
-	%Label.position = Vector2()
-	%Label.visible = true
-
-func _destroy_non_label_children() -> void:
-	for child in %Tooltip.get_children():
-		if child != %Label:
-			%Tooltip.remove_child(child)
-			child.queue_free()
+func _process(_delta: float) -> void:
+	if %Tooltip.visible:
+		if not %Rect.get_global_rect().has_point(get_global_mouse_position()):
+			_exit_tooltip()
 
 func _hide_tooltip() -> void:
-	for conn in $Timer.timeout.get_connections():
-		$Timer.timeout.disconnect(conn.callable)
 	$Timer.stop()
 	%Tooltip.hide()
 	%Tooltip.position = Vector2()
@@ -113,10 +98,6 @@ func _exit_tooltip() -> void:
 	_hide_tooltip()
 	_horrible_mouse_input_hack()
 
-func _process(delta: float) -> void:
-	if %Tooltip.visible:
-		if not %Rect.get_global_rect().has_point(get_global_mouse_position()):
-			_exit_tooltip()
 
 ## This re-fires mouse entered logic and lets you reset the timer and handle
 ## overlapping controls
@@ -137,5 +118,6 @@ func _horrible_mouse_input_hack() -> void:
 func _ready() -> void:
 	if _instance:
 		push_error("Static global tooltip manager already initialized!")
-	else:
-		_instance = self
+		return
+	_instance = self
+	$Timer.timeout.connect(_redraw)

@@ -19,6 +19,13 @@ offset_top = 458.0
 offset_right = 831.0
 offset_bottom = 488.0
 
+[node name="Button" type="Button" parent="Control/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+text = "blah blah"
+
 [node name="ColorRect2" type="ColorRect" parent="Control"]
 layout_mode = 0
 offset_left = 276.0
