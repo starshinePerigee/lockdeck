@@ -8,7 +8,13 @@ const RECT_MARGIN := 2
 
 static var _instance: TooltipManager
 
-var _request_rect: Rect2
+var _request_rect: Rect2:
+	set(v):
+		_request_rect = v
+		if $ReferenceRect.visible:
+			$ReferenceRect.position = _request_rect.position
+			$ReferenceRect.size = _request_rect.size
+
 var _request_widget: Control = null
 var _request_text: String = ""
 
@@ -27,6 +33,8 @@ static func request_widget_tooltip(rect: Rect2, widget: Control) -> void:
 func _request_internal(rect: Rect2, widget: Control, text: String) -> void:
 	_hide_tooltip()
 	_request_rect = rect
+	$ReferenceRect.position = rect.position
+	$ReferenceRect.size = rect.size
 	_request_widget = widget
 	_request_text = text
 	$Timer.start()
@@ -78,14 +86,15 @@ func _get_tooltip_pos(rect: Rect2, tooltip_size: Vector2) -> Vector2:
 	return Vector2(x, y)
 
 func _process(_delta: float) -> void:
-	if %Tooltip.visible:
-		if not %Rect.get_global_rect().has_point(get_global_mouse_position()):
+	if _request_rect:
+		if not _request_rect.has_point(get_global_mouse_position()):
 			_exit_tooltip()
 
 func _hide_tooltip() -> void:
 	if _current_widget:
 		_current_widget.queue_free()
 		_current_widget = null
+	_request_rect = Rect2()
 	$Timer.stop()
 	%Tooltip.hide()
 	%Tooltip.position = Vector2()
