@@ -12,6 +12,7 @@ extends Node2D
 var display_text := "x"
 
 func _do_request(color_rect: ColorRect) -> void:
+	print("entered %s" % color_rect.name)
 	display_text = "%s%s " % [display_text, display_text]
 	if len(display_text) > 1000:
 		display_text = display_text.substr(1000, len(display_text))

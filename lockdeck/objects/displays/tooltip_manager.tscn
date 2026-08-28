@@ -7,6 +7,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("1_d72k1")
 
 [node name="TimeoutCornerForBadWidgets" type="Control" parent="."]
@@ -14,13 +15,15 @@ unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Rect" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 3499
 z_as_relative = false
 layout_mode = 0
-mouse_filter = 1
+mouse_filter = 2
 theme_type_variation = &"OutlinePanel"
 
 [node name="Tooltip" type="PanelContainer" parent="."]
@@ -40,3 +43,7 @@ layout_mode = 2
 theme_type_variation = &"CardText"
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
 autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
