@@ -1,18 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://rb37djdo7e66"]
+[gd_scene load_steps=2 format=3 uid="uid://6pvywbeiflkk"]
 
-[ext_resource type="Script" uid="uid://bq0ctss4ydw8f" path="res://objects/displays/depth_display.gd" id="1_3q4qd"]
+[ext_resource type="Script" uid="uid://bq0ctss4ydw8f" path="res://objects/displays/depth_tooltip.gd" id="1_hddqj"]
 
-[node name="DepthDisplay" type="VBoxContainer"]
+[node name="DepthTooltip" type="VBoxContainer"]
 anchors_preset = 10
 anchor_right = 1.0
 offset_right = -704.0
 offset_bottom = 53.0
 grow_horizontal = 2
 theme_override_constants/separation = 0
-script = ExtResource("1_3q4qd")
+script = ExtResource("1_hddqj")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="DepthName" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
@@ -34,7 +35,7 @@ text = "Tests as:"
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"SmallText"
-text = "[ ? ]"
+text = "unknown"
 
 [node name="Description" type="Label" parent="."]
 unique_name_in_owner = true

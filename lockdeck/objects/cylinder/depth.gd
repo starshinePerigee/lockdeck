@@ -51,7 +51,7 @@ func _redraw() -> void:
 	$DepthTexture.size = $DepthTexture.texture.get_size()
 	size = $DepthTexture.size
 
-const TOOLTIP := preload("res://objects/displays/depth_display.tscn")
+const TOOLTIP := preload("res://objects/displays/depth_tooltip.tscn")
 
 func request_tooltip() -> void:
 	var tooltip: Control = TOOLTIP.instantiate()

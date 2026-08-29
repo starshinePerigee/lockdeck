@@ -11,16 +11,16 @@ extends VBoxContainer
 		var tests_as_color: Color
 		match depth.tests_as:
 			Depths.DangerLevel.INVALID:
-				tests_as_text = "[ ? ]"
+				tests_as_text = "unknown"
 				tests_as_color = Color("918891")
 			Depths.DangerLevel.CLEAR:
-				tests_as_text = "[ok ]"
+				tests_as_text = "clear"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.CLEAR]
 			Depths.DangerLevel.INTERESTING:
-				tests_as_text = "[ ! ]"
+				tests_as_text = "caution"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.INTERESTING]
 			Depths.DangerLevel.DANGEROUS:
-				tests_as_text = "[ X ]"
+				tests_as_text = "danger"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.DANGEROUS]
 		%TestsAs.text = tests_as_text
 		%TestsAs.add_theme_color_override("font_color", tests_as_color)
