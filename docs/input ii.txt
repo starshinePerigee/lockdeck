@@ -1,0 +1,12 @@
+pins, cards, discard, end turn are "selectable objects".
+- their draw state is exclusively managed by game_core
+- inputs are managed and activated exclusively by game_core
+
+
+all activatable objects have the following:
+- contains_point()
+- collides_with()
+- core_select
+- core_deselect (which functions as reset / drag halt)
+- core_click
+

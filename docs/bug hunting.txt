@@ -15,13 +15,15 @@ click to select also weird right now:
 
 deck selection does not reset on return to menu
 
-if your final pick locks you out and solves the lock, the game softlocks if you press continue
-
 clicking a volume slider and holding the mouse down while going away from hover is jank af
 
 
+notifications don't dismiss on click
 
-re-confirm that jumping over final depth still unlocks
+
+
+trap doesn't work with push over the trap
+
 
 
 
