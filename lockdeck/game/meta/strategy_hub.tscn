@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=11 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
 [ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c33xyxumep28r" path="res://game/strategy/deck_widget.tscn" id="9_8jrdt"]
 [ext_resource type="PackedScene" uid="uid://b5e53sip1353w" path="res://game/strategy/shop_widget.tscn" id="9_f7am3"]
 [ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_widget.tscn" id="9_snyf0"]
+[ext_resource type="PackedScene" uid="uid://baek5vgdxl62k" path="res://game/strategy/preview_widget.tscn" id="10_snyf0"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -57,6 +58,13 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"BoxButton"
 text = "Shop"
+
+[node name="PreviewButton" type="Button" parent="TabButtonBox"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"BoxButton"
+text = "Preview"
 
 [node name="MetaInfo" parent="." instance=ExtResource("4_8p2bt")]
 layout_mode = 0
@@ -111,6 +119,7 @@ grow_vertical = 1
 title = "Manage Deck"
 
 [node name="DeckWidget" parent="DeckPopover" instance=ExtResource("9_8jrdt")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="ShopPopover" parent="." instance=ExtResource("8_oohkw")]
@@ -128,6 +137,7 @@ grow_vertical = 1
 title = "Underground Shop"
 
 [node name="ShopWidget" parent="ShopPopover" instance=ExtResource("9_f7am3")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="RepairPopover" parent="." instance=ExtResource("8_oohkw")]
@@ -139,11 +149,28 @@ anchor_bottom = 0.0
 offset_left = 149.0
 offset_top = 608.0
 offset_right = 811.0
-offset_bottom = 1066.0
+offset_bottom = 1074.0
 grow_horizontal = 1
 grow_vertical = 1
 title = "Pick Repair"
 
 [node name="RepairWidget" parent="RepairPopover" instance=ExtResource("9_snyf0")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PreviewPopover" parent="." instance=ExtResource("8_oohkw")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 149.0
+offset_top = 608.0
+offset_right = 803.0
+offset_bottom = 1074.0
+grow_horizontal = 1
+grow_vertical = 1
+title = "Next Heist"
+
+[node name="PreviewWidget" parent="PreviewPopover" instance=ExtResource("10_snyf0")]
 unique_name_in_owner = true
 layout_mode = 2

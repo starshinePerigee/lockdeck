@@ -29,6 +29,20 @@ func reset() -> void:
 		_pointers[difficulty] = -1
 		deck[difficulty].shuffle()
 
+func get_unique_depths() -> Dictionary[DepthTemplates.Difficulty, Array]:
+	var depths: Dictionary[DepthTemplates.Difficulty, Array] = {}
+	for key in deck.keys():
+		if len(deck[key]) == 0:
+			continue
+		
+		depths[key] = []
+		for template in deck[key]:
+			if template.depth not in depths[key]:
+				depths[key].append(template.depth)
+			if template.minor_depth and template.minor_depth not in depths[key]:
+				depths[key].append(template.minor_depth)
+	return depths
+
 func print() -> void:
 	for difficulty in DepthTemplates.Difficulty:
 		print(difficulty)

@@ -172,8 +172,10 @@ static func get_in_progress_game() -> GameSpec:
 	game.coins = 28
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
-#	game.broken_picks = PickGenerator.get_many_base_cards(7)
-#	game.removed_forever_picks = PickGenerator.get_many_base_cards(2)
+	game.broken_picks = PickGenerator.get_many_base_cards(7)
+	game.removed_forever_picks = PickGenerator.get_many_base_cards(2)
+	game.build_new_lockset_deck(LockDeck.GameArcs.MID)
+	game.build_new_lock_deck(4)
 	for i in len(game.broken_picks):
 		game.broken_picks[i].repair_count = i
 	game.lock_number = 4
