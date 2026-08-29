@@ -48,3 +48,13 @@ offset_bottom = 325.0
 theme = ExtResource("3_caluf")
 text = "Settings"
 alignment = 0
+
+[node name="CreditsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 362.0
+offset_right = 250.0
+offset_bottom = 389.0
+theme = ExtResource("3_caluf")
+text = "Credits"
+alignment = 0

@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://5xk2bth3ug3d"]
+[gd_scene load_steps=13 format=3 uid="uid://5xk2bth3ug3d"]
 
 [ext_resource type="Script" uid="uid://buwp38onrby12" path="res://game/menus/top_level_menus.gd" id="1_cthtm"]
 [ext_resource type="PackedScene" uid="uid://b5e0yy8ky4832" path="res://game/menus/title.tscn" id="1_sxjyl"]
 [ext_resource type="PackedScene" uid="uid://cophugyta6nde" path="res://game/menus/deck_select.tscn" id="2_cthtm"]
+[ext_resource type="PackedScene" uid="uid://otfojrutumql" path="res://game/menus/credits.tscn" id="4_68a3w"]
 
 [sub_resource type="Animation" id="Animation_wjctj"]
 resource_name = "RESET"
@@ -42,6 +43,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Credits:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_einai"]
@@ -122,6 +135,34 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_p8wmi"]
+resource_name = "go_credits"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-960, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Credits:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(960, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_dgpao"]
@@ -223,6 +264,7 @@ _data = {
 &"RESET": SubResource("Animation_wjctj"),
 &"direct_load": SubResource("Animation_einai"),
 &"first_title": SubResource("Animation_ihya6"),
+&"go_credits": SubResource("Animation_p8wmi"),
 &"go_deck_select": SubResource("Animation_dgpao"),
 &"return_to_title": SubResource("Animation_68a3w"),
 &"start_game": SubResource("Animation_cthtm")
@@ -247,5 +289,9 @@ layout_mode = 1
 
 [node name="DeckSelect" parent="." instance=ExtResource("2_cthtm")]
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
+
+[node name="Credits" parent="." instance=ExtResource("4_68a3w")]
 offset_left = 960.0
 offset_right = 960.0
