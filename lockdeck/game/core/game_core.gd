@@ -176,7 +176,10 @@ func reset_countdown():
 	)
 
 func pick_selected(card: CardSpec) -> void:
-	if current_state == InputState.INACTIVE and not _lock_input:
+	if (
+		current_state in [InputState.INACTIVE, InputState.ACTIVE_SELECT] 
+		and not _lock_input
+	):
 		set_state(InputState.ACTIVE_SELECT)
 		active_card = card
 

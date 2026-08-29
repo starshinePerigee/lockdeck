@@ -102,9 +102,9 @@ columns = 4
 [node name="Label2" type="Label" parent="."]
 layout_mode = 2
 offset_left = 208.0
-offset_top = 56.0
+offset_top = 484.0
 offset_right = 752.0
-offset_bottom = 69.0
+offset_bottom = 497.0
 theme_type_variation = &"TinyAccentText"
 text = "Click or tap outside the window to close."
-horizontal_alignment = 2
+horizontal_alignment = 1
