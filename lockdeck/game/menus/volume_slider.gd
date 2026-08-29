@@ -19,13 +19,15 @@ const NORMAL := Color("FFFFFF")
 const HOVERED := Color("ffbc57")
 const DISABLED := Color("575651")
 
-var _prev_pos: float
-var _muted: bool
+var _prev_pos: float = 0.6
+var _muted: bool = false
 
 func set_value(value: float) -> void:
 	$HSlider.value = value
 	_prev_pos = value
 	_muted = value == 0.0
+	show_mute(_muted)
+	_update_bus(value)
 	_end_hover()
 
 func toggle_mute() -> void:
@@ -33,8 +35,10 @@ func toggle_mute() -> void:
 	if _muted:
 		_prev_pos = $HSlider.value
 		$HSlider.value = 0.0
+		_update_bus(0.0)
 	else:
 		$HSlider.value = _prev_pos
+		_update_bus(0.0)
 	show_mute(_muted)
 	setting_updated.emit($HSlider.value)
 
@@ -47,6 +51,7 @@ func show_mute(muted: bool) -> void:
 func update_value(value: float) -> void:
 	_muted = $HSlider.value == 0.0
 	show_mute(_muted)
+	_update_bus(value)
 	setting_updated.emit($HSlider.value)
 
 func _do_hover() -> void:
@@ -86,6 +91,5 @@ func _ready() -> void:
 	_end_hover()
 	$VolumeIcon.clicked.connect(toggle_mute)
 	$HSlider.value_changed.connect(update_value)
-	$HSlider.value_changed.connect(_update_bus)
 	mouse_entered.connect(_do_hover)
 	mouse_exited.connect(_end_hover)
