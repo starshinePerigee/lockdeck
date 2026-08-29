@@ -99,7 +99,6 @@ func _input(event: InputEvent) -> void:
 		event is InputEventScreenDrag
 		or event is InputEventMouseButton
 	):
-		print(event)
 		_exit_tooltip()
 
 func _process(_delta: float) -> void:
