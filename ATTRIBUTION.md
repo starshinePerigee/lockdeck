@@ -1,7 +1,3 @@
-Created for WHEELJAM 2026
-
-
-
 Much love is given to everyone who releases their work for free, and especially those who use maximally permissive licenses such as CC0. Attribution may not be required, but is offered in thanks.
 
 
@@ -36,6 +32,10 @@ Sounds:
 * Cricket 2 is [LoneCricketInFallBasement.wav by kvgarlic](https://freesound.org/people/kvgarlic/sounds/246537/), CC0
 * Cricket 3 is [single\_cricket\_chirping by wgwgsa](https://freesound.org/people/wgwgsa/sounds/755333/), CC0
 * Cicada solo is [Cicada\_1 by Adrian\_Gomar](https://freesound.org/people/Adrian_Gomar/sounds/197292/), Attribution 3.0
+
+
+
+Created for [WHEELJAM 2](https://itch.io/jam/wheeljam-2). Many thanks to the organizers <3
 
 
 

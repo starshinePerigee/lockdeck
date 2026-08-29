@@ -20,9 +20,9 @@ music by Chris Hitchcock"
 [node name="AttributionsButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 137.0
-offset_top = 211.0
+offset_top = 227.0
 offset_right = 431.0
-offset_bottom = 244.0
+offset_bottom = 260.0
 text = "attributions (external link) >"
 alignment = 0
 
@@ -33,3 +33,11 @@ offset_top = 416.0
 offset_right = 247.0
 offset_bottom = 449.0
 text = "< return to menu"
+
+[node name="WHEEL" type="Label" parent="."]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 307.0
+offset_right = 533.0
+offset_bottom = 333.0
+text = "originally created for WHEELJAM 2"
