@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b0shtp3l3acc8" path="res://game/menus/settings_main.tscn" id="5_dgpao"]
 [ext_resource type="PackedScene" uid="uid://d0x4a02iuivck" path="res://game/menus/wip_notif.tscn" id="6_dgpao"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="7_wjctj"]
-[ext_resource type="PackedScene" uid="uid://iioqp46sx2bt" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
+[ext_resource type="PackedScene" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -49,7 +49,6 @@ theme_type_variation = &"TinyAccentText"
 text = "v0.0.0"
 
 [node name="WipNotif" parent="." instance=ExtResource("6_dgpao")]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
