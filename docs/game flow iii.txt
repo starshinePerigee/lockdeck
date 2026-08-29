@@ -1,0 +1,12 @@
+x intermediate deck handling
+x game saving with decks
+x depth description widget
+x next depth window in strat hub
+x possible depths reference in game
+x return to start confirm
+x discard tooltip
+x end turn tooltip
+x prev turn tooltip
+x tooltip speed
+
+"These are the depths that might appear; but this is not a guarantee they are present."

@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://6pvywbeiflkk"]
+
+[ext_resource type="Script" uid="uid://bq0ctss4ydw8f" path="res://objects/displays/depth_tooltip.gd" id="1_hddqj"]
+
+[node name="DepthTooltip" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -704.0
+offset_bottom = 53.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_hddqj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DepthName" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = " DEBUG"
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = "Tests as:"
+
+[node name="TestsAs" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallText"
+text = "unknown"
+
+[node name="Description" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 16)
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = "  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
+autowrap_mode = 2

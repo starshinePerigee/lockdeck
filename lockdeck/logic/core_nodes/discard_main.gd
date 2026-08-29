@@ -94,11 +94,41 @@ func update_label(n: int = -1) -> void:
 
 func show_display() -> void:
 	display_cards.emit(cards)
-	
+
+func request_tooltip() -> void:
+	var rect: Rect2 = $DiscardIcon.get_global_rect()
+	if not icon_selected:
+		rect = rect.grow_side(Side.SIDE_TOP, -12)
+	TooltipManager.request_tooltip(
+		rect,
+		(
+			"This is your discard space. \n\n"
+			+ "Drag a pick here or click here with a pick selected to discard it.\n\n"
+			+ "After discarding a pick, you will draw from your deck until you have three cards in hand, "
+			+ "or your deck is empty.\n\n"
+			+ "Discarding a pick counts as using a pick, so your pick can break if you're in your " 
+			+ "third turn, pins resting on non-exhausted depths will activate, "
+			+ "bombs will go off, etc."
+		)
+	)
+
+func request_button_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		$DiscardLabel.get_global_rect().grow_individual(20, 20, 20, 10),
+		(
+			"This is your discard pile.\n\n"
+			+ "Picks used or discarded are kept here. "
+			+ "End your turn to shuffle them back into your deck.\n\n"
+			+ "Click this button to see all picks currently in your discard pile."
+		)
+	)
+
 func _ready() -> void:
 	$DiscardIcon.discard_icon_clicked.connect(discard_pressed.emit)
 	$DiscardIcon.mouse_entered.connect(do_mouse_enter)
+	$DiscardIcon.mouse_entered.connect(request_tooltip)
 	$DiscardIcon.mouse_exited.connect(do_mouse_exit)
 	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
 	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
+	$DiscardLabel.mouse_entered.connect(request_button_tooltip)
 	$DiscardLabel.pressed.connect(show_display)

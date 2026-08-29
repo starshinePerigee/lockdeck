@@ -9,9 +9,8 @@ class_name CardSpec
 @export var effects: Dictionary[int, Array]
 ## Human readable name in lowercase
 @export var pick_name: String
-## Text description - currently flavor. Should be vestigial but I am a sucker
+## Text description
 @export var description: String
-# you haven't earned flavortext yet
 ## The pick art resource for this card.
 @export var texture: Resource
 ## How many times this pick has been repaired
@@ -41,12 +40,31 @@ static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> Card
 		template.rarity
 	)
 
+func get_unique_list() -> Array[Effects]:
+	var list: Array[Effects] = []
+	for key in effects.keys():
+		for effect in effects[key]:
+			if effect.flavor not in list:
+				list.append(effect.flavor as Effects)
+	return list
+
+func reify() -> void:
+	ability = Abilities.static_registry[ability.description]
+	for key in effects.keys():
+		for spec in effects[key]:
+			spec.reify()
+	if unique_id > last_id:
+		push_warning(
+			"High unique ID when reifying card spec: unique %s vs last %s"
+			% [unique_id, last_id]
+		)
+
 func _init(
-	pick_name_: String,
-	description_: String,
-	texture_: Resource,
-	effects_: Dictionary[int, Array],
-	rarity: int
+	pick_name_: String = "NULL",
+	description_: String = "",
+	texture_: Resource = null,
+	effects_: Dictionary[int, Array] = {},
+	rarity: int = -2
 ):
 	unique_id = last_id
 	last_id += 1

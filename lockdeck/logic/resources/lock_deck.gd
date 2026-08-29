@@ -3,11 +3,14 @@ extends Resource
 class_name LockDeck
 
 ## All the cards in a Difficulty: Array[DepthTemplate) dictionary
-var deck: Dictionary[DepthTemplates.Difficulty, Array]
+@export var deck: Dictionary[DepthTemplates.Difficulty, Array]
 
+## used to track your position in the deck while you are drawing cards
+## (decks are not shuffled between each card draw; only once exhausted)
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
 
 enum GameArcs {
+	INVALID = -1,
 	EARLY = 0,
 	MID = 1,
 	LATE = 2
@@ -25,6 +28,20 @@ func reset() -> void:
 	for difficulty in DepthTemplates.Difficulty.values():
 		_pointers[difficulty] = -1
 		deck[difficulty].shuffle()
+
+func get_unique_depths() -> Dictionary[DepthTemplates.Difficulty, Array]:
+	var depths: Dictionary[DepthTemplates.Difficulty, Array] = {}
+	for key in deck.keys():
+		if len(deck[key]) == 0:
+			continue
+		
+		depths[key] = []
+		for template in deck[key]:
+			if template.depth not in depths[key]:
+				depths[key].append(template.depth)
+			if template.minor_depth and template.minor_depth not in depths[key]:
+				depths[key].append(template.minor_depth)
+	return depths
 
 func print() -> void:
 	for difficulty in DepthTemplates.Difficulty:
@@ -58,6 +75,11 @@ static func get_template_weight(template: DepthTemplates, arc: GameArcs) -> int:
 	return 0
 
 static var base_template_deck_catalog: Dictionary[GameArcs, LockDeck]
+
+func reify() -> void:
+	for key in deck.keys():
+		for template in deck[key]:
+			template.reify()
 
 func _init() -> void:
 	deck = {}

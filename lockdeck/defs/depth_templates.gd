@@ -3,13 +3,13 @@ extends Resource
 class_name DepthTemplates
 
 ## Core depth - will be placed lower on the pin than the minor depth
-var depth: Depths
+@export var depth: Depths
 ## Minor depth - will be placed higher on the pin, if a depth is placed
-var minor_depth: Depths
+@export var minor_depth: Depths
 ## How many pins (out of five) should get this depth.
 ## This scales; ie - if 2/5 pins get this depth, then for 3 pins, 2/5*4=1.6=2
 ## Will always be at least 1
-var depths_per_five: int
+@export var depths_per_five: int
 # dp5 reference:
 #		pins
 # dp5	1	2	3	4	5
@@ -20,7 +20,7 @@ var depths_per_five: int
 #	5	1	2	3	4	5
 
 ## overrides the above and will always place this many depths. 0 to disregard (default)
-var absolute_limit: int
+@export var absolute_limit: int
 
 enum Difficulty {
 	ESSENTIAL = 3,
@@ -30,18 +30,23 @@ enum Difficulty {
 	HELPFUL = -1
 }
 
-var difficulty: Difficulty
+@export var difficulty: Difficulty
 ## How frequently to include this depth for early (1-3 pin) locks
-var early_weight
+@export var early_weight: int
 ## How frequently to include this depth for midgame (4 and early 5 pin) locks
-var mid_weight
+@export var mid_weight: int
 ## How frequently to include this depth in extended endgame locks
-var late_weight
+@export var late_weight: int
+
+func reify() -> void:
+	depth = Depths.static_registry[depth.depth_name]
+	if minor_depth:
+		minor_depth = Depths.static_registry[minor_depth.depth_name]
 
 func _init(
-	depth_: Depths,
-	difficulty_: Difficulty,
-	weights: Array[int],
+	depth_: Depths = Depths.DEBUG,
+	difficulty_: Difficulty = Difficulty.EMPTY,
+	weights: Array[int] = [0, 0, 0],
 	per_five: int = 5,
 	minor: Depths = null
 ):

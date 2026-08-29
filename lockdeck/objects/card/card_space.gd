@@ -59,6 +59,7 @@ func set_selected() -> void:
 	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
 	$HighlightRect.visible = true
 	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
+	$PickCard.tooltippable = false
 	z_boost = true
 
 ## Unpop card
@@ -67,6 +68,7 @@ func clear_selected() -> void:
 	$HighlightRect.position = Vector2(-5, -5)
 	$HighlightRect.visible = false
 	$PickCard.position = Vector2(0, 0)
+	$PickCard.tooltippable = true
 	z_boost = false
 
 @export var z_boost: bool:
@@ -107,6 +109,7 @@ func _end_click():
 
 func snapback():
 	$PickCard.position = Vector2()
+	$PickCard.tooltippable = true
 
 func _set_texture():
 	if not is_node_ready():
@@ -127,6 +130,7 @@ func _process(_delta: float) -> void:
 		if _dragging == DragState.NOT and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
 				_dragging = DragState.DRAG
+				$PickCard.tooltippable = false
 				card_picked_up.emit($PickCard/Area2D)
 		if _dragging == DragState.DRAG:
 			if curr_mouse_position.distance_to(mouse_start_position) >= SUPER_DRAG_DISTANCE:

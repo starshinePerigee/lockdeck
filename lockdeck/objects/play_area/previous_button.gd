@@ -31,6 +31,14 @@ func _emit_signal():
 func _update_icon(texture: Texture2D):
 	$TextureRect.texture = texture
 
+func request_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		get_global_rect(),
+		(
+			"See a summary of what all happened last turn."
+		)
+	)
+
 func _ready() -> void:
 	mouse_entered.connect(_update_icon.bind(T_HOVER))
 	mouse_exited.connect(_update_icon.bind(T_NORMAL))

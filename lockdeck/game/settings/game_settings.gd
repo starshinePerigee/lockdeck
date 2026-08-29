@@ -35,6 +35,13 @@ static func _load_from_disk() -> GameSettings:
 	else:
 		return reset()
 
+signal tooltip_speed_changed(float)
+@export var tooltip_speed: float = 1.4
+
+func set_tooltip_speed(setting: float = 1.4) -> void:
+	tooltip_speed = setting
+	tooltip_speed_changed.emit(tooltip_speed)
+
 
 signal highlight_active_row_changed(bool)
 @export var highlight_active_row: bool = true

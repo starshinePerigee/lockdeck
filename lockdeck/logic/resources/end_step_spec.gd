@@ -9,6 +9,7 @@ class_name EndStepSpec
 @export var decks_broken := 0
 @export var picks_twisted := 0
 @export var turn_number := -1
+@export var last_reveal := PinSpec.RevealLevel.REVEALED
 @export var last_hint := ""
 
 ## Holds all effects as a Dictionary[pin position, Array[EffectSpec))

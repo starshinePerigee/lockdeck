@@ -2,6 +2,13 @@ extends TextureButton
 ## A fully drawn pick card view object
 class_name PickCard
 
+## If this is allowed to show a tooltip
+@export var tooltippable := true:
+	set(v):
+		tooltippable = v
+		if not tooltippable:
+			TooltipManager.request_tooltip_close()
+
 @export var card_spec: CardSpec:
 	set(v):
 		card_spec = v
@@ -43,8 +50,19 @@ func _redraw() -> void:
 	$Tallies.frame = min(card_spec.repair_count, 11)
 	_squash_columns()
 
+const TOOLTIP := preload("res://objects/displays/card_tooltip.tscn")
+
+func request_tooltip() -> void:
+	if not tooltippable:
+		return
+	var tooltip: Control = TOOLTIP.instantiate()
+	tooltip.add_effects(card_spec.get_unique_list())
+	TooltipManager.request_widget_tooltip(get_global_rect(), tooltip)
+	
+
 func _ready() -> void:
 	_redraw()
+	mouse_entered.connect(request_tooltip)
 
 const SELF_PACKED := preload("res://objects/card/pick_card.tscn")
 

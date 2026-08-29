@@ -26,11 +26,22 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.current_deck = starter_deck
+	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(1)
+
+func load_saved_game(saved_game: GameSpec):
+	$AnimationPlayer.play("RESET")
+	game = saved_game
+	$StrategyHub.set_game(game)
+	$LootMain.game = game
+	$BetweenLocks/SpeedBonusLabel.visible = false
+	$AnimationPlayer.play("first lock")
+	heist_start.emit(game.heist_number)
 
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
@@ -39,6 +50,8 @@ func lock_complete():
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
+	game.next_lock_deck = null
+	game.save()
 	$AnimationPlayer.play("lock to between")
 
 func advance_from_between() -> void:
@@ -47,6 +60,7 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
 		LevelSpec.Stages.LOOT_STRAT:
+			game.build_new_lockset_deck(next_level.arc)
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
@@ -65,25 +79,30 @@ func end_loot() -> void:
 		$AnimationPlayer.play("loot to strategy")
 
 func end_strategy() -> void:
+	game.save()
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$AnimationPlayer.play("strategy to between")
 	heist_start.emit(game.heist_number)
 
 func do_victory() -> void:
+	GameSpec.clear_save()
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 	victory_start.emit()
 
 ## Show the failure screen - called from gamecore
 func do_failure() -> void:
+	GameSpec.clear_save()
 	$AnimationPlayer.play("lock to failure")
 	failure_start.emit()
 
 func next_lock(level: LevelSpec) -> void:
+	if not game.next_lock_deck:
+		game.build_new_lock_deck(level.difficulty)
+	
 	$GameCore.load_lock(
-		LockGenerator.get_next_level(
-			level.difficulty,
-			level.arc,
+		LockGenerator.build_lock(
+			game.next_lock_deck,
 			level.pin_count
 		)
 	)

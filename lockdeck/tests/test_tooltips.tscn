@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://lffsubdtdqqi"]
+
+[ext_resource type="Script" uid="uid://d326minmhow1y" path="res://tests/test_tooltips.gd" id="1_003cx"]
+[ext_resource type="PackedScene" uid="uid://iioqp46sx2bt" path="res://objects/displays/tooltip_manager.tscn" id="1_n78pt"]
+
+[node name="TestTooltips" type="Node2D"]
+script = ExtResource("1_003cx")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 757.0
+offset_top = 458.0
+offset_right = 831.0
+offset_bottom = 488.0
+
+[node name="Button" type="Button" parent="Control/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+text = "blah blah"
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 94.0
+offset_right = 915.0
+offset_bottom = 304.0
+
+[node name="ColorRect3" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 94.0
+offset_right = 915.0
+offset_bottom = 304.0
+
+[node name="ColorRect4" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 228.0
+offset_right = 322.0
+offset_bottom = 258.0
+
+[node name="ColorRect5" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = -13.0
+offset_top = -8.0
+offset_right = 61.0
+offset_bottom = 22.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+editor_only = false
+
+[node name="TooltipManager" parent="." instance=ExtResource("1_n78pt")]
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 240.0
+offset_bottom = 440.0

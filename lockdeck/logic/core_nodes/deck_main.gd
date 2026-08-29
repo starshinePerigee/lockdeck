@@ -49,5 +49,17 @@ func redraw():
 	$CardPile.count = c
 	$DeckLabel.text = "Deck: %s" % c
 
+func request_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		$DeckLabel.get_global_rect().grow(16),
+		(
+			"This is your deck.\n\n"
+			+ "After you use a pick, you'll draw cards from your deck until you have "
+			+ "at least three cards in your hand, or your deck is empty.\n\n"
+			+ "Once your deck is empty, refil it by ending your turn."
+		)
+	)
+
 func _ready() -> void:
+	$DeckLabel.mouse_entered.connect(request_tooltip)
 	$DeckLabel.pressed.connect(load_display)

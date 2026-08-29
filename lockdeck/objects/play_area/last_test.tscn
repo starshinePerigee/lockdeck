@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn6430a44cbwe"]
+
+[ext_resource type="Script" uid="uid://c547to4qtiggr" path="res://objects/play_area/last_test.gd" id="1_fo7dx"]
+
+[node name="LastTest" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -6
+script = ExtResource("1_fo7dx")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.870588, 0.505882, 0.67451, 1)
+text = "Test:"
+horizontal_alignment = 1
+
+[node name="Result" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No picks yet!"
+horizontal_alignment = 1

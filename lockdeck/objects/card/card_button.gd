@@ -8,6 +8,10 @@ const PRESSED: Texture2D = preload("res://assets/card/card_bg_pressed.png")
 const DISABLED: Texture2D = preload("res://assets/card/card_bg_disabled.png")
 
 var _mouse_over: bool = false
+var tooltippable := true:
+	set(v):
+		tooltippable = v
+		$PickCard.tooltippable = tooltippable
 
 func _do_hover() -> void:
 	_mouse_over = true

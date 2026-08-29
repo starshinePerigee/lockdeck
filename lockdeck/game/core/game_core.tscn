@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=19 format=3 uid="uid://6n5hdt0ihpyn"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -14,7 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
+[ext_resource type="PackedScene" uid="uid://ey2xmdqnqgtx" path="res://game/core/depth_button.tscn" id="11_ihpbi"]
+[ext_resource type="PackedScene" path="res://objects/play_area/last_test.tscn" id="12_3ctlq"]
 [ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="15_gg2qb"]
+[ext_resource type="PackedScene" uid="uid://dxbpwot2ljda4" path="res://objects/displays/depth_display.tscn" id="16_ralr2"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -110,6 +113,13 @@ offset_top = 498.0
 offset_right = 931.0
 offset_bottom = 531.0
 
+[node name="DepthButton" parent="." instance=ExtResource("11_ihpbi")]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 118.0
+offset_right = 96.0
+offset_bottom = 151.0
+
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
 offset_left = 134.0
@@ -117,16 +127,12 @@ offset_top = 4.0
 offset_right = 182.0
 offset_bottom = 52.0
 
-[node name="LastHint" type="Label" parent="PreviousButton"]
-visible = false
-layout_mode = 0
-offset_left = -192.0
-offset_top = 385.0
-offset_right = 123.0
-offset_bottom = 414.0
-text = "LAST HINT LABEL"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="LastTest" parent="." instance=ExtResource("12_3ctlq")]
+layout_mode = 1
+offset_left = -10.0
+offset_top = 360.0
+offset_right = 234.0
+offset_bottom = 420.0
 
 [node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
 layout_mode = 1
@@ -171,6 +177,13 @@ offset_left = 226.0
 offset_top = 19.0
 offset_right = 738.0
 offset_bottom = 83.0
+
+[node name="DepthDisplay" parent="." instance=ExtResource("16_ralr2")]
+visible = false
+custom_minimum_size = Vector2(960, 540)
+layout_mode = 1
+offset_right = 960.0
+offset_bottom = 540.0
 
 [node name="CardDisplay" parent="." instance=ExtResource("15_gg2qb")]
 visible = false

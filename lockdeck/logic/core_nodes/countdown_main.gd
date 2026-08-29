@@ -98,17 +98,42 @@ func set_count(new_count: int) -> void:
 	$Countdown.count = count
 	reset_odds()
 
+var _pressed := false
+
 func handle_press() -> void:
 	if button_disable:
 		return
 	if suggest:
+		_pressed = false
 		countdown_triggered.emit()
 	else:
+		_pressed = true
 		suggest = true
 #endregion
 
+func request_tooltip() -> void:
+	if button_disable or _pressed:
+		return
+	
+	TooltipManager.request_tooltip(
+		$Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 26),
+		(
+			"This is your turn counter.\n\n"
+			+ "Click to end your turn.\n\n"
+			+ "If you run out of picks, or need one from your discard, "
+			+ "ending your turn will shuffle your hand and discard pile back into your deck and "
+			+ "you will draw a new hand.\n\n" 
+			+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
+			+ "starting positions. All depths will reset and can be triggered again.\n\n"
+			+ "After two turns, your light will go out and you will have a chance to break each pick "
+			+ "when you use it.\n\n"
+			+ "After three turns, you will be locked out and your game will end."
+		) 
+	)
+
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)
+	$Countdown.mouse_entered.connect(request_tooltip)
 	$Countdown.mouse_entered.connect(set_hovered.bind(true))
 	$Countdown.mouse_exited.connect(set_hovered.bind(false))
 	reset_odds()

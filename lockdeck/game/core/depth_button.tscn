@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ey2xmdqnqgtx"]
+
+[ext_resource type="Script" uid="uid://doik8fseh8tcf" path="res://game/core/depth_button.gd" id="1_fona0"]
+
+[node name="DepthButton" type="Button"]
+offset_right = 80.0
+offset_bottom = 33.0
+theme_type_variation = &"BoxButton"
+text = "Depths"
+script = ExtResource("1_fona0")

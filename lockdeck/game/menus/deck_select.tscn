@@ -74,7 +74,14 @@ offset_right = 879.0
 offset_bottom = 382.0
 theme_type_variation = &"PaperPanel"
 
-[node name="Info" type="RichTextLabel" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Info" type="RichTextLabel" parent="Panel/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 144)
 layout_mode = 2

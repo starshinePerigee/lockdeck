@@ -4,9 +4,11 @@ signal continue_to_next
 
 var _game: GameSpec
 
+# These are necessary (vs %static names) as it is leaving the current scene
 @onready var deck_widget: DeckWidget = $DeckPopover.get_inside_node()
 @onready var repair_widget: RepairWidget = $RepairPopover.get_inside_node()
 @onready var shop_widget: ShopWidget = $ShopPopover.get_inside_node()
+@onready var preview_widget: Control = $PreviewPopover.get_inside_node()
 
 const Y_OFFSET := 64 - 16
 @onready var HIDDEN_Y: int = get_viewport().size.y + Y_OFFSET
@@ -103,7 +105,7 @@ func show_panel(new_panel: StrategyPopover) -> void:
 
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
-	$NextDepths.update(_game)
+	preview_widget.update(_game)
 	$EffectCount.update_counts(_game.current_deck)
 	var hand_full := len(_game.current_deck) > 20
 	$ContinueButton.disabled = hand_full
@@ -122,7 +124,7 @@ func break_temporary_picks() -> void:
 func reset() -> void:
 	update_info()
 	
-	for popover in [$DeckPopover, $RepairPopover, $ShopPopover]:
+	for popover in [$DeckPopover, $RepairPopover, $ShopPopover, $PreviewPopover]:
 		popover.position.y = HIDDEN_Y
 	current_panel = null
 	
@@ -134,6 +136,7 @@ func _ready() -> void:
 	$TabButtonBox/DeckButton.pressed.connect(show_panel.bind($DeckPopover))
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))
+	$TabButtonBox/PreviewButton.pressed.connect(show_panel.bind($PreviewPopover))
 	
 	deck_widget.card_sold.connect(do_sell)
 	repair_widget.repair_pick.connect(do_repair)

@@ -47,6 +47,7 @@ var _confirm := false:
 		
 		if _confirm:
 			%Label.text = confirm_label
+			TooltipManager.request_tooltip_close()
 		else:
 			%Label.text = label
 

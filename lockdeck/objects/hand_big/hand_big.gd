@@ -27,7 +27,9 @@ func _dis_en_able_card(card_index: int, enable: bool) -> void:
 		filter = Control.MOUSE_FILTER_STOP
 	
 	space.mouse_filter = filter
-	space.get_node("PickCard").mouse_filter = filter
+	var card: PickCard = space.get_node("PickCard")
+	card.mouse_filter = filter
+	card.tooltippable = enable 
 
 ## Disable all card activations
 func disable_all() -> void:
@@ -45,12 +47,17 @@ func enable_all() -> void:
 	for i in len($Hand.get_children()):
 		_dis_en_able_card(i, true)
 
+func set_all_tooltippable(tooltippable: bool) -> void:
+	for space in $Hand.get_children():
+		space.get_node("PickCard").tooltippable = tooltippable 
+
 ## Set the current card to card_index
 func card_select(card_index: int) -> void:
 	if current_card != card_index:
 		card_deselect()
 		current_card = card_index
 		card_selected.emit(card_index)
+	set_all_tooltippable(false)
 
 ## Clear the current card
 func card_deselect() -> void:
@@ -58,6 +65,7 @@ func card_deselect() -> void:
 		get_space().clear_selected()
 		card_deselected.emit(current_card)
 		current_card = -1
+	set_all_tooltippable(true)
 
 ## Handle a card being clicked
 func card_tap(card_index: int) -> void:

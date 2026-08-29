@@ -33,6 +33,9 @@ func set_jammed(position: int) -> void:
 	add_position(position)
 	flavor = Effects.UNJAM
 
+func reify() -> void:
+	flavor = Effects.static_registry[flavor.effect_name]
+
 func _init(flavor_: Effects = Effects.DEBUG, value_: int = 0):
 	flavor = flavor_
 	value = value_

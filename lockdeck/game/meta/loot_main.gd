@@ -94,8 +94,20 @@ func claim_and_continue():
 	print("Claimed %s gold" % claimed)
 	continue_to_next.emit()
 
+func request_continue_tooltip() -> void:
+	if $ContinueButton.highlight:
+		return
+	TooltipManager.request_tooltip(
+		$ContinueButton.get_global_rect().grow(4),
+		(
+			"Continue to your base.\n\n"
+			+ "This will claim all unclaimed coins, and sell any unclaimed loot."
+		)
+	)
+
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(claim_and_continue)
+	$ContinueButton.mouse_entered.connect(request_continue_tooltip)
 	$LootDrop.all_looted.connect(_enable_continue)
 	
 	# if name == "__main__:
