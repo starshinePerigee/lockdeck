@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://baek5vgdxl62k"]
+
+[ext_resource type="Script" uid="uid://cclgivpmfqb0y" path="res://game/strategy/next_depths_widget.gd" id="1_vwcob"]
+
+[node name="NextDepthsWidget" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vwcob")
+
+[node name="HeistLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Heist 5"
+
+[node name="PinsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Maximum pins: 5"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Next depths:"
+
+[node name="DepthsVBox" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2

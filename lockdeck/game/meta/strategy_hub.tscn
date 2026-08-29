@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=10 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
 [ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
 [ext_resource type="PackedScene" uid="uid://ct3tci7mh7u6d" path="res://game/strategy/meta_info.tscn" id="4_8p2bt"]
-[ext_resource type="PackedScene" uid="uid://hrdpbeio1k83" path="res://game/strategy/next_depths.tscn" id="4_adqrd"]
 [ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="5_emvr5"]
 [ext_resource type="Texture2D" uid="uid://do040btpt70v4" path="res://assets/game/hand_full.png" id="7_8jrdt"]
 [ext_resource type="PackedScene" uid="uid://c0sa0jqmc66b2" path="res://game/strategy/strategy_popover.tscn" id="8_oohkw"]
@@ -75,14 +74,6 @@ offset_left = 824.0
 offset_top = 56.0
 offset_right = 952.0
 offset_bottom = 218.0
-
-[node name="NextDepths" parent="." instance=ExtResource("4_adqrd")]
-visible = false
-layout_mode = 1
-offset_left = 863.0
-offset_top = 48.0
-offset_right = 943.0
-offset_bottom = 422.0
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 0

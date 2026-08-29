@@ -103,7 +103,8 @@ func show_panel(new_panel: StrategyPopover) -> void:
 
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
-	$NextDepths.update(_game)
+#	$NextDepths.update(_game)
+	# TODO
 	$EffectCount.update_counts(_game.current_deck)
 	var hand_full := len(_game.current_deck) > 20
 	$ContinueButton.disabled = hand_full
