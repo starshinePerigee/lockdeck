@@ -1,7 +1,7 @@
 class_name PickGenerator
 
 static func get_debug_spec() -> CardSpec:
-	return CardSpec.from_template(PickTemplates.DEBUG)
+	return PickTemplates.DEBUG
 
 static func get_random_base_card() -> CardSpec:
 	var template: PickTemplates = PickTemplates.valid_templates.pick_random()

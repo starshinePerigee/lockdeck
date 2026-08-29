@@ -2,7 +2,7 @@ extends Control
 # The view for the hand and all the cards in it
 
 signal card_selected(card_index: int)
-signal card_deselected(card_index: int)
+
 signal card_untapped()
 signal card_dragged(card_area: Area2D, card_index: int)
 signal card_definitive_dragged()
@@ -13,83 +13,12 @@ const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 
-var current_card: int = -1
-
-## gets the current space based on current card
-func get_space() -> CardSpace:
-	return $Hand.get_children()[current_card]
-
-func _dis_en_able_card(card_index: int, enable: bool) -> void:
-	var space := $Hand.get_child(card_index)
-	
-	var filter := Control.MOUSE_FILTER_IGNORE
-	if enable:
-		filter = Control.MOUSE_FILTER_STOP
-	
-	space.mouse_filter = filter
-	var card: PickCard = space.get_node("PickCard")
-	card.mouse_filter = filter
-	card.tooltippable = enable 
-
-## Disable all card activations
-func disable_all() -> void:
-	for i in len($Hand.get_children()):
-		_dis_en_able_card(i, false)
-
-## Lock out all other card spaces while dragging
-func _disable_others(card_index: int) -> void:
-	for i in len($Hand.get_children()):
-		if i != card_index:
-			_dis_en_able_card(i, false)
-
-## Re-enable all other cards
-func enable_all() -> void:
-	for i in len($Hand.get_children()):
-		_dis_en_able_card(i, true)
-
-func set_all_tooltippable(tooltippable: bool) -> void:
-	for space in $Hand.get_children():
-		space.get_node("PickCard").tooltippable = tooltippable 
-
-## Set the current card to card_index
-func card_select(card_index: int) -> void:
-	if current_card != card_index:
-		card_deselect()
-		current_card = card_index
-		card_selected.emit(card_index)
-	set_all_tooltippable(false)
-
-## Clear the current card
-func card_deselect() -> void:
-	if current_card >= 0:
-		get_space().clear_selected()
-		card_deselected.emit(current_card)
-		current_card = -1
-	set_all_tooltippable(true)
-
-## Handle a card being clicked
-func card_tap(card_index: int) -> void:
-	if card_index == current_card:
-		get_space().clear_selected()
-		card_deselect()
-		card_untapped.emit()
-	else:
-		card_select(card_index)
-		get_space().set_selected()
-
-## Handle a card being dragged
-func card_pick_up(card_area: Area2D, card_index: int) -> void:
-	card_dragged.emit(card_area, card_index)
-	card_select(card_index)
-	get_space().clear_selected()
-	get_space().z_boost = true
-	_disable_others(card_index)
-
-## Handle a dragged card being dropped
-func card_drop(card_area: Area2D, card_index: int) -> void:
-	card_dropped.emit(card_area, card_index)
-	card_deselect()
-	enable_all()
+func get_card_refs() -> Array[CardSpace]:
+	var spaces: Array[CardSpace] = []
+	for child in $Hand.get_children():
+		if child is CardSpace:
+			spaces.append(child)
+	return spaces
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
@@ -115,10 +44,6 @@ func redraw(cards: Array[CardSpec]) -> void:
 		space.has_card = true
 		space.z_index = 100 * i
 		$Hand.add_child(space)
-		space.card_tapped.connect(card_tap.bind(i))
-		space.card_picked_up.connect(card_pick_up.bind(i))
-		space.drag_definitive.connect(card_definitive_dragged.emit)
-		space.card_dropped.connect(card_drop.bind(i))
 
 	var sep_index := clampi(
 		$Hand.get_child_count() - 1,
