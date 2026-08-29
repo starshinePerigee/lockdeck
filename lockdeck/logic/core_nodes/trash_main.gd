@@ -29,6 +29,18 @@ func reset() -> void:
 	cards = []
 	text = "Broken: 0"
 
+func request_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		get_global_rect().grow(4),
+		(
+			"This is your trash.\n\n"
+			+ "Broken picks end up here. Once broken, picks are removed from your deck "
+			+ "and must be repaired to be used again. \n\n"
+			+ "Click this button to see all picks currently in your trash."
+		)
+	)
+
 func _ready() -> void:
+	mouse_entered.connect(request_tooltip)
 	pressed.connect(show_display)
 	reset()

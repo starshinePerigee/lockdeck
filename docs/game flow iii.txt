@@ -4,8 +4,9 @@ x depth description widget
 x next depth window in strat hub
 x possible depths reference in game
 x return to start confirm
-- discard tooltip
+x discard tooltip
 x end turn tooltip
-- prev turn tooltip
+x prev turn tooltip
+- tooltip speed
 
 "These are the depths that might appear; but this is not a guarantee they are present."

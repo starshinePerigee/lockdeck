@@ -118,13 +118,15 @@ func request_tooltip() -> void:
 	TooltipManager.request_tooltip(
 		$Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 26),
 		(
-			"Click to end your turn.\n\n"
+			"This is your turn counter.\n\n"
+			+ "Click to end your turn.\n\n"
 			+ "If you run out of picks, or need one from your discard, "
 			+ "ending your turn will shuffle your hand and discard pile back into your deck and "
 			+ "you will draw a new hand.\n\n" 
 			+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
-			+ "starting positions. All depths will reset and can be triggered again.\n\n"\
-			+ "After two turns, your light will go out and you will start breaking picks at random.\n\n"
+			+ "starting positions. All depths will reset and can be triggered again.\n\n"
+			+ "After two turns, your light will go out and you will have a chance to break each pick "
+			+ "when you use it.\n\n"
 			+ "After three turns, you will be locked out and your game will end."
 		) 
 	)
