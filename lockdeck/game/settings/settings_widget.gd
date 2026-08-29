@@ -14,6 +14,31 @@ func set_highlight_active_row(setting: bool) -> void:
 	var settings := GameSettings.instance()
 	settings.set_highlight_active_row(setting)
 
+static var tooltip_speeds: Dictionary[float, String] = {
+	2.2: "Slow",
+	1.4: "Medium",
+	1.0: "Fast",
+	999999: "Off"
+}
+
+func set_tooltip_speed() -> void:
+	var settings := GameSettings.instance()
+	var speed_pos := tooltip_speeds.keys().find(settings.tooltip_speed)
+	settings.set_tooltip_speed(
+		tooltip_speeds.keys()[
+			(speed_pos + 1) % len(tooltip_speeds)
+		]
+	)
+
+func update_tooltip_button(speed: float) -> void:
+	if speed > 10:
+		%TooltipSpeedButton.text = "Tooltips disabled"
+	elif speed in tooltip_speeds:
+		%TooltipSpeedButton.text = (
+			"Tooltip speed: %s (%.1f s)"
+			% [tooltip_speeds[speed], speed] 
+		)
+
 func set_ambience_volume(setting: float) -> void:
 	var settings := GameSettings.instance()
 	settings.set_ambience_volume(setting)
@@ -46,12 +71,15 @@ func _ready() -> void:
 	visible = false
 	
 	var settings := GameSettings.instance()
+	update_tooltip_button(settings.tooltip_speed)
+	settings.tooltip_speed_changed.connect(update_tooltip_button)
 	%ActiveRowToggle.button_pressed = settings.highlight_active_row
 	%AmbienceSlider.set_value(settings.ambience_volume)
 	%MusicSlider.set_value(settings.music_volume)
 	%EffectSlider.set_value(settings.effect_volume)
 	
 	closed.connect(settings.save)
+	%TooltipSpeedButton.pressed.connect(set_tooltip_speed)
 	%ActiveRowToggle.toggled.connect(set_highlight_active_row)
 	%AmbienceSlider.setting_updated.connect(set_ambience_volume)
 	%AmbienceSlider.hovered_start.connect(ambience_hovered_start.emit)

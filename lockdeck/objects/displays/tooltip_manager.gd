@@ -140,9 +140,13 @@ func _horrible_mouse_input_hack() -> void:
 	reset.global_position = global_pos
 	Input.parse_input_event(reset)
 
+func update_tooltip_speed(new_speed: float) -> void:
+	$Timer.wait_time = new_speed
+
 func _ready() -> void:
 	if _instance:
 		push_error("Static global tooltip manager already initialized!")
 		return
 	_instance = self
+	GameSettings.instance().tooltip_speed_changed.connect(update_tooltip_speed)
 	$Timer.timeout.connect(_redraw)

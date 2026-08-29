@@ -55,6 +55,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 408)
 layout_mode = 2
 
+[node name="TooltipSpeedButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tooltip speed: Medium"
+
 [node name="ActiveRowToggle" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("2_86042")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)

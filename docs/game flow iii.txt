@@ -7,6 +7,6 @@ x return to start confirm
 x discard tooltip
 x end turn tooltip
 x prev turn tooltip
-- tooltip speed
+x tooltip speed
 
 "These are the depths that might appear; but this is not a guarantee they are present."
