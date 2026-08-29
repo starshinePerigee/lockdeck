@@ -6,34 +6,36 @@ Much love is given to everyone who releases their work for free, and especially 
 
 
 
-Palette is (superficial-35)\[https://lospec.com/palette-list/superficial-35] by downgraded.
+While this project is public domain via the Unlicense, all assets are subject to their original licenses as listed below. Audio files distributed in this repository have had lossy file type conversions performed and effects applied prior to their inclusion as .mp3 files. Other assets may have been modified.
+
+
+
+Palette is [superficial-35](https://lospec.com/palette-list/superficial-35) by downgraded.
 
 
 
 Fonts:
 
-* (Not Jam Old Style 11)\[https://not-jam.itch.io/not-jam-old-style-11] by Not Jam, CC0.
-* (m5x7)\[https://managore.itch.io/m5x7] font by Daniel Linssen, CC0.
+* [Not Jam Old Style 11](https://not-jam.itch.io/not-jam-old-style-11) by Not Jam, CC0.
+* [m5x7](https://managore.itch.io/m5x7) font by Daniel Linssen, CC0.
 
 
 
 Sounds:
 
-* Fire ambiance is (Fireplace 1 by Deweak)\[https://freesound.org/people/Deweak/sounds/462916/], CC0
-* Wind ambiance is (wind light calm soft breeze deep big gusty.flac by kyles), \[https://freesound.org/people/kyles/sounds/454360/?], CC0
-* Night ambiance is (Forest atmosphere at night with cicada, cricket, city hum very far away, recorded in Amazon rainforest by felix.blume)\[https://freesound.org/people/felix.blume/sounds/672318/]
-* Cicada 1 is (steady\_crickets.wav by joedeshon)\[https://freesound.org/people/joedeshon/sounds/78372/], Attribution 4.0
-* Cicada 2 is (crickets by rucisko)\[https://freesound.org/people/rucisko/sounds/250355/], Attribution 4.0
-* Cricket 1 is (Crickets\_Clean.wav by johnnydekk)\[https://freesound.org/people/johnnydekk/sounds/626180/], CC0
-* Cricket 2 is (LoneCricketInFallBasement.wav by kvgarlic)\[https://freesound.org/people/kvgarlic/sounds/246537/], CC0
-* Cricket 3 is (single\_cricket\_chirping by wgwgsa)\[https://freesound.org/people/wgwgsa/sounds/755333/]
-* Cicada solo is (Cicada\_1 by Adrian\_Gomar)\[https://freesound.org/people/Adrian\_Gomar/sounds/197292/], Attribution 3.0
+* Fire ambiance is [Fireplace 1 by Deweak](https://freesound.org/people/Deweak/sounds/462916/), CC0
+* Wind ambiance is [wind light calm soft breeze deep big gusty.flac by kyles](https://freesound.org/people/kyles/sounds/454360/), CC0
+* Night ambiance is [Forest atmosphere at night with cicada, cricket, city hum very far away, recorded in Amazon rainforest by felix.blume](https://freesound.org/people/felix.blume/sounds/672318/)
+* Cicada 1 is [steady\_crickets.wav by joedeshon](https://freesound.org/people/joedeshon/sounds/78372/), Attribution 4.0
+* Cicada 2 is [crickets by rucisko](https://freesound.org/people/rucisko/sounds/250355/), Attribution 4.0
+* Cricket 1 is [Crickets\_Clean.wav by johnnydekk](https://freesound.org/people/johnnydekk/sounds/626180/), CC0
+* Cricket 2 is [LoneCricketInFallBasement.wav by kvgarlic](https://freesound.org/people/kvgarlic/sounds/246537/), CC0
+* Cricket 3 is [single\_cricket\_chirping by wgwgsa](https://freesound.org/people/wgwgsa/sounds/755333/)
+* Cicada solo is [Cicada\_1 by Adrian\_Gomar](https://freesound.org/people/Adrian_Gomar/sounds/197292/), Attribution 3.0
 
 
 
 Made with Godot, MIT License.
-
-
 
 
 
