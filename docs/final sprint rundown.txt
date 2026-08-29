@@ -13,11 +13,6 @@ x ambience and music
 - balance pass 1
 - final polish 1
 
-SCHEDULE:
-by Friday: depth flow, post game screen, input fixes, and meta 0
-Saturday: start animation, do final assets
-Sunday: tutorial, balance, polish, bugfixes
-
 ---
 
 - pick modifiers (gems)
