@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b0shtp3l3acc8" path="res://game/menus/settings_main.tscn" id="5_dgpao"]
 [ext_resource type="PackedScene" uid="uid://d0x4a02iuivck" path="res://game/menus/wip_notif.tscn" id="6_dgpao"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="7_wjctj"]
-[ext_resource type="PackedScene" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
+[ext_resource type="PackedScene" uid="uid://ddv5rycyrni1h" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
 
 [node name="Main" type="Control"]
 layout_mode = 3

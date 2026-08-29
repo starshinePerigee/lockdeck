@@ -94,6 +94,14 @@ func _get_tooltip_pos(rect: Rect2, tooltip_size: Vector2) -> Vector2:
 	
 	return Vector2(x, y)
 
+func _input(event: InputEvent) -> void:
+	if (
+		event is InputEventScreenDrag
+		or event is InputEventMouseButton
+	):
+		print(event)
+		_exit_tooltip()
+
 func _process(_delta: float) -> void:
 	if _request_rect:
 		if not _request_rect.has_point(get_global_mouse_position()):
