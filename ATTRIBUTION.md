@@ -6,7 +6,7 @@ Much love is given to everyone who releases their work for free, and especially 
 
 
 
-While this project is public domain via the Unlicense, all assets are subject to their original licenses as listed below. Audio files distributed in this repository have had lossy file type conversions performed and effects applied prior to their inclusion as .mp3 files. Other assets may have been modified.
+Audio files distributed in this repository have had lossy file type conversions performed and effects applied prior to their inclusion as .mp3 files. Other assets may have been modified.
 
 
 
@@ -30,7 +30,7 @@ Sounds:
 * Cicada 2 is [crickets by rucisko](https://freesound.org/people/rucisko/sounds/250355/), Attribution 4.0
 * Cricket 1 is [Crickets\_Clean.wav by johnnydekk](https://freesound.org/people/johnnydekk/sounds/626180/), CC0
 * Cricket 2 is [LoneCricketInFallBasement.wav by kvgarlic](https://freesound.org/people/kvgarlic/sounds/246537/), CC0
-* Cricket 3 is [single\_cricket\_chirping by wgwgsa](https://freesound.org/people/wgwgsa/sounds/755333/)
+* Cricket 3 is [single\_cricket\_chirping by wgwgsa](https://freesound.org/people/wgwgsa/sounds/755333/), CC0
 * Cicada solo is [Cicada\_1 by Adrian\_Gomar](https://freesound.org/people/Adrian_Gomar/sounds/197292/), Attribution 3.0
 
 
@@ -41,6 +41,7 @@ Made with Godot, MIT License.
 
 References:
 
+* Lock body and overall game concept is "borrowed" from Oblivion, by Bethesda.
 * Orcish ingot: based on these Roman lead ingots: https://commons.wikimedia.org/wiki/File:Lingotesplomocarthagonova.jpg
 * Dwarven ingot: Roman copper ingots were frequently shaped like animal hides. These are traced from these particularly delicious and chunky looking silver ones: https://www.livescience.com/archaeology/romans/rare-roman-era-silver-ingots-depicting-constantine-the-great-seized-from-alleged-black-market-sale
 * Moonstone ingot: many, if not most, ancient precious metal ingots were long and often approximately finger shaped. Round and featureless isn't a great reference, but the long spindle that was part of this Viking treasure hoard is an absolute delight and one of my favorite metal chunks ever: https://commons.wikimedia.org/wiki/File:Silver\_bars\_Spillings\_Hoard\_2.jpg
