@@ -22,9 +22,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -284.0
-offset_top = -208.0
+offset_top = -216.0
 offset_right = 284.0
-offset_bottom = 208.0
+offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -99,8 +99,12 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
 
-[node name="Label2" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="."]
 layout_mode = 2
+offset_left = 208.0
+offset_top = 56.0
+offset_right = 752.0
+offset_bottom = 69.0
 theme_type_variation = &"TinyAccentText"
 text = "Click or tap outside the window to close."
-horizontal_alignment = 1
+horizontal_alignment = 2

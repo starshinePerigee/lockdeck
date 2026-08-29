@@ -124,6 +124,7 @@ func dis_en_able_buttons(state: bool = true) -> void:
 		$TrashMain.disabled = state
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
+		$DepthButton.disabled = state
 
 # Used for when you want to continue interacting with the interface,
 # such as after unlock
@@ -149,6 +150,11 @@ func game_over() -> void:
 	lock_input()
 	show_failure()
 	game_fail.emit()
+
+func display_depths() -> void:
+	$DepthDisplay.show_display()
+	set_state(InputState.INACTIVE)
+	set_state(InputState.CARD_DISPLAY)
 
 func display_cards(cards: Array, header: String) -> void:
 	var cards_typed: Array[CardSpec] = []
@@ -433,6 +439,7 @@ var _already_broken: Array[CardSpec]
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
 	$GameStatus.stage = game.lock_number
+	$DepthDisplay.update(game.lockset_deck.get_unique_depths())
 	load_deck(game.current_deck.duplicate())
 	_already_broken = game.broken_picks
 	$TrashMain.reset()
@@ -483,7 +490,9 @@ func _ready() -> void:
 	$DiscardMain.discard_unhovered.connect(unpreview_discard)
 	$BackgroundClick.pressed.connect(bg_cancel)
 	
+	$DepthDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
+	$DepthButton.pressed.connect(display_depths)
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
@@ -498,5 +507,6 @@ func _ready() -> void:
 	if get_tree().current_scene == self:
 		print("Running in debug mode.")
 		DEBUG_MODE = true
-		$DeckMain.add_cards(PickGenerator.get_many_base_cards(deck_count))
-		restart()
+		var game := GameSpec.get_in_progress_game()
+		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
+		load_game(game)

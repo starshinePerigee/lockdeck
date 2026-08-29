@@ -2,7 +2,7 @@ x intermediate deck handling
 x game saving with decks
 x depth description widget
 x next depth window in strat hub
-- possible depths reference in game
+x possible depths reference in game
 x return to start confirm
 - discard tooltip
 - end turn tooltip

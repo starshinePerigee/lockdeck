@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxbpwot2ljda4"]
+
+[ext_resource type="Script" uid="uid://cox33us7xv3ox" path="res://objects/displays/depth_display.gd" id="1_nsrrv"]
+
+[node name="DepthDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nsrrv")
+
+[node name="Container" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(568, 420)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -284.0
+offset_top = -216.0
+offset_right = 284.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Potential Depths"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Container/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(544, 46)
+layout_mode = 2
+text = "Not all these depths are present, but all depths present are in the list below."
+autowrap_mode = 2
+
+[node name="Reminder" type="Label" parent="Container/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_type_variation = &"TinyAccentText"
+text = "(hover for more info)"
+vertical_alignment = 1
+
+[node name="DepthsVBox" type="VBoxContainer" parent="Container/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 208.0
+offset_top = 56.0
+offset_right = 752.0
+offset_bottom = 69.0
+theme_type_variation = &"TinyAccentText"
+text = "Click or tap outside the window to close."
+horizontal_alignment = 2

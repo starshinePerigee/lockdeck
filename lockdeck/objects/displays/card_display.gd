@@ -17,16 +17,16 @@ signal closed()
 
 @export var cards_2: Array[CardSpec] = []
 
-func show_display():
+func show_display() -> void:
 	global_position = Vector2(0, 0)
 	visible = true
 	z_index = 120
 
-func hide_display():
+func hide_display() -> void:
 	visible = false
 	closed.emit()
 
-func redraw():
+func redraw() -> void:
 	if not is_node_ready():
 		await ready
 	

@@ -8,7 +8,13 @@ func _update_depth_preview(game: GameSpec) -> void:
 		child.queue_free()
 	
 	var next_depths := game.lockset_deck.get_unique_depths()
-	for difficulty in next_depths:
+	for difficulty in DepthTemplates.Difficulty.values():
+		if (
+			difficulty not in next_depths
+			or len(next_depths[difficulty]) == 0
+		):
+			continue
+		
 		var label := Label.new()
 		label.theme_type_variation = "SmallText"
 		var add_separator := true
