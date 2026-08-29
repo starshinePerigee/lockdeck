@@ -1,6 +1,6 @@
 x intermediate deck handling
 x game saving with decks
-- depth description widget
+x depth description widget
 - next depth window in strat hub
 - possible depths reference in game
 x return to start confirm

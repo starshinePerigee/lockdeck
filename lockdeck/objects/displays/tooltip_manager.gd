@@ -23,12 +23,21 @@ var _current_widget: Control = null
 
 ## Shows a text-only tooltip.
 static func request_tooltip(rect: Rect2, text: String) -> void:
+	if not _instance:
+		return
 	_instance._request_internal(rect, null, text)
 
 ## Shows a specific widget as a tooltip 
 ## This widget should have a minimum width of 256 px or less
 static func request_widget_tooltip(rect: Rect2, widget: Control) -> void:
+	if not _instance:
+		return
 	_instance._request_internal(rect, widget, "")
+
+static func request_tooltip_close() -> void:
+	if not _instance:
+		return
+	_instance._hide_tooltip()
 
 func _request_internal(rect: Rect2, widget: Control, text: String) -> void:
 	_hide_tooltip()

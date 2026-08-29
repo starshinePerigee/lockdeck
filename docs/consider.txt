@@ -3,7 +3,8 @@ show total number of each depth in lock ("X remaining") - means depth reference 
 
 s/jam/bind
 
-remove hint letters
+
+on end turn, start with current depth exhausted
 
 
 less options on ingots

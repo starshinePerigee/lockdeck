@@ -57,7 +57,7 @@ static var END_EXECUTION := Effects.new("end_execution")
 static var PUSH := Effects.new(
 	"push",
 	(
-		"Pushes the pin upward. Push the pin to the top to unlock the lock. "
+		"Pushes the pin upward.\n\nReach the bottom depth to unlock the lock.\n"
 		+ "If you push past the end of the pin, your pick will break."
 	)
 )
@@ -66,9 +66,9 @@ static var PUSH := Effects.new(
 static var TEST := Effects.new(
 	"test",
 	(
-		"Tests this depth, telling you if there are threats ahead. "
+		"Tests a depth to help find dangers.\n\n"
 		+ "All tested depths are evaluated together, "
-		+ "and the worst case depth (safe, caution, or dangerous) will be "
+		+ "and the worst case depth will be "
 		+ "indicated."
 	)
 )
@@ -76,16 +76,16 @@ static var TEST := Effects.new(
 ## reveal the next depth but do not advance the pin
 static var REVEAL := Effects.new(
 	"reveal",
-	"Reveals the exact contents of this depth."
+	"Reveals a depth.\n\nThis lets you see the exact contents of a depth.\nIt is as good as it sounds."
 )
 
 ## apply jam
 static var JAM := Effects.new(
 	"jam",
 	(
-		"\"Jams\" the pin. "
-		+ "Each point of jam requires one push to undo, "
-		+ "and jammed pins can't be tested or revealed. "
+		"\"Jams\" the pin.\n\n"
+		+ "Each point of jam blocks one push.\n"
+		+ "Jammed pins can't be tested or revealed.\n"
 		+ "Jammed pins don't reset at the end of a turn."
 	)
 )
@@ -94,7 +94,7 @@ static var JAM := Effects.new(
 static var SKIP := Effects.new(
 	"skip",
 	(
-		"Skips this depth, doing nothing except moving future "
+		"Skips a depth.\n\nThis does nothing except moves future "
 		+ "test or reveal effects down the pin."
 	)
 )
