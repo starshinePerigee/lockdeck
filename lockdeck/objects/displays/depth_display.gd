@@ -24,7 +24,12 @@ func update(depths: Dictionary[DepthTemplates.Difficulty, Array]) -> void:
 		child.queue_free()
 	
 	var add_separator := false
-	for difficulty in DepthTemplates.Difficulty.values():
+	
+	var difficulties = DepthTemplates.Difficulty.values()
+	difficulties.erase(DepthTemplates.Difficulty.ESSENTIAL)
+	difficulties.append(DepthTemplates.Difficulty.ESSENTIAL)
+	
+	for difficulty in difficulties:
 		if (
 			difficulty not in depths
 			or len(depths[difficulty]) == 0

@@ -8,7 +8,13 @@ func _update_depth_preview(game: GameSpec) -> void:
 		child.queue_free()
 	
 	var next_depths := game.lockset_deck.get_unique_depths()
-	for difficulty in DepthTemplates.Difficulty.values():
+	
+	var difficulties = DepthTemplates.Difficulty.values()
+	difficulties.erase(DepthTemplates.Difficulty.ESSENTIAL)
+	difficulties.append(DepthTemplates.Difficulty.ESSENTIAL)
+	
+	var add_separator := false
+	for difficulty in difficulties:
 		if (
 			difficulty not in next_depths
 			or len(next_depths[difficulty]) == 0
@@ -17,12 +23,10 @@ func _update_depth_preview(game: GameSpec) -> void:
 		
 		var label := Label.new()
 		label.theme_type_variation = "SmallText"
-		var add_separator := true
 		
 		match difficulty:
 			DepthTemplates.Difficulty.ESSENTIAL:
 				label.text = "Always and forever:"
-				add_separator = false
 			DepthTemplates.Difficulty.CRITICAL:
 				label.text = "Hazards:"
 			DepthTemplates.Difficulty.ANNOYING:
@@ -32,6 +36,7 @@ func _update_depth_preview(game: GameSpec) -> void:
 		
 		if add_separator:
 			%DepthsVBox.add_child(HSeparator.new())
+		add_separator = true
 		%DepthsVBox.add_child(label)
 		
 		for depth in next_depths[difficulty]:
