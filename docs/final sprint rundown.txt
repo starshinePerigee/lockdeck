@@ -1,6 +1,6 @@
 x core game expansion (strategy sprint)
 x basic economy sprint
-- next depths and depth deck flow
+x next depths and depth deck flow
 x saving and loading
 x settings
 x ambience and music

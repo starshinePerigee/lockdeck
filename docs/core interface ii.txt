@@ -3,17 +3,6 @@ x menu (return to title, etc)
 
 settings tooltips
 
-references:
-- depth tooltips
-- pullout depth glossary that shows all depths that could be present in the current stage (click on the "depth" label) (also show remaining count?)
-- upcoming depths in strat hub
--- the reference needs to show what the depth "tests as" (so a bounce "tests as interesting")
--- in the tooltips, instead of using icons, just use [ ! ] [ok ] [ X ] with the color highlights
-- pullout pick reference (small ? next to the deck)
-- artifact tooltip
-
-- return to title should have confirm
-
 
 small polish asset list:
 - clean up carddisplay windows and areas
