@@ -62,6 +62,8 @@ func update_size() -> void:
 	%ActiveRowToggle.custom_minimum_size.x = h_size
 
 func _ready() -> void:
+	$ActiveRowToggle/Label.mouse_entered.connect(mouse_entered.emit)
+	$ActiveRowToggle.mouse_entered.connect(mouse_entered.emit)
 	$ActiveRowToggle/Label.text = label_text
 	call_deferred("update_size")
 	

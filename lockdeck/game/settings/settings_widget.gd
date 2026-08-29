@@ -66,9 +66,16 @@ func _handle_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			hide_widget()
 
+func request_active_row_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		%ActiveRowToggle.get_global_rect().grow(4.0),
+		"Shows an outline of the current row of depths, which will activate after using a pick."
+	)
+
 func _ready() -> void:
 	gui_input.connect(_handle_input)
 	visible = false
+	%ActiveRowToggle.mouse_entered.connect(request_active_row_tooltip)
 	
 	var settings := GameSettings.instance()
 	update_tooltip_button(settings.tooltip_speed)

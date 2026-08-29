@@ -1,8 +1,6 @@
 - debug mode
 x menu (return to title, etc)
 
-settings tooltips
-
 
 small polish asset list:
 - clean up carddisplay windows and areas
