@@ -59,7 +59,7 @@ func _init(
 #region fake depths
 ## Debug depth. Should not be used.
 static var DEBUG := Depths.new(
-	"debug", DangerLevel.INVALID, Effects.DEBUG, "Tell starshine you saw this!"
+	"debug", DangerLevel.INVALID, Effects.DEBUG, "Tell feather you saw this!"
 )
 
 ## Pending depth. used for level generation

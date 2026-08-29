@@ -6,8 +6,8 @@ a game for wheeljam 2026
 
 
 
-code / design / game by feather
-music by Chris
+code / design / game / art by feather
+music by Chris Hitchcock
 
 
 

@@ -16,6 +16,6 @@ func _init(description_: String = "Null ability"):
 
 static var NONE := Abilities.new("")
 
-static var DEBUG := Abilities.new("Tell starshine you saw this!")
+static var DEBUG := Abilities.new("Tell feather you saw this!")
 
 static var TEMPORARY := Abilities.new("Abandoned after this heist.")

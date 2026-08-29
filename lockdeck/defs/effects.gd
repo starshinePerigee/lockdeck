@@ -29,7 +29,7 @@ func _init(name_: String = "", description_: String = ""):
 #region utility effects
 
 ## Debug effect. should not be used.
-static var DEBUG := Effects.new("debug", "If you see this tell starshine!")
+static var DEBUG := Effects.new("debug", "If you see this tell feather!")
 
 ## Blank effect - needed for a display hack when composing cards :c
 static var BLANK := Effects.new("blank")

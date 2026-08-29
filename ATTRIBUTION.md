@@ -6,8 +6,10 @@ Much love is given to everyone who releases their work for free, and especially 
 
 
 
-Audio files distributed in this repository have had lossy file type conversions performed and effects applied prior to their inclusion as .mp3 files. Other assets may have been modified.
+Audio files distributed in this repository have had lossy file type conversions performed and effects applied prior to their inclusion as .mp3/.ogg files. Other assets may have been modified as appropriate. Links to the original works are below.
 
+
+Music is original work by Chris Hitchcock and is released as Attribution 4.0, as documented in [the music license](lockdeck/assets/bcm/LICENSE.md)
 
 
 Palette is [superficial-35](https://lospec.com/palette-list/superficial-35) by downgraded.
