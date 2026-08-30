@@ -2,6 +2,13 @@ pins, cards, discard, end turn are "selectable objects".
 - their draw state is exclusively managed by game_core
 - inputs are managed and activated exclusively by game_core
 
+droppables implement:
+- get_drop_area
+- core_highlight
+- core_unhighlight
+
+clickables implement:
+- get_
 
 all activatable objects have the following:
 - contains_point()

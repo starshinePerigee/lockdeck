@@ -147,13 +147,19 @@ func clear_results() -> void:
 func get_drop_area() -> Area2D:
 	return $DropArea
 
-func get_click_rect() -> Rect2:
+func get_mouse_rect() -> Rect2:
 	return get_global_rect()
 
 func core_highlight() -> void:
 	pass
 
 func core_unhighlight() -> void:
+	pass
+
+func core_hover() -> void:
+	pass
+
+func core_unhover() -> void:
 	pass
 
 func _ready() -> void:

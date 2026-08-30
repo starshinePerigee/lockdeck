@@ -148,8 +148,14 @@ func _ready():
 	if get_tree().current_scene == self:
 		card_spec = CardSpec.DEBUG
 
+func get_mouse_rect() -> Rect2:
+	return $PickCard.get_global_rect()
+
+func core_hover() -> void:
+	z_boost = true
+
+func core_unhover() -> void:
+	z_boost = false
+
 func get_card_area() -> Area2D:
 	return $PickCard/Area2D
-
-func get_area() -> Area2D:
-	return $Area2D

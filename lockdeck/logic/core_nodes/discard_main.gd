@@ -68,7 +68,7 @@ func show_display() -> void:
 func get_drop_area() -> Area2D:
 	return $DropArea
 
-func get_click_rect() -> Rect2:
+func get_mouse_rect() -> Rect2:
 	var rect: Rect2 = $DropArea/CollisionShape2D.get_shape().get_rect()
 	rect.position += global_position
 	return rect
@@ -78,6 +78,12 @@ func core_highlight() -> void:
 
 func core_unhighlight() -> void:
 	icon_selected = false
+
+func core_hover() -> void:
+	pass
+
+func core_unhover() -> void:
+	pass
 
 func request_tooltip() -> void:
 	var rect: Rect2 = $DiscardIcon.get_global_rect()
@@ -111,4 +117,3 @@ func _ready() -> void:
 	$DiscardIcon.mouse_entered.connect(request_tooltip)
 	$DiscardLabel.mouse_entered.connect(request_button_tooltip)
 	$DiscardLabel.pressed.connect(show_display)
-	print(get_click_rect())

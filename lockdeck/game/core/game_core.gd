@@ -48,6 +48,10 @@ enum InputState {
 }
 var current_state := InputState.INACTIVE
 
+## This holds the current hover target.
+## This can be a card, a pin, or a discardmain
+var _current_hover: Control
+
 ## If you're dragging, this holds the Area2D of the dragged pick
 var _current_area: Area2D
 
@@ -55,12 +59,22 @@ var _current_area: Area2D
 var _current_target: Control
 
 ## Returns a list of all valid pick drop targets
-## Targets must implement a get_drop_area() method.
+## Targets must implement the following:
+## get_drop_area, get_mouse_rect, core_highlight, core_unhighlight, core_hover, core_unhover
 func valid_targets() -> Array[Control]:
 	var targets: Array[Control] = []
 	targets.assign($LockBody/CylinderMain/Cylinders.get_valid_refs())
 	targets.append($DiscardMain)
 	return targets
+
+## returns a list of all mouse hover objects
+## Objects must implement the following:
+## get_mouse_rect, core_hover, core_unhover
+func valid_hovers() -> Array[Control]:
+	var hovers: Array[Control] = []
+	hovers.append_array($HandMain/Hand.space_refs)
+	hovers.append_array(valid_targets())
+	return hovers
 
 func pick_dragged(space: CardSpace) -> void:
 	set_state(InputState.ACTIVE_DRAG)
@@ -90,9 +104,7 @@ func pick_dropped(space: CardSpace) -> void:
 	set_state(InputState.INACTIVE)
 
 func _process(delta: float) -> void:
-	if current_state in [InputState.INACTIVE, InputState.ACTIVE_SELECT]:
-		pass
-	elif current_state in [InputState.ACTIVE_DRAG]:
+	if current_state == InputState.ACTIVE_DRAG:
 		if not _current_area:
 			push_error("In drag state without active area?")
 		elif (
@@ -102,6 +114,16 @@ func _process(delta: float) -> void:
 			pass
 		else:
 			_process_drag()
+	if current_state == InputState.ACTIVE_SELECT:
+		pass
+	if current_state == InputState.INACTIVE:
+		if (
+			_current_hover
+			and _current_hover.get_mouse_rect().has_point(get_global_mouse_position())
+		):
+			pass
+		else:
+			_process_hover()
 
 func _process_drag() -> void:
 	if _current_target:
@@ -111,6 +133,20 @@ func _process_drag() -> void:
 		if _current_area.overlaps_area(target.get_drop_area()):
 			_current_target = target
 			highlight_target(target)
+			return
+
+func _process_hover() -> void:
+	if _current_hover:
+		unhover_target(_current_hover)
+		_current_hover = null
+	var global_mouse := get_global_mouse_position()
+	for hover in valid_hovers():
+		if hover.get_mouse_rect().has_point(global_mouse):
+			if $HoverRect.visible:
+				$HoverRect.position = hover.get_mouse_rect().position
+				$HoverRect.size = hover.get_mouse_rect().size
+			_current_hover = hover
+			hover_target(hover)
 			return
 
 func unhighlight_target(target: Control) -> void:
@@ -127,8 +163,22 @@ func highlight_target(target: Control) -> void:
 		$LockBody/CylinderMain.preview(active_card, pin_index)
 
 func unhighlight_all() -> void:
+	if _current_target:
+		push_warning("nulling current target from unhighlight_all")
+		_current_target = null
+	_current_hover = null
+	for space in $HandMain/Hand.space_refs:
+		space.highlighted = false
 	for target in valid_targets():
 		target.core_unhighlight()
+	for hover in valid_hovers():
+		hover.core_unhover()
+
+func hover_target(target: Control) -> void:
+	target.core_hover()
+
+func unhover_target(target) -> void:
+	target.core_unhover()
 
 # TODO: hover z-boosts picks
 
@@ -558,3 +608,4 @@ func _ready() -> void:
 		var game := GameSpec.get_in_progress_game()
 		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
 		load_game(game)
+		draw_cards(5)

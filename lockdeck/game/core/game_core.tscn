@@ -186,3 +186,11 @@ layout_mode = 1
 offset_right = 960.0
 offset_bottom = 540.0
 header = "Broken picks"
+
+[node name="HoverRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+border_color = Color(0.304416, 0.493369, 1, 1)
+editor_only = false
