@@ -74,7 +74,7 @@ static func build_from_template(flavor: PickTemplates) -> PickCard:
 static func build_from_spec(spec: CardSpec = null) -> PickCard:
 	var n := SELF_PACKED.instantiate() as PickCard
 	if spec == null:
-		n.card_spec = CardSpec.from_template(PickTemplates.DEBUG)
+		n.card_spec = CardSpec.DEBUG
 	else:
 		n.card_spec = spec
 	return n

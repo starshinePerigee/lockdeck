@@ -1,28 +1,11 @@
-note that if you're manually rolling _input handling from event: InputEvent, this fires even if you're not visible. use is_visible_in_tree()
-
-re-confirm that jumping over final depth still unlocks
-
-superdrag still shows issues (superdrag to right, then left, stays on right)
-- hover over keyway feels weird?
-- hover over left side of lock selects pin
-
-can't click the top edge of a card?
-
-better cancel area handling
-- make sure you can click cancel out of end turn
-- also for end turn
-
-click to select also weird right now:
-- on card select and start drag, force recalculate
-- click and then mouse over pin - broken
-
-
-deck selection does not reset on return to menu
-
-if you have a pick selected, then select another pick without unselecting, it doesn't update the current pick
-
-if your final pick locks you out and solves the lock, the game softlocks if you press continue
-
-
-
 clicking a volume slider and holding the mouse down while going away from hover is jank af
+
+
+bomb on end turn is weird!
+
+
+trap doesn't work with push over the trap
+
+
+
+

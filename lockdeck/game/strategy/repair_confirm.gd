@@ -10,4 +10,4 @@ var card: CardSpec:
 
 func _ready() -> void:
 	if get_tree().current_scene == self:
-		card = CardSpec.from_template(PickTemplates.DEBUG)
+		card = CardSpec.DEBUG
