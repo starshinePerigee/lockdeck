@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://6n5hdt0ihpyn"]
+[gd_scene load_steps=19 format=3 uid="uid://bql12v3dt5jn2"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]

@@ -70,7 +70,7 @@ func get_drop_area() -> Area2D:
 
 func get_mouse_rect() -> Rect2:
 	var rect: Rect2 = $DropArea/CollisionShape2D.get_shape().get_rect()
-	rect.position += global_position
+	rect.position += $DropArea/CollisionShape2D.global_position
 	return rect
 
 func core_highlight() -> void:
