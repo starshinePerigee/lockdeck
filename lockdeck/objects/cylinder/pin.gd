@@ -144,6 +144,18 @@ func clear_results() -> void:
 	_draw_bomb()
 #endregion
 
+func get_drop_area() -> Area2D:
+	return $DropArea
+
+func get_click_rect() -> Rect2:
+	return get_global_rect()
+
+func core_highlight() -> void:
+	pass
+
+func core_unhighlight() -> void:
+	pass
+
 func _ready() -> void:
 	SPRING_POSITION = $Spring.position
 	SPRING_SIZE = $Spring.size

@@ -6,9 +6,9 @@ class_name CardSpace
 ## Card is tapped (clicked and relesaed within short distance)
 signal card_tapped()
 ## Drag started
-signal card_picked_up(Area2D)
+signal card_picked_up()
 ## Drag eneded
-signal card_dropped(Area2D)
+signal card_dropped()
 
 var _dragging := false
 var _active := false
@@ -82,27 +82,35 @@ func clear_selected() -> void:
 
 func _start_click():
 	if has_card:
-		$PickCard.z_index = 1200
+		_cancel_snapback = false
 		_active = true
 		if draggable:
+			z_boost = true
 			mouse_start_position = get_local_mouse_position()
 
 func _end_click():
 	if _active:
-		$PickCard.z_index = 0
 		if not _dragging:
 			card_tapped.emit()
 		else:
-			card_dropped.emit($PickCard/Area2D)
+			z_boost = false
+			card_dropped.emit()
 			call_deferred("snapback")
 	_active = false
 	_dragging = false
 
-func snapback():
+var _cancel_snapback := false
+
+func cancel_snapback() -> void:
+	_cancel_snapback = true
+
+func snapback() -> void:
+	if _cancel_snapback:
+		return
 	var tween := get_tree().create_tween()
 	var distance: float = Vector2().distance_to($PickCard.position)
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property($PickCard, "position", Vector2(), distance * 0.0003)
+	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
 	$PickCard.tooltippable = true
 
 func _set_texture():
@@ -125,7 +133,7 @@ func _process(_delta: float) -> void:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
 				_dragging = true
 				$PickCard.tooltippable = false
-				card_picked_up.emit($PickCard/Area2D)
+				card_picked_up.emit()
 		else:
 			$PickCard.set_position(
 				get_local_mouse_position() - mouse_start_position
@@ -139,6 +147,9 @@ func _ready():
 	
 	if get_tree().current_scene == self:
 		card_spec = CardSpec.DEBUG
+
+func get_card_area() -> Area2D:
+	return $PickCard/Area2D
 
 func get_area() -> Area2D:
 	return $Area2D

@@ -21,6 +21,8 @@ clicking a volume slider and holding the mouse down while going away from hover 
 notifications don't dismiss on click
 
 
+bomb on end turn is weird!
+
 
 trap doesn't work with push over the trap
 

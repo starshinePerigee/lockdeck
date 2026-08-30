@@ -4,6 +4,9 @@ extends Control
 ## Raised when a card is clicked or a drag starts
 signal card_selected(card: CardSpec)
 
+signal card_dragged(space: CardSpace)
+signal card_dropped(space: CardSpace)
+
 ## Holds live references to every card in this hand
 var space_refs: Array[CardSpace]
 
@@ -35,8 +38,12 @@ func redraw(cards: Array[CardSpec]) -> void:
 		space.card_spec = spec
 		space.has_card = true
 		space.z_index = 100 * i
+		
 		space.card_tapped.connect(card_selected.emit.bind(spec))
 		space.card_picked_up.connect(card_selected.emit.bind(spec))
+		space.card_picked_up.connect(card_dragged.emit.bind(space))
+		space.card_dropped.connect(card_dropped.emit.bind(space))
+		
 		$Hand.add_child(space)
 		space_refs.append(space)
 

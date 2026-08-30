@@ -40,6 +40,16 @@ func clear_results() -> void:
 		pin.clear_results()
 #endregion
 
+func get_valid_refs() -> Array[Pin]:
+	var refs: Array[Pin] = []
+	for pin in pin_refs:
+		if pin.visible_:
+			refs.append(pin)
+	return refs
+
+func get_index_of_ref(ref: Pin) -> int:
+	return pin_refs.find(ref)
+
 func _ready() -> void:
 	pin_refs = [
 		$CylinderHBox/Pin1,

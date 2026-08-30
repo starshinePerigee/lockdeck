@@ -48,11 +48,133 @@ enum InputState {
 }
 var current_state := InputState.INACTIVE
 
+## If you're dragging, this holds the Area2D of the dragged pick
+var _current_area: Area2D
+
+## This holds the current target - either a Pin or DiscardMain
+var _current_target: Control
+
+## Returns a list of all valid pick drop targets
+## Targets must implement a get_drop_area() method.
+func valid_targets() -> Array[Control]:
+	var targets: Array[Control] = []
+	targets.assign($LockBody/CylinderMain/Cylinders.get_valid_refs())
+	targets.append($DiscardMain)
+	return targets
+
+func pick_dragged(space: CardSpace) -> void:
+	set_state(InputState.ACTIVE_DRAG)
+	$Notifications.clear()
+	active_card = space.card_spec
+	_current_area = space.get_card_area()
+
+func pick_dropped(space: CardSpace) -> void:
+	if not _current_area:
+		push_error("Pick dropped without being dragged?")
+		return
+	_current_area = null
+	
+	if _current_target:
+		space.cancel_snapback()
+		unhighlight_target(_current_target)
+	
+	if _current_target == $DiscardMain:
+		discard_pick()
+	elif _current_target is Pin:
+		do_pick(
+			active_card,
+			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
+		)
+	
+	_current_target = null
+	set_state(InputState.INACTIVE)
+
 func _process(delta: float) -> void:
-	pass
+	if current_state in [InputState.INACTIVE, InputState.ACTIVE_SELECT]:
+		pass
+	elif current_state in [InputState.ACTIVE_DRAG]:
+		if not _current_area:
+			push_error("In drag state without active area?")
+		elif (
+			_current_target
+			and _current_area.overlaps_area(_current_target.get_drop_area())
+		):
+			pass
+		else:
+			_process_drag()
+
+func _process_drag() -> void:
+	if _current_target:
+		unhighlight_target(_current_target)
+		_current_target = null
+	for target in valid_targets():
+		if _current_area.overlaps_area(target.get_drop_area()):
+			_current_target = target
+			highlight_target(target)
+			return
+
+func unhighlight_target(target: Control) -> void:
+	target.core_unhighlight()
+	if target is Pin:
+		$LockBody/IndicatorPick.go_stow()
+		$LockBody/CylinderMain.cancel_preview()
+
+func highlight_target(target: Control) -> void:
+	target.core_highlight()
+	if target is Pin:
+		var pin_index: int = $LockBody/CylinderMain/Cylinders.get_index_of_ref(target)
+		$LockBody/IndicatorPick.go_index(pin_index)
+		$LockBody/CylinderMain.preview(active_card, pin_index)
+
+func unhighlight_all() -> void:
+	for target in valid_targets():
+		target.core_unhighlight()
+
+# TODO: hover z-boosts picks
+
+#	func pin_cursored(pin_index) -> void:
+#		if current_state == InputState.ACTIVE_SELECT and not _lock_input:
+
+
+#	func pin_uncursored() -> void:
+#    	if current_state == InputState.ACTIVE_SELECT:
+#    		$LockBody/IndicatorPick.go_stow()
+#    		$LockBody/CylinderMain.cancel_preview()
+
+#	func pin_hovered(pin_index):
+#    	if current_state == InputState.ACTIVE_DRAG and not _lock_input:
+#    		$LockBody/IndicatorPick.go_index(pin_index)
+#    		$LockBody/CylinderMain.preview(active_card, pin_index)
+
+#	func pin_unhovered():
+#		if current_state == InputState.ACTIVE_DRAG:
+#			$LockBody/IndicatorPick.go_stow()
+#			$LockBody/CylinderMain.cancel_preview()
 
 func _input(event: InputEvent) -> void:
+	# If the pick is currently selected, clicking it deselects it
+	# otherwise, select the pick if you hit one
+	# otherwise deselect everything
 	pass
+	
+	
+#	func pick_selected(card: CardSpec) -> void:
+	
+#	$Notifications.clear()
+#		if (
+#			current_state in [InputState.INACTIVE, InputState.ACTIVE_SELECT] 
+#			and not _lock_input
+#		):
+#			set_state(InputState.ACTIVE_SELECT)
+#			active_card = card
+	
+#	func pick_deselected() -> void:
+#		set_state(InputState.INACTIVE)
+
+#	func discard_clicked() -> void:
+#    	if current_state != InputState.ACTIVE_SELECT:
+#    		return
+#    	discard_pick()
 
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
@@ -71,6 +193,7 @@ func set_state(state: InputState) -> void:
 		InputState.REFRESH_PENDING:
 			pass
 		InputState.INACTIVE:
+			unhighlight_all()
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
 			$LockBody.position = LOCK_BODY_HOME
@@ -129,63 +252,6 @@ func show_failure(state: bool = true) -> void:
 		$FailureButton.mouse_filter = MOUSE_FILTER_STOP
 	else:
 		$FailureButton.mouse_filter = MOUSE_FILTER_IGNORE
-
-func pick_selected(card: CardSpec) -> void:
-	if (
-		current_state in [InputState.INACTIVE, InputState.ACTIVE_SELECT] 
-		and not _lock_input
-	):
-		set_state(InputState.ACTIVE_SELECT)
-		active_card = card
-
-func pin_cursored(pin_index) -> void:
-	if current_state == InputState.ACTIVE_SELECT and not _lock_input:
-		$LockBody/IndicatorPick.go_index(pin_index)
-		$LockBody/CylinderMain.preview(active_card, pin_index)
-		
-func pin_uncursored() -> void:
-	if current_state == InputState.ACTIVE_SELECT:
-		$LockBody/IndicatorPick.go_stow()
-		$LockBody/CylinderMain.cancel_preview()
-
-func pick_deselected() -> void:
-	set_state(InputState.INACTIVE)
-
-func pick_dragged(_card_area: Area2D, card: CardSpec) -> void:
-	set_state(InputState.ACTIVE_DRAG)
-	active_card = card
-
-func pick_superdragged():
-	$LockBody/CylinderMain/Cylinders.force_update()
-
-func pin_hovered(pin_index):
-	if current_state == InputState.ACTIVE_DRAG and not _lock_input:
-		$LockBody/IndicatorPick.go_index(pin_index)
-		$LockBody/CylinderMain.preview(active_card, pin_index)
-
-func pin_unhovered():
-	if current_state == InputState.ACTIVE_DRAG:
-		$LockBody/IndicatorPick.go_stow()
-		$LockBody/CylinderMain.cancel_preview()
-
-func pick_dropped(_card_area: Area2D, card: CardSpec) -> void:
-	var target: int = $LockBody/CylinderMain.get_current_drag_target()
-	if target >= 0:
-		do_pick(card, target)
-	elif $DiscardMain.is_dragged_into():
-		discard_pick()
-	set_state(InputState.INACTIVE)
-
-func pick_activated(space_index: int) -> void:
-	if not current_state in [InputState.ACTIVE_SELECT, InputState.ACTIVE_DRAG]:
-		return
-	do_pick(active_card, space_index)
-	set_state(InputState.INACTIVE)
-
-func discard_clicked() -> void:
-	if current_state != InputState.ACTIVE_SELECT:
-		return
-	discard_pick()
 
 # Used for settings
 func toggle_active_row(show_row: bool) -> void:
@@ -304,7 +370,6 @@ func break_from_hand() -> void:
 	discard_pick()
 
 func discard_pick() -> void:
-	$HandMain.deselect()
 	$LastTest.visible = false
 	do_pick(
 		_NULL_PICK,
@@ -316,7 +381,6 @@ func discard_pick() -> void:
 		move_cards_from_hand_to_discard([active_card])
 	
 	cleanup_step()
-	set_state(InputState.INACTIVE)
 
 func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:
@@ -336,7 +400,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
-	$HandMain.deselect()
 	if card != _NULL_PICK:
 		$HandMain.remove_card(card)
 	
@@ -423,7 +486,6 @@ func solve_lock() -> void:
 	game_win.emit()
 	$LockBody/AnimationPlayer.play("unlock")
 	$Notifications.notify(Notifications.UNLOCK)
-	set_state(InputState.INACTIVE)
 	lock_input(true)
 
 #endregion
@@ -473,6 +535,9 @@ func _ready() -> void:
 	
 	$ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
+
+	$HandMain/Hand.card_dragged.connect(pick_dragged)
+	$HandMain/Hand.card_dropped.connect(pick_dropped)
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$LockBody/CountdownMain.countdown_ended.connect(final_turn.emit)
