@@ -30,6 +30,16 @@ enum Archetypes {
 	TRICKS
 }
 
+static var RARITY_COLORS: Dictionary[Rarities, Color] = {
+	Rarities.DEBUG: Color("ff0089"),
+	Rarities.BASIC: Color("918891"),
+	Rarities.GREAT: Color("c7e0e3"),
+	Rarities.TRASH: Color("29524e"),
+	Rarities.COMMON: Color("5c3c41"),
+	Rarities.RARE: Color("29524e"),
+	Rarities.TEMPORARY: Color("575651"),
+}
+
 enum Rarities {
 	DEBUG = -2,  # 5
 	BASIC = 2,  # 25

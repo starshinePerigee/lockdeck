@@ -86,6 +86,7 @@ func _redraw() -> void:
 	$Art/EffectBar.effect_stacks = card_spec.effects
 	$Art/EffectBar.redraw()
 	$Art/PickArt.texture = card_spec.template.texture
+	$Art/PickArt.set_instance_shader_parameter("new",card_spec.color())
 	$Art/PickShadow.texture = card_spec.template.bg_texture
 	$Art/TitleBox/Title.text = card_spec.pick_name.capitalize()
 	$Art/TextBox/Text.text = card_spec.ability.description

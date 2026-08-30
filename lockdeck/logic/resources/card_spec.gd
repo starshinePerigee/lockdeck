@@ -60,6 +60,11 @@ func reify() -> void:
 			% [unique_id, last_id]
 		)
 
+func color() -> Color:
+	if template.rarity in PickTemplates.RARITY_COLORS:
+		return PickTemplates.RARITY_COLORS[template.rarity]
+	return Color()
+
 func _init(
 	template_: PickTemplates = null,
 	pick_name_: String = "NULL",
