@@ -1,0 +1,25 @@
+WEIRD: should have its own name. catchall, mostly for shop temp picks
+
+rakes
+BULK_PUSH: four peak rake, 
+BULK_TEST: wiggly, snake rake
+HYBRID_S: city rake
+GAPS: sharp wiggles (king rake)
+
+diamonds 
+DARK: big wedge
+x THREE_PUSH: basic diamond
+FINISHER: deforest diamond
+REVEAL: chip / hollow diamond
+
+hooks
+PRECISE: short hook
+PUSHY: gonzo hook
+JUMP_TEST: gem hook
+CLOSE_TEST: flat skinny hook 
+
+wrenches 
+END_TURN: flat wrench
+LOCK_N_BLOCK: beefy with curve
+ISOLATION: top of keyway wrench
+TRICKS: weirder narrower top of keyway wrench

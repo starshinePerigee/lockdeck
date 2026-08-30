@@ -78,8 +78,10 @@ func _squash_columns() -> void:
 
 ## Redraws when a new card is loaded
 func _redraw() -> void:
-	if not is_node_ready() or card_spec == null:
+	if not is_node_ready():
 		return
+	if card_spec == null or card_spec.template == null or card_spec.template.texture == null:
+		card_spec = CardSpec.DEBUG
 	
 	$Art/EffectBar.effect_stacks = card_spec.effects
 	$Art/EffectBar.redraw()

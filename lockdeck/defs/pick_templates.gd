@@ -118,14 +118,19 @@ func _init(
 	archetype_: Archetypes = Archetypes.WEIRD,
 	rarity_: Rarities = Rarities.DEBUG,
 	effect_string: String = "",
+	texture_string: String = "",
 ):
 	pick_name = pick_name_
 	family = family_
 	archetype = archetype_
 	rarity = rarity_
 	effects = parse_effects_string(effect_string)
-	texture = _get_texture(pick_name_)
-	bg_texture = _get_texture(pick_name_, true)
+	
+	if not texture_string:
+		texture_string = Archetypes.keys()[archetype_].to_lower()
+	
+	texture = _get_texture(texture_string)
+	bg_texture = _get_texture(texture_string, true)
 	if pick_name:
 		static_registry[pick_name] = self
 
