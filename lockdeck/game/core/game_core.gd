@@ -470,15 +470,8 @@ func _ready() -> void:
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$LockBody/CountdownMain.countdown_ended.connect(final_turn.emit)
-	$HandMain.hand_selected.connect(pick_selected)
-	$HandMain.hand_untapped.connect(pick_deselected)
-	$HandMain.hand_dragged.connect(pick_dragged)
-	$HandMain.hand_super_dragged.connect(pick_superdragged)
-	$HandMain.hand_dropped.connect(pick_dropped)
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
-	$DiscardMain.discard_hovered.connect(preview_discard)
-	$DiscardMain.discard_unhovered.connect(unpreview_discard)
 	
 	$DepthDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
@@ -486,12 +479,6 @@ func _ready() -> void:
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
-	
-	$LockBody/CylinderMain/Cylinders.new_pin_hovered.connect(pin_hovered)
-	$LockBody/CylinderMain/Cylinders.pin_no_longer_hovered.connect(pin_unhovered)
-	$LockBody/CylinderMain/Cylinders.new_pin_cursored.connect(pin_cursored)
-	$LockBody/CylinderMain/Cylinders.pin_no_longer_cursored.connect(pin_uncursored)
-	$LockBody/CylinderMain/Cylinders.pin_activated.connect(pick_activated)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:
