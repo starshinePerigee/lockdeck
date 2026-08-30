@@ -271,6 +271,7 @@ func set_state(state: InputState) -> void:
 			$LockBody.position = LOCK_BODY_HOME
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
+			$DiscardMain.show_icon = false
 			$LockBody/CylinderMain.cancel_preview()
 			reset_countdown()
 			dis_en_able_buttons(false)
@@ -552,7 +553,7 @@ func game_over() -> void:
 	game_fail.emit()
 
 func solve_lock() -> void:
-	$ContinueButton.visible = true	
+	$LockBody/ContinueButton.visible = true	
 	game_win.emit()
 	$LockBody/AnimationPlayer.play("unlock")
 	$Notifications.notify(Notifications.UNLOCK)
@@ -590,7 +591,7 @@ func restart() -> void:
 	lock_input(false)
 	show_failure(false)
 	$LastTest.visible = false
-	$ContinueButton.visible = false
+	$LockBody/ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(countdown_time)
 	$LockBody/CountdownMain.reset_odds()
@@ -603,7 +604,7 @@ func _ready() -> void:
 	toggle_active_row(settings.highlight_active_row)
 	settings.highlight_active_row_changed.connect(toggle_active_row)
 	
-	$ContinueButton.pressed.connect(continue_to_next.emit)
+	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 
 	$HandMain/Hand.card_selected.connect(pick_selected)

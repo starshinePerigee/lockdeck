@@ -13,6 +13,7 @@ signal display_cards(Array)
 	set(v):
 		show_icon = v
 		icon_selected = false
+		$DiscardIcon.visible = show_icon
 
 @export var icon_selected: bool = false:
 	set(v):
@@ -87,7 +88,7 @@ func core_unhover() -> void:
 
 func request_tooltip() -> void:
 	var rect: Rect2 = $DiscardIcon/TooltipTrigger.get_global_rect()
-	if icon_selected:
+	if icon_selected or true:
 		rect = rect.grow_side(Side.SIDE_TOP, 12)
 	TooltipManager.request_tooltip(
 		rect,
