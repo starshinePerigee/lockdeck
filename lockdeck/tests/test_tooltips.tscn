@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://lffsubdtdqqi"]
 
-[ext_resource type="Script" uid="uid://d326minmhow1y" path="res://tests/test_tooltips.gd" id="1_003cx"]
-[ext_resource type="PackedScene" uid="uid://iioqp46sx2bt" path="res://objects/displays/tooltip_manager.tscn" id="1_n78pt"]
+[ext_resource type="Script" path="res://tests/test_tooltips.gd" id="1_003cx"]
+[ext_resource type="PackedScene" uid="uid://ddv5rycyrni1h" path="res://objects/displays/tooltip_manager.tscn" id="1_n78pt"]
 
 [node name="TestTooltips" type="Node2D"]
 script = ExtResource("1_003cx")

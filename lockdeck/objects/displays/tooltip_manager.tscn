@@ -37,10 +37,6 @@ theme_type_variation = &"CardText"
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
 autowrap_mode = 2
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 1.2
-one_shot = true
-
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 visible = false
 layout_mode = 0

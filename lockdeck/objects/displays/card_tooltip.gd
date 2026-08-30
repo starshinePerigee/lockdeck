@@ -11,5 +11,5 @@ func add_effects(effects: Array[Effects]) -> void:
 func _ready() -> void:
 	if get_tree().current_scene == self:
 		add_effects(
-			PickTemplates.DEBUG.get_unique_list()
+			CardSpec.DEBUG.get_unique_list()
 		)

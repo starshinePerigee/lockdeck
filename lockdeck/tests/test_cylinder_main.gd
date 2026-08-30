@@ -16,7 +16,7 @@ func get_pick(selected: String) -> CardSpec:
 		if t.pick_name == selected:
 			return CardSpec.from_template(t)
 	push_error("Could not find pick from selector!")
-	return PickTemplates.DEBUG
+	return CardSpec.DEBUG
 
 func update_card(dropdown_index: int):
 	var selected: String = $CardSelectionOption.get_item_text(dropdown_index)
@@ -110,11 +110,11 @@ func gen_new_lock() -> void:
 	
 
 func _ready() -> void:
-	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
-	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
-	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
-	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
-	$CylinderMain/Cylinders.pin_activated.connect(do_click)
+#	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
+#	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
+#	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
+#	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
+#	$CylinderMain/Cylinders.pin_activated.connect(do_click)
 	$Difficulty/Button.pressed.connect(gen_new_lock)
 	
 	gen_new_lock()
@@ -123,7 +123,7 @@ func _ready() -> void:
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
-	$CardSpace.card_spec = PickTemplates.DEBUG
+	$CardSpace.card_spec = CardSpec.DEBUG
 	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
