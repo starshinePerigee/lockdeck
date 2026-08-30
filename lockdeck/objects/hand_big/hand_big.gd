@@ -4,6 +4,7 @@ extends Control
 ## Raised when a card is clicked or a drag starts
 signal card_selected(card: CardSpec)
 
+signal card_tapped(space: CardSpace)
 signal card_dragged(space: CardSpace)
 signal card_dropped(space: CardSpace)
 
@@ -41,6 +42,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		
 		space.card_tapped.connect(card_selected.emit.bind(spec))
 		space.card_picked_up.connect(card_selected.emit.bind(spec))
+		space.card_tapped.connect(card_tapped.emit.bind(space))
 		space.card_picked_up.connect(card_dragged.emit.bind(space))
 		space.card_dropped.connect(card_dropped.emit.bind(space))
 		

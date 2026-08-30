@@ -14,10 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://dmo5cgmd68fwu" path="res://logic/core_nodes/trash_main.tscn" id="8_2tf6j"]
 [ext_resource type="PackedScene" uid="uid://b2jv527wajjta" path="res://objects/indicator_pick/indicator_pick.tscn" id="9_i4qfg"]
 [ext_resource type="PackedScene" uid="uid://crs57pdq8xw4l" path="res://objects/play_area/previous_button.tscn" id="10_gg2qb"]
-[ext_resource type="PackedScene" uid="uid://ey2xmdqnqgtx" path="res://game/core/depth_button.tscn" id="11_ihpbi"]
-[ext_resource type="PackedScene" uid="uid://cn6430a44cbwe" path="res://objects/play_area/last_test.tscn" id="12_3ctlq"]
+[ext_resource type="PackedScene" path="res://game/core/depth_button.tscn" id="11_ihpbi"]
+[ext_resource type="PackedScene" path="res://objects/play_area/last_test.tscn" id="12_3ctlq"]
 [ext_resource type="PackedScene" uid="uid://rccuomam3kp" path="res://objects/displays/card_display.tscn" id="15_gg2qb"]
-[ext_resource type="PackedScene" uid="uid://dxbpwot2ljda4" path="res://objects/displays/depth_display.tscn" id="16_ralr2"]
+[ext_resource type="PackedScene" path="res://objects/displays/depth_display.tscn" id="16_ralr2"]
 
 [node name="GameCore" type="Control"]
 layout_mode = 3
@@ -42,9 +42,9 @@ offset_bottom = 40.0
 [node name="LockBody" parent="." instance=ExtResource("2_2tf6j")]
 layout_mode = 0
 offset_left = 216.0
-offset_top = -143.0
+offset_top = -175.0
 offset_right = 256.0
-offset_bottom = -103.0
+offset_bottom = -135.0
 
 [node name="CylinderMain" parent="LockBody" instance=ExtResource("2_l83s3")]
 offset_left = 1.0
@@ -65,10 +65,11 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="CountdownMain" parent="LockBody" instance=ExtResource("3_i4qfg")]
+z_index = 4
 offset_left = 593.0
-offset_top = 158.0
+offset_top = 206.0
 offset_right = 593.0
-offset_bottom = 158.0
+offset_bottom = 206.0
 
 [node name="ActiveBox" type="TextureRect" parent="LockBody"]
 layout_mode = 0

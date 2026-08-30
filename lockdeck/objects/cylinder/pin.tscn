@@ -13,11 +13,11 @@ radius = 22.0
 height = 546.0
 
 [node name="Pin" type="Control"]
-custom_minimum_size = Vector2(80, 672)
+custom_minimum_size = Vector2(80, 560)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 80.0
-offset_bottom = 672.0
+offset_bottom = 528.0
 mouse_filter = 1
 script = ExtResource("1_sibiv")
 visible_ = true
