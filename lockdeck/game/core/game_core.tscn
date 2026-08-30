@@ -150,9 +150,9 @@ offset_bottom = 94.0
 z_index = -3
 layout_mode = 0
 offset_left = 640.0
-offset_top = 298.0
-offset_right = 746.0
-offset_bottom = 324.0
+offset_top = 258.0
+offset_right = 756.0
+offset_bottom = 291.0
 theme_type_variation = &"BoxButton"
 text = "Continue >"
 
