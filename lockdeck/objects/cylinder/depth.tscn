@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://br6rlbw57vk25"]
+[gd_scene load_steps=7 format=3 uid="uid://br6rlbw57vk25"]
 
 [ext_resource type="Texture2D" uid="uid://dufy74tlb6o2c" path="res://assets/depths/depth_hidden.png" id="1_pxkuq"]
 [ext_resource type="Script" uid="uid://dede4agib6hm6" path="res://objects/cylinder/depth.gd" id="1_t3uj8"]
+[ext_resource type="Shader" uid="uid://d2j3iltnvf327" path="res://objects/cylinder/depth_exhaust.gdshader" id="2_f08qc"]
 [ext_resource type="Texture2D" uid="uid://dmngqshk6j878" path="res://assets/results/result_debug.png" id="3_f3om4"]
 [ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="4_hntsp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hntsp"]
+shader = ExtResource("2_f08qc")
+shader_parameter/bg = Color(0.458824, 0.458824, 0.458824, 1)
+shader_parameter/skip = Color(0.341176, 0.337255, 0.317647, 1)
+shader_parameter/new_bg = Color(0.341176, 0.337255, 0.317647, 1)
+shader_parameter/new_fg = Color(0.458824, 0.458824, 0.458824, 1)
 
 [node name="Depth" type="Control"]
 custom_minimum_size = Vector2(80, 32)
@@ -15,6 +23,7 @@ mouse_filter = 1
 script = ExtResource("1_t3uj8")
 
 [node name="DepthTexture" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_hntsp")
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 32.0
