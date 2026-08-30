@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxbpwot2ljda4"]
 
-[ext_resource type="Script" uid="uid://cox33us7xv3ox" path="res://objects/displays/depth_display.gd" id="1_nsrrv"]
+[ext_resource type="Script" path="res://objects/displays/depth_display.gd" id="1_nsrrv"]
 
 [node name="DepthDisplay" type="Control"]
 layout_mode = 3
@@ -72,5 +72,5 @@ offset_top = 472.0
 offset_right = 752.0
 offset_bottom = 485.0
 theme_type_variation = &"TinyAccentText"
-text = "Click or tap outside the window to close."
+text = "Click outside the window to close."
 horizontal_alignment = 1

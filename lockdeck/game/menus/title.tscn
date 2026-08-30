@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5e0yy8ky4832"]
+[gd_scene load_steps=4 format=3 uid="uid://b5e0yy8ky4832"]
 
 [ext_resource type="Script" uid="uid://peauvaoe3emi" path="res://game/menus/title.gd" id="1_pwv2q"]
 [ext_resource type="Theme" uid="uid://ceiwumox6242k" path="res://assets/themes/hol_default_ii.tres" id="3_caluf"]
+[ext_resource type="Script" uid="uid://dfck3u724ea4f" path="res://logic/util_classes/confirm_button.gd" id="3_np82d"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -33,18 +34,18 @@ alignment = 0
 [node name="NewGameButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 134.0
-offset_top = 235.0
+offset_top = 219.0
 offset_right = 250.0
-offset_bottom = 262.0
+offset_bottom = 246.0
 text = "New Game"
 alignment = 0
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 134.0
-offset_top = 298.0
+offset_top = 266.0
 offset_right = 250.0
-offset_bottom = 325.0
+offset_bottom = 293.0
 theme = ExtResource("3_caluf")
 text = "Settings"
 alignment = 0
@@ -52,9 +53,21 @@ alignment = 0
 [node name="CreditsButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 134.0
+offset_top = 314.0
+offset_right = 250.0
+offset_bottom = 341.0
+theme = ExtResource("3_caluf")
+text = "Credits"
+alignment = 0
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 134.0
 offset_top = 362.0
 offset_right = 250.0
 offset_bottom = 389.0
 theme = ExtResource("3_caluf")
-text = "Credits"
+text = "Exit"
 alignment = 0
+script = ExtResource("3_np82d")
+base_text = "Quit"
+confirm_text = "Really Quit?"
