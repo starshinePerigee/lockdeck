@@ -122,6 +122,10 @@ func _input(event: InputEvent) -> void:
 		$Notifications.clear()
 		var click: Vector2 = event.global_position
 		
+		# Handle countdown highlight here while we're here
+		if not $LockBody/CountdownMain.get_mouse_rect().has_point(click):
+			reset_countdown()
+		
 		if current_state == InputState.ACTIVE_SELECT:
 			for target in valid_targets():
 				if target.get_mouse_rect().has_point(click):

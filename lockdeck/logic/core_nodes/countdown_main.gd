@@ -116,7 +116,7 @@ func request_tooltip() -> void:
 		return
 	
 	TooltipManager.request_tooltip(
-		$Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 26),
+		get_mouse_rect(),
 		(
 			"This is your turn counter.\n\n"
 			+ "Click to end your turn.\n\n"
@@ -130,6 +130,9 @@ func request_tooltip() -> void:
 			+ "After three turns, you will be locked out and your game will end."
 		) 
 	)
+
+func get_mouse_rect() -> Rect2:
+	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 26)
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)

@@ -111,10 +111,10 @@ offset_bottom = 531.0
 
 [node name="DepthButton" parent="." instance=ExtResource("11_ihpbi")]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 118.0
-offset_right = 96.0
-offset_bottom = 151.0
+offset_left = 40.0
+offset_top = 426.0
+offset_right = 120.0
+offset_bottom = 459.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
@@ -126,9 +126,9 @@ offset_bottom = 52.0
 [node name="LastTest" parent="." instance=ExtResource("12_3ctlq")]
 layout_mode = 1
 offset_left = -10.0
-offset_top = 360.0
+offset_top = 320.0
 offset_right = 234.0
-offset_bottom = 420.0
+offset_bottom = 380.0
 
 [node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
 layout_mode = 1
