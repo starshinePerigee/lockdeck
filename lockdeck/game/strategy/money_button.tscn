@@ -20,6 +20,15 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="RemovalHighlight" type="TextureRect" parent="VBoxContainer/CardButton"]
+unique_name_in_owner = true
+visible = false
+z_index = 55
+offset_right = 128.0
+offset_bottom = 160.0
+mouse_filter = 2
+texture = ExtResource("3_tww1t")
+
 [node name="Control" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(128, 26)
 layout_mode = 2
@@ -33,10 +42,3 @@ offset_right = 160.0
 offset_bottom = 26.0
 text = "MONDY BTN"
 horizontal_alignment = 1
-
-[node name="VBoxContainer_CardButton_PickCard#RemovalHighlight" type="TextureRect" parent="."]
-unique_name_in_owner = true
-visible = false
-z_index = 55
-layout_mode = 2
-texture = ExtResource("3_tww1t")

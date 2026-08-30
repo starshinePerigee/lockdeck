@@ -40,15 +40,21 @@ enum Rarities {
 	TEMPORARY = -1, # 10
 }
 
-static func _get_texture(n: String) -> Resource:
-	var res_str := "res://assets/picks/pick_%s.png" % [n]
+static func _get_texture(n: String, bg := false) -> Resource:
+	var prefix: String
+	if bg:
+		prefix = "bg"
+	else:
+		prefix = "pick"
+	
+	var res_str := "res://assets/picks/%s_%s.png" % [prefix, n]
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/picks/pick_debug_card.png")
+		return load("res://assets/picks/%s_debug.png" % [prefix])
 	
 ## Human readable pick name, lowercase
-var pick_name: String
+@export var pick_name: String
 
 ## pick metadata
 var family: Families
@@ -59,6 +65,8 @@ var rarity: Rarities
 var effects: Dictionary[int, Array]
 ## Card art texture
 var texture: Resource
+## Background texture
+var bg_texture: Resource
 
 static func parse_effect_substring(substring: String) -> Array[EffectSpec]:
 	var sub_effects: Array[EffectSpec] = []
@@ -102,12 +110,14 @@ static func parse_effects_string(effect_string: String) -> Dictionary[int, Array
 	
 	return new_effects
 
+static var static_registry: Dictionary[String, PickTemplates] = {}
+
 func _init(
-	pick_name_: String,
-	family_: Families,
-	archetype_: Archetypes,
-	rarity_: Rarities,
-	effect_string: String,
+	pick_name_: String = "",
+	family_: Families = Families.NONE,
+	archetype_: Archetypes = Archetypes.WEIRD,
+	rarity_: Rarities = Rarities.DEBUG,
+	effect_string: String = "",
 ):
 	pick_name = pick_name_
 	family = family_
@@ -115,6 +125,9 @@ func _init(
 	rarity = rarity_
 	effects = parse_effects_string(effect_string)
 	texture = _get_texture(pick_name_)
+	bg_texture = _get_texture(pick_name_, true)
+	if pick_name:
+		static_registry[pick_name] = self
 
 
 ## JJJ/DDDDDDDD/PPPPTTTR\RRR

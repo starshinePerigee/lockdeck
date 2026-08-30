@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://un4p6k1icu2m"
-path="res://.godot/imported/pick_debug_card.png-b22e7fac21e742eecb04aa25d6a9c1f3.ctex"
+uid="uid://q6saty7w207w"
+path="res://.godot/imported/pick_debug.png-8d311aa8252a91a6cc805c9315c71913.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/picks/pick_debug_card.png"
-dest_files=["res://.godot/imported/pick_debug_card.png-b22e7fac21e742eecb04aa25d6a9c1f3.ctex"]
+source_file="res://assets/picks/pick_debug.png"
+dest_files=["res://.godot/imported/pick_debug.png-8d311aa8252a91a6cc805c9315c71913.ctex"]
 
 [params]
 

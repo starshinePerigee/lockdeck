@@ -44,7 +44,6 @@ func redraw(cards: Array[CardSpec]) -> void:
 		space.has_card = true
 		space.z_index = 100 * i
 		space.position.x = start_pos + ((CARD_WIDTH + separation) * i)
-		print("pos: %s" % space.position.x)
 		
 		space.card_tapped.connect(card_selected.emit.bind(spec))
 		space.card_picked_up.connect(card_selected.emit.bind(spec))

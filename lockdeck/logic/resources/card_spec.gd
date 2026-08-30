@@ -11,8 +11,8 @@ class_name CardSpec
 @export var pick_name: String
 ## Text description
 @export var description: String
-## The pick art resource for this card.
-@export var texture: Resource
+## The original template used to create this pick
+@export var template: PickTemplates
 ## How many times this pick has been repaired
 @export var repair_count := 0
 ## Base shop value for this pick
@@ -31,13 +31,13 @@ func get_buy_cost() -> int:
 func get_repair_cost() -> int:
 	return 20 + repair_count * 10
 
-static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
+static func from_template(source: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
-		template.pick_name,
+		source,
+		source.pick_name,
 		"",
-		template.texture,
-		template.effects,
-		template.rarity
+		source.effects,
+		source.rarity
 	)
 
 func get_unique_list() -> Array[Effects]:
@@ -50,6 +50,7 @@ func get_unique_list() -> Array[Effects]:
 
 func reify() -> void:
 	ability = Abilities.static_registry[ability.description]
+	template = PickTemplates.static_registry[template.pick_name]
 	for key in effects.keys():
 		for spec in effects[key]:
 			spec.reify()
@@ -60,18 +61,18 @@ func reify() -> void:
 		)
 
 func _init(
+	template_: PickTemplates = null,
 	pick_name_: String = "NULL",
 	description_: String = "",
-	texture_: Resource = null,
 	effects_: Dictionary[int, Array] = {},
 	rarity: int = -2
 ):
 	unique_id = last_id
 	last_id += 1
 	
+	template = template_
 	pick_name = pick_name_
 	description = description_
-	texture = texture_
 	effects.assign(effects_)
 	shop_value = 15 + 5 * rarity
 
