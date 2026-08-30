@@ -2,15 +2,6 @@ extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin
 
-## Emitted if pin is clicked (anywhere)
-signal pin_clicked()
-
-## Emitted if a card enters
-signal card_entered_pin()
-
-## Emitted when a card exits
-signal card_exited_pin()
-
 ## Vertical height of a depth texture in pixels.
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
@@ -153,27 +144,6 @@ func clear_results() -> void:
 	_draw_bomb()
 #endregion
 
-#region input logic
-## Handle mouse clicks
-func _handle_input(event: InputEvent) -> void:
-	if not visible_:
-		return
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			pin_clicked.emit()
-
-func _handle_enter_exit(area: Area2D, entered: bool) -> void:
-	if not visible_:
-		return
-	var parent := area.get_parent()
-	if parent is PickCard:
-		if entered:
-			card_entered_pin.emit()
-		else:
-			card_exited_pin.emit()
-
-#endregion
-
 func _ready() -> void:
 	SPRING_POSITION = $Spring.position
 	SPRING_SIZE = $Spring.size
@@ -187,9 +157,5 @@ func _ready() -> void:
 			next_depth.flavor = Depths.FINAL
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
-	
-	gui_input.connect(_handle_input)
-	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
-	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
 	
 	load_spec(PinSpec.new())

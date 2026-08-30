@@ -379,7 +379,8 @@ func cleanup_step() -> void:
 	update_status_widget()
 
 func discard_hand() -> void:
-	$DiscardMain.add_cards($HandMain.load_new_hand())
+	$DiscardMain.add_cards($HandMain.remove_all_cards())
+	
 
 func draw_from_discard(count: int) -> void:
 	var discard_count: int = min(count, $DiscardMain.count())
@@ -488,7 +489,6 @@ func _ready() -> void:
 	$HandMain.hand_dropped.connect(pick_dropped)
 	$PreviousButton.show_previous.connect(view_all_pins)
 	$PreviousButton.go_back.connect(return_from_view_all)
-	$DiscardMain.discard_pressed.connect(discard_clicked)
 	$DiscardMain.discard_hovered.connect(preview_discard)
 	$DiscardMain.discard_unhovered.connect(unpreview_discard)
 	$BackgroundClick.pressed.connect(bg_cancel)

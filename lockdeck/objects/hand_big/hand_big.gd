@@ -1,24 +1,16 @@
 extends Control
 # The view for the hand and all the cards in it
 
-signal card_selected(card_index: int)
+## Raised when a card is clicked or a drag starts
+signal card_selected(card: CardSpec)
 
-signal card_untapped()
-signal card_dragged(card_area: Area2D, card_index: int)
-signal card_definitive_dragged()
-signal card_dropped(card_area: Area2D, card_index: int)
+## Holds live references to every card in this hand
+var space_refs: Array[CardSpace]
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
-
-func get_card_refs() -> Array[CardSpace]:
-	var spaces: Array[CardSpace] = []
-	for child in $Hand.get_children():
-		if child is CardSpace:
-			spaces.append(child)
-	return spaces
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
@@ -29,6 +21,7 @@ func unhide_hand() -> void:
 
 ## Forces full redraw
 func redraw(cards: Array[CardSpec]) -> void:
+	space_refs = []
 	for child in $Hand.get_children():
 		$Hand.remove_child(child)
 		child.queue_free()
@@ -38,12 +31,14 @@ func redraw(cards: Array[CardSpec]) -> void:
 		if spec == null:
 			continue
 		
-		# TODO: probably need a factory method to prevent the double-init
 		var space := CARD_SPACE.instantiate()
 		space.card_spec = spec
 		space.has_card = true
 		space.z_index = 100 * i
+		space.card_tapped.connect(card_selected.emit.bind(spec))
+		space.card_picked_up.connect(card_selected.emit.bind(spec))
 		$Hand.add_child(space)
+		space_refs.append(space)
 
 	var sep_index := clampi(
 		$Hand.get_child_count() - 1,
