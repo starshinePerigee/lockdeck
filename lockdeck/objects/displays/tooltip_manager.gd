@@ -44,18 +44,20 @@ static func request_widget_tooltip(rect: Rect2, widget: Control) -> void:
 static func request_tooltip_close() -> void:
 	if not _instance:
 		return
-	_instance._hide_tooltip()
+	if _instance._displayed_request:
+		_instance._hide_tooltip()
 	_instance._request_queue = []
 
+const WINODW := Vector2(960.0, 540.0)
+
 func _get_tooltip_pos(rect: Rect2, tooltip_size: Vector2) -> Vector2:
-	var window: Vector2 = get_viewport().size
 	# each bias is "how much space is there between the specified border and the rect" 
 	var left_bias := rect.position.x
-	var right_bias := window.x - rect.end.x
+	var right_bias := WINODW.x - rect.end.x
 	var show_left := right_bias < left_bias
 	
 	var top_bias := rect.position.y
-	var bottom_bias := window.y - rect.end.y
+	var bottom_bias := WINODW.y - rect.end.y
 	var show_top := bottom_bias < top_bias
 	
 	var x: float

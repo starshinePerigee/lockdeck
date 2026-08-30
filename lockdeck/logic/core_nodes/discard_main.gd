@@ -86,9 +86,9 @@ func core_unhover() -> void:
 	pass
 
 func request_tooltip() -> void:
-	var rect: Rect2 = $DiscardIcon.get_global_rect()
-	if not icon_selected:
-		rect = rect.grow_side(Side.SIDE_TOP, -12)
+	var rect: Rect2 = $DiscardIcon/TooltipTrigger.get_global_rect()
+	if icon_selected:
+		rect = rect.grow_side(Side.SIDE_TOP, 12)
 	TooltipManager.request_tooltip(
 		rect,
 		(
@@ -114,6 +114,6 @@ func request_button_tooltip() -> void:
 	)
 
 func _ready() -> void:
-	$DiscardIcon.mouse_entered.connect(request_tooltip)
+	$DiscardIcon/TooltipTrigger.mouse_entered.connect(request_tooltip)
 	$DiscardLabel.mouse_entered.connect(request_button_tooltip)
 	$DiscardLabel.pressed.connect(show_display)
