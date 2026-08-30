@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://3tt7yy0bstia"]
+[gd_scene load_steps=18 format=3 uid="uid://3tt7yy0bstia"]
 
 [ext_resource type="Texture2D" uid="uid://v0438wjnd4w0" path="res://assets/card/card_bg.png" id="1_0dxge"]
-[ext_resource type="Texture2D" uid="uid://csrnajdiivx3q" path="res://assets/card/card_back.png" id="2_0dxge"]
+[ext_resource type="Texture2D" uid="uid://jlf5gwpkv344" path="res://assets/card/card_swipe.png" id="4_xpvy4"]
 [ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
 [ext_resource type="Script" uid="uid://ddxbcyvqdaxxg" path="res://objects/card/pick_card.gd" id="5_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://un4p6k1icu2m" path="res://assets/picks/pick_debug_card.png" id="6_0dxge"]
+[ext_resource type="Texture2D" uid="uid://dxkbou4lufs8c" path="res://assets/card/frame_normal.png" id="7_jlvwl"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://dbweirtd3gtdb" path="res://assets/card/card_textbox.png" id="8_ll2st"]
 [ext_resource type="Texture2D" uid="uid://6p18c7vtuqf5" path="res://assets/card/card_titlebox.png" id="8_xpvy4"]
@@ -38,43 +39,47 @@ value = 3
 script = ExtResource("7_xpvy4")
 value = 0
 
-[node name="PickCard" type="TextureButton"]
+[node name="PickCard" type="Button"]
 custom_minimum_size = Vector2(128, 160)
 offset_right = 128.0
 offset_bottom = 160.0
-texture_normal = ExtResource("1_0dxge")
-texture_disabled = ExtResource("2_0dxge")
 script = ExtResource("5_xpvy4")
 
-[node name="EffectBar" parent="." instance=ExtResource("5_0je1g")]
-z_index = 50
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
+[node name="Art" type="Control" parent="."]
 anchors_preset = 0
-offset_left = -64.0
-offset_top = 10.0
-offset_right = 64.0
-offset_bottom = 138.0
-effect_stacks = Dictionary[int, Array]({
--1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
-0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
-2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_weuou")]),
-3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_6qvwq"), SubResource("Resource_s2nqy")])
-})
+mouse_filter = 1
 
-[node name="PickArt" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="Art"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_0dxge")
+
+[node name="Frame" type="TextureRect" parent="Art"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 160.0
+texture = ExtResource("7_jlvwl")
+
+[node name="Swipe" type="TextureRect" parent="Art"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 160.0
+texture = ExtResource("4_xpvy4")
+
+[node name="PickArt" type="TextureRect" parent="Art"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0
 texture = ExtResource("6_0dxge")
 
-[node name="TitleBox" type="TextureRect" parent="."]
+[node name="TitleBox" type="TextureRect" parent="Art"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0
 texture = ExtResource("8_xpvy4")
 
-[node name="Title" type="Label" parent="TitleBox"]
+[node name="Title" type="Label" parent="Art/TitleBox"]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 135.0
@@ -85,14 +90,14 @@ text = "Debug"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="TextBox" type="TextureRect" parent="."]
+[node name="TextBox" type="TextureRect" parent="Art"]
 visible = false
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0
 texture = ExtResource("8_ll2st")
 
-[node name="Text" type="RichTextLabel" parent="TextBox"]
+[node name="Text" type="RichTextLabel" parent="Art/TextBox"]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 89.0
@@ -107,7 +112,22 @@ scroll_active = false
 autowrap_mode = 2
 shortcut_keys_enabled = false
 
-[node name="Tallies" type="Sprite2D" parent="."]
+[node name="EffectBar" parent="Art" instance=ExtResource("5_0je1g")]
+z_index = 50
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+anchors_preset = 0
+offset_top = 2.0
+offset_right = 128.0
+offset_bottom = 130.0
+effect_stacks = Dictionary[int, Array]({
+-1: Array[ExtResource("7_xpvy4")]([SubResource("Resource_1sytb")]),
+0: Array[ExtResource("7_xpvy4")]([SubResource("Resource_8lkom"), SubResource("Resource_hiufj"), SubResource("Resource_lyvnw")]),
+2: Array[ExtResource("7_xpvy4")]([SubResource("Resource_weuou")]),
+3: Array[ExtResource("7_xpvy4")]([SubResource("Resource_6qvwq"), SubResource("Resource_s2nqy")])
+})
+
+[node name="Tallies" type="Sprite2D" parent="Art"]
 position = Vector2(64, 120)
 texture = ExtResource("10_xpvy4")
 hframes = 12

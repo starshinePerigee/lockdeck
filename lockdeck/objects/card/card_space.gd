@@ -115,6 +115,7 @@ func snapback() -> void:
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
 	$PickCard.tooltippable = true
+	$PickCard.force_normal = false
 
 func _set_texture():
 	if not is_node_ready():
@@ -137,6 +138,7 @@ func _process(_delta: float) -> void:
 				_dragging = true
 				z_boost = true
 				$PickCard.tooltippable = false
+				$PickCard.force_normal = true
 				card_picked_up.emit()
 		else:
 			$PickCard.set_position(
@@ -146,6 +148,7 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)	
+		
 	_set_texture()
 	clear_selected()
 	
@@ -157,6 +160,7 @@ func get_mouse_rect() -> Rect2:
 
 func core_hover() -> void:
 	z_boost = true
+	get_parent().move_child(self, -1)
 
 func core_unhover() -> void:
 	if not _selected:

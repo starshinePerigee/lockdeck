@@ -11,9 +11,10 @@ offset_bottom = 160.0
 mouse_filter = 2
 script = ExtResource("1_ph4ca")
 
-[node name="Hand" type="HBoxContainer" parent="."]
+[node name="Hand" type="Control" parent="."]
 custom_minimum_size = Vector2(768, 160)
 layout_mode = 2
+anchors_preset = 0
+offset_right = 768.0
+offset_bottom = 160.0
 mouse_filter = 2
-theme_override_constants/separation = 0
-alignment = 1

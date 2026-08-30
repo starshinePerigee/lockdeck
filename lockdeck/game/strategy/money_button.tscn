@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dj40cm7uff2bc" path="res://game/strategy/money_button.gd" id="1_h5a62"]
 [ext_resource type="Theme" uid="uid://ceiwumox6242k" path="res://assets/themes/hol_default_ii.tres" id="1_lg6oa"]
-[ext_resource type="PackedScene" uid="uid://b0c7icsd8ihh3" path="res://objects/card/card_button.tscn" id="2_tww1t"]
+[ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="3_lg6oa"]
 [ext_resource type="Texture2D" uid="uid://b3oaypwro80q0" path="res://assets/card/removal_x.png" id="3_tww1t"]
 
 [node name="MoneyButton" type="MarginContainer"]
@@ -16,18 +16,9 @@ script = ExtResource("1_h5a62")
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="CardButton" parent="VBoxContainer" instance=ExtResource("2_tww1t")]
+[node name="CardButton" parent="VBoxContainer" instance=ExtResource("3_lg6oa")]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="RemovalHighlight" type="TextureRect" parent="VBoxContainer/CardButton/PickCard" index="5"]
-unique_name_in_owner = true
-visible = false
-z_index = 55
-layout_mode = 0
-offset_right = 128.0
-offset_bottom = 160.0
-texture = ExtResource("3_tww1t")
 
 [node name="Control" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(128, 26)
@@ -43,4 +34,9 @@ offset_bottom = 26.0
 text = "MONDY BTN"
 horizontal_alignment = 1
 
-[editable path="VBoxContainer/CardButton"]
+[node name="VBoxContainer_CardButton_PickCard#RemovalHighlight" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 55
+layout_mode = 2
+texture = ExtResource("3_tww1t")

@@ -81,7 +81,7 @@ func valid_targets() -> Array[Control]:
 ## get_mouse_rect, core_hover, core_unhover
 func valid_hovers() -> Array[Control]:
 	var hovers: Array[Control] = []
-	hovers.append_array($HandMain/Hand.space_refs)
+	hovers.append_array($HandMain/Hand.get_spaces())
 	hovers.append_array(valid_targets())
 	return hovers
 
@@ -235,7 +235,7 @@ func unhighlight_all() -> void:
 	if $HoverRect.visible:
 		$HoverRect.position = Vector2()
 		$HoverRect.size = Vector2()
-	for space in $HandMain/Hand.space_refs:
+	for space in $HandMain/Hand.get_spaces():
 		space.highlighted = false
 	for target in valid_targets():
 		target.core_unhighlight()
