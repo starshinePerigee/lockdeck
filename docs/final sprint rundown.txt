@@ -4,11 +4,11 @@ x next depths and depth deck flow
 x saving and loading
 x settings
 x ambience and music
+- input sprint (fix the input bugs frfr)
 - post game screen
 - animation sprint (between locks, push effects, card draw and flow, card snapback, sound effects 1)
 - meta 0 (knucklebones, unlocking new depths)
 - final major assets (picks, home screen, load screen, strat hub, loot chest)
-- input sprint (fix the input bugs frfr)
 - tutorial
 - balance pass 1
 - final polish 1

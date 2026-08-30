@@ -16,7 +16,7 @@ func get_pick(selected: String) -> CardSpec:
 		if t.pick_name == selected:
 			return CardSpec.from_template(t)
 	push_error("Could not find pick from selector!")
-	return CardSpec.from_template(PickTemplates.DEBUG)
+	return PickTemplates.DEBUG
 
 func update_card(dropdown_index: int):
 	var selected: String = $CardSelectionOption.get_item_text(dropdown_index)
@@ -123,7 +123,7 @@ func _ready() -> void:
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
-	$CardSpace.card_spec = CardSpec.from_template(PickTemplates.DEBUG)
+	$CardSpace.card_spec = PickTemplates.DEBUG
 	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)

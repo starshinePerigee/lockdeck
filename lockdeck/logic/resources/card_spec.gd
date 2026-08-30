@@ -74,3 +74,8 @@ func _init(
 	texture = texture_
 	effects.assign(effects_)
 	shop_value = 15 + 5 * rarity
+
+static var DEBUG: CardSpec
+
+static func _static_init() -> void:
+	DEBUG = CardSpec.from_template(PickTemplates.DEBUG)

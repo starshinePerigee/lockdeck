@@ -5,10 +5,6 @@ const DISCARD_SELECTED := preload("res://assets/hand/discard_selected.png")
 const DISCARD_DESELECTED := preload("res://assets/hand/discard_deselected.png")
 
 ## Discard pile pressed
-signal discard_pressed()
-signal discard_hovered()
-signal discard_unhovered()
-
 signal display_cards(Array)
 
 @export var cards: Array[CardSpec]
@@ -23,34 +19,8 @@ signal display_cards(Array)
 		icon_selected = v
 		if icon_selected:
 			$DiscardIcon.texture = DISCARD_SELECTED
-			discard_hovered.emit()
 		else:
 			$DiscardIcon.texture = DISCARD_DESELECTED
-			discard_unhovered.emit()
-
-## Both listening_for_ variables might be unnecessary actually
-@export var listening_for_mouse: bool = false
-
-func do_mouse_enter() -> void:
-	if listening_for_mouse:
-		icon_selected = true
-
-func do_mouse_exit() -> void:
-	if listening_for_mouse:
-		icon_selected = false
-
-@export var listening_for_drag: bool = false
-
-func _handle_enter_exit(area: Area2D, entered: bool) -> void:
-	if not listening_for_drag:
-		return
-	var parent := area.get_parent()
-	if parent is PickCard:
-		icon_selected = entered
-
-## Returns true a a card was dragged in this area
-func is_dragged_into() -> bool:
-	return listening_for_drag and icon_selected
 
 func count() -> int:
 	return len(cards)
@@ -95,6 +65,26 @@ func update_label(n: int = -1) -> void:
 func show_display() -> void:
 	display_cards.emit(cards)
 
+func get_drop_area() -> Area2D:
+	return $DropArea
+
+func get_mouse_rect() -> Rect2:
+	var rect: Rect2 = $DropArea/CollisionShape2D.get_shape().get_rect()
+	rect.position += $DropArea/CollisionShape2D.global_position
+	return rect
+
+func core_highlight() -> void:
+	icon_selected = true
+
+func core_unhighlight() -> void:
+	icon_selected = false
+
+func core_hover() -> void:
+	pass
+
+func core_unhover() -> void:
+	pass
+
 func request_tooltip() -> void:
 	var rect: Rect2 = $DiscardIcon.get_global_rect()
 	if not icon_selected:
@@ -124,11 +114,6 @@ func request_button_tooltip() -> void:
 	)
 
 func _ready() -> void:
-	$DiscardIcon.discard_icon_clicked.connect(discard_pressed.emit)
-	$DiscardIcon.mouse_entered.connect(do_mouse_enter)
 	$DiscardIcon.mouse_entered.connect(request_tooltip)
-	$DiscardIcon.mouse_exited.connect(do_mouse_exit)
-	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
-	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
 	$DiscardLabel.mouse_entered.connect(request_button_tooltip)
 	$DiscardLabel.pressed.connect(show_display)

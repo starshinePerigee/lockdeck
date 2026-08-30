@@ -3,24 +3,14 @@ extends TextureRect
 ## Note that despite being used for empty spaces, this always has a child PickCard - just hidden.
 class_name CardSpace
 
-## Card is present and clicked (could be tap, could be drag)
-signal card_clicked()
 ## Card is tapped (clicked and relesaed within short distance)
 signal card_tapped()
 ## Drag started
-signal card_picked_up(Area2D)
-## Drag is significant
-signal drag_definitive()
+signal card_picked_up()
 ## Drag eneded
-signal card_dropped(Area2D)
+signal card_dropped()
 
-enum DragState {
-	NOT,
-	DRAG,
-	SUPERDRAG
-}
-
-var _dragging := DragState.NOT
+var _dragging := false
 var _active := false
 var mouse_start_position := Vector2()
 
@@ -42,7 +32,7 @@ const HIGHLIGHT_OFFSET := 64
 		closed = v
 		_set_texture()
 
-## True if there is a card in this space, and if that card should be drawn
+## True if there is a card in this space, and if that card should be shown
 @export var has_card: bool = false:
 	set(v):
 		has_card = v
@@ -53,8 +43,11 @@ const HIGHLIGHT_OFFSET := 64
 		highlighted = v
 		_set_texture()
 
+var _selected := false
+
 ## Draw highlight and pop card
 func set_selected() -> void:
+	_selected = true
 	$HighlightRect.z_index = 90
 	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
 	$HighlightRect.visible = true
@@ -64,6 +57,7 @@ func set_selected() -> void:
 
 ## Unpop card
 func clear_selected() -> void:
+	_selected = false
 	$HighlightRect.z_index = -10
 	$HighlightRect.position = Vector2(-5, -5)
 	$HighlightRect.visible = false
@@ -92,23 +86,34 @@ func clear_selected() -> void:
 
 func _start_click():
 	if has_card:
+		_cancel_snapback = false
 		_active = true
-		card_clicked.emit()
 		if draggable:
 			mouse_start_position = get_local_mouse_position()
 
 func _end_click():
 	if _active:
-		if _dragging == DragState.NOT:
+		if not _dragging:
 			card_tapped.emit()
 		else:
-			card_dropped.emit($PickCard/Area2D)
+			z_boost = false
+			card_dropped.emit()
 			call_deferred("snapback")
 	_active = false
-	_dragging = DragState.NOT
+	_dragging = false
 
-func snapback():
-	$PickCard.position = Vector2()
+var _cancel_snapback := false
+
+func cancel_snapback() -> void:
+	_cancel_snapback = true
+
+func snapback() -> void:
+	if _cancel_snapback:
+		return
+	var tween := get_tree().create_tween()
+	var distance: float = Vector2().distance_to($PickCard.position)
+	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
 	$PickCard.tooltippable = true
 
 func _set_texture():
@@ -127,16 +132,13 @@ func _set_texture():
 func _process(_delta: float) -> void:
 	if _active:
 		var curr_mouse_position := get_local_mouse_position()
-		if _dragging == DragState.NOT and draggable:
+		if not _dragging and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
-				_dragging = DragState.DRAG
+				_dragging = true
+				z_boost = true
 				$PickCard.tooltippable = false
-				card_picked_up.emit($PickCard/Area2D)
-		if _dragging == DragState.DRAG:
-			if curr_mouse_position.distance_to(mouse_start_position) >= SUPER_DRAG_DISTANCE:
-				_dragging = DragState.SUPERDRAG
-				drag_definitive.emit()
-		if _dragging != DragState.NOT:
+				card_picked_up.emit()
+		else:
 			$PickCard.set_position(
 				get_local_mouse_position() - mouse_start_position
 			)
@@ -146,6 +148,19 @@ func _ready():
 	$PickCard.button_up.connect(_end_click)	
 	_set_texture()
 	clear_selected()
+	
+	if get_tree().current_scene == self:
+		card_spec = CardSpec.DEBUG
 
-func get_area() -> Area2D:
-	return $Area2D
+func get_mouse_rect() -> Rect2:
+	return $PickCard.get_global_rect()
+
+func core_hover() -> void:
+	z_boost = true
+
+func core_unhover() -> void:
+	if not _selected:
+		z_boost = false
+
+func get_card_area() -> Area2D:
+	return $PickCard/Area2D
