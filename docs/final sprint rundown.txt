@@ -5,8 +5,8 @@ x saving and loading
 x settings
 x ambience and music
 x input sprint (fix the input bugs frfr)
-- final major assets (picks, home screen, load screen, loot chest)
-- animation sprint (between locks, push effects, card draw and flow, sound effects 1)
+- final major assets (picks, home screen, load screen, loot chest, between locks)
+- animation sprint (push effects, card draw and flow, sound effects 1)
 - knucklebones and new victory
 - tutorial
 - post game screen

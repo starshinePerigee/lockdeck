@@ -4,8 +4,6 @@ CardDisplay should have the card grid full-panel and the title and close hint ov
 
 Make end turn visibly a button via outline
 
-Move next depths into its own window, with tooltips and a scroll
-
 RepairWidget is permanently fucked
 
 Continue -> buttons change size on confirm, which is weird
