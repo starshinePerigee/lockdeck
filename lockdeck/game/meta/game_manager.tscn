@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dcnnwbxmgrvx2"]
 
 [ext_resource type="Script" uid="uid://bj3uatmntqbfg" path="res://game/meta/game_manager.gd" id="1_hcbws"]
-[ext_resource type="PackedScene" uid="uid://6n5hdt0ihpyn" path="res://game/core/game_core.tscn" id="2_51x2c"]
+[ext_resource type="PackedScene" uid="uid://bql12v3dt5jn2" path="res://game/core/game_core.tscn" id="2_51x2c"]
 [ext_resource type="PackedScene" uid="uid://dk2f6qb81xv2r" path="res://game/meta/between_locks.tscn" id="3_51x2c"]
 [ext_resource type="PackedScene" uid="uid://b432wp5ei356c" path="res://game/meta/loot_main.tscn" id="4_bujib"]
 [ext_resource type="PackedScene" uid="uid://t14tg1tt2anv" path="res://game/meta/strategy_hub.tscn" id="4_vpla2"]
