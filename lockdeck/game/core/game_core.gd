@@ -151,7 +151,7 @@ func _do_target() -> void:
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if current_state == InputState.ACTIVE_DRAG:
 		if not _current_area:
 			push_error("In drag state without active area?")

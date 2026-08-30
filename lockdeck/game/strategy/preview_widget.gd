@@ -49,7 +49,7 @@ func update(game: GameSpec) -> void:
 	%PinsLabel.text = "%s pins maximum" % game.get_max_pin_count()
 	_update_depth_preview(game)
 
-func reset(game: GameSpec) -> void:
+func reset(_game: GameSpec) -> void:
 	pass
 
 func _ready() -> void:
