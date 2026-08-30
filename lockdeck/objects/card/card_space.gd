@@ -48,9 +48,6 @@ var _selected := false
 ## Draw highlight and pop card
 func set_selected() -> void:
 	_selected = true
-	$HighlightRect.z_index = 90
-	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
-	$HighlightRect.visible = true
 	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
 	$PickCard.tooltippable = false
 	z_boost = true
@@ -58,9 +55,6 @@ func set_selected() -> void:
 ## Unpop card
 func clear_selected() -> void:
 	_selected = false
-	$HighlightRect.z_index = -10
-	$HighlightRect.position = Vector2(-5, -5)
-	$HighlightRect.visible = false
 	$PickCard.position = Vector2(0, 0)
 	$PickCard.tooltippable = true
 	z_boost = false
@@ -122,7 +116,6 @@ func _set_texture():
 		await ready
 
 	$PickCard.visible = has_card
-	$HighlightRect.visible = highlighted
 	if has_card and false:  # trying leaving the outline out
 		texture = TEXTURE_EMPTY
 	elif closed:

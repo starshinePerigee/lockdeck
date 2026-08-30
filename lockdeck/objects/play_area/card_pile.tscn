@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cngnvxsdjt452"]
+[gd_scene load_steps=5 format=3 uid="uid://cngnvxsdjt452"]
 
 [ext_resource type="Texture2D" uid="uid://cqpixqeatajej" path="res://assets/card/space.png" id="1_uy38q"]
 [ext_resource type="Script" uid="uid://buxxq0w3hh1gr" path="res://objects/play_area/card_pile.gd" id="2_xkj5j"]
-[ext_resource type="Texture2D" uid="uid://c53hgmilngf7p" path="res://assets/card/highlight.png" id="3_xe7x2"]
-[ext_resource type="Texture2D" uid="uid://ilprukb2umvv" path="res://assets/card/card_back_static.png" id="4_xe7x2"]
+[ext_resource type="Texture2D" uid="uid://b4gndeuhjcf4b" path="res://assets/card/card_back_static.png" id="4_xe7x2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bscuu"]
 
@@ -12,15 +11,6 @@ offset_right = 128.0
 offset_bottom = 160.0
 texture = ExtResource("1_uy38q")
 script = ExtResource("2_xkj5j")
-
-[node name="Highlight" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_left = -9.0
-offset_top = -5.0
-offset_right = 135.0
-offset_bottom = 171.0
-texture = ExtResource("3_xe7x2")
 
 [node name="Holder" type="Control" parent="."]
 anchors_preset = 0

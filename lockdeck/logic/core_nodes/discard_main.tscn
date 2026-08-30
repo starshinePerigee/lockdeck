@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://5io01qsv1qby"]
+[gd_scene load_steps=7 format=3 uid="uid://5io01qsv1qby"]
 
 [ext_resource type="Script" uid="uid://cbws7n2egd8ao" path="res://logic/core_nodes/discard_main.gd" id="1_0x64h"]
 [ext_resource type="PackedScene" uid="uid://cngnvxsdjt452" path="res://objects/play_area/card_pile.tscn" id="2_50n1f"]
 [ext_resource type="Texture2D" uid="uid://c2l3enbuq6eol" path="res://assets/hand/discard_deselected.png" id="3_4350w"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1ngcg"]
+load_path = "res://.godot/imported/highlight.png-a8e38f95a5734601730be393f7f5061d.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4350w"]
+load_path = "res://.godot/imported/card_back_static.png-5005bfacb8bf3c5ec48606062eb14f5f.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ngcg"]
 size = Vector2(125.75, 100)
@@ -23,6 +29,24 @@ layout_mode = 0
 offset_left = 160.0
 offset_right = 288.0
 rotation = 1.5708
+
+[node name="Highlight" parent="CardPile" index="0"]
+texture = SubResource("CompressedTexture2D_1ngcg")
+
+[node name="CardBack1" parent="CardPile/Holder" index="0"]
+texture = SubResource("CompressedTexture2D_4350w")
+
+[node name="CardBack2" parent="CardPile/Holder" index="1"]
+texture = SubResource("CompressedTexture2D_4350w")
+
+[node name="CardBack3" parent="CardPile/Holder" index="2"]
+texture = SubResource("CompressedTexture2D_4350w")
+
+[node name="CardBack4" parent="CardPile/Holder" index="3"]
+texture = SubResource("CompressedTexture2D_4350w")
+
+[node name="CardBack5" parent="CardPile/Holder" index="4"]
+texture = SubResource("CompressedTexture2D_4350w")
 
 [node name="Button" parent="CardPile" index="2"]
 offset_left = -89.0
