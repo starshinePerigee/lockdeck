@@ -12,6 +12,7 @@ script = ExtResource("1_d72k1")
 
 [node name="Rect" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 3499
 z_as_relative = false
 layout_mode = 0
