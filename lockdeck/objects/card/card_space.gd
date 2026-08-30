@@ -82,12 +82,14 @@ func clear_selected() -> void:
 
 func _start_click():
 	if has_card:
+		$PickCard.z_index = 1200
 		_active = true
 		if draggable:
 			mouse_start_position = get_local_mouse_position()
 
 func _end_click():
 	if _active:
+		$PickCard.z_index = 0
 		if not _dragging:
 			card_tapped.emit()
 		else:

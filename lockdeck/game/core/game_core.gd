@@ -48,6 +48,12 @@ enum InputState {
 }
 var current_state := InputState.INACTIVE
 
+func _process(delta: float) -> void:
+	pass
+
+func _input(event: InputEvent) -> void:
+	pass
+
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
 
