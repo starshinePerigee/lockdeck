@@ -125,7 +125,7 @@ func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
 	
 	if old_bomb >= 0:
 		var bomb_effect: EffectSpec
-		if old_bomb >= pin_position:
+		if old_bomb > pin_position:
 			# boom
 			update_result(Results.BREAK, old_bomb)
 			bomb_effect = EffectSpec.new(Effects.BREAK)
@@ -194,7 +194,7 @@ func execute_effect(effect) -> void:
 		Effects.GATE_UNLOCK:
 			do_gate_unlock()
 		Effects.BOMB:
-			do_bomb(pin_position)
+			pass
 		Effects.DRAW_FROM_DISCARD:
 			# handled in end_step_spec
 			pass
@@ -254,7 +254,7 @@ func on_reveal_trigger(pos: int, effect: EffectSpec) -> void:
 
 ## Called when a pin is advanced past
 func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
-	if pos > bomb_pos:
+	if pos >= bomb_pos:
 		bomb_pos = -1
 	match get_live_depth(pos):
 		Depths.GATE_LOCKED:
