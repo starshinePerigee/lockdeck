@@ -76,6 +76,8 @@ func _squash_columns() -> void:
 		for stack in $Art/EffectBar.get_children():
 			stack.add_theme_constant_override("separation", separation)
 
+static var material_dictionary: Dictionary[PickTemplates.Rarities, ShaderMaterial] = {}
+
 ## Redraws when a new card is loaded
 func _redraw() -> void:
 	if not is_node_ready():
@@ -86,7 +88,7 @@ func _redraw() -> void:
 	$Art/EffectBar.effect_stacks = card_spec.effects
 	$Art/EffectBar.redraw()
 	$Art/PickArt.texture = card_spec.template.texture
-	$Art/PickArt.set_instance_shader_parameter("new",card_spec.color())
+	$Art/PickArt.material = material_dictionary[card_spec.template.rarity]
 	$Art/PickShadow.texture = card_spec.template.bg_texture
 	$Art/TitleBox/Title.text = card_spec.pick_name.capitalize()
 	$Art/TextBox/Text.text = card_spec.ability.description
@@ -105,6 +107,13 @@ func request_tooltip() -> void:
 	
 
 func _ready() -> void:
+	if not material_dictionary:
+		for rarity in PickTemplates.Rarities.values():
+			var color: Color = PickTemplates.RARITY_COLORS[rarity]
+			var new_material: ShaderMaterial = $Art/PickArt.material.duplicate()
+			new_material.set_shader_parameter("new", color)
+			material_dictionary[rarity] = new_material
+	
 	_redraw()
 	mouse_entered.connect(request_tooltip)
 	mouse_entered.connect(_do_hover)
