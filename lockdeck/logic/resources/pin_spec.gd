@@ -566,6 +566,7 @@ func reset_exhaustion() -> void:
 	activated.fill(false)
 	activated[0] = true
 	activated[-1] = true
+	activated[pin_position] = true
 
 ## Performs the end of turn actions
 func end_turn_and_fall() -> void:
