@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://4nktv0wsa7s3"]
+[gd_scene load_steps=8 format=3 uid="uid://4nktv0wsa7s3"]
 
 [ext_resource type="Script" uid="uid://c5aim8ml7s4kv" path="res://game/main.gd" id="1_xtpaf"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_emt18"]
 [ext_resource type="PackedScene" uid="uid://5xk2bth3ug3d" path="res://game/menus/top_level_menus.tscn" id="4_dgpao"]
 [ext_resource type="PackedScene" uid="uid://dcnnwbxmgrvx2" path="res://game/meta/game_manager.tscn" id="4_wjctj"]
 [ext_resource type="PackedScene" uid="uid://b0shtp3l3acc8" path="res://game/menus/settings_main.tscn" id="5_dgpao"]
-[ext_resource type="PackedScene" uid="uid://d0x4a02iuivck" path="res://game/menus/wip_notif.tscn" id="6_dgpao"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="7_wjctj"]
 [ext_resource type="PackedScene" uid="uid://ddv5rycyrni1h" path="res://objects/displays/tooltip_manager.tscn" id="8_xkbyp"]
 
@@ -47,20 +46,6 @@ offset_right = 57.0
 offset_bottom = 540.0
 theme_type_variation = &"TinyAccentText"
 text = "v0.0.0"
-
-[node name="WipNotif" parent="." instance=ExtResource("6_dgpao")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -192.0
-offset_top = -143.5
-offset_right = 192.0
-offset_bottom = 143.5
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="BgmMain" parent="." instance=ExtResource("7_wjctj")]
 

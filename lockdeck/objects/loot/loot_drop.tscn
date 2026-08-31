@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0hjes7wdm1g3"]
+[gd_scene load_steps=7 format=3 uid="uid://d0hjes7wdm1g3"]
 
 [ext_resource type="Script" uid="uid://c3dg1hkjjo2hu" path="res://objects/loot/loot_drop.gd" id="1_g4gmb"]
+[ext_resource type="Texture2D" uid="uid://boinp61o5pujk" path="res://assets/menus/lootbox.png" id="2_7nssv"]
+[ext_resource type="Texture2D" uid="uid://drg4o4jgntg35" path="res://assets/menus/lootback.png" id="2_n2xwd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2o7sf"]
 
@@ -20,6 +22,17 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_g4gmb")
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -20
+layout_mode = 0
+offset_left = 32.0
+offset_right = 920.0
+offset_bottom = 540.0
+mouse_filter = 2
+texture = ExtResource("2_n2xwd")
+expand_mode = 1
+stretch_mode = 1
+
 [node name="Container" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_2o7sf")
 
@@ -27,34 +40,13 @@ physics_material_override = SubResource("PhysicsMaterial_2o7sf")
 position = Vector2(0, -476)
 shape = SubResource("RectangleShape2D_g4gmb")
 
-[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D1"]
-offset_left = -64.0
-offset_top = 476.0
-offset_right = 64.0
-offset_bottom = 1016.0
-color = Color(0.404167, 0.266835, 0.162841, 1)
-
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Container"]
 position = Vector2(960, -476)
 shape = SubResource("RectangleShape2D_g4gmb")
 
-[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D2"]
-offset_left = -64.0
-offset_top = 476.0
-offset_right = 64.0
-offset_bottom = 1016.0
-color = Color(0.404167, 0.266835, 0.162841, 1)
-
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Container"]
 position = Vector2(480, 540)
 shape = SubResource("RectangleShape2D_7nssv")
-
-[node name="ColorRect" type="ColorRect" parent="Container/CollisionShape2D3"]
-offset_left = -544.0
-offset_top = -64.0
-offset_right = 544.0
-offset_bottom = 64.0
-color = Color(0.404167, 0.266835, 0.162841, 1)
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Container"]
 position = Vector2(480, -1492)
@@ -63,3 +55,10 @@ shape = SubResource("RectangleShape2D_7nssv")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.05
 autostart = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_7nssv")

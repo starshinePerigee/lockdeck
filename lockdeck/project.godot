@@ -13,6 +13,10 @@ config_version=5
 config/name="lockdeck"
 run/main_scene="uid://4nktv0wsa7s3"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.0352941, 0.0352941, 0.0588235, 1)
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/image="uid://c132mai51bl5h"
 config/icon="res://icon.svg"
 
 [audio]
