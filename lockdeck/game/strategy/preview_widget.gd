@@ -26,7 +26,7 @@ func _update_depth_preview(game: GameSpec) -> void:
 		
 		match difficulty:
 			DepthTemplates.Difficulty.ESSENTIAL:
-				label.text = "Always and forever:"
+				label.text = "Always:"
 			DepthTemplates.Difficulty.CRITICAL:
 				label.text = "Hazards:"
 			DepthTemplates.Difficulty.ANNOYING:
