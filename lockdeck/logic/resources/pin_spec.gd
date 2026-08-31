@@ -257,6 +257,8 @@ func on_advance_trigger(pos: int, effect: EffectSpec) -> void:
 	if pos >= bomb_pos:
 		bomb_pos = -1
 	match get_live_depth(pos):
+#		Depths.TRAP:
+#			trigger_depth(pos, effect, true)
 		Depths.GATE_LOCKED:
 			effect.broke_pick = true
 			update_result(Results.BREAK, pos)

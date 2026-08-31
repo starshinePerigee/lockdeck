@@ -217,7 +217,7 @@ static var WARN := Depths.new(
 
 static var TRAP := Depths.new(
 	"trap", DangerLevel.INVALID, Effects.DISARM,
-	("Breaks your pick if you try to test or reveal it, including if you push past it. "
+	("Breaks your pick if you try to test or reveal it, but not if you land on it or past it. "
 	+ "Like all depths, it does nothing if exhausted, so activating it disarms it.")
 )
 

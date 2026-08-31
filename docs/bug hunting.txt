@@ -1,6 +1,6 @@
 clicking a volume slider and holding the mouse down while going away from hover is jank af
 
-
+if you win and start a new game the congrats text doesn't show up
 
 trap doesn't work with push over the trap
 
