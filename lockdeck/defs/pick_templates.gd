@@ -930,7 +930,8 @@ static var NEEDLE := PickTemplates.new(
 	Families.NONE,
 	Archetypes.BULK_TEST,
 	Rarities.TEMPORARY,
-	"T[TT[PTT"
+	"T[TT[PTT",
+	"needle",
 )
 
 ## PPJJJ[PPJJJ
@@ -939,7 +940,8 @@ static var NAIL := PickTemplates.new(
 	Families.NONE,
 	Archetypes.END_TURN,
 	Rarities.TEMPORARY,
-	"PPJJJ[PPJJJ"
+	"PPJJJ[PPJJJ",
+	"nail",
 )
 
 ## P.RT
@@ -948,7 +950,8 @@ static var FISHHOOK := PickTemplates.new(
 	Families.NONE,
 	Archetypes.JUMP_TEST,
 	Rarities.TEMPORARY,
-	"P.RT"
+	"P.RT",
+	"fishook",
 )
 
 ## P[PP[PPP]JJ
@@ -957,7 +960,8 @@ static var HAIRPIN := PickTemplates.new(
 	Families.NONE,
 	Archetypes.THREE_PUSH,
 	Rarities.TEMPORARY,
-	"P[PP[PPP]JJ"
+	"P[PP[PPP]JJ",
+	"hairpin",
 )
 
 ## PT[PT[PPT]P
@@ -966,7 +970,8 @@ static var TOOTHPICK := PickTemplates.new(
 	Families.NONE,
 	Archetypes.BULK_PUSH,
 	Rarities.TEMPORARY,
-	"PT[PT[PPT]P"
+	"PT[PT[PPT]P",
+	"toothpick",
 )
 
 ## PPP[JJJ]PPP
@@ -975,7 +980,8 @@ static var OLD_KEY := PickTemplates.new(
 	Families.NONE,
 	Archetypes.ISOLATION,
 	Rarities.TEMPORARY,
-	"PPP[JJJ]PPP"
+	"PPP[JJJ]PPP",
+	"old_key"
 )
 #endregion
 
