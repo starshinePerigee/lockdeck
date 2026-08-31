@@ -1,7 +1,334 @@
-[gd_scene load_steps=3 format=3 uid="uid://dk2f6qb81xv2r"]
+[gd_scene load_steps=15 format=3 uid="uid://dk2f6qb81xv2r"]
 
 [ext_resource type="Script" uid="uid://boow6f7avfqqy" path="res://game/meta/between_locks.gd" id="1_op2j0"]
+[ext_resource type="Texture2D" uid="uid://cg03rn0ccp4xm" path="res://assets/menus/lock.png" id="3_87i8u"]
 [ext_resource type="PackedScene" uid="uid://cswtuur6co65u" path="res://objects/loot/display_coin.tscn" id="3_fmoul"]
+[ext_resource type="Texture2D" uid="uid://cqm218y11in1b" path="res://assets/menus/line.png" id="4_qc7cf"]
+[ext_resource type="Texture2D" uid="uid://d4lw5x2yvf146" path="res://assets/menus/loot.png" id="5_qc7cf"]
+[ext_resource type="Texture2D" uid="uid://cd33b1rqquxe7" path="res://assets/menus/clear.png" id="6_fqa36"]
+[ext_resource type="Texture2D" uid="uid://cckubrtkqn02q" path="res://assets/menus/current_pos.png" id="7_ks8ci"]
+
+[sub_resource type="Animation" id="Animation_ks8ci"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(54, 315)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ab2ku"]
+resource_name = "go_1"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(54, 315), Vector2(162, 314)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8yyhu"]
+resource_name = "go_2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(162, 314), Vector2(320, 314)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_i3cxo"]
+resource_name = "go_3"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(320, 314), Vector2(484, 309)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qqkgj"]
+resource_name = "go_4"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(484, 309), Vector2(642, 309)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lquwi"]
+resource_name = "go_0"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CurrentPos:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(54, 315)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Unlocks/Unlock1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks/Unlock2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Unlocks/Unlock3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ab2ku"]
+_data = {
+&"RESET": SubResource("Animation_ks8ci"),
+&"go_0": SubResource("Animation_lquwi"),
+&"go_1": SubResource("Animation_ab2ku"),
+&"go_2": SubResource("Animation_8yyhu"),
+&"go_3": SubResource("Animation_i3cxo"),
+&"go_4": SubResource("Animation_qqkgj")
+}
 
 [node name="BetweenLocks" type="Control"]
 layout_mode = 3
@@ -12,21 +339,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_op2j0")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 234.0
-offset_top = 186.0
-offset_right = 274.0
-offset_bottom = 205.0
-text = "Between lock summary page"
-
 [node name="SpeedBonusLabel" type="Label" parent="."]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 0
-offset_left = 234.0
-offset_top = 240.0
-offset_right = 490.0
-offset_bottom = 259.0
+offset_left = 362.0
+offset_top = 128.0
+offset_right = 618.0
+offset_bottom = 154.0
 text = "Speed bonus! +5 gold"
 
 [node name="DisplayCoin" parent="SpeedBonusLabel" instance=ExtResource("3_fmoul")]
@@ -35,3 +354,84 @@ offset_left = -62.0
 offset_top = -17.0
 offset_right = -254.0
 offset_bottom = 28.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 185.0
+offset_right = 768.0
+offset_bottom = 313.0
+theme_override_constants/separation = -48
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_87i8u")
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_qc7cf")
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_87i8u")
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_qc7cf")
+
+[node name="TextureRect5" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_87i8u")
+
+[node name="TextureRect6" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_qc7cf")
+
+[node name="TextureRect7" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_qc7cf")
+
+[node name="Unlocks" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Unlock1" type="TextureRect" parent="Unlocks"]
+visible = false
+layout_mode = 0
+offset_left = 175.0
+offset_top = 197.0
+offset_right = 303.0
+offset_bottom = 325.0
+texture = ExtResource("6_fqa36")
+
+[node name="Unlock2" type="TextureRect" parent="Unlocks"]
+visible = false
+layout_mode = 0
+offset_left = 332.0
+offset_top = 197.0
+offset_right = 460.0
+offset_bottom = 325.0
+texture = ExtResource("6_fqa36")
+
+[node name="Unlock3" type="TextureRect" parent="Unlocks"]
+visible = false
+layout_mode = 0
+offset_left = 494.0
+offset_top = 197.0
+offset_right = 622.0
+offset_bottom = 325.0
+texture = ExtResource("6_fqa36")
+
+[node name="CurrentPos" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 315.0
+offset_right = 182.0
+offset_bottom = 443.0
+texture = ExtResource("7_ks8ci")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ab2ku")
+}

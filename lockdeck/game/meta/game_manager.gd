@@ -30,7 +30,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
-	$BetweenLocks/SpeedBonusLabel.visible = false
+	$BetweenLocks.reset(1)
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(1)
 
@@ -40,6 +40,8 @@ func load_saved_game(saved_game: GameSpec):
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
+	print("Loading lock in heist: %s" % game.lock_in_heist)
+	$BetweenLocks.reset(game.lock_in_heist)
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(game.heist_number)
 
@@ -81,6 +83,7 @@ func end_loot() -> void:
 func end_strategy() -> void:
 	game.save()
 	$BetweenLocks/SpeedBonusLabel.visible = false
+	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("strategy to between")
 	heist_start.emit(game.heist_number)
 

@@ -16,7 +16,7 @@ const SAVE_PATH := "user://game_save.tres"
 
 ## Current heist, ONE INDEXED
 @export var heist_number: int = 1
-
+@export var lock_in_heist: int = 0
 @export var current_stage: int = -1
 
 ## Holds the full set of live cards
@@ -92,8 +92,10 @@ func get_next_level() -> LevelSpec:
 	match next_stage.stage:
 		LOCK:
 			lock_number += 1
+			lock_in_heist += 1
 		LOOT_STRAT:
 			heist_number += 1
+			lock_in_heist = 0
 		_:
 			pass
 	

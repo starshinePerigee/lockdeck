@@ -3,14 +3,12 @@ extends Control
 
 signal continue_to_next
 
-# TODO:
-# this should be pictoral representations, as you progress you unlock / open lock icons
-# [ ] > [] > [BOSS] > loot
+var current_pos: int = 1
 
-func first_animate() -> void:
+func reset(lock_in_set: int = 0) -> void:
+	current_pos = lock_in_set
 	$SpeedBonusLabel.visible = false
-	var timer := get_tree().create_timer(0.6)
-	timer.timeout.connect(continue_to_next.emit)
+	$AnimationPlayer.play("go_%s" % lock_in_set)
 
 func animate() -> void:
 	$SpeedBonusLabel/DisplayCoin.reset()
@@ -19,6 +17,8 @@ func animate() -> void:
 	if $SpeedBonusLabel.visible:
 		get_tree().create_timer(0.3).timeout.connect($SpeedBonusLabel/DisplayCoin.claim_coin)
 		get_tree().create_timer(2).timeout.connect($SpeedBonusLabel/DisplayCoin.reset)
+	current_pos += 1
+	$AnimationPlayer.play("go_%s" % current_pos)
 
 func _ready() -> void:
 	pass
