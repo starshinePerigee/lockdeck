@@ -306,6 +306,7 @@ func dis_en_able_buttons(state: bool = true) -> void:
 			or _lock_input
 			or $LockBody/CountdownMain.count <= 0
 		)
+		$HandMain/Hand.disabled = state or _lock_input
 		$TrashMain.disabled = state
 		$DeckMain/DeckLabel.disabled = state
 		$DiscardMain/DiscardLabel.disabled = state
@@ -316,6 +317,7 @@ func dis_en_able_buttons(state: bool = true) -> void:
 func lock_input(state: bool = true) -> void:
 	_lock_input = state
 	$LockBody/CountdownMain.button_disable = state
+	$HandMain/Hand.disabled = state
 
 func show_failure(state: bool = true) -> void:
 	$FailureButton.visible = state

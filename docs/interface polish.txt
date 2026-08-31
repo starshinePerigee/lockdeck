@@ -6,6 +6,4 @@ Make end turn visibly a button via outline
 
 RepairWidget is permanently fucked
 
-Continue -> buttons change size on confirm, which is weird
-
 Move strat hub's continue to the top? Redo strat hub entirely? Some kind of strategy hub theming? (A table with a map? A skyrim underdepths drawing?)

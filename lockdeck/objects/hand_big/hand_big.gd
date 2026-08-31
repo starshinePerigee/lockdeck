@@ -14,6 +14,13 @@ const CARD_WIDTH := 128
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 
+## Disables meaningful card interactions
+var disabled := false:
+	set(v):
+		disabled = v
+		for child in $Hand.get_children():
+			child.disabled = disabled
+
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
 	$Hand.position = Vector2(0, HIDE_OFFSET)

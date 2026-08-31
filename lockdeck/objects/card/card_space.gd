@@ -13,6 +13,10 @@ signal card_dropped()
 var _dragging := false
 var _active := false
 var mouse_start_position := Vector2()
+var disabled := false:
+	set(v):
+		disabled = v
+		$PickCard.disabled = disabled
 
 const TEXTURE_OPEN := preload("res://assets/card/space.png")
 const TEXTURE_CLOSED := preload("res://assets/card/blocked.png")
