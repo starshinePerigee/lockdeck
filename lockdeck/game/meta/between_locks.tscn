@@ -15,13 +15,13 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("CurrentPos:position")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(54, 315)]
+"values": [Vector2(16, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -62,18 +62,18 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_ab2ku"]
 resource_name = "go_1"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("CurrentPos:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.3667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(54, 315), Vector2(162, 314)]
+"values": [Vector2(16, 218), Vector2(16, 218), Vector2(176, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -114,18 +114,18 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_8yyhu"]
 resource_name = "go_2"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("CurrentPos:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.3667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(162, 314), Vector2(320, 314)]
+"values": [Vector2(176, 218), Vector2(176, 218), Vector2(341, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -134,10 +134,10 @@ tracks/1/path = NodePath("Unlocks/Unlock1:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [false, true]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -166,18 +166,18 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_i3cxo"]
 resource_name = "go_3"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("CurrentPos:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.3667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(320, 314), Vector2(484, 309)]
+"values": [Vector2(341, 218), Vector2(341, 218), Vector2(498, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -198,10 +198,10 @@ tracks/2/path = NodePath("Unlocks/Unlock2:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [false, true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -218,18 +218,18 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_qqkgj"]
 resource_name = "go_4"
-length = 0.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("CurrentPos:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0666667, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.3667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(484, 309), Vector2(642, 309)]
+"values": [Vector2(498, 218), Vector2(498, 218), Vector2(655, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -262,10 +262,10 @@ tracks/3/path = NodePath("Unlocks/Unlock3:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_lquwi"]
@@ -281,7 +281,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(54, 315)]
+"values": [Vector2(16, 218)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -342,10 +342,10 @@ script = ExtResource("1_op2j0")
 [node name="SpeedBonusLabel" type="Label" parent="."]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 0
-offset_left = 362.0
-offset_top = 128.0
-offset_right = 618.0
-offset_bottom = 154.0
+offset_left = 373.0
+offset_top = 408.0
+offset_right = 629.0
+offset_bottom = 434.0
 text = "Speed bonus! +5 gold"
 
 [node name="DisplayCoin" parent="SpeedBonusLabel" instance=ExtResource("3_fmoul")]
@@ -356,12 +356,17 @@ offset_right = -254.0
 offset_bottom = 28.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 185.0
-offset_right = 768.0
-offset_bottom = 313.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -304.0
+offset_top = 104.0
+offset_right = 304.0
+offset_bottom = 232.0
+grow_horizontal = 2
 theme_override_constants/separation = -48
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
@@ -393,42 +398,37 @@ texture = ExtResource("5_qc7cf")
 
 [node name="Unlocks" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 189.0
+offset_top = 116.0
+offset_right = 229.0
+offset_bottom = 156.0
 
 [node name="Unlock1" type="TextureRect" parent="Unlocks"]
-visible = false
 layout_mode = 0
-offset_left = 175.0
-offset_top = 197.0
-offset_right = 303.0
-offset_bottom = 325.0
+offset_right = 128.0
+offset_bottom = 128.0
 texture = ExtResource("6_fqa36")
 
 [node name="Unlock2" type="TextureRect" parent="Unlocks"]
-visible = false
 layout_mode = 0
-offset_left = 332.0
-offset_top = 197.0
-offset_right = 460.0
-offset_bottom = 325.0
+offset_left = 161.0
+offset_right = 289.0
+offset_bottom = 128.0
 texture = ExtResource("6_fqa36")
 
 [node name="Unlock3" type="TextureRect" parent="Unlocks"]
-visible = false
 layout_mode = 0
-offset_left = 494.0
-offset_top = 197.0
-offset_right = 622.0
-offset_bottom = 325.0
+offset_left = 322.0
+offset_right = 450.0
+offset_bottom = 128.0
 texture = ExtResource("6_fqa36")
 
 [node name="CurrentPos" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 54.0
-offset_top = 315.0
-offset_right = 182.0
-offset_bottom = 443.0
+offset_left = 16.0
+offset_top = 218.0
+offset_right = 144.0
+offset_bottom = 346.0
 texture = ExtResource("7_ks8ci")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -289,6 +289,8 @@ layout_mode = 1
 
 [node name="DeckSelect" parent="." instance=ExtResource("2_cthtm")]
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
 
 [node name="Credits" parent="." instance=ExtResource("4_68a3w")]
 offset_left = 960.0

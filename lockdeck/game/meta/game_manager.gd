@@ -30,7 +30,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
-	$BetweenLocks.reset(1)
+	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(1)
 
