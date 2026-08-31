@@ -29,6 +29,14 @@ func add_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
 	redraw()
 
+func remove_card(card: CardSpec) -> void:
+	for i in range(len(cards)):
+		if cards[i].unique_id == card.unique_id:
+			cards.pop_at(i)
+			redraw()
+			return
+	push_warning("Failed to remove card %s with UID %s" % [card.pick_name, card.unique_id])
+
 ## Remove all cards
 func clear_all() -> void:
 	cards.clear()

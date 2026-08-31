@@ -3,22 +3,5 @@ show total number of each depth in lock ("X remaining") - means depth reference 
 s/jam/bind
 
 
-on end turn, start with current depth exhausted
-
-
 less options on ingots
 
-pick art: each archetype has its own shape, but then the highlight color changes with rarity
-(orc, dwarven, glass, malachite, ebony) ->
-- trash: dark grey
-- common: orange
-- basic: light yellow
-- rare: green
-- great: white
-
-
-put between locks after lock before loot
-
-
-
-use paper panel style for strat hub

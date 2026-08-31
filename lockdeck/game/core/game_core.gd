@@ -424,6 +424,16 @@ func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
 	if card in $HandMain.cards:
 		$HandMain.remove_card(card)
+	elif card in $DeckMain.cards:
+		$DeckMain.remove_card(card)
+	elif card in $DiscardMain.cards:
+		$DiscardMain.remove_cards([card])
+	else:
+		push_error(
+			"Tried to break card %s [%s] but could not locate!"
+			% [card.pick_name, card.unique_id]
+		)
+	
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)
 	else:
@@ -532,10 +542,20 @@ func cleanup_step() -> void:
 	update_status_widget()
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
+## Like discard, end turn also trips the null pick, although it'll break from deck instead
 func end_turn(count_down: bool = true) -> void:
 	$Notifications.clear()
 	$LastTest.visible = false
 	if count_down:
+		var all_cards: Array[CardSpec]
+		all_cards.append_array($DeckMain.cards)
+		all_cards.append_array($DiscardMain.cards)
+		all_cards.append_array($HandMain.cards)
+		do_pick(
+			_NULL_PICK,
+			0,
+			all_cards.pick_random()
+		)
 		$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
 	discard_hand()
