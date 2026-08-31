@@ -6,40 +6,13 @@
 
 [node name="TestCylinderMain" type="Node2D"]
 script = ExtResource("1_tgx1c")
+default_pick = "half diamond"
 
 [node name="CylinderMain" parent="." instance=ExtResource("1_gmt7f")]
 offset_left = 416.0
 offset_top = -12.0
 offset_right = 880.0
 offset_bottom = 596.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Anchor" type="Control" parent="CylinderMain"]
-layout_mode = 1
-anchor_left = -0.0107759
-anchor_top = -0.269737
-anchor_right = -0.0107759
-anchor_bottom = -0.269737
-offset_left = -135.0
-offset_top = 656.0
-offset_right = -95.0
-offset_bottom = 696.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Dot" type="ColorRect" parent="CylinderMain/Anchor"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(1, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="HighlightPos" type="Label" parent="CylinderMain/Anchor"]
-layout_mode = 0
-offset_left = -4.0
-offset_top = -39.0
-offset_right = 36.0
-offset_bottom = -26.0
-text = "-2"
 metadata/_edit_use_anchors_ = true
 
 [node name="AnchorCursor" type="Control" parent="CylinderMain"]

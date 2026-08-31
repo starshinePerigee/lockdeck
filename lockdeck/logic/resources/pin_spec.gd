@@ -227,10 +227,11 @@ func trigger_depth(pos: int, effect: EffectSpec, break_pick := false) -> void:
 		update_result(Results.TRIGGERED, pos)
 
 ## Called on each depth tested - used for on-test hooks
-func on_test_trigger(pos: int, effect: EffectSpec) -> void:
+func on_test_trigger(pos: int, effect: EffectSpec, from_push := false) -> void:
 	match get_live_depth(pos):
 		Depths.TRAP:
-			trigger_depth(pos, effect, true)
+			if not from_push:
+				trigger_depth(pos, effect, true)
 		Depths.TWIST:
 			twist_count += 1
 		Depths.BOMB:
@@ -323,11 +324,15 @@ func activate_and_get_depth(effect: EffectSpec = null) -> Depths:
 	return depth
 
 ## Checks a depth (or the current depth is none is provided), if it's not revealed
-func test_position(pos: int = -1, effect: EffectSpec = null) -> void:
+func test_position(
+	pos: int = -1,
+	effect: EffectSpec = null,
+	from_push := false
+) -> void:
 	if pos == -1:
 		pos = pin_position
 	
-	on_test_trigger(pos, effect)
+	on_test_trigger(pos, effect, from_push)
 	
 	if get_revealed(pos):
 		update_result(Results.NONE, pos)
@@ -366,7 +371,7 @@ func push_pin(effect: EffectSpec, safe := false) -> void:
 	_push_pending += remainder
 	while _push_pending > 0:
 		on_advance_trigger(pin_position, effect)
-		test_position(pin_position)
+		test_position(pin_position, effect, true)
 		
 		effect.add_position(pin_position + 1)
 		_push_pending -= 1

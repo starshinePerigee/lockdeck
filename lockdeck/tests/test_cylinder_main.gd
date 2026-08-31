@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var default_pick: String = "debug"
+
 func set_testpos() -> void:
 	var pins: Array[PinSpec] = $CylinderMain.pins
 	pins[0].pin_position = 0
@@ -10,13 +12,19 @@ func set_testpos() -> void:
 	pins[4].pin_position = PinSpec.PIN_DEPTH_COUNT - 1
 	$CylinderMain.load_new_lock(LockSpec.new(pins))
 
-
 func get_pick(selected: String) -> CardSpec:
-	for t in PickTemplates.valid_templates:
-		if t.pick_name == selected:
-			return CardSpec.from_template(t)
-	push_error("Could not find pick from selector!")
+	if selected in PickTemplates.static_registry.keys():
+		return CardSpec.from_template(
+			PickTemplates.static_registry[selected]
+		)
+	
+	push_error("Could not find pick %s from selector!" % selected)
 	return CardSpec.DEBUG
+
+func first_update():
+	if default_pick:
+		$CardSpace.card_spec = get_pick(default_pick)
+		print("Loaded %s" % $CardSpace.card_spec.pick_name)
 
 func update_card(dropdown_index: int):
 	var selected: String = $CardSelectionOption.get_item_text(dropdown_index)
@@ -47,18 +55,6 @@ func end_drag() -> void:
 	if target >= 0:
 		apply_card($CardSpace.card_spec, target)
 
-func do_highlight(pin_index: int) -> void:
-	$CylinderMain/Anchor/HighlightPos.text = str(pin_index)
-	$CylinderMain/Anchor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
-	$CylinderMain.cancel_preview()
-	$CylinderMain.preview($CardSpace.card_spec, pin_index)
-
-func clear_highlight() -> void:
-	$CylinderMain/Anchor/HighlightPos.text = "-1"
-	$CylinderMain/Anchor/Dot.position = Vector2()
-	$CylinderMain.cancel_preview()
-	$CylinderMain.show_preview(_last_result)
-
 func do_cursor(pin_index: int) -> void:
 	$CylinderMain/AnchorCursor/CursorPos.text = str(pin_index)
 	$CylinderMain/AnchorCursor/Dot.position = Vector2((80 + 32) * (pin_index + 1), 0)
@@ -83,10 +79,10 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
-	spec.depths[1] = Depths.BOMB
+	spec.depths[1] = Depths.TRAP
 	spec.depths[2] = Depths.EMPTY
 	spec.depths[3] = Depths.EMPTY
-	spec.depths[4] = Depths.BOMB
+	spec.depths[4] = Depths.EMPTY
 	spec.depths[5] = Depths.EMPTY
 	spec.depths[6] = Depths.SPIKE
 	spec.depths[7] = Depths.EMPTY
@@ -107,23 +103,36 @@ func gen_new_lock() -> void:
 	
 	$CylinderMain.load_new_lock(lock)
 	reveal_all()
-	
+
+var _cursoring: int = -1
+func _process(_delta: float) -> void:
+	var global_mouse := get_global_mouse_position()
+	var pin_refs: Array[Pin] = $CylinderMain/Cylinders.get_valid_refs()
+	for i in len(pin_refs):
+		if pin_refs[i].get_mouse_rect().has_point(global_mouse):
+			_cursoring = i
+			do_cursor(i)
+			return
+	if _cursoring >= 0:
+		clear_cursor()
+		_cursoring = -1
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if _cursoring >= 0:
+			do_click(_cursoring)
 
 func _ready() -> void:
-#	$CylinderMain/Cylinders.new_pin_hovered.connect(do_highlight)
-#	$CylinderMain/Cylinders.pin_no_longer_hovered.connect(clear_highlight)
-#	$CylinderMain/Cylinders.new_pin_cursored.connect(do_cursor)
-#	$CylinderMain/Cylinders.pin_no_longer_cursored.connect(clear_cursor)
-#	$CylinderMain/Cylinders.pin_activated.connect(do_click)
 	$Difficulty/Button.pressed.connect(gen_new_lock)
 	
 	gen_new_lock()
+	first_update()
+
 	for t in PickTemplates.valid_templates:
 		$CardSelectionOption.add_item(t.pick_name)
 	$CardSelectionOption.item_selected.connect(update_card)
 	
 	$CardSpace.card_dropped.connect(end_drag.unbind(1))
-	$CardSpace.card_spec = CardSpec.DEBUG
 	
 	$ResetButton.pressed.connect($CylinderMain.reset_all_pins)
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
