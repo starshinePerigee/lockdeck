@@ -258,3 +258,8 @@ static var REVEALED_AT_START: Array[Depths] = [
 	SPIKE,
 	GATE_LOCKED
 ]
+
+static var DO_NOT_EXHAUST: Array[Depths] = [
+#	BASE,
+	FINAL
+]

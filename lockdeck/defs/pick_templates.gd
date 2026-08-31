@@ -30,6 +30,16 @@ enum Archetypes {
 	TRICKS
 }
 
+static var RARITY_COLORS: Dictionary[Rarities, Color] = {
+	Rarities.DEBUG: Color("ff0089"),
+	Rarities.BASIC: Color("918891"),
+	Rarities.GREAT: Color("c7e0e3"),
+	Rarities.TRASH: Color("38423b"),
+	Rarities.COMMON: Color("5c3c41"),
+	Rarities.RARE: Color("7ac259"),
+	Rarities.TEMPORARY: Color("575651"),
+}
+
 enum Rarities {
 	DEBUG = -2,  # 5
 	BASIC = 2,  # 25
@@ -40,15 +50,22 @@ enum Rarities {
 	TEMPORARY = -1, # 10
 }
 
-static func _get_texture(n: String) -> Resource:
-	var res_str := "res://assets/picks/pick_%s.png" % [n]
+static func _get_texture(n: String, bg := false) -> Resource:
+	var prefix: String
+	if bg:
+		prefix = "bg"
+	else:
+		prefix = "pick"
+	
+	var res_str := "res://assets/picks/%s_%s.png" % [prefix, n]
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
-		return load("res://assets/picks/pick_debug_card.png")
+		push_warning("Could not find %s, using fallback" % res_str)
+		return load("res://assets/picks/%s_debug.png" % [prefix])
 	
 ## Human readable pick name, lowercase
-var pick_name: String
+@export var pick_name: String
 
 ## pick metadata
 var family: Families
@@ -59,6 +76,8 @@ var rarity: Rarities
 var effects: Dictionary[int, Array]
 ## Card art texture
 var texture: Resource
+## Background texture
+var bg_texture: Resource
 
 static func parse_effect_substring(substring: String) -> Array[EffectSpec]:
 	var sub_effects: Array[EffectSpec] = []
@@ -102,19 +121,29 @@ static func parse_effects_string(effect_string: String) -> Dictionary[int, Array
 	
 	return new_effects
 
+static var static_registry: Dictionary[String, PickTemplates] = {}
+
 func _init(
-	pick_name_: String,
-	family_: Families,
-	archetype_: Archetypes,
-	rarity_: Rarities,
-	effect_string: String,
+	pick_name_: String = "",
+	family_: Families = Families.NONE,
+	archetype_: Archetypes = Archetypes.WEIRD,
+	rarity_: Rarities = Rarities.DEBUG,
+	effect_string: String = "",
+	texture_string: String = "",
 ):
 	pick_name = pick_name_
 	family = family_
 	archetype = archetype_
 	rarity = rarity_
 	effects = parse_effects_string(effect_string)
-	texture = _get_texture(pick_name_)
+	
+	if not texture_string:
+		texture_string = Archetypes.keys()[archetype_].to_lower()
+	
+	texture = _get_texture(texture_string)
+	bg_texture = _get_texture(texture_string, true)
+	if pick_name:
+		static_registry[pick_name] = self
 
 
 ## JJJ/DDDDDDDD/PPPPTTTR\RRR
@@ -901,7 +930,8 @@ static var NEEDLE := PickTemplates.new(
 	Families.NONE,
 	Archetypes.BULK_TEST,
 	Rarities.TEMPORARY,
-	"T[TT[PTT"
+	"T[TT[PTT",
+	"needle",
 )
 
 ## PPJJJ[PPJJJ
@@ -910,7 +940,8 @@ static var NAIL := PickTemplates.new(
 	Families.NONE,
 	Archetypes.END_TURN,
 	Rarities.TEMPORARY,
-	"PPJJJ[PPJJJ"
+	"PPJJJ[PPJJJ",
+	"nail",
 )
 
 ## P.RT
@@ -919,7 +950,8 @@ static var FISHHOOK := PickTemplates.new(
 	Families.NONE,
 	Archetypes.JUMP_TEST,
 	Rarities.TEMPORARY,
-	"P.RT"
+	"P.RT",
+	"fishook",
 )
 
 ## P[PP[PPP]JJ
@@ -928,7 +960,8 @@ static var HAIRPIN := PickTemplates.new(
 	Families.NONE,
 	Archetypes.THREE_PUSH,
 	Rarities.TEMPORARY,
-	"P[PP[PPP]JJ"
+	"P[PP[PPP]JJ",
+	"hairpin",
 )
 
 ## PT[PT[PPT]P
@@ -937,7 +970,8 @@ static var TOOTHPICK := PickTemplates.new(
 	Families.NONE,
 	Archetypes.BULK_PUSH,
 	Rarities.TEMPORARY,
-	"PT[PT[PPT]P"
+	"PT[PT[PPT]P",
+	"toothpick",
 )
 
 ## PPP[JJJ]PPP
@@ -946,7 +980,8 @@ static var OLD_KEY := PickTemplates.new(
 	Families.NONE,
 	Archetypes.ISOLATION,
 	Rarities.TEMPORARY,
-	"PPP[JJJ]PPP"
+	"PPP[JJJ]PPP",
+	"old_key"
 )
 #endregion
 

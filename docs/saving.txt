@@ -1,9 +1,0 @@
-You need to save / load:
-
-- all settings
-
-- game:
--- stage
--- 
-
-note: save going into a lock / strat hub

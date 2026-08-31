@@ -8,7 +8,7 @@ signal pressed_confirmed
 @export var card: CardSpec:
 	set(v):
 		card = v
-		%CardButton.set_card_spec(card)
+		%CardButton.card_spec = card
 
 @export var label := "MONDY BTN":
 	set(v):

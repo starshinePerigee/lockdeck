@@ -7,5 +7,5 @@ bomb on end turn is weird!
 trap doesn't work with push over the trap
 
 
-
-
+almost everything that moves after you click it requires manual tooltip intervention
+(make tooltip process update the rect? pass a rect function into tooltips instead of a static rect?)

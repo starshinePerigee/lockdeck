@@ -40,7 +40,7 @@ func _ready() -> void:
 		BAR_VALUE[_loots],
 		template_value
 	):
-		var card := CardButton.build_from_spec(spec)
+		var card := PickCard.build_from_spec(spec)
 		card.pressed.connect(add_pick.emit.bind(spec))
 		card.pressed.connect(close_popup.emit)
 		add_child(card)

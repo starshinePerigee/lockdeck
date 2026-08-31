@@ -48,9 +48,6 @@ var _selected := false
 ## Draw highlight and pop card
 func set_selected() -> void:
 	_selected = true
-	$HighlightRect.z_index = 90
-	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
-	$HighlightRect.visible = true
 	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
 	$PickCard.tooltippable = false
 	z_boost = true
@@ -58,9 +55,6 @@ func set_selected() -> void:
 ## Unpop card
 func clear_selected() -> void:
 	_selected = false
-	$HighlightRect.z_index = -10
-	$HighlightRect.position = Vector2(-5, -5)
-	$HighlightRect.visible = false
 	$PickCard.position = Vector2(0, 0)
 	$PickCard.tooltippable = true
 	z_boost = false
@@ -115,13 +109,13 @@ func snapback() -> void:
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
 	$PickCard.tooltippable = true
+	$PickCard.force_normal = false
 
 func _set_texture():
 	if not is_node_ready():
 		await ready
 
 	$PickCard.visible = has_card
-	$HighlightRect.visible = highlighted
 	if has_card and false:  # trying leaving the outline out
 		texture = TEXTURE_EMPTY
 	elif closed:
@@ -137,6 +131,7 @@ func _process(_delta: float) -> void:
 				_dragging = true
 				z_boost = true
 				$PickCard.tooltippable = false
+				$PickCard.force_normal = true
 				card_picked_up.emit()
 		else:
 			$PickCard.set_position(
@@ -146,6 +141,7 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)	
+		
 	_set_texture()
 	clear_selected()
 	
@@ -157,6 +153,7 @@ func get_mouse_rect() -> Rect2:
 
 func core_hover() -> void:
 	z_boost = true
+	get_parent().move_child(self, -1)
 
 func core_unhover() -> void:
 	if not _selected:

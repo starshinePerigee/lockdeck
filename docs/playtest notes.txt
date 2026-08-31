@@ -1,1 +1,6 @@
 previous turn should disable the click / jam indicators or at least hide partial
+
+be more aggressive calling clear_tooltips - any time the scene changes, call it
+
+
+bomb - you shoud only have to land on it (100% do this)

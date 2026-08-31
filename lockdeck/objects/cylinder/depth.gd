@@ -24,15 +24,10 @@ const PREV_SPACING := 12
 @export var exhausted: bool = false:
 	set(v):
 		exhausted = v
-		_update_exhaust()
-
-func _update_exhaust() -> void:
-	# TODO: this should be a shader to replace the normal background texture
-	# as modulation breaks the color limitations
-	if exhausted:
-		$DepthTexture.modulate = Color("B4B4B4")
-	else:
-		$DepthTexture.modulate = Color("ffffff")
+		$DepthTexture.set_instance_shader_parameter(
+			"exhaust", 
+			exhausted and flavor not in Depths.DO_NOT_EXHAUST
+		)
 
 func set_hints(letters: String, color: Color = Color()):
 	if letters:
@@ -58,5 +53,10 @@ func request_tooltip() -> void:
 	tooltip.depth = flavor
 	TooltipManager.request_widget_tooltip($DepthTexture.get_global_rect(), tooltip)
 
+func exhaust() -> void:
+	print("zz")
+	exhausted = not exhausted
+
 func _ready() -> void:
 	mouse_entered.connect(request_tooltip)
+#	mouse_entered.connect(exhaust)
