@@ -85,6 +85,7 @@ func reset() -> void:
 	$LootPopup.remove_and_close()
 	$LootDrop.empty_queue()
 	$LootDrop.clear_all()
+	$VictoryLabel.visible = false
 	_already_claimed = false
 
 func claim_and_continue():
