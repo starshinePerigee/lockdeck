@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-instance uniform vec4 new:source_color;
+uniform vec4 new:source_color;
 uniform vec4 old:source_color;
 
 void fragment() {

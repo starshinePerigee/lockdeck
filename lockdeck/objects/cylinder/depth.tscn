@@ -8,6 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hntsp"]
 shader = ExtResource("2_f08qc")
+shader_parameter/exhaust = false
 shader_parameter/bg = Color(0.458824, 0.458824, 0.458824, 1)
 shader_parameter/skip = Color(0.341176, 0.337255, 0.317647, 1)
 shader_parameter/new_bg = Color(0.341176, 0.337255, 0.317647, 1)

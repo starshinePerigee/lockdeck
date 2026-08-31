@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-instance uniform bool exhaust;
+uniform bool exhaust;
 uniform vec4 bg:source_color;
 uniform vec4 skip:source_color;
 uniform vec4 new_bg:source_color;

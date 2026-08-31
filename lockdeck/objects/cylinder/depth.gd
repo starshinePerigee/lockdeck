@@ -24,10 +24,10 @@ const PREV_SPACING := 12
 @export var exhausted: bool = false:
 	set(v):
 		exhausted = v
-		$DepthTexture.set_instance_shader_parameter(
-			"exhaust", 
-			exhausted and flavor not in Depths.DO_NOT_EXHAUST
-		)
+		if exhausted:
+			$DepthTexture.material = material_exhaust
+		else:
+			$DepthTexture.material = material_normal
 
 func set_hints(letters: String, color: Color = Color()):
 	if letters:
@@ -57,6 +57,15 @@ func exhaust() -> void:
 	print("zz")
 	exhausted = not exhausted
 
+static var material_normal: ShaderMaterial = null
+static var material_exhaust: ShaderMaterial = null
+
 func _ready() -> void:
 	mouse_entered.connect(request_tooltip)
+	
+	if not material_normal:
+		material_normal = $DepthTexture.material
+		material_exhaust = $DepthTexture.material.duplicate()
+		material_exhaust.set_shader_parameter("exhaust", true)
+	
 #	mouse_entered.connect(exhaust)
