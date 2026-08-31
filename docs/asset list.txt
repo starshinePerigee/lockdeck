@@ -3,7 +3,7 @@ x font style objects
 x revisit font
 x revisit click indicator
 x 32 color palette
-- You need pick art for like 10 picks.
+x You need pick art for like 10 picks.
 - 10ish depths with art, icon, preview, animation, and sound effect
 - Handle art for like 10 effects
 x card templating.
@@ -44,8 +44,3 @@ cooler animations
 - hints: character by character, wipe out
 - depth effect animation
 - candle flicker (4 frame, throw off sparks)
-
-Sound
-- bgm is fireplace ambience, random strums (bass?)
-- success / rewards / post level uses a different instrument (guitar? flute?)
-- effects are tied to signals
