@@ -49,9 +49,12 @@ func redraw():
 	$CardPile.count = c
 	$DeckLabel.text = "Deck: %s" % c
 
+func get_nice_rect() -> Rect2:
+	return $DeckLabel.get_global_rect().grow(16)
+
 func request_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		$DeckLabel.get_global_rect().grow(16),
+		get_nice_rect,
 		(
 			"This is your deck.\n\n"
 			+ "After you use a pick, you'll draw cards from your deck until you have "

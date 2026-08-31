@@ -66,9 +66,12 @@ func _handle_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			hide_widget()
 
+func get_nice_rect() -> Rect2:
+	return %ActiveRowToggle.get_global_rect().grow(4.0)
+
 func request_active_row_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		%ActiveRowToggle.get_global_rect().grow(4.0),
+		get_nice_rect,
 		"Shows an outline of the current row of depths, which will activate after using a pick."
 	)
 

@@ -33,7 +33,7 @@ func _update_icon(texture: Texture2D):
 
 func request_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		get_global_rect(),
+		get_global_rect,
 		(
 			"See a summary of what all happened last turn."
 		)

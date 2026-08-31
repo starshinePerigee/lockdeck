@@ -19,7 +19,7 @@ func _do_request(color_rect: ColorRect) -> void:
 	var rect := color_rect.get_global_rect()
 	$ReferenceRect.global_position = rect.position
 	$ReferenceRect.size = rect.size
-	TooltipManager.request_tooltip(rect, display_text)
+	TooltipManager.request_tooltip(color_rect.get_global_rect, display_text)
 
 func _ready() -> void:
 	for node in $Control.get_children():

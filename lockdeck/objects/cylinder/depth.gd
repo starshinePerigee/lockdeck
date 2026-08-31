@@ -51,7 +51,7 @@ const TOOLTIP := preload("res://objects/displays/depth_tooltip.tscn")
 func request_tooltip() -> void:
 	var tooltip: Control = TOOLTIP.instantiate()
 	tooltip.depth = flavor
-	TooltipManager.request_widget_tooltip($DepthTexture.get_global_rect(), tooltip)
+	TooltipManager.request_widget_tooltip($DepthTexture.get_global_rect, tooltip)
 
 func exhaust() -> void:
 	print("zz")

@@ -11,17 +11,17 @@ static var _instance: TooltipManager
 var _request_queue: Array[TooltipRequest] = []
 
 class TooltipRequest:
-	var rect: Rect2
+	var rect_fn: Callable
 	var widget: Control = null
 	var text: String = ""
 	var time: int
 	
 	func _init(
-		rect_: Rect2,
+		rect_fn_: Callable,
 		widget_: Control = null,
 		text_: String = ""
 	) -> void:
-		rect = rect_
+		rect_fn = rect_fn_
 		widget = widget_
 		text = text_
 		time = Time.get_ticks_msec() 
@@ -29,17 +29,17 @@ class TooltipRequest:
 		TooltipManager._instance._request_queue.append(self)
 
 ## Shows a text-only tooltip.
-static func request_tooltip(rect: Rect2, text: String) -> void:
+static func request_tooltip(rect_fn: Callable, text: String) -> void:
 	if not _instance:
 		return
-	TooltipRequest.new(rect, null, text)
+	TooltipRequest.new(rect_fn, null, text)
 
 ## Shows a specific widget as a tooltip 
 ## This widget should have a minimum width of 256 px or less
-static func request_widget_tooltip(rect: Rect2, widget: Control) -> void:
+static func request_widget_tooltip(rect_fn: Callable, widget: Control) -> void:
 	if not _instance:
 		return
-	TooltipRequest.new(rect, widget, "")
+	TooltipRequest.new(rect_fn, widget, "")
 
 static func request_tooltip_close() -> void:
 	if not _instance:
@@ -79,7 +79,10 @@ var _displayed_request: TooltipRequest = null
 func _process(_delta: float) -> void:
 	# remove any requests we're no longer requesting
 	for req in _request_queue.duplicate():
-		if not req.rect.has_point(get_global_mouse_position()):
+		if (
+			not req.rect_fn.is_valid()
+			or not req.rect_fn.call().has_point(get_global_mouse_position())
+		):
 			if req == _displayed_request:
 				# clean up the current request
 				_hide_tooltip()
@@ -95,8 +98,9 @@ func _process(_delta: float) -> void:
 	
 	# update the refrect since it doesn't need timing
 	if $ReferenceRect.visible:
-		$ReferenceRect.global_position = _request_queue.front().rect.position
-		$ReferenceRect.size = _request_queue.front().rect.size 
+		var refrect_rect: Rect2 = _request_queue.front().rect_fn.call()
+		$ReferenceRect.global_position = refrect_rect.position
+		$ReferenceRect.size = refrect_rect.size 
 	
 	# at this point, something has changed, and we have requests in queue.
 	# so check time
@@ -115,7 +119,7 @@ func _show_tooltip(req: TooltipRequest) -> void:
 		%Label.visible = true
 
 	%Tooltip.size = Vector2()
-	call_deferred("_finalize", req.rect)
+	call_deferred("_finalize", req.rect_fn.call())
 
 func _finalize(rect: Rect2) -> void:
 	%Tooltip.global_position = _get_tooltip_pos(rect, %Tooltip.size)

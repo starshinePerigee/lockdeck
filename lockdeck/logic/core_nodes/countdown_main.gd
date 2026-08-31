@@ -116,7 +116,7 @@ func request_tooltip() -> void:
 		return
 	
 	TooltipManager.request_tooltip(
-		get_mouse_rect(),
+		get_mouse_rect,
 		(
 			"This is your turn counter.\n\n"
 			+ "Click to end your turn.\n\n"

@@ -101,7 +101,7 @@ func request_tooltip() -> void:
 		return
 	var tooltip: Control = TOOLTIP.instantiate()
 	tooltip.add_effects(card_spec.get_unique_list())
-	TooltipManager.request_widget_tooltip(get_global_rect(), tooltip)
+	TooltipManager.request_widget_tooltip(get_global_rect, tooltip)
 	
 
 func _ready() -> void:

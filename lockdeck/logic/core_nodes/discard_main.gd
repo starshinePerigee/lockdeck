@@ -86,12 +86,16 @@ func core_hover() -> void:
 func core_unhover() -> void:
 	pass
 
-func request_tooltip() -> void:
+func get_nice_rect() -> Rect2:
 	var rect: Rect2 = $DiscardIcon/TooltipTrigger.get_global_rect()
 	if icon_selected or true:
 		rect = rect.grow_side(Side.SIDE_TOP, 12)
+	return rect
+
+func request_tooltip() -> void:
+
 	TooltipManager.request_tooltip(
-		rect,
+		get_nice_rect,
 		(
 			"This is your discard space. \n\n"
 			+ "Drag a pick here or click here with a pick selected to discard it.\n\n"
@@ -103,9 +107,12 @@ func request_tooltip() -> void:
 		)
 	)
 
+func get_button_rect() -> Rect2:
+	return $DiscardLabel.get_global_rect().grow_individual(20, 20, 20, 10)
+
 func request_button_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		$DiscardLabel.get_global_rect().grow_individual(20, 20, 20, 10),
+		get_button_rect,
 		(
 			"This is your discard pile.\n\n"
 			+ "Picks used or discarded are kept here. "

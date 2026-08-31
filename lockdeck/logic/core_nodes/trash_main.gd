@@ -29,9 +29,12 @@ func reset() -> void:
 	cards = []
 	text = "Broken: 0"
 
+func get_nice_rect() -> Rect2:
+	return get_global_rect().grow(4)
+
 func request_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		get_global_rect().grow(4),
+		get_nice_rect,
 		(
 			"This is your trash.\n\n"
 			+ "Broken picks end up here. Once broken, picks are removed from your deck "
