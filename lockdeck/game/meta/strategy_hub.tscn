@@ -84,11 +84,12 @@ offset_right = 952.0
 offset_bottom = 218.0
 
 [node name="ContinueButton" type="Button" parent="."]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 0
-offset_left = 821.0
-offset_top = 481.0
-offset_right = 928.0
-offset_bottom = 508.0
+offset_left = 797.0
+offset_top = 489.0
+offset_right = 925.0
+offset_bottom = 522.0
 theme_type_variation = &"BoxButton"
 text = "Continue >"
 script = ExtResource("5_emvr5")
