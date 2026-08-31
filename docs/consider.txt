@@ -5,3 +5,5 @@ s/jam/bind
 
 less options on ingots
 
+
+shop replaces pick on buy?

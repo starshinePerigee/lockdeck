@@ -1,3 +1,2 @@
 previous turn should disable the click / jam indicators or at least hide partial
 
-be more aggressive calling clear_tooltips - any time the scene changes, call it

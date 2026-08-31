@@ -7,8 +7,8 @@ x ambience and music
 x input sprint (fix the input bugs frfr)
 x final major assets (picks, home screen, load screen, loot chest, between locks)
 - animation sprint (push effects, card draw and flow, sound effects 1)
-- knucklebones and new victory
 - tutorial
+- knucklebones and new victory
 - post game screen
 - balance pass 1
 - final polish 1

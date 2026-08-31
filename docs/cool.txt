@@ -7,19 +7,13 @@
 
 - new background (or palette swapped) when candle is out
 
-- pin depths are shown on a page and that page is moved mostly off-screen - but can be pulled out and referenced
-
 - unknown font as accents on cards
 
 - notifications rise before vanishing
 
-- need a shadowboard effect for pick art (use dark green that's already the bg offcolor)
-
 - do something with the indicator pick on discard
 
 - when locking out a scene (such as CardDisplay or SettingsWidget) do you want to dither over the entire bg with a border?
-
-- saving and loading
 
 - knuckles and artifacts are draggable pivotable physics objects in the strat hub
 - decks are represented by figurines, which are also always present in the strat hub

@@ -6,5 +6,4 @@ small polish asset list:
 - clean up carddisplay windows and areas
 - clean up lock details
 - convert depths to transparent on second background
--- make exhausted depths use a different darker base instead of modulating
 - on pin set, raise by 8px and exhaust
