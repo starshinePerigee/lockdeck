@@ -24,6 +24,7 @@ layout_mode = 2
 unique_name_in_owner = true
 visible = false
 z_index = 55
+layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0
 mouse_filter = 2

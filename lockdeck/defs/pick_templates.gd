@@ -34,9 +34,9 @@ static var RARITY_COLORS: Dictionary[Rarities, Color] = {
 	Rarities.DEBUG: Color("ff0089"),
 	Rarities.BASIC: Color("918891"),
 	Rarities.GREAT: Color("c7e0e3"),
-	Rarities.TRASH: Color("29524e"),
+	Rarities.TRASH: Color("38423b"),
 	Rarities.COMMON: Color("5c3c41"),
-	Rarities.RARE: Color("29524e"),
+	Rarities.RARE: Color("7ac259"),
 	Rarities.TEMPORARY: Color("575651"),
 }
 
@@ -61,6 +61,7 @@ static func _get_texture(n: String, bg := false) -> Resource:
 	if ResourceLoader.exists(res_str):
 		return load(res_str)
 	else:
+		push_warning("Could not find %s, using fallback" % res_str)
 		return load("res://assets/picks/%s_debug.png" % [prefix])
 	
 ## Human readable pick name, lowercase

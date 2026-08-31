@@ -8,7 +8,7 @@ GAPS: sharp wiggles (king rake)
 
 diamonds 
 DARK: big wedge
-x THREE_PUSH: basic diamond
+THREE_PUSH: basic diamond
 FINISHER: deforest diamond
 REVEAL: chip / hollow diamond
 
