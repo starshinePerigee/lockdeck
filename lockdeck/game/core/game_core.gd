@@ -424,12 +424,12 @@ func reload_deck() -> void:
 
 func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
-	if card in $HandMain.cards:
+	if card in $DiscardMain.cards:
+		$DiscardMain.remove_card(card)
+	elif card in $HandMain.cards:
 		$HandMain.remove_card(card)
 	elif card in $DeckMain.cards:
 		$DeckMain.remove_card(card)
-	elif card in $DiscardMain.cards:
-		$DiscardMain.remove_cards([card])
 	else:
 		push_error(
 			"Tried to break card %s [%s] but could not locate!"
@@ -485,15 +485,13 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	
 	if card != _NULL_PICK:
 		$HandMain.remove_card(card)
+		$DiscardMain.add_card(card)
 	
 	if _result.pick_broke or break_next:
 		if break_instead:
 			break_pick(break_instead)
 		else:
 			break_pick(card)
-	else:
-		if card != _NULL_PICK:
-			$DiscardMain.add_card(card)
 	
 	if Effects.TEST in card.get_unique_list():
 		$LastTest.update(_result.last_reveal, _result.last_hint)

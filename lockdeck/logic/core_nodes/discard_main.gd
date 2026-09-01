@@ -37,15 +37,19 @@ func add_card(card: CardSpec) -> void:
 	$CardPile.count = count()
 	update_label()
 
+func remove_card(dis_card: CardSpec) -> void:
+	if dis_card not in cards:
+		push_error(
+			"Tried to remove card %s [%s] but not in discard!"
+			% [dis_card.pick_name, dis_card.unique_id]
+		)
+		return
+	cards.erase(dis_card)
+	update_label()
+
 func remove_cards(dis_cards: Array[CardSpec]) -> void:
 	for card in dis_cards:
-		if card not in cards:
-			push_error(
-				"Tried to remove card %s [%s] but not in discard!"
-				% [card.pick_name, card.unique_id]
-			)
-			continue
-		cards.erase(card)
+		remove_card(card)
 
 ## Get all cards from the discard pile
 func empty_deck() -> Array[CardSpec]:
