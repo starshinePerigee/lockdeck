@@ -1,7 +1,2 @@
 - convert to animated sprites for depths
-- candle flicker
-- pin push
-- draw animation
-- discard animation
 - notification redo (with animation)
-- Move the pick card's break counter to be a larger, more visible indicator and cap it at 5

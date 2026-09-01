@@ -1,0 +1,18 @@
+- indicator movement
+- indicator push
+- card draw
+- card discard
+- deck reload
+- pick break
+- notifications
+- pin pushing
+- card acquire
+- previous turn pan
+- better completion animation: cards should slide down and hide
+- Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+
+- jam ani
+- bomb ani
+- unlock ani
+- pin rise and set
+- candle flicker

@@ -1,15 +1,9 @@
-- can broken picks pop off the card and accumulate at the bottom of the screen?
-
 - can you show the pick in the keyway when you're hovering a card?
 -- pick is removed from the card
 
 - effects are handles - pick is handle + card. When pick breaks both fly off
 
 - new background (or palette swapped) when candle is out
-
-- notifications rise before vanishing
-
-- do something with the indicator pick on discard
 
 - when locking out a scene (such as CardDisplay or SettingsWidget) do you want to dither over the entire bg with a border?
 
@@ -19,9 +13,9 @@
 
 - all useful indicators are drawn on - starting draw animation (show lock, draw depths, pull hand up)
 
-- move card break tallies to side of card? make card break tallies more tears? put tallies over card name?
+- candle flicker
 
-- better completion animation: cards should slide down and hide
+- move card break tallies to side of card? make card break tallies more tears? put tallies over card name?
 
 - is the strat hub a space (skyrim thieves guild?)
 -- a table, featuring:
