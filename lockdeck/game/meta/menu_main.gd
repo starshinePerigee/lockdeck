@@ -30,5 +30,5 @@ func _ready() -> void:
 	$MenuWidget.add_button("Game settings", open_settings.emit, true)
 	$MenuWidget.add_button("DEBUG: Solve level", auto_complete_level.emit, true)
 	$MenuWidget.add_button("DEBUG: Reveal lock", reveal_level.emit, true)
-	$MenuWidget.add_button("DEBUG: Break three", break_three.emit) 
-	$MenuWidget.add_button("DEBUG: Screenshot", request_screenshot, true) 
+#	$MenuWidget.add_button("DEBUG: Break three", break_three.emit) 
+#	$MenuWidget.add_button("DEBUG: Screenshot", request_screenshot, true) 
