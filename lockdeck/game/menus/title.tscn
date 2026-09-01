@@ -15,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_pwv2q")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 256.0
 offset_right = 976.0
 offset_bottom = 540.0

@@ -1,8 +1,6 @@
 previous turn should disable the click / jam indicators or at least hide partial
 
 
-move cards closer on title
-
 
 daring deck:
 - doesnt have a three jump
