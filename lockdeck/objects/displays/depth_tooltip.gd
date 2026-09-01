@@ -13,6 +13,9 @@ extends VBoxContainer
 			Depths.DangerLevel.INVALID:
 				tests_as_text = "unknown"
 				tests_as_color = Color("918891")
+			Depths.DangerLevel.REVEALED:
+				tests_as_text = "Revealed at start"
+				tests_as_color = Color("83dbce")
 			Depths.DangerLevel.CLEAR:
 				tests_as_text = "clear"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.CLEAR]
@@ -22,6 +25,7 @@ extends VBoxContainer
 			Depths.DangerLevel.DANGEROUS:
 				tests_as_text = "danger"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.DANGEROUS]
+		%TestsAsLabel.visible = depth.tests_as != Depths.DangerLevel.REVEALED
 		%TestsAs.text = tests_as_text
 		%TestsAs.add_theme_color_override("font_color", tests_as_color)
 

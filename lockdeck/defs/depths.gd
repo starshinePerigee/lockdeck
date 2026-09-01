@@ -5,6 +5,7 @@ class_name Depths
 enum DangerLevel {
 	## Raises a warning if tested, but tests as interesting
 	INVALID,
+	REVEALED,
 	CLEAR,
 	INTERESTING,
 	DANGEROUS
@@ -80,12 +81,12 @@ static var EMPTY := Depths.new(
 )
 
 static var BASE := Depths.new(
-	"base", DangerLevel.CLEAR, Effects.EMPTY,
+	"base", DangerLevel.REVEALED, Effects.EMPTY,
 	"The resting position of the pin. Does not activate."
 )
 
 static var FINAL := Depths.new(
-	"final_neutral", DangerLevel.CLEAR, Effects.UNLOCK,
+	"final_neutral", DangerLevel.REVEALED, Effects.UNLOCK,
 	"Reach this depth to solve this pin. Push past it to break your pick.",
 	1, "final"
 )
@@ -216,7 +217,7 @@ static var WARN := Depths.new(
 )
 
 static var TRAP := Depths.new(
-	"trap", DangerLevel.INVALID, Effects.DISARM,
+	"trap", DangerLevel.REVEALED, Effects.DISARM,
 	("Breaks your pick if you try to test or reveal it, but not if you land on it or past it. "
 	+ "Like all depths, it does nothing if exhausted, so activating it disarms it.")
 )
@@ -228,12 +229,12 @@ static var SURPRISE := Depths.new(
 )
 
 static var SPIKE := Depths.new(
-	"spike", DangerLevel.DANGEROUS, Effects.BREAK,
+	"spike", DangerLevel.REVEALED, Effects.BREAK,
 	"Breaks your pick. This depth is revealed at the start of a lock."
 )
 
 static var GATE_LOCKED := Depths.new(
-	"gate_locked", DangerLevel.DANGEROUS, Effects.BREAK,
+	"gate_locked", DangerLevel.REVEALED, Effects.BREAK,
 	"This breaks your pick if you move past it. Find the Key to unlock it.",
 	1, "locked gate"
 )
@@ -250,14 +251,6 @@ static var GATE_KEY := Depths.new(
 )
 
 #endregion
-
-static var REVEALED_AT_START: Array[Depths] = [
-	BASE,
-	FINAL,
-	TRAP,
-	SPIKE,
-	GATE_LOCKED
-]
 
 static var DO_NOT_EXHAUST: Array[Depths] = [
 #	BASE,

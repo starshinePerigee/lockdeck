@@ -519,6 +519,8 @@ func get_reveal_level() -> PinSpec.RevealLevel:
 				level = max(level, PinSpec.RevealLevel.INTERESTING)
 			elif depth.tests_as == Depths.DangerLevel.CLEAR:
 				level = max(level, PinSpec.RevealLevel.CLEAR)
+			elif depth.tests_as == Depths.DangerLevel.REVEALED:
+				level = max(level, PinSpec.RevealLevel.REVEALED)
 			else:
 				push_warning("Unusual depth during update visibility: %s" % depth.depth_name)
 				level = max(level, PinSpec.RevealLevel.INTERESTING)
@@ -587,7 +589,7 @@ func end_turn_and_fall() -> void:
 ## Called after generation
 func finalize() -> void:
 	for i in PIN_DEPTH_COUNT:
-		if depths[i] in Depths.REVEALED_AT_START:
+		if depths[i].tests_as == Depths.DangerLevel.REVEALED:
 			reveals[i] = RevealLevel.REVEALED
 
 ## Resets the pin to default values but does not change depths.
