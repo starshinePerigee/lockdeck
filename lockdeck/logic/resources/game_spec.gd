@@ -67,19 +67,19 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(LOCK, 4, 3),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2], LockDeck.GameArcs.LATE),
 	
-	LevelSpec.new(LOCK, 4, 3),
+	LevelSpec.new(LOCK, 3, 4),
 	LevelSpec.new(LOCK, 4, 4),
 	LevelSpec.new(LOCK, 5, 3),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3], LockDeck.GameArcs.LATE),
 	
 	LevelSpec.new(LOCK, 4, 5),
+	LevelSpec.new(LOCK, 4, 6),
 	LevelSpec.new(LOCK, 5, 4),
-	LevelSpec.new(LOCK, 5, 5),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4], LockDeck.GameArcs.LATE),
 	
+	LevelSpec.new(LOCK, 5, 5),
 	LevelSpec.new(LOCK, 5, 6),
 	LevelSpec.new(LOCK, 5, 7),
-	LevelSpec.new(LOCK, 5, 8),
 	LevelSpec.new(VICTORY),
 ]
 

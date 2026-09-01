@@ -9,7 +9,7 @@ less options on ingots
 shop replaces pick on buy?
 
 
-move 
+move "show active row" from settings to menu
 
 
 size/scale setting
