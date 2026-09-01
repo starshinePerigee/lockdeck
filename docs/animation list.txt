@@ -1,18 +1,33 @@
+- move word art to title
+- loading screen is a single card (with all depths) and the name "Loading..."
+
 - indicator movement
 - indicator push
-- card draw
-- card discard
+- card draw - flip from deck, tween hand over if needed
+- card discard - tween to discard 
 - deck reload
 - pick break
 - notifications
 - pin pushing
+-- move up for each push, skip, test, reveal
+-- mark all depths on the way up with "..." texture (different sound fx and speed for skip)
+-- move back down, revealing depths as you go (for reveal and the pin you land on)
+-- at end, flip all "..." to the actual reveal
+-- (sound fx on pivot)
+-- (sound fx on land based on depth revealed)
+-- play jam if jam
 - card acquire
 - previous turn pan
 - better completion animation: cards should slide down and hide
 - Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+-- on side
 
 - jam ani
 - bomb ani
 - unlock ani
 - pin rise and set
 - candle flicker
+
+- push should be bounce, because the pin bounces back up
+- bounce should be slip, because the pin slips down
+- slip should be pop

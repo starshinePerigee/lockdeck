@@ -16,3 +16,8 @@ size/scale setting
 
 
 
+repair update:
+- the repair vs buy decision is kind of mid
+so:
+- repairs are cheaper (5 gold)
+- 50% chance of failure
