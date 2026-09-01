@@ -1,1 +1,3 @@
 https://docs.godotengine.org/en/stable/engine_details/development/compiling/optimizing_for_size.html#doc-optimizing-for-size
+
+https://docs.godotengine.org/en/stable/tutorials/export/changing_application_icon_for_windows.html

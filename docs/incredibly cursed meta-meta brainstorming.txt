@@ -21,4 +21,4 @@ modes:
 - crushed: at the end of each lock, every pick used gets broken. earn way more coins at the end, and start with extra broken picks. Deck limit +x
 - picks can only be repaired once
 - attached: picks auto-repair after each level but your deck size is 16 and you have a break limit
-- mana: draw x and play y cards per turn
+- mana: draw x and play y cards per turn, n turns, pins reset every n turns (based on deck cycling?)

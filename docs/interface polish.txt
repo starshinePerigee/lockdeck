@@ -7,3 +7,5 @@ Make end turn visibly a button via outline
 RepairWidget is permanently fucked
 
 Move strat hub's continue to the top? Redo strat hub entirely? Some kind of strategy hub theming? (A table with a map? A skyrim underdepths drawing?)
+
+Update load screen texture (don't include the bg)

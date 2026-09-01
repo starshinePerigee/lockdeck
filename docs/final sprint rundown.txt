@@ -11,7 +11,7 @@ x final major assets (picks, home screen, load screen, loot chest, between locks
 - knucklebones and new victory
 - post game screen
 - balance pass 1
-- final polish 1
+- final polish 1 (don't forget to remove debug options)
 
 ---
 

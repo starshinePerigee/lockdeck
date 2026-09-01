@@ -7,15 +7,12 @@
 
 - new background (or palette swapped) when candle is out
 
-- unknown font as accents on cards
-
 - notifications rise before vanishing
 
 - do something with the indicator pick on discard
 
 - when locking out a scene (such as CardDisplay or SettingsWidget) do you want to dither over the entire bg with a border?
 
-- knuckles and artifacts are draggable pivotable physics objects in the strat hub
 - decks are represented by figurines, which are also always present in the strat hub
 
 - deck select has a roll of lockpicks, and it rolls up after you click go
@@ -34,4 +31,5 @@
 --- tools and picks (repair)
 --- map (next heist)
 --- doorway (continue)
+--- knuckles and artifacts (review status / artifacts)
 -- each object changes with relevance - as you get more coins, the bag goes through one of three states. The map gets more complicated, and once you review it, it gets marked. Doorway shines more light once you're out of coins and have reviewed the map
