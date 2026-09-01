@@ -7,3 +7,12 @@ less options on ingots
 
 
 shop replaces pick on buy?
+
+
+move 
+
+
+size/scale setting
+
+
+

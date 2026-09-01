@@ -85,8 +85,8 @@ static func parse_effect_substring(substring: String) -> Array[EffectSpec]:
 	var effect_count := {
 		"P": 0,
 		".": 0,
-		"T": 0,
 		"R": 0,
+		"T": 0,
 		"J": 0,
 	}
 	
@@ -99,8 +99,8 @@ static func parse_effect_substring(substring: String) -> Array[EffectSpec]:
 			match e:
 				"P": effect = Effects.PUSH
 				".": effect = Effects.SKIP
-				"T": effect = Effects.TEST
 				"R": effect = Effects.REVEAL
+				"T": effect = Effects.TEST
 				"J": effect = Effects.JAM
 			sub_effects.append(EffectSpec.new(effect, effect_count[e]))
 	
