@@ -21,6 +21,7 @@ func add_button(button_text: String, callable: Callable, close_after: bool = fal
 	
 	var button := Button.new()
 	_button_table[button_text] = button
+	button.theme_type_variation = "PlainButton"
 	
 	button.text = button_text
 	button.pressed.connect(call_callable.bind(callable.call, close_after))

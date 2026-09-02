@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://otfojrutumql"]
 
-[ext_resource type="Script" uid="uid://d4fsml4vkjq4h" path="res://game/menus/credits.gd" id="1_xqijp"]
+[ext_resource type="Script" path="res://game/menus/credits.gd" id="1_xqijp"]
 
 [node name="Credits" type="Control"]
 layout_mode = 3
@@ -23,6 +23,7 @@ offset_left = 137.0
 offset_top = 227.0
 offset_right = 431.0
 offset_bottom = 260.0
+theme_type_variation = &"PlainButton"
 text = "attributions (external link) >"
 alignment = 0
 

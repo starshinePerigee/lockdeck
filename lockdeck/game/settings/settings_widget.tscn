@@ -38,15 +38,10 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Panel/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderLabel"
-text = "Game Settings"
-
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 0
 
@@ -55,9 +50,16 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 408)
 layout_mode = 2
 
+[node name="Title" type="Label" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Settings"
+horizontal_alignment = 1
+
 [node name="TooltipSpeedButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"PlainButton"
 text = "Tooltip speed: Medium"
 
 [node name="ActiveRowToggle" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("2_86042")]
@@ -100,6 +102,7 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+theme_type_variation = &"PlainButton"
 text = "Reset Tutorial"
 autowrap_mode = 2
 script = ExtResource("10_ia2ei")
@@ -110,6 +113,7 @@ metadata/_custom_type_script = "uid://dfck3u724ea4f"
 [node name="ClearTutorialButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"PlainButton"
 text = "Clear Tutorial"
 autowrap_mode = 1
 script = ExtResource("10_ia2ei")

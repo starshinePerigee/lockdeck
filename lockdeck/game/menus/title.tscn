@@ -16,65 +16,57 @@ script = ExtResource("1_pwv2q")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 256.0
-offset_right = 976.0
-offset_bottom = 540.0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 924.0
+offset_bottom = 508.0
 mouse_filter = 2
 texture = ExtResource("2_np82d")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 134.0
-offset_top = 92.0
-offset_right = 632.0
-offset_bottom = 137.0
-theme_type_variation = &"TitleLabel"
-text = "Handful of Lockpicks"
-
 [node name="LoadGameButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 211.0
-offset_right = 250.0
-offset_bottom = 238.0
+offset_left = 94.0
+offset_top = 275.0
+offset_right = 210.0
+offset_bottom = 302.0
 text = "Load Game"
 alignment = 0
 
 [node name="NewGameButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 259.0
-offset_right = 250.0
-offset_bottom = 286.0
+offset_left = 94.0
+offset_top = 323.0
+offset_right = 210.0
+offset_bottom = 350.0
 text = "New Game"
 alignment = 0
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 306.0
-offset_right = 250.0
-offset_bottom = 333.0
+offset_left = 94.0
+offset_top = 370.0
+offset_right = 210.0
+offset_bottom = 397.0
 theme = ExtResource("3_caluf")
 text = "Settings"
 alignment = 0
 
 [node name="CreditsButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 354.0
-offset_right = 250.0
-offset_bottom = 381.0
+offset_left = 94.0
+offset_top = 418.0
+offset_right = 210.0
+offset_bottom = 445.0
 theme = ExtResource("3_caluf")
 text = "Credits"
 alignment = 0
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 402.0
-offset_right = 250.0
-offset_bottom = 429.0
+offset_left = 94.0
+offset_top = 466.0
+offset_right = 210.0
+offset_bottom = 493.0
 theme = ExtResource("3_caluf")
 text = "Exit"
 alignment = 0
