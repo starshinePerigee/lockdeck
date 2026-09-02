@@ -44,6 +44,7 @@ var _lock_input := false
 enum InputState {
 	REFRESH_PENDING,  # used to refresh a state
 	INACTIVE,
+	ANIMATING,
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
 	VIEW_ALL,
@@ -99,9 +100,11 @@ func pick_dropped(space: CardSpace) -> void:
 	if _current_target:
 		space.cancel_snapback()
 		_do_target()
+		set_state(InputState.ANIMATING)
+	else:
+		set_state(InputState.INACTIVE)
 	
 	_current_target = null
-	set_state(InputState.INACTIVE)
 
 func pick_clicked(space: CardSpace) -> void:
 	if _current_hover is CardSpace:
@@ -139,17 +142,19 @@ func _input(event: InputEvent) -> void:
 			
 			_current_space.clear_selected()
 			_current_space = null
-			set_state(InputState.INACTIVE)
+			set_state(InputState.ANIMATING)
 
 func _do_target() -> void:
 	unhighlight_target(_current_target)
 	if _current_target == $DiscardMain:
 		discard_pick()
+		end_animation()
 	elif _current_target is Pin:
 		do_pick(
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
+		$LockBody/IndicatorPick.do_push()
 
 func _process(_delta: float) -> void:
 	if current_state == InputState.ACTIVE_DRAG:
@@ -276,6 +281,8 @@ func set_state(state: InputState) -> void:
 			reset_countdown()
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
+		InputState.ANIMATING:
+			lock_input(true)
 		InputState.ACTIVE_SELECT:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
@@ -329,6 +336,14 @@ func show_failure(state: bool = true) -> void:
 # Used for settings
 func toggle_active_row(show_row: bool) -> void:
 	$LockBody/ActiveBox.visible = show_row
+#endregion
+
+#region animation handling
+
+func end_animation() -> void:
+	lock_input(false)
+	set_state(InputState.INACTIVE)
+
 #endregion
 
 #region game functions
@@ -637,6 +652,7 @@ func _ready() -> void:
 	$HandMain/Hand.card_tapped.connect(pick_clicked)
 	$HandMain/Hand.card_dragged.connect(pick_dragged)
 	$HandMain/Hand.card_dropped.connect(pick_dropped)
+	$LockBody/IndicatorPick.reset.connect(end_animation)
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$LockBody/CountdownMain.countdown_ended.connect(final_turn.emit)
