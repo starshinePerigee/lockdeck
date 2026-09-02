@@ -1,7 +1,9 @@
 x indicator movement
-- indicator push
+x indicator push
+- hand raise/lower as tween
 - card draw - flip from deck, tween hand over if needed
 - card discard - tween to discard 
+- cared played - tween to discard also?
 - deck reload
 - pick break
 - notifications

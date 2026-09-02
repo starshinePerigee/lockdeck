@@ -57,6 +57,7 @@ func _actually_push() -> void:
 	if _tween and _tween.is_running():
 		_tween.kill()
 	
+	_current_target = OFFSCREEN
 	_tween = get_tree().create_tween()
 	_tween.tween_callback(start_push.emit)
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
@@ -65,6 +66,10 @@ func _actually_push() -> void:
 	_tween.tween_property($Position, "position", $Position.position, PUSH_DURATION - 0.1)
 	_tween.tween_callback(reset.emit)
 	_tween.tween_property(self, "_push_requested", false, 0.0)
+	_tween.tween_callback(_go_to_target)
+
+func _go_to_target() -> void:
+	_tween_to(_current_target)
 
 func _actually_hide() -> void:
 	_tween_to(OFFSCREEN)
@@ -72,18 +77,17 @@ func _actually_hide() -> void:
 
 ## Sets the pick to a given pin index
 func go_index(index: int) -> void:
-	_current_target = Vector2(INTER_PIN_SPACING * index, 0)
+	_tween_to(Vector2(INTER_PIN_SPACING * index, 0))
 	_waiting_for_stow = false
-	_tween_to(_current_target)
 
 ## Sets the pin to away and stowed
 func go_stow() -> void:
+	_current_target = STOW_POSITION
 	_waiting_for_stow = true
 
 ## Hides the pick
 func go_hide() -> void:
-	if _tween_to(OFFSCREEN):
-		_tween.tween_callback($Position.hide)
+	_tween_to(OFFSCREEN)
 
 func do_push() -> void:
 	_push_requested = true

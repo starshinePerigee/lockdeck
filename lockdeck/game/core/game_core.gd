@@ -130,11 +130,18 @@ func _input(event: InputEvent) -> void:
 			reset_countdown()
 		
 		if current_state == InputState.ACTIVE_SELECT:
+			# check if you clicked a pin / discard
 			for target in valid_targets():
 				if target.get_mouse_rect().has_point(click):
 					_current_target = target
 					_do_target()
+					set_state(InputState.ANIMATING)
+					return
 			
+			# note that if you clicked a pick card, this will execute before pick_clicked
+			# so we only need to bring things back to default
+			
+			# check if you clicked the same card again:
 			if _current_space.get_mouse_rect().has_point(click):
 				_previous_space = _current_space
 			else:
@@ -142,7 +149,7 @@ func _input(event: InputEvent) -> void:
 			
 			_current_space.clear_selected()
 			_current_space = null
-			set_state(InputState.ANIMATING)
+			set_state(InputState.INACTIVE)
 
 func _do_target() -> void:
 	unhighlight_target(_current_target)
