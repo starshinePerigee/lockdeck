@@ -15,15 +15,12 @@ var INTER_PIN_SPACING := 80 + 32
 var STOW_POSITION := Vector2(-128, -16)
 var OFFSCREEN := STOW_POSITION + Vector2(-256, 0)
 var PUSH := Vector2(0, -64)
-var SPEED_PIXELS_PER_SEC := 1000
+var MOVE_DELAY := 0.36
 var PUSH_DURATION := 0.4
 
 var mouse_box := Rect2()
 
 var _tween: Tween = null
-
-func _calc_delay(new_pos: Vector2) -> float:
-	return new_pos.distance_to($Position.position) / SPEED_PIXELS_PER_SEC
 
 func _tween_to(new_pos: Vector2) -> bool:
 	if _push_requested:
@@ -35,7 +32,7 @@ func _tween_to(new_pos: Vector2) -> bool:
 	$Position.visible = true
 	_tween = create_tween()
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_tween.tween_property($Position, "position", new_pos, _calc_delay(new_pos))
+	_tween.tween_property($Position, "position", new_pos, MOVE_DELAY)
 	_tween.tween_callback(_on_tween_end)
 	return true
 

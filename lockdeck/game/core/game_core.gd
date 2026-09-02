@@ -109,8 +109,6 @@ func pick_dropped(space: CardSpace) -> void:
 func pick_clicked(space: CardSpace) -> void:
 	if _current_hover is CardSpace:
 		space = _current_hover
-	else:
-		push_warning("Pick clicked without hover?") 
 	
 	if _previous_space == space:
 		_previous_space = null
@@ -237,7 +235,6 @@ func highlight_target(target: Control) -> void:
 
 func unhighlight_all() -> void:
 	if _current_target:
-		push_warning("nulling current target from unhighlight_all")
 		_current_target = null
 	if _current_space:
 		push_warning("nulling current space from unhighlight_all")
