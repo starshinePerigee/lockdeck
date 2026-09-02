@@ -14,6 +14,7 @@ func update_pick(i: int) -> void:
 	push_error("Could not find pick from selector!")
 
 func _ready() -> void:
+	$PickCard.card_spec = CardSpec.from_template(PickTemplates.LOADING)
 	for t in PickTemplates.ALL_PICKS:
 		$TemplateSelector.add_item(t.pick_name)
 	

@@ -163,6 +163,15 @@ static var NULL := PickTemplates.new(
 	"["
 )
 
+static var LOADING := PickTemplates.new(
+	"Loading...",
+	Families.NONE,
+	Archetypes.WEIRD,
+	Rarities.GREAT,
+	"T[PT[PPTT[.RRTT]JJJ",
+	"gaps"
+)
+
 #region RAKES
 
 # Rakes affect many pins. 
