@@ -13,6 +13,7 @@ const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 const CARD_WIDTH := 128
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
+const HIDE_PIXELS_PER_SEC := 680
 
 ## Disables meaningful card interactions
 var disabled := false:
@@ -21,8 +22,14 @@ var disabled := false:
 		for child in $Hand.get_children():
 			child.disabled = disabled
 
+var _tween: Tween = null
+
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
+	if _tween:
+		_tween.kill()
+	
+	_tween = create_tween()
 	$Hand.position = Vector2(0, HIDE_OFFSET)
 
 func unhide_hand() -> void:

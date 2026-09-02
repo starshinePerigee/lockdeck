@@ -33,7 +33,7 @@ func _tween_to(new_pos: Vector2) -> bool:
 		_tween.kill()
 
 	$Position.visible = true
-	_tween = get_tree().create_tween()
+	_tween = create_tween()
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_tween.tween_property($Position, "position", new_pos, _calc_delay(new_pos))
 	_tween.tween_callback(_on_tween_end)
@@ -58,7 +58,7 @@ func _actually_push() -> void:
 		_tween.kill()
 	
 	_current_target = OFFSCREEN
-	_tween = get_tree().create_tween()
+	_tween = create_tween()
 	_tween.tween_callback(start_push.emit)
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_tween.tween_property($Position, "position", $Position.position + PUSH, PUSH_DURATION)

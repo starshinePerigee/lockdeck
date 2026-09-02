@@ -108,7 +108,7 @@ func cancel_snapback() -> void:
 func snapback() -> void:
 	if _cancel_snapback:
 		return
-	var tween := get_tree().create_tween()
+	var tween := create_tween()
 	var distance: float = Vector2().distance_to($PickCard.position)
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
