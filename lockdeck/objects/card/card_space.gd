@@ -10,6 +10,8 @@ signal card_picked_up()
 ## Drag eneded
 signal card_dropped()
 
+const HIDE_DURATION := 0.23
+
 var _dragging := false
 var _active := false
 var mouse_start_position := Vector2()
@@ -49,17 +51,25 @@ const HIGHLIGHT_OFFSET := 64
 
 var _selected := false
 
+var _tween: Tween = null
+func _tween_to(new_pos: int) -> void:
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_tween.tween_property($PickCard, "position:y", new_pos, HIDE_DURATION)
+
 ## Draw highlight and pop card
 func set_selected() -> void:
 	_selected = true
-	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
+	_tween_to(-HIGHLIGHT_OFFSET)
 	$PickCard.tooltippable = false
 	z_boost = true
 
 ## Unpop card
 func clear_selected() -> void:
 	_selected = false
-	$PickCard.position = Vector2(0, 0)
+	_tween_to(0)
 	$PickCard.tooltippable = true
 	z_boost = false
 
