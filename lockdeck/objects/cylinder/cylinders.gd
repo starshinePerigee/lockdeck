@@ -40,6 +40,13 @@ func clear_results() -> void:
 		pin.clear_results()
 #endregion
 
+func get_valid_global_rect() -> Rect2:
+	var rect: Rect2 = pin_refs[0].get_global_rect()
+	for pin in get_valid_refs():
+		print(pin.get_global_rect().end)
+	rect = rect.merge(get_valid_refs()[-1].get_global_rect())
+	return rect
+
 func get_valid_refs() -> Array[Pin]:
 	var refs: Array[Pin] = []
 	for pin in pin_refs:

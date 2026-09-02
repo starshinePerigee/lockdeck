@@ -594,6 +594,12 @@ func load_deck(deck: Array[CardSpec]) -> void:
 func load_lock(lock: LockSpec) -> void:
 	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
+	call_deferred("_set_indicator_box")
+
+func _set_indicator_box() -> void:
+	$LockBody/IndicatorPick.mouse_box = (
+		$LockBody/CylinderMain/Cylinders.get_valid_global_rect()
+	)
 
 var _already_broken: Array[CardSpec]
 

@@ -1,7 +1,4 @@
-- move word art to title
-- loading screen is a single card (with all depths) and the name "Loading..."
-
-- indicator movement
+x indicator movement
 - indicator push
 - card draw - flip from deck, tween hand over if needed
 - card discard - tween to discard 
