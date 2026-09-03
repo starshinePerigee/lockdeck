@@ -63,7 +63,6 @@ func _remove_space(space: CardSpace):
 		/ (CARD_SPEED_PX_PER_SEC * 3)
 		+ 0.14
 	)
-	print(duration)
 	var tween := space.tween_to(discard_pos.x, duration)
 	if space in $Hand.get_children():
 		tween.tween_callback($Hand.remove_child.bind(space))
@@ -71,8 +70,6 @@ func _remove_space(space: CardSpace):
 		push_error("Hand parent lost track of ref!")
 	tween.tween_callback(space.queue_free)
 	space.arc_to(discard_pos.y, 250, duration)
-
-@onready var home_y: float = global_position.y
 
 func _add_space(spec: CardSpec) -> CardSpace:
 	var space := CARD_SPACE.instantiate()
@@ -111,7 +108,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 	var separation: int = SIZE_SCALE[sep_index]
 	var space_delta := CARD_WIDTH + separation
 	var total_size := len(cards) * space_delta
-	var start_pos := global_position.x + ((size.x - total_size) - 64) / 2
+	var start_pos := ((size.x - total_size) - 64) / 2
 	
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
@@ -119,7 +116,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
 		spaces[i].tween_to(end_pos, duration)
 		if spaces[i].global_position == deck_pos:
-			spaces[i].arc_to(home_y, 60, duration)
+			spaces[i].arc_to(0, 40, duration)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces

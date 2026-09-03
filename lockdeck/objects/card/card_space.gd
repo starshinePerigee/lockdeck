@@ -75,18 +75,18 @@ func clear_selected() -> void:
 	z_boost = false
 
 var _x_tween: Tween
-## Travel to a given GLOBAL x position
-func tween_to(new_global_x: float, duration: float) -> Tween:
+## Travel to a given  x position
+func tween_to(new_x: float, duration: float) -> Tween:
 	if _x_tween:
 		_x_tween.kill()
 	_x_tween = create_tween()
 	_x_tween.set_trans(Tween.TRANS_LINEAR)
-	_x_tween.tween_property(self, "global_position:x", new_global_x, duration)
+	_x_tween.tween_property(self, "position:x", new_x, duration)
 	return _x_tween
 
 var _y_tween: Tween
-## Arc through a global position to a given GLOBAL y posistion
-func arc_to(new_global_y: float, arc_height: int, duration:) -> Tween:
+## Arc through a position to a given y posistion
+func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
 	if _card_tween:
 		_card_tween.kill()
 	
@@ -98,14 +98,15 @@ func arc_to(new_global_y: float, arc_height: int, duration:) -> Tween:
 		_y_tween.kill()
 	_y_tween = create_tween()
 	
-	var global_arc_peak := VIEWPORT_Y - arc_height
-	if global_position.y < global_arc_peak:
-		global_arc_peak = int(global_position.y - 30)
-	global_arc_peak -= randi_range(0, 50)
+	var arc_peak := VIEWPORT_Y - arc_height
+	if position.y < arc_peak:
+		arc_peak = int(position.y - 30)
+	if arc_height > 50:
+		arc_peak -= randi_range(0, 40)
 	_y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_y_tween.tween_property(self, "global_position:y", global_arc_peak, duration / 2)
+	_y_tween.tween_property(self, "position:y", arc_peak, duration / 2)
 	_y_tween.set_ease(Tween.EASE_IN)
-	_y_tween.tween_property(self, "global_position:y", new_global_y, duration / 2)
+	_y_tween.tween_property(self, "position:y", new_y, duration / 2)
 	
 	_y_tween.set_ease(Tween.EASE_OUT)
 	_y_tween.tween_property(self, "position:y", 0, HIDE_DURATION)

@@ -29,6 +29,13 @@ func draw_cards(n: int) -> Array[CardSpec]:
 	redraw()
 	return many_cards
 
+func get_random_pointers(n: int) -> Array[CardSpec]:
+	var shuffled: Array = cards.duplicate()
+	shuffled.shuffle()
+	var ret: Array[CardSpec]
+	ret.assign(shuffled.slice(0, n))
+	return ret
+
 ## Put cards back in the deck from discard
 func add_cards(new_cards: Array[CardSpec]) -> void:
 	#TODO

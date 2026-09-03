@@ -132,8 +132,8 @@ func _input(event: InputEvent) -> void:
 			for target in valid_targets():
 				if target.get_mouse_rect().has_point(click):
 					_current_target = target
-					_do_target()
 					set_state(InputState.ANIMATING)
+					_do_target()
 					return
 			
 			# note that if you clicked a pick card, this will execute before pick_clicked
@@ -551,7 +551,7 @@ func post_pick() -> void:
 	
 	var deck_breaks := _result.decks_broken
 	if deck_breaks > 0:
-		var broken_cards = $DeckMain.draw_cards(deck_breaks)
+		var broken_cards = $DeckMain.get_random_pointers(deck_breaks)
 		for card in broken_cards:
 			break_pick(card, true)
 	
