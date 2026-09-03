@@ -9,6 +9,7 @@ signal card_tapped()
 signal card_picked_up()
 ## Drag eneded
 signal card_dropped()
+signal animation_complete()
 
 const HIDE_DURATION := 0.23
 
@@ -81,6 +82,7 @@ func tween_to(new_x: float, duration: float) -> Tween:
 	_x_tween = create_tween()
 	_x_tween.set_trans(Tween.TRANS_LINEAR)
 	_x_tween.tween_property(self, "position:x", new_x, duration)
+	_x_tween.tween_callback(animation_complete.emit)
 	return _x_tween
 
 var _y_tween: Tween

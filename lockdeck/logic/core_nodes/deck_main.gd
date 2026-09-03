@@ -11,7 +11,7 @@ signal reload_finish
 signal display_cards(Array)
 
 const CARD_FLIGHT_TIME := 0.45
-const CARD_TAKEOFF_TIME := 0.6
+const CARD_TAKEOFF_TIME := 0.4
 
 var discard_pos := Vector2(1000, 500)
 
@@ -43,16 +43,21 @@ func get_random_pointers(n: int) -> Array[CardSpec]:
 ## Put cards back in the deck from discard
 func add_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
-	var interval := CARD_TAKEOFF_TIME / count() + 0.1
+	var interval := CARD_TAKEOFF_TIME / count() + 0.02
 	# tween instead of a timer
 	var tween := create_tween()
 	tween.tween_callback(reload_progress.emit.bind(0))
 	for i in len(new_cards):
 		tween.tween_callback(_animate_draw_from_discard.bind(i + 1))
 		tween.tween_interval(interval)
-	tween.tween_interval(CARD_FLIGHT_TIME + 0.1)
-	tween.tween_callback(reload_finish.emit)
+	if len(new_cards) > 0:
+		tween.tween_interval((CARD_FLIGHT_TIME + 0.1) - interval)
+	tween.tween_callback(_finish_reload)
 	tween.tween_callback(redraw)
+
+func _finish_reload() -> void:
+	print("reload finished")
+	reload_finish.emit.call_deferred()
 
 const CARD_BACK := preload("res://assets/card/card_back_static.png")
 
@@ -62,7 +67,6 @@ func _animate_draw_from_discard(i: int) -> void:
 	card.texture = CARD_BACK
 	card.position = discard_pos
 	card.z_index = 3100
-	print("global: %s" % card.global_position)
 	
 	var x_tween := card.create_tween()
 	x_tween.set_trans(Tween.TRANS_LINEAR)
@@ -73,7 +77,12 @@ func _animate_draw_from_discard(i: int) -> void:
 	
 	var y_tween := card.create_tween()
 	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	y_tween.tween_property(card, "position:y", -120, CARD_FLIGHT_TIME / 2)
+	y_tween.tween_property(
+		card,
+		"position:y",
+		-120 - randi_range(0, 40),
+		CARD_FLIGHT_TIME / 2
+	)
 	y_tween.set_ease(Tween.EASE_IN)
 	y_tween.tween_property(card, "position:y", position.y - 30, CARD_FLIGHT_TIME / 2)
 

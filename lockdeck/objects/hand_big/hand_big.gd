@@ -8,6 +8,8 @@ signal card_tapped(space: CardSpace)
 signal card_dragged(space: CardSpace)
 signal card_dropped(space: CardSpace)
 
+signal animation_complete()
+
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
 const CARD_WIDTH := 128
@@ -110,13 +112,18 @@ func redraw(cards: Array[CardSpec]) -> void:
 	var total_size := len(cards) * space_delta
 	var start_pos := ((size.x - total_size) - 64) / 2
 	
+	var last_tween: Tween
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
-		spaces[i].tween_to(end_pos, duration)
+		last_tween = spaces[i].tween_to(end_pos, duration)
 		if spaces[i].global_position == deck_pos:
 			spaces[i].arc_to(0, 10, duration)
+	if last_tween:
+		last_tween.tween_callback(animation_complete.emit)
+	else:
+		animation_complete.emit.call_deferred()
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces

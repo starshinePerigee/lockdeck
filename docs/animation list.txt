@@ -4,7 +4,7 @@ x hand raise/lower as tween
 x card draw - flip from deck, tween hand over if needed
 x card discard - tween to discard 
 x cared played - tween to discard also?
-- deck reload
+x deck reload
 - pick break
 - notifications
 - pin pushing

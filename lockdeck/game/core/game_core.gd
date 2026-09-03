@@ -42,7 +42,6 @@ func pick_selected(spec: CardSpec) -> void:
 var _lock_input := false
 
 enum InputState {
-	REFRESH_PENDING,  # used to refresh a state
 	INACTIVE,
 	ANIMATING,
 	ACTIVE_SELECT,
@@ -283,8 +282,6 @@ func set_state(state: InputState) -> void:
 	current_state = state
 	
 	match state:
-		InputState.REFRESH_PENDING:
-			pass
 		InputState.INACTIVE:
 			unhighlight_all()
 			$LockBody/IndicatorPick.go_hide()
@@ -449,8 +446,8 @@ func draw_new_hand() -> void:
 ## Move discard back into deck
 func reload_deck() -> void:
 	if $DiscardMain.count() > 0:
-		$DeckMain.add_cards($DiscardMain.empty_deck())
 		$Notifications.notify(Notifications.RELOAD)
+	$DeckMain.add_cards($DiscardMain.empty_deck())
 
 func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
@@ -593,10 +590,16 @@ func end_turn(count_down: bool = true) -> void:
 		)
 		$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
+	set_state(InputState.ANIMATING)
 	discard_hand()
+	print("await discard")
+	await $HandMain/Hand.animation_complete
 	reload_deck()
-	set_state(InputState.REFRESH_PENDING)
+	print("await reload")
+	await $DeckMain.reload_finish
 	cleanup_step()
+	print("await cleanup")
+	await $HandMain/Hand.animation_complete
 	set_state(InputState.INACTIVE)
 
 func game_over() -> void:
