@@ -99,8 +99,8 @@ func pick_dropped(space: CardSpace) -> void:
 	
 	if _current_target:
 		space.cancel_snapback()
-		_do_target()
 		set_state(InputState.ANIMATING)
+		_do_target()
 	else:
 		set_state(InputState.INACTIVE)
 	
@@ -454,6 +454,7 @@ func break_pick(card: CardSpec, surprise := false) -> void:
 			"Tried to break card %s [%s] but could not locate!"
 			% [card.pick_name, card.unique_id]
 		)
+		assert(false)
 	
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)
@@ -648,8 +649,8 @@ func _ready() -> void:
 	var settings := GameSettings.instance()
 	toggle_active_row(settings.highlight_active_row)
 	settings.highlight_active_row_changed.connect(toggle_active_row)
-	$HandMain/Hand.deck_pos = $DeckMain.global_position
-	$HandMain/Hand.discard_pos = $DiscardMain.global_position
+	$HandMain/Hand.deck_pos = $DeckMain.position
+	$HandMain/Hand.discard_pos = $DiscardMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)

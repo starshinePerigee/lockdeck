@@ -60,8 +60,8 @@ func _remove_space(space: CardSpace):
 	var card_pos: Vector2 = space.find_child("PickCard").global_position
 	var duration: float = (
 		card_pos.distance_to(discard_pos)
-		/ (CARD_SPEED_PX_PER_SEC * 1.5)
-		+ 0.08
+		/ (CARD_SPEED_PX_PER_SEC * 3)
+		+ 0.14
 	)
 	print(duration)
 	var tween := space.tween_to(discard_pos.x, duration)
@@ -114,7 +114,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 	var start_pos := global_position.x + ((size.x - total_size) - 64) / 2
 	
 	for i in len(spaces):
-		spaces[i].z_index = 100 * i
+		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
 		spaces[i].tween_to(end_pos, duration)
