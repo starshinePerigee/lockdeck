@@ -16,7 +16,7 @@ var STOW_POSITION := Vector2(-128, -16)
 var OFFSCREEN := STOW_POSITION + Vector2(-256, 0)
 var PUSH := Vector2(0, -64)
 var MOVE_DELAY := 0.36
-var PUSH_DURATION := 0.4
+var PUSH_DURATION := 0.3
 
 var mouse_box := Rect2()
 
