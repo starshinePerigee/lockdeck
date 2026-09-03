@@ -101,6 +101,7 @@ func arc_to(new_global_y: float, arc_height: int, duration:) -> Tween:
 	var global_arc_peak := VIEWPORT_Y - arc_height
 	if global_position.y < global_arc_peak:
 		global_arc_peak = int(global_position.y - 30)
+	global_arc_peak -= randi_range(0, 50)
 	_y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_y_tween.tween_property(self, "global_position:y", global_arc_peak, duration / 2)
 	_y_tween.set_ease(Tween.EASE_IN)

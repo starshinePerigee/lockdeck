@@ -4,7 +4,12 @@ extends Control
 ## Emitted if more cards are drawn than are present in the deck
 signal draw_empty
 
+## Emitted when the reload animation finishes
+signal reload_finish
+
 signal display_cards(Array)
+
+var discard_pos := Vector2(1000, 500)
 
 @export var cards: Array[CardSpec]
 
@@ -24,8 +29,13 @@ func draw_cards(n: int) -> Array[CardSpec]:
 	redraw()
 	return many_cards
 
-## Put cards back in the deck
+## Put cards back in the deck from discard
 func add_cards(new_cards: Array[CardSpec]) -> void:
+	#TODO
+	cards.append_array(new_cards)
+	redraw()
+
+func load_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
 	redraw()
 

@@ -58,6 +58,7 @@ func _actually_push() -> void:
 	_tween = create_tween()
 	_tween.tween_callback(start_push.emit)
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_tween.tween_interval(0.1)
 	_tween.tween_property($Position, "position", $Position.position + PUSH, PUSH_DURATION)
 	_tween.tween_callback(at_top.emit)
 	_tween.tween_property($Position, "position", $Position.position, PUSH_DURATION - 0.1)

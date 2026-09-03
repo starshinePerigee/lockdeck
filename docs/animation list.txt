@@ -16,7 +16,7 @@ x cared played - tween to discard also?
 -- (sound fx on land based on depth revealed)
 -- play jam if jam
 - card acquire
-- previous turn pan
+x previous turn pan
 - better completion animation: cards should slide down and hide
 - Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
 -- on side

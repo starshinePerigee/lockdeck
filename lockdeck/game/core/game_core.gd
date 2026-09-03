@@ -277,7 +277,13 @@ func set_state(state: InputState) -> void:
 			unhighlight_all()
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
-			$LockBody.position = LOCK_BODY_HOME
+			if $LockBody.position != LOCK_BODY_HOME:
+				create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
+					$LockBody,
+					"position", 
+					LOCK_BODY_HOME,
+					0.23
+				)
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
@@ -298,9 +304,14 @@ func set_state(state: InputState) -> void:
 			reset_countdown()
 			$DiscardMain.show_icon = true
 		InputState.VIEW_ALL:
-			$LockBody.global_position = Vector2(
-				# 146 is a full pin worth of depths, putting the base at the top
-				LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
+			create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
+				$LockBody,
+				"global_position", 
+				Vector2(
+					# 146 is a full pin worth of depths, putting the base at the top
+					LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
+				),
+				0.23
 			)
 			$HandMain/Hand.hide_hand()
 			$LockBody/CylinderMain.show_preview(_result)
@@ -607,7 +618,7 @@ func load_deck(deck: Array[CardSpec]) -> void:
 	discard_hand()
 	reload_deck()
 	$DeckMain.clear_all()
-	$DeckMain.add_cards(deck)
+	$DeckMain.load_cards(deck)
 	update_status_widget()
 
 ## loads a lock
@@ -651,6 +662,7 @@ func _ready() -> void:
 	settings.highlight_active_row_changed.connect(toggle_active_row)
 	$HandMain/Hand.deck_pos = $DeckMain.position
 	$HandMain/Hand.discard_pos = $DiscardMain.position
+	$DeckMain.discard_pos = $DiscardMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
