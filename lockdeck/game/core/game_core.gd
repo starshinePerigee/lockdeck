@@ -351,6 +351,7 @@ func toggle_active_row(show_row: bool) -> void:
 #region animation handling
 
 func end_animation() -> void:
+	cleanup_step()
 	lock_input(false)
 	set_state(InputState.INACTIVE)
 
@@ -531,10 +532,9 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		solve_lock()
 	else:
 		post_pick()
-		cleanup_step()
 	
 	if current_state != InputState.ANIMATING:
-		set_state(InputState.INACTIVE)
+		end_animation()
 
 ## Perform all the local actions for pick effects
 func post_pick() -> void:

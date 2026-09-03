@@ -11,7 +11,6 @@ signal card_picked_up()
 signal card_dropped()
 
 const HIDE_DURATION := 0.23
-const VIEWPORT_Y := 540
 
 var _dragging := false
 var _active := false
@@ -85,7 +84,7 @@ func tween_to(new_x: float, duration: float) -> Tween:
 	return _x_tween
 
 var _y_tween: Tween
-## Arc through a position to a given y posistion
+## Arc through a fixed height above 0 to a given y posistion
 func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
 	if _card_tween:
 		_card_tween.kill()
@@ -98,10 +97,11 @@ func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
 		_y_tween.kill()
 	_y_tween = create_tween()
 	
-	var arc_peak := VIEWPORT_Y - arc_height
-	if position.y < arc_peak:
-		arc_peak = int(position.y - 30)
+	var arc_peak := -arc_height
 	if arc_height > 50:
+		if position.y < arc_peak:
+			# if we're above the requested arc peak
+			arc_peak = int(position.y - 30)
 		arc_peak -= randi_range(0, 40)
 	_y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_y_tween.tween_property(self, "position:y", arc_peak, duration / 2)
@@ -118,9 +118,9 @@ func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
 			return
 		
 		z_boost = v
-		if z_boost:
+		if z_boost and z_index < 2000:
 			z_index += 2000
-		else:
+		elif z_index > 2000:
 			z_index -= 2000
 
 @export var card_spec: CardSpec: 
