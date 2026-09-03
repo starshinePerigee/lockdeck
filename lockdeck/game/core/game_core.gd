@@ -99,7 +99,6 @@ func pick_dropped(space: CardSpace) -> void:
 	
 	if _current_target:
 		space.cancel_snapback()
-		set_state(InputState.ANIMATING)
 		_do_target()
 	else:
 		set_state(InputState.INACTIVE)
@@ -132,10 +131,8 @@ func _input(event: InputEvent) -> void:
 			for target in valid_targets():
 				if target.get_mouse_rect().has_point(click):
 					_current_target = target
-					set_state(InputState.ANIMATING)
 					_do_target()
 					return
-			
 			# note that if you clicked a pick card, this will execute before pick_clicked
 			# so we only need to bring things back to default
 			
@@ -153,13 +150,11 @@ func _do_target() -> void:
 	unhighlight_target(_current_target)
 	if _current_target == $DiscardMain:
 		discard_pick()
-		end_animation()
 	elif _current_target is Pin:
 		do_pick(
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
-		$LockBody/IndicatorPick.do_push()
 
 func _process(_delta: float) -> void:
 	if current_state == InputState.ACTIVE_DRAG:
@@ -515,6 +510,8 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	if card != _NULL_PICK:
+		set_state(InputState.ANIMATING)
+		$LockBody/IndicatorPick.do_push()
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
 	
@@ -535,6 +532,9 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	else:
 		post_pick()
 		cleanup_step()
+	
+	if current_state != InputState.ANIMATING:
+		set_state(InputState.INACTIVE)
 
 ## Perform all the local actions for pick effects
 func post_pick() -> void:

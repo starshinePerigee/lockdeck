@@ -116,7 +116,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
 		spaces[i].tween_to(end_pos, duration)
 		if spaces[i].global_position == deck_pos:
-			spaces[i].arc_to(0, 40, duration)
+			spaces[i].arc_to(0, 0, duration)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces
