@@ -14,6 +14,7 @@ const CARD_WIDTH := 128
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 const HIDE_DURATION := 0.23
+const CARD_SPEED_PX_PER_SEC := 1600
 
 # set these from main
 var deck_pos := Vector2(0, 500)
@@ -55,16 +56,29 @@ func _remove_space(space: CardSpace):
 		spaces.erase(space)
 	else:
 		push_error("Hand space refs lost track of child!")
+	
+	var card_pos: Vector2 = space.find_child("PickCard").global_position
+	var duration: float = (
+		card_pos.distance_to(discard_pos)
+		/ (CARD_SPEED_PX_PER_SEC * 1.5)
+		+ 0.08
+	)
+	print(duration)
+	var tween := space.tween_to(discard_pos.x, duration)
 	if space in $Hand.get_children():
-		$Hand.remove_child(space)
+		tween.tween_callback($Hand.remove_child.bind(space))
 	else:
 		push_error("Hand parent lost track of ref!")
-	space.queue_free()
+	tween.tween_callback(space.queue_free)
+	space.arc_to(discard_pos.y, 250, duration)
+
+@onready var home_y: float = global_position.y
 
 func _add_space(spec: CardSpec) -> CardSpace:
 	var space := CARD_SPACE.instantiate()
 	space.card_spec = spec
 	space.has_card = true
+	$Hand.add_child(space)
 	
 	space.card_tapped.connect(card_selected.emit.bind(spec))
 	space.card_picked_up.connect(card_selected.emit.bind(spec))
@@ -72,18 +86,12 @@ func _add_space(spec: CardSpec) -> CardSpace:
 	space.card_picked_up.connect(card_dragged.emit.bind(space))
 	space.card_dropped.connect(card_dropped.emit.bind(space))
 	
+	space.global_position = deck_pos
 	spaces.append(space)
-	$Hand.add_child(space)
 	return space
 
 ## Forces full redraw
 func redraw(cards: Array[CardSpec]) -> void:
-	if len(spaces) != $Hand.get_child_count():
-		push_error(
-			"Hand space reference and child mismatch! %s vs %s"
-			% [len(spaces), $Hand.get_child_count()]
-		)
-	
 	for card in cards.duplicate():
 		if not(card):
 			push_error("Null card spec passed to hand?")
@@ -103,11 +111,15 @@ func redraw(cards: Array[CardSpec]) -> void:
 	var separation: int = SIZE_SCALE[sep_index]
 	var space_delta := CARD_WIDTH + separation
 	var total_size := len(cards) * space_delta
-	var start_pos := ((size.x - total_size) - 64) / 2
+	var start_pos := global_position.x + ((size.x - total_size) - 64) / 2
 	
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i
-		spaces[i].position.x = start_pos + ((CARD_WIDTH + separation) * i)
+		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
+		var duration := end_pos / CARD_SPEED_PX_PER_SEC
+		spaces[i].tween_to(end_pos, duration)
+		if spaces[i].global_position == deck_pos:
+			spaces[i].arc_to(home_y, 60, duration)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces

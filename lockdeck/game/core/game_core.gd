@@ -648,6 +648,8 @@ func _ready() -> void:
 	var settings := GameSettings.instance()
 	toggle_active_row(settings.highlight_active_row)
 	settings.highlight_active_row_changed.connect(toggle_active_row)
+	$HandMain/Hand.deck_pos = $DeckMain.global_position
+	$HandMain/Hand.discard_pos = $DiscardMain.global_position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
@@ -677,4 +679,4 @@ func _ready() -> void:
 		var game := GameSpec.get_in_progress_game()
 		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
 		load_game(game)
-		draw_cards(5)
+#		draw_cards(5)

@@ -11,6 +11,7 @@ signal card_picked_up()
 signal card_dropped()
 
 const HIDE_DURATION := 0.23
+const VIEWPORT_Y := 540
 
 var _dragging := false
 var _active := false
@@ -51,27 +52,63 @@ const HIGHLIGHT_OFFSET := 64
 
 var _selected := false
 
-var _tween: Tween = null
-func _tween_to(new_pos: int) -> void:
-	if _tween:
-		_tween.kill()
-	_tween = create_tween()
-	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_tween.tween_property($PickCard, "position:y", new_pos, HIDE_DURATION)
+var _card_tween: Tween = null
+func _card_tween_to(new_pos: int) -> void:
+	if _card_tween:
+		_card_tween.kill()
+	_card_tween = $PickCard.create_tween()
+	_card_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_card_tween.tween_property($PickCard, "position:y", new_pos, HIDE_DURATION)
 
 ## Draw highlight and pop card
 func set_selected() -> void:
 	_selected = true
-	_tween_to(-HIGHLIGHT_OFFSET)
+	_card_tween_to(-HIGHLIGHT_OFFSET)
 	$PickCard.tooltippable = false
 	z_boost = true
 
 ## Unpop card
 func clear_selected() -> void:
 	_selected = false
-	_tween_to(0)
+	_card_tween_to(0)
 	$PickCard.tooltippable = true
 	z_boost = false
+
+var _x_tween: Tween
+## Travel to a given GLOBAL x position
+func tween_to(new_global_x: float, duration: float) -> Tween:
+	if _x_tween:
+		_x_tween.kill()
+	_x_tween = create_tween()
+	_x_tween.set_trans(Tween.TRANS_LINEAR)
+	_x_tween.tween_property(self, "global_position:x", new_global_x, duration)
+	return _x_tween
+
+var _y_tween: Tween
+## Arc through a global position to a given GLOBAL y posistion
+func arc_to(new_global_y: float, arc_height: int, duration:) -> Tween:
+	if _card_tween:
+		_card_tween.kill()
+	
+	# set current position to be the pick card's position:
+	position += $PickCard.position
+	$PickCard.position = Vector2()
+	
+	if _y_tween:
+		_y_tween.kill()
+	_y_tween = create_tween()
+	
+	var global_arc_peak := VIEWPORT_Y - arc_height
+	if global_position.y < global_arc_peak:
+		global_arc_peak = int(global_position.y - 30)
+	_y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_y_tween.tween_property(self, "global_position:y", global_arc_peak, duration / 2)
+	_y_tween.set_ease(Tween.EASE_IN)
+	_y_tween.tween_property(self, "global_position:y", new_global_y, duration / 2)
+	
+	_y_tween.set_ease(Tween.EASE_OUT)
+	_y_tween.tween_property(self, "position:y", 0, HIDE_DURATION)
+	return _y_tween
 
 @export var z_boost: bool:
 	set(v):
