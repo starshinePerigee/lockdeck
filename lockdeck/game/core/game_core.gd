@@ -220,6 +220,8 @@ func unhighlight_target(target: Control) -> void:
 	if target is Pin:
 		$LockBody/IndicatorPick.go_stow()
 		$LockBody/CylinderMain.cancel_preview()
+	elif target == $DiscardMain:
+		unpreview_discard()
 
 func highlight_target(target: Control) -> void:
 	target.core_highlight()
@@ -227,6 +229,8 @@ func highlight_target(target: Control) -> void:
 		var pin_index: int = $LockBody/CylinderMain/Cylinders.get_index_of_ref(target)
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
+	elif target == $DiscardMain:
+		preview_discard()
 
 func unhighlight_all() -> void:
 	if _current_target:
@@ -251,6 +255,19 @@ func hover_target(target: Control) -> void:
 
 func unhover_target(target) -> void:
 	target.core_unhover()
+
+func preview_discard() -> void:
+	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
+	if preview_step.pick_broke or preview_step.decks_broken > 0 or break_next:
+		$TrashMain.bump_label()
+	else:
+		$DiscardMain.bump_label()
+	# I am not handling any other effects here. by god.
+
+func unpreview_discard() -> void:
+	$LockBody/CylinderMain.cancel_preview()
+	$DiscardMain.redraw()
+	$TrashMain.update_label()
 
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
@@ -402,19 +419,6 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 	for card in cards:
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
-
-func preview_discard() -> void:
-	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
-	if preview_step.pick_broke or preview_step.decks_broken > 0:
-		$TrashMain.bump_label()
-	else:
-		$DiscardMain.bump_label()
-	# I am not handling any other effects here. by god.
-
-func unpreview_discard() -> void:
-	$LockBody/CylinderMain.cancel_preview()
-	$DiscardMain.update_label()
-	$TrashMain.update_label()
 
 #endregion
 
@@ -662,7 +666,7 @@ func _ready() -> void:
 	settings.highlight_active_row_changed.connect(toggle_active_row)
 	$HandMain/Hand.deck_pos = $DeckMain.position
 	$HandMain/Hand.discard_pos = $DiscardMain.position
-	$DeckMain.discard_pos = $DiscardMain.position
+	$DeckMain.discard_pos = $DiscardMain.position - $DeckMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
@@ -671,7 +675,6 @@ func _ready() -> void:
 	$HandMain/Hand.card_tapped.connect(pick_clicked)
 	$HandMain/Hand.card_dragged.connect(pick_dragged)
 	$HandMain/Hand.card_dropped.connect(pick_dropped)
-	$LockBody/IndicatorPick.reset.connect(end_animation)
 
 	$LockBody/CountdownMain.countdown_triggered.connect(end_turn)
 	$LockBody/CountdownMain.countdown_ended.connect(final_turn.emit)
@@ -684,6 +687,12 @@ func _ready() -> void:
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
+	
+	$LockBody/IndicatorPick.reset.connect(end_animation)
+	$DeckMain.reload_finish.connect(end_animation)
+	$DeckMain.reload_progress.connect($DiscardMain.update_label)
+	$DeckMain.reload_progress.connect($DiscardMain.update_pile)
+	$DeckMain.reload_finish.connect($DiscardMain.redraw)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:

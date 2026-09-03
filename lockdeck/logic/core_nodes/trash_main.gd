@@ -17,7 +17,7 @@ func add_card(card: CardSpec) -> void:
 	text = "Broken: %s" % len(cards)
 
 func bump_label() -> void:
-	update_label(count() + 1)
+	update_label(1)
 
 func update_label(n: int = -1) -> void:
 	if n == -1:
