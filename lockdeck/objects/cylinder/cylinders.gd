@@ -47,6 +47,8 @@ func animate_pins(pins: Array[PinSpec], results: Array[ResultSpec] = []):
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
+	# sync with indicator pick
+	_tween.tween_interval(0.02)
 	_open_awaits = len(pins)
 	
 	for i in range(len(pins) - 1, -1, -1):

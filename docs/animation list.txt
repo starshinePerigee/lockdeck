@@ -19,13 +19,14 @@ x- move up for each push, skip, test, reveal
 -- (sound fx on pivot)
 -- (sound fx on land based on depth revealed)
 -- play jam if jam
+- pin fall animation
 - card acquire
 x previous turn pan
 - better completion animation: cards should slide down and hide
 - Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
 -- on side
 
-- jam ani
+- jam ani and unjam ani
 - bomb ani
 - unlock ani
 - pin rise and set

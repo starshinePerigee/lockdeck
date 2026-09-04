@@ -125,7 +125,6 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	result.lock_solved = lock_solved()
 	if not shadow:
 		update_visibility(result)
-		$Cylinders.animate_pins(pins, result.results)
 		for i in len(pins):
 			pins[i].shadow_clone(_shadow_pins[i])
 	return result
