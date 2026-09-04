@@ -85,7 +85,7 @@ func _add_space(spec: CardSpec) -> CardSpace:
 	space.card_picked_up.connect(card_dragged.emit.bind(space))
 	space.card_dropped.connect(card_dropped.emit.bind(space))
 	
-	space.global_position = deck_pos
+	space.position = Vector2()
 	spaces.append(space)
 	return space
 
@@ -118,7 +118,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
 		last_tween = spaces[i].tween_to(end_pos, duration)
-		if spaces[i].global_position == deck_pos:
+		if spaces[i].position == Vector2():
 			spaces[i].arc_to(0, 10, duration)
 	if last_tween:
 		last_tween.tween_callback(animation_complete.emit)

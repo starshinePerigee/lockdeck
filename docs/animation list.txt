@@ -35,3 +35,5 @@ x previous turn pan
 - push should be bounce, because the pin bounces back up
 - bounce should be slip, because the pin slips down
 - slip should be pop
+
+- animation speed as setting

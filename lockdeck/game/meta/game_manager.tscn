@@ -474,13 +474,15 @@ libraries = {
 [node name="BetweenLocks" parent="." instance=ExtResource("3_51x2c")]
 z_index = -30
 layout_mode = 1
+offset_left = 960.0
+offset_right = 960.0
 mouse_filter = 2
 
 [node name="GameCore" parent="." instance=ExtResource("2_51x2c")]
 visible = false
 layout_mode = 1
-offset_top = -1013.0
-offset_bottom = -1553.0
+offset_top = 1200.0
+offset_bottom = 660.0
 
 [node name="LootMain" parent="." instance=ExtResource("4_bujib")]
 visible = false

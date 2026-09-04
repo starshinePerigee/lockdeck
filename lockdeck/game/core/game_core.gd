@@ -515,8 +515,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		print("Applying pick %s on cylinder %s" % [card.pick_name, cylinder])
 	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
-
-	
 	if card != _NULL_PICK:
 		set_state(InputState.ANIMATING)
 		$LockBody/IndicatorPick.do_push()
