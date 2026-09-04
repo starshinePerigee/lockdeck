@@ -12,7 +12,7 @@ x deck reload
 - pick break
 - notifications
 - pin pushing
--- move up for each push, skip, test, reveal
+x- move up for each push, skip, test, reveal
 -- mark all depths on the way up with "..." texture (different sound fx and speed for skip)
 -- move back down, revealing depths as you go (for reveal and the pin you land on)
 -- at end, flip all "..." to the actual reveal

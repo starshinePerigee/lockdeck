@@ -2,6 +2,8 @@ extends Control
 ## The view for the full set of cylinders in the lock.
 ## Made up of pins, which are made up of depths.
 
+signal animation_complete()
+
 ## Contains references to all the Pin view objects in order.
 ## Skips having to disambiguate get_children()[i] and avoids that breaking
 ## if more children are added.
@@ -38,6 +40,29 @@ func set_results(pin_results: Array[ResultSpec]) -> void:
 func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
+
+var _tween: Tween
+var _open_awaits: int
+func animate_pins(pins: Array[PinSpec], results: Array[ResultSpec] = []):
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	_open_awaits = len(pins)
+	
+	for i in range(len(pins) - 1, -1, -1):
+		if (
+			pins[i].pin_position == pin_refs[i].pin_position
+			and len(results[i].results) <= 1
+		):
+			_tween.tween_callback(pin_refs[i].load_spec.bind(pins[i]))
+		else:
+			_tween.tween_callback(pin_refs[i].animate.bind(pins[i], results[i]))
+			_tween.tween_interval(0.07)
+
+func _pseudo_await() -> void:
+	_open_awaits -= 1
+	if _open_awaits == 0:
+		animation_complete.emit()
 #endregion
 
 func get_valid_global_rect() -> Rect2:
@@ -63,6 +88,8 @@ func _ready() -> void:
 		$CylinderHBox/Pin4,
 		$CylinderHBox/Pin5,
 	]
+	for pin in pin_refs:
+		pin.animation_complete.connect(_pseudo_await)
 	clear_all_pins()
 
 func _init() -> void:

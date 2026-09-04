@@ -2,9 +2,13 @@ extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin
 
+signal animation_complete()
+
 ## Vertical height of a depth texture in pixels.
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
+
+const SEC_PER_DEPTH := 0.08
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -32,6 +36,13 @@ const BOMB_DEAD := preload("res://assets/pin/bomb_defused.png")
 var SPRING_SIZE: Vector2
 var SPRING_POSITION: Vector2
 
+func _stack_position(pos: int) -> Vector2:
+	return Vector2(
+		0,
+		DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
+		- DEPTH_VHEIGHT * pos
+	)
+
 ## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
 	set(v):
@@ -40,16 +51,12 @@ var SPRING_POSITION: Vector2
 		if not is_node_ready():
 			await ready
 		
-		var depth_shift := DEPTH_VHEIGHT * v
-		$Stack.position = Vector2(
-			0,
-			DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
-			- depth_shift
-		)
+		$Stack.position = _stack_position(pin_position)
 		
 		# this logic handles skewing the spring as a hack
 		@warning_ignore("integer_division")
-		var pin_shift = depth_shift / 3
+		var depth_shift := DEPTH_VHEIGHT * pin_position
+		var pin_shift := depth_shift / 3.0
 		$Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
 		$Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y - (depth_shift - pin_shift))
 
@@ -91,11 +98,52 @@ func _draw_bomb(defused := false) -> void:
 	else:
 		$Stack/BombIndicator/BombIcon.texture = BOMB_LIVE
 
-## Load a PinSpec into this pin, setting all parameters.
+var _tween: Tween
+var _pending_spec: PinSpec
+
+func animate(pin_spec: PinSpec, results: ResultSpec) -> void:
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	
+	if _pending_spec:
+		load_spec(_pending_spec)
+	_pending_spec = pin_spec
+	
+	var deep_depth := pin_spec.pin_position
+	for i in results.results.keys():
+		if (
+			i > deep_depth
+			and Results.gt(results.results[i], Results.HOME)
+			and Results.gt(Results.BREAK, results.results[i])
+		):
+			deep_depth = i
+	
+	_tween.tween_property(
+		$Stack,
+		"position",
+		_stack_position(deep_depth),
+		abs(deep_depth - pin_position) * SEC_PER_DEPTH 
+	)
+	if deep_depth > pin_spec.pin_position:
+		_tween.tween_property(
+			$Stack,
+			"position",
+			_stack_position(pin_spec.pin_position),
+			abs(pin_spec.pin_position - deep_depth) * SEC_PER_DEPTH
+		)
+	_tween.tween_callback(_finish_animation)
+
+func _finish_animation() -> void:
+	load_spec(_pending_spec)
+	_pending_spec = null
+	animation_complete.emit()
+
+## Load a PinSpec into this pin, setting all parameters directly without animation.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
 		return
-		
+	
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
 		depth_refs[i].exhausted = pin_spec.activated[i]

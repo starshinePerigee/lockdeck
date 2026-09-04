@@ -31,7 +31,7 @@ func _tween_to(new_pos: Vector2) -> bool:
 	if _push_requested:
 		return false
 	
-	if _tween and _tween.is_running():
+	if _tween:
 		_tween.kill()
 
 	$Position.visible = true
@@ -56,7 +56,7 @@ func _process(_delta: float) -> void:
 			_waiting_for_stow = false
 
 func _actually_push() -> void:
-	if _tween and _tween.is_running():
+	if _tween:
 		_tween.kill()
 	
 	_current_target = OFFSCREEN
@@ -77,8 +77,8 @@ func _go_to_target() -> void:
 func _actually_hide() -> void:
 	if current_pick:
 		current_pick.hide_pick = false
-	_tween_to(OFFSCREEN)
-	_tween.tween_property($Position, "visible", false, 0)
+	if _tween_to(OFFSCREEN):
+		_tween.tween_property($Position, "visible", false, 0)
 
 ## Sets the pick to a given pin index
 func go_index(index: int) -> void:
