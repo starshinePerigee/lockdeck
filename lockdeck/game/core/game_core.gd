@@ -89,6 +89,7 @@ func pick_dragged(space: CardSpace) -> void:
 	set_state(InputState.ACTIVE_DRAG)
 	$Notifications.clear()
 	_current_area = space.get_card_area()
+	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
 
 func pick_dropped(space: CardSpace) -> void:
 	if not _current_area:
@@ -102,6 +103,7 @@ func pick_dropped(space: CardSpace) -> void:
 	else:
 		set_state(InputState.INACTIVE)
 	
+	$LockBody/IndicatorPick.current_pick = null
 	_current_target = null
 
 func pick_clicked(space: CardSpace) -> void:
@@ -110,9 +112,11 @@ func pick_clicked(space: CardSpace) -> void:
 	
 	if _previous_space == space:
 		_previous_space = null
+		$LockBody/IndicatorPick.current_pick = null
 		return
 	
 	_current_space = space
+	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
 	space.set_selected()
 	set_state(InputState.ACTIVE_SELECT)
 

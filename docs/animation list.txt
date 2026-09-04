@@ -1,3 +1,7 @@
+when a card is played:
+- move it to a central hover point as the pin plays
+- once the animation is finished, move it to discard / trash
+
 x indicator movement
 x indicator push
 x hand raise/lower as tween

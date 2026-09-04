@@ -45,6 +45,11 @@ var force_normal := false:
 			$Art.position = Vector2(0, 0)
 			$Art/Frame.texture = FRAME_NORMAL
 
+@export var hide_pick := false:
+	set(v):
+		hide_pick = v
+		$Art/PickArt.visible = not hide_pick
+
 ## If this is allowed to show a tooltip
 @export var tooltippable := true:
 	set(v):
@@ -89,6 +94,7 @@ func _redraw() -> void:
 	$Art/EffectBar.redraw()
 	$Art/PickArt.texture = card_spec.template.texture
 	$Art/PickArt.material = material_dictionary[card_spec.template.rarity]
+	$Art/PickArt.visible = not hide_pick
 	$Art/PickShadow.texture = card_spec.template.bg_texture
 	$Art/TitleBox/Title.text = card_spec.pick_name.capitalize()
 	$Art/TextBox/Text.text = card_spec.ability.description

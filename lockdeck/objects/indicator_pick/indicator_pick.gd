@@ -19,6 +19,11 @@ var MOVE_DELAY := 0.36
 var PUSH_DURATION := 0.3
 
 var mouse_box := Rect2()
+var current_pick: PickCard:
+	set(v):
+		if current_pick:
+			current_pick.hide_pick = false
+		current_pick = v
 
 var _tween: Tween = null
 
@@ -70,22 +75,28 @@ func _go_to_target() -> void:
 	_tween_to(_current_target)
 
 func _actually_hide() -> void:
+	if current_pick:
+		current_pick.hide_pick = false
 	_tween_to(OFFSCREEN)
 	_tween.tween_property($Position, "visible", false, 0)
 
 ## Sets the pick to a given pin index
 func go_index(index: int) -> void:
+	if current_pick:
+		current_pick.hide_pick = true
 	_tween_to(Vector2(INTER_PIN_SPACING * index, 0))
 	_waiting_for_stow = false
 
 ## Sets the pin to away and stowed
 func go_stow() -> void:
+	if current_pick:
+		current_pick.hide_pick = true
 	_current_target = STOW_POSITION
 	_waiting_for_stow = true
 
 ## Hides the pick
 func go_hide() -> void:
-	_tween_to(OFFSCREEN)
+	_actually_hide()
 
 func do_push() -> void:
 	_push_requested = true
