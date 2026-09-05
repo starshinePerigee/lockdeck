@@ -49,21 +49,32 @@ func animate_pins(pins: Array[PinSpec], results: Array[ResultSpec] = []):
 	_tween = create_tween()
 	# sync with indicator pick
 	_tween.tween_interval(0.02)
-	_open_awaits = len(pins)
 	
+	_open_awaits = 1 + len(pins)
+	_tween.tween_callback(_pseudo_await)
 	for i in range(len(pins) - 1, -1, -1):
 		if (
 			pins[i].pin_position == pin_refs[i].pin_position
 			and len(results[i].results) <= 1
 		):
-			_tween.tween_callback(pin_refs[i].load_spec.bind(pins[i]))
+			# If this pin doesn't have results, just load the spec (for jam, mostly)
+			_tween.tween_callback(pin_refs[i].direct_load.bind(pins[i]))
 		else:
 			_tween.tween_callback(pin_refs[i].animate.bind(pins[i], results[i]))
 			_tween.tween_interval(0.07)
+	# timeout / fallback for animation logic failures
+	_tween.tween_interval(5.0)
+	_tween.tween_callback(_animation_timeout)
+
+func _animation_timeout() -> void:
+	push_error("Animation timed out!")
+	animation_complete.emit()
 
 func _pseudo_await() -> void:
 	_open_awaits -= 1
 	if _open_awaits == 0:
+		if _tween:
+			_tween.kill()
 		animation_complete.emit()
 #endregion
 

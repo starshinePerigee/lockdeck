@@ -83,14 +83,16 @@ func _actually_hide() -> void:
 ## Sets the pick to a given pin index
 func go_index(index: int) -> void:
 	if current_pick:
-		current_pick.hide_pick = true
+#		current_pick.hide_pick = true
+		pass
 	_tween_to(Vector2(INTER_PIN_SPACING * index, 0))
 	_waiting_for_stow = false
 
 ## Sets the pin to away and stowed
 func go_stow() -> void:
 	if current_pick:
-		current_pick.hide_pick = true
+#		current_pick.hide_pick = true
+		pass
 	_current_target = STOW_POSITION
 	_waiting_for_stow = true
 

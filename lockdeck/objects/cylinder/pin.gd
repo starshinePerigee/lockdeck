@@ -139,6 +139,10 @@ func _finish_animation() -> void:
 	_pending_spec = null
 	animation_complete.emit()
 
+func direct_load(pin_spec: PinSpec) -> void:
+	load_spec(pin_spec)
+	animation_complete.emit()
+
 ## Load a PinSpec into this pin, setting all parameters directly without animation.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():

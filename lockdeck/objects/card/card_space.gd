@@ -74,30 +74,45 @@ func clear_selected() -> void:
 	$PickCard.tooltippable = true
 	z_boost = false
 
+func tween_to_vector(new_pos: Vector2, duration: float) -> void:
+	var x_tween := _source_tween(true)
+	x_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	x_tween.tween_property(self, "position:x", new_pos.x, duration)
+	x_tween.tween_callback(animation_complete.emit)
+	
+	var y_tween := _source_tween(false)
+	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	y_tween.tween_property(self, "position:y", new_pos.y, duration)
+
+## Build a tween or pass it forward
+func _source_tween(is_x: bool) -> Tween:
+	position += $PickCard.position
+	$PickCard.position = Vector2.ZERO
+	
+	if is_x:
+		if _x_tween:
+			_x_tween.kill()
+		_x_tween = create_tween()
+		return _x_tween
+	else:
+		if _y_tween:
+			_y_tween.kill()
+		_y_tween = create_tween()
+		return _y_tween
+
 var _x_tween: Tween
 ## Travel to a given  x position
 func tween_to(new_x: float, duration: float) -> Tween:
-	if _x_tween:
-		_x_tween.kill()
-	_x_tween = create_tween()
-	_x_tween.set_trans(Tween.TRANS_LINEAR)
-	_x_tween.tween_property(self, "position:x", new_x, duration)
-	_x_tween.tween_callback(animation_complete.emit)
-	return _x_tween
+	var tween := _source_tween(true)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "position:x", new_x, duration)
+	tween.tween_callback(animation_complete.emit)
+	return tween
 
 var _y_tween: Tween
 ## Arc through a fixed height above 0 to a given y posistion
-func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
-	if _card_tween:
-		_card_tween.kill()
-	
-	# set current position to be the pick card's position:
-	position += $PickCard.position
-	$PickCard.position = Vector2()
-	
-	if _y_tween:
-		_y_tween.kill()
-	_y_tween = create_tween()
+func arc_to(new_y: float, arc_height: int, duration: float) -> Tween:
+	var tween := _source_tween(false)
 	
 	var arc_peak := -arc_height
 	if arc_height > 50:
@@ -105,14 +120,14 @@ func arc_to(new_y: float, arc_height: int, duration:) -> Tween:
 			# if we're above the requested arc peak
 			arc_peak = int(position.y - 30)
 		arc_peak -= randi_range(0, 40)
-	_y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_y_tween.tween_property(self, "position:y", arc_peak, duration / 2)
-	_y_tween.set_ease(Tween.EASE_IN)
-	_y_tween.tween_property(self, "position:y", new_y, duration / 2)
+	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", arc_peak, duration / 2)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "position:y", new_y, duration / 2)
 	
-	_y_tween.set_ease(Tween.EASE_OUT)
-	_y_tween.tween_property(self, "position:y", 0, HIDE_DURATION)
-	return _y_tween
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", 0, HIDE_DURATION)
+	return tween
 
 @export var z_boost: bool:
 	set(v):

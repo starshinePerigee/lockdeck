@@ -53,6 +53,12 @@ func live_specs() -> Array[CardSpec]:
 	specs.assign(spaces.map(func(x): return x.card_spec))
 	return specs
 
+## Moves the card to a central neutral space after being played
+## The intent is that this tween will be interrupted naturally once execution finishes 
+func activate_space(space: CardSpace, x_pos_global: float) -> void:
+	var target_vector := Vector2(x_pos_global - global_position.x - 40, -135)
+	space.tween_to_vector(target_vector, 0.5)
+
 func _remove_space(space: CardSpace):
 	if space in spaces:
 		spaces.erase(space)

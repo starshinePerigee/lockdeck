@@ -55,7 +55,7 @@ var current_state := InputState.INACTIVE
 ## This can be a card, a pin, or a discardmain
 var _current_hover: Control
 
-## If you're clicking, this holds the CardSpace of the selected pick
+## this holds the CardSpace of the selected pick for clicking or dragging
 var _current_space: CardSpace
 
 ## this is used to allow de-selecting the current pick
@@ -99,8 +99,10 @@ func pick_dropped(space: CardSpace) -> void:
 	
 	if _current_target:
 		space.cancel_snapback()
+		_current_space = space
 		_do_target()
 	else:
+		_current_space = null
 		set_state(InputState.INACTIVE)
 	
 	$LockBody/IndicatorPick.current_pick = null
@@ -239,7 +241,6 @@ func unhighlight_all() -> void:
 	if _current_target:
 		_current_target = null
 	if _current_space:
-		push_warning("nulling current space from unhighlight_all")
 		_current_space.clear_selected()
 		_current_space = null
 	_current_hover = null
@@ -496,6 +497,7 @@ func discard_pick() -> void:
 		move_cards_from_hand_to_discard([active_card])
 	
 	cleanup_step()
+	set_state(InputState.INACTIVE)
 
 func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:
@@ -508,6 +510,9 @@ func discard_hand() -> void:
 #region pick activation logic
 @onready var _result := EndStepSpec.new()
 
+# BIG IMPORTANT FUNCTION FLAG
+var RIDER_DOESNT_SHOW_EMOJIS_IN_COMMENTS := "🐳🐋🐳🐋"
+
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> void:
 	# main pick logic lives here:
@@ -518,19 +523,26 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	if card != _NULL_PICK:
 		set_state(InputState.ANIMATING)
 		$LockBody/IndicatorPick.do_push()
+		$HandMain/Hand.activate_space(
+			_current_space,
+			$LockBody/CylinderMain/Cylinders.pin_refs[cylinder].global_position.x
+		)
 		await $LockBody/IndicatorPick.start_push
-		$HandMain.remove_card(card)
-		$DiscardMain.add_card(card)
 	
 	$LockBody/CylinderMain/Cylinders.animate_pins(
 		$LockBody/CylinderMain.pins, _result.results
 	)
+	await $LockBody/CylinderMain/Cylinders.animation_complete
+	print("passed ani complete await")
 	
 	if _result.pick_broke or break_next:
 		if break_instead:
 			break_pick(break_instead)
 		else:
 			break_pick(card)
+	else:
+		if card != _NULL_PICK:
+			move_cards_from_hand_to_discard([card])
 	
 	if Effects.TEST in card.get_unique_list():
 		$LastTest.update(_result.last_reveal, _result.last_hint)
