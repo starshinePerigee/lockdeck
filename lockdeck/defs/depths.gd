@@ -115,6 +115,12 @@ static var MARK_DANGEROUS := Depths.new(
 	+ "If you activate this depth, anything could happen, including your pick breaking."),
 	0, "marked dangerous"
 )
+
+static var MARK_PENDING := Depths.new(
+	"mark_pending", DangerLevel.INVALID, Effects.DEBUG,
+	"This depth is pending the completion of the pin animation. How are you seeing this tooltip?",
+	0, "marked pending"
+)
 #endregion
 
 #region safe depths

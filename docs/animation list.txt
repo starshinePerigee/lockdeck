@@ -12,9 +12,9 @@ x pick break
 - pin pushing
 x- move up for each push, skip, test, reveal
 -- clear jam
--- mark all depths on the way up with "..." texture (different sound fx and speed for skip)
--- move back down, revealing depths as you go (for reveal and the pin you land on)
--- at end, flip all "..." to the actual reveal
+x- mark all depths on the way up with "..." texture (different sound fx and speed for skip)
+x- move back down, revealing depths as you go (for reveal and the pin you land on)
+x- at end, flip all "..." to the actual reveal
 -- (sound fx on pivot)
 -- (sound fx on land based on depth revealed)
 -- play jam if jam

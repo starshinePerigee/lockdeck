@@ -107,6 +107,9 @@ var _pending_spec: PinSpec
 var _mid_pos: int
 
 func _tween_to(pos: int) -> void:
+	if _mid_pos == pos:
+		return
+	
 	_tween.tween_property(
 		$Stack,
 		"position",
@@ -130,9 +133,15 @@ func animate(
 	_mid_pos = pin_position
 	for effect in effects:
 		if effect.real():
-			_tween_to(effect.first())
-			_tween_to(effect.last())
-	_tween_to(pin_position)
+			for depth in effect.realized_positions.keys():
+				_tween_to(depth)
+				if (
+					depth < len(depth_refs)
+					and depth_refs[depth].flavor in [Depths.HIDDEN]
+					and effect.flavor in [Effects.PUSH, Effects.TEST, Effects.REVEAL]
+				):
+					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+	_tween_to(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
 
 func _finish_animation() -> void:

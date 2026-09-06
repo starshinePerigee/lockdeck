@@ -45,6 +45,9 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	_last_result = $CylinderMain.execute(card, card_index)
 	
 	print_previouses(_last_result)
+	$CylinderMain/Cylinders.animate_pins(
+		$CylinderMain.pins, _last_result
+	)
 	
 	$BreakLabel.visible = _last_result.pick_broke
 		
