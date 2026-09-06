@@ -43,7 +43,7 @@ func clear_results() -> void:
 
 var _tween: Tween
 var _open_awaits: int
-func animate_pins(pins: Array[PinSpec], results: Array[ResultSpec] = []):
+func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
@@ -55,12 +55,19 @@ func animate_pins(pins: Array[PinSpec], results: Array[ResultSpec] = []):
 	for i in range(len(pins) - 1, -1, -1):
 		if (
 			pins[i].pin_position == pin_refs[i].pin_position
-			and len(results[i].results) <= 1
+			and not i in end_step.effects.keys()
 		):
-			# If this pin doesn't have results, just load the spec (for jam, mostly)
+			# If this pin doesn't have results, just reload the spec
 			_tween.tween_callback(pin_refs[i].direct_load.bind(pins[i]))
 		else:
-			_tween.tween_callback(pin_refs[i].animate.bind(pins[i], results[i]))
+			var effects_typed: Array[EffectSpec] = []
+			effects_typed.assign(end_step.effects[i])
+			_tween.tween_callback(
+				pin_refs[i].animate.bind(
+					pins[i], 
+					effects_typed, 
+				)
+			)
 			_tween.tween_interval(0.07)
 	# timeout / fallback for animation logic failures
 	_tween.tween_interval(5.0)

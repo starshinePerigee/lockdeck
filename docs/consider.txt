@@ -21,3 +21,6 @@ repair update:
 so:
 - repairs are cheaper (5 gold) or free
 - 50% chance of failure
+
+
+- show previous color shifts depths that were affected last turn

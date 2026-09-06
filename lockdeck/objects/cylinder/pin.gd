@@ -43,6 +43,9 @@ func _stack_position(pos: int) -> Vector2:
 		- DEPTH_VHEIGHT * pos
 	)
 
+func _travel_time(start: int, end: int) -> float:
+	return abs(start - end) * SEC_PER_DEPTH
+
 ## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
 	set(v):
@@ -101,7 +104,21 @@ func _draw_bomb(defused := false) -> void:
 var _tween: Tween
 var _pending_spec: PinSpec
 
-func animate(pin_spec: PinSpec, results: ResultSpec) -> void:
+var _mid_pos: int
+
+func _tween_to(pos: int) -> void:
+	_tween.tween_property(
+		$Stack,
+		"position",
+		_stack_position(pos),
+		_travel_time(_mid_pos, pos),
+	)
+	_mid_pos = pos
+
+func animate(
+	pin_spec: PinSpec,
+	effects: Array[EffectSpec]
+) -> void:
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
@@ -110,28 +127,12 @@ func animate(pin_spec: PinSpec, results: ResultSpec) -> void:
 		load_spec(_pending_spec)
 	_pending_spec = pin_spec
 	
-	var deep_depth := pin_spec.pin_position
-	for i in results.results.keys():
-		if (
-			i > deep_depth
-			and Results.gt(results.results[i], Results.HOME)
-			and Results.gt(Results.BREAK, results.results[i])
-		):
-			deep_depth = i
-	
-	_tween.tween_property(
-		$Stack,
-		"position",
-		_stack_position(deep_depth),
-		abs(deep_depth - pin_position) * SEC_PER_DEPTH 
-	)
-	if deep_depth > pin_spec.pin_position:
-		_tween.tween_property(
-			$Stack,
-			"position",
-			_stack_position(pin_spec.pin_position),
-			abs(pin_spec.pin_position - deep_depth) * SEC_PER_DEPTH
-		)
+	_mid_pos = pin_position
+	for effect in effects:
+		if effect.real():
+			_tween_to(effect.first())
+			_tween_to(effect.last())
+	_tween_to(pin_position)
 	_tween.tween_callback(_finish_animation)
 
 func _finish_animation() -> void:

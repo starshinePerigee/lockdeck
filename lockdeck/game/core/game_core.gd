@@ -542,7 +542,7 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		await $LockBody/IndicatorPick.start_push
 	
 	$LockBody/CylinderMain/Cylinders.animate_pins(
-		$LockBody/CylinderMain.pins, _result.results
+		$LockBody/CylinderMain.pins, _result
 	)
 	await $LockBody/CylinderMain/Cylinders.animation_complete
 	

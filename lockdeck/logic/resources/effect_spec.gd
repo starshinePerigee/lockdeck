@@ -19,6 +19,21 @@ var realized_positions: Dictionary[int, bool]
 ## track if this effect broke the pick, including as part of oob
 var broke_pick: bool = false
 
+func real() -> int:
+	return len(realized_positions) > 0
+
+func first() -> int:
+	if realized_positions:
+		return realized_positions.keys().min()
+	else:
+		return -1
+
+func last() -> int:
+	if realized_positions:
+		return realized_positions.keys().max()
+	else:
+		return -1
+
 ## Marks a position as touched by this effect. Can be called with the same value multiple times.
 func add_position(position: int) -> void:
 	realized_positions[position] = true
