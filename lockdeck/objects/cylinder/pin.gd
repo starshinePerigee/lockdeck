@@ -103,7 +103,7 @@ var _pending_spec: PinSpec
 
 var _mid_pos: int
 
-func _tween_to(pos: int, scale_delay := 1) -> void:
+func _tween_to(pos: int, speed_scale := 1.0) -> void:
 	if _mid_pos == pos:
 		return
 	
@@ -111,8 +111,9 @@ func _tween_to(pos: int, scale_delay := 1) -> void:
 		$Stack,
 		"position",
 		_stack_position(pos),
-		PER_DEPTH_DELAY * scale_delay
+		PER_DEPTH_DELAY * speed_scale
 	)
+	_mid_pos = pos
 
 func _activate_delay() -> void:
 	_tween.tween_interval(PRE_ACTIVATION_DELAY)
@@ -135,10 +136,18 @@ func animate(
 		load_spec(_pending_spec)
 	_pending_spec = pin_spec
 	
+	if jam_count:
+		for effect in effects:
+			if effect.flavor in [Effects.PUSH, Effects.TEST, Effects.REVEAL]:
+				jam_count = 0
+	
 	_mid_pos = pin_position
 	for effect in effects:
 		_animate_effect(effect)
-	_tween_to(pin_spec.pin_position, abs(pin_spec.pin_position - _mid_pos))
+	_tween_to(
+		pin_spec.pin_position, 
+		0.8 * abs(_mid_pos - pin_spec.pin_position)
+	)
 	_tween.tween_callback(_finish_animation)
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
@@ -158,27 +167,39 @@ func _animate_effect(effect: EffectSpec):
 			else:
 				delay = PER_DEPTH_DELAY * 2
 				pos = effect.first()
-			_tween.tween_property( $Stack, "position", _stack_position(pos), delay)
+			_tween.tween_property($Stack, "position", _stack_position(pos), delay)
 			_mid_pos = pos
 			_reset_trans()
 		Effects.PUSH, Effects.TEST:
 			for depth in effect.realized_positions.keys():
-				_tween_to(depth)
-				_mid_pos = depth
+				var speed_scale: float
+				if effect.flavor == Effects.TEST:
+					speed_scale = 1.0
+				else:
+					speed_scale = 1.2
+				_tween_to(depth, speed_scale)
 				if (
 					(depth < len(depth_refs) and depth >= 0)
 					and depth_refs[depth].flavor in [Depths.HIDDEN]
 				):
 					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+		Effects.SKIP:
+			_tween_to(effect.last(), 0.5)
+		Effects.JAM:
+			_tween_to(effect.last(), abs(_mid_pos - effect.last()))
+			for shake in [-3, 3, 0]:
+				_tween.tween_property($Stack, "position:x", shake, 0.05)
+		Effects.UNJAM:
+			var base_pos := _stack_position(_mid_pos)
+			for shake in [Vector2(-1, -16), Vector2(0, -10), Vector2(-1, -12), Vector2(0, 0)]:
+				_tween.tween_property($Stack, "position", base_pos + shake, 0.04)
 		Effects.REVEAL:
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
-				_mid_pos = depth
 				_tween_reveal(depth)
 		_:
 			if effect.real():
 				_tween_to(effect.last())
-				_mid_pos = effect.last()
 
 func _finish_animation() -> void:
 	load_spec(_pending_spec)
