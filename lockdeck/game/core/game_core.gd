@@ -454,20 +454,31 @@ func reload_deck() -> void:
 		$Notifications.notify(Notifications.RELOAD)
 	$DeckMain.add_cards($DiscardMain.empty_deck())
 
+const PHYSICAL_PICK := preload("res://game/core/physical_pick.tscn")
+
 func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
+	var physical := PHYSICAL_PICK.instantiate()
+	physical.load_spec(card)
 	if card in $DiscardMain.cards:
-		$DiscardMain.remove_card(card)
+		physical.position = $DiscardMain.remove_card(card)
 	elif card in $HandMain.cards:
-		$HandMain.remove_card(card)
+		physical.position = $HandMain.remove_card(card)
 	elif card in $DeckMain.cards:
-		$DeckMain.remove_card(card)
+		physical.position = $DeckMain.remove_card(card)
 	else:
 		push_error(
 			"Tried to break card %s [%s] but could not locate!"
 			% [card.pick_name, card.unique_id]
 		)
-		assert(false)
+		if DEBUG_MODE:
+			assert(false)
+		else:
+			physical.queue_free()
+	
+	add_child(physical)
+	if _current_space:
+		_current_space.find_child("PickCard").hide_pick = true
 	
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)

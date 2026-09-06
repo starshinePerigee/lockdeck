@@ -90,13 +90,14 @@ func load_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
 	redraw()
 
-func remove_card(card: CardSpec) -> void:
+func remove_card(card: CardSpec) -> Vector2:
 	for i in range(len(cards)):
 		if cards[i].unique_id == card.unique_id:
 			cards.pop_at(i)
 			redraw()
-			return
+			return position
 	push_warning("Failed to remove card %s with UID %s" % [card.pick_name, card.unique_id])
+	return Vector2(-2000, -2000)
 
 ## Remove all cards
 func clear_all() -> void:

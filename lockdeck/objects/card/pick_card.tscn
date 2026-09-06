@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://74tahen457xn" path="res://assets/picks/bg_debug.png" id="3_jlvwl"]
 [ext_resource type="Texture2D" uid="uid://jlf5gwpkv344" path="res://assets/card/card_swipe.png" id="4_xpvy4"]
 [ext_resource type="PackedScene" uid="uid://spoal730rpjx" path="res://objects/card/effect_bar.tscn" id="5_0je1g"]
-[ext_resource type="Texture2D" uid="uid://q6saty7w207w" path="res://assets/picks/pick_debug.png" id="5_jlvwl"]
 [ext_resource type="Script" uid="uid://ddxbcyvqdaxxg" path="res://objects/card/pick_card.gd" id="5_xpvy4"]
 [ext_resource type="Shader" uid="uid://di3a6xctqrvy6" path="res://objects/card/recolor_pick.gdshader" id="6_g4nul"]
+[ext_resource type="Texture2D" uid="uid://bvifpdks0oalv" path="res://assets/picks/pick_weird.png" id="7_g4nul"]
 [ext_resource type="Texture2D" uid="uid://dxkbou4lufs8c" path="res://assets/card/frame_normal.png" id="7_jlvwl"]
 [ext_resource type="Script" uid="uid://c7bnvgoiue7cx" path="res://logic/resources/effect_spec.gd" id="7_xpvy4"]
 [ext_resource type="Texture2D" uid="uid://dbweirtd3gtdb" path="res://assets/card/card_textbox.png" id="8_ll2st"]
@@ -15,8 +15,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bielf"]
 shader = ExtResource("6_g4nul")
-shader_parameter/new = Color(0, 0, 0, 1)
+shader_parameter/new = Color(0, 1, 0.14902, 1)
 shader_parameter/old = Color(1, 0, 0.537255, 1)
+shader_parameter/base = Color(0.106, 0.102, 0.169, 1)
 
 [sub_resource type="Resource" id="Resource_1sytb"]
 script = ExtResource("7_xpvy4")
@@ -89,7 +90,7 @@ layout_mode = 0
 offset_right = 128.0
 offset_bottom = 160.0
 mouse_filter = 2
-texture = ExtResource("5_jlvwl")
+texture = ExtResource("7_g4nul")
 
 [node name="TitleBox" type="TextureRect" parent="Art"]
 layout_mode = 0

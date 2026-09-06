@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://becsdqlgixhet"]
+
+[ext_resource type="Script" uid="uid://bn2ixjs3qfoqt" path="res://physical_pick.gd" id="1_5nu7o"]
+[ext_resource type="Texture2D" uid="uid://bvifpdks0oalv" path="res://assets/picks/pick_weird.png" id="2_xc05p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5nu7o"]
+radius = 32.0
+
+[node name="PhysicalPick" type="RigidBody2D"]
+position = Vector2(300, 300)
+gravity_scale = 2.0
+script = ExtResource("1_5nu7o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xc05p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5nu7o")

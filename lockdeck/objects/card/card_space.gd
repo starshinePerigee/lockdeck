@@ -77,12 +77,16 @@ func clear_selected() -> void:
 func tween_to_vector(new_pos: Vector2, duration: float) -> void:
 	var x_tween := _source_tween(true)
 	x_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	x_tween.tween_property(self, "position:x", new_pos.x, duration)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, duration)
 	x_tween.tween_callback(animation_complete.emit)
+	# avoid the hand rising back up affecting this card
+	# (arc to discard will kill this tween)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, 5.0)
 	
 	var y_tween := _source_tween(false)
 	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	y_tween.tween_property(self, "position:y", new_pos.y, duration)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, duration)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, 5.0)
 
 ## Build a tween or pass it forward
 func _source_tween(is_x: bool) -> Tween:
@@ -128,6 +132,10 @@ func arc_to(new_y: float, arc_height: int, duration: float) -> Tween:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "position:y", 0, HIDE_DURATION)
 	return tween
+
+func break_pick() -> void:
+	if has_card:
+		$PickCard.break_pick()
 
 @export var z_boost: bool:
 	set(v):

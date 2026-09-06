@@ -19,13 +19,20 @@ func add_cards(new_cards: Array[CardSpec]) -> void:
 	$Hand.redraw(cards)
 
 ## Removes a specific card by CardSpec.unique_id
-func remove_card(card: CardSpec) -> void:
+func remove_card(card: CardSpec) -> Vector2:
 	for i in range(len(cards)):
 		if cards[i].unique_id == card.unique_id:
 			cards.pop_at(i)
+			var space: CardSpace = $Hand.spaces[i]
 			$Hand.redraw(cards)
-			return
+			
+			if space.card_spec.unique_id != card.unique_id:
+				push_warning("Hand space:card mismatch!")
+				return global_position
+			else:
+				return space.global_position
 	push_warning("Failed to remove card %s with UID %s" % [card.pick_name, card.unique_id])
+	return Vector2(-2000, -2000)
 
 ## Remove the current hand and load a new one, returning them.
 func remove_all_cards() -> Array[CardSpec]:
