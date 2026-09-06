@@ -167,7 +167,8 @@ func activate() -> EffectSpec:
 	return effect
 
 ## Execute a single effect
-func execute_effect(effect) -> void:
+func execute_effect(effect: EffectSpec) -> void:
+	effect.realized_origin = pin_position
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)

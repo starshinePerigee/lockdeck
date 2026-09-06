@@ -160,6 +160,7 @@ func _do_target() -> void:
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
+		cleanup_step()
 		end_animation()
 
 func _process(_delta: float) -> void:
@@ -371,7 +372,6 @@ func toggle_active_row(show_row: bool) -> void:
 #region animation handling
 
 func end_animation() -> void:
-	cleanup_step()
 	lock_input(false)
 	set_state(InputState.INACTIVE)
 
@@ -571,6 +571,7 @@ func post_pick() -> void:
 	if _result.hand_fumbled:
 		$Notifications.notify(Notifications.FUMBLE)
 		move_cards_from_hand_to_discard($HandMain.cards.duplicate())
+		await $HandMain/Hand.animation_complete
 	
 	var breaths := _result.breaths_taken
 	if breaths > 0:

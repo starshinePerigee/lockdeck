@@ -104,7 +104,7 @@ var _pending_spec: PinSpec
 
 var _mid_pos: int
 
-func _tween_to(pos: int) -> void:
+func _tween_to(pos: int, scale_delay := 1) -> void:
 	if _mid_pos == pos:
 		return
 	
@@ -112,7 +112,7 @@ func _tween_to(pos: int) -> void:
 		$Stack,
 		"position",
 		_stack_position(pos),
-		PER_DEPTH_DELAY
+		PER_DEPTH_DELAY * scale_delay
 	)
 
 func _activate_delay() -> void:
@@ -139,28 +139,33 @@ func animate(
 	_mid_pos = pin_position
 	for effect in effects:
 		_animate_effect(effect)
-	_tween_to(pin_spec.pin_position)
+	_tween_to(pin_spec.pin_position, abs(pin_spec.pin_position - _mid_pos))
 	_tween.tween_callback(_finish_animation)
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
 ## showing at the specific depth
 func _animate_effect(effect: EffectSpec):
 	match effect.flavor:
-		Effects.SAFE_PUSH:
+		Effects.SAFE_PUSH, Effects.BOUNCE:
 			_tween_to(effect.realized_origin)
 			_tween_reveal(effect.realized_origin)
 			_activate_delay()
 			_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-			_tween.tween_property(
-				$Stack,
-				"position",
-				_stack_position(effect.last()),
-				PER_DEPTH_DELAY,
-			)
+			var pos: int
+			var delay: float
+			if effect.flavor == Effects.SAFE_PUSH:
+				delay = PER_DEPTH_DELAY
+				pos = effect.last()
+			else:
+				delay = PER_DEPTH_DELAY * 2
+				pos = effect.first()
+			_tween.tween_property( $Stack, "position", _stack_position(pos), delay)
+			_mid_pos = pos
 			_reset_trans()
 		Effects.PUSH, Effects.TEST, Effects.REVEAL:
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
+				_mid_pos = depth
 				if (
 					(depth >= len(depth_refs) and depth < 0)
 					and depth_refs[depth].flavor in [Depths.HIDDEN]
@@ -169,8 +174,7 @@ func _animate_effect(effect: EffectSpec):
 		_:
 			if effect.real():
 				_tween_to(effect.last())
-	
-	_mid_pos = effect.last()
+				_mid_pos = effect.last()
 
 func _finish_animation() -> void:
 	load_spec(_pending_spec)

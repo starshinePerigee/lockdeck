@@ -128,8 +128,11 @@ static var MARK_PENDING := Depths.new(
 ## Push effect
 static var PUSH := Depths.new(
 	"push", DangerLevel.CLEAR, Effects.SAFE_PUSH, 
-	"Will move the pick up by two. This can cause that depth to activate next turn, so be careful.",
-	2
+	(
+		"Bounces off the pick, advancing it by two additional depths. "
+		+ "This won't break your pick, but will that depth to activate next turn, so be careful."
+	),
+	2, "bounce"
 )
 
 ## solves the pin instantly
@@ -170,8 +173,8 @@ static var CATCH := Depths.new(
 
 static var SLIP := Depths.new(
 	"slip", DangerLevel.CLEAR, Effects.DISARM,
-	"When you push past slip, the pin advances one more depth.",
-	1
+	"When you push past pop, the pin advances one more depth.",
+	1, "pop"
 )
 
 #endregion
@@ -189,10 +192,9 @@ static var JAM := Depths.new(
 ## Bounces up four (or to the edge)
 static var BOUNCE := Depths.new(
 	"bounce", DangerLevel.INTERESTING, Effects.BOUNCE,
-	("Bounces this pin backwards four spaces. "
-	+ "Thankfully, this won't break your pick if you get sent past the start."
+	("Causes this pin to slip backwards four spaces."
 	),
-	4
+	4, "slip"
 )
 
 static var BOMB := Depths.new(

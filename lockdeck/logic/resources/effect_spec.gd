@@ -30,12 +30,21 @@ var broke_pick: bool = false
 
 func real() -> int:
 	if (len(realized_positions) > 0) != (realized_origin >= 0):
-		push_error("Effect only partially realized! %s %s" % [realized_positions, realized_origin]) 
+		push_error(
+			"Effect only partially realized! %s %s %s" 
+			% [flavor.effect_name, realized_positions, realized_origin]
+		) 
 	return len(realized_positions) > 0
 
 func last() -> int:
 	if realized_positions:
 		return realized_positions.keys().max()
+	else:
+		return -1
+
+func first() -> int:
+	if realized_positions:
+		return realized_positions.keys().min()
 	else:
 		return -1
 

@@ -54,8 +54,7 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 	_tween.tween_callback(_pseudo_await)
 	for i in range(len(pins) - 1, -1, -1):
 		if (
-			pins[i].pin_position == pin_refs[i].pin_position
-			and not i in end_step.effects.keys()
+			not i in end_step.effects.keys()
 		):
 			# If this pin doesn't have results, just reload the spec
 			_tween.tween_callback(pin_refs[i].direct_load.bind(pins[i]))
