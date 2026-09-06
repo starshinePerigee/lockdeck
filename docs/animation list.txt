@@ -26,6 +26,7 @@ x previous turn pan
 -- on side
 
 - jam ani and unjam ani
+- jam pushed ani
 - bomb ani
 - unlock ani
 - pin rise and set

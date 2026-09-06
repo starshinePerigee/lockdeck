@@ -160,6 +160,7 @@ func _do_target() -> void:
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
+		end_animation()
 
 func _process(_delta: float) -> void:
 	if current_state == InputState.ACTIVE_DRAG:
@@ -544,7 +545,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		$LockBody/CylinderMain.pins, _result.results
 	)
 	await $LockBody/CylinderMain/Cylinders.animation_complete
-	print("passed ani complete await")
 	
 	if _result.pick_broke or break_next:
 		if break_instead:
@@ -566,9 +566,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	else:
 		post_pick()
 	
-	if current_state != InputState.ANIMATING:
-		end_animation()
-
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
 	if _result.hand_fumbled:
@@ -624,13 +621,10 @@ func end_turn(count_down: bool = true) -> void:
 	$LockBody/CylinderMain.handle_fall()
 	set_state(InputState.ANIMATING)
 	discard_hand()
-	print("await discard")
 	await $HandMain/Hand.animation_complete
 	reload_deck()
-	print("await reload")
 	await $DeckMain.reload_finish
 	cleanup_step()
-	print("await cleanup")
 	await $HandMain/Hand.animation_complete
 	set_state(InputState.INACTIVE)
 

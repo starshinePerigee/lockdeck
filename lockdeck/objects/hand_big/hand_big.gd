@@ -16,7 +16,7 @@ const CARD_WIDTH := 128
 const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 const HIDE_DURATION := 0.23
-const CARD_SPEED_PX_PER_SEC := 1600
+const CARD_SPEED_PX_PER_SEC := 1200
 
 # set these from main
 var deck_pos := Vector2(0, 500)
@@ -59,6 +59,19 @@ func activate_space(space: CardSpace, x_pos_global: float) -> void:
 	var target_vector := Vector2(x_pos_global - 40, 280)
 	space.tween_to_vector(target_vector, 0.5)
 
+var _open_awaits: int
+
+func _pseudo_await() -> void:
+	_open_awaits -= 1
+	if _open_awaits == 0:
+		if _timeout_tween:
+			_timeout_tween.kill()
+		animation_complete.emit()
+
+func _animation_timeout() -> void:
+	push_error("Animation timed out!")
+	animation_complete.emit()
+
 func _remove_space(space: CardSpace):
 	if space in spaces:
 		spaces.erase(space)
@@ -68,11 +81,13 @@ func _remove_space(space: CardSpace):
 	var card_pos: Vector2 = space.find_child("PickCard").global_position
 	var duration: float = (
 		card_pos.distance_to(discard_pos)
-		/ (CARD_SPEED_PX_PER_SEC * 3)
+		/ (CARD_SPEED_PX_PER_SEC * 2)
 		+ 0.14
 	)
 	var tween := space.tween_to(discard_pos.x, duration)
 	if space in $Hand.get_children():
+		_open_awaits += 1
+		tween.tween_callback(_pseudo_await)
 		tween.tween_callback($Hand.remove_child.bind(space))
 	else:
 		push_error("Hand parent lost track of ref!")
@@ -95,8 +110,18 @@ func _add_space(spec: CardSpec) -> CardSpace:
 	spaces.append(space)
 	return space
 
+var _timeout_tween: Tween
+
 ## Forces full redraw
 func redraw(cards: Array[CardSpec]) -> void:
+	_open_awaits = 1
+	if _timeout_tween:
+		_timeout_tween.kill()
+	_timeout_tween = create_tween()
+	_timeout_tween.tween_callback(_pseudo_await)
+	_timeout_tween.tween_interval(3.0)
+	_timeout_tween.tween_callback(_animation_timeout)
+	
 	for card in cards.duplicate():
 		if not(card):
 			push_error("Null card spec passed to hand?")
@@ -118,18 +143,17 @@ func redraw(cards: Array[CardSpec]) -> void:
 	var total_size := len(cards) * space_delta
 	var start_pos := ((size.x - total_size) - 64) / 2
 	
-	var last_tween: Tween
+	var tween: Tween
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC
-		last_tween = spaces[i].tween_to(end_pos, duration)
+		tween = spaces[i].tween_to(end_pos, duration)
+		_open_awaits += 1
+		tween.tween_callback(_pseudo_await)
+		
 		if spaces[i].position == Vector2():
 			spaces[i].arc_to(0, 10, duration)
-	if last_tween:
-		last_tween.tween_callback(animation_complete.emit)
-	else:
-		animation_complete.emit.call_deferred()
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces
