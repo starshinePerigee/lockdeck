@@ -8,7 +8,8 @@ signal animation_complete()
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
-const SEC_PER_DEPTH := 0.08
+const PER_DEPTH_DELAY := 0.2
+const PRE_ACTIVATION_DELAY := 0.3
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -42,9 +43,6 @@ func _stack_position(pos: int) -> Vector2:
 		DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
 		- DEPTH_VHEIGHT * pos
 	)
-
-func _travel_time(start: int, end: int) -> float:
-	return abs(start - end) * SEC_PER_DEPTH
 
 ## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
@@ -114,9 +112,17 @@ func _tween_to(pos: int) -> void:
 		$Stack,
 		"position",
 		_stack_position(pos),
-		_travel_time(_mid_pos, pos),
+		PER_DEPTH_DELAY
 	)
-	_mid_pos = pos
+
+func _activate_delay() -> void:
+	_tween.tween_interval(PRE_ACTIVATION_DELAY)
+
+func _reset_trans() -> void:
+	_tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+
+func _tween_reveal(pos: int) -> void:
+	_tween.tween_property(depth_refs[pos], "flavor", _pending_spec.depths[pos], 0)
 
 func animate(
 	pin_spec: PinSpec,
@@ -132,17 +138,39 @@ func animate(
 	
 	_mid_pos = pin_position
 	for effect in effects:
-		if effect.real():
+		_animate_effect(effect)
+	_tween_to(pin_spec.pin_position)
+	_tween.tween_callback(_finish_animation)
+
+## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
+## showing at the specific depth
+func _animate_effect(effect: EffectSpec):
+	match effect.flavor:
+		Effects.SAFE_PUSH:
+			_tween_to(effect.realized_origin)
+			_tween_reveal(effect.realized_origin)
+			_activate_delay()
+			_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			_tween.tween_property(
+				$Stack,
+				"position",
+				_stack_position(effect.last()),
+				PER_DEPTH_DELAY,
+			)
+			_reset_trans()
+		Effects.PUSH, Effects.TEST, Effects.REVEAL:
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
 				if (
-					depth < len(depth_refs)
+					(depth >= len(depth_refs) and depth < 0)
 					and depth_refs[depth].flavor in [Depths.HIDDEN]
-					and effect.flavor in [Effects.PUSH, Effects.TEST, Effects.REVEAL]
 				):
 					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
-	_tween_to(pin_spec.pin_position)
-	_tween.tween_callback(_finish_animation)
+		_:
+			if effect.real():
+				_tween_to(effect.last())
+	
+	_mid_pos = effect.last()
 
 func _finish_animation() -> void:
 	load_spec(_pending_spec)

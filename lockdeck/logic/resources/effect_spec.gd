@@ -13,6 +13,15 @@ class_name EffectSpec
 ## used for pin execution logic. carries the value of the pin the effect is applied to.
 var realized_pin: int = -1
 
+## used to track the originating depth
+var realized_origin: int = -1:
+	set(v):
+		realized_origin = v
+	get():
+		if realized_origin < 0:
+			push_warning("Reading unrealized origin")
+		return realized_origin
+
 ## used for displaying previous results. Dictionary as a set
 var realized_positions: Dictionary[int, bool]
 
@@ -20,7 +29,15 @@ var realized_positions: Dictionary[int, bool]
 var broke_pick: bool = false
 
 func real() -> int:
+	if (len(realized_positions) > 0) != (realized_origin >= 0):
+		push_error("Effect only partially realized! %s %s" % [realized_positions, realized_origin]) 
 	return len(realized_positions) > 0
+
+func last() -> int:
+	if realized_positions:
+		return realized_positions.keys().max()
+	else:
+		return -1
 
 ## Marks a position as touched by this effect. Can be called with the same value multiple times.
 func add_position(position: int) -> void:

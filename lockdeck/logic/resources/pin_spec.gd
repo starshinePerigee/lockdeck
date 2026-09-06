@@ -133,6 +133,7 @@ func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
 		else:
 			bomb_effect = EffectSpec.new(Effects.BOMB_DEFUSED)
 			_bomb_defused = true
+		bomb_effect.realized_origin = old_bomb
 		bomb_effect.add_position(old_bomb)
 		additional_effects.append(bomb_effect)
 	
@@ -157,6 +158,7 @@ func activate() -> EffectSpec:
 	# activate the pin:
 	var depth := activate_and_get_depth()
 	var effect := EffectSpec.new(depth.effect, depth.value)
+	effect.realized_origin = pin_position
 	# print(
 	# 	"Activating pin at depth %s with effect %s"
 	# 	% [pin_position, effect.effect_name]
