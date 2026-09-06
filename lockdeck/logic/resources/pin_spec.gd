@@ -580,6 +580,12 @@ func reset_exhaustion() -> void:
 	activated[-1] = true
 	activated[pin_position] = true
 
+func reset_reveals() -> void:
+	reveals.fill(RevealLevel.UNKNOWN)
+	for i in PIN_DEPTH_COUNT:
+		if depths[i].tests_as == Depths.DangerLevel.REVEALED:
+			reveals[i] = RevealLevel.REVEALED
+
 ## Performs the end of turn actions
 func end_turn_and_fall() -> void:
 	if is_jammed():
@@ -589,17 +595,12 @@ func end_turn_and_fall() -> void:
 	reset_exhaustion()
 	end_step()
 
-## Called after generation
-func finalize() -> void:
-	for i in PIN_DEPTH_COUNT:
-		if depths[i].tests_as == Depths.DangerLevel.REVEALED:
-			reveals[i] = RevealLevel.REVEALED
-
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
 	bomb_pos = -1
+	reset_reveals()
 	reset_exhaustion()
 	end_step()
 #endregion

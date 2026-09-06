@@ -84,12 +84,12 @@ static func get_known_test_pin() -> PinSpec:
 		spec.depths[i] = Depths.EMPTY
 	spec.depths[1] = Depths.EMPTY
 	spec.depths[2] = Depths.EMPTY
-	spec.depths[3] = Depths.PUSH
+	spec.depths[3] = Depths.EMPTY
 	spec.depths[4] = Depths.EMPTY
 	spec.depths[5] = Depths.EMPTY
-	spec.depths[6] = Depths.SPIKE
+	spec.depths[6] = Depths.EMPTY
 	spec.depths[7] = Depths.EMPTY
-	spec.finalize()
+	spec.reset_pin()
 	return spec
 
 func gen_new_lock() -> void:

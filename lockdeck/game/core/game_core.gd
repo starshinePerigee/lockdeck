@@ -156,7 +156,7 @@ func _do_target() -> void:
 	if _current_target == $DiscardMain:
 		discard_pick()
 	elif _current_target is Pin:
-		do_pick(
+		await do_pick(
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
@@ -499,7 +499,7 @@ func break_from_hand() -> void:
 
 func discard_pick() -> void:
 	$LastTest.visible = false
-	do_pick(
+	await do_pick(
 		_NULL_PICK,
 		0,
 		active_card
@@ -564,7 +564,7 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	if _result.lock_solved:
 		solve_lock()
 	else:
-		post_pick()
+		await post_pick()
 	
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
@@ -613,7 +613,7 @@ func end_turn(count_down: bool = true) -> void:
 		all_cards.append_array($DeckMain.cards)
 		all_cards.append_array($DiscardMain.cards)
 		all_cards.append_array($HandMain.cards)
-		do_pick(
+		await do_pick(
 			_NULL_PICK,
 			0,
 			all_cards.pick_random()

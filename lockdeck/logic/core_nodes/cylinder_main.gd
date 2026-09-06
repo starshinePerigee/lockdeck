@@ -51,6 +51,7 @@ func load_new_lock(new_lock: LockSpec) -> void:
 	pins = new_lock.pins
 	_shadow_pins = []
 	for i in len(pins):
+		pins[i].reset_pin()
 		_shadow_pins.append(PinSpec.new())
 		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)

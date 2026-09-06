@@ -215,7 +215,7 @@ static func build_lock(
 				break
 	
 	for pin in pins:
-		pin.finalize()
+		pin.reset_pin()
 	
 	return LockSpec.new(pins, [])
 

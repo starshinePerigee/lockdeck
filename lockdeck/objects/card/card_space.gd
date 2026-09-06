@@ -19,7 +19,6 @@ var mouse_start_position := Vector2()
 var disabled := false:
 	set(v):
 		disabled = v
-		print("Disabled: %s" % disabled)  # TODO
 		$PickCard.disabled = disabled
 
 const TEXTURE_OPEN := preload("res://assets/card/space.png")

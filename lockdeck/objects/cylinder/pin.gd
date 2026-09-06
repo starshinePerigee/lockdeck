@@ -8,7 +8,7 @@ signal animation_complete()
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
-const PER_DEPTH_DELAY := 0.2
+const PER_DEPTH_DELAY := 0.15
 const PRE_ACTIVATION_DELAY := 0.3
 
 ## Reference to each depth object, so adding children doesn't break things.
@@ -55,11 +55,10 @@ func _stack_position(pos: int) -> Vector2:
 		$Stack.position = _stack_position(pin_position)
 		
 		# this logic handles skewing the spring as a hack
-		@warning_ignore("integer_division")
 		var depth_shift := DEPTH_VHEIGHT * pin_position
 		var pin_shift := depth_shift / 3.0
-		$Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
-		$Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y - (depth_shift - pin_shift))
+		$Stack/Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
+		$Stack/Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y + pin_shift)
 
 ## Hides the pin, visually.
 ## I don't remember why I use this instaead of just self.visible?
@@ -75,7 +74,7 @@ func _stack_position(pos: int) -> Vector2:
 		$Stack.visible = visible_
 		$JamIndicator.visible = visible_
 		$KeyIndicator.visible = visible_
-		$Spring.visible = visible_
+		$Stack/Spring.visible = visible_
 
 ## The value of the jam indicator, and if one is present. If jam count is less than or equal
 ## to zero, hide the jam indicator.
@@ -162,15 +161,20 @@ func _animate_effect(effect: EffectSpec):
 			_tween.tween_property( $Stack, "position", _stack_position(pos), delay)
 			_mid_pos = pos
 			_reset_trans()
-		Effects.PUSH, Effects.TEST, Effects.REVEAL:
+		Effects.PUSH, Effects.TEST:
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
 				_mid_pos = depth
 				if (
-					(depth >= len(depth_refs) and depth < 0)
+					(depth < len(depth_refs) and depth >= 0)
 					and depth_refs[depth].flavor in [Depths.HIDDEN]
 				):
 					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+		Effects.REVEAL:
+			for depth in effect.realized_positions.keys():
+				_tween_to(depth)
+				_mid_pos = depth
+				_tween_reveal(depth)
 		_:
 			if effect.real():
 				_tween_to(effect.last())
@@ -257,8 +261,8 @@ func core_unhover() -> void:
 	pass
 
 func _ready() -> void:
-	SPRING_POSITION = $Spring.position
-	SPRING_SIZE = $Spring.size
+	SPRING_POSITION = $Stack/Spring.position
+	SPRING_SIZE = $Stack/Spring.size
 
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:
