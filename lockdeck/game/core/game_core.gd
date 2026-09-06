@@ -98,6 +98,7 @@ func pick_dropped(space: CardSpace) -> void:
 	_current_area = null
 	
 	if _current_target:
+		set_state(InputState.ANIMATING)
 		space.cancel_snapback()
 		_current_space = space
 		_do_target()
@@ -509,7 +510,7 @@ func discard_pick() -> void:
 		move_cards_from_hand_to_discard([active_card])
 	
 	cleanup_step()
-	set_state(InputState.INACTIVE)
+	end_animation()
 
 func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:

@@ -1,4 +1,5 @@
-- end turn should discard, then draw, 
+- discard to deck shows on start of lock
+- bomb activation shows an active depth
 
 x indicator movement
 x indicator push

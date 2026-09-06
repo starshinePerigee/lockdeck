@@ -8,8 +8,8 @@ signal animation_complete()
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
-const PER_DEPTH_DELAY := 0.15
-const PRE_ACTIVATION_DELAY := 0.3
+const PER_DEPTH_DELAY := 0.12
+const PRE_ACTIVATION_DELAY := 0.25
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -191,8 +191,10 @@ func _animate_effect(effect: EffectSpec):
 				_tween.tween_property($Stack, "position:x", shake, 0.05)
 		Effects.UNJAM:
 			var base_pos := _stack_position(_mid_pos)
-			for shake in [Vector2(-1, -16), Vector2(0, -10), Vector2(-1, -12), Vector2(0, 0)]:
-				_tween.tween_property($Stack, "position", base_pos + shake, 0.04)
+			for __ in effect.value:
+				for shake in [Vector2(-1, -6), Vector2(1, -10)]:
+					_tween.tween_property($Stack, "position", base_pos + shake, 0.06)
+			_tween.tween_property($Stack, "position", base_pos, 0.08)
 		Effects.REVEAL:
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)

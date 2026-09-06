@@ -134,7 +134,6 @@ func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
 			bomb_effect = EffectSpec.new(Effects.BOMB_DEFUSED)
 			_bomb_defused = true
 		bomb_effect.realized_origin = old_bomb
-		bomb_effect.add_position(old_bomb)
 		additional_effects.append(bomb_effect)
 	
 	return additional_effects

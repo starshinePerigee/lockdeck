@@ -29,7 +29,7 @@ var realized_positions: Dictionary[int, bool]
 var broke_pick: bool = false
 
 func real() -> int:
-	if (len(realized_positions) > 0) != (realized_origin >= 0):
+	if (len(realized_positions) > 0) and realized_origin < 0:
 		push_error(
 			"Effect only partially realized! %s %s %s" 
 			% [flavor.effect_name, realized_positions, realized_origin]
