@@ -9,7 +9,7 @@ const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
 const PER_DEPTH_DELAY := 0.12
-const PRE_ACTIVATION_DELAY := 0.25
+const PRE_ACTIVATION_DELAY := 0.35
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -25,15 +25,6 @@ const BOMB_LIVE := preload("res://assets/pin/its_a_bomb.png")
 const BOMB_DEAD := preload("res://assets/pin/bomb_defused.png")
 
 #region display logic
-## If this pin is "locked" - displayed as greyed out.
-@export var pin_locked: bool = false:
-	set(v):
-		pin_locked = v
-		if pin_locked:
-			$Stack.modulate = Color("848484")
-		else:
-			$Stack.modulate = Color("ffffff")
-
 var SPRING_SIZE: Vector2
 var SPRING_POSITION: Vector2
 
@@ -124,6 +115,23 @@ func _reset_trans() -> void:
 func _tween_reveal(pos: int) -> void:
 	_tween.tween_property(depth_refs[pos], "flavor", _pending_spec.depths[pos], 0)
 
+func _tween_trap(pos: int) -> void:
+	_tween_reveal(pos)
+	var base_pos := _stack_position(pos)
+	for shake in [
+		Vector2(-2, 1), Vector2(2, -1),
+		Vector2(-2, 1), Vector2(2, -1),
+		Vector2(-2, 1), Vector2(2, -1),
+	]:
+		_tween.tween_property($Stack, "position", base_pos + shake, 0.08)
+
+
+func _tween_home(spec_pos: int) -> void:
+	_tween_to(
+		spec_pos, 
+		0.8 * abs(_mid_pos - spec_pos)
+	)
+
 func animate(
 	pin_spec: PinSpec,
 	effects: Array[EffectSpec]
@@ -143,30 +151,31 @@ func animate(
 	
 	_mid_pos = pin_position
 	for effect in effects:
-		_animate_effect(effect)
-	_tween_to(
-		pin_spec.pin_position, 
-		0.8 * abs(_mid_pos - pin_spec.pin_position)
-	)
+		_animate_effect(effect, pin_spec)
+	_tween_home(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
 ## showing at the specific depth
-func _animate_effect(effect: EffectSpec):
+func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 	match effect.flavor:
-		Effects.SAFE_PUSH, Effects.BOUNCE:
+		Effects.SAFE_PUSH, Effects.BOUNCE, Effects.LUCKY:
 			_tween_to(effect.realized_origin)
 			_tween_reveal(effect.realized_origin)
 			_activate_delay()
 			_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			var pos: int
 			var delay: float
-			if effect.flavor == Effects.SAFE_PUSH:
-				delay = PER_DEPTH_DELAY
-				pos = effect.last()
-			else:
-				delay = PER_DEPTH_DELAY * 2
-				pos = effect.first()
+			match effect.flavor:
+				Effects.SAFE_PUSH:
+					delay = PER_DEPTH_DELAY * 1.5
+					pos = effect.last()
+				Effects.BOUNCE:
+					delay = PER_DEPTH_DELAY * 2
+					pos = effect.first()
+				Effects.LUCKY:
+					delay = PER_DEPTH_DELAY * (PinSpec.PIN_DEPTH_COUNT - effect.realized_origin)
+					pos = PinSpec.PIN_DEPTH_COUNT
 			_tween.tween_property($Stack, "position", _stack_position(pos), delay)
 			_mid_pos = pos
 			_reset_trans()
@@ -183,6 +192,10 @@ func _animate_effect(effect: EffectSpec):
 					and depth_refs[depth].flavor in [Depths.HIDDEN]
 				):
 					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+				if pin_spec.depths[depth] == Depths.TRAP and effect.flavor == Effects.TEST:
+					_tween_trap(depth)
+				if pin_spec.depths[depth] == Depths.GATE_LOCKED and effect.flavor == Effects.PUSH:
+					_tween_trap(depth)
 		Effects.SKIP:
 			_tween_to(effect.last(), 0.5)
 		Effects.JAM:
@@ -199,7 +212,18 @@ func _animate_effect(effect: EffectSpec):
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
 				_tween_reveal(depth)
+				if pin_spec.depths[depth] == Depths.LABYRINTH:
+					_tween_trap(depth)
+		Effects.HINT:
+			_tween_home(pin_spec.pin_position)
+			_tween_reveal(_mid_pos)
+			_tween.tween_interval(PRE_ACTIVATION_DELAY + 0.1)
+		Effects.EMPTY:
+			_tween_home(pin_spec.pin_position)
 		_:
+			_tween_home(pin_spec.pin_position)
+			_tween_reveal(_mid_pos)
+			_activate_delay()
 			if effect.real():
 				_tween_to(effect.last())
 

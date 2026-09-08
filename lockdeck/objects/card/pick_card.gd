@@ -115,6 +115,9 @@ func request_tooltip() -> void:
 func _ready() -> void:
 	if not material_dictionary:
 		for rarity in PickTemplates.Rarities.values():
+			if rarity in [PickTemplates.Rarities.TEMPORARY]:
+				material_dictionary[rarity] = null
+				continue
 			var color: Color = PickTemplates.RARITY_COLORS[rarity]
 			var new_material: ShaderMaterial = $Art/PickArt.material.duplicate()
 			new_material.set_shader_parameter("new", color)
