@@ -72,6 +72,21 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 	_tween.tween_interval(5.0)
 	_tween.tween_callback(_animation_timeout)
 
+func animate_fall(pins: Array[PinSpec]) -> void:
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	
+	_open_awaits = 1 + len(pins)
+	_tween.tween_callback(_pseudo_await)
+	
+	for i in len(pins):
+		pin_refs[i].animate_fall(pins[i])
+		_tween.tween_interval(0.07)
+	
+	_tween.tween_interval(3.0)
+	_tween.tween_callback(_animation_timeout)
+
 func _animation_timeout() -> void:
 	push_error("Animation timed out!")
 	animation_complete.emit()

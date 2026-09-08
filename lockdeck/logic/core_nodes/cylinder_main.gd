@@ -169,4 +169,4 @@ func redraw_pins() -> void:
 func handle_fall() -> void:
 	for pin in pins:
 		pin.end_turn_and_fall()
-	$Cylinders.set_pin_specs(pins)
+	$Cylinders.animate_fall(pins)

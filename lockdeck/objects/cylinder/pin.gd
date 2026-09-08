@@ -132,10 +132,7 @@ func _tween_home(spec_pos: int) -> void:
 		0.8 * abs(_mid_pos - spec_pos)
 	)
 
-func animate(
-	pin_spec: PinSpec,
-	effects: Array[EffectSpec]
-) -> void:
+func _clear_old(pin_spec: PinSpec) -> void:
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
@@ -143,6 +140,12 @@ func animate(
 	if _pending_spec:
 		load_spec(_pending_spec)
 	_pending_spec = pin_spec
+
+func animate(
+	pin_spec: PinSpec,
+	effects: Array[EffectSpec]
+) -> void:
+	_clear_old(pin_spec)
 	
 	if jam_count:
 		for effect in effects:
@@ -187,15 +190,20 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 				else:
 					speed_scale = 1.2
 				_tween_to(depth, speed_scale)
-				if (
-					(depth < len(depth_refs) and depth >= 0)
-					and depth_refs[depth].flavor in [Depths.HIDDEN]
-				):
-					_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
-				if pin_spec.depths[depth] == Depths.TRAP and effect.flavor == Effects.TEST:
-					_tween_trap(depth)
-				if pin_spec.depths[depth] == Depths.GATE_LOCKED and effect.flavor == Effects.PUSH:
-					_tween_trap(depth)
+				
+				if depth >= len(depth_refs) or depth < 0:
+					continue
+				
+				match depth_refs[depth].flavor:
+					Depths.HIDDEN:
+						_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+					Depths.TRAP:
+						if effect.flavor == Effects.TEST:
+							_tween_trap(depth)
+					Depths.GATE_LOCKED:
+						if effect.flavor == Effects.PUSH:
+							_tween_trap(depth)
+		
 		Effects.SKIP:
 			_tween_to(effect.last(), 0.5)
 		Effects.JAM:
@@ -226,6 +234,17 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			_activate_delay()
 			if effect.real():
 				_tween_to(effect.last())
+
+func animate_fall(pin_spec: PinSpec) -> void:
+	_clear_old(pin_spec)
+	
+	if jam_count > 0:
+		for shake in [-3, 3, -3, 3, 0]:
+			_tween.tween_property($Stack, "position:x", shake, 0.05)
+	
+	_tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_tween_home(pin_spec.pin_position)
+	_tween.tween_callback(_finish_animation)
 
 func _finish_animation() -> void:
 	load_spec(_pending_spec)
