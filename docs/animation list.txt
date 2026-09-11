@@ -1,4 +1,3 @@
-- discard to deck shows on start of lock
 - animation speed in settings
 - I don't know what this means but: "bomb activation shows an active depth" (I think this is "when a bomb activates, an active depth is revealed during the animation and then unrevealed later)
 
@@ -24,6 +23,7 @@ x pin fall animation
 - card acquire
 x previous turn pan
 - better completion animation: cards should slide down and hide
+- better start lock animation
 - Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
 -- on side
 -- with crumples/wrinkles/damage on card

@@ -451,10 +451,10 @@ func draw_new_hand() -> void:
 	draw_cards(hand_size)
 
 ## Move discard back into deck
-func reload_deck() -> void:
+func reload_deck(instant := false) -> void:
 	if $DiscardMain.count() > 0:
 		$Notifications.notify(Notifications.RELOAD)
-	$DeckMain.add_cards($DiscardMain.empty_deck())
+	$DeckMain.add_cards($DiscardMain.empty_deck(), instant)
 
 const PHYSICAL_PICK := preload("res://game/core/physical_pick.tscn")
 
@@ -651,7 +651,7 @@ func solve_lock() -> void:
 ## Loads the starter hand
 func load_deck(deck: Array[CardSpec]) -> void:
 	discard_hand()
-	reload_deck()
+	reload_deck(true)
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(deck)
 	update_status_widget()

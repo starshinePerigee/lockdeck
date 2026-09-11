@@ -41,17 +41,19 @@ func get_random_pointers(n: int) -> Array[CardSpec]:
 	return ret
 
 ## Put cards back in the deck from discard
-func add_cards(new_cards: Array[CardSpec]) -> void:
+func add_cards(new_cards: Array[CardSpec], instant := false) -> void:
 	cards.append_array(new_cards)
 	var interval := CARD_TAKEOFF_TIME / count() + 0.02
 	# tween instead of a timer
 	var tween := create_tween()
-	tween.tween_callback(reload_progress.emit.bind(0))
-	for i in len(new_cards):
-		tween.tween_callback(_animate_draw_from_discard.bind(i + 1))
-		tween.tween_interval(interval)
-	if len(new_cards) > 0:
-		tween.tween_interval((CARD_FLIGHT_TIME + 0.1) - interval)
+	
+	if not instant:
+		tween.tween_callback(reload_progress.emit.bind(0))
+		for i in len(new_cards):
+			tween.tween_callback(_animate_draw_from_discard.bind(i + 1))
+			tween.tween_interval(interval)
+		if len(new_cards) > 0:
+			tween.tween_interval((CARD_FLIGHT_TIME + 0.1) - interval)
 	tween.tween_callback(_finish_reload)
 	tween.tween_callback(redraw)
 
