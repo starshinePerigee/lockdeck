@@ -97,6 +97,9 @@ var _mid_pos: int
 func _tween_to(pos: int, speed_scale := 1.0) -> void:
 	if _mid_pos == pos:
 		return
+	if pos < 0:
+		_tween.tween_interval(PER_DEPTH_DELAY)
+		return
 	
 	_tween.tween_property(
 		$Stack,

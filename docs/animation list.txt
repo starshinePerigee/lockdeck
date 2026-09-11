@@ -1,6 +1,6 @@
 - discard to deck shows on start of lock
-
-animation speed in settings
+- animation speed in settings
+- I don't know what this means but: "bomb activation shows an active depth" (I think this is "when a bomb activates, an active depth is revealed during the animation and then unrevealed later)
 
 x indicator movement
 x indicator push
