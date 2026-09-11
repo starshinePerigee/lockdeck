@@ -1,6 +1,19 @@
+if you're on the end, "skip test" sends the pin to the beginning really quickly??
+
+update depth descriptions to be more diagetic. "A twist in the keyway causes you to lose a card every time you test this depth". 
+
+make ingots 1 / 2 / 2 / 3 / 3 picks
+
+show current coins and picks on loot screen
+
+end turn isnt' disabling after game win anymore
+
+gate unlock should either not exhaust or stay exhausted (or you can change the color so it just looks exhausted lol)
+
 reset scroll position for strat hub widgets on load
 
 notif for bomb going off
+I don't know what this means but: "bomb activation shows an active depth"
 
 more 4-depth picks
 

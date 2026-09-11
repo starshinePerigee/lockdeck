@@ -1,7 +1,6 @@
 - discard to deck shows on start of lock
-- bomb activation shows an active depth
 
-animation speed
+animation speed in settings
 
 x indicator movement
 x indicator push
@@ -21,7 +20,7 @@ x- at end, flip all "..." to the actual reveal
 -- (sound fx on pivot)
 -- (sound fx on land based on depth revealed)
 -- play jam if jam
-- pin fall animation
+x pin fall animation
 - card acquire
 x previous turn pan
 - better completion animation: cards should slide down and hide
