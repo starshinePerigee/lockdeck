@@ -1,5 +1,3 @@
-end turn isnt' disabling after game win anymore
-
 reset scroll position for strat hub widgets on load
 
 notif for bomb going off

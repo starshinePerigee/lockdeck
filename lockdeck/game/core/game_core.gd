@@ -338,12 +338,15 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			dis_en_able_buttons()
 
+var lock_complete: bool
+
 # Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
 		$LockBody/CountdownMain.button_disable = (
 			state 
 			or _lock_input
 			or $LockBody/CountdownMain.count <= 0
+			or lock_complete
 		)
 		$HandMain/Hand.disabled = state or _lock_input
 		$TrashMain.disabled = state
@@ -355,8 +358,8 @@ func dis_en_able_buttons(state: bool = true) -> void:
 # such as after unlock
 func lock_input(state: bool = true) -> void:
 	_lock_input = state
-	$LockBody/CountdownMain.button_disable = state
-	$HandMain/Hand.disabled = state
+	$LockBody/CountdownMain.button_disable = state or lock_complete
+	$HandMain/Hand.disabled = state or lock_complete
 
 func show_failure(state: bool = true) -> void:
 	$FailureButton.visible = state
@@ -635,16 +638,16 @@ func game_over() -> void:
 	print("Game over.")
 	$Notifications.notify(Notifications.FAILURE)
 	$LockBody/CountdownMain.game_over()
-	lock_input()
 	show_failure()
 	game_fail.emit()
+	lock_complete = true
 
 func solve_lock() -> void:
 	$LockBody/ContinueButton.visible = true	
 	game_win.emit()
 	$LockBody/AnimationPlayer.play("unlock")
 	$Notifications.notify(Notifications.UNLOCK)
-	lock_input(true)
+	lock_complete = true
 
 #endregion
 
@@ -680,6 +683,7 @@ func load_game(game: GameSpec) -> void:
 	restart()
 
 func restart() -> void:
+	lock_complete = false
 	lock_input(false)
 	show_failure(false)
 	$LastTest.visible = false
