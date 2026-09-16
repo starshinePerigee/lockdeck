@@ -3,6 +3,7 @@ extends Resource
 class_name EndStepSpec
 
 @export var pick_broke := false
+@export var bomb_exploded := false
 @export var lock_solved := false
 @export var hand_fumbled := false
 @export var breaths_taken := 0
@@ -27,6 +28,8 @@ func record_effect(effect: EffectSpec, realized_pin: int) -> void:
 	match effect.flavor:
 		Effects.DRAW_FROM_DISCARD:
 			breaths_taken += effect.value
+		Effects.BOMB_DETONATED:
+			bomb_exploded = true
 		Effects.BREAK_FROM_DECK:
 			decks_broken += effect.value
 		Effects.DISCARD_HAND:

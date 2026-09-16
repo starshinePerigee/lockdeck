@@ -461,7 +461,7 @@ func reload_deck(instant := false) -> void:
 
 const PHYSICAL_PICK := preload("res://game/core/physical_pick.tscn")
 
-func break_pick(card: CardSpec, surprise := false) -> void:
+func break_pick(card: CardSpec, surprise := false, bomb := false) -> void:
 	$TrashMain.add_card(card)
 	var physical := PHYSICAL_PICK.instantiate()
 	physical.load_spec(card)
@@ -487,8 +487,11 @@ func break_pick(card: CardSpec, surprise := false) -> void:
 	
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)
+	elif bomb:
+		$Notifications.notify(Notifications.BOMB)
 	else:
 		$Notifications.notify(Notifications.BREAK)
+	
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
 
@@ -552,9 +555,9 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	
 	if _result.pick_broke or break_next:
 		if break_instead:
-			break_pick(break_instead)
+			break_pick(break_instead, false, _result.bomb_exploded)
 		else:
-			break_pick(card)
+			break_pick(card, false, _result.bomb_exploded)
 	else:
 		if card != _NULL_PICK:
 			move_cards_from_hand_to_discard([card])

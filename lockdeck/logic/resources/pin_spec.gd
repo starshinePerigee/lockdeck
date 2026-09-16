@@ -128,7 +128,7 @@ func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
 		if old_bomb > pin_position:
 			# boom
 			update_result(Results.BREAK, old_bomb)
-			bomb_effect = EffectSpec.new(Effects.BREAK)
+			bomb_effect = EffectSpec.new(Effects.BOMB_DETONATED)
 			bomb_effect.broke_pick = true
 		else:
 			bomb_effect = EffectSpec.new(Effects.BOMB_DEFUSED)

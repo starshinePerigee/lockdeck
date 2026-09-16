@@ -121,6 +121,9 @@ static var UNLOCK := Effects.new("unlock")
 ## Depth effect - break the current pick
 static var BREAK := Effects.new("break")
 
+## Meta effect - bomb has gone off
+static var BOMB_DETONATED := Effects.new("bomb_detonated")
+
 ## Breaks from deck (unless it's empty)
 static var BREAK_FROM_DECK := Effects.new("break_from_deck")
 

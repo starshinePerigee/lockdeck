@@ -43,3 +43,6 @@ static var TWIST := Notifications.new("twist")
 
 ## Discarded from hand
 static var FUMBLE := Notifications.new("fumble")
+
+## Bomb goes off
+static var BOMB := Notifications.new("bomb")
