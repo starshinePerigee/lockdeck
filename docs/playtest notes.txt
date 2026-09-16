@@ -4,8 +4,6 @@ show current coins and picks on loot screen
 
 end turn isnt' disabling after game win anymore
 
-gate unlock should either not exhaust or stay exhausted (or you can change the color so it just looks exhausted lol)
-
 reset scroll position for strat hub widgets on load
 
 notif for bomb going off
