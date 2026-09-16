@@ -106,7 +106,10 @@ func claim_and_continue():
 	var claimed := claim_all()
 	game.add_coins(claimed)
 	update_coin_count()
-	continue_to_next.emit()
+	var timer := create_tween()
+	if claimed > 0:
+		timer.tween_interval(0.5)
+	timer.tween_callback(continue_to_next.emit)
 
 func get_nice_rect() -> Rect2:
 	return $ContinueButton.get_global_rect().grow(4)
