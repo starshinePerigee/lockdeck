@@ -30,10 +30,16 @@ static func _load_from_disk() -> GameSettings:
 		SAVE_PATH, "GameSettings", ResourceLoader.CACHE_MODE_IGNORE
 	)
 
+	var settings: GameSettings
 	if load_res is GameSettings:
-		return load_res
+		settings = load_res
 	else:
-		return reset()
+		settings = reset()
+	
+	if OS.has_feature("web"):
+		settings.fullscreen = false
+	
+	return settings
 
 signal tooltip_speed_changed(float)
 @export var tooltip_speed: float = 1.4
