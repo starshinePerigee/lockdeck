@@ -73,7 +73,7 @@ func _animation_timeout() -> void:
 	push_error("Animation timed out!")
 	animation_complete.emit()
 
-func _remove_space(space: CardSpace):
+func _remove_space(space: CardSpace, sub_scale: float):
 	if space in spaces:
 		spaces.erase(space)
 	else:
@@ -85,7 +85,7 @@ func _remove_space(space: CardSpace):
 		/ (CARD_SPEED_PX_PER_SEC * 2)
 		+ 0.14
 	)
-	var tween := space.tween_to(discard_pos.x, duration * animation_scale)
+	var tween := space.tween_to(discard_pos.x, duration * sub_scale)
 	if space in $Hand.get_children():
 		_open_awaits += 1
 		tween.tween_callback(_pseudo_await)
@@ -93,7 +93,7 @@ func _remove_space(space: CardSpace):
 	else:
 		push_error("Hand parent lost track of ref!")
 	tween.tween_callback(space.queue_free)
-	space.arc_to(discard_pos.y, 150, duration * animation_scale)
+	space.arc_to(discard_pos.y, 150, duration * sub_scale)
 
 func _add_space(spec: CardSpec) -> CardSpace:
 	var space := CARD_SPACE.instantiate()
@@ -114,13 +114,19 @@ func _add_space(spec: CardSpec) -> CardSpace:
 var _timeout_tween: Tween
 
 ## Forces full redraw
-func redraw(cards: Array[CardSpec]) -> void:
+func redraw(cards: Array[CardSpec], instant := false) -> void:
+	var sub_scale: float
+	if instant:
+		sub_scale = 0.0
+	else:
+		sub_scale = animation_scale
+	
 	_open_awaits = 1
 	if _timeout_tween:
 		_timeout_tween.kill()
 	_timeout_tween = create_tween()
 	_timeout_tween.tween_callback(_pseudo_await)
-	_timeout_tween.tween_interval(2.0 * animation_scale + 1.0)
+	_timeout_tween.tween_interval(2.0 * sub_scale + 1.0)
 	_timeout_tween.tween_callback(_animation_timeout)
 	
 	for card in cards.duplicate():
@@ -130,7 +136,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 	
 	for space in spaces.duplicate():
 		if space.card_spec not in cards:
-			_remove_space(space)
+			_remove_space(space, sub_scale)
 	
 	var specs := live_specs()
 	for card in cards:
@@ -148,13 +154,13 @@ func redraw(cards: Array[CardSpec]) -> void:
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
-		var duration := end_pos / CARD_SPEED_PX_PER_SEC * animation_scale
+		var duration := end_pos / CARD_SPEED_PX_PER_SEC * sub_scale
 		tween = spaces[i].tween_to(end_pos, duration)
 		_open_awaits += 1
 		tween.tween_callback(_pseudo_await)
 		
 		if spaces[i].position == Vector2.ZERO:
-			spaces[i].arc_to(0, 10, duration * animation_scale)
+			spaces[i].arc_to(0, 10, duration)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces

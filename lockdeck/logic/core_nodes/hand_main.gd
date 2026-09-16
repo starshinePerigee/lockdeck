@@ -35,8 +35,8 @@ func remove_card(card: CardSpec) -> Vector2:
 	return Vector2(-2000, -2000)
 
 ## Remove the current hand and load a new one, returning them.
-func remove_all_cards() -> Array[CardSpec]:
+func remove_all_cards(instant := false) -> Array[CardSpec]:
 	var old_cards := cards.duplicate()
 	cards = []
-	$Hand.redraw(cards)
+	$Hand.redraw(cards, instant)
 	return old_cards

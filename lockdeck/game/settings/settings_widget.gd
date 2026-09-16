@@ -108,6 +108,7 @@ func _ready() -> void:
 	var settings := GameSettings.instance()
 	update_tooltip_button(settings.tooltip_speed)
 	settings.tooltip_speed_changed.connect(update_tooltip_button)
+	update_animation_button(settings.animation_speed)
 	settings.animation_speed_changed.connect(update_animation_button)
 	%ActiveRowToggle.button_pressed = settings.highlight_active_row
 	%AmbienceSlider.set_value(settings.ambience_volume)

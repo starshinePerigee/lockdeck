@@ -516,8 +516,8 @@ func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:
 		$DiscardMain.add_cards($DeckMain.draw_cards(1))
 
-func discard_hand() -> void:
-	$DiscardMain.add_cards($HandMain.remove_all_cards())
+func discard_hand(instant := false) -> void:
+	$DiscardMain.add_cards($HandMain.remove_all_cards(instant))
 #endregion
 
 #region pick activation logic
@@ -606,20 +606,21 @@ func cleanup_step() -> void:
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
-func end_turn(count_down: bool = true) -> void:
+func end_turn() -> void:
 	$Notifications.clear()
 	$LastTest.visible = false
-	if count_down:
-		var all_cards: Array[CardSpec]
-		all_cards.append_array($DeckMain.cards)
-		all_cards.append_array($DiscardMain.cards)
-		all_cards.append_array($HandMain.cards)
-		await do_pick(
-			_NULL_PICK,
-			0,
-			all_cards.pick_random()
-		)
-		$LockBody/CountdownMain.count_down()
+	
+	var all_cards: Array[CardSpec]
+	all_cards.append_array($DeckMain.cards)
+	all_cards.append_array($DiscardMain.cards)
+	all_cards.append_array($HandMain.cards)
+	await do_pick(
+		_NULL_PICK,
+		0,
+		all_cards.pick_random()
+	)
+	
+	$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
 	set_state(InputState.ANIMATING)
 	discard_hand()
@@ -650,11 +651,10 @@ func solve_lock() -> void:
 #region setup functions
 ## Loads the starter hand
 func load_deck(deck: Array[CardSpec]) -> void:
-	discard_hand()
+	discard_hand(true)
 	reload_deck(true)
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(deck)
-	update_status_widget()
 
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
@@ -688,8 +688,10 @@ func restart() -> void:
 	$LockBody/CountdownMain.set_count(countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
-	end_turn(false)
 	$Notifications.clear()
+	$LastTest.visible = false
+	cleanup_step()
+	set_state(InputState.INACTIVE)
 
 func _ready() -> void:
 	var settings := GameSettings.instance()
