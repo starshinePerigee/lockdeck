@@ -62,6 +62,12 @@ layout_mode = 2
 theme_type_variation = &"PlainButton"
 text = "Tooltip speed: Medium"
 
+[node name="AnimationSpeedButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PlainButton"
+text = "Animation speed: Fast"
+
 [node name="ActiveRowToggle" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder" instance=ExtResource("2_86042")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)
@@ -95,11 +101,13 @@ texture_disabled = ExtResource("9_p82ga")
 sound_name = "Effects"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="ResetTutorialButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_type_variation = &"PlainButton"
@@ -112,6 +120,7 @@ metadata/_custom_type_script = "uid://dfck3u724ea4f"
 
 [node name="ClearTutorialButton" type="Button" parent="Panel/VBoxContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_type_variation = &"PlainButton"
 text = "Clear Tutorial"

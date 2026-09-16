@@ -299,7 +299,7 @@ func set_state(state: InputState) -> void:
 					$LockBody,
 					"position", 
 					LOCK_BODY_HOME,
-					0.23
+					0.23 * GameSettings.instance().animation_speed
 				)
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
@@ -328,7 +328,7 @@ func set_state(state: InputState) -> void:
 					# 146 is a full pin worth of depths, putting the base at the top
 					LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
 				),
-				0.23
+				0.23 * GameSettings.instance().animation_speed
 			)
 			$HandMain/Hand.hide_hand()
 			$LockBody/CylinderMain.show_preview(_result)

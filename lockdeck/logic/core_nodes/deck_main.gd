@@ -12,6 +12,7 @@ signal display_cards(Array)
 
 const CARD_FLIGHT_TIME := 0.45
 const CARD_TAKEOFF_TIME := 0.4
+static var animation_scale := 1.0
 
 var discard_pos := Vector2(1000, 500)
 
@@ -73,7 +74,12 @@ func _animate_draw_from_discard(i: int) -> void:
 	var x_tween := card.create_tween()
 	x_tween.set_trans(Tween.TRANS_LINEAR)
 	x_tween.tween_callback(reload_progress.emit.bind(i))
-	x_tween.tween_property(card, "position:x", 0 - 120, CARD_FLIGHT_TIME)
+	x_tween.tween_property(
+		card,
+		"position:x",
+		0 - 120,
+		CARD_FLIGHT_TIME * animation_scale
+	)
 	x_tween.tween_callback(remove_child.bind(card))
 	x_tween.tween_callback(card.queue_free)
 	
@@ -83,10 +89,15 @@ func _animate_draw_from_discard(i: int) -> void:
 		card,
 		"position:y",
 		-120 - randi_range(0, 40),
-		CARD_FLIGHT_TIME / 2
+		CARD_FLIGHT_TIME / 2 * animation_scale
 	)
 	y_tween.set_ease(Tween.EASE_IN)
-	y_tween.tween_property(card, "position:y", position.y - 30, CARD_FLIGHT_TIME / 2)
+	y_tween.tween_property(
+		card,
+		"position:y", 
+		position.y - 30, 
+		CARD_FLIGHT_TIME / 2 * animation_scale
+	)
 
 func load_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
@@ -142,9 +153,16 @@ func request_tooltip() -> void:
 		)
 	)
 
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed / 2 + 0.5
+
 func _ready() -> void:
 	$DeckLabel.mouse_entered.connect(request_tooltip)
 	$DeckLabel.pressed.connect(load_display)
 	reload_progress.connect(update_pile)
 	reload_progress.connect(update_label)
 	reload_finish.connect(redraw)
+	
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)

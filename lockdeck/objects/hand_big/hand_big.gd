@@ -17,6 +17,7 @@ const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
 const HIDE_DURATION := 0.23
 const CARD_SPEED_PX_PER_SEC := 1200
+static var animation_scale := 1.0
 
 # set these from main
 var deck_pos := Vector2(0, 500)
@@ -36,7 +37,7 @@ func _tween_to(new_pos: int) -> void:
 		_tween.kill()
 	_tween = create_tween()
 	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_tween.tween_property($Hand, "position:y", new_pos, HIDE_DURATION)
+	_tween.tween_property($Hand, "position:y", new_pos, HIDE_DURATION * animation_scale)
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
@@ -84,7 +85,7 @@ func _remove_space(space: CardSpace):
 		/ (CARD_SPEED_PX_PER_SEC * 2)
 		+ 0.14
 	)
-	var tween := space.tween_to(discard_pos.x, duration)
+	var tween := space.tween_to(discard_pos.x, duration * animation_scale)
 	if space in $Hand.get_children():
 		_open_awaits += 1
 		tween.tween_callback(_pseudo_await)
@@ -92,7 +93,7 @@ func _remove_space(space: CardSpace):
 	else:
 		push_error("Hand parent lost track of ref!")
 	tween.tween_callback(space.queue_free)
-	space.arc_to(discard_pos.y, 150, duration)
+	space.arc_to(discard_pos.y, 150, duration * animation_scale)
 
 func _add_space(spec: CardSpec) -> CardSpace:
 	var space := CARD_SPACE.instantiate()
@@ -119,7 +120,7 @@ func redraw(cards: Array[CardSpec]) -> void:
 		_timeout_tween.kill()
 	_timeout_tween = create_tween()
 	_timeout_tween.tween_callback(_pseudo_await)
-	_timeout_tween.tween_interval(3.0)
+	_timeout_tween.tween_interval(2.0 * animation_scale + 1.0)
 	_timeout_tween.tween_callback(_animation_timeout)
 	
 	for card in cards.duplicate():
@@ -147,18 +148,25 @@ func redraw(cards: Array[CardSpec]) -> void:
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
-		var duration := end_pos / CARD_SPEED_PX_PER_SEC
+		var duration := end_pos / CARD_SPEED_PX_PER_SEC * animation_scale
 		tween = spaces[i].tween_to(end_pos, duration)
 		_open_awaits += 1
 		tween.tween_callback(_pseudo_await)
 		
-		if spaces[i].position == Vector2():
-			spaces[i].arc_to(0, 10, duration)
+		if spaces[i].position == Vector2.ZERO:
+			spaces[i].arc_to(0, 10, duration * animation_scale)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces
 
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed / 2 + 0.5
+
 func _ready() -> void:
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)
+	
 	redraw([])
 	if get_tree().current_scene == self:
 		redraw(PickGenerator.get_many_base_cards(7))

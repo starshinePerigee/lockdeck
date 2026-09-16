@@ -44,6 +44,7 @@ func clear_results() -> void:
 var _tween: Tween
 var _open_awaits: int
 func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
+	var animation_scale := GameSettings.instance().animation_speed
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
@@ -67,12 +68,13 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 					effects_typed, 
 				)
 			)
-			_tween.tween_interval(0.07)
+			_tween.tween_interval(0.07 * animation_scale)
 	# timeout / fallback for animation logic failures
-	_tween.tween_interval(5.0)
+	_tween.tween_interval(4.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)
 
 func animate_fall(pins: Array[PinSpec]) -> void:
+	var animation_scale := GameSettings.instance().animation_speed
 	if _tween:
 		_tween.kill()
 	_tween = create_tween()
@@ -82,9 +84,9 @@ func animate_fall(pins: Array[PinSpec]) -> void:
 	
 	for i in len(pins):
 		pin_refs[i].animate_fall(pins[i])
-		_tween.tween_interval(0.07)
+		_tween.tween_interval(0.07 * animation_scale)
 	
-	_tween.tween_interval(3.0)
+	_tween.tween_interval(2.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)
 
 func _animation_timeout() -> void:

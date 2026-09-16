@@ -10,6 +10,7 @@ const _DEPTH := preload("res://objects/cylinder/depth.tscn")
 
 const PER_DEPTH_DELAY := 0.12
 const PRE_ACTIVATION_DELAY := 0.35
+static var animation_scale := 1.0
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -98,19 +99,19 @@ func _tween_to(pos: int, speed_scale := 1.0) -> void:
 	if _mid_pos == pos:
 		return
 	if pos < 0:
-		_tween.tween_interval(PER_DEPTH_DELAY)
+		_tween.tween_interval(PER_DEPTH_DELAY * animation_scale)
 		return
 	
 	_tween.tween_property(
 		$Stack,
 		"position",
 		_stack_position(pos),
-		PER_DEPTH_DELAY * speed_scale
+		PER_DEPTH_DELAY * speed_scale * animation_scale
 	)
 	_mid_pos = pos
 
 func _activate_delay() -> void:
-	_tween.tween_interval(PRE_ACTIVATION_DELAY)
+	_tween.tween_interval(PRE_ACTIVATION_DELAY * animation_scale)
 
 func _reset_trans() -> void:
 	_tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
@@ -121,6 +122,8 @@ func _tween_reveal(pos: int) -> void:
 func _tween_trap(pos: int) -> void:
 	_tween_reveal(pos)
 	var base_pos := _stack_position(pos)
+	if animation_scale < 0.1:
+		return
 	for shake in [
 		Vector2(-2, 1), Vector2(2, -1),
 		Vector2(-2, 1), Vector2(2, -1),
@@ -132,7 +135,7 @@ func _tween_trap(pos: int) -> void:
 func _tween_home(spec_pos: int) -> void:
 	_tween_to(
 		spec_pos, 
-		0.8 * abs(_mid_pos - spec_pos)
+		0.8 * abs(_mid_pos - spec_pos) * animation_scale
 	)
 
 func _clear_old(pin_spec: PinSpec) -> void:
@@ -156,9 +159,10 @@ func animate(
 				jam_count = 0
 	
 	_mid_pos = pin_position
-	for effect in effects:
-		_animate_effect(effect, pin_spec)
-	_tween_home(pin_spec.pin_position)
+	if animation_scale >= 0.1:
+		for effect in effects:
+			_animate_effect(effect, pin_spec)
+		_tween_home(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
@@ -174,13 +178,17 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			var delay: float
 			match effect.flavor:
 				Effects.SAFE_PUSH:
-					delay = PER_DEPTH_DELAY * 1.5
+					delay = PER_DEPTH_DELAY * 1.5 * animation_scale
 					pos = effect.last()
 				Effects.BOUNCE:
-					delay = PER_DEPTH_DELAY * 2
+					delay = PER_DEPTH_DELAY * 2 * animation_scale
 					pos = effect.first()
 				Effects.LUCKY:
-					delay = PER_DEPTH_DELAY * (PinSpec.PIN_DEPTH_COUNT - effect.realized_origin)
+					delay = (
+						PER_DEPTH_DELAY
+						* (PinSpec.PIN_DEPTH_COUNT - effect.realized_origin)
+						* animation_scale
+					)
 					pos = PinSpec.PIN_DEPTH_COUNT
 			_tween.tween_property($Stack, "position", _stack_position(pos), delay)
 			_mid_pos = pos
@@ -228,7 +236,7 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 		Effects.HINT:
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)
-			_tween.tween_interval(PRE_ACTIVATION_DELAY + 0.1)
+			_tween.tween_interval((PRE_ACTIVATION_DELAY + 0.1) * animation_scale)
 		Effects.EMPTY:
 			_tween_home(pin_spec.pin_position)
 		_:
@@ -329,6 +337,9 @@ func core_hover() -> void:
 func core_unhover() -> void:
 	pass
 
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed
+
 func _ready() -> void:
 	SPRING_POSITION = $Stack/Spring.position
 	SPRING_SIZE = $Stack/Spring.size
@@ -344,3 +355,8 @@ func _ready() -> void:
 		$Stack/Depths.add_child(next_depth)
 	
 	load_spec(PinSpec.new())
+	
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)
+	
