@@ -7,6 +7,7 @@
 z_index = 1
 offset_right = 48.0
 offset_bottom = 48.0
+theme_type_variation = &"PlainButton"
 text = "Prev turn"
 autowrap_mode = 2
 script = ExtResource("1_hdkky")

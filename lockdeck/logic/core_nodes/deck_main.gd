@@ -4,7 +4,17 @@ extends Control
 ## Emitted if more cards are drawn than are present in the deck
 signal draw_empty
 
+## Emitted when the reload animation finishes
+signal reload_progress(int)
+signal reload_finish
+
 signal display_cards(Array)
+
+const CARD_FLIGHT_TIME := 0.45
+const CARD_TAKEOFF_TIME := 0.4
+static var animation_scale := 1.0
+
+var discard_pos := Vector2(1000, 500)
 
 @export var cards: Array[CardSpec]
 
@@ -24,18 +34,83 @@ func draw_cards(n: int) -> Array[CardSpec]:
 	redraw()
 	return many_cards
 
-## Put cards back in the deck
-func add_cards(new_cards: Array[CardSpec]) -> void:
+func get_random_pointers(n: int) -> Array[CardSpec]:
+	var shuffled: Array = cards.duplicate()
+	shuffled.shuffle()
+	var ret: Array[CardSpec]
+	ret.assign(shuffled.slice(0, n))
+	return ret
+
+## Put cards back in the deck from discard
+func add_cards(new_cards: Array[CardSpec], instant := false) -> void:
+	cards.append_array(new_cards)
+	var interval := CARD_TAKEOFF_TIME / count() + 0.02
+	# tween instead of a timer
+	var tween := create_tween()
+	
+	if not instant:
+		tween.tween_callback(reload_progress.emit.bind(0))
+		for i in len(new_cards):
+			tween.tween_callback(_animate_draw_from_discard.bind(i + 1))
+			tween.tween_interval(interval)
+		if len(new_cards) > 0:
+			tween.tween_interval((CARD_FLIGHT_TIME + 0.1) - interval)
+	tween.tween_callback(_finish_reload)
+	tween.tween_callback(redraw)
+
+func _finish_reload() -> void:
+	print("reload finished")
+	reload_finish.emit.call_deferred()
+
+const CARD_BACK := preload("res://assets/card/card_back_static.png")
+
+func _animate_draw_from_discard(i: int) -> void:
+	var card := TextureRect.new()
+	add_child(card)
+	card.texture = CARD_BACK
+	card.position = discard_pos
+	card.z_index = 3100
+	
+	var x_tween := card.create_tween()
+	x_tween.set_trans(Tween.TRANS_LINEAR)
+	x_tween.tween_callback(reload_progress.emit.bind(i))
+	x_tween.tween_property(
+		card,
+		"position:x",
+		0 - 120,
+		CARD_FLIGHT_TIME * animation_scale
+	)
+	x_tween.tween_callback(remove_child.bind(card))
+	x_tween.tween_callback(card.queue_free)
+	
+	var y_tween := card.create_tween()
+	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	y_tween.tween_property(
+		card,
+		"position:y",
+		-120 - randi_range(0, 40),
+		CARD_FLIGHT_TIME / 2 * animation_scale
+	)
+	y_tween.set_ease(Tween.EASE_IN)
+	y_tween.tween_property(
+		card,
+		"position:y", 
+		position.y - 30, 
+		CARD_FLIGHT_TIME / 2 * animation_scale
+	)
+
+func load_cards(new_cards: Array[CardSpec]) -> void:
 	cards.append_array(new_cards)
 	redraw()
 
-func remove_card(card: CardSpec) -> void:
+func remove_card(card: CardSpec) -> Vector2:
 	for i in range(len(cards)):
 		if cards[i].unique_id == card.unique_id:
 			cards.pop_at(i)
 			redraw()
-			return
+			return position
 	push_warning("Failed to remove card %s with UID %s" % [card.pick_name, card.unique_id])
+	return Vector2(-2000, -2000)
 
 ## Remove all cards
 func clear_all() -> void:
@@ -51,11 +126,18 @@ func load_display() -> void:
 	cards_sorted.sort_custom(sort_card_id)
 	display_cards.emit(cards_sorted)
 
+var _current_label := 0
+func update_label(n: int = 0) -> void:
+	$DeckLabel.text = "Deck: %s" % (_current_label + n)
+
+func update_pile(n: int = 0) -> void:
+	$CardPile.count = _current_label + n
+
 ## Redraw the deck
 func redraw():
-	var c := count()
-	$CardPile.count = c
-	$DeckLabel.text = "Deck: %s" % c
+	_current_label = count()
+	update_label()
+	update_pile()
 
 func get_nice_rect() -> Rect2:
 	return $DeckLabel.get_global_rect().grow(16)
@@ -71,6 +153,16 @@ func request_tooltip() -> void:
 		)
 	)
 
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed / 2 + 0.5
+
 func _ready() -> void:
 	$DeckLabel.mouse_entered.connect(request_tooltip)
 	$DeckLabel.pressed.connect(load_display)
+	reload_progress.connect(update_pile)
+	reload_progress.connect(update_label)
+	reload_finish.connect(redraw)
+	
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)

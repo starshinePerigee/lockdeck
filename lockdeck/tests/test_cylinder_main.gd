@@ -45,6 +45,9 @@ func apply_card(card: CardSpec, card_index: int) -> void:
 	_last_result = $CylinderMain.execute(card, card_index)
 	
 	print_previouses(_last_result)
+	$CylinderMain/Cylinders.animate_pins(
+		$CylinderMain.pins, _last_result
+	)
 	
 	$BreakLabel.visible = _last_result.pick_broke
 		
@@ -79,14 +82,14 @@ static func get_known_test_pin() -> PinSpec:
 	var spec := PinSpec.new()
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
-	spec.depths[1] = Depths.TRAP
+	spec.depths[1] = Depths.PUSH
 	spec.depths[2] = Depths.EMPTY
 	spec.depths[3] = Depths.EMPTY
-	spec.depths[4] = Depths.EMPTY
+	spec.depths[4] = Depths.BOMB
 	spec.depths[5] = Depths.EMPTY
-	spec.depths[6] = Depths.SPIKE
+	spec.depths[6] = Depths.EMPTY
 	spec.depths[7] = Depths.EMPTY
-	spec.finalize()
+	spec.reset_pin()
 	return spec
 
 func gen_new_lock() -> void:

@@ -78,7 +78,7 @@ func get_that_bag() -> void:
 	$Label.visible = true
 	$TextureRect.visible = false
 	
-	var label_tween := get_tree().create_tween()
+	var label_tween := create_tween()
 	label_tween.tween_property(
 		$Label,
 		"position",

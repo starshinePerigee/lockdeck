@@ -2,6 +2,8 @@ extends Control
 ## The view for the full set of cylinders in the lock.
 ## Made up of pins, which are made up of depths.
 
+signal animation_complete()
+
 ## Contains references to all the Pin view objects in order.
 ## Skips having to disambiguate get_children()[i] and avoids that breaking
 ## if more children are added.
@@ -38,7 +40,71 @@ func set_results(pin_results: Array[ResultSpec]) -> void:
 func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
+
+var _tween: Tween
+var _open_awaits: int
+func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
+	var animation_scale := GameSettings.instance().animation_speed
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	# sync with indicator pick
+	_tween.tween_interval(0.02)
+	
+	_open_awaits = 1 + len(pins)
+	_tween.tween_callback(_pseudo_await)
+	for i in range(len(pins) - 1, -1, -1):
+		if (
+			not i in end_step.effects.keys()
+		):
+			# If this pin doesn't have results, just reload the spec
+			_tween.tween_callback(pin_refs[i].direct_load.bind(pins[i]))
+		else:
+			var effects_typed: Array[EffectSpec] = []
+			effects_typed.assign(end_step.effects[i])
+			_tween.tween_callback(
+				pin_refs[i].animate.bind(
+					pins[i], 
+					effects_typed, 
+				)
+			)
+			_tween.tween_interval(0.07 * animation_scale)
+	# timeout / fallback for animation logic failures
+	_tween.tween_interval(4.0 * animation_scale + 1.0)
+	_tween.tween_callback(_animation_timeout)
+
+func animate_fall(pins: Array[PinSpec]) -> void:
+	var animation_scale := GameSettings.instance().animation_speed
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	
+	_open_awaits = 1 + len(pins)
+	_tween.tween_callback(_pseudo_await)
+	
+	for i in len(pins):
+		pin_refs[i].animate_fall(pins[i])
+		_tween.tween_interval(0.07 * animation_scale)
+	
+	_tween.tween_interval(2.0 * animation_scale + 1.0)
+	_tween.tween_callback(_animation_timeout)
+
+func _animation_timeout() -> void:
+	push_error("Animation timed out!")
+	animation_complete.emit()
+
+func _pseudo_await() -> void:
+	_open_awaits -= 1
+	if _open_awaits == 0:
+		if _tween:
+			_tween.kill()
+		animation_complete.emit()
 #endregion
+
+func get_valid_global_rect() -> Rect2:
+	var rect: Rect2 = pin_refs[0].get_global_rect()
+	rect = rect.merge(get_valid_refs()[-1].get_global_rect())
+	return rect
 
 func get_valid_refs() -> Array[Pin]:
 	var refs: Array[Pin] = []
@@ -58,6 +124,8 @@ func _ready() -> void:
 		$CylinderHBox/Pin4,
 		$CylinderHBox/Pin5,
 	]
+	for pin in pin_refs:
+		pin.animation_complete.connect(_pseudo_await)
 	clear_all_pins()
 
 func _init() -> void:

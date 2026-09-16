@@ -9,6 +9,9 @@ signal card_tapped()
 signal card_picked_up()
 ## Drag eneded
 signal card_dropped()
+signal animation_complete()
+
+const HIDE_DURATION := 0.23
 
 var _dragging := false
 var _active := false
@@ -49,19 +52,90 @@ const HIGHLIGHT_OFFSET := 64
 
 var _selected := false
 
+var _card_tween: Tween = null
+func _card_tween_to(new_pos: int) -> void:
+	if _card_tween:
+		_card_tween.kill()
+	_card_tween = $PickCard.create_tween()
+	_card_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_card_tween.tween_property($PickCard, "position:y", new_pos, HIDE_DURATION)
+
 ## Draw highlight and pop card
 func set_selected() -> void:
 	_selected = true
-	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
+	_card_tween_to(-HIGHLIGHT_OFFSET)
 	$PickCard.tooltippable = false
 	z_boost = true
 
 ## Unpop card
 func clear_selected() -> void:
 	_selected = false
-	$PickCard.position = Vector2(0, 0)
+	_card_tween_to(0)
 	$PickCard.tooltippable = true
 	z_boost = false
+
+func tween_to_vector(new_pos: Vector2, duration: float) -> void:
+	var x_tween := _source_tween(true)
+	x_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, duration)
+	x_tween.tween_callback(animation_complete.emit)
+	# avoid the hand rising back up affecting this card
+	# (arc to discard will kill this tween)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, 5.0)
+	
+	var y_tween := _source_tween(false)
+	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, duration)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, 5.0)
+
+## Build a tween or pass it forward
+func _source_tween(is_x: bool) -> Tween:
+	position += $PickCard.position
+	$PickCard.position = Vector2.ZERO
+	
+	if is_x:
+		if _x_tween:
+			_x_tween.kill()
+		_x_tween = create_tween()
+		return _x_tween
+	else:
+		if _y_tween:
+			_y_tween.kill()
+		_y_tween = create_tween()
+		return _y_tween
+
+var _x_tween: Tween
+## Travel to a given  x position
+func tween_to(new_x: float, duration: float) -> Tween:
+	var tween := _source_tween(true)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "position:x", new_x, duration)
+	tween.tween_callback(animation_complete.emit)
+	return tween
+
+var _y_tween: Tween
+## Arc through a fixed height above 0 to a given y posistion
+func arc_to(new_y: float, arc_height: int, duration: float) -> Tween:
+	var tween := _source_tween(false)
+	
+	var arc_peak := -arc_height
+	if arc_height > 50:
+		if position.y < arc_peak:
+			# if we're above the requested arc peak
+			arc_peak = int(position.y - 30)
+		arc_peak -= randi_range(0, 40)
+	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", arc_peak, duration / 2)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "position:y", new_y, duration / 2)
+	
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", 0, HIDE_DURATION)
+	return tween
+
+func break_pick() -> void:
+	if has_card:
+		$PickCard.break_pick()
 
 @export var z_boost: bool:
 	set(v):
@@ -69,9 +143,9 @@ func clear_selected() -> void:
 			return
 		
 		z_boost = v
-		if z_boost:
+		if z_boost and z_index < 2000:
 			z_index += 2000
-		else:
+		elif z_index > 2000:
 			z_index -= 2000
 
 @export var card_spec: CardSpec: 
@@ -108,7 +182,7 @@ func cancel_snapback() -> void:
 func snapback() -> void:
 	if _cancel_snapback:
 		return
-	var tween := get_tree().create_tween()
+	var tween := create_tween()
 	var distance: float = Vector2().distance_to($PickCard.position)
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)

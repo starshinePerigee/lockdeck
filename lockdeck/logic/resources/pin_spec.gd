@@ -133,7 +133,7 @@ func execute(pending_effects: Array[EffectSpec]) -> Array[EffectSpec]:
 		else:
 			bomb_effect = EffectSpec.new(Effects.BOMB_DEFUSED)
 			_bomb_defused = true
-		bomb_effect.add_position(old_bomb)
+		bomb_effect.realized_origin = old_bomb
 		additional_effects.append(bomb_effect)
 	
 	return additional_effects
@@ -157,6 +157,7 @@ func activate() -> EffectSpec:
 	# activate the pin:
 	var depth := activate_and_get_depth()
 	var effect := EffectSpec.new(depth.effect, depth.value)
+	effect.realized_origin = pin_position
 	# print(
 	# 	"Activating pin at depth %s with effect %s"
 	# 	% [pin_position, effect.effect_name]
@@ -165,7 +166,8 @@ func activate() -> EffectSpec:
 	return effect
 
 ## Execute a single effect
-func execute_effect(effect) -> void:
+func execute_effect(effect: EffectSpec) -> void:
+	effect.realized_origin = pin_position
 	match effect.flavor:
 		# ALL OF THE GAME LOGIC GOES HERE: 
 		# (BALATRO REFERENCE LMAO)
@@ -577,6 +579,12 @@ func reset_exhaustion() -> void:
 	activated[-1] = true
 	activated[pin_position] = true
 
+func reset_reveals() -> void:
+	reveals.fill(RevealLevel.UNKNOWN)
+	for i in PIN_DEPTH_COUNT:
+		if depths[i].tests_as == Depths.DangerLevel.REVEALED:
+			reveals[i] = RevealLevel.REVEALED
+
 ## Performs the end of turn actions
 func end_turn_and_fall() -> void:
 	if is_jammed():
@@ -586,17 +594,12 @@ func end_turn_and_fall() -> void:
 	reset_exhaustion()
 	end_step()
 
-## Called after generation
-func finalize() -> void:
-	for i in PIN_DEPTH_COUNT:
-		if depths[i].tests_as == Depths.DangerLevel.REVEALED:
-			reveals[i] = RevealLevel.REVEALED
-
 ## Resets the pin to default values but does not change depths.
 func reset_pin() -> void:
 	pin_position = 0
 	jam_count = 0
 	bomb_pos = -1
+	reset_reveals()
 	reset_exhaustion()
 	end_step()
 #endregion

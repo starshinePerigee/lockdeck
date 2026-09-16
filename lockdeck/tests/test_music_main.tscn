@@ -77,10 +77,10 @@ alignment = 0
 
 [node name="HeistLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 218.0
-offset_top = 141.0
-offset_right = 296.0
-offset_bottom = 167.0
+offset_left = 252.0
+offset_top = 144.0
+offset_right = 330.0
+offset_bottom = 170.0
 text = "Heist: 0"
 
 [node name="Label" type="Label" parent="."]

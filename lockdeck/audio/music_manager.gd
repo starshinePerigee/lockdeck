@@ -72,14 +72,14 @@ func crossfade_track(
 		ramp = 0.05
 	else:
 		ramp = 1.0
-	quiet_fader = get_tree().create_tween()
+	quiet_fader = create_tween()
 	quiet_fader.tween_property(quiet_player, "volume_db", -60.0, ramp)
 	quiet_fader.tween_interval(delay)
 	quiet_fader.tween_callback(_start_track.bind(quiet_player, track))
 	quiet_fader.tween_property(quiet_player, "volume_db", -12.0, 0.0)
 	quiet_fader.tween_property(quiet_player, "volume_db", 0.0, 0.2)
 	
-	playing_fader = get_tree().create_tween()
+	playing_fader = create_tween()
 	playing_fader.tween_property(playing_player, "volume_db", -60, fade_out)
 	playing_fader.tween_callback(playing_player.stop)
 	
@@ -139,7 +139,7 @@ func settings_open() -> void:
 		bgm_2_fader.pause()
 	_bgm_2_db_cache = $BGM_2.volume_db
 	
-	_settings_tween = get_tree().create_tween()
+	_settings_tween = create_tween()
 	_settings_tween.parallel()
 	_settings_tween.tween_property($BGM_1, "volume_db", -60, 1.0)
 	_settings_tween.tween_property($BGM_2, "volume_db", -60, 1.0)
@@ -149,7 +149,7 @@ var _sub_settings_tween: Tween
 func settings_play() -> void:
 	if _sub_settings_tween:
 		_sub_settings_tween.kill()
-	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween = create_tween()
 	$SettingsMusic.volume_db = -60
 	$SettingsMusic.play()
 	_sub_settings_tween.tween_property($SettingsMusic, "volume_db", 0.0, 0.5)
@@ -157,14 +157,14 @@ func settings_play() -> void:
 func settings_stop() -> void:
 	if _sub_settings_tween:
 		_sub_settings_tween.kill()
-	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween = create_tween()
 	_sub_settings_tween.tween_property($SettingsMusic, "volume_db", -60, 0.5)
 	_sub_settings_tween.tween_callback($SettingsMusic.stop)
 
 func settings_close() -> void:
 	if _settings_tween:
 		_settings_tween.kill()
-	_settings_tween = get_tree().create_tween()
+	_settings_tween = create_tween()
 	
 	_settings_tween.tween_property($BGM_1, "volume_db", _bgm_1_db_cache, 1.0)
 	_settings_tween.parallel().tween_property($BGM_2, "volume_db", _bgm_2_db_cache, 1.0)

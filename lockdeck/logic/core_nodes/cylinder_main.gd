@@ -51,6 +51,7 @@ func load_new_lock(new_lock: LockSpec) -> void:
 	pins = new_lock.pins
 	_shadow_pins = []
 	for i in len(pins):
+		pins[i].reset_pin()
 		_shadow_pins.append(PinSpec.new())
 		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)
@@ -125,7 +126,6 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	result.lock_solved = lock_solved()
 	if not shadow:
 		update_visibility(result)
-		$Cylinders.set_pin_specs(pins)
 		for i in len(pins):
 			pins[i].shadow_clone(_shadow_pins[i])
 	return result
@@ -169,4 +169,4 @@ func redraw_pins() -> void:
 func handle_fall() -> void:
 	for pin in pins:
 		pin.end_turn_and_fall()
-	$Cylinders.set_pin_specs(pins)
+	$Cylinders.animate_fall(pins)

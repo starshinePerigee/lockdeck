@@ -11,7 +11,7 @@ func set_play(
 ) -> Tween:
 	if tween:
 		tween.kill()
-	var new_tween := get_tree().create_tween()
+	var new_tween := create_tween()
 	if make_playing:
 		if not player.playing:
 			player.play()
@@ -66,7 +66,7 @@ func title_screen() -> void:
 	set_night(true)
 	
 	$CracklePlayer.volume_db = -60
-	_fire_tween = get_tree().create_tween()
+	_fire_tween = create_tween()
 	_fire_tween.tween_interval(4)
 	_fire_tween.tween_callback(set_fire.bind(true))
 
@@ -127,7 +127,7 @@ func check_bug(bug_number: int = 0) -> void:
 	
 	if tween:
 		tween.kill()
-	tween = get_tree().create_tween()
+	tween = create_tween()
 	
 #	print("checking bug %s" % bug_number)
 	if player.playing:
@@ -178,14 +178,14 @@ func stop_bugs() -> void:
 	
 	if _bug_1_tween:
 		_bug_1_tween.kill()
-	_bug_1_tween = get_tree().create_tween()
+	_bug_1_tween = create_tween()
 	_bug_1_tween.tween_property($BugPlayer1, "volume_db", -60, 4.0)
 	_bug_1_tween.tween_callback($BugPlayer1.stop)
 	bug_1 = null
 	
 	if _bug_2_tween:
 		_bug_2_tween.kill()
-	_bug_2_tween = get_tree().create_tween()
+	_bug_2_tween = create_tween()
 	_bug_2_tween.tween_property($BugPlayer2, "volume_db", -60, 4.0)
 	_bug_2_tween.tween_callback($BugPlayer2.stop)
 	bug_2 = null
@@ -208,7 +208,7 @@ func settings_open() -> void:
 		_bug_2_tween.pause()
 	_bug_2_db_cache = $BugPlayer2.volume_db
 	
-	_settings_tween = get_tree().create_tween()
+	_settings_tween = create_tween()
 	_settings_tween.parallel()
 	_settings_tween.tween_property($BugPlayer1, "volume_db", -60, 1.0)
 	_settings_tween.tween_property($BugPlayer2, "volume_db", -60, 1.0)
@@ -218,7 +218,7 @@ var _sub_settings_tween: Tween
 func settings_play() -> void:
 	if _sub_settings_tween:
 		_sub_settings_tween.kill()
-	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween = create_tween()
 	$SettingsAmbience.volume_db = -60
 	$SettingsAmbience.play()
 	_sub_settings_tween.tween_property($SettingsAmbience, "volume_db", bug_db, 0.5)
@@ -226,14 +226,14 @@ func settings_play() -> void:
 func settings_stop() -> void:
 	if _sub_settings_tween:
 		_sub_settings_tween.kill()
-	_sub_settings_tween = get_tree().create_tween()
+	_sub_settings_tween = create_tween()
 	_sub_settings_tween.tween_property($SettingsAmbience, "volume_db", -60, 0.5)
 	_sub_settings_tween.tween_callback($SettingsAmbience.stop)
 
 func settings_close() -> void:
 	if _settings_tween:
 		_settings_tween.kill()
-	_settings_tween = get_tree().create_tween()
+	_settings_tween = create_tween()
 	
 	_settings_tween.tween_property($BugPlayer1, "volume_db", _bug_1_db_cache, 1.0)
 	_settings_tween.parallel().tween_property($BugPlayer2, "volume_db", _bug_2_db_cache, 1.0)

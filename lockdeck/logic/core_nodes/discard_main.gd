@@ -29,23 +29,23 @@ func count() -> int:
 ## Add multiple cards to the discard pile
 func add_cards(dis_cards: Array[CardSpec]) -> void:
 	cards.append_array(dis_cards)
-	$CardPile.count = len(cards)
-	update_label()
+	redraw()
 
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	$CardPile.count = count()
-	update_label()
+	redraw()
 
-func remove_card(dis_card: CardSpec) -> void:
+func remove_card(dis_card: CardSpec) -> Vector2:
 	if dis_card not in cards:
 		push_error(
 			"Tried to remove card %s [%s] but not in discard!"
 			% [dis_card.pick_name, dis_card.unique_id]
 		)
-		return
-	cards.erase(dis_card)
-	update_label()
+		return Vector2(-2000, -2000)
+	else:
+		cards.erase(dis_card)
+		update_label()
+		return $CardPile.global_position
 
 func remove_cards(dis_cards: Array[CardSpec]) -> void:
 	for card in dis_cards:
@@ -59,13 +59,23 @@ func empty_deck() -> Array[CardSpec]:
 	update_label()
 	return old_cards
 
+#region bad hacky hack for deck reload
+var _current_label := 0
 func bump_label() -> void:
-	update_label(count() + 1)
+	_current_label = count()
+	update_label(-1)
 
-func update_label(n: int = -1) -> void:
-	if n == -1:
-		n = count()
-	$DiscardLabel.text = "Discard: %s" % n
+func update_label(n: int = 0) -> void:
+	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
+
+func update_pile(n: int = 0) -> void:
+	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
+#endregion
+
+func redraw() -> void:
+	_current_label = count()
+	update_label()
+	update_pile()
 
 func show_display() -> void:
 	display_cards.emit(cards)

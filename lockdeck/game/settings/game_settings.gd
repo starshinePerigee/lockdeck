@@ -43,6 +43,14 @@ func set_tooltip_speed(setting: float = 1.4) -> void:
 	tooltip_speed_changed.emit(tooltip_speed)
 
 
+signal animation_speed_changed(float)
+@export var animation_speed: float = 1.0
+
+func set_animation_speed(setting: float = 1.0) -> void:
+	animation_speed = setting
+	animation_speed_changed.emit(animation_speed)
+
+
 signal highlight_active_row_changed(bool)
 @export var highlight_active_row: bool = true
 

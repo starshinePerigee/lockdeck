@@ -29,14 +29,6 @@ x gears
 - touch up previous button to match new theme
 - between scene locks (locks and boss locks)
 
-Animations
-- between scene animation 
-- opening animation
-- pin execution
-- broken pick flicks
-- draw card
-- shuffle deck
-
 cooler animations
 - all pins use the same base color, and icons get drawn on as an animation
 - while a pin is executing, each tested depth goes to a "test" depth graphic until the entire thing resolves and they update to a new graphic

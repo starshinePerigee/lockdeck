@@ -42,8 +42,8 @@ func pick_selected(spec: CardSpec) -> void:
 var _lock_input := false
 
 enum InputState {
-	REFRESH_PENDING,  # used to refresh a state
 	INACTIVE,
+	ANIMATING,
 	ACTIVE_SELECT,
 	ACTIVE_DRAG,
 	VIEW_ALL,
@@ -55,7 +55,7 @@ var current_state := InputState.INACTIVE
 ## This can be a card, a pin, or a discardmain
 var _current_hover: Control
 
-## If you're clicking, this holds the CardSpace of the selected pick
+## this holds the CardSpace of the selected pick for clicking or dragging
 var _current_space: CardSpace
 
 ## this is used to allow de-selecting the current pick
@@ -89,6 +89,7 @@ func pick_dragged(space: CardSpace) -> void:
 	set_state(InputState.ACTIVE_DRAG)
 	$Notifications.clear()
 	_current_area = space.get_card_area()
+	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
 
 func pick_dropped(space: CardSpace) -> void:
 	if not _current_area:
@@ -97,23 +98,28 @@ func pick_dropped(space: CardSpace) -> void:
 	_current_area = null
 	
 	if _current_target:
+		set_state(InputState.ANIMATING)
 		space.cancel_snapback()
+		_current_space = space
 		_do_target()
+	else:
+		_current_space = null
+		set_state(InputState.INACTIVE)
 	
+	$LockBody/IndicatorPick.current_pick = null
 	_current_target = null
-	set_state(InputState.INACTIVE)
 
 func pick_clicked(space: CardSpace) -> void:
 	if _current_hover is CardSpace:
 		space = _current_hover
-	else:
-		push_warning("Pick clicked without hover?") 
 	
 	if _previous_space == space:
 		_previous_space = null
+		$LockBody/IndicatorPick.current_pick = null
 		return
 	
 	_current_space = space
+	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
 	space.set_selected()
 	set_state(InputState.ACTIVE_SELECT)
 
@@ -127,11 +133,16 @@ func _input(event: InputEvent) -> void:
 			reset_countdown()
 		
 		if current_state == InputState.ACTIVE_SELECT:
+			# check if you clicked a pin / discard
 			for target in valid_targets():
 				if target.get_mouse_rect().has_point(click):
 					_current_target = target
 					_do_target()
+					return
+			# note that if you clicked a pick card, this will execute before pick_clicked
+			# so we only need to bring things back to default
 			
+			# check if you clicked the same card again:
 			if _current_space.get_mouse_rect().has_point(click):
 				_previous_space = _current_space
 			else:
@@ -146,10 +157,12 @@ func _do_target() -> void:
 	if _current_target == $DiscardMain:
 		discard_pick()
 	elif _current_target is Pin:
-		do_pick(
+		await do_pick(
 			active_card,
 			$LockBody/CylinderMain/Cylinders.get_index_of_ref(_current_target)
 		)
+		cleanup_step()
+		end_animation()
 
 func _process(_delta: float) -> void:
 	if current_state == InputState.ACTIVE_DRAG:
@@ -215,6 +228,8 @@ func unhighlight_target(target: Control) -> void:
 	if target is Pin:
 		$LockBody/IndicatorPick.go_stow()
 		$LockBody/CylinderMain.cancel_preview()
+	elif target == $DiscardMain:
+		unpreview_discard()
 
 func highlight_target(target: Control) -> void:
 	target.core_highlight()
@@ -222,13 +237,13 @@ func highlight_target(target: Control) -> void:
 		var pin_index: int = $LockBody/CylinderMain/Cylinders.get_index_of_ref(target)
 		$LockBody/IndicatorPick.go_index(pin_index)
 		$LockBody/CylinderMain.preview(active_card, pin_index)
+	elif target == $DiscardMain:
+		preview_discard()
 
 func unhighlight_all() -> void:
 	if _current_target:
-		push_warning("nulling current target from unhighlight_all")
 		_current_target = null
 	if _current_space:
-		push_warning("nulling current space from unhighlight_all")
 		_current_space.clear_selected()
 		_current_space = null
 	_current_hover = null
@@ -248,6 +263,19 @@ func hover_target(target: Control) -> void:
 func unhover_target(target) -> void:
 	target.core_unhover()
 
+func preview_discard() -> void:
+	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
+	if preview_step.pick_broke or preview_step.decks_broken > 0 or break_next:
+		$TrashMain.bump_label()
+	else:
+		$DiscardMain.bump_label()
+	# I am not handling any other effects here. by god.
+
+func unpreview_discard() -> void:
+	$LockBody/CylinderMain.cancel_preview()
+	$DiscardMain.redraw()
+	$TrashMain.update_label()
+
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
 
@@ -262,13 +290,17 @@ func set_state(state: InputState) -> void:
 	current_state = state
 	
 	match state:
-		InputState.REFRESH_PENDING:
-			pass
 		InputState.INACTIVE:
 			unhighlight_all()
 			$LockBody/IndicatorPick.go_hide()
 			$HandMain/Hand.unhide_hand()
-			$LockBody.position = LOCK_BODY_HOME
+			if $LockBody.position != LOCK_BODY_HOME:
+				create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
+					$LockBody,
+					"position", 
+					LOCK_BODY_HOME,
+					0.23 * GameSettings.instance().animation_speed
+				)
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
@@ -276,6 +308,8 @@ func set_state(state: InputState) -> void:
 			reset_countdown()
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
+		InputState.ANIMATING:
+			lock_input(true)
 		InputState.ACTIVE_SELECT:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
@@ -287,9 +321,14 @@ func set_state(state: InputState) -> void:
 			reset_countdown()
 			$DiscardMain.show_icon = true
 		InputState.VIEW_ALL:
-			$LockBody.global_position = Vector2(
-				# 146 is a full pin worth of depths, putting the base at the top
-				LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
+			create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
+				$LockBody,
+				"global_position", 
+				Vector2(
+					# 146 is a full pin worth of depths, putting the base at the top
+					LOCK_BODY_HOME.x, LOCK_BODY_HOME.y + 146 + 8
+				),
+				0.23 * GameSettings.instance().animation_speed
 			)
 			$HandMain/Hand.hide_hand()
 			$LockBody/CylinderMain.show_preview(_result)
@@ -329,6 +368,14 @@ func show_failure(state: bool = true) -> void:
 # Used for settings
 func toggle_active_row(show_row: bool) -> void:
 	$LockBody/ActiveBox.visible = show_row
+#endregion
+
+#region animation handling
+
+func end_animation() -> void:
+	lock_input(false)
+	set_state(InputState.INACTIVE)
+
 #endregion
 
 #region game functions
@@ -377,19 +424,6 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
 
-func preview_discard() -> void:
-	var preview_step: EndStepSpec = $LockBody/CylinderMain.preview(_NULL_PICK, 0)
-	if preview_step.pick_broke or preview_step.decks_broken > 0:
-		$TrashMain.bump_label()
-	else:
-		$DiscardMain.bump_label()
-	# I am not handling any other effects here. by god.
-
-func unpreview_discard() -> void:
-	$LockBody/CylinderMain.cancel_preview()
-	$DiscardMain.update_label()
-	$TrashMain.update_label()
-
 #endregion
 
 #region basic game action building blocks
@@ -417,24 +451,36 @@ func draw_new_hand() -> void:
 	draw_cards(hand_size)
 
 ## Move discard back into deck
-func reload_deck() -> void:
+func reload_deck(instant := false) -> void:
 	if $DiscardMain.count() > 0:
-		$DeckMain.add_cards($DiscardMain.empty_deck())
 		$Notifications.notify(Notifications.RELOAD)
+	$DeckMain.add_cards($DiscardMain.empty_deck(), instant)
+
+const PHYSICAL_PICK := preload("res://game/core/physical_pick.tscn")
 
 func break_pick(card: CardSpec, surprise := false) -> void:
 	$TrashMain.add_card(card)
+	var physical := PHYSICAL_PICK.instantiate()
+	physical.load_spec(card)
 	if card in $DiscardMain.cards:
-		$DiscardMain.remove_card(card)
+		physical.position = $DiscardMain.remove_card(card)
 	elif card in $HandMain.cards:
-		$HandMain.remove_card(card)
+		physical.position = $HandMain.remove_card(card)
 	elif card in $DeckMain.cards:
-		$DeckMain.remove_card(card)
+		physical.position = $DeckMain.remove_card(card)
 	else:
 		push_error(
 			"Tried to break card %s [%s] but could not locate!"
 			% [card.pick_name, card.unique_id]
 		)
+		if DEBUG_MODE:
+			assert(false)
+		else:
+			physical.queue_free()
+	
+	add_child(physical)
+	if _current_space:
+		_current_space.find_child("PickCard").hide_pick = true
 	
 	if surprise:
 		$Notifications.notify(Notifications.SURPRISE)
@@ -454,7 +500,7 @@ func break_from_hand() -> void:
 
 func discard_pick() -> void:
 	$LastTest.visible = false
-	do_pick(
+	await do_pick(
 		_NULL_PICK,
 		0,
 		active_card
@@ -464,17 +510,21 @@ func discard_pick() -> void:
 		move_cards_from_hand_to_discard([active_card])
 	
 	cleanup_step()
+	end_animation()
 
 func discard_from_deck() -> void:
 	if $DeckMain.count() > 0:
 		$DiscardMain.add_cards($DeckMain.draw_cards(1))
 
-func discard_hand() -> void:
-	$DiscardMain.add_cards($HandMain.remove_all_cards())
+func discard_hand(instant := false) -> void:
+	$DiscardMain.add_cards($HandMain.remove_all_cards(instant))
 #endregion
 
 #region pick activation logic
 @onready var _result := EndStepSpec.new()
+
+# BIG IMPORTANT FUNCTION FLAG
+var RIDER_DOESNT_SHOW_EMOJIS_IN_COMMENTS := "🐳🐋🐳🐋"
 
 ## Handle all steps from pick activation
 func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> void:
@@ -484,14 +534,27 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	_result = $LockBody/CylinderMain.execute(card, cylinder)
 	
 	if card != _NULL_PICK:
-		$HandMain.remove_card(card)
-		$DiscardMain.add_card(card)
+		set_state(InputState.ANIMATING)
+		$LockBody/IndicatorPick.do_push()
+		$HandMain/Hand.activate_space(
+			_current_space,
+			$LockBody/CylinderMain/Cylinders.pin_refs[cylinder].global_position.x
+		)
+		await $LockBody/IndicatorPick.start_push
+	
+	$LockBody/CylinderMain/Cylinders.animate_pins(
+		$LockBody/CylinderMain.pins, _result
+	)
+	await $LockBody/CylinderMain/Cylinders.animation_complete
 	
 	if _result.pick_broke or break_next:
 		if break_instead:
 			break_pick(break_instead)
 		else:
 			break_pick(card)
+	else:
+		if card != _NULL_PICK:
+			move_cards_from_hand_to_discard([card])
 	
 	if Effects.TEST in card.get_unique_list():
 		$LastTest.update(_result.last_reveal, _result.last_hint)
@@ -502,14 +565,14 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	if _result.lock_solved:
 		solve_lock()
 	else:
-		post_pick()
-		cleanup_step()
-
+		await post_pick()
+	
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
 	if _result.hand_fumbled:
 		$Notifications.notify(Notifications.FUMBLE)
 		move_cards_from_hand_to_discard($HandMain.cards.duplicate())
+		await $HandMain/Hand.animation_complete
 	
 	var breaths := _result.breaths_taken
 	if breaths > 0:
@@ -520,7 +583,7 @@ func post_pick() -> void:
 	
 	var deck_breaks := _result.decks_broken
 	if deck_breaks > 0:
-		var broken_cards = $DeckMain.draw_cards(deck_breaks)
+		var broken_cards = $DeckMain.get_random_pointers(deck_breaks)
 		for card in broken_cards:
 			break_pick(card, true)
 	
@@ -543,25 +606,29 @@ func cleanup_step() -> void:
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
-func end_turn(count_down: bool = true) -> void:
+func end_turn() -> void:
 	$Notifications.clear()
 	$LastTest.visible = false
-	if count_down:
-		var all_cards: Array[CardSpec]
-		all_cards.append_array($DeckMain.cards)
-		all_cards.append_array($DiscardMain.cards)
-		all_cards.append_array($HandMain.cards)
-		do_pick(
-			_NULL_PICK,
-			0,
-			all_cards.pick_random()
-		)
-		$LockBody/CountdownMain.count_down()
+	
+	var all_cards: Array[CardSpec]
+	all_cards.append_array($DeckMain.cards)
+	all_cards.append_array($DiscardMain.cards)
+	all_cards.append_array($HandMain.cards)
+	await do_pick(
+		_NULL_PICK,
+		0,
+		all_cards.pick_random()
+	)
+	
+	$LockBody/CountdownMain.count_down()
 	$LockBody/CylinderMain.handle_fall()
+	set_state(InputState.ANIMATING)
 	discard_hand()
+	await $HandMain/Hand.animation_complete
 	reload_deck()
-	set_state(InputState.REFRESH_PENDING)
+	await $DeckMain.reload_finish
 	cleanup_step()
+	await $HandMain/Hand.animation_complete
 	set_state(InputState.INACTIVE)
 
 func game_over() -> void:
@@ -584,16 +651,21 @@ func solve_lock() -> void:
 #region setup functions
 ## Loads the starter hand
 func load_deck(deck: Array[CardSpec]) -> void:
-	discard_hand()
-	reload_deck()
+	discard_hand(true)
+	reload_deck(true)
 	$DeckMain.clear_all()
-	$DeckMain.add_cards(deck)
-	update_status_widget()
+	$DeckMain.load_cards(deck)
 
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
 	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
+	call_deferred("_set_indicator_box")
+
+func _set_indicator_box() -> void:
+	$LockBody/IndicatorPick.mouse_box = (
+		$LockBody/CylinderMain/Cylinders.get_valid_global_rect()
+	)
 
 var _already_broken: Array[CardSpec]
 
@@ -616,13 +688,18 @@ func restart() -> void:
 	$LockBody/CountdownMain.set_count(countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
-	end_turn(false)
 	$Notifications.clear()
+	$LastTest.visible = false
+	cleanup_step()
+	set_state(InputState.INACTIVE)
 
 func _ready() -> void:
 	var settings := GameSettings.instance()
 	toggle_active_row(settings.highlight_active_row)
 	settings.highlight_active_row_changed.connect(toggle_active_row)
+	$HandMain/Hand.deck_pos = $DeckMain.position
+	$HandMain/Hand.discard_pos = $DiscardMain.position
+	$DeckMain.discard_pos = $DiscardMain.position - $DeckMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
@@ -643,6 +720,12 @@ func _ready() -> void:
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
+	
+	$LockBody/IndicatorPick.reset.connect(end_animation)
+	$DeckMain.reload_finish.connect(end_animation)
+	$DeckMain.reload_progress.connect($DiscardMain.update_label)
+	$DeckMain.reload_progress.connect($DiscardMain.update_pile)
+	$DeckMain.reload_finish.connect($DiscardMain.redraw)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:
@@ -651,4 +734,4 @@ func _ready() -> void:
 		var game := GameSpec.get_in_progress_game()
 		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
 		load_game(game)
-		draw_cards(5)
+#		draw_cards(5)
