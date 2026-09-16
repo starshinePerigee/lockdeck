@@ -37,7 +37,7 @@ func _ready() -> void:
 	
 	var template_value := int(BAR_VALUE[_loots] ** BAR_PER_BAR)
 	for spec in PickGenerator.get_n_cards_with_template_value(
-		BAR_VALUE[_loots],
+		int(BAR_VALUE[_loots] / 2.0) + 1,
 		template_value
 	):
 		var card := PickCard.build_from_spec(spec)
