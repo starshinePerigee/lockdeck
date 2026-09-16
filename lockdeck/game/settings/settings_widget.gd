@@ -10,6 +10,16 @@ signal music_hovered_end()
 signal effects_hovered_start()
 signal effects_hovered_end()
 
+
+func set_fullscreen(setting: bool) -> void:
+	var settings := GameSettings.instance()
+	settings.set_fullscreen(setting)
+
+func set_discrete_scale(setting: bool) -> void:
+	var settings := GameSettings.instance()
+	settings.set_discrete_scale(setting)
+
+
 func set_highlight_active_row(setting: bool) -> void:
 	var settings := GameSettings.instance()
 	settings.set_highlight_active_row(setting)
@@ -91,19 +101,34 @@ func _handle_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			hide_widget()
 
-func get_nice_rect() -> Rect2:
-	return %ActiveRowToggle.get_global_rect().grow(4.0)
-
 func request_active_row_tooltip() -> void:
 	TooltipManager.request_tooltip(
-		get_nice_rect,
+		func(): return %ActiveRowToggle.get_global_rect().grow(4.0),
 		"Shows an outline of the current row of depths, which will activate after using a pick."
+	)
+func request_fullscreen_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		func(): return %FullscreenButton.get_global_rect().grow(4.0),
+		"Toggles between fullscreen-windowed and windowed modes."
+	)
+
+func request_discrete_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		func(): return %DiscreteScale.get_global_rect().grow(4.0),
+		(
+			"If checked, the game will scale its resolution to the largest whole number that "
+			+ "will fit the window.\n"
+			+ "Leave it checked to ensure crisp visuals, or uncheck it to remove the black outline "
+			+ "and make sure the game is the largest possible size for your display."
+		)
 	)
 
 func _ready() -> void:
 	gui_input.connect(_handle_input)
 	visible = false
 	%ActiveRowToggle.mouse_entered.connect(request_active_row_tooltip)
+	%FullscreenButton.mouse_entered.connect(request_fullscreen_tooltip)
+	%DiscreteScale.mouse_entered.connect(request_discrete_tooltip)
 	
 	var settings := GameSettings.instance()
 	update_tooltip_button(settings.tooltip_speed)
@@ -111,6 +136,8 @@ func _ready() -> void:
 	update_animation_button(settings.animation_speed)
 	settings.animation_speed_changed.connect(update_animation_button)
 	%ActiveRowToggle.button_pressed = settings.highlight_active_row
+	%FullscreenButton.button_pressed = settings.fullscreen
+	%DiscreteScale.button_pressed = settings.discrete_scale
 	%AmbienceSlider.set_value(settings.ambience_volume)
 	%MusicSlider.set_value(settings.music_volume)
 	%EffectSlider.set_value(settings.effect_volume)
@@ -119,6 +146,8 @@ func _ready() -> void:
 	%TooltipSpeedButton.pressed.connect(set_tooltip_speed)
 	%AnimationSpeedButton.pressed.connect(set_animation_speed)
 	%ActiveRowToggle.toggled.connect(set_highlight_active_row)
+	%FullscreenButton.toggled.connect(set_fullscreen)
+	%DiscreteScale.toggled.connect(set_discrete_scale)
 	%AmbienceSlider.setting_updated.connect(set_ambience_volume)
 	%AmbienceSlider.hovered_start.connect(ambience_hovered_start.emit)
 	%AmbienceSlider.hovered_stop.connect(ambience_hovered_end.emit)

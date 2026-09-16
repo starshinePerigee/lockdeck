@@ -51,6 +51,22 @@ func set_animation_speed(setting: float = 1.0) -> void:
 	animation_speed_changed.emit(animation_speed)
 
 
+signal fullscreen_changed(bool)
+@export var fullscreen: bool = true
+
+func set_fullscreen(setting: bool = true) -> void:
+	fullscreen = setting
+	fullscreen_changed.emit(fullscreen)
+
+
+signal discrete_scale_changed(bool)
+@export var discrete_scale: bool = true
+
+func set_discrete_scale(setting: bool = true) -> void:
+	discrete_scale = setting
+	discrete_scale_changed.emit(discrete_scale)
+
+
 signal highlight_active_row_changed(bool)
 @export var highlight_active_row: bool = true
 
