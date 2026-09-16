@@ -1,5 +1,3 @@
-reset scroll position for strat hub widgets on load
-
 notif for bomb going off
 
 more 4-depth picks

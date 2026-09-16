@@ -50,7 +50,7 @@ func update(game: GameSpec) -> void:
 	_update_depth_preview(game)
 
 func reset(_game: GameSpec) -> void:
-	pass
+	$ScrollContainer.scroll_vertical = 0
 
 func _ready() -> void:
 	if get_tree().current_scene == self:
