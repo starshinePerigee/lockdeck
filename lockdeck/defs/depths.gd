@@ -77,7 +77,7 @@ static var EXHAUSTED := Depths.new(
 #region regular depths
 static var EMPTY := Depths.new(
 	"empty", DangerLevel.CLEAR, Effects.EMPTY, 
-	"There's nothing here."
+	"A safe depth with no effects."
 )
 
 static var BASE := Depths.new(
@@ -98,7 +98,7 @@ static var HIDDEN := Depths.new(
 
 static var MARK_CLEAR := Depths.new(
 	"mark_clear", DangerLevel.INVALID, Effects.DEBUG,
-	"Marked safe. You can advance to this depth without worry, although it might be dangerous in other ways.",
+	"Marked safe. You can push to this depth without worry, although it might be dangerous in other ways.",
 	0, "marked safe"
 )
 
@@ -129,8 +129,8 @@ static var MARK_PENDING := Depths.new(
 static var PUSH := Depths.new(
 	"push", DangerLevel.CLEAR, Effects.SAFE_PUSH, 
 	(
-		"Bounces off the pick, advancing it by two additional depths. "
-		+ "This won't break your pick, but will that depth to activate next turn, so be careful."
+		"An unstable depth that will bounce off your pick, advancing it by two additional depths. "
+		+ "This won't break your pick, but that depth will activate next turn, so be careful."
 	),
 	2, "bounce"
 )
@@ -138,42 +138,60 @@ static var PUSH := Depths.new(
 ## solves the pin instantly
 static var LUCKY := Depths.new(
 	"lucky", DangerLevel.CLEAR, Effects.LUCKY,
-	"Solves the pin immediately. Lucky you! Unless you break a pick pushing this pin afterwards."
+	(
+		"A weakness in the lock lets you push from this depth all the way to the end. Lucky you!\n"
+		+ "Unless you break a pick pushing this pin afterwards."
+	)
 )
 
 ## Reveals the next safe depth (if one) or sets the pin as clear
 static var HINT := Depths.new(
 	"hint", DangerLevel.CLEAR, Effects.HINT,
-	"Reveals a safe depth on this pin, if one exists."
+	"A safe depth that also reveals another safe on this pin, if one exists."
 )
 
 static var BREATH := Depths.new(
 	"breath", DangerLevel.CLEAR, Effects.DRAW_FROM_DISCARD,
-	"Take a deep breath and draw two cards from the discard pile, or the deck if the discard is empty.",
+	(
+		"This depth is particularly stable." 
+		+ "Take a deep breath and draw two cards from the discard pile, or the deck if the discard is empty."
+	),
 	2
 )
 
 static var TWIST := Depths.new(
 	"twist", DangerLevel.CLEAR, Effects.DISARM,
-	"Discards a card from your deck whenever you test or reveal this depth."
+	(
+		"A twist in the keyway makes working with this pin difficult. "
+		+ "A card from your deck is discarded whenever you test or reveal this depth."
+	)
 )
 
 # Labyrinth
 static var LABYRINTH := Depths.new(
 	"labyrinth", DangerLevel.CLEAR, Effects.DISARM,
-	"Revealing this depth with a reveal pick breaks that pick." 
+	(
+		"A complex set of turns confounds pulls in and shears apart fragile picks. "
+		+ "If you reveal this depth with a reveal pick, the pick will break."
+	) 
 )
 
 static var CATCH := Depths.new(
 	"catch", DangerLevel.CLEAR, Effects.DISARM,
-	("If you are below this depth and jam this pin, it breaks your pick. "
-	+ "Like all pins, it does nothing if exhausted, so activating it disarms it."
+	(
+		"A catch in the pin kicks back against lockpickers. "
+		+ "If you are below this depth and apply jam to this pin, it breaks your pick. "
+		+ "Like all pins, it does nothing if exhausted, so activating it disarms it."
 	)
 )
 
 static var SLIP := Depths.new(
 	"slip", DangerLevel.CLEAR, Effects.DISARM,
-	"When you push past pop, the pin advances one more depth.",
+	(
+		"A surprisingly smooth section of the cylinder accellerates the pin. "
+		+ "When you push past pop, the pin advances one more depth. "
+		+ "Be careful approaching the end of the pin."
+	),
 	1, "pop"
 )
 
@@ -184,7 +202,7 @@ static var SLIP := Depths.new(
 ## Jam effect
 static var JAM := Depths.new(
 	"jam", DangerLevel.INTERESTING, Effects.JAM, 
-	"Jams this pin by three jam.",
+	"A rough section of the cylinder jams this pin by three jam.",
 	3
 )
 
@@ -192,15 +210,18 @@ static var JAM := Depths.new(
 ## Bounces up four (or to the edge)
 static var BOUNCE := Depths.new(
 	"bounce", DangerLevel.INTERESTING, Effects.BOUNCE,
-	("Causes this pin to slip backwards four spaces."
+	(
+		"Play in the pin causes it to slip off your pick, moving backwards four spaces."
 	),
 	4, "slip"
 )
 
 static var BOMB := Depths.new(
 	"bomb", DangerLevel.INTERESTING, Effects.BOMB,
-	("Activating, testing, or revealing a bomb will cause it to light."
-	+ "Once lit, you have one turn to advance past the bomb or it explodes, breaking your pick.")
+	(
+		"Activating, testing, or revealing a bomb will cause it to light."
+		+ "Once lit, you have one turn to advance past the bomb or it explodes, breaking your pick."
+	)
 )
 
 static var FUMBLE := Depths.new(
@@ -214,7 +235,7 @@ static var FUMBLE := Depths.new(
 
 static var BREAK := Depths.new(
 	"break", DangerLevel.DANGEROUS, Effects.BREAK,
-	"Breaks your pick. Only present past a Warning depth."
+	"A point of resistance in the pin. Activating it breaks your pick. Only present past a Warning depth."
 )
 
 ## Does nothing except indicates a break is ahead somewhere
@@ -226,24 +247,34 @@ static var WARN := Depths.new(
 
 static var TRAP := Depths.new(
 	"trap", DangerLevel.REVEALED, Effects.DISARM,
-	("Breaks your pick if you try to test or reveal it, but not if you land on it or past it. "
-	+ "Like all depths, it does nothing if exhausted, so activating it disarms it.")
+	(
+		"A trap against lockpickers like yourself who might be probing around inside the lock. "
+		+ "This breaks your pick if you try to test or reveal it, but not if you land on it or past it. "
+		+ "Like all depths, it does nothing if exhausted, so activating it disarms it."
+	)
 )
 
 static var SURPRISE := Depths.new(
 	"surprise", DangerLevel.DANGEROUS, Effects.BREAK_FROM_DECK,
-	("Breaks the top card of your deck. Does nothing if your deck is empty."),
+	(
+		"Breaks the top card of your deck. Does nothing if your deck is empty."
+	),
 	1
 )
 
 static var SPIKE := Depths.new(
 	"spike", DangerLevel.REVEALED, Effects.BREAK,
-	"Breaks your pick. This depth is revealed at the start of a lock."
+	(
+		"An unsubtle security measure, this spike breaks your pick. This depth is revealed at the start of a lock."
+	)
 )
 
 static var GATE_LOCKED := Depths.new(
 	"gate_locked", DangerLevel.REVEALED, Effects.BREAK,
-	"This breaks your pick if you move past it. Find the Key to unlock it.",
+	(
+		"A \"gate\" that requires that you visit an earlier, hidden \"key\" depth to unlock it safely. "
+		+ "You could also just push past it, at the cost of your pick."
+	),
 	1, "locked gate"
 )
 
@@ -255,7 +286,7 @@ static var GATE_UNLOCKED := Depths.new(
 
 static var GATE_KEY := Depths.new(
 	"gate_key", DangerLevel.CLEAR, Effects.GATE_UNLOCK,
-	"Unlocks the gate, permanently disabling it."
+	"Visiting this depth unlocks the gate, permanently disabling it."
 )
 
 #endregion

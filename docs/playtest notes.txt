@@ -1,5 +1,3 @@
-update depth descriptions to be more diagetic. "A twist in the keyway causes you to lose a card every time you test this depth". 
-
 make ingots 1 / 2 / 2 / 3 / 3 picks
 
 show current coins and picks on loot screen
