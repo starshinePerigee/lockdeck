@@ -45,3 +45,19 @@ offset_bottom = 169.0
 text = "congradulations u won :v
 
 total coins: 99"
+
+[node name="PickCount" type="Label" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 485.0
+offset_right = 114.0
+offset_bottom = 511.0
+text = "Picks: 20"
+
+[node name="CoinCount" type="Label" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 509.0
+offset_right = 130.0
+offset_bottom = 535.0
+text = "Coins: 200"

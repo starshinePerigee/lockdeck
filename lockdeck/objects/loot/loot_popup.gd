@@ -2,6 +2,8 @@ extends Control
 ## This contains and displays the widget for each loot type
 ## Note that the containing loot widget must contain and emit a close_popup signal.
 
+signal closed
+
 ## Centers the main panel in the screen
 func center_container() -> void:
 	$PanelContainer.position = Vector2(
@@ -29,6 +31,7 @@ func remove_and_close() -> void:
 		child.queue_free()
 	visible = false
 	mouse_filter = MOUSE_FILTER_IGNORE
+	closed.emit()
 
 func _ready() -> void:
 	center_container()

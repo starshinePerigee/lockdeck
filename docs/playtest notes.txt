@@ -1,7 +1,5 @@
 make ingots 1 / 2 / 2 / 3 / 3 picks
 
-show current coins and picks on loot screen
-
 end turn isnt' disabling after game win anymore
 
 reset scroll position for strat hub widgets on load
@@ -10,9 +8,6 @@ notif for bomb going off
 
 more 4-depth picks
 
-shop loop has a fade out?
-long lead in hype track doesnt loop?
-audio on mobile is weird? 
 
 dont mute on settings open, mute on hover
 

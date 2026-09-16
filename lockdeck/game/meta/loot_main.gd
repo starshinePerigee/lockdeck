@@ -27,6 +27,7 @@ func do_loot(value: int) -> void:
 func do_coin(coin: Loot) -> void:
 	coin.get_that_bag()
 	game.add_coins(coin.spec.value)
+	update_coin_count()
 
 func do_bar(bar: Loot) -> void:
 	var widget := IngotWidget.unpack(bar.spec)
@@ -36,6 +37,12 @@ func do_bar(bar: Loot) -> void:
 	$LootPopup.add_contents_and_show(widget, bar.spec)
 	$LootPopup.visible = true
 	bar.get_that_bag()
+
+func update_pick_count() -> void:
+	$PickCount.text = "Picks: %s" % len(game.current_deck)
+
+func update_coin_count() -> void:
+	$CoinCount.text = "Coins: %s" % game.coins
 
 var _already_claimed := false
 
@@ -68,6 +75,8 @@ func claim_all() -> int:
 func do_victory(count: int) -> void:
 	reset()
 
+	$CoinCount.visible = false
+	$PickCount.visible = false
 	$VictoryLabel.visible = true
 	$VictoryLabel.text = VICTORY_MESSAGE % count
 	
@@ -87,12 +96,16 @@ func reset() -> void:
 	$LootDrop.clear_all()
 	$VictoryLabel.visible = false
 	_already_claimed = false
+	$CoinCount.visible = true
+	update_coin_count()
+	$PickCount.visible = true
+	update_pick_count()
 
 func claim_and_continue():
 	_already_claimed = true
 	var claimed := claim_all()
 	game.add_coins(claimed)
-	print("Claimed %s gold" % claimed)
+	update_coin_count()
 	continue_to_next.emit()
 
 func get_nice_rect() -> Rect2:
@@ -113,6 +126,7 @@ func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(claim_and_continue)
 	$ContinueButton.mouse_entered.connect(request_continue_tooltip)
 	$LootDrop.all_looted.connect(_enable_continue)
+	$LootPopup.closed.connect(update_pick_count)
 	
 	# if name == "__main__:
 	if get_tree().current_scene == self:
