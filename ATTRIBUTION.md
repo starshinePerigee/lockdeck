@@ -35,6 +35,13 @@ Sounds:
 
 
 
+Sound Effects are clipped from the following sources:
+
+* [FX-metal tool-click 02-090720.wav by ra\_gun](https://freesound.org/people/ra_gun/sounds/81266/), CC0
+* 
+
+
+
 Created for [WHEELJAM 2](https://itch.io/jam/wheeljam-2). Many thanks to the organizers <3
 
 

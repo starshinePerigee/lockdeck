@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7lx7c5kgijce"]
+
+[ext_resource type="Script" uid="uid://dabsr6ef5lmwb" path="res://audio/sfx_manager.gd" id="1_a3cge"]
+[ext_resource type="Script" uid="uid://bufscceeq6k7u" path="res://audio/global_effects.gd" id="2_jpml7"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_jpml7"]
+
+[node name="SFXManager" type="Node"]
+script = ExtResource("1_a3cge")
+
+[node name="GlobalEffects" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamPolyphonic_jpml7")
+max_polyphony = 8
+bus = &"Effects"
+script = ExtResource("2_jpml7")
