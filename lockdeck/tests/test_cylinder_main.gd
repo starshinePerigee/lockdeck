@@ -83,11 +83,11 @@ static func get_known_test_pin() -> PinSpec:
 	for i in range(1, PinSpec.PIN_DEPTH_COUNT - 1):
 		spec.depths[i] = Depths.EMPTY
 	spec.depths[1] = Depths.EMPTY
-	spec.depths[2] = Depths.EMPTY
+	spec.depths[2] = Depths.PUSH
 	spec.depths[3] = Depths.EMPTY
 	spec.depths[4] = Depths.EMPTY
 	spec.depths[5] = Depths.EMPTY
-	spec.depths[6] = Depths.EMPTY
+	spec.depths[6] = Depths.BOMB
 	spec.depths[7] = Depths.EMPTY
 	spec.reset_pin()
 	return spec

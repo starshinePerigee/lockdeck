@@ -172,6 +172,10 @@ func animate(
 const FX_JAM := preload("res://assets/fx/jammed_slide.ogg")
 const FX_UNJAM := preload("res://assets/fx/jammed_clear.ogg")
 const FX_JAM_BLOCK := preload("res://assets/fx/jammed_clicks.ogg")
+const FX_RUFFLE := preload("res://assets/fx/metal_ruffle.ogg")
+const FX_BOUNCE_CLACK := preload("res://assets/fx/bounce_clack.ogg" )
+const FX_BOMB_EXTINGUISH := preload("res://assets/fx/bomb_extinguish.ogg")
+const FX_THUD_TAP := preload("res://assets/fx/metal_thud_tap.ogg")
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
 ## showing at the specific depth
@@ -186,10 +190,12 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			var delay: float
 			match effect.flavor:
 				Effects.SAFE_PUSH:
+					# actually "bounce"
 					delay = PER_DEPTH_DELAY * 1.5 * animation_scale
 					pos = effect.last()
-					# TODO SOUND SAFE PUSH
+					_tween_fx(FX_BOUNCE_CLACK)
 				Effects.BOUNCE:
+					# actually "slip"
 					delay = PER_DEPTH_DELAY * 2 * animation_scale
 					pos = effect.first()
 					# TODO SOUND BOUNCE
@@ -263,12 +269,19 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			# TODO SOUND HINT
 			_tween.tween_interval((PRE_ACTIVATION_DELAY + 0.1) * animation_scale)
 		Effects.EMPTY:
-			# TODO SOUND EMPTY (thud)
 			_tween_home(pin_spec.pin_position)
+			_tween_fx(FX_THUD_TAP)
 		_:
-			# TODO SOUND OTHER
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)
+			var effect_fx: AudioStream
+			match effect.flavor:
+				Effects.BOMB:
+					effect_fx = FX_BOMB_EXTINGUISH
+				_:
+					push_warning("Soundless effect: %s" % effect.flavor.effect_name)
+					effect_fx = FX_RUFFLE
+			_tween_fx(effect_fx)
 			_activate_delay()
 			if effect.real():
 				_tween_to(effect.last())
@@ -277,15 +290,22 @@ func animate_fall(pin_spec: PinSpec) -> void:
 	_clear_old(pin_spec)
 	
 	if jam_count > 0:
+		_tween_fx(FX_JAM_BLOCK)
 		for shake in [-3, 3, -3, 3, 0]:
 			_tween.tween_property($Stack, "position:x", shake, 0.05)
+	else:
+		pass
+		# TODO SOUND FALL
 	
-	# TODO SOUND FALL
 	_tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_tween_home(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
 
+const FX_BOMB_IGNITE := preload("res://assets/fx/bomb_ignite.ogg")
+
 func _finish_animation() -> void:
+	if _pending_spec.bomb_pos >= 0:
+		_playback.play_stream(FX_BOMB_IGNITE)
 	load_spec(_pending_spec)
 	_pending_spec = null
 	animation_complete.emit()

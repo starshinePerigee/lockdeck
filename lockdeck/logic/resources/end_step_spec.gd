@@ -20,8 +20,6 @@ class_name EndStepSpec
 @export var results: Array[ResultSpec]
 
 func record_effect(effect: EffectSpec, realized_pin: int) -> void:
-	if effect.flavor in [Effects.EMPTY]:
-		return
 	if effect.broke_pick:
 		pick_broke = true
 	
