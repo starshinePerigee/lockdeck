@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkcikxm7qtgka"]
+[gd_scene load_steps=33 format=3 uid="uid://bkcikxm7qtgka"]
 
 [ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/cylinder/pin.gd" id="1_sibiv"]
 [ext_resource type="Texture2D" uid="uid://d1dmijccgmps2" path="res://assets/pin/pin_top.png" id="2_agct7"]
@@ -7,10 +7,70 @@
 [ext_resource type="Texture2D" uid="uid://doqoo3uhhte1b" path="res://assets/pin/jam.png" id="4_agct7"]
 [ext_resource type="Texture2D" uid="uid://dq3ioeinfnr4p" path="res://assets/pin/key.png" id="5_agct7"]
 [ext_resource type="Texture2D" uid="uid://bai58yyeba45n" path="res://assets/pin/its_a_bomb.png" id="6_gcv1p"]
+[ext_resource type="AudioStream" uid="uid://cxp5xk10qqpmi" path="res://assets/fx/click_set-001.ogg" id="8_ffx1g"]
+[ext_resource type="AudioStream" uid="uid://burq104ebwud8" path="res://assets/fx/click_set-002.ogg" id="9_3wmxq"]
+[ext_resource type="AudioStream" uid="uid://dgrdt6orqkjsn" path="res://assets/fx/click_set-003.ogg" id="10_qtvn6"]
+[ext_resource type="AudioStream" uid="uid://dcoh5uex4mg2v" path="res://assets/fx/click_set-004.ogg" id="11_twg42"]
+[ext_resource type="AudioStream" uid="uid://djcxa2db5g35c" path="res://assets/fx/click_set-005.ogg" id="12_x3qq2"]
+[ext_resource type="AudioStream" uid="uid://0tacm67nfanv" path="res://assets/fx/click_reset-001.ogg" id="13_3wmxq"]
+[ext_resource type="AudioStream" uid="uid://dak7grqhjmex3" path="res://assets/fx/click_reset-002.ogg" id="14_s68v7"]
+[ext_resource type="AudioStream" uid="uid://caiwhce36we6u" path="res://assets/fx/click_reset-003.ogg" id="15_fvgo2"]
+[ext_resource type="AudioStream" uid="uid://bdgmtra6w37yu" path="res://assets/fx/click_reset-004.ogg" id="16_5wm32"]
+[ext_resource type="AudioStream" uid="uid://cmyklop01mu0f" path="res://assets/fx/click_reset-005.ogg" id="17_c7vqw"]
+[ext_resource type="AudioStream" uid="uid://b4j5kckne6cml" path="res://assets/fx/click_weak-001.ogg" id="18_7i871"]
+[ext_resource type="AudioStream" uid="uid://dhulaj68trc3l" path="res://assets/fx/click_weak-002.ogg" id="19_ilk75"]
+[ext_resource type="AudioStream" uid="uid://6bvw7k65yb34" path="res://assets/fx/click_weak-003.ogg" id="20_nouqi"]
+[ext_resource type="AudioStream" uid="uid://cue44j448iks5" path="res://assets/fx/click_weak-004.ogg" id="21_tsfm7"]
+[ext_resource type="AudioStream" uid="uid://dmrqaai1o56ql" path="res://assets/fx/click_weak-005.ogg" id="22_d37r8"]
+[ext_resource type="AudioStream" uid="uid://hqgckpn1fuxs" path="res://assets/fx/click_sharp_001.ogg" id="23_ujcui"]
+[ext_resource type="AudioStream" uid="uid://c4sw8hjrwjwah" path="res://assets/fx/click_sharp_002.ogg" id="24_wvbqd"]
+[ext_resource type="AudioStream" uid="uid://cglfxkiwin8xc" path="res://assets/fx/click_sharp_003.ogg" id="25_gfa0l"]
+[ext_resource type="AudioStream" uid="uid://g61004vp5aen" path="res://assets/fx/click_sharp_004.ogg" id="26_gyfq6"]
+[ext_resource type="AudioStream" uid="uid://e4m5mjj4rxat" path="res://assets/fx/click_sharp_005.ogg" id="27_e0wmf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_agct7"]
 radius = 22.0
 height = 546.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gcv1p"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("8_ffx1g")
+stream_1/stream = ExtResource("9_3wmxq")
+stream_2/stream = ExtResource("10_qtvn6")
+stream_3/stream = ExtResource("11_twg42")
+stream_4/stream = ExtResource("12_x3qq2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rwosq"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("13_3wmxq")
+stream_1/stream = ExtResource("14_s68v7")
+stream_2/stream = ExtResource("15_fvgo2")
+stream_3/stream = ExtResource("16_5wm32")
+stream_4/stream = ExtResource("17_c7vqw")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ujcui"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("18_7i871")
+stream_1/stream = ExtResource("19_ilk75")
+stream_2/stream = ExtResource("20_nouqi")
+stream_3/stream = ExtResource("21_tsfm7")
+stream_4/stream = ExtResource("22_d37r8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e8phr"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("23_ujcui")
+stream_1/stream = ExtResource("24_wvbqd")
+stream_2/stream = ExtResource("25_gfa0l")
+stream_3/stream = ExtResource("26_gyfq6")
+stream_4/stream = ExtResource("27_e0wmf")
 
 [node name="Pin" type="Control"]
 custom_minimum_size = Vector2(80, 560)
@@ -121,3 +181,27 @@ offset_bottom = 560.0
 mouse_filter = 2
 border_color = Color(0.670377, 0.507888, 3.85046e-07, 1)
 border_width = 2.0
+
+[node name="FX" type="Node" parent="."]
+
+[node name="PushPlayer" type="AudioStreamPlayer" parent="FX"]
+stream = SubResource("AudioStreamRandomizer_gcv1p")
+volume_db = 4.0
+bus = &"Effects"
+
+[node name="TestPlayer" type="AudioStreamPlayer" parent="FX"]
+stream = SubResource("AudioStreamRandomizer_rwosq")
+volume_db = 3.0
+bus = &"Effects"
+
+[node name="SkipPlayer" type="AudioStreamPlayer" parent="FX"]
+stream = SubResource("AudioStreamRandomizer_ujcui")
+volume_db = 4.0
+pitch_scale = 0.9
+bus = &"Effects"
+
+[node name="RevealPlayer" type="AudioStreamPlayer" parent="FX"]
+stream = SubResource("AudioStreamRandomizer_e8phr")
+volume_db = 1.0
+pitch_scale = 0.9
+bus = &"Effects"

@@ -180,9 +180,11 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 				Effects.SAFE_PUSH:
 					delay = PER_DEPTH_DELAY * 1.5 * animation_scale
 					pos = effect.last()
+					# TODO SOUND SAFE PUSH
 				Effects.BOUNCE:
 					delay = PER_DEPTH_DELAY * 2 * animation_scale
 					pos = effect.first()
+					# TODO SOUND BOUNCE
 				Effects.LUCKY:
 					delay = (
 						PER_DEPTH_DELAY
@@ -190,17 +192,22 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 						* animation_scale
 					)
 					pos = PinSpec.PIN_DEPTH_COUNT
+					# TODO SOUND LUCKY
 			_tween.tween_property($Stack, "position", _stack_position(pos), delay)
 			_mid_pos = pos
 			_reset_trans()
 		Effects.PUSH, Effects.TEST:
 			for depth in effect.realized_positions.keys():
 				var speed_scale: float
+				var callback: Callable
 				if effect.flavor == Effects.TEST:
 					speed_scale = 1.0
+					callback = $FX/TestPlayer.play
 				else:
 					speed_scale = 1.2
+					callback = $FX/PushPlayer.play
 				_tween_to(depth, speed_scale)
+				_tween.tween_callback(callback)
 				
 				if depth >= len(depth_refs) or depth < 0:
 					continue
@@ -208,21 +215,28 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 				match depth_refs[depth].flavor:
 					Depths.HIDDEN:
 						_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+						# TODO SOUND PUSH HIDDEN
+						# TODO SOUND TEST HIDDEN
 					Depths.TRAP:
 						if effect.flavor == Effects.TEST:
 							_tween_trap(depth)
+							# TODO SOUND TRAP
 					Depths.GATE_LOCKED:
 						if effect.flavor == Effects.PUSH:
 							_tween_trap(depth)
+							# TODO SOUND GATE CRASH
 		
 		Effects.SKIP:
 			_tween_to(effect.last(), 0.5)
+			_tween.tween_callback($FX/SkipPlayer.play)
 		Effects.JAM:
 			_tween_to(effect.last(), abs(_mid_pos - effect.last()))
+			# TODO SOUND JAM
 			for shake in [-3, 3, 0]:
 				_tween.tween_property($Stack, "position:x", shake, 0.05)
 		Effects.UNJAM:
 			var base_pos := _stack_position(_mid_pos)
+			# TODO SOUND UNJAM
 			for __ in effect.value:
 				for shake in [Vector2(-1, -6), Vector2(1, -10)]:
 					_tween.tween_property($Stack, "position", base_pos + shake, 0.06)
@@ -231,15 +245,20 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			for depth in effect.realized_positions.keys():
 				_tween_to(depth)
 				_tween_reveal(depth)
+				_tween.tween_callback($FX/RevealPlayer.play)
 				if pin_spec.depths[depth] == Depths.LABYRINTH:
+					# TODO SOUND LABYRINTH
 					_tween_trap(depth)
 		Effects.HINT:
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)
+			# TODO SOUND HINT
 			_tween.tween_interval((PRE_ACTIVATION_DELAY + 0.1) * animation_scale)
 		Effects.EMPTY:
+			# TODO SOUND EMPTY (thud)
 			_tween_home(pin_spec.pin_position)
 		_:
+			# TODO SOUND OTHER
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)
 			_activate_delay()
@@ -253,6 +272,7 @@ func animate_fall(pin_spec: PinSpec) -> void:
 		for shake in [-3, 3, -3, 3, 0]:
 			_tween.tween_property($Stack, "position:x", shake, 0.05)
 	
+	# TODO SOUND FALL
 	_tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_tween_home(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
