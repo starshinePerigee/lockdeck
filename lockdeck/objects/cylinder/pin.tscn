@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bkcikxm7qtgka"]
+[gd_scene load_steps=34 format=3 uid="uid://bkcikxm7qtgka"]
 
 [ext_resource type="Script" uid="uid://do1plwd85qucb" path="res://objects/cylinder/pin.gd" id="1_sibiv"]
 [ext_resource type="Texture2D" uid="uid://d1dmijccgmps2" path="res://assets/pin/pin_top.png" id="2_agct7"]
@@ -71,6 +71,8 @@ stream_1/stream = ExtResource("24_wvbqd")
 stream_2/stream = ExtResource("25_gfa0l")
 stream_3/stream = ExtResource("26_gyfq6")
 stream_4/stream = ExtResource("27_e0wmf")
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_ujcui"]
 
 [node name="Pin" type="Control"]
 custom_minimum_size = Vector2(80, 560)
@@ -191,7 +193,7 @@ bus = &"Effects"
 
 [node name="TestPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamRandomizer_rwosq")
-volume_db = 3.0
+volume_db = 1.0
 bus = &"Effects"
 
 [node name="SkipPlayer" type="AudioStreamPlayer" parent="FX"]
@@ -205,3 +207,7 @@ stream = SubResource("AudioStreamRandomizer_e8phr")
 volume_db = 1.0
 pitch_scale = 0.9
 bus = &"Effects"
+
+[node name="PolyPlayer" type="AudioStreamPlayer" parent="FX"]
+stream = SubResource("AudioStreamPolyphonic_ujcui")
+max_polyphony = 8

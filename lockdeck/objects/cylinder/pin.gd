@@ -131,12 +131,16 @@ func _tween_trap(pos: int) -> void:
 	]:
 		_tween.tween_property($Stack, "position", base_pos + shake, 0.08)
 
-
 func _tween_home(spec_pos: int) -> void:
 	_tween_to(
 		spec_pos, 
 		0.8 * abs(_mid_pos - spec_pos) * animation_scale
 	)
+
+var _playback: AudioStreamPlaybackPolyphonic
+
+func _tween_fx(stream: AudioStream) -> void:
+	_tween.tween_callback(_playback.play_stream.bind(stream))
 
 func _clear_old(pin_spec: PinSpec) -> void:
 	if _tween:
@@ -164,6 +168,10 @@ func animate(
 			_animate_effect(effect, pin_spec)
 		_tween_home(pin_spec.pin_position)
 	_tween.tween_callback(_finish_animation)
+
+const FX_JAM := preload("res://assets/fx/jammed_slide.ogg")
+const FX_UNJAM := preload("res://assets/fx/jammed_clear.ogg")
+const FX_JAM_BLOCK := preload("res://assets/fx/jammed_clicks.ogg")
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
 ## showing at the specific depth
@@ -231,12 +239,12 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			_tween.tween_callback($FX/SkipPlayer.play)
 		Effects.JAM:
 			_tween_to(effect.last(), abs(_mid_pos - effect.last()))
-			# TODO SOUND JAM
+			_tween_fx(FX_JAM)
 			for shake in [-3, 3, 0]:
 				_tween.tween_property($Stack, "position:x", shake, 0.05)
 		Effects.UNJAM:
 			var base_pos := _stack_position(_mid_pos)
-			# TODO SOUND UNJAM
+			_tween_fx(FX_JAM_BLOCK)
 			for __ in effect.value:
 				for shake in [Vector2(-1, -6), Vector2(1, -10)]:
 					_tween.tween_property($Stack, "position", base_pos + shake, 0.06)
@@ -363,6 +371,9 @@ func animation_speed_changed(speed: float) -> void:
 func _ready() -> void:
 	SPRING_POSITION = $Stack/Spring.position
 	SPRING_SIZE = $Stack/Spring.size
+
+	$FX/PolyPlayer.play()
+	_playback = $FX/PolyPlayer.get_stream_playback()
 
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:

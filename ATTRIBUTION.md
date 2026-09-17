@@ -38,6 +38,10 @@ Sounds:
 Sound Effects are clipped from the following sources:
 
 * [FX-metal tool-click 02-090720.wav by ra\_gun](https://freesound.org/people/ra_gun/sounds/81266/), CC0
+* [Padlock.wav by 21100267](https://freesound.org/people/21100267/sounds/591287/), CC0
+* [Sugar cube grabber\_1(metal, click).wav by o\_ciz](https://freesound.org/people/o_ciz/sounds/475424/), CC0
+* [Sliding Open Door Security Chain 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555142/), CC0
+* [Gently Sliding Closed Door Security Chain.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555139/), CC0
 * 
 
 
