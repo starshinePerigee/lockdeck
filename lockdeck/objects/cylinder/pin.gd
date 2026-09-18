@@ -219,7 +219,7 @@ const FX_SLIDE_SHING := preload("res://assets/fx/slide_shing.ogg")
 const FX_UNLOCK := preload("res://assets/fx/unlock_chime.ogg")
 const FX_FALL_CLATTER := preload("res://assets/fx/fall_clatter.ogg")
 
-const FX_BREAK_NORMAL := preload("res://assets/fx/break_crunch.ogg")
+const FX_BREAK_NORMAL := preload("res://assets/fx/break_jangle.ogg")
 const FX_BREAK_LABYRINTH := preload("res://assets/fx/break_labyrinth.ogg")
 const FX_BREAK_SPIKE := preload("res://assets/fx/break_shing.ogg")
 const FX_BREAK_TRAP := preload("res://assets/fx/break_trap.ogg")

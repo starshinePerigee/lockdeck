@@ -551,6 +551,8 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	$LockBody/CylinderMain/Cylinders.animate_pins(
 		$LockBody/CylinderMain.pins, _result
 	)
+	if break_next:
+		play_break($LockBody/CylinderMain/Cylinders.animation_complete)
 	await $LockBody/CylinderMain/Cylinders.animation_complete
 	
 	if _result.pick_broke or break_next:
@@ -572,7 +574,16 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		solve_lock()
 	else:
 		await post_pick()
-	
+	print("exit do pick")
+
+const FX_BREAK_CANDLE := preload("res://assets/fx/break_ring.ogg")
+## Async break sound
+func play_break(sig: Signal) -> void:
+	print("enter pbreak")
+	await sig
+	GlobalEffects.request(FX_BREAK_CANDLE)
+	print("exit pbreak")
+
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
 	if _result.hand_fumbled:

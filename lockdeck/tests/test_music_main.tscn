@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://drpkq250olmj8"]
+[gd_scene load_steps=10 format=3 uid="uid://drpkq250olmj8"]
 
-[ext_resource type="Script" path="res://tests/test_music_main.gd" id="1_6hyun"]
+[ext_resource type="Script" uid="uid://bpqhuf6eytwbi" path="res://tests/test_music_main.gd" id="1_6hyun"]
 [ext_resource type="PackedScene" uid="uid://b3f67mok2yg5s" path="res://audio/bgm_main.tscn" id="1_x0c0l"]
+[ext_resource type="AudioStream" uid="uid://cxp5xk10qqpmi" path="res://assets/fx/click_set-001.ogg" id="3_pq2nx"]
+[ext_resource type="AudioStream" uid="uid://burq104ebwud8" path="res://assets/fx/click_set-002.ogg" id="4_goeqg"]
+[ext_resource type="AudioStream" uid="uid://dgrdt6orqkjsn" path="res://assets/fx/click_set-003.ogg" id="5_jw3ln"]
+[ext_resource type="AudioStream" uid="uid://dcoh5uex4mg2v" path="res://assets/fx/click_set-004.ogg" id="6_op1qi"]
+[ext_resource type="AudioStream" uid="uid://djcxa2db5g35c" path="res://assets/fx/click_set-005.ogg" id="7_wl12a"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_m1iln"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("3_pq2nx")
+stream_1/stream = ExtResource("4_goeqg")
+stream_2/stream = ExtResource("5_jw3ln")
+stream_3/stream = ExtResource("6_op1qi")
+stream_4/stream = ExtResource("7_wl12a")
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_exxx6"]
 
 [node name="TestMusicMain" type="Control"]
 layout_mode = 3
@@ -74,6 +91,45 @@ alignment = 0
 layout_mode = 2
 text = "End Bugs"
 alignment = 0
+
+[node name="FX" type="VBoxContainer" parent="."]
+offset_left = 609.0
+offset_top = 107.0
+offset_right = 769.0
+offset_bottom = 247.0
+
+[node name="PlayTapButton" type="Button" parent="FX"]
+layout_mode = 2
+text = "Tap"
+alignment = 0
+
+[node name="PlayManyButton" type="Button" parent="FX"]
+layout_mode = 2
+text = "Many Taps"
+alignment = 0
+
+[node name="PlayBreakButton" type="Button" parent="FX"]
+layout_mode = 2
+text = "Break"
+alignment = 0
+
+[node name="PlayCardsButton" type="Button" parent="FX"]
+layout_mode = 2
+text = "Shuffle"
+alignment = 0
+
+[node name="Node" type="Node" parent="."]
+
+[node name="PushPlayer" type="AudioStreamPlayer" parent="Node"]
+stream = SubResource("AudioStreamRandomizer_m1iln")
+volume_db = 1.0
+bus = &"Effects"
+
+[node name="PolyPlayer" type="AudioStreamPlayer" parent="Node"]
+stream = SubResource("AudioStreamPolyphonic_exxx6")
+volume_db = -3.0
+autoplay = true
+max_polyphony = 8
 
 [node name="HeistLabel" type="Label" parent="."]
 layout_mode = 0
