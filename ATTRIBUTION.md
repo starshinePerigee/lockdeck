@@ -49,6 +49,10 @@ Sound Effects are clipped and remixed from the following sources:
 * [metal glass makes long 'PING!' sound.aif by Tomlija](https://freesound.org/people/Tomlija/sounds/101246/), Attribution 3.0
 * [Gravel Crunches by DrinkingWindGames](https://freesound.org/people/DrinkingWindGames/sounds/572467/), Attribution 4.0
 * [tap hammer small piece of metal gentle hits.wav by kyles](https://freesound.org/people/kyles/sounds/450874/), CC0
+* [Guitar string snap or breaks - various sounds by khenshom](Guitar%20string%20snap%20or%20breaks%20-%20various%20sounds), CC0
+* [metal\_spring\_scrape\_resonance.wav by Halion](https://freesound.org/people/Halion/sounds/49706/), CC0
+* [Shing! by TheAcidRomance](https://freesound.org/people/TheAcidRomance/sounds/786713/), CC0
+* [MetalGate.wav by ahill86](https://freesound.org/people/ahill86/sounds/207137/), CC0
 
 
 
