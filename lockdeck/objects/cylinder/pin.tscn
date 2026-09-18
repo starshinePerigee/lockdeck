@@ -188,26 +188,28 @@ border_width = 2.0
 
 [node name="PushPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamRandomizer_gcv1p")
-volume_db = 4.0
+volume_db = 1.0
 bus = &"Effects"
 
 [node name="TestPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamRandomizer_rwosq")
-volume_db = 1.0
+volume_db = -2.0
 bus = &"Effects"
 
 [node name="SkipPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamRandomizer_ujcui")
-volume_db = 4.0
+volume_db = 2.0
 pitch_scale = 0.9
 bus = &"Effects"
 
 [node name="RevealPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamRandomizer_e8phr")
-volume_db = 1.0
+volume_db = -3.0
 pitch_scale = 0.9
 bus = &"Effects"
 
 [node name="PolyPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamPolyphonic_ujcui")
+volume_db = -6.0
+autoplay = true
 max_polyphony = 8

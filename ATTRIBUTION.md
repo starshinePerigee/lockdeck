@@ -53,6 +53,8 @@ Sound Effects are clipped and remixed from the following sources:
 * [metal\_spring\_scrape\_resonance.wav by Halion](https://freesound.org/people/Halion/sounds/49706/), CC0
 * [Shing! by TheAcidRomance](https://freesound.org/people/TheAcidRomance/sounds/786713/), CC0
 * [MetalGate.wav by ahill86](https://freesound.org/people/ahill86/sounds/207137/), CC0
+* [Party Horn Room 06](https://freesound.org/people/Lucas_Schacht/sounds/713677) by Lucas\_Schat, CC0
+* [LockingAndUnlocking.wav by talithamaree\_2L](https://freesound.org/people/talithamaree_2L/sounds/593581/), Attribution 3.0
 
 
 

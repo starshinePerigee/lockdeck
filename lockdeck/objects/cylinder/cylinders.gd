@@ -41,6 +41,8 @@ func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
 
+const FX_TWIST := preload("res://assets/fx/slide_twist.ogg")
+
 var _tween: Tween
 var _open_awaits: int
 func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
@@ -69,6 +71,9 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 				)
 			)
 			_tween.tween_interval(0.07 * animation_scale)
+	for i in range(end_step.picks_twisted):
+		_tween.tween_interval(0.1)
+		_tween.tween_callback(GlobalEffects.request.bind(FX_TWIST))
 	# timeout / fallback for animation logic failures
 	_tween.tween_interval(4.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)
@@ -83,8 +88,8 @@ func animate_fall(pins: Array[PinSpec]) -> void:
 	_tween.tween_callback(_pseudo_await)
 	
 	for i in len(pins):
-		pin_refs[i].animate_fall(pins[i])
-		_tween.tween_interval(0.07 * animation_scale)
+		_tween.tween_callback(pin_refs[i].animate_fall.bind(pins[i]))
+		_tween.tween_interval(0.07)
 	
 	_tween.tween_interval(2.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)

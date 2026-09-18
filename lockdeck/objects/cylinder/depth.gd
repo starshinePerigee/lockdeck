@@ -24,7 +24,7 @@ const PREV_SPACING := 12
 @export var exhausted: bool = false:
 	set(v):
 		exhausted = v
-		if exhausted:
+		if exhausted and flavor not in [Depths.BASE]:
 			$DepthTexture.material = material_exhaust
 		else:
 			$DepthTexture.material = material_normal

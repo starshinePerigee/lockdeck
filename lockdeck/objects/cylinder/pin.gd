@@ -186,6 +186,18 @@ static func _is_triggered_slip(pos: int, pin_spec: PinSpec) -> bool:
 		and pin_spec.results[pos] == Results.TRIGGERED
 	)  
 
+static func _is_triggered_catch(pin_spec: PinSpec) -> bool:
+	for i in range(pin_spec.PIN_DEPTH_COUNT):
+		if (
+			pin_spec.depths[i] == Depths.CATCH
+			and pin_spec.results[i] == Results.BREAK
+		):
+			return true
+	return false
+
+static func _is_triggered_oob(pos: int, pin_spec: PinSpec) -> bool:
+	return pos == 8 and pin_spec.results[PinSpec.PIN_DEPTH_COUNT] == Results.BREAK
+
 const FX_TAP := preload("res://assets/fx/click_weak-001.ogg")
 const FX_JAM := preload("res://assets/fx/jammed_slide.ogg")
 const FX_UNJAM := preload("res://assets/fx/jammed_clear.ogg")
@@ -196,16 +208,22 @@ const FX_BOMB_EXTINGUISH := preload("res://assets/fx/bomb_extinguish.ogg")
 const FX_THUD_TAP := preload("res://assets/fx/metal_thud_tap.ogg")
 const FX_UNSLIDE := preload("res://assets/fx/unslide.ogg")
 const FX_SLIP_WOOP := preload("res://assets/fx/slip_woop.ogg")
+const FX_KEY_UNLOCK := preload("res://assets/fx/key_unlock.ogg")
+const FX_HINT_REVEAL := preload("res://assets/fx/hint_reveal.ogg")
+const FX_KEYS_FUMBLE := preload("res://assets/fx/keys_fumble.ogg")
+const FX_BREATH := preload("res://assets/fx/breath.ogg")
+const FX_SLIDE_SHING := preload("res://assets/fx/slide_shing.ogg")
+const FX_UNLOCK := preload("res://assets/fx/unlock_chime.ogg")
+const FX_FALL_CLATTER := preload("res://assets/fx/fall_clatter.ogg")
 
 const FX_BREAK_NORMAL := preload("res://assets/fx/break_crunch.ogg")
 const FX_BREAK_LABYRINTH := preload("res://assets/fx/break_labyrinth.ogg")
 const FX_BREAK_SPIKE := preload("res://assets/fx/break_shing.ogg")
 const FX_BREAK_TRAP := preload("res://assets/fx/break_trap.ogg")
 const FX_BREAK_GATE := preload("res://assets/fx/break_gate.ogg")
-
-# TODO SOUND BREAK OOB
-# TODO SOUND BREAK CATCH
-# TODO SOUND TWIST
+const FX_BREAK_SURPRISE := preload("res://assets/fx/break_surprise.ogg")
+const FX_BREAK_CATCH := preload("res://assets/fx/break_catch.ogg")
+const FX_BREAK_OOB := preload("res://assets/fx/break_collide.ogg")
 
 ## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
 ## showing at the specific depth
@@ -228,7 +246,7 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 					# actually "slip"
 					delay = PER_DEPTH_DELAY * 2 * animation_scale
 					pos = effect.first()
-					# TODO SOUND SLIP
+					_tween_fx(FX_SLIDE_SHING)
 				Effects.LUCKY:
 					delay = (
 						PER_DEPTH_DELAY
@@ -244,12 +262,16 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			for depth in effect.realized_positions.keys():
 				var speed_scale: float
 				var callback: Callable
-				var slip := false
+				var end := false
 				if _is_triggered_slip(depth, pin_spec):
 					speed_scale = 1.4
 					callback = _playback.play_stream.bind(FX_SLIP_WOOP)
 					_tween_reveal(depth)
-					slip = true
+					end = true
+				elif _is_triggered_oob(depth, pin_spec):
+					speed_scale = 0.9
+					callback = _playback.play_stream.bind(_break_fx(FX_BREAK_OOB))
+					end = true
 				elif effect.flavor == Effects.TEST:
 					speed_scale = 1.0
 					callback = $FX/TestPlayer.play
@@ -262,14 +284,12 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 				if depth >= len(depth_refs) or depth < 0:
 					continue
 				
-				if slip:
+				if end:
 					continue
 				
 				match depth_refs[depth].flavor:
 					Depths.HIDDEN:
 						_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
-						# TODO SOUND PUSH HIDDEN
-						# TODO SOUND TEST HIDDEN
 					Depths.TRAP:
 						if effect.flavor == Effects.TEST:
 							_tween_fx(_break_fx(FX_BREAK_TRAP))
@@ -284,7 +304,10 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 			_tween.tween_callback($FX/SkipPlayer.play)
 		Effects.JAM:
 			_tween_to(effect.last(), abs(_mid_pos - effect.last()))
-			_tween_fx(FX_JAM)
+			if _is_triggered_catch(pin_spec):
+				_tween_fx(_break_fx(FX_BREAK_CATCH))
+			else:
+				_tween_fx(FX_JAM)
 			for shake in [-3, 3, 0]:
 				_tween.tween_property($Stack, "position:x", shake, 0.05)
 		Effects.UNJAM:
@@ -306,8 +329,10 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 		Effects.HINT:
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)
-			# TODO SOUND HINT
+			_tween_fx(FX_HINT_REVEAL)
 			_tween.tween_interval((PRE_ACTIVATION_DELAY + 0.1) * animation_scale)
+		Effects.UNLOCK:
+			_tween_fx(FX_UNLOCK)
 		Effects.EMPTY:
 			_tween_home(pin_spec.pin_position)
 			_tween_fx(FX_THUD_TAP)
@@ -323,23 +348,16 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 				Depths.BREAK:
 					effect_fx = _break_fx(FX_BREAK_NORMAL)
 				Depths.SURPRISE:
-					# TODO SOUND SURPRISE
-#					effect_fx = _break_fx(FX_BREAK_NORMAL)
-					pass
+					effect_fx = _break_fx(FX_BREAK_SURPRISE)
 				Depths.SPIKE:
 					effect_fx = _break_fx(FX_BREAK_SPIKE)
 				Depths.GATE_KEY:
-					pass
-					# TODO SOUND UNLOCK
+					effect_fx = FX_KEY_UNLOCK
 				Depths.BREATH:
-					pass
-					# TODO SOUND BREATH
+					effect_fx = FX_BREATH
 				Depths.FUMBLE:
-					pass
-					# TODO SOUND FUMBLE
-				
+					effect_fx = FX_KEYS_FUMBLE
 				_:
-					push_warning("Soundless effect: %s" % effect.flavor.effect_name)
 					effect_fx = FX_RUFFLE
 			_tween_fx(effect_fx)
 			_activate_delay()
@@ -353,9 +371,10 @@ func animate_fall(pin_spec: PinSpec) -> void:
 		_tween_fx(FX_JAM_BLOCK)
 		for shake in [-3, 3, -3, 3, 0]:
 			_tween.tween_property($Stack, "position:x", shake, 0.05)
+	elif pin_position <= 0:
+		_tween_fx(FX_TAP)
 	else:
-		pass
-		# TODO SOUND FALL
+		_tween_fx(FX_FALL_CLATTER)
 	
 	_tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	_tween_home(pin_spec.pin_position)
@@ -452,7 +471,6 @@ func _ready() -> void:
 	SPRING_POSITION = $Stack/Spring.position
 	SPRING_SIZE = $Stack/Spring.size
 
-	$FX/PolyPlayer.play()
 	_playback = $FX/PolyPlayer.get_stream_playback()
 
 	depth_refs = []
