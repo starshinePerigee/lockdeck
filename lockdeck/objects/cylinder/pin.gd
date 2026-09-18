@@ -200,6 +200,8 @@ static func _is_triggered_oob(pos: int, pin_spec: PinSpec) -> bool:
 	return pos == 8 and pin_spec.results[PinSpec.PIN_DEPTH_COUNT] == Results.BREAK
 
 const FX_TAP := preload("res://assets/fx/click_weak-001.ogg")
+const FX_PUSH_SAMPLE := preload("res://assets/fx/click_set-001.ogg")
+const FX_REVEAL_SAMPLE := preload("res://assets/fx/click_sharp_001.ogg")
 const FX_JAM := preload("res://assets/fx/jammed_slide.ogg")
 const FX_UNJAM := preload("res://assets/fx/jammed_clear.ogg")
 const FX_JAM_BLOCK := preload("res://assets/fx/jammed_clicks.ogg")
