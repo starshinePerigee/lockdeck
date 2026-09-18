@@ -1,0 +1,2 @@
+disable DEBUG options
+move version to main menus

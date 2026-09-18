@@ -30,8 +30,7 @@ const PREV_SPACING := 12
 			$DepthTexture.material = material_normal
 
 func set_hints(letters: String, color: Color = Color()):
-	if letters:
-		$HintTracker.visible = true
+	$HintTracker.visible = len(letters) > 0
 	if len(letters) > 8:
 		$HintTracker.text = "*" + letters.substr(len(letters) - 7, 7)
 	else:

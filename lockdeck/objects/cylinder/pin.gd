@@ -118,6 +118,7 @@ func _reset_trans() -> void:
 
 func _tween_reveal(pos: int) -> void:
 	_tween.tween_property(depth_refs[pos], "flavor", _pending_spec.depths[pos], 0)
+	_tween.tween_callback(depth_refs[pos].set_hints.bind(""))
 
 func _tween_trap(pos: int) -> void:
 	_tween_reveal(pos)

@@ -55,6 +55,7 @@ Sound Effects are clipped and remixed from the following sources:
 * [MetalGate.wav by ahill86](https://freesound.org/people/ahill86/sounds/207137/), CC0
 * [Party Horn Room 06](https://freesound.org/people/Lucas_Schacht/sounds/713677) by Lucas\_Schat, CC0
 * [LockingAndUnlocking.wav by talithamaree\_2L](https://freesound.org/people/talithamaree_2L/sounds/593581/), Attribution 3.0
+* [tibetan bells wind chime ring meditation ohm.wav](https://freesound.org/people/rsellick/sounds/545531/) by rsellick, CC0
 
 
 
