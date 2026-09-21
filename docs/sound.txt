@@ -1,0 +1,27 @@
+menu open
+menu close
+
+between X
+between move
+
+coin claim
+ingot select
+ingot claim
+coin collide
+ingot collide
+mass claim
+
+lock scroll in/out
+chest scroll in/out
+strat scroll in/out
+
+between menu show
+between menu hide
+card repair
+card buy
+card remove
+
+top menu woosh
+top menu click
+return to title
+game start (load and new game)

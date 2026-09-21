@@ -2,13 +2,33 @@ extends Control
 
 signal closed()
 
+const OFFSCREEN_LEFT := Vector2(-1440, 0)
+const FX_WIPE := preload("res://assets/fx/menu_swipe.ogg")
+const FX_WIPE_OUT := preload("res://assets/fx/menu_swipe_out.ogg")
+
+var _tween: Tween
+
 func show_display() -> void:
-	global_position = Vector2(0, 0)
+	if _tween:
+		_tween.kill()
+	
+	global_position = OFFSCREEN_LEFT
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(self, "global_position", Vector2.ZERO, 0.15)
+	GlobalEffects.request(FX_WIPE)
 	visible = true
 	z_index = 120
 
 func hide_display() -> void:
-	visible = false
+	if _tween:
+		_tween.kill()
+	
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	_tween.tween_property(self, "global_position", OFFSCREEN_LEFT, 0.15)
+	_tween.tween_property(self, "visible", false, 0.0)
+	GlobalEffects.request(FX_WIPE_OUT)
 	closed.emit()
 
 func _handle_input(event: InputEvent) -> void:

@@ -285,6 +285,9 @@ func unpreview_discard() -> void:
 	$DiscardMain.redraw()
 	$TrashMain.update_label()
 
+const FX_ROLL_IN := preload("res://assets/fx/menu_roll_in.ogg")
+const FX_ROLL_OUT := preload("res://assets/fx/menu_roll_out.ogg")
+
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
 
@@ -310,6 +313,7 @@ func set_state(state: InputState) -> void:
 					LOCK_BODY_HOME,
 					0.23 * GameSettings.instance().animation_speed
 				)
+				GlobalEffects.request(FX_ROLL_OUT)
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
@@ -339,6 +343,7 @@ func set_state(state: InputState) -> void:
 				),
 				0.23 * GameSettings.instance().animation_speed
 			)
+			GlobalEffects.request(FX_ROLL_IN)
 			$HandMain/Hand.hide_hand()
 			$LockBody/CylinderMain.show_preview(_result)
 			$PreviousButton.show_see_prev = false
@@ -396,7 +401,7 @@ func display_depths() -> void:
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
-func display_cards(cards: Array, header: String) -> void:
+func display_cards(cards: Array, header: String, left: bool) -> void:
 	var cards_typed: Array[CardSpec] = []
 	cards_typed.assign(cards)
 	$CardDisplay.header = header
@@ -405,7 +410,7 @@ func display_cards(cards: Array, header: String) -> void:
 	$CardDisplay.has_sections = "broken" in header.to_lower()
 	
 	$CardDisplay.redraw()
-	$CardDisplay.show_display()
+	$CardDisplay.show_display(left)
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
@@ -665,13 +670,15 @@ func game_over() -> void:
 	game_fail.emit()
 	lock_complete = true
 
+const FX_UNLOCK_CLICKS := preload("res://assets/fx/lock_unlock_clicks.ogg")
+
 func solve_lock() -> void:
 	$LockBody/ContinueButton.visible = true	
 	game_win.emit()
+	GlobalEffects.request(FX_UNLOCK_CLICKS)
 	$LockBody/AnimationPlayer.play("unlock")
 	$Notifications.notify(Notifications.UNLOCK)
 	lock_complete = true
-
 #endregion
 
 #region setup functions
@@ -722,6 +729,8 @@ func restart() -> void:
 	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
 
+const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
+
 func _ready() -> void:
 	var settings := GameSettings.instance()
 	toggle_active_row(settings.highlight_active_row)
@@ -731,6 +740,7 @@ func _ready() -> void:
 	$DeckMain.discard_pos = $DiscardMain.position - $DeckMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
+	$LockBody/ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_SUCCESS_CHIME))
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 
 	$HandMain/Hand.card_selected.connect(pick_selected)
@@ -746,9 +756,9 @@ func _ready() -> void:
 	$DepthDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$DepthButton.pressed.connect(display_depths)
-	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
-	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
-	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
+	$TrashMain.display_cards.connect(display_cards.bind("Broken picks", false))
+	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck", true))
+	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile", false))
 	
 	$LockBody/IndicatorPick.reset.connect(end_animation)
 	$DeckMain.reload_finish.connect(end_animation)

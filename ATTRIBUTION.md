@@ -60,6 +60,7 @@ Sound Effects are clipped and remixed from the following sources:
 * [fabric rustling and sliding by breadparticles](https://freesound.org/people/breadparticles/sounds/575335/), CC0
 * [EQUIPTact\_Leather Revolver Holster Equip\_HvD\_OwSFX by Hano\_van\_Dalen](https://freesound.org/people/Hano_van_Dalen/sounds/767308/), CC0
 * [Hitting Cabbage Against Wooden Door Frame 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/547580/), Attribution 4.0
+* [Rolling drawer open/close by freemaster2](https://freesound.org/people/freemaster2/sounds/237397/), Attribution 4.0
 
 
 
