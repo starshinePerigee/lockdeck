@@ -1,3 +1,0 @@
-- card draw
-- card set from draw
-- new "empty space activated" sound (a softer click?)

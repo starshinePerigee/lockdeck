@@ -63,6 +63,7 @@ func _finish_reload() -> void:
 	reload_finish.emit.call_deferred()
 
 const CARD_BACK := preload("res://assets/card/card_back_static.png")
+const FX_DISCARD_DRAW := preload("res://assets/fx/hand_quick_ruffle.ogg")
 
 func _animate_draw_from_discard(i: int) -> void:
 	var card := TextureRect.new()
@@ -74,6 +75,7 @@ func _animate_draw_from_discard(i: int) -> void:
 	var x_tween := card.create_tween()
 	x_tween.set_trans(Tween.TRANS_LINEAR)
 	x_tween.tween_callback(reload_progress.emit.bind(i))
+	x_tween.tween_callback(GlobalEffects.request.bind(FX_DISCARD_DRAW))
 	x_tween.tween_property(
 		card,
 		"position:x",
