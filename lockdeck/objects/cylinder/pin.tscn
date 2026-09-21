@@ -210,6 +210,6 @@ bus = &"Effects"
 
 [node name="PolyPlayer" type="AudioStreamPlayer" parent="FX"]
 stream = SubResource("AudioStreamPolyphonic_ujcui")
-volume_db = -3.0
+volume_db = -5.0
 autoplay = true
 max_polyphony = 8
