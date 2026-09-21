@@ -1,4 +1,4 @@
-﻿extends Node
+extends Node
 
 func set_fullscreen(fullscreen: bool) -> void:
 	if fullscreen:
@@ -24,4 +24,3 @@ func _ready() -> void:
 	
 	set_scale_mode(settings.discrete_scale)
 	settings.discrete_scale_changed.connect(set_scale_mode)
-	

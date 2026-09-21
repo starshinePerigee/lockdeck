@@ -10,7 +10,7 @@ static func request(stream_: AudioStream, volume_ := 0.0) -> void:
 	if not _instance:
 		return
 	
-	_instance.playback.play_stream(stream_, volume_)
+	_instance.playback.play_stream(stream_, 0, volume_)
 
 func _ready() -> void:
 	if _instance:

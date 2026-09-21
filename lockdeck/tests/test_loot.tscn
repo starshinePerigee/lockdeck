@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://chd078g2xmw1u"]
+[gd_scene load_steps=10 format=3 uid="uid://chd078g2xmw1u"]
 
 [ext_resource type="Script" uid="uid://detchlpnimgaq" path="res://tests/test_loot.gd" id="1_1vtxi"]
 [ext_resource type="Texture2D" uid="uid://dcch1pjolfm7o" path="res://assets/game/bg.png" id="2_7rxjp"]
@@ -15,6 +15,9 @@ size = Vector2(128, 1208)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bgtj1"]
 size = Vector2(1088, 128)
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_7rxjp"]
+polyphony = 2
 
 [node name="TestLoot" type="Control"]
 layout_mode = 3
@@ -93,5 +96,10 @@ offset_bottom = 64.0
 texture = ExtResource("3_l5t33")
 
 [node name="CollisionPolygon2D" parent="Loot" instance=ExtResource("4_k2mnv")]
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamPolyphonic_7rxjp")
+autoplay = true
+bus = &"Effects"
 
 [editable path="Loot"]
