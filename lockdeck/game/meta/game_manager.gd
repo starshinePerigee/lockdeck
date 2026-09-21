@@ -112,6 +112,8 @@ func next_lock(level: LevelSpec) -> void:
 	$GameCore.load_game(game)
 	
 	$AnimationPlayer.play("between to lock")
+	await $AnimationPlayer.animation_finished
+	$GameCore.draw_to_five()
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:

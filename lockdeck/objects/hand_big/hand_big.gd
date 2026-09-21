@@ -73,6 +73,10 @@ func _animation_timeout() -> void:
 	push_error("Animation timed out!")
 	animation_complete.emit()
 
+const FX_HAND_DISCARD_COMPLETE := preload("res://assets/fx/hand_discard_complete.ogg")
+const FX_HAND_DRAW_START := preload("res://assets/fx/hand_draw_start.ogg")
+const FX_HAND_DRAW_END := preload("res://assets/fx/hand_draw_end.ogg")
+
 func _remove_space(space: CardSpace, sub_scale: float):
 	if space in spaces:
 		spaces.erase(space)
@@ -92,6 +96,8 @@ func _remove_space(space: CardSpace, sub_scale: float):
 		tween.tween_callback($Hand.remove_child.bind(space))
 	else:
 		push_error("Hand parent lost track of ref!")
+	
+	tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DISCARD_COMPLETE))
 	tween.tween_callback(space.queue_free)
 	space.arc_to(discard_pos.y, 150, duration * sub_scale)
 
@@ -151,16 +157,26 @@ func redraw(cards: Array[CardSpec], instant := false) -> void:
 	var start_pos := ((size.x - total_size) - 64) / 2
 	
 	var tween: Tween
+	var cards_drawn := 0
 	for i in len(spaces):
 		spaces[i].z_index = 100 * i + 10
 		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
 		var duration := end_pos / CARD_SPEED_PX_PER_SEC * sub_scale
 		tween = spaces[i].tween_to(end_pos, duration)
 		_open_awaits += 1
-		tween.tween_callback(_pseudo_await)
 		
 		if spaces[i].position == Vector2.ZERO:
+			var sound_duration := 0.04 * cards_drawn
+			if sound_duration < duration and not instant:
+				var sound_tween := create_tween()
+				sound_tween.tween_interval(sound_duration)
+				sound_tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DRAW_START))
 			spaces[i].arc_to(0, 10, duration)
+			if not instant:
+				tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DRAW_END))
+			cards_drawn += 1
+		
+		tween.tween_callback(_pseudo_await)
 
 func get_spaces() -> Array[CardSpace]:
 	return spaces

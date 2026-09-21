@@ -56,6 +56,10 @@ Sound Effects are clipped and remixed from the following sources:
 * [Party Horn Room 06](https://freesound.org/people/Lucas_Schacht/sounds/713677) by Lucas\_Schat, CC0
 * [LockingAndUnlocking.wav by talithamaree\_2L](https://freesound.org/people/talithamaree_2L/sounds/593581/), Attribution 3.0
 * [tibetan bells wind chime ring meditation ohm.wav](https://freesound.org/people/rsellick/sounds/545531/) by rsellick, CC0
+* [playing\_cards.aif by KevinHilt](https://freesound.org/people/KevinHilt/sounds/196541/), CC0
+* [fabric rustling and sliding by breadparticles](https://freesound.org/people/breadparticles/sounds/575335/), CC0
+* [EQUIPTact\_Leather Revolver Holster Equip\_HvD\_OwSFX by Hano\_van\_Dalen](https://freesound.org/people/Hano_van_Dalen/sounds/767308/), CC0
+* [Hitting Cabbage Against Wooden Door Frame 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/547580/), Attribution 4.0
 
 
 

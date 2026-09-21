@@ -85,11 +85,16 @@ func valid_hovers() -> Array[Control]:
 	hovers.append_array(valid_targets())
 	return hovers
 
+const FX_CARD_SELECT := preload("res://assets/fx/hand_select.ogg")
+const FX_CARD_DESELECT := preload("res://assets/fx/hand_deselect.ogg")
+const FX_CARD_DISCARD := preload("res://assets/fx/hand_discard.ogg")
+
 func pick_dragged(space: CardSpace) -> void:
 	set_state(InputState.ACTIVE_DRAG)
 	$Notifications.clear()
 	_current_area = space.get_card_area()
 	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
+	GlobalEffects.request(FX_CARD_SELECT)
 
 func pick_dropped(space: CardSpace) -> void:
 	if not _current_area:
@@ -104,6 +109,7 @@ func pick_dropped(space: CardSpace) -> void:
 		_do_target()
 	else:
 		_current_space = null
+		GlobalEffects.request(FX_CARD_DESELECT)
 		set_state(InputState.INACTIVE)
 	
 	$LockBody/IndicatorPick.current_pick = null
@@ -120,6 +126,7 @@ func pick_clicked(space: CardSpace) -> void:
 	
 	_current_space = space
 	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
+	GlobalEffects.request(FX_CARD_SELECT)
 	space.set_selected()
 	set_state(InputState.ACTIVE_SELECT)
 
@@ -142,6 +149,7 @@ func _input(event: InputEvent) -> void:
 			# note that if you clicked a pick card, this will execute before pick_clicked
 			# so we only need to bring things back to default
 			
+			GlobalEffects.request(FX_CARD_DESELECT)
 			# check if you clicked the same card again:
 			if _current_space.get_mouse_rect().has_point(click):
 				_previous_space = _current_space
@@ -155,6 +163,7 @@ func _input(event: InputEvent) -> void:
 func _do_target() -> void:
 	unhighlight_target(_current_target)
 	if _current_target == $DiscardMain:
+		GlobalEffects.request(FX_CARD_DISCARD)
 		discard_pick()
 	elif _current_target is Pin:
 		await do_pick(
@@ -708,7 +717,9 @@ func restart() -> void:
 	turn_count = 0
 	$Notifications.clear()
 	$LastTest.visible = false
-	cleanup_step()
+	tick_turn_count()
+	update_status_widget()
+	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
 
 func _ready() -> void:
@@ -752,4 +763,5 @@ func _ready() -> void:
 		var game := GameSpec.get_in_progress_game()
 		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
 		load_game(game)
+		draw_to_five()
 #		draw_cards(5)
