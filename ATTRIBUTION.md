@@ -43,9 +43,10 @@ Sound Effects are clipped and remixed from the following sources:
 * [Sliding Open Door Security Chain 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555142/), CC0
 * [Gently Sliding Closed Door Security Chain.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555139/), CC0
 * [Metal Grinding 2 by qubodup](https://freesound.org/people/qubodup/sounds/743239/), CC0
-* [metallic\_clicks\_taps\_slides.flac by TreadheadRad](https://freesound.org/people/TreadheadRad/sounds/527799/), CCO
+* [metallic\_clicks\_taps\_slides.flac by TreadheadRad](https://freesound.org/people/TreadheadRad/sounds/527799/), CC0
 * [fuse2.wav by j1987](https://freesound.org/people/j1987/sounds/140715/), CC0
 * [Pocket-Knife.flac by SyntaxSeed](https://freesound.org/people/SyntaxSeed/sounds/244772/), CC0
+* [Sharp Explosion 4 (of 5) by Rudmer\_Rotteveel](https://freesound.org/people/Rudmer_Rotteveel/sounds/336011/), cc0
 * [metal glass makes long 'PING!' sound.aif by Tomlija](https://freesound.org/people/Tomlija/sounds/101246/), Attribution 3.0
 * [Gravel Crunches by DrinkingWindGames](https://freesound.org/people/DrinkingWindGames/sounds/572467/), Attribution 4.0
 * [tap hammer small piece of metal gentle hits.wav by kyles](https://freesound.org/people/kyles/sounds/450874/), CC0

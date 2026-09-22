@@ -15,11 +15,11 @@ script = ExtResource("1_atfqw")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-offset_left = 137.0
+offset_left = 89.0
 offset_top = 165.0
-offset_right = 809.0
+offset_right = 869.0
 offset_bottom = 191.0
-text = "With this character's death, the thread of prophecy is severed."
+text = "With this character's imminent arrest, the thread of prophecy is severed."
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 0
