@@ -33,6 +33,15 @@ var mass: int
 ## Material - leave null to use metal
 var material
 
+enum EffectFonts {
+	CLACK,
+	CHING,
+	INGOT
+}
+
+var fx_font: EffectFonts
+
+
 func _load_assets(asset_name) -> void:
 	var texture_str := "res://assets/loot/%s.png" % asset_name
 	if ResourceLoader.exists(texture_str):
@@ -52,7 +61,8 @@ func _init(
 	description_: String,
 	value_: int,
 	category_weight_: int,
-	mass_: int = 10
+	mass_: int = 10,
+	fx_font_: EffectFonts = EffectFonts.CLACK
 ):
 	_load_assets(asset_name)
 	readable_name = readable_name_
@@ -60,7 +70,7 @@ func _init(
 	value = value_
 	category_weight = category_weight_
 	mass = mass_
-
+	fx_font = fx_font_
 
 #region coins
 
@@ -73,6 +83,7 @@ static var COIN_1 := Loots.new(
 	1,
 	6,
 	4,
+	EffectFonts.CHING
 )
 
 static var COIN_2 := Loots.new(
@@ -82,6 +93,7 @@ static var COIN_2 := Loots.new(
 	2,
 	2,
 	10,
+	EffectFonts.CLACK
 )
 
 static var COIN_3 := Loots.new(
@@ -91,6 +103,7 @@ static var COIN_3 := Loots.new(
 	3,
 	3,
 	6,
+	EffectFonts.CHING
 )
 
 static var COIN_4 := Loots.new(
@@ -100,6 +113,7 @@ static var COIN_4 := Loots.new(
 	5,
 	1,
 	8,
+	EffectFonts.CLACK
 )
 
 static var COIN_5 := Loots.new(
@@ -109,6 +123,7 @@ static var COIN_5 := Loots.new(
 	10,
 	2,
 	3,
+	EffectFonts.CLACK
 )
 
 static var COIN_6 := Loots.new(
@@ -118,6 +133,7 @@ static var COIN_6 := Loots.new(
 	20,
 	1,
 	20,
+	EffectFonts.CHING
 )
 
 static var ALL_COINS: Array[Loots] = [
@@ -139,6 +155,7 @@ static var BAR_1 := Loots.new(
 	10,
 	10,
 	20,
+	EffectFonts.INGOT
 )
 
 static var BAR_2 := Loots.new(
@@ -148,6 +165,7 @@ static var BAR_2 := Loots.new(
 	15,
 	9,
 	20,
+	EffectFonts.INGOT
 )
 
 static var BAR_3 := Loots.new(
@@ -157,6 +175,7 @@ static var BAR_3 := Loots.new(
 	20,
 	8,
 	10,
+	EffectFonts.INGOT
 )
 
 static var BAR_4 := Loots.new(
@@ -166,6 +185,7 @@ static var BAR_4 := Loots.new(
 	25,
 	7,
 	20,
+	EffectFonts.INGOT
 )
 
 static var BAR_5 := Loots.new(
@@ -175,6 +195,7 @@ static var BAR_5 := Loots.new(
 	30,
 	6,
 	30,
+	EffectFonts.INGOT
 )
 
 static var ALL_BARS: Array[Loots] = [

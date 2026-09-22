@@ -47,6 +47,8 @@ func spawn_loot() -> void:
 	
 	var loot: Loot = loot_queue.pop_front()
 	loot.loot_grabbed.connect(check_complete)
+	loot.collide.connect(queue_sound)
+	
 	add_child(loot)
 	loot.position = Vector2(
 		randi_range(SPAWN_X_1, SPAWN_X_2),
@@ -67,6 +69,51 @@ func check_complete() -> void:
 	_grabbed_emitted = true
 	all_looted.emit()
 	$Timer.stop()
+
+var sound_queue: Array[int] = []
+func queue_sound(heavy: bool, font: Loots.EffectFonts):
+	match font:
+		Loots.EffectFonts.INGOT:
+			if heavy:
+				sound_queue.append(6)
+			else:
+				sound_queue.append(3)
+		Loots.EffectFonts.CLACK:
+			if heavy:
+				sound_queue.append(5)
+			else:
+				sound_queue.append(2)
+		Loots.EffectFonts.CHING:
+			if heavy:
+				sound_queue.append(4)
+			else:
+				sound_queue.append(1)
+
+func _process(delta: float) -> void:
+	if len(sound_queue) > 0:
+		sound_queue.sort()
+		var sound_count := 0
+		for i in range(6, 0, -1):
+			if i in sound_queue:
+				match i:
+					6:
+						$IngotHeavyPlayer.play()
+					5:
+						$ClickHeavyPlayer.play()
+					4:
+						$ChingHeavyPlayer.play()
+					3:
+						$IngotLightPlayer.play()
+					2:
+						$ClickLightPlayer.play()
+					1:
+						$ChingLightPlayer.play()
+					_:
+						pass
+				sound_count += 1
+				if sound_count >= 3:
+					break
+		sound_queue.clear()
 
 func _ready() -> void:
 	$Timer.timeout.connect(spawn_loot)

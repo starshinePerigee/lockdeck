@@ -5,13 +5,13 @@ class_name Loot
 signal loot_hovered
 signal loot_clicked
 signal loot_grabbed
-signal collide_light
-signal collide_medium
-signal collide_heavy
+signal collide(bool, EffectFonts)
 
 const SELF_SCENE := preload("res://objects/loot/loot.tscn")
 
 var spec: Loots
+
+var fx_font: Loots.EffectFonts
 
 var grabbed: bool = false
 
@@ -23,6 +23,7 @@ static func new_loot(loots: Loots) -> Loot:
 	scene.mass = loots.mass
 	if not loots.material == null:
 		scene.physics_material_override = loots.material
+	scene.fx_font = loots.fx_font
 	
 	var collider := loots.collider.instantiate()
 	scene.add_child(collider)
@@ -96,8 +97,7 @@ func disable_physics() -> void:
 	collision_layer = 0
 	collision_mask = 0
 
-const STRONG_THRESHOLD := 300000.0
-const MED_THRESHOLD := 80000.0
+const STRONG_THRESHOLD := 400000.0
 const WEAK_THRESHHOLD := 10000.0
 const ROT_SCALE := 1000
 const TIME_THRESHOLD := 50
@@ -113,16 +113,10 @@ func _physics_process(delta: float) -> void:
 	if delta_weight > WEAK_THRESHHOLD:
 		var current_time := Time.get_ticks_msec()
 		if delta_weight > STRONG_THRESHOLD:
-			print("heavy %s" % delta_weight)
-			collide_heavy.emit()
+			collide.emit(true, fx_font)
 			prev_time = current_time
 		elif current_time - prev_time > TIME_THRESHOLD:
-			if delta_weight > MED_THRESHOLD:
-				print("medium %s" % delta_weight)
-				collide_medium.emit()
-			else:
-				print("light %s" % delta_weight)
-				collide_light.emit()
+			collide.emit(false, fx_font)
 			prev_time = current_time
 	
 	previous_velocity = linear_velocity
