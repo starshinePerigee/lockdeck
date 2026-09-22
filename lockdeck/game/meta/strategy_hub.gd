@@ -55,7 +55,7 @@ func do_repair(card: CardSpec) -> void:
 	_game.repair_pick(card)
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
-	GlobalEffects.request(FX_REPAIR)
+	GlobalEffects.request(FX_REPAIR, -15)
 	update_info()
 
 func do_repair_all() -> void:
@@ -78,7 +78,7 @@ func do_repair_all() -> void:
 	
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
-	GlobalEffects.request(FX_REPAIR_ALL)
+	GlobalEffects.request(FX_REPAIR_ALL, -15)
 	update_info()
 
 func do_remove_forever(card: CardSpec) -> void:
@@ -117,7 +117,7 @@ func show_panel(new_panel: StrategyPopover) -> void:
 			enter_tween.tween_interval(0.2)
 		enter_tween.tween_callback(GlobalEffects.request.bind(FX_ROLL_IN))
 		enter_tween.set_trans(Tween.TRANS_CUBIC)
-		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.4)
+		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.5)
 		current_panel = new_panel
 
 func update_info() -> void:
@@ -148,7 +148,10 @@ func reset() -> void:
 	shop_widget.load_inventory(PickGenerator.get_shop_spread())
 	break_temporary_picks()
 
+const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
+
 func _ready() -> void:
+	$ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
 	$ContinueButton.pressed_confirmed.connect(GlobalEffects.request.bind(FX_COMPLETE_CHIME))
 	$TabButtonBox/DeckButton.pressed.connect(show_panel.bind($DeckPopover))

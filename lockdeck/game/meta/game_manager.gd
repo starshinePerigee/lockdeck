@@ -45,6 +45,11 @@ func load_saved_game(saved_game: GameSpec):
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(game.heist_number)
 
+const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
+const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")
+const FX_LOOT_ROLL_IN := preload("res://assets/fx/loot_roll_in.ogg")
+const FX_LOOT_ROLL_OUT := preload("res://assets/fx/drawers_roll.ogg")
+
 func lock_complete():
 	game.break_picks($GameCore/TrashMain.cards)
 	if $GameCore/LockBody/CountdownMain.count >= 2:
@@ -54,7 +59,8 @@ func lock_complete():
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	game.next_lock_deck = null
 	game.save()
-	$AnimationPlayer.play("lock to between")
+	$AnimationPlayer.play("lock to between", -12)
+	GlobalEffects.request(FX_LOCK_ROLL_OUT)
 
 func advance_from_between() -> void:
 	var next_level: LevelSpec = game.get_next_level()
@@ -70,7 +76,8 @@ func advance_from_between() -> void:
 
 func next_loot(loot_value: int) -> void:
 	$LootMain.do_loot(loot_value)
-	$AnimationPlayer.play("between to loot")
+	$AnimationPlayer.play("between to loot", -12)
+	GlobalEffects.request(FX_LOOT_ROLL_IN)
 	shop_start.emit()
 
 func end_loot() -> void:
@@ -79,6 +86,7 @@ func end_loot() -> void:
 	else:
 		$StrategyHub.reset()
 		$AnimationPlayer.play("loot to strategy")
+		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
 
 func end_strategy() -> void:
 	game.save()
@@ -112,6 +120,7 @@ func next_lock(level: LevelSpec) -> void:
 	$GameCore.load_game(game)
 	
 	$AnimationPlayer.play("between to lock")
+	GlobalEffects.request(FX_LOCK_ROLL_IN)
 	await $AnimationPlayer.animation_finished
 	$GameCore.draw_to_five()
 

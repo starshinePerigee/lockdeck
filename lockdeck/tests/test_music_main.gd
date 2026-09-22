@@ -21,6 +21,8 @@ func play_many() -> void:
 		t.tween_callback($Node/PushPlayer.play)
 		t.tween_interval(0.1)
 
+const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
+
 func _ready() -> void:
 	$Stack/MenuButton.pressed.connect(main_menu)
 	$Stack/LockButton.pressed.connect(next_heist)
@@ -36,4 +38,4 @@ func _ready() -> void:
 	$FX/PlayTapButton.pressed.connect($Node/PushPlayer.play)
 	$FX/PlayManyButton.pressed.connect(play_many)
 	$FX/PlayBreakButton.pressed.connect(GlobalEffects.request.bind(Pin.FX_BREAK_NORMAL))
-	
+	$FX/RollInButton.pressed.connect(GlobalEffects.request.bind(FX_LOCK_ROLL_IN))

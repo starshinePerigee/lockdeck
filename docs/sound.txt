@@ -5,10 +5,6 @@ menu close
 
 between move
 
-lock scroll in/out
-chest scroll in/out
-strat scroll in/out
-
 between menu show
 between menu hide
 

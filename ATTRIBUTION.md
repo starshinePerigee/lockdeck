@@ -67,6 +67,8 @@ Sound Effects are clipped and remixed from the following sources:
 * [quartz crystal tapping ceramic plate-002.wav ](https://freesound.org/people/CVLTIV8R/sounds/800113/)by CVLTIV8R, CC0
 * [Shells Falling - Coins by JelloApocalypse](https://freesound.org/people/JelloApocalypse/sounds/802589/), CC0
 * [Pencil Drawing on Paper - Closer Aspect by rylandbrooks](https://freesound.org/people/rylandbrooks/sounds/387927/), CC0
+* [drag\_keys\_over\_counter\_top\_table\_wood.mp3 by bobbobbob2013](https://freesound.org/people/bobbobbob2013/sounds/613819/), CC0
+* [door wood residential turn knob open close thud with spring deadbolt leftside onmic right side offmic.flac by kyles](https://freesound.org/people/kyles/sounds/451139/), CC0
 
 
 

@@ -93,6 +93,7 @@ text = "End Bugs"
 alignment = 0
 
 [node name="FX" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 609.0
 offset_top = 107.0
 offset_right = 769.0
@@ -116,6 +117,11 @@ alignment = 0
 [node name="PlayCardsButton" type="Button" parent="FX"]
 layout_mode = 2
 text = "Shuffle"
+alignment = 0
+
+[node name="RollInButton" type="Button" parent="FX"]
+layout_mode = 2
+text = "Roll In"
 alignment = 0
 
 [node name="Node" type="Node" parent="."]

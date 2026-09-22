@@ -30,7 +30,7 @@ func animate() -> void:
 		var claim_tween := create_tween()
 		claim_tween.tween_interval(0.3667)
 		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.claim_coin)
-		claim_tween.tween_callback(GlobalEffects.request.bind(FX_COIN_GET))
+		claim_tween.tween_callback(GlobalEffects.request.bind(FX_COIN_GET, -6))
 		claim_tween.tween_interval(2)
 		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.reset)
 	current_pos += 1
