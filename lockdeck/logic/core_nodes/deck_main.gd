@@ -59,7 +59,6 @@ func add_cards(new_cards: Array[CardSpec], instant := false) -> void:
 	tween.tween_callback(redraw)
 
 func _finish_reload() -> void:
-	print("reload finished")
 	reload_finish.emit.call_deferred()
 
 const CARD_BACK := preload("res://assets/card/card_back_static.png")

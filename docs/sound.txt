@@ -1,17 +1,9 @@
-chimes and breaks are way too loud
+chimes and breaks are way too loud?
 
 menu open
 menu close
 
-between X
 between move
-
-coin claim
-ingot select
-ingot claim
-coin collide
-ingot collide
-mass claim
 
 lock scroll in/out
 chest scroll in/out
@@ -19,27 +11,8 @@ strat scroll in/out
 
 between menu show
 between menu hide
-card repair
-card buy
-card remove
 
 top menu woosh
 top menu click
 return to title
 game start (load and new game)
-
-
-https://freesound.org/people/Flem0527/sounds/630018/
-https://freesound.org/people/ilyaShevelev/sounds/847340/
-https://freesound.org/people/robbeman/sounds/495643/
-https://freesound.org/people/TheWoodlandNomad/sounds/363090/
-https://freesound.org/people/flaine/sounds/680492/
-https://freesound.org/people/thisisdesolator/sounds/668946/
-https://freesound.org/people/jerry.berumen/sounds/584937/
-https://freesound.org/people/joseph.larralde/sounds/405427/
-https://freesound.org/people/Okuhle/sounds/408814/
-https://freesound.org/people/keatonmarek/sounds/533777/
-https://freesound.org/people/keatonmarek/sounds/533771/
-https://freesound.org/people/keatonmarek/sounds/533770/
-https://freesound.org/people/keatonmarek/sounds/533774/
-https://freesound.org/people/dontduckvr1/sounds/678976/

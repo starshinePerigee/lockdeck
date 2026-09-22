@@ -114,7 +114,6 @@ func reset() -> void:
 	update_pick_count()
 
 const FX_ALL_COINS := preload("res://assets/fx/coins_many.ogg")
-const FX_COMPLETE_CHIME := preload("res://assets/fx/complete_chime.ogg")
 const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func claim_and_continue():
@@ -125,10 +124,7 @@ func claim_and_continue():
 	var timer := create_tween()
 	if claimed > 0:
 		timer.tween_interval(0.5)
-		GlobalEffects.request(FX_ALL_COINS)
-		timer.tween_callback(GlobalEffects.request.bind(FX_COMPLETE_CHIME))
-	else:
-		GlobalEffects.request(FX_COMPLETE_CHIME)
+	GlobalEffects.request(FX_ALL_COINS)
 	timer.tween_callback(continue_to_next.emit)
 
 func get_nice_rect() -> Rect2:

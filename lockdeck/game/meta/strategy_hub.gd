@@ -21,6 +21,12 @@ func set_game(game: GameSpec) -> void:
 
 # This could be consolidated... but we're on the perimiter of this game, so nah
 
+const FX_COIN_SPEND := preload("res://assets/fx/coins_many.ogg")
+const FX_REPAIR := preload("res://assets/fx/repair_hits.ogg")
+const FX_REPAIR_ALL := preload("res://assets/fx/repair_hits_many.ogg")
+const FX_COIN_GET := preload("res://assets/fx/coin_claim.ogg")
+const FX_TRASH := preload("res://assets/fx/hand_discard.ogg")
+
 func do_buy(card: CardSpec) -> void:
 	var buy_cost := card.get_buy_cost()
 	if buy_cost > _game.coins:
@@ -33,6 +39,7 @@ func do_buy(card: CardSpec) -> void:
 		_game.spend_coins(buy_cost)
 	_game.add_pick(card)
 	shop_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_COIN_SPEND)
 	update_info()
 
 func do_repair(card: CardSpec) -> void:
@@ -48,6 +55,7 @@ func do_repair(card: CardSpec) -> void:
 	_game.repair_pick(card)
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_REPAIR)
 	update_info()
 
 func do_repair_all() -> void:
@@ -70,22 +78,30 @@ func do_repair_all() -> void:
 	
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_REPAIR_ALL)
 	update_info()
 
 func do_remove_forever(card: CardSpec) -> void:
 	_game.remove_broken_pick_forever(card)
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.load_trash(_game.removed_forever_picks)
+	GlobalEffects.request(FX_TRASH)
 	update_info()
 
 func do_sell(card: CardSpec) -> void:
 	_game.remove_real_pick_forever(card)
 	_game.add_coins(10)
 	deck_widget.load_cards(_game.current_deck)
+	GlobalEffects.request(FX_COIN_GET)
 	update_info()
+
+const FX_ROLL_IN := preload("res://assets/fx/slide_in.ogg")
+const FX_ROLL_OUT := preload("res://assets/fx/slide_out.ogg")
+const FX_COMPLETE_CHIME := preload("res://assets/fx/single_chime.ogg")
 
 func show_panel(new_panel: StrategyPopover) -> void:
 	if current_panel != null:
+		GlobalEffects.request(FX_ROLL_OUT)
 		var exit_tween := create_tween()
 		exit_tween.set_trans(Tween.TRANS_CUBIC)
 		exit_tween.tween_property(current_panel, "position:y", HIDDEN_Y, 0.4)
@@ -99,6 +115,7 @@ func show_panel(new_panel: StrategyPopover) -> void:
 		var enter_tween := create_tween()
 		if current_panel != null:
 			enter_tween.tween_interval(0.2)
+		enter_tween.tween_callback(GlobalEffects.request.bind(FX_ROLL_IN))
 		enter_tween.set_trans(Tween.TRANS_CUBIC)
 		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.4)
 		current_panel = new_panel
@@ -133,6 +150,7 @@ func reset() -> void:
 
 func _ready() -> void:
 	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
+	$ContinueButton.pressed_confirmed.connect(GlobalEffects.request.bind(FX_COMPLETE_CHIME))
 	$TabButtonBox/DeckButton.pressed.connect(show_panel.bind($DeckPopover))
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))

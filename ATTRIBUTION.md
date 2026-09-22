@@ -66,6 +66,7 @@ Sound Effects are clipped and remixed from the following sources:
 * [Caida Moneda - Coin Drop by Dimm\_1](https://freesound.org/people/Diim_1/sounds/854248/), CC0
 * [quartz crystal tapping ceramic plate-002.wav ](https://freesound.org/people/CVLTIV8R/sounds/800113/)by CVLTIV8R, CC0
 * [Shells Falling - Coins by JelloApocalypse](https://freesound.org/people/JelloApocalypse/sounds/802589/), CC0
+* [Pencil Drawing on Paper - Closer Aspect by rylandbrooks](https://freesound.org/people/rylandbrooks/sounds/387927/), CC0
 
 
 

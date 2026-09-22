@@ -77,11 +77,16 @@ const FX_HAND_DISCARD_COMPLETE := preload("res://assets/fx/hand_discard_complete
 const FX_HAND_DRAW_START := preload("res://assets/fx/hand_draw_start.ogg")
 const FX_HAND_DRAW_END := preload("res://assets/fx/hand_draw_end.ogg")
 
-func _remove_space(space: CardSpace, sub_scale: float):
+func _remove_space(space: CardSpace, sub_scale: float, instant := false) -> void:
 	if space in spaces:
 		spaces.erase(space)
 	else:
 		push_error("Hand space refs lost track of child!")
+	
+	if instant:
+		$Hand.remove_child(space)
+		space.queue_free()
+		return
 	
 	var card_pos: Vector2 = space.find_child("PickCard").global_position
 	var duration: float = (
@@ -142,7 +147,7 @@ func redraw(cards: Array[CardSpec], instant := false) -> void:
 	
 	for space in spaces.duplicate():
 		if space.card_spec not in cards:
-			_remove_space(space, sub_scale)
+			_remove_space(space, sub_scale, instant)
 	
 	var specs := live_specs()
 	for card in cards:
