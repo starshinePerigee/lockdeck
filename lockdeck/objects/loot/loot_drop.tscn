@@ -133,28 +133,30 @@ texture = ExtResource("2_7nssv")
 
 [node name="ClickHeavyPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_krm67")
+volume_db = 3.0
 max_polyphony = 4
 bus = &"Effects"
 
 [node name="ClickLightPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_qf1p3")
+volume_db = 3.0
 max_polyphony = 4
 bus = &"Effects"
 
 [node name="ChingHeavyPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_vom6o")
-volume_db = -2.713
 max_polyphony = 4
 bus = &"Effects"
 
 [node name="ChingLightPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_5j4sy")
-volume_db = -7.235
+volume_db = -4.0
 max_polyphony = 4
 bus = &"Effects"
 
 [node name="IngotHeavyPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_wi7f0")
+volume_db = 2.0
 max_polyphony = 4
 bus = &"Effects"
 

@@ -225,6 +225,7 @@ const FX_BREAK_LABYRINTH := preload("res://assets/fx/break_labyrinth.ogg")
 const FX_BREAK_SPIKE := preload("res://assets/fx/break_shing.ogg")
 const FX_BREAK_TRAP := preload("res://assets/fx/break_trap.ogg")
 const FX_BREAK_GATE := preload("res://assets/fx/break_gate.ogg")
+const FX_BREAK_EXPLODE := preload("res://assets/fx/break_explode.ogg")
 const FX_BREAK_SURPRISE := preload("res://assets/fx/break_surprise.ogg")
 const FX_BREAK_CATCH := preload("res://assets/fx/break_catch.ogg")
 const FX_BREAK_OOB := preload("res://assets/fx/break_collide.ogg")
@@ -340,6 +341,9 @@ func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
 		Effects.EMPTY:
 			_tween_home(pin_spec.pin_position)
 			_tween_fx(FX_THUD_TAP)
+		Effects.BOMB_DETONATED:
+			_tween_fx(FX_BREAK_EXPLODE)
+			_tween_trap(effect.realized_origin)
 		_:
 			_tween_home(pin_spec.pin_position)
 			_tween_reveal(_mid_pos)

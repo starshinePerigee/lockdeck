@@ -62,6 +62,9 @@ Sound Effects are clipped and remixed from the following sources:
 * [Hitting Cabbage Against Wooden Door Frame 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/547580/), Attribution 4.0
 * [Rolling drawer open/close by freemaster2](https://freesound.org/people/freemaster2/sounds/237397/), Attribution 4.0
 * Coin effects by [keatonmarek](https://freesound.org/people/keatonmarek/): [1](https://freesound.org/people/keatonmarek/sounds/533771/), [2](https://freesound.org/people/keatonmarek/sounds/533770/), [3](https://freesound.org/people/keatonmarek/sounds/533775/), [4](https://freesound.org/people/keatonmarek/sounds/533770/), [multiple](https://freesound.org/people/keatonmarek/sounds/533773/), CC0
+* [Caida Moneda - Coin Drop by Dimm\_1](https://freesound.org/people/Diim_1/sounds/854248/), CC0
+* [quartz crystal tapping ceramic plate-002.wav ](https://freesound.org/people/CVLTIV8R/sounds/800113/)by CVLTIV8R, CC0
+* [Shells Falling - Coins by JelloApocalypse](https://freesound.org/people/JelloApocalypse/sounds/802589/), CC0
 
 
 

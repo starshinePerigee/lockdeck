@@ -101,6 +101,10 @@ func reset() -> void:
 	$PickCount.visible = true
 	update_pick_count()
 
+const FX_ALL_COINS := preload("res://assets/fx/coins_many.ogg")
+const FX_COMPLETE_CHIME := preload("res://assets/fx/complete_chime.ogg")
+const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
+
 func claim_and_continue():
 	_already_claimed = true
 	var claimed := claim_all()
@@ -109,6 +113,10 @@ func claim_and_continue():
 	var timer := create_tween()
 	if claimed > 0:
 		timer.tween_interval(0.5)
+		GlobalEffects.request(FX_ALL_COINS)
+		timer.tween_callback(GlobalEffects.request.bind(FX_COMPLETE_CHIME))
+	else:
+		GlobalEffects.request(FX_COMPLETE_CHIME)
 	timer.tween_callback(continue_to_next.emit)
 
 func get_nice_rect() -> Rect2:
@@ -126,6 +134,7 @@ func request_continue_tooltip() -> void:
 	)
 
 func _ready() -> void:
+	$ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
 	$ContinueButton.pressed_confirmed.connect(claim_and_continue)
 	$ContinueButton.mouse_entered.connect(request_continue_tooltip)
 	$LootDrop.all_looted.connect(_enable_continue)
