@@ -379,7 +379,11 @@ func dis_en_able_buttons(state: bool = true) -> void:
 # such as after unlock
 func lock_input(state: bool = true) -> void:
 	_lock_input = state
-	$LockBody/CountdownMain.button_disable = state or lock_complete
+	$LockBody/CountdownMain.button_disable = (
+		state 
+		or lock_complete
+		or $LockBody/CountdownMain.count <= 0
+	)
 	$HandMain/Hand.disabled = state or lock_complete
 
 func show_failure(state: bool = true) -> void:
