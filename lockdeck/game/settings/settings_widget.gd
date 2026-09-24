@@ -89,7 +89,7 @@ func set_effect_volume(setting: float) -> void:
 func show_widget():
 	global_position = Vector2(0, 0)
 	visible = true
-	z_index = 1200
+	z_index = 3910
 	opened.emit()
 
 func hide_widget():

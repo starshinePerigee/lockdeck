@@ -1,14 +1,11 @@
 chimes and breaks are way too loud?
 
-menu open
-menu close
+menu open (click)
+menu close (click)
 
-between move
-
-between menu show
-between menu hide
+between move - wind
 
 top menu woosh
 top menu click
-return to title
-game start (load and new game)
+return to title - chime
+game start (load and new game) - chime
