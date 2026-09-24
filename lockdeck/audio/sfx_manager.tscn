@@ -1,9 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7lx7c5kgijce"]
+[gd_scene load_steps=10 format=3 uid="uid://c7lx7c5kgijce"]
 
 [ext_resource type="Script" uid="uid://dabsr6ef5lmwb" path="res://audio/sfx_manager.gd" id="1_a3cge"]
 [ext_resource type="Script" uid="uid://bufscceeq6k7u" path="res://audio/global_effects.gd" id="2_jpml7"]
+[ext_resource type="AudioStream" uid="uid://cxp5xk10qqpmi" path="res://assets/fx/click_set-001.ogg" id="3_vlepx"]
+[ext_resource type="AudioStream" uid="uid://burq104ebwud8" path="res://assets/fx/click_set-002.ogg" id="4_73hfn"]
+[ext_resource type="AudioStream" uid="uid://dgrdt6orqkjsn" path="res://assets/fx/click_set-003.ogg" id="5_p1usu"]
+[ext_resource type="AudioStream" uid="uid://dcoh5uex4mg2v" path="res://assets/fx/click_set-004.ogg" id="6_4bqlo"]
+[ext_resource type="AudioStream" uid="uid://djcxa2db5g35c" path="res://assets/fx/click_set-005.ogg" id="7_n71xh"]
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_jpml7"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_66m3u"]
+streams_count = 5
+stream_0/stream = ExtResource("3_vlepx")
+stream_1/stream = ExtResource("4_73hfn")
+stream_2/stream = ExtResource("5_p1usu")
+stream_3/stream = ExtResource("6_4bqlo")
+stream_4/stream = ExtResource("7_n71xh")
 
 [node name="SFXManager" type="Node"]
 script = ExtResource("1_a3cge")
@@ -13,3 +26,8 @@ stream = SubResource("AudioStreamPolyphonic_jpml7")
 max_polyphony = 8
 bus = &"Effects"
 script = ExtResource("2_jpml7")
+
+[node name="SettingsFX" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_66m3u")
+max_polyphony = 2
+bus = &"Effects"

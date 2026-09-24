@@ -71,14 +71,26 @@ func _ready() -> void:
 	$TopLevelMenus/Title.load_game.connect(load_saved_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
 	
-	$SettingsMain/SettingsWidget.opened.connect($BgmMain.settings_open)
-	$SettingsMain/SettingsWidget.closed.connect($BgmMain.settings_closed)
 	$SettingsMain/SettingsWidget.ambience_hovered_start.connect($BgmMain.start_sample_ambience)
 	$SettingsMain/SettingsWidget.ambience_hovered_end.connect($BgmMain.stop_sample_ambience)
 	$SettingsMain/SettingsWidget.music_hovered_start.connect($BgmMain.start_sample_music)
 	$SettingsMain/SettingsWidget.music_hovered_end.connect($BgmMain.stop_sample_music)
 	$SettingsMain/SettingsWidget.effects_hovered_start.connect($BgmMain.start_sample_effects)
 	$SettingsMain/SettingsWidget.effects_hovered_end.connect($BgmMain.stop_sample_effects)
+	
+	for sig in [
+		$SettingsMain/SettingsWidget.ambience_hovered_start,
+		$SettingsMain/SettingsWidget.music_hovered_start,
+		$SettingsMain/SettingsWidget.effects_hovered_start
+	]:
+		sig.connect($BgmMain.settings_open)
+	
+	for sig in [
+		$SettingsMain/SettingsWidget.ambience_hovered_end,
+		$SettingsMain/SettingsWidget.music_hovered_end,
+		$SettingsMain/SettingsWidget.effects_hovered_end
+	]:
+		sig.connect($BgmMain.settings_closed)
 	
 	$GameManager.heist_start.connect($BgmMain.heist_start)
 	$GameManager.lock_start.connect($BgmMain.new_lock)

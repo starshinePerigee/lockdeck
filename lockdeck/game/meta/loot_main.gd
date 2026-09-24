@@ -42,9 +42,9 @@ func do_bar(bar: Loot) -> void:
 	var widget := IngotWidget.unpack(bar.spec)
 	widget.close_popup.connect($LootPopup.remove_and_close)
 	widget.add_coins.connect(game.add_coins)
-	widget.add_coins.connect(func(x): GlobalEffects.request(FX_COIN_CLAIM))
+	widget.add_coins.connect(func(_x): GlobalEffects.request(FX_COIN_CLAIM))
 	widget.add_pick.connect(game.add_pick)
-	widget.add_pick.connect(func(x): GlobalEffects.request(FX_PICK_CLAIM))
+	widget.add_pick.connect(func(_x): GlobalEffects.request(FX_PICK_CLAIM))
 	$LootPopup.add_contents_and_show(widget, bar.spec)
 	$LootPopup.visible = true
 	bar.get_that_bag()

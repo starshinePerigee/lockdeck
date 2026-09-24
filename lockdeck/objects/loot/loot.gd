@@ -105,7 +105,7 @@ var previous_velocity := Vector2.ZERO
 var prev_rotation := 0.0
 @onready var prev_time := Time.get_ticks_msec()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var delta_vel := linear_velocity - previous_velocity
 	var delta_rot := angular_velocity - prev_rotation
 	var delta_weight: float = delta_vel.length_squared() + abs(delta_rot) * ROT_SCALE
