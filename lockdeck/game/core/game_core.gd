@@ -12,7 +12,7 @@ signal final_turn
 @export var hand_size := 3
 @export var countdown_time := 2
 
-var DEBUG_MODE := false
+@onready var DEBUG_MODE := OS.is_debug_build()
 
 var turn_count := -1
 
@@ -599,15 +599,12 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		solve_lock()
 	else:
 		await post_pick()
-	print("exit do pick")
 
 const FX_BREAK_CANDLE := preload("res://assets/fx/break_ring.ogg")
 ## Async break sound
 func play_break(sig: Signal) -> void:
-	print("enter pbreak")
 	await sig
 	GlobalEffects.request(FX_BREAK_CANDLE)
-	print("exit pbreak")
 
 ## Perform all the local actions for pick effects
 func post_pick() -> void:

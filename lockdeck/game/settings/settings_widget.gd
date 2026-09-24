@@ -171,7 +171,7 @@ func _ready() -> void:
 		%FullscreenButton,
 		%DiscreteScale,
 	]:
-		toggle.toggled.connect(func(x): GlobalEffects.request(FX_CLICK))
+		toggle.toggled.connect(func(_x): GlobalEffects.request(FX_CLICK))
 	
 	if get_parent() == get_tree().root:
 		show_widget()
