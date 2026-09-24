@@ -737,6 +737,16 @@ func restart() -> void:
 	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
 
+var tutorial_mode := false
+
+func set_tutorial_mode() -> void:
+	tutorial_mode = true
+	$DiscardMain.disable_discard = true 
+
+func clear_tutorial_mode() -> void:
+	tutorial_mode = false
+	$DiscardMain.disable_discard = true
+
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
 
 func _ready() -> void:

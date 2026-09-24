@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dk2f6qb81xv2r"]
+[gd_scene load_steps=17 format=3 uid="uid://dk2f6qb81xv2r"]
 
 [ext_resource type="Script" uid="uid://boow6f7avfqqy" path="res://game/meta/between_locks.gd" id="1_op2j0"]
 [ext_resource type="Texture2D" uid="uid://cg03rn0ccp4xm" path="res://assets/menus/lock.png" id="3_87i8u"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d4lw5x2yvf146" path="res://assets/menus/loot.png" id="5_qc7cf"]
 [ext_resource type="Texture2D" uid="uid://cd33b1rqquxe7" path="res://assets/menus/clear.png" id="6_fqa36"]
 [ext_resource type="Texture2D" uid="uid://cckubrtkqn02q" path="res://assets/menus/current_pos.png" id="7_ks8ci"]
+[ext_resource type="Texture2D" uid="uid://bd2asi6m2s4y4" path="res://assets/menus/tutorial_text.png" id="8_ab2ku"]
 
 [sub_resource type="Animation" id="Animation_ks8ci"]
 resource_name = "RESET"
@@ -58,6 +59,54 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TutorialText:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpeedBonusLabel:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HBoxContainer:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Unlocks:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_lquwi"]
@@ -376,6 +425,70 @@ tracks/4/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_44fgu"]
+resource_name = "go_tutorial"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpeedBonusLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Unlocks:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CurrentPos:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(421, 142)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TutorialText:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ab2ku"]
 _data = {
 &"RESET": SubResource("Animation_ks8ci"),
@@ -383,7 +496,8 @@ _data = {
 &"go_1": SubResource("Animation_ab2ku"),
 &"go_2": SubResource("Animation_8yyhu"),
 &"go_3": SubResource("Animation_i3cxo"),
-&"go_4": SubResource("Animation_qqkgj")
+&"go_4": SubResource("Animation_qqkgj"),
+&"go_tutorial": SubResource("Animation_44fgu")
 }
 
 [node name="BetweenLocks" type="Control"]
@@ -489,6 +603,15 @@ offset_top = 218.0
 offset_right = 144.0
 offset_bottom = 346.0
 texture = ExtResource("7_ks8ci")
+
+[node name="TutorialText" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 361.0
+offset_top = 288.0
+offset_right = 617.0
+offset_bottom = 352.0
+texture = ExtResource("8_ab2ku")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

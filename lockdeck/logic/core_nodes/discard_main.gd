@@ -9,11 +9,17 @@ signal display_cards(Array)
 
 @export var cards: Array[CardSpec]
 
+@export var disable_discard := false:
+	set(v):
+		disable_discard = v
+		$DropArea/CollisionShape2D.set_deferred("disabled", disable_discard) 
+		$DiscardIcon.visible = show_icon and not disable_discard
+
 @export var show_icon: bool = false:
 	set(v):
 		show_icon = v
 		icon_selected = false
-		$DiscardIcon.visible = show_icon
+		$DiscardIcon.visible = show_icon and not disable_discard
 
 @export var icon_selected: bool = false:
 	set(v):

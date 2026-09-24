@@ -1,8 +1,214 @@
+Tutorializer sits in game_manager but gets passed a reference to GameCore
+
+Tutorial takes place in two places:
+1. a tutorial where one or more pages are shown, and then you have a lock to unlock with a deck
+1a. the tutorial has a hand-drawn overlay that can be shown
+2. a manual that describes how to play the game as a series of pages (with cover and TOC)
+2a. the manual is partially locked until you complete the tutorial or reach parts of the game
+
+
+TABLE OF CONTENTS:
+1. Welcome to thieving, kid
+- as we go, you can also follow along in the manual here
+2. The lock
+- these are pins
+- these are depths
+- push the pins all the way up to pick the lock
+3. Picks
+- picks are stored in pick cards
+- here is how you read a basic pick card
+-- this pick pushes the pin up two. we'll talk about that more later
+- drag or tap/tap a card to a pin to play it
+- unlock this lock
+4. Decks, hand management, and game flow (also highlights the deck and discard buttons)
+5. Pick effects (after breakage in the manual)
+- it's now later. You've already met the first effect: push
+- push moves the pin. 
+- effects have a value based on how many of that icon are on the card
+-- this pushes 1
+-- this pushes 3
+6. Breaking your picks
+- once we start dealing with real locks, there's all sorts of things that'll break your pick
+- breaking your pick removes it from your deck, and you'll have to spend money to repair it later. Try real hard to avoid it
+(also unlocks the trash button)
+6a. 
+- right now, there's one way break your pick: push past the end of the pin
+- break a pick to continue
+( if solve: you have to push past the pin)
+6b: nice work. note that while you broke your pick pushing too hard, you also set the pin and solved the lock.
+
+6a manual. ways to break your picks:
+- dangerous depths
+-- the break depth, but also others
+- push past end of pin
+- get unlucky during your last turn
+
+
+7. Depths
+- real locks have dangers in them - security features to slow you down or break your picks.
+- these features are triggered when pins are pushed to a specific position in the lock
+- every real pin - including this one here - has a depth that will break your pick.
+(also unlocks the depth button)
+- you can always hover over a depth to get a reminder what that depth does
+
+"Unlock this lock. You will break a pick."
+deck: all 1-push cards
+
+7-2. Basic survival
+- avoiding dangers is the major skill in picking locks. to keep your picks - and yourself - safe, you're going to need to learn how to look ahead.
+- up to this point, all the depths have been revealed to you. Going forward, they're going to be hidden. If you could scry locks, you wouldn't need me!
+
+- the first technique you need to learn is warning depths. Every BREAK depth always has a WARNING depth somewhere before it.
+(warning and break depth pages)
+
+- the second technique is reveal picks. This is the second effect you get to play with. It's rare, mind you, so you won't see much of it, but let's use it now.
+( draw 1 2-reveal, 1 2-move, and 1 1-move, and the deck is all 1-moves. if they reveal without warning, warn them and reset. if they move 2 without warning, warn them and reset)
+
+- look at this hand. on the left is a reveal pick - rare and important. You don't want to use it willy-nilly and waste it.
+- in the middle is a 2-push pick. If you know where the BREAK depth is, you can use this to jump it - but if you use it blindly, you'll risk jumping right into the break
+- this 1-push pick is safe since
+
+- once you push past the break, you get a notification - pins always have exactly one break depth. Since you know there aren't any other hazards, the rest of this pin is safe.
+
+8. multiple effects
+- most picks have multiple effects at once. these take effect from top down
+- you can preview a pick by clicking and hovering, or dragging it over a pin without dropping it
+- here's a handful of picks to practice with, unlock this lock without breaking it (push + reveal)
+
+9. advanced survival
+- picks with "reveal" effects are super rare - you're playing with almost every one I own right now.
+- far more common are picks that test the lock, but only give you a rough sense of what ahead
+- we call this effect TEST
+
+- when you use a pick that has TEST on it, it'll visit one depth for each test effect. then, from all the unrevealed depths that are tested, you'll learn the worst case danger.
+- let's look at some examples
+-- this pick has a single test on it. it shows as safe - so you know it's good
+-- this pick has a single test on it and it shows as danger - so you know the break depth is there, and the rest of the pin is safe. fantastic!
+-- this pick has two tests on it, and it shows as safe. You can freely advance to either depth, but not any further without risking your pick
+-- this pick has two tests on it, and it shows as danger. you don't know which depth is the break! if you have a big pick that can push three you can skip both, or if you have a tiny pick that tests just one depth you can puzzle out which of the two is dangerous. or you can push one blind and take the fifty-fifty. Sometimes you gotta do what you gotta do.
+
+- TEST is really important to understand, so let's play around a little bit. here's a practice lock and some picks. Press the "RESET" button to hide all the depths and jump back to the beginning, and "REVEAL" to show all the depths. play around about until you get the hang of it, and then let me know.
+- show "reset", "reveal", and "continue" buttons
+
+10. push also tests depths you jump over - be careful if you jump over a break
+- pick this lock without breaking any picks
+
+11. One last thing your picks can do - JAM
+- some picks specialize in jam. we call those "wrenches", since they turn the keyway instead of pushing pins directly. Other picks do jam as a side effect. Those aren't called wrenches, but honestly who cares what they're named. I can't even read - just look at the icons.
+
+- oh anyway, jam - jam blocks other effects. If a pin is jammed, each point of jam blocks one point of push. Also, if a pin is jammed, it won't let you test or reveal it.
+- it sounds bad, and it can be - but it also has its uses. Take this situation: (set up)
+you have a push + 2-reveal pick. if you pushed past the WARNING, you'd be taking a risk. but if you jam first, the push will get absorbed and you can reveal the upcoming depths without moving the pin.
+
+12. so far we've been doing easy locks, but real locks might take you a few runs through your picks to get through. Once you use all the picks in your deck, you'll have to ease up on the pin. That will make every pin fall all the way back to the beginning!
+
+Don't worry though, you'll remember everything you learned about the lock, so you can speed right back up to where you used to be.
+
+However, if you don't feel like retracing your footsteps, if a pin is jammed at the end of a turn, it won't fall. Keep a jam or two handy, especially towards the end of your deck.
+
+solve this lock:
+- two feather wrenches, a push-reveal-reveal, a push, and a two-push
+- warn for anything but a push
+- first depth is a warning
+- warn for anything but a jam
+
+13. Your candle
+(unlocks candle)
+- now on a real heist you don't have forever to pick a lock. You get three turns - that's three runs through your deck. If you have five picks, that means fifteen goes at it, no more.
+- even worse - 
+- solve this lock. don't worry about breaking picks
+
+14. Discarding and ending your turn
+- if you have a bunch of junk picks, there's a couple ways of moving things along.
+- first, you can discard any pick. don't worry about it - it'll be back in your deck on your next turn. Click it then click to the garbage on the right - (or drag the pick over there, same deal)
+- discard the pick
+- if you really have bumpkis, you can end your turn early by clicking your candle twice. It'll discard every pick in your hand and your deck, then shuffle everything back together for a new turn and a fresh run through all your picks.
+
+- solve this lock (4 jams, starting with two in hand and drawing a 3rd.)
+
+15. Multiple pins
+- you don't think all locks are this easy, right? most locks have more than one pin
+- each pin has different depths and you're going to have to solve all of them together to unlock the lock
+- now so far every pick you've been using has been a pick that only affects a single pin. But most picks are a little to big for that, and some affect a whole lot of pins in one go!
+
+- look at the card - you see those notches? each column on the card represents a pin. So this pick has two columns of effects, which means it can push two pins at once
+
+- (fork) this pick pushes two pins, and jams the one in the middle of them! give it a try
+
+- you see that stripe on each pick? that red stripe is the "center pin" - it's what happens to the pin you play the pick to.
+- picks can affect one pin to the right and three pins to the left of your center pin
+- any effects that don't have a pin don't do anything! so for a single-pin lock, you'll only ever get to use the center column. that's why we paint that column red! cuz it's important
+- if you get confused, just hover the pick over the pins and look at the preview. it'll tell you what's affecting what
+- a final note: test applies across all pins at once
+
+solve this lock without breaking any picks (three-pin lock)
+
+
+16. Weaknesses
+- great work. let's go back to a single pin for a bit
+- some pins have weaknesses you can exploit. these also show up as depths
+- take "HINT" - land on a hint depth and you can figure out the next safe depth. 
+- HINT is safe, just like empty depths, so you can't tell them apart with test. 
+- solve this lock! I've included a bunch of hint depths for you
+- if you forget what a depth does, hover over it for a little reminder.
+
+17. complications
+- some depths hinder you without breaking your pick. These test as a yellow "caution". 
+- caution depths fall between safe and dangerous depths when it comes to test - if you test three depths, and one tests as caution while the other two are safe, all three show as caution.
+- likewise, if you test three depths, and two are caution and one is dangerous, all three show as dangerous.
+
+- your first complication is "slip", a little wobble that makes a pin slip backwards a few depths. Annoying, but not the end of the world.
+
+solve this lock without breaking your pick (slip sends to the beginning)
+
+18. depth activations
+- two quirks of locks.
+- first: depths can only activate once per turn. you'll have to get around some complicated hazards by activating them, but you can even push through a slip if you have to.
+- second: if your pin is resting on a depth that does something, and somehow it didn't activate already, it'll auto-activate all on its own at the end of your next action. Even if all you did was throw a pick away - the lock has a mind of its own
+- it might help you to think of it like this: after you do something, every pin activates the depth it's currently at, regardless of if you touched that pin, unless that depth has already activated this turn.
+- that matters a lot for the next depth: bounce! this depth moves your pin forward instead of back. this won't break your pin directly, but it can put you in a tight spot
+- don't forget you can pull up the depth reference to see all the depths that might be in your lock, and hover over a depth for a quick description of what it does
+
+18. other dangers
+- final lesson - there are other depths that can break your pick. you'll see most of them later, but for now, meet spike
+- spike is just like break, with two exceptions:
+-- first, it's revealed at the start! You always know where spikes are. they're not subtle
+-- second, it doesn't have a WARNING depth in front of it. I mean, it might have a warning depth, but that warning is for the BREAK depth specifically, not just "any depth that breaks your pin". So a pin could go spike-warning-break or warning-spike-break. I mean, the spikes are obvious, so this shouldn't be a problem
+alright: solve this final lock and I'll let you go
+
+
+
+
+in tutorial, the "Give Up" button is replaced by "retry"
+
+
+
+another set of tutorials when you first get to loot and strat hub
+- nice work out there! now is the fun part. this is the loot screen
+- in a moment a bunch of treasure is going to come pouring out - and it's all yours!
+- most of the treasure will be coins. hover over them to collect them if you want, but don't sweat every little one - any you don't pick up will get collected automatically for you
+- you'll also get some ingots! ingots are special, because you can immediately turn them into a pick.
+- better ingots give you better picks and more options!
+- alright, go have fun! see you back at base
+
+
+Welcome home! this is where you can spend all that cash you've found. Click the buttons along the top and I'll tell you about them. 
+
+(if you click, you get interrupted):
+oh, first - on the left is your current loot. coins, picks, and broken picks for you to repair. You can't leave with more than twenty picks, but that's probably not going to be an issue for a while.
+on the right is a count of every icon that shows up on all your picks. it gives you a rough feel for how your deck is doing.
+
+alright! click the buttons and i'll walk you through
+
+
+
+
 tutorials: one or more pages (with images), plus drawing on the next game
 global tutorializer object, and "disable tutorial" and "reset tutorial" menu options
 
 tutorial pages go into a book - you're collecting pages (writing?) for the book (one of the skillbooks?)
 
+"locked. complete the tutorial or unlock the manual in the saves menu"
 
 
 tutorial list:
@@ -17,3 +223,9 @@ tutorial list:
 - page for store
 - pages for repair
 - page for "you need x strength to clear a lock"
+
+
+
+starting spread: bounce, slip, spike, hint
+
+jam first unlock

@@ -22,7 +22,16 @@ func break_three() -> void:
 	for __ in 3:
 		$GameCore.break_from_hand()
 
+func begin_tutorial() -> void:
+	$AnimationPlayer.play("RESET")
+	$BetweenLocks/AnimationPlayer.play("go_tutorial")
+	$GameCore.set_tutorial_mode()
+	# TODO
+	$BetweenLocks.reset(0)
+	$AnimationPlayer.play("first lock")
+
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
+	$GameCore.clear_tutorial_mode()
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.current_deck = starter_deck
@@ -35,6 +44,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	heist_start.emit(1)
 
 func load_saved_game(saved_game: GameSpec):
+	$GameCore.clear_tutorial_mode()
 	$AnimationPlayer.play("RESET")
 	game = saved_game
 	$StrategyHub.set_game(game)
