@@ -1,3 +1,1 @@
 clicking a volume slider and holding the mouse down while going away from hover is jank af
-
-something is letting you re-click countdown after turns are done and you play a card??

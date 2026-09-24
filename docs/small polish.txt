@@ -1,0 +1,8 @@
+- clean up carddisplay windows and areas
+- clean up lock details
+- on pin set, raise by 8px and exhaust
+- notifications tween up and vanish
+- card acquire animation
+- Move the pick card's break counter to be a larger, more visible indicator and cap it at 5
+-- on side
+-- with crumples/wrinkles/damage on card

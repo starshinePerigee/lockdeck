@@ -3,17 +3,10 @@ show total number of each depth in lock ("X remaining") - means depth reference 
 s/jam/bind
 
 
-less options on ingots
-
-
 shop replaces pick on buy?
 
 
 move "show active row" from settings to menu
-
-
-size/scale setting
-
 
 
 repair update:
@@ -21,6 +14,3 @@ repair update:
 so:
 - repairs are cheaper (5 gold) or free
 - 50% chance of failure
-
-
-- show previous color shifts depths that were affected last turn

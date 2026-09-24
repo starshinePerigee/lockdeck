@@ -1,17 +1,8 @@
 
-
 more 4-depth picks
 
 
-dont mute on settings open, mute on hover
-
-cards show over settings menu if settings is open during lock
-
-don't accept mousewheel for sliders in settings
-
-
 previous turn should disable the click / jam indicators or at least hide partial
-
 
 
 daring deck:

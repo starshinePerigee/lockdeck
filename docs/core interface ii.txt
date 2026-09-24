@@ -1,9 +1,0 @@
-- debug mode
-x menu (return to title, etc)
-
-
-small polish asset list:
-- clean up carddisplay windows and areas
-- clean up lock details
-- convert depths to transparent on second background
-- on pin set, raise by 8px and exhaust

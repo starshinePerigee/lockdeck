@@ -1,2 +1,0 @@
-- convert to animated sprites for depths
-- notification redo (with animation)
