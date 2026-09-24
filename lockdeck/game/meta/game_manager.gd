@@ -138,6 +138,8 @@ func _ready() -> void:
 	$FailureScreen.continue_to_title.connect(end_game.emit)
 	
 	$MenuButton.pressed.connect($MenuMain.show_menu)
+	$MenuButton.pressed.connect($GameCore.set_menu_status.bind(true))
+	$MenuMain/MenuWidget.closed.connect($GameCore.set_menu_status.bind(false))
 	$MenuMain.auto_complete_level.connect(auto_complete_level)
 	$MenuMain.reveal_level.connect(reveal_level)
 	$MenuMain.break_three.connect(break_three)

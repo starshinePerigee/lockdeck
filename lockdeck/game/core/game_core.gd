@@ -173,7 +173,14 @@ func _do_target() -> void:
 		cleanup_step()
 		end_animation()
 
+var menu_shown := false
+func set_menu_status(menu_shown_: bool) -> void:
+	menu_shown = menu_shown_
+
 func _process(_delta: float) -> void:
+	if menu_shown:
+		return
+	
 	if current_state == InputState.ACTIVE_DRAG:
 		if not _current_area:
 			push_error("In drag state without active area?")

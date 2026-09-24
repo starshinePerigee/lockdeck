@@ -42,7 +42,7 @@ const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 func show_widget():
 	global_position = Vector2(0, 0)
 	visible = true
-	z_index = 3900
+	z_index = 3400
 	GlobalEffects.request(FX_CLICK)
 
 func hide_widget():
