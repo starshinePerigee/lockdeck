@@ -73,3 +73,11 @@ alignment = 0
 script = ExtResource("3_np82d")
 base_text = "Quit"
 confirm_text = "Really Quit?"
+
+[node name="Version" type="Label" parent="."]
+offset_left = 1.0
+offset_top = 527.0
+offset_right = 57.0
+offset_bottom = 540.0
+theme_type_variation = &"TinyAccentText"
+text = "v0.0.0"

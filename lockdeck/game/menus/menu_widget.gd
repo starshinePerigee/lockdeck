@@ -59,6 +59,9 @@ func _handle_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			hide_widget()
 
+func set_version(version: String) -> void:
+	%Version.text = version
+
 func _ready() -> void:
 	%Title.text = title
 	%ToTopMenuButton.pressed_confirmed.connect(do_return_to_title)

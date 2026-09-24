@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.17.7"
+var VERSION_NUMBER := "v0.17.8"
 
 var _saved_game: GameSpec
 
@@ -59,7 +59,8 @@ func load_saves() -> void:
 func _ready() -> void:
 	load_saves()
 	check_saved_game()
-	$Version.text = VERSION_NUMBER
+	$TopLevelMenus/Title/Version.text = VERSION_NUMBER
+	$GameManager/MenuMain/MenuWidget.set_version(VERSION_NUMBER)
 	$GameManager.visible = false
 	
 	$GameManager.end_game.connect(return_to_title)
