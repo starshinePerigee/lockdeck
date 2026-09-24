@@ -41,6 +41,8 @@ func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
 
+const FX_TWIST := preload("res://assets/fx/slide_twist.ogg")
+
 var _tween: Tween
 var _open_awaits: int
 func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
@@ -69,9 +71,36 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 				)
 			)
 			_tween.tween_interval(0.07 * animation_scale)
+	for i in range(end_step.picks_twisted):
+		_tween.tween_interval(0.1)
+		_tween.tween_callback(GlobalEffects.request.bind(FX_TWIST))
+	if animation_scale < 0.1:
+		play_instant_sound(pins)
 	# timeout / fallback for animation logic failures
 	_tween.tween_interval(4.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)
+
+func play_instant_sound(pins: Array[PinSpec]) -> void:
+	# find the worst case result
+	var final_result := Results.EMPTY
+	for pin in pins:
+		for result in pin.results:
+			if result == Results.EXHAUSTED:
+				continue
+			final_result = Results.compare(final_result, result)
+	match final_result:
+		Results.HINT:
+			GlobalEffects.request(Pin.FX_PUSH_SAMPLE)
+		Results.REVEAL:
+			GlobalEffects.request(Pin.FX_REVEAL_SAMPLE)
+		Results.ACTIVATE, Results.TRIGGERED, Results.AUTO:
+			GlobalEffects.request(Pin.FX_RUFFLE)
+		Results.UNLOCK:
+			GlobalEffects.request(Pin.FX_UNLOCK)
+		Results.BREAK:
+			GlobalEffects.request(Pin.FX_BREAK_NORMAL)
+		_:
+			GlobalEffects.request(Pin.FX_TAP)
 
 func animate_fall(pins: Array[PinSpec]) -> void:
 	var animation_scale := GameSettings.instance().animation_speed
@@ -83,8 +112,8 @@ func animate_fall(pins: Array[PinSpec]) -> void:
 	_tween.tween_callback(_pseudo_await)
 	
 	for i in len(pins):
-		pin_refs[i].animate_fall(pins[i])
-		_tween.tween_interval(0.07 * animation_scale)
+		_tween.tween_callback(pin_refs[i].animate_fall.bind(pins[i]))
+		_tween.tween_interval(0.07)
 	
 	_tween.tween_interval(2.0 * animation_scale + 1.0)
 	_tween.tween_callback(_animation_timeout)

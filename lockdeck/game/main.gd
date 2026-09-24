@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.17.3"
+var VERSION_NUMBER := "v0.17.7"
 
 var _saved_game: GameSpec
 
@@ -22,9 +22,12 @@ func start_game(starter_deck: Array[CardSpec]) -> void:
 	$TopLevelMenus/AnimationPlayer.play("start_game")
 	$GameManager.begin_new_game(starter_deck)
 
+const FX_RETURN_CHIME := preload("res://assets/fx/low_chime.ogg")
+
 func return_to_title() -> void:
 	$TopLevelMenus.reset()
 	$TopLevelMenus/AnimationPlayer.play("return_to_title")
+	GlobalEffects.request(FX_RETURN_CHIME)
 	$GameManager.visible = false
 	$GameManager.abort_and_reset()
 	check_saved_game()
@@ -68,14 +71,26 @@ func _ready() -> void:
 	$TopLevelMenus/Title.load_game.connect(load_saved_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
 	
-	$SettingsMain/SettingsWidget.opened.connect($BgmMain.settings_open)
-	$SettingsMain/SettingsWidget.closed.connect($BgmMain.settings_closed)
 	$SettingsMain/SettingsWidget.ambience_hovered_start.connect($BgmMain.start_sample_ambience)
 	$SettingsMain/SettingsWidget.ambience_hovered_end.connect($BgmMain.stop_sample_ambience)
 	$SettingsMain/SettingsWidget.music_hovered_start.connect($BgmMain.start_sample_music)
 	$SettingsMain/SettingsWidget.music_hovered_end.connect($BgmMain.stop_sample_music)
 	$SettingsMain/SettingsWidget.effects_hovered_start.connect($BgmMain.start_sample_effects)
 	$SettingsMain/SettingsWidget.effects_hovered_end.connect($BgmMain.stop_sample_effects)
+	
+	for sig in [
+		$SettingsMain/SettingsWidget.ambience_hovered_start,
+		$SettingsMain/SettingsWidget.music_hovered_start,
+		$SettingsMain/SettingsWidget.effects_hovered_start
+	]:
+		sig.connect($BgmMain.settings_open)
+	
+	for sig in [
+		$SettingsMain/SettingsWidget.ambience_hovered_end,
+		$SettingsMain/SettingsWidget.music_hovered_end,
+		$SettingsMain/SettingsWidget.effects_hovered_end
+	]:
+		sig.connect($BgmMain.settings_closed)
 	
 	$GameManager.heist_start.connect($BgmMain.heist_start)
 	$GameManager.lock_start.connect($BgmMain.new_lock)

@@ -15,6 +15,14 @@ func main_menu() -> void:
 	$HeistLabel.text = "Heist: %s" % heist
 	$BgmMain.title_screen()
 
+func play_many() -> void:
+	var t := create_tween()
+	for __ in 10:
+		t.tween_callback($Node/PushPlayer.play)
+		t.tween_interval(0.1)
+
+const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
+
 func _ready() -> void:
 	$Stack/MenuButton.pressed.connect(main_menu)
 	$Stack/LockButton.pressed.connect(next_heist)
@@ -26,3 +34,8 @@ func _ready() -> void:
 	$Effects/StartBugsButton.pressed.connect($BgmMain/AmbienceManager.start_bugs)
 	$Effects/ShiftBugsButton.pressed.connect($BgmMain/AmbienceManager.shift_bugs)
 	$Effects/EndBugsButton.pressed.connect($BgmMain/AmbienceManager.stop_bugs)
+
+	$FX/PlayTapButton.pressed.connect($Node/PushPlayer.play)
+	$FX/PlayManyButton.pressed.connect(play_many)
+	$FX/PlayBreakButton.pressed.connect(GlobalEffects.request.bind(Pin.FX_BREAK_NORMAL))
+	$FX/RollInButton.pressed.connect(GlobalEffects.request.bind(FX_LOCK_ROLL_IN))

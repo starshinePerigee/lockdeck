@@ -576,7 +576,7 @@ func end_step() -> void:
 func reset_exhaustion() -> void:
 	activated.fill(false)
 	activated[0] = true
-	activated[-1] = true
+#	activated[-1] = true
 	activated[pin_position] = true
 	for i in PIN_DEPTH_COUNT:
 		if depths[i] == Depths.GATE_UNLOCKED and reveals[i] == RevealLevel.REVEALED:

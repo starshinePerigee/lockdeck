@@ -12,7 +12,6 @@ var screenshot_number := 0
 func request_screenshot() -> void:
 	get_tree().create_timer(0.1).timeout.connect(take_screenshot)
 	
-
 func take_screenshot() -> void:
 	await RenderingServer.frame_post_draw
 	var img = get_viewport().get_texture().get_image()

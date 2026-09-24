@@ -89,7 +89,7 @@ func set_effect_volume(setting: float) -> void:
 func show_widget():
 	global_position = Vector2(0, 0)
 	visible = true
-	z_index = 1200
+	z_index = 3910
 	opened.emit()
 
 func hide_widget():
@@ -122,6 +122,8 @@ func request_discrete_tooltip() -> void:
 			+ "and make sure the game is the largest possible size for your display."
 		)
 	)
+
+const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func _ready() -> void:
 	gui_input.connect(_handle_input)
@@ -157,6 +159,19 @@ func _ready() -> void:
 	%EffectSlider.setting_updated.connect(set_effect_volume)
 	%EffectSlider.hovered_start.connect(effects_hovered_start.emit)
 	%EffectSlider.hovered_stop.connect(effects_hovered_end.emit)
-
+	
+	for button in [
+		%TooltipSpeedButton,
+		%AnimationSpeedButton,
+	]:
+		button.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
+	
+	for toggle in [
+		%ActiveRowToggle,
+		%FullscreenButton,
+		%DiscreteScale,
+	]:
+		toggle.toggled.connect(func(x): GlobalEffects.request(FX_CLICK))
+	
 	if get_parent() == get_tree().root:
 		show_widget()

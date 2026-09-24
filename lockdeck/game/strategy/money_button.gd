@@ -67,6 +67,8 @@ const HOVERED := Color("ffbc57")
 const PRESSED := Color("e3773d")
 const DISABLED := Color("918891")
 const DISABLED_HOVER := Color("bd4844")
+const FX_CARD_HOVER := preload("res://assets/fx/hand_hover.ogg")
+const FX_CARD_SELECT := preload("res://assets/fx/hand_select.ogg")
 
 var _mouse_over: bool = false
 
@@ -82,6 +84,7 @@ func _do_hover() -> void:
 		_color_label(DISABLED_HOVER)
 	else:
 		_color_label(HOVERED)
+		GlobalEffects.request(FX_CARD_HOVER)
 
 func _end_hover() -> void:
 	_mouse_over = false
@@ -93,6 +96,7 @@ func _end_hover() -> void:
 func _do_press() -> void:
 	if not disabled:
 		_color_label(PRESSED)
+		GlobalEffects.request(FX_CARD_SELECT)
 
 func _end_press() -> void:
 	if _mouse_over:

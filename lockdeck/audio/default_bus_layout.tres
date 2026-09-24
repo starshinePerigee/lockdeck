@@ -1,6 +1,25 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://ddhmjoior1rl"]
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://ddhmjoior1rl"]
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_73ea7"]
+resource_name = "Limiter"
+threshold_db = -3.0
+
+[sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_73ea7"]
+resource_name = "StereoEnhance"
+pan_pullout = 0.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_73ea7"]
+resource_name = "Reverb"
+predelay_feedback = 0.0
+room_size = 0.02
+damping = 0.99
+spread = 0.0
+hipass = 0.7
+wet = 0.08
 
 [resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLimiter_73ea7")
+bus/0/effect/0/enabled = true
 bus/1/name = &"Ambience"
 bus/1/solo = false
 bus/1/mute = false
@@ -19,3 +38,7 @@ bus/3/mute = false
 bus/3/bypass_fx = false
 bus/3/volume_db = 0.0
 bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectStereoEnhance_73ea7")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectReverb_73ea7")
+bus/3/effect/1/enabled = true

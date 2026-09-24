@@ -100,9 +100,12 @@ func set_count(new_count: int) -> void:
 
 var _pressed := false
 
+const FX_CLICK := preload("res://assets/fx/card_click.ogg")
+
 func handle_press() -> void:
 	if button_disable:
 		return
+	GlobalEffects.request(FX_CLICK)
 	if suggest:
 		_pressed = false
 		countdown_triggered.emit()

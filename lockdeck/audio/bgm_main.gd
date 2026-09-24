@@ -64,10 +64,10 @@ func stop_sample_music() -> void:
 	$MusicManager.settings_stop()
 
 func start_sample_effects() -> void:
-	pass
+	$SFXManager.start_fx()
 
 func stop_sample_effects() -> void:
-	pass
+	$SFXManager.stop_fx()
 
 func _ready() -> void:
 	title_screen()

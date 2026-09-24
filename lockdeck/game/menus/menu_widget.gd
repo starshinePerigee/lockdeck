@@ -37,14 +37,18 @@ func remove_button(button_text: String) -> void:
 	_button_table.erase(button_text)
 	button.queue_free()
 
+const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
+
 func show_widget():
 	global_position = Vector2(0, 0)
 	visible = true
-	z_index = 1200
+	z_index = 3900
+	GlobalEffects.request(FX_CLICK)
 
 func hide_widget():
 	visible = false
 	closed.emit()
+	GlobalEffects.request(FX_CLICK)
 
 func do_return_to_title() -> void:
 	return_to_title.emit()

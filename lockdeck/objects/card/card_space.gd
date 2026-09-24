@@ -229,9 +229,12 @@ func _ready():
 func get_mouse_rect() -> Rect2:
 	return $PickCard.get_global_rect()
 
+const FX_CARD_HOVER := preload("res://assets/fx/hand_hover.ogg")
+
 func core_hover() -> void:
 	z_boost = true
 	get_parent().move_child(self, -1)
+	GlobalEffects.request(FX_CARD_HOVER)
 
 func core_unhover() -> void:
 	if not _selected:

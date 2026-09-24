@@ -35,6 +35,43 @@ Sounds:
 
 
 
+Sound Effects are clipped and remixed from the following sources:
+
+* [FX-metal tool-click 02-090720.wav by ra\_gun](https://freesound.org/people/ra_gun/sounds/81266/), CC0
+* [Padlock.wav by 21100267](https://freesound.org/people/21100267/sounds/591287/), CC0
+* [Sugar cube grabber\_1(metal, click).wav by o\_ciz](https://freesound.org/people/o_ciz/sounds/475424/), CC0
+* [Sliding Open Door Security Chain 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555142/), CC0
+* [Gently Sliding Closed Door Security Chain.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/555139/), CC0
+* [Metal Grinding 2 by qubodup](https://freesound.org/people/qubodup/sounds/743239/), CC0
+* [metallic\_clicks\_taps\_slides.flac by TreadheadRad](https://freesound.org/people/TreadheadRad/sounds/527799/), CC0
+* [fuse2.wav by j1987](https://freesound.org/people/j1987/sounds/140715/), CC0
+* [Pocket-Knife.flac by SyntaxSeed](https://freesound.org/people/SyntaxSeed/sounds/244772/), CC0
+* [Sharp Explosion 4 (of 5) by Rudmer\_Rotteveel](https://freesound.org/people/Rudmer_Rotteveel/sounds/336011/), cc0
+* [metal glass makes long 'PING!' sound.aif by Tomlija](https://freesound.org/people/Tomlija/sounds/101246/), Attribution 3.0
+* [Gravel Crunches by DrinkingWindGames](https://freesound.org/people/DrinkingWindGames/sounds/572467/), Attribution 4.0
+* [tap hammer small piece of metal gentle hits.wav by kyles](https://freesound.org/people/kyles/sounds/450874/), CC0
+* [Guitar string snap or breaks - various sounds by khenshom](Guitar%20string%20snap%20or%20breaks%20-%20various%20sounds), CC0
+* [metal\_spring\_scrape\_resonance.wav by Halion](https://freesound.org/people/Halion/sounds/49706/), CC0
+* [Shing! by TheAcidRomance](https://freesound.org/people/TheAcidRomance/sounds/786713/), CC0
+* [MetalGate.wav by ahill86](https://freesound.org/people/ahill86/sounds/207137/), CC0
+* [Party Horn Room 06](https://freesound.org/people/Lucas_Schacht/sounds/713677) by Lucas\_Schat, CC0
+* [LockingAndUnlocking.wav by talithamaree\_2L](https://freesound.org/people/talithamaree_2L/sounds/593581/), Attribution 3.0
+* [tibetan bells wind chime ring meditation ohm.wav](https://freesound.org/people/rsellick/sounds/545531/) by rsellick, CC0
+* [playing\_cards.aif by KevinHilt](https://freesound.org/people/KevinHilt/sounds/196541/), CC0
+* [fabric rustling and sliding by breadparticles](https://freesound.org/people/breadparticles/sounds/575335/), CC0
+* [EQUIPTact\_Leather Revolver Holster Equip\_HvD\_OwSFX by Hano\_van\_Dalen](https://freesound.org/people/Hano_van_Dalen/sounds/767308/), CC0
+* [Hitting Cabbage Against Wooden Door Frame 1.wav by F.M.Audio](https://freesound.org/people/F.M.Audio/sounds/547580/), Attribution 4.0
+* [Rolling drawer open/close by freemaster2](https://freesound.org/people/freemaster2/sounds/237397/), Attribution 4.0
+* Coin effects by [keatonmarek](https://freesound.org/people/keatonmarek/): [1](https://freesound.org/people/keatonmarek/sounds/533771/), [2](https://freesound.org/people/keatonmarek/sounds/533770/), [3](https://freesound.org/people/keatonmarek/sounds/533775/), [4](https://freesound.org/people/keatonmarek/sounds/533770/), [multiple](https://freesound.org/people/keatonmarek/sounds/533773/), CC0
+* [Caida Moneda - Coin Drop by Dimm\_1](https://freesound.org/people/Diim_1/sounds/854248/), CC0
+* [quartz crystal tapping ceramic plate-002.wav ](https://freesound.org/people/CVLTIV8R/sounds/800113/)by CVLTIV8R, CC0
+* [Shells Falling - Coins by JelloApocalypse](https://freesound.org/people/JelloApocalypse/sounds/802589/), CC0
+* [Pencil Drawing on Paper - Closer Aspect by rylandbrooks](https://freesound.org/people/rylandbrooks/sounds/387927/), CC0
+* [drag\_keys\_over\_counter\_top\_table\_wood.mp3 by bobbobbob2013](https://freesound.org/people/bobbobbob2013/sounds/613819/), CC0
+* [door wood residential turn knob open close thud with spring deadbolt leftside onmic right side offmic.flac by kyles](https://freesound.org/people/kyles/sounds/451139/), CC0
+
+
+
 Created for [WHEELJAM 2](https://itch.io/jam/wheeljam-2). Many thanks to the organizers <3
 
 

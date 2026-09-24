@@ -116,7 +116,8 @@ func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec
 	# activate every pin
 	for pin_index in len(target_pins):
 		var effect := target_pins[pin_index].activate()
-		result.record_effect(effect, pin_index)
+		if effect.flavor != Effects.EMPTY or pin_index in result.effects.keys():
+			result.record_effect(effect, pin_index)
 	
 	# clean up and record
 	for pin in target_pins:

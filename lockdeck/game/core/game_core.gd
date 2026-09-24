@@ -85,11 +85,16 @@ func valid_hovers() -> Array[Control]:
 	hovers.append_array(valid_targets())
 	return hovers
 
+const FX_CARD_SELECT := preload("res://assets/fx/hand_select.ogg")
+const FX_CARD_DESELECT := preload("res://assets/fx/hand_deselect.ogg")
+const FX_CARD_DISCARD := preload("res://assets/fx/hand_discard.ogg")
+
 func pick_dragged(space: CardSpace) -> void:
 	set_state(InputState.ACTIVE_DRAG)
 	$Notifications.clear()
 	_current_area = space.get_card_area()
 	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
+	GlobalEffects.request(FX_CARD_SELECT)
 
 func pick_dropped(space: CardSpace) -> void:
 	if not _current_area:
@@ -104,6 +109,7 @@ func pick_dropped(space: CardSpace) -> void:
 		_do_target()
 	else:
 		_current_space = null
+		GlobalEffects.request(FX_CARD_DESELECT)
 		set_state(InputState.INACTIVE)
 	
 	$LockBody/IndicatorPick.current_pick = null
@@ -120,6 +126,7 @@ func pick_clicked(space: CardSpace) -> void:
 	
 	_current_space = space
 	$LockBody/IndicatorPick.current_pick = space.find_child("PickCard")
+	GlobalEffects.request(FX_CARD_SELECT)
 	space.set_selected()
 	set_state(InputState.ACTIVE_SELECT)
 
@@ -142,6 +149,7 @@ func _input(event: InputEvent) -> void:
 			# note that if you clicked a pick card, this will execute before pick_clicked
 			# so we only need to bring things back to default
 			
+			GlobalEffects.request(FX_CARD_DESELECT)
 			# check if you clicked the same card again:
 			if _current_space.get_mouse_rect().has_point(click):
 				_previous_space = _current_space
@@ -155,6 +163,7 @@ func _input(event: InputEvent) -> void:
 func _do_target() -> void:
 	unhighlight_target(_current_target)
 	if _current_target == $DiscardMain:
+		GlobalEffects.request(FX_CARD_DISCARD)
 		discard_pick()
 	elif _current_target is Pin:
 		await do_pick(
@@ -276,6 +285,9 @@ func unpreview_discard() -> void:
 	$DiscardMain.redraw()
 	$TrashMain.update_label()
 
+const FX_ROLL_IN := preload("res://assets/fx/menu_roll_in.ogg")
+const FX_ROLL_OUT := preload("res://assets/fx/menu_roll_out.ogg")
+
 ## used for moving the lock body
 @onready var LOCK_BODY_HOME: Vector2 = $LockBody.position 
 
@@ -301,6 +313,7 @@ func set_state(state: InputState) -> void:
 					LOCK_BODY_HOME,
 					0.23 * GameSettings.instance().animation_speed
 				)
+				GlobalEffects.request(FX_ROLL_OUT)
 			$PreviousButton.disable = false
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
@@ -330,6 +343,7 @@ func set_state(state: InputState) -> void:
 				),
 				0.23 * GameSettings.instance().animation_speed
 			)
+			GlobalEffects.request(FX_ROLL_IN)
 			$HandMain/Hand.hide_hand()
 			$LockBody/CylinderMain.show_preview(_result)
 			$PreviousButton.show_see_prev = false
@@ -387,7 +401,7 @@ func display_depths() -> void:
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
-func display_cards(cards: Array, header: String) -> void:
+func display_cards(cards: Array, header: String, left: bool) -> void:
 	var cards_typed: Array[CardSpec] = []
 	cards_typed.assign(cards)
 	$CardDisplay.header = header
@@ -396,7 +410,7 @@ func display_cards(cards: Array, header: String) -> void:
 	$CardDisplay.has_sections = "broken" in header.to_lower()
 	
 	$CardDisplay.redraw()
-	$CardDisplay.show_display()
+	$CardDisplay.show_display(left)
 	set_state(InputState.INACTIVE)
 	set_state(InputState.CARD_DISPLAY)
 
@@ -551,6 +565,8 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	$LockBody/CylinderMain/Cylinders.animate_pins(
 		$LockBody/CylinderMain.pins, _result
 	)
+	if break_next:
+		play_break($LockBody/CylinderMain/Cylinders.animation_complete)
 	await $LockBody/CylinderMain/Cylinders.animation_complete
 	
 	if _result.pick_broke or break_next:
@@ -572,7 +588,16 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		solve_lock()
 	else:
 		await post_pick()
-	
+	print("exit do pick")
+
+const FX_BREAK_CANDLE := preload("res://assets/fx/break_ring.ogg")
+## Async break sound
+func play_break(sig: Signal) -> void:
+	print("enter pbreak")
+	await sig
+	GlobalEffects.request(FX_BREAK_CANDLE)
+	print("exit pbreak")
+
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
 	if _result.hand_fumbled:
@@ -645,13 +670,15 @@ func game_over() -> void:
 	game_fail.emit()
 	lock_complete = true
 
+const FX_UNLOCK_CLICKS := preload("res://assets/fx/lock_unlock_clicks.ogg")
+
 func solve_lock() -> void:
 	$LockBody/ContinueButton.visible = true	
 	game_win.emit()
+	GlobalEffects.request(FX_UNLOCK_CLICKS)
 	$LockBody/AnimationPlayer.play("unlock")
 	$Notifications.notify(Notifications.UNLOCK)
 	lock_complete = true
-
 #endregion
 
 #region setup functions
@@ -697,8 +724,12 @@ func restart() -> void:
 	turn_count = 0
 	$Notifications.clear()
 	$LastTest.visible = false
-	cleanup_step()
+	tick_turn_count()
+	update_status_widget()
+	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
+
+const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
 
 func _ready() -> void:
 	var settings := GameSettings.instance()
@@ -709,6 +740,7 @@ func _ready() -> void:
 	$DeckMain.discard_pos = $DiscardMain.position - $DeckMain.position
 	
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
+	$LockBody/ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_SUCCESS_CHIME))
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 
 	$HandMain/Hand.card_selected.connect(pick_selected)
@@ -724,9 +756,9 @@ func _ready() -> void:
 	$DepthDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$CardDisplay.closed.connect(set_state.bind(InputState.INACTIVE))
 	$DepthButton.pressed.connect(display_depths)
-	$TrashMain.display_cards.connect(display_cards.bind("Broken picks"))
-	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck"))
-	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile"))
+	$TrashMain.display_cards.connect(display_cards.bind("Broken picks", false))
+	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck", true))
+	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile", false))
 	
 	$LockBody/IndicatorPick.reset.connect(end_animation)
 	$DeckMain.reload_finish.connect(end_animation)
@@ -741,4 +773,5 @@ func _ready() -> void:
 		var game := GameSpec.get_in_progress_game()
 		load_lock(LockGenerator.build_lock(game.next_lock_deck, 4))
 		load_game(game)
+		draw_to_five()
 #		draw_cards(5)
