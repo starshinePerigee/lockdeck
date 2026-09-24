@@ -1,0 +1,5 @@
+- finish sound
+- remove debug options
+- add tutorial
+- add help
+- add unlocks

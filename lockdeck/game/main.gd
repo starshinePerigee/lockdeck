@@ -22,9 +22,12 @@ func start_game(starter_deck: Array[CardSpec]) -> void:
 	$TopLevelMenus/AnimationPlayer.play("start_game")
 	$GameManager.begin_new_game(starter_deck)
 
+const FX_RETURN_CHIME := preload("res://assets/fx/low_chime.ogg")
+
 func return_to_title() -> void:
 	$TopLevelMenus.reset()
 	$TopLevelMenus/AnimationPlayer.play("return_to_title")
+	GlobalEffects.request(FX_RETURN_CHIME)
 	$GameManager.visible = false
 	$GameManager.abort_and_reset()
 	check_saved_game()

@@ -12,6 +12,7 @@ func reset(lock_in_set: int = 0) -> void:
 	_has_played = false
 
 const FX_COIN_GET := preload("res://assets/fx/coin_claim.ogg")
+const FX_GUST := preload("res://assets/fx/wind_gust.ogg")
 const FX_DRAW_X := preload("res://assets/fx/draw_scratch.ogg")
 var _has_played := false
 
@@ -21,6 +22,9 @@ func play_chime():
 	else:
 		# horrible hack to the logic on betweens
 		_has_played = true
+	var tween := create_tween()
+	tween.tween_interval(0.32)
+	tween.tween_callback(GlobalEffects.request.bind(FX_GUST))
 
 func animate() -> void:
 	$SpeedBonusLabel/DisplayCoin.reset()
