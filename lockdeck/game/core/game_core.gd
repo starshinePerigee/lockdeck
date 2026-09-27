@@ -5,12 +5,11 @@ signal game_win
 signal continue_to_next
 signal continue_to_failure
 signal final_turn
+signal new_state(state_spec: StateSpec)
 
 #region game state variables
-@export var cylinder_count := 4
-@export var deck_count := 10
-@export var hand_size := 3
-@export var countdown_time := 2
+var hand_size := 3
+var starting_countdown_time := 2
 
 @onready var DEBUG_MODE := OS.is_debug_build()
 
@@ -642,6 +641,20 @@ func cleanup_step() -> void:
 		break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
 	update_status_widget()
+	new_state.emit(
+		StateSpec.new(
+			AllCardsSpec.new(
+				$DeckMain.cards,
+				$HandMain.cards,
+				$DiscardMain.cards,
+				$TrashMain.cards
+			),
+			LockSpec.new(
+				$LockBody/CylinderMain.pins,
+				_lock_deck
+			)
+		)
+	)
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
@@ -697,10 +710,14 @@ func load_deck(deck: Array[CardSpec]) -> void:
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(deck)
 
+## Holds the deck used to generate this lock - used for state updates
+var _lock_deck: LockDeck
+
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
-	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
+	_lock_deck = lock.lock_deck
+	$DepthDisplay.update(_lock_deck.get_unique_depths())
 	call_deferred("_set_indicator_box")
 
 func _set_indicator_box() -> void:
@@ -714,7 +731,6 @@ var _already_broken: Array[CardSpec]
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
 	$GameStatus.stage = game.lock_number
-	$DepthDisplay.update(game.lockset_deck.get_unique_depths())
 	load_deck(game.current_deck.duplicate())
 	_already_broken = game.broken_picks
 	$TrashMain.reset()
@@ -727,7 +743,7 @@ func restart() -> void:
 	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
-	$LockBody/CountdownMain.set_count(countdown_time)
+	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
 	$Notifications.clear()

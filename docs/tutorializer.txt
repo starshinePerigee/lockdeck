@@ -6,6 +6,10 @@ Tutorial takes place in two places:
 2. a manual that describes how to play the game as a series of pages (with cover and TOC)
 2a. the manual is partially locked until you complete the tutorial or reach parts of the game
 
+between each major lesson, we go to a challenge lock (via the interface - UNLOCK WITHOUT BREAKING) - (TRY AGAIN) - (GOOD WORK. NOW LISTEN UP) that you have to pick without breaking a pick.
+
+
+
 
 TABLE OF CONTENTS:
 1. Welcome to thieving, kid
@@ -19,7 +23,8 @@ TABLE OF CONTENTS:
 - here is how you read a basic pick card
 -- this pick pushes the pin up two. we'll talk about that more later
 - drag or tap/tap a card to a pin to play it
-- unlock this lock
+- unlock this lock by pushing the pin all the way to the top
+
 4. Decks, hand management, and game flow (also highlights the deck and discard buttons)
 5. Pick effects (after breakage in the manual)
 - it's now later. You've already met the first effect: push
@@ -42,6 +47,34 @@ TABLE OF CONTENTS:
 -- the break depth, but also others
 - push past end of pin
 - get unlucky during your last turn
+
+FIRST CHALLENGE: ONE PIN, NO DEPTHS
+
+
+13. Your candle
+(unlocks candle)
+- now on a real heist you don't have forever to pick a lock. You get three turns - that's three runs through your deck. If you have five picks, that means fifteen goes at it, no more.
+- even worse - 
+- solve this lock. don't worry about breaking picks
+
+
+
+14. Discarding and ending your turn
+- if you have a bunch of junk picks, there's a couple ways of moving things along.
+- first, you can discard any pick. don't worry about it - it'll be back in your deck on your next turn. Click it then click to the garbage on the right - (or drag the pick over there, same deal)
+- discard the pick
+- if you really have bumpkis, you can end your turn early by clicking your candle twice. It'll discard every pick in your hand and your deck, then shuffle everything back together for a new turn and a fresh run through all your picks.
+
+SECOND CHALLENGE: TWO PINS, NO DEPTHS
+
+
+15. Multiple pins
+- you don't think all locks are this easy, right? most locks have more than one pin
+- each pin has different depths and you're going to have to solve all of them together to unlock the lock
+- now so far every pick you've been using has been a pick that only affects a single pin. But most picks are a little to big for that, and some affect a whole lot of pins in one go!
+
+
+
 
 
 7. Depths
@@ -96,9 +129,13 @@ deck: all 1-push cards
 11. One last thing your picks can do - JAM
 - some picks specialize in jam. we call those "wrenches", since they turn the keyway instead of pushing pins directly. Other picks do jam as a side effect. Those aren't called wrenches, but honestly who cares what they're named. I can't even read - just look at the icons.
 
+
+
 - oh anyway, jam - jam blocks other effects. If a pin is jammed, each point of jam blocks one point of push. Also, if a pin is jammed, it won't let you test or reveal it.
 - it sounds bad, and it can be - but it also has its uses. Take this situation: (set up)
 you have a push + 2-reveal pick. if you pushed past the WARNING, you'd be taking a risk. but if you jam first, the push will get absorbed and you can reveal the upcoming depths without moving the pin.
+
+
 
 12. so far we've been doing easy locks, but real locks might take you a few runs through your picks to get through. Once you use all the picks in your deck, you'll have to ease up on the pin. That will make every pin fall all the way back to the beginning!
 
@@ -112,24 +149,9 @@ solve this lock:
 - first depth is a warning
 - warn for anything but a jam
 
-13. Your candle
-(unlocks candle)
-- now on a real heist you don't have forever to pick a lock. You get three turns - that's three runs through your deck. If you have five picks, that means fifteen goes at it, no more.
-- even worse - 
-- solve this lock. don't worry about breaking picks
 
-14. Discarding and ending your turn
-- if you have a bunch of junk picks, there's a couple ways of moving things along.
-- first, you can discard any pick. don't worry about it - it'll be back in your deck on your next turn. Click it then click to the garbage on the right - (or drag the pick over there, same deal)
-- discard the pick
-- if you really have bumpkis, you can end your turn early by clicking your candle twice. It'll discard every pick in your hand and your deck, then shuffle everything back together for a new turn and a fresh run through all your picks.
 
-- solve this lock (4 jams, starting with two in hand and drawing a 3rd.)
-
-15. Multiple pins
-- you don't think all locks are this easy, right? most locks have more than one pin
-- each pin has different depths and you're going to have to solve all of them together to unlock the lock
-- now so far every pick you've been using has been a pick that only affects a single pin. But most picks are a little to big for that, and some affect a whole lot of pins in one go!
+15. multiple pins again
 
 - look at the card - you see those notches? each column on the card represents a pin. So this pick has two columns of effects, which means it can push two pins at once
 

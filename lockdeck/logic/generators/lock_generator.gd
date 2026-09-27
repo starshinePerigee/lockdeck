@@ -217,7 +217,7 @@ static func build_lock(
 	for pin in pins:
 		pin.reset_pin()
 	
-	return LockSpec.new(pins, [])
+	return LockSpec.new(pins, deck)
 
 ## Build a level from a difficulty rating
 static func get_next_level(

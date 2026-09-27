@@ -213,3 +213,4 @@ stream = SubResource("AudioStreamPolyphonic_ujcui")
 volume_db = -5.0
 autoplay = true
 max_polyphony = 8
+bus = &"Effects"

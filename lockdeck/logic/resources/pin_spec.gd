@@ -27,14 +27,14 @@ enum RevealLevel {
 ## Revealed status array.
 @export var reveals: Array[RevealLevel]
 ## Checks if depths have been tested this execution
-@export var checked: Array[bool]
+var checked: Array[bool]
 ## Checks if depths have been activated this turn
 @export var activated: Array[bool]
 ## Holds the results objects for this pin activation
 ## Size is ONE PLUS the size of depths to handle the overrun result
-@export var results: Array[Results]
+var results: Array[Results]
 ## Holds how many twist depths are triggered this execution
-@export var twist_count: int
+var twist_count: int
 ## holds how much more push is pending in a push action
 var _push_pending: int
 ## Holds the checked tracking letters
@@ -42,7 +42,7 @@ var _push_pending: int
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## Tracks the current test/reveal hint pointer. Measures positions beyond current position.
-@export var sight_pointer: int
+var sight_pointer: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
 ## If there is a currently active bomb, what depth it is - otherwise -1
@@ -605,6 +605,12 @@ func reset_pin() -> void:
 	reset_reveals()
 	reset_exhaustion()
 	end_step()
+
+func reify() -> void:
+	for depth in depths:
+		depth = Depths.static_registry[depth.depth_name]
+	end_step()
+
 #endregion
 
 func _init(fill: Depths = Depths.DEBUG):

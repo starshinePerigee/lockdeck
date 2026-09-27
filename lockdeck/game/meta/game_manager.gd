@@ -68,6 +68,7 @@ func lock_complete():
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	game.next_lock_deck = null
+	game.in_progress = null
 	game.save()
 	$AnimationPlayer.play("lock to between", -12)
 	GlobalEffects.request(FX_LOCK_ROLL_OUT)
@@ -116,6 +117,10 @@ func do_failure() -> void:
 	GameSpec.clear_save()
 	$AnimationPlayer.play("lock to failure")
 	failure_start.emit()
+
+func update_state(state_spec: StateSpec) -> void:
+	game.in_progress = state_spec
+	game.save()
 
 func next_lock(level: LevelSpec) -> void:
 	if not game.next_lock_deck:

@@ -3,17 +3,20 @@
 class_name LockSpec
 
 ## Holds all the templates that went into creating this lock
-var templates: Array[DepthTemplates]
+@export var lock_deck: LockDeck
 
 ## Holds the actual PinSpecs
-var pins: Array[PinSpec]
+@export var pins: Array[PinSpec]
+
+func reify() -> void:
+	lock_deck.reify()
+	for pin in pins:
+		pin.reify()
 
 func _init(
-	pins_: Array[PinSpec],
-	templates_: Array[DepthTemplates] = [],
+	pins_: Array[PinSpec] = [],
+	lock_deck_: LockDeck = null,
 ):
+	# pins should only ever be [] on first game load
 	pins = pins_ 
-	if len(templates_) == 0:
-		templates = []
-	else:
-		templates = templates_
+	lock_deck = lock_deck_

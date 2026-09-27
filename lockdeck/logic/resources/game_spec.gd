@@ -36,6 +36,9 @@ const SAVE_PATH := "user://game_save.tres"
 ## Holds the deck for the next lock
 @export var next_lock_deck: LockDeck
 
+## Saves the current in-progess game
+@export var in_progress: StateSpec
+
 func add_coins(count: int) -> void:
 	coins += count
 
