@@ -13,7 +13,7 @@ func reify() -> void:
 			card.reify()
 
 func _init(
-	deck_: Array[CardSpec],
+	deck_: Array[CardSpec] = [],
 	hand_: Array[CardSpec] = [],
 	discard_: Array[CardSpec] = [],
 	trash_: Array[CardSpec] = [],

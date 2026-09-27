@@ -9,36 +9,33 @@ extends Control
 ## Used for simulation purposes
 var _shadow_pins: Array[PinSpec]
 
-## Holds the current turn number
-static var turn_number := -1
-
 ## Holds the current hint id (integer corresponding to ascii)
-var _hint_id := -1
+var hint_id := -1
 
 ## Bump hint_id to the next letter
 func increment_hint() -> int:
 	# pre-A (65)
-	if _hint_id < 0:
-		_hint_id = 65
+	if hint_id < 0:
+		hint_id = 65
 	# A-Z (65-89)
-	elif _hint_id >= 65 and _hint_id < 90:
-		_hint_id += 1
+	elif hint_id >= 65 and hint_id < 90:
+		hint_id += 1
 	# Z (90) to 1 (97)
-	elif _hint_id == 90:
-		_hint_id = 49
+	elif hint_id == 90:
+		hint_id = 49
 	# 1-9 (49-57)
-	elif _hint_id >= 49 and _hint_id < 57:
-		_hint_id += 1
+	elif hint_id >= 49 and hint_id < 57:
+		hint_id += 1
 	# 9 (57) to a (97)
-	elif _hint_id == 57:
-		_hint_id = 97
+	elif hint_id == 57:
+		hint_id = 97
 	# a-z (97-121)
-	elif _hint_id >= 97 and _hint_id < 122:
-		_hint_id += 1
+	elif hint_id >= 97 and hint_id < 122:
+		hint_id += 1
 	# # (35)
 	else:
-		_hint_id = 35
-	return _hint_id
+		hint_id = 35
+	return hint_id
 
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
@@ -51,12 +48,10 @@ func load_new_lock(new_lock: LockSpec) -> void:
 	pins = new_lock.pins
 	_shadow_pins = []
 	for i in len(pins):
-		pins[i].reset_pin()
 		_shadow_pins.append(PinSpec.new())
 		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)
-	turn_number = 0
-	_hint_id = -1
+	hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> EndStepSpec:
@@ -146,17 +141,10 @@ func update_visibility(result: EndStepSpec):
 		return
 	increment_hint()
 	for pin in pins:
-		pin.update_pin_visible(new_level, String.chr(_hint_id))
+		pin.update_pin_visible(new_level, String.chr(hint_id))
 	
 	result.last_reveal = new_level
-	result.last_hint = String.chr(_hint_id)
-
-func update_turn_number() -> int:
-	if turn_number < 0:
-		push_error("Failed to init turn number!")
-		turn_number = 0
-	turn_number += 1
-	return turn_number
+	result.last_hint = String.chr(hint_id)
 
 #endregion
 

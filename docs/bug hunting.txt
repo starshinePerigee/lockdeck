@@ -1,1 +1,3 @@
 clicking a volume slider and holding the mouse down while going away from hover is jank af
+
+i think slip over the end breaks your pick

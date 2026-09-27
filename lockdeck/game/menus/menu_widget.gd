@@ -64,7 +64,7 @@ func set_version(version: String) -> void:
 
 func _ready() -> void:
 	%Title.text = title
-	%ToTopMenuButton.pressed_confirmed.connect(do_return_to_title)
+	%ToTopMenuButton.pressed.connect(do_return_to_title)
 	gui_input.connect(_handle_input)
 	visible = false
 

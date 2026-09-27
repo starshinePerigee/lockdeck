@@ -87,6 +87,14 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 ]
 
 func get_next_level() -> LevelSpec:
+	if in_progress:
+		return LevelSpec.new(
+			LevelSpec.Stages.SPECIFIC,
+			0,
+			0,
+			in_progress
+		)
+	
 	if not game_complete():
 		current_stage += 1
 	
@@ -223,6 +231,7 @@ func reify() -> void:
 	for deck in [lockset_deck, next_lock_deck]:
 		if deck:
 			deck.reify()
+	in_progress.reify()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

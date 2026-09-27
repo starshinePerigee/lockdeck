@@ -50,8 +50,11 @@ func load_saved_game(saved_game: GameSpec):
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
-	print("Loading lock in heist: %s" % game.lock_in_heist)
-	$BetweenLocks.reset(game.lock_in_heist)
+	var lock_in_heist := game.lock_in_heist
+	if game.in_progress:
+		lock_in_heist -= 1
+	print("Loading lock in heist: %s" % lock_in_heist)
+	$BetweenLocks.reset(lock_in_heist)
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(game.heist_number)
 
@@ -84,6 +87,9 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
 			next_lock(next_level)
+		LevelSpec.Stages.SPECIFIC:
+			lock_start.emit()
+			load_state(next_level.state)
 
 func next_loot(loot_value: int) -> void:
 	$LootMain.do_loot(loot_value)
@@ -138,6 +144,14 @@ func next_lock(level: LevelSpec) -> void:
 	GlobalEffects.request(FX_LOCK_ROLL_IN)
 	await $AnimationPlayer.animation_finished
 	$GameCore.draw_to_five()
+	update_state($GameCore.get_game_state())
+
+func load_state(state: StateSpec) -> void:
+	$GameCore.load_in_progress(game, state)
+	$AnimationPlayer.play("between to lock")
+	GlobalEffects.request(FX_LOCK_ROLL_IN)
+	await $AnimationPlayer.animation_finished
+	$GameCore.draw_to_five()
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:
@@ -149,6 +163,7 @@ func _ready() -> void:
 	$LootMain.continue_to_next.connect(end_loot)
 	$GameCore.continue_to_next.connect(lock_complete)
 	$GameCore.continue_to_failure.connect(do_failure)
+	$GameCore.new_state.connect(update_state)
 	$StrategyHub.continue_to_next.connect(end_strategy)
 	$FailureScreen.continue_to_title.connect(end_game.emit)
 	

@@ -607,8 +607,8 @@ func reset_pin() -> void:
 	end_step()
 
 func reify() -> void:
-	for depth in depths:
-		depth = Depths.static_registry[depth.depth_name]
+	for i in len(depths):
+		depths[i] = Depths.static_registry[depths[i].depth_name]
 	end_step()
 
 #endregion

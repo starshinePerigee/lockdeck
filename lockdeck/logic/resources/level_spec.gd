@@ -21,8 +21,7 @@ var loot: int
 var arc: LockDeck.GameArcs
 ## tutorial level
 var tutorial_level: int
-var lock: LockSpec
-var cards: AllCardsSpec
+var state: StateSpec = null
 
 ## Note that this is a very polymorphic init
 ## It's best to just look at the case statement for this function
@@ -30,8 +29,7 @@ func _init(
 	stage_: Stages,
 	count_: int = 0,
 	difficulty_: int = 0,
-	lock_: LockSpec = null,
-	cards_: AllCardsSpec = null,
+	state_: StateSpec = null,
 ) -> void:
 	stage = stage_
 	
@@ -46,8 +44,6 @@ func _init(
 			pass
 		Stages.TUTORIAL:
 			tutorial_level = count_
-			lock = lock_
-			cards = cards_
+			state = state_
 		Stages.SPECIFIC:
-			lock = lock_
-			cards = cards_
+			state = state_

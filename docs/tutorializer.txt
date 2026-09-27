@@ -26,6 +26,9 @@ TABLE OF CONTENTS:
 - unlock this lock by pushing the pin all the way to the top
 
 4. Decks, hand management, and game flow (also highlights the deck and discard buttons)
+
+-- your only resource is the number of picks in your deck - use them all, and your turn is over.
+
 5. Pick effects (after breakage in the manual)
 - it's now later. You've already met the first effect: push
 - push moves the pin. 

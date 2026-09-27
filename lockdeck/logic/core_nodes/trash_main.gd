@@ -14,7 +14,11 @@ func show_display() -> void:
 ## Add a card to the trash
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	text = "Broken: %s" % len(cards)
+	update_label()
+
+func add_cards(cards_: Array[CardSpec]) -> void:
+	cards.append_array(cards_)
+	update_label()
 
 func bump_label() -> void:
 	update_label(1)

@@ -631,6 +631,24 @@ func post_pick() -> void:
 #endregion
 
 #region game flow
+func get_game_state() -> StateSpec:
+	return StateSpec.new(
+		AllCardsSpec.new(
+			$DeckMain.cards,
+			$HandMain.cards,
+			$DiscardMain.cards,
+			$TrashMain.cards
+		),
+		LockSpec.new(
+			$LockBody/CylinderMain.pins,
+			_lock_deck
+		),
+		$LockBody/CountdownMain.count,
+		$LockBody/CountdownMain.break_bag,
+		$LockBody/CylinderMain.hint_id,
+		turn_count
+	)
+
 ## Handle game actions
 func cleanup_step() -> void:
 	draw_to_five()
@@ -641,20 +659,7 @@ func cleanup_step() -> void:
 		break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
 	update_status_widget()
-	new_state.emit(
-		StateSpec.new(
-			AllCardsSpec.new(
-				$DeckMain.cards,
-				$HandMain.cards,
-				$DiscardMain.cards,
-				$TrashMain.cards
-			),
-			LockSpec.new(
-				$LockBody/CylinderMain.pins,
-				_lock_deck
-			)
-		)
-	)
+	new_state.emit(get_game_state())
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
@@ -753,6 +758,23 @@ func restart() -> void:
 	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
 
+## Loads an in-progress game. Used instead of load_lock / load_game
+func load_in_progress(game: GameSpec, state: StateSpec) -> void:
+	load_lock(state.lock)
+	load_game(game)
+	$LockBody/CylinderMain.hint_id = state.hint_id
+	$DeckMain.clear_all()
+	$DeckMain.load_cards(state.all_cards.deck)
+	$HandMain.remove_all_cards()
+	$HandMain.add_cards(state.all_cards.hand)
+	$DiscardMain.empty_deck()
+	$DiscardMain.add_cards(state.all_cards.discard)
+	$TrashMain.reset()
+	$TrashMain.add_cards(state.all_cards.trash)
+	$LockBody/CountdownMain.count = state.countdown
+	$LockBody/CountdownMain.break_bag = state.break_bag
+	turn_count = state.turn_count
+
 var tutorial_mode := false
 
 func set_tutorial_mode() -> void:
@@ -761,7 +783,7 @@ func set_tutorial_mode() -> void:
 
 func clear_tutorial_mode() -> void:
 	tutorial_mode = false
-	$DiscardMain.disable_discard = true
+	$DiscardMain.disable_discard = false
 
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
 
