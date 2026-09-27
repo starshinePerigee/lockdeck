@@ -24,7 +24,7 @@ func _init(
 	all_cards = all_cards_
 	lock = lock_
 	countdown = countdown_
-	if len(break_bag) == 0:
+	if len(break_bag_) == 0:
 		break_bag = []
 	else:
 		break_bag = break_bag_
