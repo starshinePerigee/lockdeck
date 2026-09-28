@@ -99,7 +99,6 @@ func get_next_level() -> LevelSpec:
 			heist_number = 1
 		else:
 			lock_in_heist = 1
-			print("GETTING TUT %s" % (tutorial_level))
 			return Tutorializer.TUTORIAL_SEQUENCE[tutorial_level]
 	elif in_progress:
 		return LevelSpec.new(

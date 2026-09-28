@@ -13,18 +13,7 @@ game manager replays levels if you don't solve them correclty
 
 
 TABLE OF CONTENTS:
-1. Welcome to thieving, kid
-- as we go, you can also follow along in the manual here
-2. The lock
-- these are pins
-- these are depths
-- push the pins all the way up to pick the lock
-3. Picks
-- picks are stored in pick cards
-- here is how you read a basic pick card
--- this pick pushes the pin up two. we'll talk about that more later
-- drag or tap/tap a card to a pin to play it
-- unlock this lock by pushing the pin all the way to the top
+
 
 4. Decks, hand management, and game flow (also highlights the deck and discard buttons)
 
