@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v0.17.11"
+var VERSION_NUMBER := "v0.17.12"
 
 var _saved_game: GameSpec
 
@@ -21,6 +21,11 @@ func start_game(starter_deck: Array[CardSpec]) -> void:
 	
 	$TopLevelMenus/AnimationPlayer.play("start_game")
 	$GameManager.begin_new_game(starter_deck)
+
+func start_tutorial() -> void:
+	$GameManager.visible = true
+	$TopLevelMenus/AnimationPlayer.play("start_game")
+	$GameManager.begin_tutorial()
 
 const FX_RETURN_CHIME := preload("res://assets/fx/low_chime.ogg")
 
@@ -69,6 +74,7 @@ func _ready() -> void:
 	$GameManager/MenuMain.return_to_title.connect(return_to_title)
 	$GameManager/MenuMain.return_to_title.connect($BgmMain.title_screen)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
+	$TopLevelMenus/DeckSelect.start_tutorial.connect(start_tutorial)
 	$TopLevelMenus/Title.load_game.connect(load_saved_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
 	

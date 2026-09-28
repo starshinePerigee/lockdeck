@@ -10,6 +10,7 @@ signal victory_start
 signal end_game
 
 var game: GameSpec
+var tutorial_mode := false
 
 func auto_complete_level() -> void:
 	$GameCore.solve_lock()
@@ -25,13 +26,15 @@ func break_three() -> void:
 func begin_tutorial() -> void:
 	$AnimationPlayer.play("RESET")
 	$BetweenLocks/AnimationPlayer.play("go_tutorial")
-	$GameCore.set_tutorial_mode()
-	# TODO
+	$GameCore/AnimationPlayer.play("tutorial_start")
+	game = GameSpec.new()
+	game.current_deck = []
+	game.tutorial_level = 1
+	game.save()
 	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("first lock")
 
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
-	$GameCore.clear_tutorial_mode()
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.current_deck = starter_deck
@@ -44,7 +47,6 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	heist_start.emit(1)
 
 func load_saved_game(saved_game: GameSpec):
-	$GameCore.clear_tutorial_mode()
 	$AnimationPlayer.play("RESET")
 	game = saved_game
 	$StrategyHub.set_game(game)
@@ -63,7 +65,9 @@ const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")
 const FX_LOOT_ROLL_IN := preload("res://assets/fx/loot_roll_in.ogg")
 const FX_LOOT_ROLL_OUT := preload("res://assets/fx/drawers_roll.ogg")
 
-func lock_complete():
+func lock_complete() -> void:
+	if tutorial_mode:
+		return
 	game.break_picks($GameCore/TrashMain.cards)
 	if $GameCore/LockBody/CountdownMain.count >= 2:
 		game.add_coins(10)
@@ -78,6 +82,13 @@ func lock_complete():
 
 func advance_from_between() -> void:
 	var next_level: LevelSpec = game.get_next_level()
+	tutorial_mode = game.tutorial_level > 0
+	print(
+		"Next level: %s %s" % [
+			LevelSpec.Stages.find_key(next_level.stage),
+			next_level.difficulty + next_level.tutorial_level
+		]
+	)
 	match next_level.stage:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
@@ -90,6 +101,10 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.SPECIFIC:
 			lock_start.emit()
 			load_state(next_level.state)
+		LevelSpec.Stages.TUTORIAL:
+			lock_start.emit()
+			load_state(next_level.state)
+			$Tutorializer.tutorialize(next_level.tutorial_level)
 
 func next_loot(loot_value: int) -> void:
 	$LootMain.do_loot(loot_value)
@@ -120,6 +135,9 @@ func do_victory() -> void:
 
 ## Show the failure screen - called from gamecore
 func do_failure() -> void:
+	if tutorial_mode:
+		# TODO
+		return
 	GameSpec.clear_save()
 	$AnimationPlayer.play("lock to failure")
 	failure_start.emit()

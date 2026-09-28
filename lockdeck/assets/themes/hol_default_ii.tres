@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=33 format=3 uid="uid://ceiwumox6242k"]
+[gd_resource type="Theme" load_steps=35 format=3 uid="uid://ceiwumox6242k"]
 
 [ext_resource type="FontFile" uid="uid://xp1vle7pj08i" path="res://assets/themes/m5x7.ttf" id="1_2dmma"]
 [ext_resource type="StyleBox" uid="uid://b5g08s0367sks" path="res://assets/themes/basic_button_disable_stylebox.tres" id="1_c6a5y"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://hs6w6dse5sfj" path="res://assets/interface/scroll.png" id="10_6iba6"]
 [ext_resource type="StyleBox" uid="uid://dw2eg4vnyhcr1" path="res://assets/interface/hscroll_highlight.tres" id="10_nvhkk"]
 [ext_resource type="Texture2D" uid="uid://bjhdwge0fxcj2" path="res://assets/interface/button_stylebox_purble.png" id="12_xdxd8"]
+[ext_resource type="Texture2D" uid="uid://56lj2mjrvinn" path="res://assets/interface/button_stylebox_white.png" id="14_qcjvr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqxeh"]
 
@@ -42,6 +43,18 @@ texture_margin_right = 8.0
 texture_margin_bottom = 1.0
 expand_margin_top = 3.0
 expand_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gh6xd"]
+texture = ExtResource("14_qcjvr")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
@@ -114,6 +127,8 @@ Button/styles/hover = SubResource("StyleBoxEmpty_43re0")
 Button/styles/hover_pressed = SubResource("StyleBoxEmpty_c6a5y")
 Button/styles/normal = SubResource("StyleBoxEmpty_7vbbg")
 Button/styles/pressed = SubResource("StyleBoxEmpty_n2srw")
+CardBig/base_type = &"CardText"
+CardBig/font_sizes/font_size = 32
 CardRich/base_type = &"RichTextLabel"
 CardRich/font_sizes/bold_font_size = 16
 CardRich/font_sizes/bold_italics_font_size = 16
@@ -139,6 +154,8 @@ HSliderForceHighlight/styles/grabber_area = ExtResource("10_nvhkk")
 HeaderLabel/base_type = &"Label"
 HeaderLabel/font_sizes/font_size = 28
 HeaderLabel/fonts/font = ExtResource("1_gc3fe")
+HighlightPanel/base_type = &"Panel"
+HighlightPanel/styles/panel = SubResource("StyleBoxTexture_gh6xd")
 Label/colors/font_outline_color = Color(0.0352941, 0.0352941, 0.0588235, 1)
 Label/constants/line_spacing = -6
 Label/constants/outline_size = 4

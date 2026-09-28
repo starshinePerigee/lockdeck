@@ -12,15 +12,15 @@ enum Stages {
 
 var stage: Stages
 ## How many pins to generate
-var pin_count: int
+var pin_count: int = 1
 ## How difficult a lock to generate
-var difficulty: int
+var difficulty: int = 0
 ## How much loot to generate
-var loot: int
+var loot: int = 0
 ## The next lockset deck to load
 var arc: LockDeck.GameArcs
 ## tutorial level
-var tutorial_level: int
+var tutorial_level: int = 0
 var state: StateSpec = null
 
 ## Note that this is a very polymorphic init

@@ -19,6 +19,10 @@ const SAVE_PATH := "user://game_save.tres"
 @export var lock_in_heist: int = 0
 @export var current_stage: int = -1
 
+## Tutorial level. -1 for "not tutorial" and 1 for "is tutorial"
+## This should switch over to -1 and start the real game once it exhausts the tutorial specs
+@export var tutorial_level: int = -1
+
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
 
@@ -94,6 +98,16 @@ func get_next_level() -> LevelSpec:
 			0,
 			in_progress
 		)
+	
+	if tutorial_level > 0:
+		if tutorial_level - 1 >= len(Tutorializer.TUTORIAL_SEQUENCE):
+			# we've solved the tutorial
+			tutorial_level = -1
+			current_stage = 3
+			heist_number = 1
+		else:
+			tutorial_level += 1
+			return Tutorializer.TUTORIAL_SEQUENCE[tutorial_level - 2]
 	
 	if not game_complete():
 		current_stage += 1

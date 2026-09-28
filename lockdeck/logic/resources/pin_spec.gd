@@ -613,6 +613,18 @@ func reify() -> void:
 
 #endregion
 
+## Build a pinspec from a depth array. depth_array must not be longer than 7
+static func from_depth_array(depth_array: Array[Depths]) -> PinSpec:
+	if len(depth_array) > 7:
+		push_error("Depth array should be only the inner depths of the pin!")
+	
+	var new := PinSpec.new(Depths.EMPTY)
+	for i in len(depth_array):
+		new.depths[i + 1] = depth_array[i]
+	
+	new.reset_pin()
+	return new
+
 func _init(fill: Depths = Depths.DEBUG):
 	depths = []
 	depths.resize(PIN_DEPTH_COUNT)

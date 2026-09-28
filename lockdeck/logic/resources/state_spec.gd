@@ -16,7 +16,7 @@ func reify() -> void:
 func _init(
 	all_cards_: AllCardsSpec = null,
 	lock_: LockSpec = null,
-	countdown_: = 0,
+	countdown_: = 99,
 	break_bag_: = [],
 	hint_id_: int = -1,
 	turn_count_: int = 0,
@@ -25,7 +25,7 @@ func _init(
 	lock = lock_
 	countdown = countdown_
 	if len(break_bag_) == 0:
-		break_bag = []
+		break_bag = [false, false, false]
 	else:
 		break_bag = break_bag_
 	hint_id = hint_id_

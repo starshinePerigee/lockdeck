@@ -8,6 +8,7 @@ Tutorial takes place in two places:
 
 between each major lesson, we go to a challenge lock (via the interface - UNLOCK WITHOUT BREAKING) - (TRY AGAIN) - (GOOD WORK. NOW LISTEN UP) that you have to pick without breaking a pick.
 
+game manager replays levels if you don't solve them correclty
 
 
 
@@ -202,6 +203,8 @@ solve this lock without breaking your pick (slip sends to the beginning)
 alright: solve this final lock and I'll let you go
 
 
+
+end with a "here's your new deck and some cash"
 
 
 in tutorial, the "Give Up" button is replaced by "retry"

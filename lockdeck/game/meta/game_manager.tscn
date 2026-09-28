@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dcnnwbxmgrvx2"]
+[gd_scene load_steps=18 format=3 uid="uid://dcnnwbxmgrvx2"]
 
 [ext_resource type="Script" uid="uid://bj3uatmntqbfg" path="res://game/meta/game_manager.gd" id="1_hcbws"]
 [ext_resource type="PackedScene" uid="uid://bql12v3dt5jn2" path="res://game/core/game_core.tscn" id="2_51x2c"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://t14tg1tt2anv" path="res://game/meta/strategy_hub.tscn" id="4_vpla2"]
 [ext_resource type="PackedScene" uid="uid://bftgyem3nerxa" path="res://game/meta/failure_screen.tscn" id="6_84uwg"]
 [ext_resource type="PackedScene" uid="uid://biji5i2a33xn5" path="res://game/meta/menu_main.tscn" id="7_msycn"]
+[ext_resource type="PackedScene" uid="uid://8b6cmkvucovs" path="res://game/core/tutorializer.tscn" id="8_o3825"]
 
 [sub_resource type="Animation" id="Animation_vpla2"]
 resource_name = "RESET"
@@ -513,3 +514,5 @@ text = "Menu"
 [node name="MenuMain" parent="." instance=ExtResource("7_msycn")]
 visible = false
 layout_mode = 1
+
+[node name="Tutorializer" parent="." instance=ExtResource("8_o3825")]

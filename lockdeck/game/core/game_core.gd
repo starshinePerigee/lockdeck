@@ -5,6 +5,7 @@ signal game_win
 signal continue_to_next
 signal continue_to_failure
 signal final_turn
+signal pick_broke
 signal new_state(state_spec: StateSpec)
 
 #region game state variables
@@ -161,7 +162,7 @@ func _input(event: InputEvent) -> void:
 
 func _do_target() -> void:
 	unhighlight_target(_current_target)
-	if _current_target == $DiscardMain:
+	if _current_target == $DiscardMain and not $DiscardMain.disable_discard:
 		GlobalEffects.request(FX_CARD_DISCARD)
 		discard_pick()
 	elif _current_target is Pin:
@@ -518,6 +519,8 @@ func break_pick(card: CardSpec, surprise := false, bomb := false) -> void:
 	
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
+	
+	pick_broke.emit()
 
 ## Breaks the rightmost card - used for debug
 func break_from_hand() -> void:
@@ -721,7 +724,10 @@ var _lock_deck: LockDeck
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
 	$LockBody/CylinderMain.load_new_lock(lock)
-	_lock_deck = lock.lock_deck
+	if lock.lock_deck:
+		_lock_deck = lock.lock_deck
+	else:
+		_lock_deck = LockDeck.new()
 	$DepthDisplay.update(_lock_deck.get_unique_depths())
 	call_deferred("_set_indicator_box")
 
@@ -775,15 +781,8 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 	$LockBody/CountdownMain.break_bag = state.break_bag
 	turn_count = state.turn_count
 
-var tutorial_mode := false
-
-func set_tutorial_mode() -> void:
-	tutorial_mode = true
-	$DiscardMain.disable_discard = true 
-
-func clear_tutorial_mode() -> void:
-	tutorial_mode = false
-	$DiscardMain.disable_discard = false
+func set_discard_disable(disable: bool) -> void:
+	$DiscardMain.disable_discard = disable
 
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
 

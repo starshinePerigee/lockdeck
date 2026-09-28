@@ -994,6 +994,18 @@ static var OLD_KEY := PickTemplates.new(
 )
 #endregion
 
+#region tutorial picks
+
+static var TUTORIAL_PUSH_2 := PickTemplates.new(
+	"medium hook",
+	Families.NONE,
+	Archetypes.CLOSE_TEST,
+	Rarities.BASIC,
+	"PP",
+)
+
+#endregion
+
 static var valid_templates: Array[PickTemplates] = [
 	RAKE_BULK_PUSH_BASIC,
 	RAKE_BULK_PUSH_GREAT,
