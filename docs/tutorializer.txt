@@ -1,3 +1,8 @@
+IMMEDIATE TODO:
+- fix interface stuff for first challenge (add interface setup to game state)
+- 
+
+
 Tutorializer sits in game_manager but gets passed a reference to GameCore
 
 Tutorial takes place in two places:
@@ -14,9 +19,16 @@ game manager replays levels if you don't solve them correclty
 
 TABLE OF CONTENTS:
 
+1.5: two challenges. one 1-pin, one 2-pin
+
+2:
+- two pins
+- discard
+- spike
 
 4. Decks, hand management, and game flow (also highlights the deck and discard buttons)
 
+discard
 -- your only resource is the number of picks in your deck - use them all, and your turn is over.
 
 5. Pick effects (after breakage in the manual)
