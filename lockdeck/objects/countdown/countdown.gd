@@ -36,7 +36,10 @@ var show_end := false:
 		if not is_node_ready():
 			await ready
 		
-		if count > 4:
+		if count > 10:
+			_label_text = "Plenty of turns remain."
+			texture_normal = CD_TWO
+		elif count > 4:
 			_label_text = "%s turns remain"
 			texture_normal = CD_TWO
 		elif count == 4:

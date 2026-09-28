@@ -26,10 +26,9 @@ func break_three() -> void:
 func begin_tutorial() -> void:
 	$AnimationPlayer.play("RESET")
 	$BetweenLocks/AnimationPlayer.play("go_tutorial")
-	$GameCore/AnimationPlayer.play("tutorial_start")
 	game = GameSpec.new()
 	game.current_deck = []
-	game.tutorial_level = 1
+	game.tutorial_level = 0
 	game.save()
 	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("first lock")
@@ -66,8 +65,6 @@ const FX_LOOT_ROLL_IN := preload("res://assets/fx/loot_roll_in.ogg")
 const FX_LOOT_ROLL_OUT := preload("res://assets/fx/drawers_roll.ogg")
 
 func lock_complete() -> void:
-	if tutorial_mode:
-		return
 	game.break_picks($GameCore/TrashMain.cards)
 	if $GameCore/LockBody/CountdownMain.count >= 2:
 		game.add_coins(10)
@@ -76,17 +73,23 @@ func lock_complete() -> void:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	game.next_lock_deck = null
 	game.in_progress = null
+	if tutorial_mode:
+		# it's weird/bad that tutorial levels are incremented out here,
+		# but game levels are incremented in gamespec,
+		# but it makes sense because how we save/load games
+		game.tutorial_level += 1
 	game.save()
 	$AnimationPlayer.play("lock to between", -12)
 	GlobalEffects.request(FX_LOCK_ROLL_OUT)
 
 func advance_from_between() -> void:
 	var next_level: LevelSpec = game.get_next_level()
-	tutorial_mode = game.tutorial_level > 0
+	tutorial_mode = game.tutorial_level >= 0
 	print(
-		"Next level: %s %s" % [
+		"Next level: %s %s %s" % [
 			LevelSpec.Stages.find_key(next_level.stage),
-			next_level.difficulty + next_level.tutorial_level
+			next_level.difficulty,
+			next_level.tutorial_level
 		]
 	)
 	match next_level.stage:
@@ -102,6 +105,8 @@ func advance_from_between() -> void:
 			lock_start.emit()
 			load_state(next_level.state)
 		LevelSpec.Stages.TUTORIAL:
+			if next_level.tutorial_level == 0:
+				$GameCore/AnimationPlayer.play("tutorial_start")
 			lock_start.emit()
 			load_state(next_level.state)
 			$Tutorializer.tutorialize(next_level.tutorial_level)
@@ -135,9 +140,6 @@ func do_victory() -> void:
 
 ## Show the failure screen - called from gamecore
 func do_failure() -> void:
-	if tutorial_mode:
-		# TODO
-		return
 	GameSpec.clear_save()
 	$AnimationPlayer.play("lock to failure")
 	failure_start.emit()
@@ -170,6 +172,8 @@ func load_state(state: StateSpec) -> void:
 	GlobalEffects.request(FX_LOCK_ROLL_IN)
 	await $AnimationPlayer.animation_finished
 	$GameCore.draw_to_five()
+	if tutorial_mode:
+		$Tutorializer.do_step()
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:
@@ -191,6 +195,7 @@ func _ready() -> void:
 	$MenuMain.auto_complete_level.connect(auto_complete_level)
 	$MenuMain.reveal_level.connect(reveal_level)
 	$MenuMain.break_three.connect(break_three)
+	$Tutorializer.core = $GameCore
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:

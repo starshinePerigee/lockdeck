@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bql12v3dt5jn2"]
+[gd_scene load_steps=23 format=3 uid="uid://bql12v3dt5jn2"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -415,9 +415,62 @@ tracks/15/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_f550e"]
+resource_name = "show_deck_discard"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeckMain:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16, 602), Vector2(16, 474)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DiscardMain:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(791, 576), Vector2(791, 448)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DeckMain:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DiscardMain:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f550e"]
 _data = {
 &"RESET": SubResource("Animation_ihpbi"),
+&"show_deck_discard": SubResource("Animation_f550e"),
 &"tutorial_start": SubResource("Animation_q8mgc")
 }
 
@@ -506,16 +559,16 @@ offset_bottom = 575.0
 [node name="DeckMain" parent="." instance=ExtResource("6_i4qfg")]
 layout_mode = 1
 offset_left = 16.0
-offset_top = 602.0
+offset_top = 474.0
 offset_right = 16.0
-offset_bottom = 602.0
+offset_bottom = 474.0
 
 [node name="DiscardMain" parent="." instance=ExtResource("7_rrevw")]
 layout_mode = 1
 offset_left = 791.0
-offset_top = 576.0
+offset_top = 448.0
 offset_right = 791.0
-offset_bottom = 576.0
+offset_bottom = 448.0
 
 [node name="TrashMain" parent="." instance=ExtResource("8_2tf6j")]
 custom_minimum_size = Vector2(128, 24)

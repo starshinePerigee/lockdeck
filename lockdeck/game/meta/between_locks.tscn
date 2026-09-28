@@ -598,10 +598,10 @@ texture = ExtResource("6_fqa36")
 
 [node name="CurrentPos" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 421.0
-offset_top = 142.0
-offset_right = 549.0
-offset_bottom = 270.0
+offset_left = 16.0
+offset_top = 218.0
+offset_right = 144.0
+offset_bottom = 346.0
 texture = ExtResource("7_ks8ci")
 
 [node name="TutorialText" type="TextureRect" parent="."]

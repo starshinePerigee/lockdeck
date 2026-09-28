@@ -7,7 +7,13 @@ func _update_depth_preview(game: GameSpec) -> void:
 		%DepthsVBox.remove_child(child)
 		child.queue_free()
 	
-	var next_depths := game.lockset_deck.get_unique_depths()
+	var lockset_deck: LockDeck
+	if game.lockset_deck:
+		lockset_deck = game.lockset_deck
+	else:
+		lockset_deck = LockDeck.new()
+	
+	var next_depths := lockset_deck.get_unique_depths()
 	
 	var difficulties = DepthTemplates.Difficulty.values()
 	difficulties.erase(DepthTemplates.Difficulty.ESSENTIAL)

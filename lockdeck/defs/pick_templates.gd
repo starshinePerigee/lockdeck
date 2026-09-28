@@ -1004,6 +1004,22 @@ static var TUTORIAL_PUSH_2 := PickTemplates.new(
 	"PP",
 )
 
+static var TUTORIAL_PUSH_1 := PickTemplates.new(
+	"small hook",
+	Families.NONE,
+	Archetypes.PRECISE,
+	Rarities.BASIC,
+	"P",
+)
+
+static var TUTORIAL_PUSH_3 := PickTemplates.new(
+	"large hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.BASIC,
+	"PPP",
+)
+
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [

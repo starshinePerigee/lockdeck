@@ -8,6 +8,9 @@ var current_pos: int = 1
 func reset(lock_in_set: int = 0) -> void:
 	current_pos = lock_in_set
 	$SpeedBonusLabel.visible = false
+	if lock_in_set < 0 or lock_in_set > 4:
+		lock_in_set = 0
+	
 	$AnimationPlayer.play("go_%s" % lock_in_set, -1, 1000)
 	_has_played = false
 

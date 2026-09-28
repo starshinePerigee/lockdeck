@@ -39,10 +39,9 @@ autowrap_mode = 2
 
 [node name="CloseLabel" type="Label" parent="TutorialBox/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_type_variation = &"CardText"
-text = "Click outside the window to close."
+text = "Click outside the window to continue."
 horizontal_alignment = 1
 
 [node name="Arrows" type="TextureRect" parent="."]

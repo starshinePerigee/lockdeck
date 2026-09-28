@@ -19,9 +19,9 @@ const SAVE_PATH := "user://game_save.tres"
 @export var lock_in_heist: int = 0
 @export var current_stage: int = -1
 
-## Tutorial level. -1 for "not tutorial" and 1 for "is tutorial"
-## This should switch over to -1 and start the real game once it exhausts the tutorial specs
-@export var tutorial_level: int = -1
+## Tutorial level. -2 for "not tutorial", -1 is "tutorial the next shop", and 0 is "start tutorial".
+## This should switch over to -2 and start the real game once it exhausts the tutorial specs
+@export var tutorial_level: int = -2
 
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
@@ -91,23 +91,23 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 ]
 
 func get_next_level() -> LevelSpec:
-	if in_progress:
+	if tutorial_level >= 0:
+		if tutorial_level >= len(Tutorializer.TUTORIAL_SEQUENCE):
+			# we've solved the tutorial
+			tutorial_level = -1
+			current_stage = 3
+			heist_number = 1
+		else:
+			lock_in_heist = 1
+			print("GETTING TUT %s" % (tutorial_level))
+			return Tutorializer.TUTORIAL_SEQUENCE[tutorial_level]
+	elif in_progress:
 		return LevelSpec.new(
 			LevelSpec.Stages.SPECIFIC,
 			0,
 			0,
 			in_progress
 		)
-	
-	if tutorial_level > 0:
-		if tutorial_level - 1 >= len(Tutorializer.TUTORIAL_SEQUENCE):
-			# we've solved the tutorial
-			tutorial_level = -1
-			current_stage = 3
-			heist_number = 1
-		else:
-			tutorial_level += 1
-			return Tutorializer.TUTORIAL_SEQUENCE[tutorial_level - 2]
 	
 	if not game_complete():
 		current_stage += 1
@@ -240,12 +240,14 @@ static func load_save() -> GameSpec:
 
 func reify() -> void:
 	for deck in [current_deck, broken_picks, removed_forever_picks]:
-		for card in deck:
-			card.reify()
+		if deck:
+			for card in deck:
+				card.reify()
 	for deck in [lockset_deck, next_lock_deck]:
 		if deck:
 			deck.reify()
-	in_progress.reify()
+	if in_progress:
+		in_progress.reify()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

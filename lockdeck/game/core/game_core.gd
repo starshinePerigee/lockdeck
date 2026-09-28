@@ -1,4 +1,5 @@
 extends Control
+class_name GameCore
 
 signal game_fail
 signal game_win
@@ -7,6 +8,7 @@ signal continue_to_failure
 signal final_turn
 signal pick_broke
 signal new_state(state_spec: StateSpec)
+signal animation_complete
 
 #region game state variables
 var hand_size := 3
@@ -387,7 +389,7 @@ func lock_input(state: bool = true) -> void:
 	$HandMain/Hand.disabled = state or lock_complete
 
 func show_failure(state: bool = true) -> void:
-	$FailureButton.visible = state
+	$FailureButton.visible = state and not tutorial_mode
 	if state:
 		$FailureButton.mouse_filter = MOUSE_FILTER_STOP
 	else:
@@ -702,7 +704,7 @@ func game_over() -> void:
 const FX_UNLOCK_CLICKS := preload("res://assets/fx/lock_unlock_clicks.ogg")
 
 func solve_lock() -> void:
-	$LockBody/ContinueButton.visible = true	
+	$LockBody/ContinueButton.visible = not tutorial_mode	
 	game_win.emit()
 	GlobalEffects.request(FX_UNLOCK_CLICKS)
 	$LockBody/AnimationPlayer.play("unlock")
@@ -784,6 +786,8 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 func set_discard_disable(disable: bool) -> void:
 	$DiscardMain.disable_discard = disable
 
+var tutorial_mode := false
+
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
 
 func _ready() -> void:
@@ -814,6 +818,9 @@ func _ready() -> void:
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks", false))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck", true))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile", false))
+	
+	$HandMain/Hand.animation_complete.connect(animation_complete.emit)
+	$LockBody/CylinderMain/Cylinders.animation_complete.connect(animation_complete.emit)
 	
 	$LockBody/IndicatorPick.reset.connect(end_animation)
 	$DeckMain.reload_finish.connect(end_animation)

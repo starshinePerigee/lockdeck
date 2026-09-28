@@ -10,8 +10,10 @@ class_name StateSpec
 @export var turn_count: int
 
 func reify() -> void:
-	all_cards.reify()
-	lock.reify()
+	if all_cards:
+		all_cards.reify()
+	if lock:
+		lock.reify()
 
 func _init(
 	all_cards_: AllCardsSpec = null,
