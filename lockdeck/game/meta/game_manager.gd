@@ -108,8 +108,9 @@ func advance_from_between() -> void:
 			if next_level.tutorial_level == 0:
 				$GameCore/AnimationPlayer.play("tutorial_start")
 			lock_start.emit()
-			load_state(next_level.state)
+			await load_state(next_level.state)
 			$Tutorializer.tutorialize(next_level.tutorial_level)
+			$Tutorializer.do_step()
 
 func next_loot(loot_value: int) -> void:
 	$LootMain.do_loot(loot_value)
@@ -172,8 +173,6 @@ func load_state(state: StateSpec) -> void:
 	GlobalEffects.request(FX_LOCK_ROLL_IN)
 	await $AnimationPlayer.animation_finished
 	$GameCore.draw_to_five()
-	if tutorial_mode:
-		$Tutorializer.do_step()
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:
