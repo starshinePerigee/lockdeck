@@ -582,9 +582,9 @@ grow_vertical = 1
 
 [node name="CountdownMain" parent="LockBody" instance=ExtResource("3_i4qfg")]
 z_index = 4
-offset_left = 753.0
+offset_left = 593.0
 offset_top = 174.0
-offset_right = 753.0
+offset_right = 593.0
 offset_bottom = 174.0
 
 [node name="ActiveBox" type="TextureRect" parent="LockBody"]
@@ -639,16 +639,16 @@ offset_bottom = 531.0
 [node name="DepthButton" parent="." instance=ExtResource("11_ihpbi")]
 layout_mode = 0
 offset_left = 40.0
-offset_top = 554.0
+offset_top = 426.0
 offset_right = 120.0
-offset_bottom = 587.0
+offset_bottom = 459.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
 offset_left = 134.0
-offset_top = -92.0
+offset_top = 4.0
 offset_right = 182.0
-offset_bottom = -44.0
+offset_bottom = 52.0
 
 [node name="LastTest" parent="." instance=ExtResource("12_3ctlq")]
 layout_mode = 1
@@ -659,9 +659,9 @@ offset_bottom = 380.0
 
 [node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
 layout_mode = 1
-offset_left = -144.0
+offset_left = 16.0
 offset_top = 48.0
-offset_right = -144.0
+offset_right = 16.0
 offset_bottom = 48.0
 
 [node name="ArtifactsInterface" parent="." instance=ExtResource("3_q6sjy")]

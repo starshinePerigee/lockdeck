@@ -11,17 +11,13 @@ const SAVE_PATH := "user://game_save.tres"
 ## Current coin count
 @export var coins: int = 0
 
-## Current lock. ONE INDEXED
-@export var lock_number: int = 0
+## The current stage.
+## Each time you clear a stage, game manager indexes this by one, and then pulls the next one 
+@export var stage: int = 0
 
-## Current heist, ONE INDEXED
-@export var heist_number: int = 1
-@export var lock_in_heist: int = 0
-@export var current_stage: int = -1
-
-## Tutorial level. -2 for "not tutorial", -1 is "tutorial the next shop", and 0 is "start tutorial".
-## This should switch over to -2 and start the real game once it exhausts the tutorial specs
-@export var tutorial_level: int = -2
+## True to progress through tutorial stages. Once tutorial completes, this sets false
+## and stage sets to the pick-up point
+@export var tutorial_mode := false
 
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
@@ -91,15 +87,14 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 ]
 
 func get_next_level() -> LevelSpec:
-	if tutorial_level >= 0:
-		if tutorial_level >= len(Tutorializer.TUTORIAL_SEQUENCE):
+	if tutorial_mode:
+		if stage >= len(Tutorializer.TUTORIAL_SEQUENCE):
 			# we've solved the tutorial
-			tutorial_level = -1
-			current_stage = 3
-			heist_number = 1
+			tutorial_mode = false
+			stage = 4
 		else:
-			lock_in_heist = 1
-			return Tutorializer.TUTORIAL_SEQUENCE[tutorial_level]
+			return Tutorializer.TUTORIAL_SEQUENCE[stage]
+	
 	elif in_progress:
 		return LevelSpec.new(
 			LevelSpec.Stages.SPECIFIC,
@@ -108,22 +103,7 @@ func get_next_level() -> LevelSpec:
 			in_progress
 		)
 	
-	if not game_complete():
-		current_stage += 1
-	
-	var next_stage: LevelSpec = GAME_SEQUENCE[current_stage]
-	
-	match next_stage.stage:
-		LOCK:
-			lock_number += 1
-			lock_in_heist += 1
-		LOOT_STRAT:
-			heist_number += 1
-			lock_in_heist = 0
-		_:
-			pass
-	
-	return next_stage
+	return GAME_SEQUENCE[stage]
 
 func build_new_lockset_deck(arc: LockDeck.GameArcs) -> void:
 	lockset_deck = LockGenerator.get_lockset_deck(arc)
@@ -134,17 +114,59 @@ func build_new_lock_deck(difficulty: int) -> void:
 	next_lock_deck = LockGenerator.get_lock_deck(lockset_deck, difficulty_params)
 
 func game_complete() -> bool:
-	return current_stage >= len(GAME_SEQUENCE) - 1
+	return stage + 1 >= len(GAME_SEQUENCE)
 
-func get_max_pin_count() -> int:
-	var pin_count := 0
-	var stage := current_stage + 1
+func current_lock() -> int:
+	if tutorial_mode:
+		return stage 
 	
-	for level in GAME_SEQUENCE.slice(stage, -1):
+	var lock_count := 0
+	
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if level.stage == LOCK:
+			lock_count += 1
+	
+	return lock_count 
+
+func heist_number() -> int:
+	if tutorial_mode:
+		return 0
+	
+	var heist_count := 1
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if level.stage == LOOT_STRAT:
+			heist_count += 1
+	
+	return heist_count
+
+func lock_in_heist() -> int:
+	if tutorial_mode:
+		return stage
+	
+	var lock_count := 0
+	var clear_next := false
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if clear_next:
+			lock_count = 0
+		if level.stage == LOCK:
+			lock_count += 1
+		elif level.stage == LOOT_STRAT:
+			clear_next = true
+	
+	return lock_count
+
+func max_pin_count() -> int:
+	if tutorial_mode:
+		return 2
+	
+	var pin_count := 0
+	
+	for level in GAME_SEQUENCE.slice(stage + 1, -1):
 		if level.stage != LOCK:
 			break
 		pin_count = max(pin_count, level.pin_count)
 	return pin_count
+
 
 ## Updates the broken_picks deck, removing the picks from the deck.
 func break_picks(picks: Array[CardSpec]) -> void:
@@ -192,9 +214,7 @@ func remove_real_pick_forever(pick: CardSpec) -> void:
 
 static func get_in_progress_game() -> GameSpec:
 	var game := GameSpec.new()
-	game.heist_number = 2
-	game.lock_number = 4
-	game.current_stage = 5
+	game.stage = 5
 	game.coins = 28
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
@@ -204,7 +224,6 @@ static func get_in_progress_game() -> GameSpec:
 	game.build_new_lock_deck(4)
 	for i in len(game.broken_picks):
 		game.broken_picks[i].repair_count = i
-	game.lock_number = 4
 	return game
 
 func save() -> void:

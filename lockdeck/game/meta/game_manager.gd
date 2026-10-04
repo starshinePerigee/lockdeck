@@ -10,7 +10,6 @@ signal victory_start
 signal end_game
 
 var game: GameSpec
-var tutorial_mode := false
 
 func auto_complete_level() -> void:
 	$GameCore.solve_lock()
@@ -27,8 +26,8 @@ func begin_tutorial() -> void:
 	$AnimationPlayer.play("RESET")
 	$BetweenLocks/AnimationPlayer.play("go_tutorial")
 	game = GameSpec.new()
+	game.tutorial_mode = true
 	game.current_deck = []
-	game.tutorial_level = 0
 	game.save()
 	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("first lock")
@@ -51,13 +50,10 @@ func load_saved_game(saved_game: GameSpec):
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
-	var lock_in_heist := game.lock_in_heist
-	if game.in_progress:
-		lock_in_heist -= 1
-	print("Loading lock in heist: %s" % lock_in_heist)
-	$BetweenLocks.reset(lock_in_heist)
+	print("Loading lock in heist: %s" % game.lock_in_heist())
+	$BetweenLocks.reset(game.lock_in_heist())
 	$AnimationPlayer.play("first lock")
-	heist_start.emit(game.heist_number)
+	heist_start.emit(game.heist_number())
 
 const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
 const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")
@@ -73,18 +69,13 @@ func lock_complete() -> void:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	game.next_lock_deck = null
 	game.in_progress = null
-	if tutorial_mode:
-		# it's weird/bad that tutorial levels are incremented out here,
-		# but game levels are incremented in gamespec,
-		# but it makes sense because how we save/load games
-		game.tutorial_level += 1
+	game.stage += 1
 	game.save()
 	$AnimationPlayer.play("lock to between", -12)
 	GlobalEffects.request(FX_LOCK_ROLL_OUT)
 
 func advance_from_between() -> void:
 	var next_level: LevelSpec = game.get_next_level()
-	tutorial_mode = game.tutorial_level >= 0
 	print(
 		"Next level: %s %s %s" % [
 			LevelSpec.Stages.find_key(next_level.stage),
@@ -127,11 +118,12 @@ func end_loot() -> void:
 		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
 
 func end_strategy() -> void:
+	game.stage += 1
 	game.save()
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	$BetweenLocks.reset(0)
 	$AnimationPlayer.play("strategy to between")
-	heist_start.emit(game.heist_number)
+	heist_start.emit(game.heist_number())
 
 func do_victory() -> void:
 	GameSpec.clear_save()

@@ -51,8 +51,8 @@ func _update_depth_preview(game: GameSpec) -> void:
 			%DepthsVBox.add_child(next_line)
 
 func update(game: GameSpec) -> void:
-	%HeistLabel.text = "Heist %s" % game.heist_number
-	%PinsLabel.text = "%s pins maximum" % game.get_max_pin_count()
+	%HeistLabel.text = "Heist %s" % game.heist_number()
+	%PinsLabel.text = "%s pins maximum" % game.max_pin_count()
 	_update_depth_preview(game)
 
 func reset(_game: GameSpec) -> void:

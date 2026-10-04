@@ -743,7 +743,7 @@ var _already_broken: Array[CardSpec]
 ## Loads non-lock parameters from the game spec and restarting the game.
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
-	$GameStatus.stage = game.lock_number
+	$GameStatus.stage = game.current_lock()
 	load_deck(game.current_deck.duplicate())
 	_already_broken = game.broken_picks
 	$TrashMain.reset()

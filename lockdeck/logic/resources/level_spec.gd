@@ -10,6 +10,12 @@ enum Stages {
 	SPECIFIC,
 }
 
+enum InterfaceSetup {
+	DEFAULT,
+	FULL_EMPTY,
+	HALF_SHOWN
+}
+
 var stage: Stages
 ## How many pins to generate
 var pin_count: int = 1
@@ -22,6 +28,7 @@ var arc: LockDeck.GameArcs
 ## tutorial level
 var tutorial_level: int = 0
 var state: StateSpec = null
+var interface: InterfaceSetup = InterfaceSetup.DEFAULT
 
 ## Note that this is a very polymorphic init
 ## It's best to just look at the case statement for this function
@@ -30,6 +37,7 @@ func _init(
 	count_: int = 0,
 	difficulty_: int = 0,
 	state_: StateSpec = null,
+	interface_: InterfaceSetup = InterfaceSetup.DEFAULT
 ) -> void:
 	stage = stage_
 	
@@ -45,5 +53,7 @@ func _init(
 		Stages.TUTORIAL:
 			tutorial_level = count_
 			state = state_
+			interface = interface_
 		Stages.SPECIFIC:
 			state = state_
+			interface = interface_
