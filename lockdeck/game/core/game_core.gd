@@ -740,7 +740,7 @@ func _set_indicator_box() -> void:
 
 var _already_broken: Array[CardSpec]
 
-## Loads non-lock parameters from the game spec and restarting the game.
+## Loads non-lock parameters from the game spec and restarts the game.
 func load_game(game: GameSpec) -> void:
 	$GameStatus.coins = game.coins
 	$GameStatus.stage = game.current_lock()
@@ -751,6 +751,7 @@ func load_game(game: GameSpec) -> void:
 
 func restart() -> void:
 	lock_complete = false
+	tutorial_mode = false
 	lock_input(false)
 	show_failure(false)
 	$LastTest.visible = false
@@ -765,6 +766,15 @@ func restart() -> void:
 	update_status_widget()
 	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
+
+func setup_interface(setup: LevelSpec.InterfaceSetup = LevelSpec.InterfaceSetup.DEFAULT) -> void:
+	match setup:
+		LevelSpec.InterfaceSetup.DEFAULT:
+			$AnimationPlayer.play("RESET")
+		LevelSpec.InterfaceSetup.FULL_EMPTY:
+			$AnimationPlayer.play("tutorial_start")
+		LevelSpec.InterfaceSetup.HALF_SHOWN:
+			$AnimationPlayer.play("half_visible")
 
 ## Loads an in-progress game. Used instead of load_lock / load_game
 func load_in_progress(game: GameSpec, state: StateSpec) -> void:

@@ -50,18 +50,14 @@ const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
 
 static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
-	LevelSpec.new(TUTORIAL, 0, 0, TUTORIAL_1),
-	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1),
+	LevelSpec.new(TUTORIAL, 0, 0, TUTORIAL_1, LevelSpec.InterfaceSetup.FULL_EMPTY),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	LevelSpec.new(TUTORIAL, 1, 0, TUTORIAL_1),
 ]
 
 func tutorialize(level_: int) -> void:
 	level = level_
-	step = 0
-	# debug logic
-	if level == 0:
-		step = 33
-	
+	step = 0	
 	core.tutorial_mode = true
 
 func do_step() -> void:
@@ -145,17 +141,17 @@ func do_step() -> void:
 						550,
 						250
 					)
-				9:
+				10:
 					show_box(
 						"Go ahead and use the pick on the pin. Either click and drag it over, "
 						+ "or click it once, and then click on the pin. No difference either way.",
 						550,
 						250
 					)
-				10:
+				11:
 					core.lock_input(false)
 					await_use = 1
-				11:
+				12:
 					show_box(
 						"Good work. See how the pin moved up two spaces?\n\n"
 						+ "We call those spaces depths. Each pin has eight depths, plus the resting "
@@ -165,7 +161,7 @@ func do_step() -> void:
 						320,
 						166
 					)
-				12:
+				13:
 					show_box(
 						"You're already a quarter of the way there, so these should get you "
 						+ "the rest of the way up.",
@@ -178,20 +174,20 @@ func do_step() -> void:
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
 					]
 					core.get_node("HandMain").add_cards(new_cards)
-				13:
+				14:
 					show_box("Have at it.", -1, -1, false)
 					await_unlock = 1
-				14:
+				15:
 					show_box(
 						"Nice work.\n\n"
 						+ "If you forget what any of the icons mean, you can hover over any of your picks "
-						+ "and get a quick reminder. \n\n That applies to just about everything - so don't forget it!"
+						+ "and get a quick reminder. \n\nThat applies to just about everything - so don't forget it!"
 					)
-				15:
+				16:
 					show_box("Let's reset that...", -1, -1, false)
 					await reset_pins([PinSpec.from_depth_array()])
 					advance()
-				16:
+				17:
 					show_box(
 						"Alright. Let's talk about how picks flow when you're lockpicking."
 					)
@@ -203,7 +199,7 @@ func do_step() -> void:
 					]
 					core.get_node("DeckMain").load_cards(new_cards)
 					core.get_node("AnimationPlayer").play("show_deck_discard")
-				17:
+				18:
 					highlight(core.get_node("DeckMain").get_nice_rect().grow(6))
 					show_box(
 						"This is your deck. This is where you keep all the picks you haven't used yet.\n\n"
@@ -211,24 +207,24 @@ func do_step() -> void:
 						64,
 						272,
 					)
-				18:
+				19:
 					highlight(core.get_node("DeckMain/DeckLabel").get_global_rect().grow(6))
 					await_display_close = 1
-				19:
+				20:
 					show_box(
 						"I've given you a couple of picks to get started.\n\n"
 						+ "You'll be giving those back, so don't be too thankful."
 					)
-				20:
+				21:
 					show_box(
 						"After you use a pick, if you have cards in your deck, you'll draw back "
 						+ "up to three cards. Let's do that now."
 					)
-				21:
+				22:
 					core.draw_to_five()
 					await core.animation_complete
 					advance()
-				22:
+				23:
 					var hand_rect: Rect2 = core.get_node("HandMain").get_global_rect()
 					hand_rect = hand_rect.grow_individual(-128, 6, -126, 0)
 					highlight(hand_rect)
@@ -238,34 +234,34 @@ func do_step() -> void:
 						256,
 						200
 					)
-				23:
+				24:
 					highlight(core.get_node("DiscardMain/CardPile").get_global_rect().grow(6))
 					show_box(
 						"This is your discard pile. Picks you use end up here, hopefully",
 						490,
 						356,
 					)
-				24:
-					show_box("Alright. Pick this lock again, and watch how your cards move.")
 				25:
-					await_unlock = 1
+					show_box("Alright. Pick this lock again, and watch how your cards move.")
 				26:
-					show_box("Perfect. Two more things before I let you go for the day.")
+					await_unlock = 1
 				27:
+					show_box("Perfect. Two more things before I let you go for the day.")
+				28:
 					core.get_node("AnimationPlayer").play("show_trash")
 					var t := create_tween()
 					t.tween_interval(0.5)
 					t.tween_callback(advance)
-				28:
+				29:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
 					show_box(
-						"First: here's your trash pile. "
-						+ "If you heck up and break picks, they end up here instead of in your discard.\n\n"
+						"This is your trash pile. "
+						+ "If you screw up and break picks, they end up here instead of in your discard.\n\n"
 						+ "Broken picks are gone until you can repair them, which might be a bit and costs money.",
 						440,
 						280,
 					)
-				29:
+				30:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
 					show_box(
 						"Try real hard to avoid breaking picks. "
@@ -274,13 +270,13 @@ func do_step() -> void:
 						440,
 						280,
 					)
-				30:
+				31:
 					show_box(
 						"With these training locks, there's really only one way to break a pick: "
 						+ "push the pin past its final spot. Slamming a pin like that will break the pick.\n\n"
 						+ "It's not all bad though, you'll still set the pin and can unlock the lock."
 					)
-				31:
+				32:
 					show_box(
 						"Have a few more picks. Solve this lock by overshooting the pin and breaking a pick.\n\n"
 						+ "Don't worry, these training picks are all cheap garbage anyway.",
@@ -304,7 +300,7 @@ func do_step() -> void:
 					]
 					core.get_node("DeckMain").load_cards(new_cards)
 					core.draw_to_five()
-				32:
+				33:
 					if core.get_node("TrashMain").count() > 0:
 						show_box("That pick is trashed! Now you know what not to do.")
 					else:
@@ -314,12 +310,12 @@ func do_step() -> void:
 							+ "it feels like. Try again, and make sure you don't accidentally unlock the lock "
 							+ "without overshooting it this time."
 						)
-				33:
+				34:
 					show_box(
 						"Alright, You're on your own for a bit. Pick this next lock without "
 						+ "breaking a pick and I'll continue your training."
 					)
-				34:
+				35:
 					core.continue_to_next.emit()
 					advance()
 #				24:
@@ -405,7 +401,9 @@ func lock_unlocked() -> void:
 var await_display_close := 0
 func display_closed() -> void:
 	if await_display_close:
-		advance(await_display_close)
+		var t := create_tween()
+		t.tween_interval(0.05)
+		t.tween_callback(advance.bind(await_display_close))
 		await_display_close = 0
 
 func reset_pins(pins: Array[PinSpec]) -> void:

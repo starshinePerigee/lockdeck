@@ -91,14 +91,15 @@ func advance_from_between() -> void:
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
+			$GameCore.setup_interface()
 			next_lock(next_level)
 		LevelSpec.Stages.SPECIFIC:
 			lock_start.emit()
+			$GameCore.setup_interface(next_level.interface)
 			load_state(next_level.state)
 		LevelSpec.Stages.TUTORIAL:
-			if next_level.tutorial_level == 0:
-				$GameCore/AnimationPlayer.play("tutorial_start")
 			lock_start.emit()
+			$GameCore.setup_interface(next_level.interface)
 			await load_state(next_level.state)
 			$Tutorializer.tutorialize(next_level.tutorial_level)
 			$Tutorializer.do_step()
