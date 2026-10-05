@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://8b6cmkvucovs"]
+[gd_scene load_steps=3 format=3 uid="uid://8b6cmkvucovs"]
 
 [ext_resource type="Script" uid="uid://c12p120myjwui" path="res://game/core/tutorializer.gd" id="1_v8nnk"]
+[ext_resource type="PackedScene" uid="uid://bv3lhaiivm41e" path="res://game/menus/tutorial_box.tscn" id="2_ebfag"]
 
 [node name="Tutorializer" type="Control"]
 layout_mode = 3
@@ -11,43 +12,21 @@ script = ExtResource("1_v8nnk")
 [node name="HighlightRect" type="Panel" parent="."]
 unique_name_in_owner = true
 visible = false
-z_index = 3499
+z_index = 3399
 z_as_relative = false
+layout_mode = 0
 mouse_filter = 2
 theme_type_variation = &"HighlightPanel"
 
-[node name="TutorialBox" type="PanelContainer" parent="."]
+[node name="TutorialBox" parent="." instance=ExtResource("2_ebfag")]
 unique_name_in_owner = true
 visible = false
-z_index = 3500
-z_as_relative = false
-offset_right = 272.0
-offset_bottom = 52.0
-mouse_filter = 2
-theme_type_variation = &"PaperPanelContainer"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TutorialBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="TutorialBox/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-theme_type_variation = &"CardBig"
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
-autowrap_mode = 2
-
-[node name="CloseLabel" type="Label" parent="TutorialBox/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"CardText"
-text = "Click outside the window to continue."
-horizontal_alignment = 1
+layout_mode = 0
 
 [node name="Arrows" type="TextureRect" parent="."]
 unique_name_in_owner = true
 visible = false
-z_index = 3498
+z_index = 3398
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

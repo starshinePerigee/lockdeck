@@ -14,3 +14,11 @@ repair update:
 so:
 - repairs are cheaper (5 gold) or free
 - 50% chance of failure
+- picks are more expensive
+
+
+more empty pins - add additional easy levels, easy 3-pins, etc.
+
+
+make it more obvious on the final level
+

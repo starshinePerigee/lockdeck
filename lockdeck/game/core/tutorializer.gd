@@ -58,8 +58,8 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
-	if level == 0:
-		step = 46
+#	if level == 0:
+#		step = 46
 	core.tutorial_mode = true
 
 func do_step() -> void:
@@ -148,11 +148,14 @@ func do_step() -> void:
 						"Go ahead and use the pick on the pin. Either click and drag it over, "
 						+ "or click it once, and then click on the pin. No difference either way.",
 						550,
-						250
+						250,
+						false
 					)
-				11:
 					core.lock_input(false)
 					await_use = 1
+				11:
+					# deleted
+					advance()
 				12:
 					show_box(
 						"Good work. See how the pin moved up two spaces?\n\n"
@@ -177,7 +180,7 @@ func do_step() -> void:
 					]
 					core.get_node("HandMain").add_cards(new_cards)
 				14:
-					show_box("Have at it.", -1, -1, false)
+					show_box("Have at it.", 370, 180, false)
 					await_unlock = 1
 				15:
 					show_box(
@@ -188,7 +191,9 @@ func do_step() -> void:
 				16:
 					show_box("Let's reset that...", -1, -1, false)
 					await reset_pins([PinSpec.from_depth_array()])
-					advance()
+					var t := create_tween()
+					t.tween_interval(0.4)
+					t.tween_callback(advance)
 				17:
 					show_box(
 						"Alright. Let's talk about how picks flow when you're lockpicking."
@@ -283,7 +288,7 @@ func do_step() -> void:
 					show_box(
 						"Have a few more picks. Solve this lock by overshooting the pin and breaking a pick.\n\n"
 						+ "Don't worry, these training picks are all cheap garbage anyway.",
-						-1,
+						370,
 						-1,
 						false
 					)
@@ -356,7 +361,7 @@ func do_step() -> void:
 				40:
 					highlight(core.get_node("LockBody/CountdownMain").get_mouse_rect())
 					show_box(
-						"Your candle tracks how many turns you have left."
+						"Your candle tracks how many turns you have left.\n\n"
 						+ "Run out of turns, run out of time.",
 						380,
 						100,
@@ -372,7 +377,9 @@ func do_step() -> void:
 						+ "Finish a lock on the first turn and get a bonus.\n\n"
 						+ "Finish a lock on the second turn, all's fine.\n\n"
 						+ "In the third turn, you'll start breaking picks randomly, so wrap it up!\n\n"
-						+ "If you don't finish after the third turn, it's over for you."
+						+ "If you don't finish after the third turn, it's over for you.",
+						-1,
+						64
 					)
 				43:
 					show_box(
@@ -406,46 +413,26 @@ func do_step() -> void:
 
 func advance(n := 1) -> void:
 	step += n
-	continuable = false
 	do_step()
-
-const DEFAULT_X := int((960 - 384) / 2.0)
-const DEFAULT_Y := 128
-
-const FX_SCRAPE := preload("res://assets/fx/card_scrape.ogg")
 
 func show_box(
 	text: String,
 	origin_x: int = -1,
 	origin_y: int = -1,
-	continuable_ := true
+	continuable := true
 ):
-	if origin_x == -1:
-		origin_x = DEFAULT_X
-	if origin_y == -1:
-		origin_y = DEFAULT_Y
-	
-	GlobalEffects.request(FX_SCRAPE)
-	%Label.text = text
-	%TutorialBox.global_position = Vector2(origin_x, origin_y)
-	%TutorialBox.visible = true
-	%TutorialBox.size = Vector2.ZERO
-	continuable = continuable_
+	%TutorialBox.show_box(text, origin_x, origin_y, continuable)
 
 func highlight(rect: Rect2) -> void:
 	%HighlightRect.visible = true
 	%HighlightRect.position = rect.position
 	%HighlightRect.size = rect.size
 
-const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func hide_all() -> void:
 	%HighlightRect.visible = false
 	%TutorialBox.visible = false
 	%Arrows.visible = false
-	GlobalEffects.request(FX_CLICK)
-
-var continuable := false
 
 var await_use := 0
 func pick_used(_state: StateSpec) -> void:
@@ -481,13 +468,9 @@ func reset_pins(pins: Array[PinSpec]) -> void:
 		LockSpec.new(pins)
 	)
 
-func _input(event: InputEvent) -> void:
-	if (
-		%TutorialBox.visible
-		and event is InputEventMouseButton
-		and event.button_index == MOUSE_BUTTON_LEFT
-		and not event.pressed
-	):
-		hide_all()
-		if continuable:
-			advance()
+func continue_pressed() -> void:
+	hide_all()
+	advance()
+
+func _ready() -> void:
+	%TutorialBox.box_clicked.connect(continue_pressed)

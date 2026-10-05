@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv3lhaiivm41e"]
+
+[ext_resource type="Script" uid="uid://rtwxp2nmog28" path="res://game/menus/tutorial_box.gd" id="1_a01ut"]
+
+[node name="TutorialBox" type="PanelContainer"]
+z_index = 3300
+z_as_relative = false
+offset_right = 272.0
+offset_bottom = 52.0
+theme_type_variation = &"PaperPanelContainer"
+script = ExtResource("1_a01ut")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+theme_type_variation = &"CardBig"
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
+autowrap_mode = 2
+
+[node name="Continue" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = "Click to continue"
+horizontal_alignment = 1
