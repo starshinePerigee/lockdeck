@@ -1,68 +1,8 @@
 TABLE OF CONTENTS:
 
 
-5. Pick effects (after breakage in the manual)
-- it's now later. You've already met the first effect: push
-- push moves the pin. 
-- effects have a value based on how many of that icon are on the card
--- this pushes 1
--- this pushes 3
-6. Breaking your picks
-- once we start dealing with real locks, there's all sorts of things that'll break your pick
-- breaking your pick removes it from your deck, and you'll have to spend money to repair it later. Try real hard to avoid it
-(also unlocks the trash button)
-6a. 
-- right now, there's one way break your pick: push past the end of the pin
-- break a pick to continue
-( if solve: you have to push past the pin)
-6b: nice work. note that while you broke your pick pushing too hard, you also set the pin and solved the lock.
+Reveal, warning, and break depths
 
-6a manual. ways to break your picks:
-- dangerous depths
--- the break depth, but also others
-- push past end of pin
-- get unlucky during your last turn
-
-FIRST CHALLENGE: ONE PIN, NO DEPTHS
-
-
-13. Your candle
-(unlocks candle)
-- now on a real heist you don't have forever to pick a lock. You get three turns - that's three runs through your deck. If you have five picks, that means fifteen goes at it, no more.
-- even worse - 
-- solve this lock. don't worry about breaking picks
-
-
-
-14. Discarding and ending your turn
-- if you have a bunch of junk picks, there's a couple ways of moving things along.
-- first, you can discard any pick. don't worry about it - it'll be back in your deck on your next turn. Click it then click to the garbage on the right - (or drag the pick over there, same deal)
-- discard the pick
-- if you really have bumpkis, you can end your turn early by clicking your candle twice. It'll discard every pick in your hand and your deck, then shuffle everything back together for a new turn and a fresh run through all your picks.
-
-SECOND CHALLENGE: TWO PINS, NO DEPTHS
-
-
-15. Multiple pins
-- you don't think all locks are this easy, right? most locks have more than one pin
-- each pin has different depths and you're going to have to solve all of them together to unlock the lock
-- now so far every pick you've been using has been a pick that only affects a single pin. But most picks are a little to big for that, and some affect a whole lot of pins in one go!
-
-
-
-
-
-7. Depths
-- real locks have dangers in them - security features to slow you down or break your picks.
-- these features are triggered when pins are pushed to a specific position in the lock
-- every real pin - including this one here - has a depth that will break your pick.
-(also unlocks the depth button)
-- you can always hover over a depth to get a reminder what that depth does
-
-"Unlock this lock. You will break a pick."
-deck: all 1-push cards
-
-7-2. Basic survival
 - avoiding dangers is the major skill in picking locks. to keep your picks - and yourself - safe, you're going to need to learn how to look ahead.
 - up to this point, all the depths have been revealed to you. Going forward, they're going to be hidden. If you could scry locks, you wouldn't need me!
 
@@ -78,10 +18,14 @@ deck: all 1-push cards
 
 - once you push past the break, you get a notification - pins always have exactly one break depth. Since you know there aren't any other hazards, the rest of this pin is safe.
 
+
 8. multiple effects
 - most picks have multiple effects at once. these take effect from top down
 - you can preview a pick by clicking and hovering, or dragging it over a pin without dropping it
 - here's a handful of picks to practice with, unlock this lock without breaking it (push + reveal)
+
+
+
 
 9. advanced survival
 - picks with "reveal" effects are super rare - you're playing with almost every one I own right now.
@@ -101,7 +45,33 @@ deck: all 1-push cards
 10. push also tests depths you jump over - be careful if you jump over a break
 - pick this lock without breaking any picks
 
-11. One last thing your picks can do - JAM
+
+
+
+
+
+
+Multiple pins
+- you don't think all locks are this easy, right? most locks have more than one pin
+- each pin has different depths and you're going to have to solve all of them together to unlock the lock
+- now so far every pick you've been using has been a pick that only affects a single pin. But most picks are a little to big for that, and some affect a whole lot of pins in one go!
+
+- look at the card - you see those notches? each column on the card represents a pin. So this pick has two columns of effects, which means it can push two pins at once
+
+
+- you see that stripe on each pick? that red stripe is the "center pin" - it's what happens to the pin you play the pick to.
+- picks can affect one pin to the right and three pins to the left of your center pin
+- any effects that don't have a pin don't do anything! so for a single-pin lock, you'll only ever get to use the center column. that's why we paint that column red! cuz it's important
+- if you get confused, just hover the pick over the pins and look at the preview. it'll tell you what's affecting what
+- a final note: test applies across all pins at once
+
+solve this lock without breaking any picks (three-pin lock)
+
+
+
+
+
+ One last thing your picks can do - JAM
 - some picks specialize in jam. we call those "wrenches", since they turn the keyway instead of pushing pins directly. Other picks do jam as a side effect. Those aren't called wrenches, but honestly who cares what they're named. I can't even read - just look at the icons.
 
 
@@ -126,20 +96,6 @@ solve this lock:
 
 
 
-15. multiple pins again
-
-- look at the card - you see those notches? each column on the card represents a pin. So this pick has two columns of effects, which means it can push two pins at once
-
-- (fork) this pick pushes two pins, and jams the one in the middle of them! give it a try
-
-- you see that stripe on each pick? that red stripe is the "center pin" - it's what happens to the pin you play the pick to.
-- picks can affect one pin to the right and three pins to the left of your center pin
-- any effects that don't have a pin don't do anything! so for a single-pin lock, you'll only ever get to use the center column. that's why we paint that column red! cuz it's important
-- if you get confused, just hover the pick over the pins and look at the preview. it'll tell you what's affecting what
-- a final note: test applies across all pins at once
-
-solve this lock without breaking any picks (three-pin lock)
-
 
 16. Weaknesses
 - great work. let's go back to a single pin for a bit
@@ -158,6 +114,18 @@ solve this lock without breaking any picks (three-pin lock)
 
 solve this lock without breaking your pick (slip sends to the beginning)
 
+
+
+18. other dangers
+- final lesson - there are other depths that can break your pick. you'll see most of them later, but for now, meet spike
+- spike is just like break, with two exceptions:
+-- first, it's revealed at the start! You always know where spikes are. they're not subtle
+-- second, it doesn't have a WARNING depth in front of it. I mean, it might have a warning depth, but that warning is for the BREAK depth specifically, not just "any depth that breaks your pin". So a pin could go spike-warning-break or warning-spike-break. I mean, the spikes are obvious, so this shouldn't be a problem
+alright: solve this final lock and I'll let you go
+
+
+
+
 18. depth activations
 - two quirks of locks.
 - first: depths can only activate once per turn. you'll have to get around some complicated hazards by activating them, but you can even push through a slip if you have to.
@@ -166,12 +134,6 @@ solve this lock without breaking your pick (slip sends to the beginning)
 - that matters a lot for the next depth: bounce! this depth moves your pin forward instead of back. this won't break your pin directly, but it can put you in a tight spot
 - don't forget you can pull up the depth reference to see all the depths that might be in your lock, and hover over a depth for a quick description of what it does
 
-18. other dangers
-- final lesson - there are other depths that can break your pick. you'll see most of them later, but for now, meet spike
-- spike is just like break, with two exceptions:
--- first, it's revealed at the start! You always know where spikes are. they're not subtle
--- second, it doesn't have a WARNING depth in front of it. I mean, it might have a warning depth, but that warning is for the BREAK depth specifically, not just "any depth that breaks your pin". So a pin could go spike-warning-break or warning-spike-break. I mean, the spikes are obvious, so this shouldn't be a problem
-alright: solve this final lock and I'll let you go
 
 
 
@@ -199,29 +161,6 @@ on the right is a count of every icon that shows up on all your picks. it gives 
 
 alright! click the buttons and i'll walk you through
 
-
-
-
-tutorials: one or more pages (with images), plus drawing on the next game
-global tutorializer object, and "disable tutorial" and "reset tutorial" menu options
-
-tutorial pages go into a book - you're collecting pages (writing?) for the book (one of the skillbooks?)
-
-"locked. complete the tutorial or unlock the manual in the saves menu"
-
-
-tutorial list:
-- page for every effect
-- pages for hints
-- pages on turn limits
-- page for each depth set
-- page for each asset type
-- page for "effects are ordered"
-- page for each artifact
-- page for loot
-- page for store
-- pages for repair
-- page for "you need x strength to clear a lock"
 
 
 
