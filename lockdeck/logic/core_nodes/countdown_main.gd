@@ -57,6 +57,8 @@ var _is_hovered := false
 	set(v):
 		button_disable = v
 		_draw_label()
+		if button_disable:
+			suggest = false
 
 func _draw_label() -> void:
 	var font_color := Color("#ffffff")

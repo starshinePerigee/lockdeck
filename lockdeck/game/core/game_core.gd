@@ -139,7 +139,10 @@ func _input(event: InputEvent) -> void:
 		var click: Vector2 = event.global_position
 		
 		# Handle countdown highlight here while we're here
-		if not $LockBody/CountdownMain.get_mouse_rect().has_point(click):
+		if (
+			not $LockBody/CountdownMain.get_mouse_rect().has_point(click)
+			and not tutorial_mode
+		):
 			reset_countdown()
 		
 		if current_state == InputState.ACTIVE_SELECT:

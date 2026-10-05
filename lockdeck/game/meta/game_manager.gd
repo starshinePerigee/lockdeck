@@ -55,6 +55,12 @@ func load_saved_game(saved_game: GameSpec):
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	print("Loading lock in heist: %s" % game.lock_in_heist())
 	$BetweenLocks.reset(game.lock_in_heist())
+	if game.tutorial_mode:
+		if game.get_next_level().stage == LevelSpec.Stages.SPECIFIC:
+			$BetweenLocks.set_text("challenge")
+		else:
+			$BetweenLocks.set_text("first")
+		$BetweenLocks/AnimationPlayer.play("go_tutorial")
 	$AnimationPlayer.play("first lock")
 	heist_start.emit(game.heist_number())
 
@@ -224,6 +230,7 @@ func _ready() -> void:
 	$MenuButton.pressed.connect($MenuMain.show_menu)
 	$MenuButton.pressed.connect($GameCore.set_menu_status.bind(true))
 	$MenuMain/MenuWidget.closed.connect($GameCore.set_menu_status.bind(false))
+	$MenuMain.return_to_title.connect($Tutorializer.hide_all)
 	$MenuMain.auto_complete_level.connect(auto_complete_level)
 	$MenuMain.reveal_level.connect(reveal_level)
 	$MenuMain.break_three.connect(break_three)

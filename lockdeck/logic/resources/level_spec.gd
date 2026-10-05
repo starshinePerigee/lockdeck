@@ -13,7 +13,8 @@ enum Stages {
 enum InterfaceSetup {
 	DEFAULT,
 	FULL_EMPTY,
-	HALF_SHOWN
+	HALF_SHOWN,
+	THREE_QUARTERS,
 }
 
 var stage: Stages

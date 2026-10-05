@@ -14,6 +14,8 @@ var core: GameCore:
 		core = v
 		core.new_state.connect(pick_used)
 		core.game_win.connect(lock_unlocked)
+		core.get_node("PreviousButton").show_previous.connect(prev_preved)
+		core.get_node("PreviousButton").go_back.connect(prev_preved)
 		core.get_node("CardDisplay").closed.connect(display_closed)
 		
 var level: int
@@ -28,20 +30,142 @@ static var TUTORIAL_1 := StateSpec.new(
 	)
 ) 
 
+static var TWO_OF_EACH: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+]
+
 static var CHALLENGE_1 := StateSpec.new(
+	AllCardsSpec.new(TWO_OF_EACH),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array([])
+		]
+	)
+)
+
+static var PUSHY_DECK: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+]
+
+static var CHALLENGE_2 := StateSpec.new(
+	AllCardsSpec.new(PUSHY_DECK),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array([]),
+			PinSpec.from_depth_array([])
+		]
+	)
+)
+
+static var TWO_SPIKES: Array[Depths] = [
+	Depths.EMPTY,
+	Depths.SPIKE,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.SPIKE,
+]
+
+static var TUTORIAL_2 := StateSpec.new(
 	AllCardsSpec.new(
 		[
 			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
 			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
-			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
-			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
+		]
+	),
+	LockSpec.new([PinSpec.from_depth_array(TWO_SPIKES)])
+) 
+
+static var CHALLENGE_3 := StateSpec.new(
+	AllCardsSpec.new(PUSHY_DECK),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+				]
+			),
+		]
+	)
+)
+
+static var CHALLENGE_4 := StateSpec.new(
+	AllCardsSpec.new(PUSHY_DECK),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.SPIKE,
+				]
+			),
+		]
+	)
+)
+
+static var CHALLENGE_5 := StateSpec.new(
+	AllCardsSpec.new(
+		[
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
 			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
 			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
 		]
 	),
 	LockSpec.new(
 		[
-			PinSpec.from_depth_array([])
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.SPIKE,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.SPIKE,
+				]
+			),
 		]
 	)
 )
@@ -52,15 +176,23 @@ const SPECIFIC := LevelSpec.Stages.SPECIFIC
 static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(TUTORIAL, 0, 0, TUTORIAL_1, LevelSpec.InterfaceSetup.FULL_EMPTY),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1, LevelSpec.InterfaceSetup.HALF_SHOWN),
-	LevelSpec.new(TUTORIAL, 1, 0, TUTORIAL_1),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
+	LevelSpec.new(TUTORIAL, 1, 0, TUTORIAL_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 ]
 
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
-#	if level == 0:
-#		step = 46
+	if level == 0:
+		step = 46
+	if level == 1:
+		step = 13
 	core.tutorial_mode = true
+	core.get_node("LockBody/CountdownMain").set_count(999999)
+	core.get_node("LockBody/CountdownMain").suggest = false
 
 func do_step() -> void:
 	print("Tutorial Level %s Step %s" % [level, step])
@@ -354,8 +486,6 @@ func do_step() -> void:
 					show_box(
 						"Ending your turn isn't free. Let me get your candle..."
 					)
-					core.get_node("LockBody/CountdownMain").set_count(999999)
-					core.get_node("LockBody/CountdownMain").suggest = false
 					core.get_node("LockBody/CountdownMain").button_disable = true
 					core.get_node("AnimationPlayer").play("show_countdown")
 				40:
@@ -409,7 +539,207 @@ func do_step() -> void:
 					)
 				47:
 					core.continue_to_next.emit()
+		1:
+			match step:
+				0:
+					core.lock_input(true)
+					show_box(
+						"Nice job! As you noticed, some locks have more than one pin.\n\n"
+						+ "Rich bastards'll try anything to keep us out. That's why it's time to continue learning."
+					)
+				1:
+					show_box(
+						"Speaking of which, it's time we started to talk about depths."
+					)
+				2:
+					show_box(
+						"So far, you've only focused on pushing to the end of the pin.\n\n"
+						+ "From now on, you're going to have to deal with the fact that locks have surprises built in."
+					)
+				3:
+					show_box(
+						"Whenever you push a pin, whatever depth you land on will \"activate\".\n\n"
+						+ "Needless to say, when it activates it's probably not throwing you a party."
+					)
+				4:
+					highlight(
+						core.get_node(
+							"LockBody/CylinderMain/Cylinders/CylinderHBox/Pin1/Stack/Depths"
+						)
+						.get_child(2)
+						.get_global_rect()
+					)
+					show_box(
+						"Your first depth is \"spike\".",
+						320,
+						140,
+					)
+				5:
+					show_box(
+						"Why don't you see what it does.", 320, 140, false
+					)
+					core.lock_input(false)
+					await_use = 1
+				6:
+					show_box(
+						"Fun, isn't it!\n\n"
+						+ "Spike will break your pick if you land on it.",
+						320,
+						140,
+					)
+				7:
+					show_box(
+						"Pay attention to how it's changed color. "
+						+ "Depths will only activate once per turn - although it's pretty rare when that matters.",
+						320,
+						140,
+					)
+				8:
+					show_box(
+						"The real challenge in lockpicking is navigating the traps "
+						+ "that make up each lock. Each lock is different, so your approach has to "
+						+ "be different too."
+					)
+				9:
+					core.get_node("TrashMain").reset()
+					var new_cards: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+					]
+					core.get_node("DeckMain").load_cards(new_cards)
+					core.draw_to_five()
+					await core.animation_complete
+					advance(2)
+				10:
+					# failure reset
+					core.lock_input(true)
+					reset_pins([PinSpec.from_depth_array(TWO_SPIKES)])
+					core.get_node("TrashMain").reset()
+					core.get_node("DeckMain").clear_all()
+					core.get_node("HandMain").remove_all_cards(true)
+					core.get_node("DeckMain").load_cards(PUSHY_DECK)
+					core.draw_to_five()
+					await core.animation_complete
 					advance()
+					core.lock_input(false)
+				11:
+					show_box(
+						"Go ahead and finish this lock without breaking another pick.",
+						320,
+						140,
+						false,
+					)
+					await_unlock = 1
+				12:
+					if core.get_node("TrashMain").count() == 0:
+						show_box("Good job avoiding the spikes and avoiding overshoot.")
+					else:
+						step = 9
+						show_box(
+							"Nah, you have to avoid breaking a pick. Try again."
+						)
+				13:
+					core.lock_input(true)
+					reset_pins([PinSpec.from_depth_array(TWO_SPIKES)])
+					core.get_node("DeckMain").clear_all()
+					core.get_node("HandMain").remove_all_cards(true)
+					var new_hand: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+					]
+					core.get_node("HandMain").add_cards(new_hand)
+					var new_deck: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+					]
+					core.get_node("DeckMain").load_cards(new_deck)
+					await core.animation_complete
+					advance()
+				14:
+					show_box(
+						"Let's give you a couple more tools to help you navigate locks\n\n"
+						+ "Starting with the ability to discard picks without using them."
+					)
+				15:
+					show_box("Sometimes none of the picks you have in your hand are useful in that moment.")
+				16:
+					show_box(
+						"Look at this situation: three copies of the same pick, and each of them "
+						+ "would land you right on the spike.",
+						320,
+						140,
+					)
+				17:
+					show_box(
+						"Luckily, you don't have to use a pick. If you're in a bad spot, you can always "
+						+ "discard one of the picks in your hand to draw another.",
+						320,
+						140,
+					)
+				18:
+					core.lock_input(false)
+					core.set_discard_disable(false)
+					highlight(core.get_node("DiscardMain/DiscardIcon").get_global_rect().grow(6))
+					show_box(
+						"If you drag a card over here, or click this space with a pick selected, "
+						+ "you'll discard it. Do it now.",
+						420,
+						220,
+						false
+					)
+					await_use = 1
+				19:
+					show_box(
+						"If you really need a specific pick, you can keep discarding until you find it.\n\n"
+						+ "But don't forget to keep an eye on your candle. Each pick discarded is a pick you don't get "
+						+ "to use this turn."
+					)
+				20:
+					show_box(
+						"Before we get to the next tool, I need to you play a pick. " 
+						+ "Doesn't matter which, just play it on the pin.",
+						320,
+						140,
+						false
+					)
+					await_use = 1
+				21:
+					core.lock_input(true)
+					core.get_node("AnimationPlayer").play("show_show_prev")
+					var t := create_tween()
+					t.tween_interval(0.3)
+					t.tween_callback(advance)
+				22:
+					highlight(core.get_node("PreviousButton").get_global_rect().grow(6))
+					show_box(
+						"If you ever forget what you're doing, or get surprised by something that happened, "
+						+ "this button here will let you see what went down last time you did something.",
+						200,
+						40,
+						false
+					)
+					await_prev = true
+				23:
+					show_box(
+						"Click it again to go back.",
+						200,
+						40,
+						false
+					)
+					await_prev = true
+				24:
+					show_box(
+						"The next couple of locks are going to be all spikes. Like before, pick them without "
+						+ "breaking any picks to continue.\n\n"
+						+ "You'll need to be capable and clever - prove to me you're both."
+					)
+				25:
+					core.continue_to_next.emit()
 
 func advance(n := 1) -> void:
 	step += n
@@ -445,6 +775,12 @@ func lock_unlocked() -> void:
 	if await_unlock:
 		advance(await_unlock)
 		await_unlock = 0
+
+var await_prev := false
+func prev_preved() -> void:
+	if await_prev:
+		await_prev = false
+		advance(1)
 
 var await_display_close := 0
 func display_closed() -> void:

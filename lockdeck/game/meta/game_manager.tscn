@@ -502,6 +502,8 @@ layout_mode = 1
 offset_left = 1920.0
 offset_right = 1920.0
 
+[node name="Tutorializer" parent="." instance=ExtResource("8_o3825")]
+
 [node name="MenuButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 10.0
@@ -514,5 +516,3 @@ text = "Menu"
 [node name="MenuMain" parent="." instance=ExtResource("7_msycn")]
 visible = false
 layout_mode = 1
-
-[node name="Tutorializer" parent="." instance=ExtResource("8_o3825")]
