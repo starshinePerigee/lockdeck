@@ -1,9 +1,8 @@
-IMMEDIATE TODO:
-- fix interface stuff for first challenge (add interface setup to game state)
-- 
+menu is under tutorial
+negatives on reload?
 
+fix betweens
 
-Tutorializer sits in game_manager but gets passed a reference to GameCore
 
 Tutorial takes place in two places:
 1. a tutorial where one or more pages are shown, and then you have a lock to unlock with a deck

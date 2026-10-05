@@ -39,7 +39,6 @@ func add_cards(dis_cards: Array[CardSpec]) -> void:
 
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	redraw()
 
 func remove_card(dis_card: CardSpec) -> Vector2:
 	if dis_card not in cards:
@@ -75,7 +74,8 @@ func update_label(n: int = 0) -> void:
 	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
 
 func update_pile(n: int = 0) -> void:
-	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
+	$CardPile.count = (_current_label - n)
+
 #endregion
 
 func redraw() -> void:

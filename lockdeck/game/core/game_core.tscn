@@ -152,7 +152,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -850,6 +850,7 @@ offset_right = 182.0
 offset_bottom = 52.0
 
 [node name="LastTest" parent="." instance=ExtResource("12_3ctlq")]
+visible = false
 layout_mode = 1
 offset_left = -10.0
 offset_top = 320.0

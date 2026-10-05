@@ -7,6 +7,7 @@ signal continue_to_next
 signal continue_to_failure
 signal final_turn
 signal pick_broke
+signal turn_ended
 signal new_state(state_spec: StateSpec)
 signal animation_complete
 
@@ -453,6 +454,8 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 	for card in cards:
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
+		await $HandMain/Hand.animation_complete
+		$DiscardMain.redraw()
 
 #endregion
 
@@ -691,6 +694,7 @@ func end_turn() -> void:
 	await $DeckMain.reload_finish
 	cleanup_step()
 	await $HandMain/Hand.animation_complete
+	turn_ended.emit()
 	set_state(InputState.INACTIVE)
 
 func game_over() -> void:
@@ -831,6 +835,7 @@ func _ready() -> void:
 	
 	$HandMain/Hand.animation_complete.connect(animation_complete.emit)
 	$LockBody/CylinderMain/Cylinders.animation_complete.connect(animation_complete.emit)
+	$DeckMain.reload_finish.connect(animation_complete.emit)
 	
 	$LockBody/IndicatorPick.reset.connect(end_animation)
 	$DeckMain.reload_finish.connect(end_animation)

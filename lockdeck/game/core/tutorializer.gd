@@ -57,7 +57,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 
 func tutorialize(level_: int) -> void:
 	level = level_
-	step = 0	
+	step = 0
 	core.tutorial_mode = true
 
 func do_step() -> void:
@@ -198,6 +198,7 @@ func do_step() -> void:
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3)
 					]
 					core.get_node("DeckMain").load_cards(new_cards)
+					core.get_node("DiscardMain").empty_deck()
 					core.get_node("AnimationPlayer").play("show_deck_discard")
 				18:
 					highlight(core.get_node("DeckMain").get_nice_rect().grow(6))
@@ -235,14 +236,14 @@ func do_step() -> void:
 						200
 					)
 				24:
-					highlight(core.get_node("DiscardMain/CardPile").get_global_rect().grow(6))
+					highlight(core.get_node("DiscardMain/DiscardLabel").get_global_rect().grow(6))
 					show_box(
 						"This is your discard pile. Picks you use end up here, hopefully",
 						490,
 						356,
 					)
 				25:
-					show_box("Alright. Pick this lock again, and watch how your cards move.")
+					show_box("Pick this lock again, and watch how your cards move.")
 				26:
 					await_unlock = 1
 				27:
@@ -312,36 +313,94 @@ func do_step() -> void:
 						)
 				34:
 					show_box(
-						"Alright, You're on your own for a bit. Pick this next lock without "
-						+ "breaking a pick and I'll continue your training."
+						"I've been doing a bit of slight of hand with your deck - "
+						+ "adding and removing stuff from it, for the sake of the lesson.\n\n"
+						+ "If you're sharp, you probably noticed. But that's not how stuff normally works."
 					)
 				35:
+					highlight(core.get_node("DiscardMain/DiscardLabel").get_global_rect().grow(6))
+					show_box(
+						"See how all the picks you just used ended up in your discard?\n\n"
+						+ "Well, except the one you broke.",
+						380,
+						356,
+					)
+				36:
+					show_box(
+						"Discarded picks aren't gone. Once you've used all the picks in your deck, "
+						+ "you can reload them by ending your turn.\n\nIt looks like this."
+					)
+				37:
+					core.discard_hand()
+					await core.animation_complete
+					core.reload_deck()
+					await core.animation_complete
+					core.draw_to_five()
+					await core.animation_complete
+					advance()
+				38:
+					show_box(
+						"Notice that any cards you were keeping in your hand also get "
+						+ "shuffled back at end of your turn, but the pick you broke stays broken."
+					)
+				39:
+					show_box(
+						"Ending your turn isn't free. Let me get your candle..."
+					)
+					core.get_node("LockBody/CountdownMain").set_count(999999)
+					core.get_node("LockBody/CountdownMain").suggest = false
+					core.get_node("LockBody/CountdownMain").button_disable = true
+					core.get_node("AnimationPlayer").play("show_countdown")
+				40:
+					highlight(core.get_node("LockBody/CountdownMain").get_mouse_rect())
+					show_box(
+						"Your candle tracks how many turns you have left."
+						+ "Run out of turns, run out of time.",
+						380,
+						100,
+					)
+				41:
+					show_box(
+						"We're safe right now, so you have plenty of turns.\n\n"
+						+ "But out in the field, you have exactly three turns per lock."
+					)
+				42:
+					show_box(
+						"It pays to be speedy:\n\n"
+						+ "Finish a lock on the first turn and get a bonus.\n\n"
+						+ "Finish a lock on the second turn, all's fine.\n\n"
+						+ "In the third turn, you'll start breaking picks randomly, so wrap it up!\n\n"
+						+ "If you don't finish after the third turn, it's over for you."
+					)
+				43:
+					show_box(
+						"You can hover over the candle for a reminder of all the details."
+					)
+				44:
+					show_box(
+						"Now click the candle to end your turn.",
+						380,
+						100,
+						false
+					)
+					core.get_node("LockBody/CountdownMain").button_disable = false
+					await core.turn_ended
+					advance()
+				45:
+					show_box(
+						"Did you see how the pin reset?\n\n"
+						+ "Unfortunately, you'll have to ease up on the lock to reload your deck. " 
+						+ "This means all the pins will fall back to the beginning.\n\n"
+						+ "Later, we'll learn a way to avoid losing progress when you end your turn."
+					)
+				46:
+					show_box(
+						"Anyway, You're on your own for a bit. Pick this next lock without "
+						+ "breaking a pick and I'll continue your training."
+					)
+				47:
 					core.continue_to_next.emit()
 					advance()
-#				24:
-#					show_box(
-#					\n\n"
-#						+ "Know that you can use every pick once per turn, after which your "
-#						+ "discard pile gets shuffled back into your deck.\n\n
-#					"Wrong! When picking real locks, you'll only get "
-#						+ "to reload your deck twice before you run out of time.\n\n"
-#						+ "The number of picks in your deck is your only resource, so make each one count."
-#					)
-#					core.get_node("AnimationPlayer").play("show_countdown")
-#				25: 
-#					highlight(
-#						Rect2(Vector2(593, 174), Vector2(128, 280)).grow(6)
-#					)
-#					show_box(
-#					"Each time you reload your deck, that's a 'turn'\n\n"
-#						+ "You have to be fast. Pick the lock on your first turn - that is, without reloading once - "
-#						+ "and you'll get a nice little bonus.\n\n"
-#						+ "Reload once solve the lock on your second turn, that's okay.\n\n"
-#						+ "Once you're on your third turn, you're out of time and you're going to "
-#						+ "start breaking picks.", 
-#						0, 
-#						0
-#					)
 
 func advance(n := 1) -> void:
 	step += n

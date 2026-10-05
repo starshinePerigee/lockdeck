@@ -127,15 +127,15 @@ func request_tooltip() -> void:
 			+ "you will draw a new hand.\n\n" 
 			+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
 			+ "starting positions. All depths will reset and can be triggered again.\n\n"
+			+ "If you solve the lock in one turn, you'll earn a 10 gold speed bonus.\n\n"
 			+ "After two turns, your light will go out and you will have a chance to break each pick "
 			+ "when you use it.\n\n"
-			+ "If you solve the lock in one turn, you'll earn a 10 gold speed bonus. "
 			+ "After three turns, you will be locked out and your game will end."
 		) 
 	)
 
 func get_mouse_rect() -> Rect2:
-	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 26)
+	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 36)
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)

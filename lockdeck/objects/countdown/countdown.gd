@@ -37,7 +37,7 @@ var show_end := false:
 			await ready
 		
 		if count > 10:
-			_label_text = "Plenty of turns remain."
+			_label_text = "Safe."
 			texture_normal = CD_TWO
 		elif count > 4:
 			_label_text = "%s turns remain"
