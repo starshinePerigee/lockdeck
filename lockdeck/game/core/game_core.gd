@@ -782,6 +782,8 @@ func setup_interface(setup: LevelSpec.InterfaceSetup = LevelSpec.InterfaceSetup.
 			$AnimationPlayer.play("tutorial_start")
 		LevelSpec.InterfaceSetup.HALF_SHOWN:
 			$AnimationPlayer.play("half_visible")
+		LevelSpec.InterfaceSetup.THREE_QUARTERS:
+			$AnimationPlayer.play("three_quarters")
 
 ## Loads an in-progress game. Used instead of load_lock / load_game
 func load_in_progress(game: GameSpec, state: StateSpec) -> void:

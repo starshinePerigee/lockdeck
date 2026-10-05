@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bql12v3dt5jn2"]
+[gd_scene load_steps=29 format=3 uid="uid://bql12v3dt5jn2"]
 
 [ext_resource type="Script" uid="uid://b5woj2t0kdgx3" path="res://game/core/game_core.gd" id="1_db5vk"]
 [ext_resource type="PackedScene" uid="uid://c0clquqp8m1tl" path="res://objects/play_area/lock_art.tscn" id="2_2tf6j"]
@@ -770,7 +770,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(40, 554)]
+"values": [Vector2(40, 426)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -830,7 +830,7 @@ tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -947,12 +947,41 @@ tracks/1/keys = {
 "values": [Vector2(134, -92), Vector2(134, 4)]
 }
 
+[sub_resource type="Animation" id="Animation_7y687"]
+resource_name = "show_depth_button"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DepthButton:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DepthButton:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(40, 554), Vector2(40, 426)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f550e"]
 _data = {
 &"RESET": SubResource("Animation_ihpbi"),
 &"half_visible": SubResource("Animation_e85fa"),
 &"show_countdown": SubResource("Animation_3iwsp"),
 &"show_deck_discard": SubResource("Animation_f550e"),
+&"show_depth_button": SubResource("Animation_7y687"),
 &"show_show_prev": SubResource("Animation_pqkn5"),
 &"show_trash": SubResource("Animation_g2yp7"),
 &"three_quarters": SubResource("Animation_bieab"),
@@ -1066,9 +1095,9 @@ offset_bottom = 531.0
 [node name="DepthButton" parent="." instance=ExtResource("11_ihpbi")]
 layout_mode = 0
 offset_left = 40.0
-offset_top = 554.0
+offset_top = 426.0
 offset_right = 120.0
-offset_bottom = 587.0
+offset_bottom = 459.0
 
 [node name="PreviousButton" parent="." instance=ExtResource("10_gg2qb")]
 layout_mode = 0
@@ -1087,9 +1116,9 @@ offset_bottom = 380.0
 
 [node name="GameStatus" parent="." instance=ExtResource("2_tmhk6")]
 layout_mode = 1
-offset_left = -144.0
+offset_left = 16.0
 offset_top = 48.0
-offset_right = -144.0
+offset_right = 16.0
 offset_bottom = 48.0
 
 [node name="ArtifactsInterface" parent="." instance=ExtResource("3_q6sjy")]

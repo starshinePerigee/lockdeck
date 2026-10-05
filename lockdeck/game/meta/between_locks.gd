@@ -31,12 +31,14 @@ func play_chime():
 
 func animate() -> void:
 	$SpeedBonusLabel/DisplayCoin.reset()
-	var timer := get_tree().create_timer(1.1)
-	timer.timeout.connect(continue_to_next.emit)
+	var timer: SceneTreeTimer
 	
 	# use $TutorialText.visible as a proxy for tutorial mode
 	if $TutorialText.visible:
-		return
+		timer = get_tree().create_timer(0.2)
+	else:
+		timer = get_tree().create_timer(1.1)
+	timer.timeout.connect(continue_to_next.emit)
 	
 	if $SpeedBonusLabel.visible:
 		var claim_tween := create_tween()
@@ -45,8 +47,10 @@ func animate() -> void:
 		claim_tween.tween_callback(GlobalEffects.request.bind(FX_COIN_GET, -6))
 		claim_tween.tween_interval(2)
 		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.reset)
-	current_pos += 1
-	$AnimationPlayer.play("go_%s" % current_pos)
+	
+	if not $TutorialText.visible:
+		current_pos += 1
+		$AnimationPlayer.play("go_%s" % current_pos)
 
 const TUTORIAL_TEXTS := {
 	"first": preload("res://assets/menus/tutorial_text_listen.png"),

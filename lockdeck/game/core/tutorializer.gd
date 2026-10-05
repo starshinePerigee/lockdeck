@@ -78,6 +78,8 @@ static var TWO_SPIKES: Array[Depths] = [
 	Depths.SPIKE,
 ]
 
+static var SPIKE_DECK := LockDeck.from_template_array([DepthTemplates.SPIKE])
+
 static var TUTORIAL_2 := StateSpec.new(
 	AllCardsSpec.new(
 		[
@@ -86,7 +88,7 @@ static var TUTORIAL_2 := StateSpec.new(
 			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
 		]
 	),
-	LockSpec.new([PinSpec.from_depth_array(TWO_SPIKES)])
+	LockSpec.new([PinSpec.from_depth_array(TWO_SPIKES)], SPIKE_DECK)
 ) 
 
 static var CHALLENGE_3 := StateSpec.new(
@@ -104,8 +106,9 @@ static var CHALLENGE_3 := StateSpec.new(
 					Depths.SPIKE,
 				]
 			),
-		]
-	)
+		],
+		SPIKE_DECK
+	),
 )
 
 static var CHALLENGE_4 := StateSpec.new(
@@ -123,7 +126,8 @@ static var CHALLENGE_4 := StateSpec.new(
 					Depths.SPIKE,
 				]
 			),
-		]
+		],
+		SPIKE_DECK
 	)
 )
 
@@ -166,7 +170,8 @@ static var CHALLENGE_5 := StateSpec.new(
 					Depths.SPIKE,
 				]
 			),
-		]
+		],
+		SPIKE_DECK
 	)
 )
 
@@ -733,12 +738,43 @@ func do_step() -> void:
 					)
 					await_prev = true
 				24:
+#					var depths_display: Dictionary[DepthTemplates.Difficulty, Array] = {
+#						DepthTemplates.Difficulty.CRITICAL: [Depths.SPIKE]
+#					} 
+#					core.get_node("DepthDisplay").update(depths_display)
+					core.get_node("AnimationPlayer").play("show_depth_button")
+					var t := create_tween()
+					t.tween_interval(0.4)
+					t.tween_callback(advance)
+				25:
+					highlight(core.get_node("DepthButton").get_global_rect().grow(6))
+					show_box(
+						"This button shows you all the depths that could be present in the current lock.",
+						160,
+						340,
+						false
+					)
+					await core.get_node("DepthButton").pressed
+					advance()
+				26:
+					show_box(
+						"This practice lock is simple, but real locks will have a lot more depths.\n\n"
+						+ "Don't hesitate to check what depths you're up against, and if you need a refresher on "
+						+ "what a specific depth does you can hover over it in this depths window.\n\n"
+						+ "Close the depths refernece to continue.",
+						280,
+						220,
+						false
+					)
+					await core.get_node("DepthDisplay").closed
+					advance()
+				27:
 					show_box(
 						"The next couple of locks are going to be all spikes. Like before, pick them without "
 						+ "breaking any picks to continue.\n\n"
 						+ "You'll need to be capable and clever - prove to me you're both."
 					)
-				25:
+				28:
 					core.continue_to_next.emit()
 
 func advance(n := 1) -> void:
