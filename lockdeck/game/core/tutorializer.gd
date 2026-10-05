@@ -58,6 +58,8 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
+	if level == 0:
+		step = 46
 	core.tutorial_mode = true
 
 func do_step() -> void:

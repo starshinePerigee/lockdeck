@@ -1,8 +1,8 @@
 menu is under tutorial
-negatives on reload?
 
 fix betweens
 
+loading saved challenge doesn't load right
 
 Tutorial takes place in two places:
 1. a tutorial where one or more pages are shown, and then you have a lock to unlock with a deck

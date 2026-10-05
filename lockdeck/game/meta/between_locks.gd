@@ -33,6 +33,11 @@ func animate() -> void:
 	$SpeedBonusLabel/DisplayCoin.reset()
 	var timer := get_tree().create_timer(1.1)
 	timer.timeout.connect(continue_to_next.emit)
+	
+	# use $TutorialText.visible as a proxy for tutorial mode
+	if $TutorialText.visible:
+		return
+	
 	if $SpeedBonusLabel.visible:
 		var claim_tween := create_tween()
 		claim_tween.tween_interval(0.3667)
@@ -42,6 +47,16 @@ func animate() -> void:
 		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.reset)
 	current_pos += 1
 	$AnimationPlayer.play("go_%s" % current_pos)
+
+const TUTORIAL_TEXTS := {
+	"first": preload("res://assets/menus/tutorial_text_listen.png"),
+	"challenge": preload("res://assets/menus/tutorial_text_challenge.png"),
+	"retry": preload("res://assets/menus/tutorial_text_fail.png"),
+	"complete": preload("res://assets/menus/tutorial_text_complete.png")
+}
+
+func set_text(text_variation: String) -> void:
+	$TutorialText.texture = TUTORIAL_TEXTS[text_variation]
 
 func _ready() -> void:
 	pass

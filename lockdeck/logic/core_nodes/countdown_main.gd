@@ -96,6 +96,7 @@ func set_count(new_count: int) -> void:
 	count = new_count
 	$Countdown.game_over = false
 	$Countdown.count = count
+	suggest = false
 	reset_odds()
 
 var _pressed := false
@@ -135,7 +136,7 @@ func request_tooltip() -> void:
 	)
 
 func get_mouse_rect() -> Rect2:
-	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 36)
+	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 18)
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)

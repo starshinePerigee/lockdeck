@@ -22,14 +22,17 @@ func break_three() -> void:
 	for __ in 3:
 		$GameCore.break_from_hand()
 
+# Note: "first lock" and any of the "x to between" animations on GameManager's AnimationPlayer
+# call between.animate on completion, but animation is skipped if between is in tutorial mode.
+
 func begin_tutorial() -> void:
 	$AnimationPlayer.play("RESET")
-	$BetweenLocks/AnimationPlayer.play("go_tutorial")
 	game = GameSpec.new()
 	game.tutorial_mode = true
 	game.current_deck = []
 	game.save()
-	$BetweenLocks.reset(0)
+	$BetweenLocks.set_text("first")
+	$BetweenLocks/AnimationPlayer.play("go_tutorial")
 	$AnimationPlayer.play("first lock")
 
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
@@ -60,16 +63,51 @@ const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")
 const FX_LOOT_ROLL_IN := preload("res://assets/fx/loot_roll_in.ogg")
 const FX_LOOT_ROLL_OUT := preload("res://assets/fx/drawers_roll.ogg")
 
+# note that lock_complete echos into advance_from_between via
+# GameManager/AnimationPlayer's lock_to_between, which calls 
+# BetweenLocks.animate(), which emits continue_to_next, which calls
+# continue_to_next
 func lock_complete() -> void:
 	game.break_picks($GameCore/TrashMain.cards)
-	if $GameCore/LockBody/CountdownMain.count >= 2:
+	if not game.tutorial_mode and $GameCore/LockBody/CountdownMain.count >= 2:
 		game.add_coins(10)
 		$BetweenLocks/SpeedBonusLabel.visible = true
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
+	
+	if game.tutorial_mode:
+		# Tutorial mode continuation logic
+		# determine if we're continuing:
+		var retry := false
+		match game.get_next_level().stage:
+			LevelSpec.Stages.TUTORIAL:
+				game.stage += 1
+			LevelSpec.Stages.SPECIFIC:
+				# check for broken picks
+				if len($GameCore/TrashMain.cards) > 0:
+					retry = true
+				else:
+					game.stage += 1
+			_:
+				push_error("Tutorial current state weird? %s" % game.get_next_level().stage)
+				game.stage += 1
+		
+		# Determine what to show between:
+		match game.get_next_level().stage:
+			LevelSpec.Stages.TUTORIAL:
+				$BetweenLocks.set_text("complete")
+			LevelSpec.Stages.SPECIFIC:
+				if retry:
+					$BetweenLocks.set_text("retry")
+				else:
+					$BetweenLocks.set_text("challenge")
+			_:
+				print("Completed tutorial!")
+	else:
+		game.stage += 1
+	
 	game.next_lock_deck = null
 	game.in_progress = null
-	game.stage += 1
 	game.save()
 	$AnimationPlayer.play("lock to between", -12)
 	GlobalEffects.request(FX_LOCK_ROLL_OUT)
@@ -160,6 +198,8 @@ func next_lock(level: LevelSpec) -> void:
 	$GameCore.draw_to_five()
 	update_state($GameCore.get_game_state())
 
+## load_state is used to both load a game saved mid-stage as well as all
+## load all the tutorial functions
 func load_state(state: StateSpec) -> void:
 	$GameCore.load_in_progress(game, state)
 	$AnimationPlayer.play("between to lock")
