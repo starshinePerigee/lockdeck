@@ -1020,12 +1020,12 @@ static var TUTORIAL_PUSH_3 := PickTemplates.new(
 	"PPP",
 )
 
-static var TUTORIAL_REVEAL_3 := PickTemplates.new(
+static var TUTORIAL_REVEAL_2 := PickTemplates.new(
 	"reveal hook",
 	Families.NONE,
 	Archetypes.REVEAL,
 	Rarities.BASIC,
-	"RRR",
+	"RR",
 )
 
 static var TUTORIAL_REVEAL_1 := PickTemplates.new(

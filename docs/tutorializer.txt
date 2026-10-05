@@ -3,18 +3,6 @@ TABLE OF CONTENTS:
 
 Reveal, warning, and break depths
 
-- avoiding dangers is the major skill in picking locks. to keep your picks - and yourself - safe, you're going to need to learn how to look ahead.
-- up to this point, all the depths have been revealed to you. Going forward, they're going to be hidden. If you could scry locks, you wouldn't need me!
-
-- the first technique you need to learn is warning depths. Every BREAK depth always has a WARNING depth somewhere before it.
-(warning and break depth pages)
-
-- the second technique is reveal picks. This is the second effect you get to play with. It's rare, mind you, so you won't see much of it, but let's use it now.
-( draw 1 2-reveal, 1 2-move, and 1 1-move, and the deck is all 1-moves. if they reveal without warning, warn them and reset. if they move 2 without warning, warn them and reset)
-
-- look at this hand. on the left is a reveal pick - rare and important. You don't want to use it willy-nilly and waste it.
-- in the middle is a 2-push pick. If you know where the BREAK depth is, you can use this to jump it - but if you use it blindly, you'll risk jumping right into the break
-- this 1-push pick is safe since
 
 - once you push past the break, you get a notification - pins always have exactly one break depth. Since you know there aren't any other hazards, the rest of this pin is safe.
 
@@ -25,12 +13,16 @@ Reveal, warning, and break depths
 - here's a handful of picks to practice with, unlock this lock without breaking it (push + reveal)
 
 
+mix spikes and breaks
+
 
 
 9. advanced survival
 - picks with "reveal" effects are super rare - you're playing with almost every one I own right now.
 - far more common are picks that test the lock, but only give you a rough sense of what ahead
 - we call this effect TEST
+
+mention push jumps
 
 - when you use a pick that has TEST on it, it'll visit one depth for each test effect. then, from all the unrevealed depths that are tested, you'll learn the worst case danger.
 - let's look at some examples

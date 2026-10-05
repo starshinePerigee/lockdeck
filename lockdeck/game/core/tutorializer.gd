@@ -190,7 +190,6 @@ static var SPIKE_WARNING: Array[Depths] = [
 	Depths.EMPTY,
 	Depths.WARN,
 	Depths.EMPTY,
-	Depths.EMPTY,
 	Depths.BREAK,
 ]
 
@@ -861,8 +860,9 @@ func do_step() -> void:
 					)
 				5:
 					show_box(
-						"But break is the most common hazard you'll find. Every single pin has a break depth somewhere.\n\n"
-						+ "That means every pin also has a warning depth.",
+						"But break is the most common hazard you'll find. Every single pin has exactly one "
+						+ "break depth somewhere.\n\n"
+						+ "That means every pin also has exactly one warning depth.",
 					)
 				6:
 					core.tutorial_lock(false)
@@ -901,7 +901,7 @@ func do_step() -> void:
 					core.get_node("DeckMain").clear_all()
 					core.get_node("HandMain").remove_all_cards(true)
 					var one_reveal: Array[CardSpec] = [
-						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_2),
 					]
 					core.get_node("DeckMain").load_cards(one_reveal)
 					core.draw_to_five()
@@ -936,13 +936,12 @@ func do_step() -> void:
 					reset_pins([PinSpec.from_depth_array(SPIKE_WARNING)])
 					empty_cards()
 					var new_hand: Array[CardSpec] = [
-						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_2),
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
 					]
 					core.get_node("HandMain").add_cards(new_hand)
 					var new_deck: Array[CardSpec] = [
-						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3)
 					]
 					core.get_node("DeckMain").add_cards(new_deck, true)
@@ -959,6 +958,7 @@ func do_step() -> void:
 					await_use = 1
 					await_break = 1
 				18:
+					core.tutorial_lock(true)
 					await_use = 0
 					await_break = 0
 					if core.get_node("TrashMain").count() > 0:
@@ -966,17 +966,17 @@ func do_step() -> void:
 						show_box("The point is to not break picks. Try again, dumbass.")
 					elif core.get_node("DiscardMain").count() > 0:
 						var template: PickTemplates = core.get_node("DiscardMain").cards[-1].template
-						if template == PickTemplates.TUTORIAL_PUSH_1:
+						if template == PickTemplates.TUTORIAL_REVEAL_2:
 							step = 15
 							show_box(
-								"Did you learn anything by doing that?\n\n"
+								"Reveal picks are valuable, and you kind of wasted that one?\n\n"
 								+ "There's always a warning before a break, so you know there's a safe depth "
 								+ "on the other side of the spikes. Try again."
 							)
 						elif template == PickTemplates.TUTORIAL_PUSH_2:
 							show_box(
 								"Nice. You know it's safe becasue you haven't found the "
-								+ "warning yet.\n\nKeep going."
+								+ "warning yet, and you know the spike isn't it.",
 							)
 							core.get_node("DeckMain").add_cards([
 								CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
@@ -988,7 +988,119 @@ func do_step() -> void:
 						step = 15
 						show_box("Stop being dumb.")
 				19:
-					show_box("bleh")
+					core.tutorial_lock(false)
+					show_box(
+						"Keep going, and be as safe as you can.",
+						PIN_X,
+						PIN_Y,
+						false 
+					)
+					await_use = 1
+					await_break = 1
+				20:
+					core.tutorial_lock(true)
+					await_use = 0
+					await_break = 0
+					if core.get_node("TrashMain").count() > 0:
+						step = 15
+						show_box("how")
+					elif core.get_node("DiscardMain").count() > 0:
+						var template: PickTemplates = core.get_node("DiscardMain").cards[-1].template
+						if template == PickTemplates.TUTORIAL_REVEAL_2:
+							step = 15
+							show_box(
+								"Reveal picks are valuable, and you kind of wasted that one?\n\n"
+								+ "There's always a warning before a break, and you haven't found the warning yet, "
+								+ "so you know the very next depth has to be safe."
+							)
+						elif template == PickTemplates.TUTORIAL_PUSH_1:
+							show_box(
+								"Nice. There's only one depth that's definitely safe, becuase there has to " 
+								+ "be a warning somewhere.",
+							)
+						else:
+							step = 15
+							show_box(
+								"You only know exactly one depth is safe, because you haven't "
+								+ "found the warning yet. You got lucky this time, but you could have "
+								+ "landed on a break. Try again."
+							)
+					else:
+						step = 15
+						show_box("Stop being dumb.")
+				21:
+					core.tutorial_lock(false)
+					show_box(
+						"Keep going.",
+						PIN_X,
+						PIN_Y,
+						false 
+					)
+					await_use = 1
+					await_break = 1
+				22:
+					core.tutorial_lock(true)
+					await_use = 0
+					await_break = 0
+					if core.get_node("TrashMain").count() > 0:
+						step = 15
+						show_box(
+							"This is why you don't push blindly! At least now you know where the break is.\n\n"
+							+ "Try again."
+						)
+					elif core.get_node("DiscardMain").count() > 0:
+						var template: PickTemplates = core.get_node("DiscardMain").cards[-1].template
+						if template == PickTemplates.TUTORIAL_REVEAL_2:
+							show_box(
+								"Correct.\n\nNow that you can't be sure what's ahead, it was finally time "
+								+ "to use that reveal pick. Now you know where the break is."
+							)
+						else:
+							step = 15
+							show_box(
+								"You have no way of knowing where the break is, and no safe depths, so "
+								+ "pushing forward is risky. Right now, we're trying to avoid risk. Try again."
+							)
+					else:
+						step = 15
+						show_box("Stop being dumb.")
+				23:
+					core.tutorial_lock(false)
+					show_box(
+						"Two picks left.",
+						PIN_X,
+						PIN_Y,
+						false 
+					)
+					await_use = 1
+					await_break = 1
+				24:
+					core.tutorial_lock(true)
+					await_use = 0
+					await_break = 0
+					if core.get_node("TrashMain").count() > 0:
+						step = 15
+						show_box(
+							"Break, does in fact, break your pick. Stop being dumb and try again."
+						)
+					elif core.get_node("DiscardMain").count() > 0:
+						var template: PickTemplates = core.get_node("DiscardMain").cards[-1].template
+						if template == PickTemplates.TUTORIAL_PUSH_3:
+							show_box(
+								"You know where the break is, which means you know where the break isn't. "
+								+ "That space after the break is safe! Now finish this off."
+							)
+						else:
+							step = 15
+							show_box("how")
+					else:
+						step = 15
+						show_box("Stop being dumb.")
+				25:
+					core.tutorial_lock(false)
+					await_unlock = 1
+				26:
+					show_box("Alright. That's reveal. One more thing today.")
 
 func advance(n := 1) -> void:
 	step += n

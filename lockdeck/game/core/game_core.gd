@@ -369,17 +369,11 @@ var lock_complete: bool
 
 # Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
-		$LockBody/CountdownMain.button_disable = (
-			state 
-			or _lock_input
-			or $LockBody/CountdownMain.count <= 0
-			or lock_complete
-		)
-		$HandMain/Hand.disabled = state or _lock_input
-		$TrashMain.disabled = state
-		$DeckMain/DeckLabel.disabled = state
-		$DiscardMain/DiscardLabel.disabled = state
-		$DepthButton.disabled = state
+	lock_input(state)
+	$TrashMain.disabled = state
+	$DeckMain/DeckLabel.disabled = state
+	$DiscardMain/DiscardLabel.disabled = state
+	$DepthButton.disabled = state
 
 var _tutorial_lock := false
 
