@@ -999,7 +999,7 @@ static var OLD_KEY := PickTemplates.new(
 static var TUTORIAL_PUSH_2 := PickTemplates.new(
 	"medium hook",
 	Families.NONE,
-	Archetypes.CLOSE_TEST,
+	Archetypes.THREE_PUSH,
 	Rarities.BASIC,
 	"PP",
 )
@@ -1018,6 +1018,22 @@ static var TUTORIAL_PUSH_3 := PickTemplates.new(
 	Archetypes.PUSHY,
 	Rarities.BASIC,
 	"PPP",
+)
+
+static var TUTORIAL_REVEAL_3 := PickTemplates.new(
+	"reveal hook",
+	Families.NONE,
+	Archetypes.REVEAL,
+	Rarities.BASIC,
+	"RRR",
+)
+
+static var TUTORIAL_REVEAL_1 := PickTemplates.new(
+	"push reveal",
+	Families.NONE,
+	Archetypes.BULK_TEST,
+	Rarities.BASIC,
+	"PR",
 )
 
 #endregion

@@ -381,16 +381,28 @@ func dis_en_able_buttons(state: bool = true) -> void:
 		$DiscardMain/DiscardLabel.disabled = state
 		$DepthButton.disabled = state
 
+var _tutorial_lock := false
+
+## Used to lock input for tutorials. 
+func tutorial_lock(state: bool) -> void:
+	_tutorial_lock = state
+	lock_input(state)
+
 # Used for when you want to continue interacting with the interface,
 # such as after unlock
 func lock_input(state: bool = true) -> void:
 	_lock_input = state
 	$LockBody/CountdownMain.button_disable = (
-		state 
+		state
+		or _tutorial_lock
 		or lock_complete
 		or $LockBody/CountdownMain.count <= 0
 	)
-	$HandMain/Hand.disabled = state or lock_complete
+	$HandMain/Hand.disabled = (
+		state
+		or _tutorial_lock
+		or lock_complete
+	)
 
 func show_failure(state: bool = true) -> void:
 	$FailureButton.visible = state and not tutorial_mode

@@ -13,6 +13,7 @@ var core: GameCore:
 	set(v):
 		core = v
 		core.new_state.connect(pick_used)
+		core.pick_broke.connect(pick_broken)
 		core.game_win.connect(lock_unlocked)
 		core.get_node("PreviousButton").show_previous.connect(prev_preved)
 		core.get_node("PreviousButton").go_back.connect(prev_preved)
@@ -175,6 +176,39 @@ static var CHALLENGE_5 := StateSpec.new(
 	)
 )
 
+static var EARLY_WARNING: Array[Depths] = [
+	Depths.EMPTY,
+	Depths.WARN,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.BREAK,
+]
+
+static var SPIKE_WARNING: Array[Depths] = [
+	Depths.SPIKE,
+	Depths.EMPTY,
+	Depths.WARN,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.BREAK,
+]
+
+static var BREAK_DECK := LockDeck.from_template_array([DepthTemplates.BREAK])
+
+static var TUTORIAL_3 := StateSpec.new(
+	AllCardsSpec.new(
+		[
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+			CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+		]
+	),
+	LockSpec.new([PinSpec.from_depth_array(EARLY_WARNING)], SPIKE_DECK)
+) 
+
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
 
@@ -186,6 +220,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(TUTORIAL, 2, 0, TUTORIAL_3, LevelSpec.InterfaceSetup.THREE_QUARTERS)
 ]
 
 func tutorialize(level_: int) -> void:
@@ -195,9 +230,14 @@ func tutorialize(level_: int) -> void:
 		step = 46
 	if level == 1:
 		step = 13
+	if level == 2:
+		step = 16
 	core.tutorial_mode = true
 	core.get_node("LockBody/CountdownMain").set_count(999999)
 	core.get_node("LockBody/CountdownMain").suggest = false
+
+const PIN_X := 320
+const PIN_Y := 166
 
 func do_step() -> void:
 	print("Tutorial Level %s Step %s" % [level, step])
@@ -230,8 +270,8 @@ func do_step() -> void:
 				4:
 					show_box(
 						"This lock has a single pin in it.",
-						320,
-						166
+						PIN_X,
+						PIN_Y,
 					)
 					var pin: Control = core.get_node(
 						"LockBody/CylinderMain/Cylinders/CylinderHBox/Pin1"
@@ -240,8 +280,8 @@ func do_step() -> void:
 				5:
 					show_box(
 						"Push all the pins all the way up to unlock a lock. Simple as.",
-						320,
-						166
+						PIN_X,
+						PIN_Y,
 					)
 				6:
 					show_box(
@@ -251,7 +291,7 @@ func do_step() -> void:
 					core.get_node("HandMain").add_card(
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
 					)
-					core.lock_input(true)
+					core.tutorial_lock(true)
 					await core.animation_complete
 					var card: Control = core.get_node("HandMain/Hand/Hand").get_child(0)
 					highlight(card.get_global_rect().grow(6))
@@ -288,7 +328,7 @@ func do_step() -> void:
 						250,
 						false
 					)
-					core.lock_input(false)
+					core.tutorial_lock(false)
 					await_use = 1
 				11:
 					# deleted
@@ -300,15 +340,15 @@ func do_step() -> void:
 						+ "depth at the top. So you need eight pushes to unlock a lock. \n\n"
 						+ "Don't worry about the green 'ok' or the little green letters just yet - " 
 						+ "we'll get there.",
-						320,
-						166
+						PIN_X,
+						PIN_Y,
 					)
 				13:
 					show_box(
 						"You're already a quarter of the way there, so these should get you "
 						+ "the rest of the way up.",
-						320,
-						166
+						PIN_X,
+						PIN_Y,
 					)
 					var new_cards: Array[CardSpec] = [
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
@@ -547,7 +587,7 @@ func do_step() -> void:
 		1:
 			match step:
 				0:
-					core.lock_input(true)
+					core.tutorial_lock(true)
 					show_box(
 						"Nice job! As you noticed, some locks have more than one pin.\n\n"
 						+ "Rich bastards'll try anything to keep us out. That's why it's time to continue learning."
@@ -576,27 +616,27 @@ func do_step() -> void:
 					)
 					show_box(
 						"Your first depth is \"spike\".",
-						320,
+						PIN_X,
 						140,
 					)
 				5:
 					show_box(
-						"Why don't you see what it does.", 320, 140, false
+						"Why don't you see what it does.", PIN_X, 140, false
 					)
-					core.lock_input(false)
+					core.tutorial_lock(false)
 					await_use = 1
 				6:
 					show_box(
 						"Fun, isn't it!\n\n"
 						+ "Spike will break your pick if you land on it.",
-						320,
+						PIN_X,
 						140,
 					)
 				7:
 					show_box(
 						"Pay attention to how it's changed color. "
 						+ "Depths will only activate once per turn - although it's pretty rare when that matters.",
-						320,
+						PIN_X,
 						140,
 					)
 				8:
@@ -619,7 +659,7 @@ func do_step() -> void:
 					advance(2)
 				10:
 					# failure reset
-					core.lock_input(true)
+					core.tutorial_lock(true)
 					reset_pins([PinSpec.from_depth_array(TWO_SPIKES)])
 					core.get_node("TrashMain").reset()
 					core.get_node("DeckMain").clear_all()
@@ -628,11 +668,11 @@ func do_step() -> void:
 					core.draw_to_five()
 					await core.animation_complete
 					advance()
-					core.lock_input(false)
+					core.tutorial_lock(false)
 				11:
 					show_box(
 						"Go ahead and finish this lock without breaking another pick.",
-						320,
+						PIN_X,
 						140,
 						false,
 					)
@@ -646,7 +686,7 @@ func do_step() -> void:
 							"Nah, you have to avoid breaking a pick. Try again."
 						)
 				13:
-					core.lock_input(true)
+					core.tutorial_lock(true)
 					reset_pins([PinSpec.from_depth_array(TWO_SPIKES)])
 					core.get_node("DeckMain").clear_all()
 					core.get_node("HandMain").remove_all_cards(true)
@@ -676,18 +716,18 @@ func do_step() -> void:
 					show_box(
 						"Look at this situation: three copies of the same pick, and each of them "
 						+ "would land you right on the spike.",
-						320,
+						PIN_X,
 						140,
 					)
 				17:
 					show_box(
 						"Luckily, you don't have to use a pick. If you're in a bad spot, you can always "
 						+ "discard one of the picks in your hand to draw another.",
-						320,
+						PIN_X,
 						140,
 					)
 				18:
-					core.lock_input(false)
+					core.tutorial_lock(false)
 					core.set_discard_disable(false)
 					highlight(core.get_node("DiscardMain/DiscardIcon").get_global_rect().grow(6))
 					show_box(
@@ -708,13 +748,13 @@ func do_step() -> void:
 					show_box(
 						"Before we get to the next tool, I need to you play a pick. " 
 						+ "Doesn't matter which, just play it on the pin.",
-						320,
+						PIN_X,
 						140,
 						false
 					)
 					await_use = 1
 				21:
-					core.lock_input(true)
+					core.tutorial_lock(true)
 					core.get_node("AnimationPlayer").play("show_show_prev")
 					var t := create_tween()
 					t.tween_interval(0.3)
@@ -738,10 +778,6 @@ func do_step() -> void:
 					)
 					await_prev = true
 				24:
-#					var depths_display: Dictionary[DepthTemplates.Difficulty, Array] = {
-#						DepthTemplates.Difficulty.CRITICAL: [Depths.SPIKE]
-#					} 
-#					core.get_node("DepthDisplay").update(depths_display)
 					core.get_node("AnimationPlayer").play("show_depth_button")
 					var t := create_tween()
 					t.tween_interval(0.4)
@@ -776,6 +812,183 @@ func do_step() -> void:
 					)
 				28:
 					core.continue_to_next.emit()
+		2:
+			match step:
+				0:
+					core.tutorial_lock(true)
+					core.set_discard_disable(true)
+					show_box(
+						"Looks like you're getting the hang of moving pins around. "
+						+ "Time to reveal the other half of lockpicking."
+					)
+				1:
+					show_box(
+						"Somewhere in this pin is a \"Break\" depths. Like spikes, if you "
+						+ "activate it it breaks your pick. Unlike spikes, they don't advertise themselves.",
+						PIN_X,
+						PIN_Y
+					)
+				2:
+					core.tutorial_lock(false)
+					show_box(
+						"Why don't you see for yourself? Go ahead and unlock this lock.",
+						PIN_X,
+						PIN_Y,
+						false
+					)
+					await_use = 1
+				3:
+					core.tutorial_lock(true)
+					highlight(
+						core.get_node(
+							"LockBody/CylinderMain/Cylinders/CylinderHBox/Pin1/Stack/Depths"
+						)
+						.get_child(2)
+						.get_global_rect()
+					)
+					show_box(
+						"Did you feel that? That's a \"warning\" depth.\n\n"
+						+ "Warning depths do nothing when you activate them, but they tell you the break is "
+						+ "further down the pin. "
+						+ "Every break depth has a warning. Break depths aren't total surprises.",
+						PIN_X,
+						PIN_Y,
+					)
+				4:
+					show_box(
+						"Know that when I say break depth, I mean the specific \"break\" depth.\n\n"
+						+ "Spikes and other nasties don't get warnings.",
+					)
+				5:
+					show_box(
+						"But break is the most common hazard you'll find. Every single pin has a break depth somewhere.\n\n"
+						+ "That means every pin also has a warning depth.",
+					)
+				6:
+					core.tutorial_lock(false)
+					show_box(
+						"Let's finally get you introduced to the break depth. Keep going.",
+						PIN_X,
+						PIN_Y,
+						false,
+					)
+					await_break = 1
+				7:
+					core.tutorial_lock(true)
+					show_box(
+						"Good.\n\nThe problem with warning depths is they only tell you that a "
+						+ "break is somewhere below them.",
+					)
+				8:
+					show_box(
+						"That's not super useful, since every pin has a break depth!\n\n"
+						+ "But until you meet your warning, know that you're safe.",
+					)
+				9:
+					show_box(
+						"Safe from break depths, at least.\n\nAgain - warning only cares about break, "
+						+ "not any of the other hazards."
+					)
+				10:
+					show_box(
+						"You can't safely pick these locks right now with your current picks.\n\n"
+						+ "I did say they were trash.\n\n"
+						+ "Give me a moment to give you a new kind of pick."
+					)
+				11:
+					core.tutorial_lock(true)
+					reset_pins([PinSpec.from_depth_array(EARLY_WARNING)])
+					core.get_node("DeckMain").clear_all()
+					core.get_node("HandMain").remove_all_cards(true)
+					var one_reveal: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
+					]
+					core.get_node("DeckMain").load_cards(one_reveal)
+					core.draw_to_five()
+					await core.animation_complete
+					advance()
+				12:
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 52)).grow(6))
+					show_box(
+						"This icon is \"reveal\". It does exactly what it says - reveals upcoming depths.",
+						550,
+						250
+					)
+				13:
+					core.tutorial_lock(false)
+					show_box(
+						"Give it a whirl.",
+						PIN_X,
+						PIN_Y,
+						false
+					)
+					await_use = 1
+				14:
+					core.tutorial_lock(true)
+					show_box(
+						"Unlike push, it doesn't move the pin forward.\n\n"
+						+ "That's good because it means you don't activate a new depth, but bad becasue it doesn't help "
+						+ "pick the lock. Every pick is different!"
+					)
+				15:
+					show_box("Let's give you a more real example...")
+				16:
+					reset_pins([PinSpec.from_depth_array(SPIKE_WARNING)])
+					empty_cards()
+					var new_hand: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
+					]
+					core.get_node("HandMain").add_cards(new_hand)
+					var new_deck: Array[CardSpec] = [
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_3),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3)
+					]
+					core.get_node("DeckMain").add_cards(new_deck, true)
+					await core.animation_complete
+					advance()
+				17:
+					core.tutorial_lock(false)
+					show_box(
+						"Let's see if you've been paying attention. Have at it.",
+						PIN_X, 
+						PIN_Y, 
+						false
+						)
+					await_use = 1
+					await_break = 1
+				18:
+					await_use = 0
+					await_break = 0
+					if core.get_node("TrashMain").count() > 0:
+						step = 15
+						show_box("The point is to not break picks. Try again, dumbass.")
+					elif core.get_node("DiscardMain").count() > 0:
+						var template: PickTemplates = core.get_node("DiscardMain").cards[-1].template
+						if template == PickTemplates.TUTORIAL_PUSH_1:
+							step = 15
+							show_box(
+								"Did you learn anything by doing that?\n\n"
+								+ "There's always a warning before a break, so you know there's a safe depth "
+								+ "on the other side of the spikes. Try again."
+							)
+						elif template == PickTemplates.TUTORIAL_PUSH_2:
+							show_box(
+								"Nice. You know it's safe becasue you haven't found the "
+								+ "warning yet.\n\nKeep going."
+							)
+							core.get_node("DeckMain").add_cards([
+								CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
+							] as Array[CardSpec])
+						else:
+							step = 15
+							show_box("how")
+					else:
+						step = 15
+						show_box("Stop being dumb.")
+				19:
+					show_box("bleh")
 
 func advance(n := 1) -> void:
 	step += n
@@ -812,6 +1025,12 @@ func lock_unlocked() -> void:
 		advance(await_unlock)
 		await_unlock = 0
 
+var await_break := 0
+func pick_broken() -> void:
+	if await_break:
+		advance(await_break)
+		await_break = 0
+
 var await_prev := false
 func prev_preved() -> void:
 	if await_prev:
@@ -839,6 +1058,12 @@ func reset_pins(pins: Array[PinSpec]) -> void:
 	core.get_node("LockBody/CylinderMain").load_new_lock(
 		LockSpec.new(pins)
 	)
+
+func empty_cards() -> void:
+	core.get_node("DiscardMain").empty_deck()
+	core.get_node("DeckMain").clear_all()
+	core.get_node("TrashMain").reset()
+	core.get_node("HandMain").remove_all_cards(true)
 
 func continue_pressed() -> void:
 	hide_all()
