@@ -469,13 +469,13 @@ func do_step() -> void:
 					show_box(
 						"This is your deck. This is where you keep all the picks you haven't used yet.",
 						64,
-						272,
+						300,
 					)
 				19:
 					show_box(
 						"You can click the 'Deck' button to see all the cards currently in it.",
 						64,
-						272,
+						300,
 						false
 					)
 					highlight(core.get_node("DeckMain/DeckLabel").get_global_rect().grow(6))
@@ -570,7 +570,6 @@ func do_step() -> void:
 					await_unlock = 1
 					core.discard_hand()
 					await core.animation_complete
-					core.tutorial_lock(false)
 					core.get_node("DiscardMain").empty_deck()
 					await reset_pins([PinSpec.from_depth_array()])
 					var new_cards: Array[CardSpec] = [
@@ -584,6 +583,7 @@ func do_step() -> void:
 					]
 					core.get_node("DeckMain").load_cards(new_cards)
 					core.draw_to_five()
+					core.tutorial_lock(false)
 				33:
 					if core.get_node("TrashMain").count() > 0:
 						core.tutorial_lock(true)
@@ -1265,6 +1265,7 @@ func do_step() -> void:
 						PIN_Y,
 						false
 					)
+					core.set_discard_disable(false)
 					core.tutorial_lock(false)
 					await_break = 1
 					await_unlock = 2

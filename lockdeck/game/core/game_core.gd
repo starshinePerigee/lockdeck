@@ -76,7 +76,8 @@ var _current_target: Control
 func valid_targets() -> Array[Control]:
 	var targets: Array[Control] = []
 	targets.assign($LockBody/CylinderMain/Cylinders.get_valid_refs())
-	targets.append($DiscardMain)
+	if not $DiscardMain.disable_discard: 
+		targets.append($DiscardMain)
 	return targets
 
 ## returns a list of all mouse hover objects
