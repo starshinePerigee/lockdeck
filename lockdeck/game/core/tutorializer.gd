@@ -299,12 +299,12 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
-	if level == 0:
-		step = 46
-	if level == 1:
-		step = 13
-	if level == 2:
-		step = 16
+#	if level == 0:
+#		step = 46
+#	if level == 1:
+#		step = 13
+#	if level == 2:
+#		step = 16
 	core.tutorial_mode = true
 	core.get_node("LockBody/CountdownMain").set_count(999999)
 	core.get_node("LockBody/CountdownMain").suggest = false
@@ -318,6 +318,7 @@ func do_step() -> void:
 		0:
 			match step:
 				0:
+					core.tutorial_lock(true)
 					show_box(
 						"Hey, kid. We caught you trying to pick locks without a licence.\n\n"
 						+ "The Thieves' Guild doesn't take too kindly to that."
@@ -389,11 +390,17 @@ func do_step() -> void:
 						"This icon is 'push'. That means it pushes the pin up.\n\n"
 						+ "You need to push a pin all the way up to unlock the lock, so you're going "
 						+ "to see a lot of these.\n\n"
-						+ "You see how there's two of them? That means this pick pushes the pin up two. Simple as.",
+						+ "You see how there's two of them? That means this pick pushes the pin up two.",
 						550,
 						250
 					)
 				10:
+					show_box(
+						"If you forget, you can hover over any of your picks "
+						+ "and get a quick reminder about what they do.\n\n"
+						+ "That applies to just about anything you see - so don't forget it!"
+					)
+				11:
 					show_box(
 						"Go ahead and use the pick on the pin. Either click and drag it over, "
 						+ "or click it once, and then click on the pin. No difference either way.",
@@ -403,16 +410,12 @@ func do_step() -> void:
 					)
 					core.tutorial_lock(false)
 					await_use = 1
-				11:
-					# deleted
-					advance()
 				12:
+					core.tutorial_lock(true)
 					show_box(
 						"Good work. See how the pin moved up two spaces?\n\n"
-						+ "We call those spaces depths. Each pin has eight depths, plus the resting "
-						+ "depth at the top. So you need eight pushes to unlock a lock. \n\n"
-						+ "Don't worry about the green 'ok' or the little green letters just yet - " 
-						+ "we'll get there.",
+						+ "We call those spaces depths. Each pin has eight depths, plus the base "
+						+ "depth at the top. So you need eight pushes to unlock a lock.",
 						PIN_X,
 						PIN_Y,
 					)
@@ -428,15 +431,19 @@ func do_step() -> void:
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
 						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2)
 					]
-					core.get_node("HandMain").add_cards(new_cards)
+					core.get_node("DeckMain").add_cards(new_cards)
+					core.draw_to_five()
 				14:
+					core.tutorial_lock(false)
 					show_box("Have at it.", 370, 180, false)
 					await_unlock = 1
 				15:
+					core.tutorial_lock(true)
 					show_box(
 						"Nice work.\n\n"
-						+ "If you forget what any of the icons mean, you can hover over any of your picks "
-						+ "and get a quick reminder. \n\nThat applies to just about everything - so don't forget it!"
+						+ "Don't sweat the green 'ok', the little purple waves, " 
+						+ "or any other icons that haven't been explained yet. "
+						+ "Lockpicking is complicated - we'll get there. You just gotta take it step by step."
 					)
 				16:
 					show_box("Let's reset that...", -1, -1, false)
@@ -460,12 +467,17 @@ func do_step() -> void:
 				18:
 					highlight(core.get_node("DeckMain").get_nice_rect().grow(6))
 					show_box(
-						"This is your deck. This is where you keep all the picks you haven't used yet.\n\n"
-						+ "You can the 'Deck' button to see all the cards currently in it.",
+						"This is your deck. This is where you keep all the picks you haven't used yet.",
 						64,
 						272,
 					)
 				19:
+					show_box(
+						"You can click the 'Deck' button to see all the cards currently in it.",
+						64,
+						272,
+						false
+					)
 					highlight(core.get_node("DeckMain/DeckLabel").get_global_rect().grow(6))
 					await_display_close = 1
 				20:
@@ -500,24 +512,37 @@ func do_step() -> void:
 						356,
 					)
 				25:
-					show_box("Pick this lock again, and watch how your cards move.")
-				26:
+					show_box(
+						"Pick this lock again, and watch how your cards move.",
+						PIN_X,
+						PIN_Y,
+						false
+					)
+					core.tutorial_lock(false)
 					await_unlock = 1
-				27:
+				26:
+					core.tutorial_lock(true)
 					show_box("Perfect. Two more things before I let you go for the day.")
-				28:
+				27:
 					core.get_node("AnimationPlayer").play("show_trash")
 					var t := create_tween()
 					t.tween_interval(0.5)
 					t.tween_callback(advance)
-				29:
+				28:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
 					show_box(
 						"This is your trash pile. "
 						+ "If you screw up and break picks, they end up here instead of in your discard.\n\n"
 						+ "Broken picks are gone until you can repair them, which might be a bit and costs money.",
-						440,
-						280,
+						400,
+						210,
+					)
+				29:
+					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
+					show_box(
+						"Of course, right now we're training, so you don't need to worry about money or repairs just yet.",
+						400,
+						210,
 					)
 				30:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
@@ -545,6 +570,7 @@ func do_step() -> void:
 					await_unlock = 1
 					core.discard_hand()
 					await core.animation_complete
+					core.tutorial_lock(false)
 					core.get_node("DiscardMain").empty_deck()
 					await reset_pins([PinSpec.from_depth_array()])
 					var new_cards: Array[CardSpec] = [
@@ -560,6 +586,7 @@ func do_step() -> void:
 					core.draw_to_five()
 				33:
 					if core.get_node("TrashMain").count() > 0:
+						core.tutorial_lock(true)
 						show_box("That pick is trashed! Now you know what not to do.")
 					else:
 						step = 30
@@ -634,8 +661,9 @@ func do_step() -> void:
 						"You can hover over the candle for a reminder of all the details."
 					)
 				44:
+					core.tutorial_lock(false)
 					show_box(
-						"Now click the candle to end your turn.",
+						"Now click the candle twice to end your turn.",
 						380,
 						100,
 						false
@@ -644,6 +672,7 @@ func do_step() -> void:
 					await core.turn_ended
 					advance()
 				45:
+					core.tutorial_lock(true)
 					show_box(
 						"Did you see how the pin reset?\n\n"
 						+ "Unfortunately, you'll have to ease up on the lock to reload your deck. " 
@@ -656,6 +685,7 @@ func do_step() -> void:
 						+ "breaking a pick and I'll continue your training."
 					)
 				47:
+					core.tutorial_lock(false)
 					core.continue_to_next.emit()
 		1:
 			match step:
@@ -699,6 +729,7 @@ func do_step() -> void:
 					core.tutorial_lock(false)
 					await_use = 1
 				6:
+					core.tutorial_lock(true)
 					show_box(
 						"Fun, isn't it!\n\n"
 						+ "Spike will break your pick if you land on it.",
@@ -707,7 +738,7 @@ func do_step() -> void:
 					)
 				7:
 					show_box(
-						"Pay attention to how it's changed color. "
+						"Pay attention to how it's turned grey. "
 						+ "Depths will only activate once per turn - although it's pretty rare when that matters.",
 						PIN_X,
 						140,
@@ -729,6 +760,7 @@ func do_step() -> void:
 					core.get_node("DeckMain").load_cards(new_cards)
 					core.draw_to_five()
 					await core.animation_complete
+					core.tutorial_lock(false)
 					advance(2)
 				10:
 					# failure reset
@@ -812,12 +844,14 @@ func do_step() -> void:
 					)
 					await_use = 1
 				19:
+					core.tutorial_lock(true)
 					show_box(
 						"If you really need a specific pick, you can keep discarding until you find it.\n\n"
 						+ "But don't forget to keep an eye on your candle. Each pick discarded is a pick you don't get "
 						+ "to use this turn."
 					)
 				20:
+					core.tutorial_lock(false)
 					show_box(
 						"Before we get to the next tool, I need to you play a pick. " 
 						+ "Doesn't matter which, just play it on the pin.",
@@ -836,7 +870,8 @@ func do_step() -> void:
 					highlight(core.get_node("PreviousButton").get_global_rect().grow(6))
 					show_box(
 						"If you ever forget what you're doing, or get surprised by something that happened, "
-						+ "this button here will let you see what went down last time you did something.",
+						+ "this button here will let you see what went down last time you did something.\n\n"
+						+ "It's also useful if you just need to see the whole lock.",
 						200,
 						40,
 						false
@@ -844,8 +879,10 @@ func do_step() -> void:
 					await_prev = true
 				23:
 					show_box(
-						"Click it again to go back.",
-						200,
+						"Don't worry too much about all the different icons. "
+						+ " You'll learn what they mean in time.\n\n"
+						+ "Click the button again to go back.",
+						350,
 						40,
 						false
 					)
@@ -870,7 +907,7 @@ func do_step() -> void:
 						"This practice lock is simple, but real locks will have a lot more depths.\n\n"
 						+ "Don't hesitate to check what depths you're up against, and if you need a refresher on "
 						+ "what a specific depth does you can hover over it in this depths window.\n\n"
-						+ "Close the depths refernece to continue.",
+						+ "Close the depths reference to continue.",
 						280,
 						220,
 						false
@@ -879,11 +916,12 @@ func do_step() -> void:
 					advance()
 				27:
 					show_box(
-						"The next couple of locks are going to be all spikes. Like before, pick them without "
+						"The next couple of locks are going to be full of spikes. Like before, pick them without "
 						+ "breaking any picks to continue.\n\n"
 						+ "You'll need to be capable and clever - prove to me you're both."
 					)
 				28:
+					core.tutorial_lock(false)
 					core.continue_to_next.emit()
 		2:
 			match step:
@@ -896,7 +934,7 @@ func do_step() -> void:
 					)
 				1:
 					show_box(
-						"Somewhere in this pin is a \"Break\" depths. Like spikes, if you "
+						"Somewhere in this pin is a \"Break\" depth. Like spikes, if you "
 						+ "activate it it breaks your pick. Unlike spikes, they don't advertise themselves.",
 						PIN_X,
 						PIN_Y
@@ -950,7 +988,7 @@ func do_step() -> void:
 				7:
 					core.tutorial_lock(true)
 					show_box(
-						"Good.\n\nThe problem with warning depths is they only tell you that a "
+						"There you go! The break depth.\n\nThe problem with warning depths is they only tell you that a "
 						+ "break is somewhere below them.",
 					)
 				8:
@@ -982,7 +1020,7 @@ func do_step() -> void:
 					await core.animation_complete
 					advance()
 				12:
-					highlight(Rect2(Vector2(462, 412), Vector2(24, 52)).grow(6))
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 42)).grow(6))
 					show_box(
 						"This icon is \"reveal\". It does exactly what it says - reveals upcoming depths.",
 						550,
@@ -1043,7 +1081,7 @@ func do_step() -> void:
 						if template == PickTemplates.TUTORIAL_REVEAL_2:
 							step = 15
 							show_box(
-								"Reveal picks are valuable, and you kind of wasted that one?\n\n"
+								"Reveal picks are valuable, and you kind of wasted that one.\n\n"
 								+ "There's always a warning before a break, so you know there's a safe depth "
 								+ "on the other side of the spikes. Try again."
 							)
@@ -1182,9 +1220,9 @@ func do_step() -> void:
 					] as Array[CardSpec])
 					core.draw_to_five()
 					await core.animation_complete
-					highlight(Rect2(Vector2(462, 412), Vector2(24, 40)).grow(6))
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 52)).grow(6))
 					show_box(
-						"So far, all the picks you've used have had a single effect type."
+						"So far, all the picks you've used have had a single effect type. "
 						+ "Most picks have a couple, like this one.",
 						550,
 						350
@@ -1220,7 +1258,8 @@ func do_step() -> void:
 					] as Array[CardSpec])
 					core.draw_to_five()
 					show_box(
-						"I've given you some picks to play around with. Solve this without "
+						"It's probably best to see for yourself.\n\n"
+						+ "I've given you some picks to play around with. Solve this without "
 						+ "breaking a pick and I'll let you go.",
 						PIN_X,
 						PIN_Y,

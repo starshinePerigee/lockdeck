@@ -1,0 +1,16 @@
+intercept break on level 2
+
+
+investigate lockout after playing
+
+highlight box for double effect
+
+
+at final lesson for lesson four, mention "if you can't advance without breaking a pick, you can always end your turn"
+
+at final lesson, re-enable discard
+
+dropping on disabled discard is broken as hell ?
+
+
+specific tutorials have a reset button that shows on break

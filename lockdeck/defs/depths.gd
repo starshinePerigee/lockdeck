@@ -147,7 +147,7 @@ static var LUCKY := Depths.new(
 ## Reveals the next safe depth (if one) or sets the pin as clear
 static var HINT := Depths.new(
 	"hint", DangerLevel.CLEAR, Effects.HINT,
-	"A safe depth that also reveals another safe on this pin, if one exists."
+	"A safe depth that also reveals another safe depth on this pin, if one exists."
 )
 
 static var BREATH := Depths.new(

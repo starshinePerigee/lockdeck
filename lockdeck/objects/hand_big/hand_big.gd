@@ -111,6 +111,7 @@ func _add_space(spec: CardSpec) -> CardSpace:
 	space.card_spec = spec
 	space.has_card = true
 	$Hand.add_child(space)
+	space.disabled = disabled
 	
 	space.card_tapped.connect(card_selected.emit.bind(spec))
 	space.card_picked_up.connect(card_selected.emit.bind(spec))

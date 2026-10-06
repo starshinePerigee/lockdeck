@@ -997,7 +997,7 @@ static var OLD_KEY := PickTemplates.new(
 #region tutorial picks
 
 static var TUTORIAL_PUSH_2 := PickTemplates.new(
-	"medium hook",
+	"training pick",
 	Families.NONE,
 	Archetypes.THREE_PUSH,
 	Rarities.BASIC,

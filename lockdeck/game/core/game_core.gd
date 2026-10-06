@@ -765,7 +765,9 @@ func load_game(game: GameSpec) -> void:
 func restart() -> void:
 	lock_complete = false
 	tutorial_mode = false
+	tutorial_lock(false)
 	lock_input(false)
+	set_discard_disable(false)
 	show_failure(false)
 	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
