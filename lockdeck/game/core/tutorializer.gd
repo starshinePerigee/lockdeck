@@ -208,6 +208,78 @@ static var TUTORIAL_3 := StateSpec.new(
 	LockSpec.new([PinSpec.from_depth_array(EARLY_WARNING)], SPIKE_DECK)
 ) 
 
+static var BREAK_SPIKE_DECK := LockDeck.from_template_array(
+	[
+		DepthTemplates.BREAK,
+		DepthTemplates.SPIKE
+	]
+)
+
+static var REVEAL_DECK: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_2),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+]
+
+static var CHALLENGE_6 := StateSpec.new(
+	AllCardsSpec.new(REVEAL_DECK),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.WARN,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.BREAK,
+					Depths.EMPTY,
+				]
+			),
+		],
+		BREAK_SPIKE_DECK
+	)
+)
+
+static var CHALLENGE_7 := StateSpec.new(
+	AllCardsSpec.new(REVEAL_DECK),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.WARN,
+					Depths.BREAK,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.WARN,
+					Depths.EMPTY,
+					Depths.BREAK,
+				]
+			),
+		],
+		BREAK_SPIKE_DECK
+	)
+)
+
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
 
@@ -219,7 +291,9 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
-	LevelSpec.new(TUTORIAL, 2, 0, TUTORIAL_3, LevelSpec.InterfaceSetup.THREE_QUARTERS)
+	LevelSpec.new(TUTORIAL, 2, 0, TUTORIAL_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_6, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_7, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 ]
 
 func tutorialize(level_: int) -> void:
@@ -1100,7 +1174,69 @@ func do_step() -> void:
 					core.tutorial_lock(false)
 					await_unlock = 1
 				26:
+					core.tutorial_lock(true)
 					show_box("Alright. That's reveal. One more thing today.")
+				27:
+					core.get_node("DeckMain").add_cards([
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1)
+					] as Array[CardSpec])
+					core.draw_to_five()
+					await core.animation_complete
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 40)).grow(6))
+					show_box(
+						"So far, all the picks you've used have had a single effect type."
+						+ "Most picks have a couple, like this one.",
+						550,
+						350
+					)
+				28:
+					show_box(
+						"Pick effects trigger from the top down. For this pick, it'll push one depth, "
+						+ "and then reveal one depth.\n\n"
+						+ "If you need a reference, drag the pick over a pin without letting go, or click the pick "
+						+ "and then hover over the pin. If you see purple icons, don't worry about them yet - "
+						+ "we'll talk about those next time.",
+						550,
+						250
+					)
+				29:
+					reset_pins([PinSpec.from_depth_array([
+						Depths.EMPTY,
+						Depths.EMPTY,
+						Depths.WARN,
+						Depths.BREAK,
+						Depths.EMPTY,
+						Depths.EMPTY,
+						Depths.SPIKE,
+					] as Array[Depths])])
+					core.get_node("DeckMain").add_cards([
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_2),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_1),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_2),
+						CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+					] as Array[CardSpec])
+					core.draw_to_five()
+					show_box(
+						"I've given you some picks to play around with. Solve this without "
+						+ "breaking a pick and I'll let you go.",
+						PIN_X,
+						PIN_Y,
+						false
+					)
+					core.tutorial_lock(false)
+					await_break = 1
+					await_unlock = 2
+				30:
+					step = 28
+					show_box("Gotcha! Try again and pay attention to how you're revealing depths.")
+				31:
+					show_box("Nice. Go pick the next couple locks without breaking any of my picks.")
+				32:
+					core.continue_to_next.emit()
+
 
 func advance(n := 1) -> void:
 	step += n
