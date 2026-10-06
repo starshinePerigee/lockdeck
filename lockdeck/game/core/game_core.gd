@@ -383,6 +383,9 @@ func tutorial_lock(state: bool) -> void:
 	_tutorial_lock = state
 	lock_input(state)
 
+## Shows a reset button on break
+var allow_reset := false
+
 # Used for when you want to continue interacting with the interface,
 # such as after unlock
 func lock_input(state: bool = true) -> void:
@@ -534,6 +537,9 @@ func break_pick(card: CardSpec, surprise := false, bomb := false) -> void:
 	
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
+	
+	if allow_reset:
+		$ResetButton.visible = true
 	
 	pick_broke.emit()
 
@@ -768,6 +774,8 @@ func restart() -> void:
 	tutorial_mode = false
 	tutorial_lock(false)
 	lock_input(false)
+	allow_reset = false
+	$ResetButton.visible = false
 	set_discard_disable(false)
 	show_failure(false)
 	$LastTest.visible = false
@@ -798,6 +806,7 @@ func setup_interface(setup: LevelSpec.InterfaceSetup = LevelSpec.InterfaceSetup.
 func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 	load_lock(state.lock)
 	load_game(game)
+	allow_reset = game.tutorial_mode
 	$LockBody/CylinderMain.hint_id = state.hint_id
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(state.all_cards.deck)
@@ -817,6 +826,7 @@ func set_discard_disable(disable: bool) -> void:
 var tutorial_mode := false
 
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
+const FX_LOW_CHIME := preload("res://assets/fx/low_chime.ogg")
 
 func _ready() -> void:
 	var settings := GameSettings.instance()
@@ -829,6 +839,8 @@ func _ready() -> void:
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$LockBody/ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_SUCCESS_CHIME))
 	$FailureButton.pressed.connect(continue_to_failure.emit)
+	$ResetButton.pressed.connect(continue_to_next.emit)
+	$ResetButton.pressed.connect(GlobalEffects.request.bind(FX_LOW_CHIME))
 
 	$HandMain/Hand.card_selected.connect(pick_selected)
 	$HandMain/Hand.card_tapped.connect(pick_clicked)

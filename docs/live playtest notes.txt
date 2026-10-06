@@ -1,3 +1,12 @@
 intercept break on level 2
 
-specific tutorials have a reset button that shows on break?
+
+
+
+---
+
+less depths all the time (but more copies is fine)
+
+a depth should be able to stand on its own (with break)
+
+difficulty works by moving from weaknesses > inconveniences > hazards

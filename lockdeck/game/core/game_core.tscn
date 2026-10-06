@@ -1170,3 +1170,12 @@ offset_bottom = 40.0
 mouse_filter = 2
 border_color = Color(0.304416, 0.493369, 1, 1)
 editor_only = false
+
+[node name="ResetButton" type="Button" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 105.0
+offset_bottom = 89.0
+theme_type_variation = &"BoxButton"
+text = "< Retry"

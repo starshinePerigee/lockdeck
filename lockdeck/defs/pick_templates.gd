@@ -32,6 +32,7 @@ enum Archetypes {
 
 static var RARITY_COLORS: Dictionary[Rarities, Color] = {
 	Rarities.DEBUG: Color("ff0089"),
+	Rarities.TUTORIAL: Color("312836"),
 	Rarities.BASIC: Color("918891"),
 	Rarities.GREAT: Color("c7e0e3"),
 	Rarities.TRASH: Color("38423b"),
@@ -42,6 +43,7 @@ static var RARITY_COLORS: Dictionary[Rarities, Color] = {
 
 enum Rarities {
 	DEBUG = -2,  # 5
+	TUTORIAL = -3,
 	BASIC = 2,  # 25
 	GREAT = 4,  # 35
 	TRASH = 0,  # 15
@@ -1000,7 +1002,7 @@ static var TUTORIAL_PUSH_2 := PickTemplates.new(
 	"training pick",
 	Families.NONE,
 	Archetypes.THREE_PUSH,
-	Rarities.BASIC,
+	Rarities.TUTORIAL,
 	"PP",
 )
 
@@ -1008,7 +1010,7 @@ static var TUTORIAL_PUSH_1 := PickTemplates.new(
 	"small hook",
 	Families.NONE,
 	Archetypes.PRECISE,
-	Rarities.BASIC,
+	Rarities.TUTORIAL,
 	"P",
 )
 
@@ -1016,7 +1018,7 @@ static var TUTORIAL_PUSH_3 := PickTemplates.new(
 	"large hook",
 	Families.NONE,
 	Archetypes.PUSHY,
-	Rarities.BASIC,
+	Rarities.TUTORIAL,
 	"PPP",
 )
 
@@ -1024,7 +1026,7 @@ static var TUTORIAL_REVEAL_2 := PickTemplates.new(
 	"reveal hook",
 	Families.NONE,
 	Archetypes.REVEAL,
-	Rarities.BASIC,
+	Rarities.TUTORIAL,
 	"RR",
 )
 
@@ -1032,8 +1034,32 @@ static var TUTORIAL_REVEAL_1 := PickTemplates.new(
 	"push reveal",
 	Families.NONE,
 	Archetypes.BULK_TEST,
-	Rarities.BASIC,
+	Rarities.TUTORIAL,
 	"PR",
+)
+
+static var TUTORIAL_TEST_2 := PickTemplates.new(
+	"test hook",
+	Families.NONE,
+	Archetypes.CLOSE_TEST,
+	Rarities.TUTORIAL,
+	"TT",
+)
+
+static var TUTORIAL_TEST_3 := PickTemplates.new(
+	"classic hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.BASIC,
+	"PPTTT",
+)
+
+static var TUTORIAL_TEST_1 := PickTemplates.new(
+	"short hook",
+	Families.NONE,
+	Archetypes.PRECISE,
+	Rarities.BASIC,
+	"PT",
 )
 
 #endregion
