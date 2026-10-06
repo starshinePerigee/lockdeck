@@ -280,6 +280,23 @@ static var CHALLENGE_7 := StateSpec.new(
 	)
 )
 
+static var TEST_BREAK: Array[Depths] = [
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.WARN,
+	Depths.EMPTY,
+	Depths.EMPTY,
+	Depths.BREAK,
+]
+
+static var TUTORIAL_4 := StateSpec.new(
+	AllCardsSpec.new(
+		[]
+	),
+	LockSpec.new([PinSpec.from_depth_array(TEST_BREAK)], BREAK_DECK)
+) 
+
+
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
 
@@ -294,17 +311,18 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(TUTORIAL, 2, 0, TUTORIAL_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_6, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_7, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(TUTORIAL, 3, 0, TUTORIAL_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 ]
 
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
-#	if level == 0:
-#		step = 46
-#	if level == 1:
-#		step = 13
-#	if level == 2:
-#		step = 16
+	if level == 0:
+		step = 46
+	if level == 1:
+		step = 13
+	if level == 2:
+		step = 16
 	core.tutorial_mode = true
 	core.get_node("LockBody/CountdownMain").set_count(999999)
 	core.get_node("LockBody/CountdownMain").suggest = false
@@ -1260,23 +1278,66 @@ func do_step() -> void:
 					show_box(
 						"It's probably best to see for yourself.\n\n"
 						+ "I've given you some picks to play around with. Solve this without "
-						+ "breaking a pick and I'll let you go.",
+						+ "breaking a pick and I'll let you go.\n\n"
+						+ "Don't forget you can end your turn to reset the pin and your picks.",
 						PIN_X,
-						PIN_Y,
-						false
+						PIN_Y - 50,
 					)
+				30:
 					core.set_discard_disable(false)
 					core.tutorial_lock(false)
 					await_break = 1
 					await_unlock = 2
-				30:
+				31:
 					step = 28
 					show_box("Gotcha! Try again and pay attention to how you're revealing depths.")
-				31:
-					show_box("Nice. Go pick the next couple locks without breaking any of my picks.")
 				32:
+					show_box("Nice. Go pick the next couple locks without breaking any of my picks.")
+				33:
 					core.continue_to_next.emit()
-
+		3:
+			match step:
+				0:
+					core.tutorial_lock(true)
+					show_box(
+						"I'm glad to see you back.\n\n"
+						+ "I hope you enjoyed those reveal picks."
+					)
+				1:
+					show_box(
+						"Reveal is pretty rare out in the field.\n\n" + 
+						"Instead, you're going to be doing a lot of work with its little brother."
+					)
+				2:
+					core.get_node("DeckMain").load_cards([
+						CardSpec.from_template(PickTemplates.TUTORIAL_TEST_2)
+					] as Array[CardSpec])
+					core.draw_to_five()
+					await core.animation_complete
+					advance()
+				3:
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 42)).grow(6))
+					show_box(
+						"Meet \"test\".\n\nYou might have seen it before.",
+						550,
+						250
+					)
+				4:
+					core.tutorial_lock(false)
+					show_box(
+						"Try it.",
+						PIN_X,
+						PIN_Y,
+						false
+					)
+					await_use = 1
+				5:
+					core.tutorial_lock(true)
+					show_box(
+						"Test gives you partial information.",
+						PIN_X,
+						PIN_Y
+					)
 
 func advance(n := 1) -> void:
 	step += n

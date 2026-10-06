@@ -1,20 +1,7 @@
 TABLE OF CONTENTS:
 
 
-Reveal, warning, and break depths
-
-
-- once you push past the break, you get a notification - pins always have exactly one break depth. Since you know there aren't any other hazards, the rest of this pin is safe.
-
-
-8. multiple effects
-- most picks have multiple effects at once. these take effect from top down
-- you can preview a pick by clicking and hovering, or dragging it over a pin without dropping it
-- here's a handful of picks to practice with, unlock this lock without breaking it (push + reveal)
-
-
-mix spikes and breaks
-
+safe / interesting / dangerous
 
 
 9. advanced survival
