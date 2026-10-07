@@ -1,3 +1,6 @@
+reframe "show previous" as look up and emphasize it's for viewing the whole lock first, see previous second
+
+
 show total number of each depth in lock ("X remaining") - means depth reference should be a top level button
 
 s/jam/bind

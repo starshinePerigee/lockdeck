@@ -97,7 +97,7 @@ static var HIDDEN := Depths.new(
 )
 
 static var MARK_CLEAR := Depths.new(
-	"mark_clear", DangerLevel.INVALID, Effects.DEBUG,
+	"mark_clear", DangerLevel.CLEAR, Effects.DEBUG,
 	"Marked safe. You can push to this depth without worry, although it might be dangerous in other ways.",
 	0, "marked safe"
 )

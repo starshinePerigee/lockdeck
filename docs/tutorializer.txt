@@ -3,13 +3,16 @@ TABLE OF CONTENTS:
 
 safe / interesting / dangerous
 
-
 9. advanced survival
 - picks with "reveal" effects are super rare - you're playing with almost every one I own right now.
 - far more common are picks that test the lock, but only give you a rough sense of what ahead
 - we call this effect TEST
 
-mention push jumps
+- mention push jumps are tests
+- also introduce complications
+- re-testing depths
+- depths don't update if they're safer
+- revealed depths don't count for test (this is what the grey dots on preview mean)
 
 - when you use a pick that has TEST on it, it'll visit one depth for each test effect. then, from all the unrevealed depths that are tested, you'll learn the worst case danger.
 - let's look at some examples
