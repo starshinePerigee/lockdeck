@@ -118,7 +118,6 @@ func _reset_trans() -> void:
 
 func _tween_reveal(pos: int) -> void:
 	_tween.tween_property(depth_refs[pos], "flavor", _pending_spec.depths[pos], 0)
-	_tween.tween_callback(depth_refs[pos].set_hints.bind(""))
 
 func _tween_trap(pos: int) -> void:
 	_tween_reveal(pos)
@@ -409,15 +408,6 @@ func load_spec(pin_spec: PinSpec) -> void:
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
 		depth_refs[i].exhausted = pin_spec.activated[i]
-		var reveal_level := pin_spec.reveals[i]
-		if reveal_level in [
-			PinSpec.RevealLevel.DANGEROUS,
-			PinSpec.RevealLevel.INTERESTING,
-			PinSpec.RevealLevel.CLEAR
-		]:
-			depth_refs[i].set_hints(pin_spec.hint_tracks[i], HINT_COLORS[reveal_level])
-		else:
-			depth_refs[i].set_hints("")
 		depth_refs[i].result = Results.EMPTY
 	
 	pin_position = pin_spec.pin_position

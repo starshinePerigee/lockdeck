@@ -9,34 +9,6 @@ extends Control
 ## Used for simulation purposes
 var _shadow_pins: Array[PinSpec]
 
-## Holds the current hint id (integer corresponding to ascii)
-var hint_id := -1
-
-## Bump hint_id to the next letter
-func increment_hint() -> int:
-	# pre-A (65)
-	if hint_id < 0:
-		hint_id = 65
-	# A-Z (65-89)
-	elif hint_id >= 65 and hint_id < 90:
-		hint_id += 1
-	# Z (90) to 1 (97)
-	elif hint_id == 90:
-		hint_id = 49
-	# 1-9 (49-57)
-	elif hint_id >= 49 and hint_id < 57:
-		hint_id += 1
-	# 9 (57) to a (97)
-	elif hint_id == 57:
-		hint_id = 97
-	# a-z (97-121)
-	elif hint_id >= 97 and hint_id < 122:
-		hint_id += 1
-	# # (35)
-	else:
-		hint_id = 35
-	return hint_id
-
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
 	for pin in pins:
@@ -52,7 +24,6 @@ func load_new_lock(new_lock: LockSpec) -> void:
 		_shadow_pins.append(PinSpec.new())
 		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)
-	hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
 func preview(card: CardSpec, index: int) -> EndStepSpec:
@@ -140,12 +111,10 @@ func update_visibility(result: EndStepSpec):
 	if new_level == PinSpec.RevealLevel.REVEALED:
 		# we didn't hint anything, leave endstepspec as the defaults
 		return
-	increment_hint()
 	for pin in pins:
-		pin.update_pin_visible(new_level, String.chr(hint_id))
+		pin.update_pin_visible(new_level)
 	
 	result.last_reveal = new_level
-	result.last_hint = String.chr(hint_id)
 
 #endregion
 

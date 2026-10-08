@@ -29,14 +29,6 @@ const PREV_SPACING := 12
 		else:
 			$DepthTexture.material = material_normal
 
-func set_hints(letters: String, color: Color = Color()):
-	$HintTracker.visible = len(letters) > 0
-	if len(letters) > 8:
-		$HintTracker.text = "*" + letters.substr(len(letters) - 7, 7)
-	else:
-		$HintTracker.text = letters
-	$HintTracker.add_theme_color_override("font_color", color)
-
 func _redraw() -> void:
 	if not is_node_ready():
 		await ready
