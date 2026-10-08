@@ -1295,6 +1295,7 @@ func do_step() -> void:
 			match step:
 				0:
 					core.tutorial_lock(true)
+					core.set_discard_disable(true)
 					show_box("Glad to see you back.")
 				1:
 					show_box("Before we talk about the next kind of pick, let's review.")
@@ -1477,11 +1478,20 @@ func do_step() -> void:
 					show_box("I thought you were better than that. Moving on...")
 					advance()
 				29:
+					show_box(
+						"There's a few more things to learn about test."
+					)
 					core.tutorial_lock(true)
 					await_break = 0
 					await_unlock = 0
 					empty_cards()
-					await reset_pins([PinSpec.from_depth_array()])
+					reset_pins([PinSpec.from_depth_array()])
+				30:
+					show_box(
+						
+							"First, when you use a push pick with more than one push, you test every depth "
+							+ "you skip over.\n\nThat can be a little annoying when you jump a depth."
+					)
 
 
 func advance(n := 1) -> void:
