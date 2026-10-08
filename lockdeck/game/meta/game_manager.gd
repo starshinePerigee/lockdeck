@@ -143,6 +143,8 @@ func advance_from_between() -> void:
 			lock_start.emit()
 			$GameCore.setup_interface(next_level.interface)
 			load_state(next_level.state)
+			if game.tutorial_mode:
+				init_tutorial_challenge()
 		LevelSpec.Stages.TUTORIAL:
 			lock_start.emit()
 			$GameCore.setup_interface(next_level.interface)
@@ -214,6 +216,11 @@ func load_state(state: StateSpec) -> void:
 	GlobalEffects.request(FX_LOCK_ROLL_IN)
 	await $AnimationPlayer.animation_finished
 	$GameCore.draw_to_five()
+
+## Used when loading a tutorial specific for the first time
+func init_tutorial_challenge() -> void:
+	$GameCore/LockBody/CountdownMain.set_count(999999)
+	$GameCore.allow_reset = true
 
 ## Abandon the current game. Call begin_new_game after
 func abort_and_reset() -> void:

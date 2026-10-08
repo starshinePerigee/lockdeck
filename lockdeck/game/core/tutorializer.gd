@@ -449,8 +449,9 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
-	if level == 3:
-		step = 32
+	# DEV SKIP
+#	if level == 3:
+#		step = 32
 	core.tutorial_mode = true
 	core.get_node("LockBody/CountdownMain").set_count(999999)
 	core.get_node("LockBody/CountdownMain").suggest = false
@@ -775,7 +776,7 @@ func do_step() -> void:
 					show_box(
 						"Ending your turn isn't free. Let me get your candle..."
 					)
-					core.get_node("LockBody/CountdownMain").button_disable = true
+					core.set_countdown_disable(true)
 					core.get_node("AnimationPlayer").play("show_countdown")
 				40:
 					highlight(core.get_node("LockBody/CountdownMain").get_mouse_rect())
@@ -812,7 +813,7 @@ func do_step() -> void:
 						100,
 						false
 					)
-					core.get_node("LockBody/CountdownMain").button_disable = false
+					core.set_countdown_disable(false)
 					await core.turn_ended
 					advance()
 				45:
@@ -837,6 +838,7 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					core.get_node("LockBody/CountdownMain").button_disable = true
 					core.set_discard_disable(true)
+					core.set_countdown_disable(true)
 					show_box(
 						"Nice job! As you noticed, some locks have more than one pin.\n\n"
 						+ "Rich bastards'll try anything to keep us out. That's why it's time to continue learning."
@@ -1071,6 +1073,7 @@ func do_step() -> void:
 				0:
 					core.tutorial_lock(true)
 					core.set_discard_disable(true)
+					core.set_countdown_disable(true)
 					show_box(
 						"Looks like you're getting the hang of moving pins around. "
 						+ "Time to reveal the other half of lockpicking."
@@ -1410,7 +1413,7 @@ func do_step() -> void:
 					)
 				30:
 					core.set_discard_disable(false)
-					core.get_node("LockBody/CountdownMain").button_disable = false
+					core.set_countdown_disable(false)
 					core.tutorial_lock(false)
 					await_break = 1
 					await_unlock = 2
@@ -1426,7 +1429,7 @@ func do_step() -> void:
 				0:
 					core.tutorial_lock(true)
 					core.set_discard_disable(true)
-					core.get_node("LockBody/CountdownMain").button_disable = true
+					core.set_countdown_disable(true)
 					show_box("Glad to see you back.")
 				1:
 					show_box("Before we talk about the next kind of pick, let's review.")
@@ -1488,72 +1491,76 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"When you test a pin, you're feeling what's coming, but only broadly.\n\n"
-						+ "Test tells you the worst danger from every depth you tested."
+						+ "When you test, you learn the maximum danger from across every depth tested."
 					)
 				12:
-					advance()
+					show_box("Then, you mark all those depths.")
 				13:
+					show_box(
+						"Think of it like... You ask your buddies if anyone's drunk yet.\n\n"
+						+ "If even one's drunk they'll be super loud and shout over everyone else.\n\n"
+						+ "So it's easy to tell if there's even one drunk. But it's hard to know if "
+						+ "every single person is drunk, becuase if they're not they'll just stay quiet.\n\n"
+						+ "On the other hand, if you can hear anyone say \"I'm not drunk\" that tells you "
+						+ "every single person's still sober.",
+					-1,
+					50,
+					)
+				14:
+					show_box("Uh, simple as.\n\nDangers are louder than safe depths.")
+				15:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
-						"The pick you just played had two test icons, so it tested the first two "
-						+ "depths in this pin. Since  "
-						+ "safe.\n\n"
-						+ "That's what these green \"ok\" marks indicate. These depths are definitely ok to activate.",
+						"The pick you just played tested the first two "
+						+ "depths in this pin. It told you \"safe\". "
+						+ "That means nothing bad is in either of those depths.",
 						PIN_X,
 						PIN_Y
 					)
-				14:
+				16:
+					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
+					show_box(
+						"They get marked \"ok\", you know they're definitely ok to activate.",
+						PIN_X,
+						PIN_Y
+					)
+				17:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
 						"They're not necessarily empty depths (warning tests as safe, for one) "
-						+ "but you'll always be happy to see them.",
+						+ "but you'll always be happy to land on a safe depth.\n\nWhen you hover over a depth, "
+						+ "the \"tests as\" in the upper right corner tells you how loud they are.",
 						PIN_X,
 						PIN_Y
 					)
-				15:
+				18:
 					await draw_cards([PickTemplates.TUTORIAL_TEST_3])
-					advance()
-				16:
 					show_box(
 						"Picks that push and test together are going to be your bread and butter.\n\n"
 						+ "They advance you up the pin and clear the way in one smooth action."
 					)
-				17:
+				19:
 					core.tutorial_lock(false)
 					show_box(
-						"You know the next couple depths are safe from your tests, so "
+						"You know the next couple depths are safe from your last pick, so "
 						+ "go ahead and use this pick.",
 						PIN_X,
 						PIN_Y,
 						false
 					)
 					await_use = 1
-				18:
+				20:
 					core.tutorial_lock(true)
 					show_box(
-						"Looks like danger ahead. However, not all of those depths marked X are bad!\n\n"
-						+ "You tested the pin, and felt danger somewhere in that test - you just don't exactly where.",
+						"That test told you \"danger\". One of these three depths is the break.\n\n"
+						+ "You just don't know which one.",
 						PIN_X,
 						PIN_Y
-					)
-				19:
-					show_box(
-						"Since pins only have one break depth "
-						+ "(and break is the only depth in this lock that tests as dangerous) "
-						+ "only one of those depths is actually a threat.",
-						PIN_X,
-						PIN_Y
-					)
-				20:
-					show_box(
-						"If you're not sure about what depths are in the lock, or what each depth "
-						+ "tests as, you can check the depths in the depths reference. Hover over them and " 
-						+ " the top right corner of the tooltip will tell you what they test as."
 					)
 				21:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 112.0)))
 					show_box(
-						"Anyway, one of these three depths is the break. You could risk it - "
+						"You could risk it - "
 						+ "one in three ain't the worst odds - but that's still not ideal.",
 						PIN_X,
 						PIN_Y
@@ -1568,7 +1575,7 @@ func do_step() -> void:
 					)
 				23:
 					show_box(
-						"But four-pushers are pretty hard to come by and have all kinds of quirks.\n\n"
+						"But four-pushers are pretty hard to come by.\n\n"
 						+ "Instead, we're going to have to do a bit more testing."
 					)
 				24:
@@ -1585,7 +1592,8 @@ func do_step() -> void:
 					await_use = 1
 				26:
 					show_box(
-						"Bingo. You've cleared two of those depths, so - by process of elimination - "
+						"Bingo. That test told you \"safe\", so both those depths updated.\n\n"
+						+ "By process of elimination, "
 						+ "you now know exactly where the break is. Finishing this lock is now child's play.",
 						PIN_X,
 						PIN_Y
@@ -1608,7 +1616,6 @@ func do_step() -> void:
 				28:
 					core.tutorial_lock(true)
 					show_box("I thought you were better than that. Moving on...")
-					advance()
 				29:
 					show_box(
 						"There's a few more things to learn about test."
@@ -1622,14 +1629,10 @@ func do_step() -> void:
 					show_box(
 						
 							"First, when you use a push pick with more than one push, you test every depth "
-							+ "you skip over."
+							+ "you jump over."
 					)
 				31:
-					show_box(
-						"That can be a little annoying when you jump a depth, but when you're testing, "
-						+ "you're testing based on feel, so it all gets kind of mixed up. Only reveal picks let "
-						+ "you tell apart individual depths."
-					)
+					advance()
 				32:
 					core.tutorial_lock(false)
 					show_box("Let's demonstrate. Use that pick.", PIN_X, PIN_Y, false)
@@ -1695,9 +1698,8 @@ func do_step() -> void:
 				40:
 					core.tutorial_lock(true)
 					show_box(
-						"Despite the break being one of the tested depths, this pick tested as safe.\n\n"
-						+ "That's becasue only two depths were tested - every other depth was revealed, "
-						+ "one way or another.",
+						"This pick tested as safe, even though it looked like it might test the break.\n\n"
+						+ "Since break was revealed, it wasn't tested.",
 						PIN_X,
 						PIN_Y
 					)
@@ -1711,6 +1713,7 @@ func do_step() -> void:
 					)
 					await_prev = 1
 				42:
+					hide_all()
 					await_prev = 1
 				43:
 					reset_pins([PinSpec.from_depth_array(WARN_EMPTY_BREAK)])
@@ -1770,16 +1773,22 @@ func do_step() -> void:
 					show_box("Then the short one.", PIN_X, PIN_Y, false)
 				54:
 					core.tutorial_lock(true)
-					show_box("See how this time around, it updated? Danger is less specific than safe, so they updated. "
-					+ "Simple as.",
-					PIN_X, PIN_Y)
+					show_box(
+						"See how this time around, it updated?\n\n"
+						+ "If you hear safe, you know it's not danger, so they updated. "
+						+ "Simple as.",
+						PIN_X, 
+						PIN_Y
+					)
+				55:
+					advance()
 				56:
 					show_box("Oh, I lied when I said last lesson. One more.")
 				57:
 					show_box("If you break or reveal past the end of a pin, you won't break the pick "
 					+ "the same way you would if you push past the end of a pin.")
 				58:
-					show_box("No demonstration. Test it for yourself if you don't trust me.")
+					show_box("No demonstration. Test it for yourself if you care.")
 				59:
 					show_box("Anyway, I'm tired of talking. Go practice on your own until you understand testing locks.")
 				60:

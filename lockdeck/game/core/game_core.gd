@@ -392,6 +392,7 @@ func lock_input(state: bool = true) -> void:
 	_lock_input = state
 	$LockBody/CountdownMain.button_disable = (
 		state
+		or _countdown_lock
 		or _tutorial_lock
 		or lock_complete
 		or $LockBody/CountdownMain.count <= 0
@@ -777,6 +778,7 @@ func restart() -> void:
 	allow_reset = false
 	$ResetButton.visible = false
 	set_discard_disable(false)
+	set_countdown_disable(false)
 	show_failure(false)
 	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
@@ -806,7 +808,6 @@ func setup_interface(setup: LevelSpec.InterfaceSetup = LevelSpec.InterfaceSetup.
 func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 	load_lock(state.lock)
 	load_game(game)
-	allow_reset = game.tutorial_mode
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(state.all_cards.deck)
 	$HandMain.remove_all_cards()
@@ -821,6 +822,13 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 
 func set_discard_disable(disable: bool) -> void:
 	$DiscardMain.disable_discard = disable
+
+
+var _countdown_lock := false
+
+func set_countdown_disable(disable: bool) -> void:
+	_countdown_lock = disable
+	$LockBody/CountdownMain.button_disable = disable
 
 var tutorial_mode := false
 

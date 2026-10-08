@@ -17,7 +17,7 @@ func reify() -> void:
 func _init(
 	all_cards_: AllCardsSpec = null,
 	lock_: LockSpec = null,
-	countdown_: = 99,
+	countdown_: = 2,
 	break_bag_: = [],
 	_deprecated: int = 0,
 	turn_count_: int = 0,
