@@ -1038,12 +1038,36 @@ static var TUTORIAL_REVEAL_1 := PickTemplates.new(
 	"PR",
 )
 
+static var TUTORIAL_DIAMOND := PickTemplates.new(
+	"training diamond",
+	Families.NONE,
+	Archetypes.DARK,
+	Rarities.TUTORIAL,
+	"PPPT",
+)
+
+static var TUTORIAL_WEIRD_DARK := PickTemplates.new(
+	"show hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.TUTORIAL,
+	"PPRRTT",
+)
+
 static var TUTORIAL_TEST_2 := PickTemplates.new(
 	"test hook",
 	Families.NONE,
 	Archetypes.CLOSE_TEST,
 	Rarities.TUTORIAL,
 	"TT",
+)
+
+static var TUTORIAL_TEST_3_FLAT := PickTemplates.new(
+	"trap hook",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.TUTORIAL,
+	"TTT",
 )
 
 static var TUTORIAL_TEST_3 := PickTemplates.new(

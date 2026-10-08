@@ -29,6 +29,8 @@ func begin_tutorial() -> void:
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.tutorial_mode = true
+	game.stage = 1  # needed to show the display correctly
+	game.stage = 11  # TODO
 	game.current_deck = []
 	game.save()
 	$BetweenLocks.set_text("first")
@@ -54,7 +56,7 @@ func load_saved_game(saved_game: GameSpec):
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
 	print("Loading lock in heist: %s" % game.lock_in_heist())
-	$BetweenLocks.reset(game.lock_in_heist())
+	$BetweenLocks.reset(game.lock_in_heist() - 1)
 	if game.tutorial_mode:
 		if game.get_next_level().stage == LevelSpec.Stages.SPECIFIC:
 			$BetweenLocks.set_text("challenge")

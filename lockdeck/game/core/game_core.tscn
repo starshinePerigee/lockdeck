@@ -1078,9 +1078,9 @@ editor_only = false
 [node name="ResetButton" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 8.0
-offset_top = 56.0
-offset_right = 105.0
-offset_bottom = 89.0
+offset_left = 16.0
+offset_top = 224.0
+offset_right = 113.0
+offset_bottom = 257.0
 theme_type_variation = &"BoxButton"
 text = "< Retry"

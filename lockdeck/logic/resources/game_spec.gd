@@ -93,7 +93,10 @@ func get_next_level() -> LevelSpec:
 			tutorial_mode = false
 			stage = 4
 		else:
-			return Tutorializer.TUTORIAL_SEQUENCE[stage]
+			var level := Tutorializer.TUTORIAL_SEQUENCE[stage]
+			for pin in level.state.lock.pins:
+				pin.reset_pin()
+			return level
 	
 	elif in_progress:
 		return LevelSpec.new(

@@ -1,24 +1,14 @@
 TABLE OF CONTENTS:
 
 
-safe / interesting / dangerous
-
-9. advanced survival
-- picks with "reveal" effects are super rare - you're playing with almost every one I own right now.
-- far more common are picks that test the lock, but only give you a rough sense of what ahead
-- we call this effect TEST
-
-- mention push jumps are tests
-- also introduce complications
-- re-testing depths
-- depths don't update if they're safer
-- revealed depths don't count for test (this is what the grey dots on preview mean)
 
 
+next two lessons:
 
-
-
-
+- complications
+- testing with complications
+- multiple pins
+- testing across multiple pins
 
 
 Multiple pins
@@ -40,6 +30,9 @@ solve this lock without breaking any picks (three-pin lock)
 
 
 
+final lesson: jam
+
+
 
  One last thing your picks can do - JAM
 - some picks specialize in jam. we call those "wrenches", since they turn the keyway instead of pushing pins directly. Other picks do jam as a side effect. Those aren't called wrenches, but honestly who cares what they're named. I can't even read - just look at the icons.
@@ -51,70 +44,6 @@ solve this lock without breaking any picks (three-pin lock)
 you have a push + 2-reveal pick. if you pushed past the WARNING, you'd be taking a risk. but if you jam first, the push will get absorbed and you can reveal the upcoming depths without moving the pin.
 
 
-
-12. so far we've been doing easy locks, but real locks might take you a few runs through your picks to get through. Once you use all the picks in your deck, you'll have to ease up on the pin. That will make every pin fall all the way back to the beginning!
-
-Don't worry though, you'll remember everything you learned about the lock, so you can speed right back up to where you used to be.
-
-However, if you don't feel like retracing your footsteps, if a pin is jammed at the end of a turn, it won't fall. Keep a jam or two handy, especially towards the end of your deck.
-
-solve this lock:
-- two feather wrenches, a push-reveal-reveal, a push, and a two-push
-- warn for anything but a push
-- first depth is a warning
-- warn for anything but a jam
-
-
-
-
-16. Weaknesses
-- great work. let's go back to a single pin for a bit
-- some pins have weaknesses you can exploit. these also show up as depths
-- take "HINT" - land on a hint depth and you can figure out the next safe depth. 
-- HINT is safe, just like empty depths, so you can't tell them apart with test. 
-- solve this lock! I've included a bunch of hint depths for you
-- if you forget what a depth does, hover over it for a little reminder.
-
-17. complications
-- some depths hinder you without breaking your pick. These test as a yellow "caution". 
-- caution depths fall between safe and dangerous depths when it comes to test - if you test three depths, and one tests as caution while the other two are safe, all three show as caution.
-- likewise, if you test three depths, and two are caution and one is dangerous, all three show as dangerous.
-
-- your first complication is "slip", a little wobble that makes a pin slip backwards a few depths. Annoying, but not the end of the world.
-
-solve this lock without breaking your pick (slip sends to the beginning)
-
-
-
-18. other dangers
-- final lesson - there are other depths that can break your pick. you'll see most of them later, but for now, meet spike
-- spike is just like break, with two exceptions:
--- first, it's revealed at the start! You always know where spikes are. they're not subtle
--- second, it doesn't have a WARNING depth in front of it. I mean, it might have a warning depth, but that warning is for the BREAK depth specifically, not just "any depth that breaks your pin". So a pin could go spike-warning-break or warning-spike-break. I mean, the spikes are obvious, so this shouldn't be a problem
-alright: solve this final lock and I'll let you go
-
-
-
-Include a bit on "sometimes the best play is breaking your pick and taking risks"
-
-
-
-
-18. depth activations
-- two quirks of locks.
-- first: depths can only activate once per turn. you'll have to get around some complicated hazards by activating them, but you can even push through a slip if you have to.
-- second: if your pin is resting on a depth that does something, and somehow it didn't activate already, it'll auto-activate all on its own at the end of your next action. Even if all you did was throw a pick away - the lock has a mind of its own
-- it might help you to think of it like this: after you do something, every pin activates the depth it's currently at, regardless of if you touched that pin, unless that depth has already activated this turn.
-- that matters a lot for the next depth: bounce! this depth moves your pin forward instead of back. this won't break your pin directly, but it can put you in a tight spot
-- don't forget you can pull up the depth reference to see all the depths that might be in your lock, and hover over a depth for a quick description of what it does
-
-
-
-
-end with a "here's your new deck and some cash"
-
-
-in tutorial, the "Give Up" button is replaced by "retry"
 
 
 
