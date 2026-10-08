@@ -553,7 +553,6 @@ func break_from_hand() -> void:
 	discard_pick()
 
 func discard_pick() -> void:
-	$LastTest.visible = false
 	await do_pick(
 		_NULL_PICK,
 		0,
@@ -611,12 +610,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	else:
 		if card != _NULL_PICK:
 			move_cards_from_hand_to_discard([card])
-	
-	if Effects.TEST in card.get_unique_list():
-		$LastTest.update(_result.last_reveal, _result.last_hint)
-	else:
-		$LastTest.update()
-		$LastTest.visible = false
 	
 	if _result.lock_solved:
 		solve_lock()
@@ -689,7 +682,6 @@ func cleanup_step() -> void:
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
 func end_turn() -> void:
 	$Notifications.clear()
-	$LastTest.visible = false
 	
 	var all_cards: Array[CardSpec]
 	all_cards.append_array($DeckMain.cards)
@@ -778,14 +770,12 @@ func restart() -> void:
 	$ResetButton.visible = false
 	set_discard_disable(false)
 	show_failure(false)
-	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
 	$Notifications.clear()
-	$LastTest.visible = false
 	tick_turn_count()
 	update_status_widget()
 	# note: you will need to draw cards outside of restart to sync with animation
