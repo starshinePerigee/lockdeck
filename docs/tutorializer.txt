@@ -14,18 +14,6 @@ safe / interesting / dangerous
 - depths don't update if they're safer
 - revealed depths don't count for test (this is what the grey dots on preview mean)
 
-- when you use a pick that has TEST on it, it'll visit one depth for each test effect. then, from all the unrevealed depths that are tested, you'll learn the worst case danger.
-- let's look at some examples
--- this pick has a single test on it. it shows as safe - so you know it's good
--- this pick has a single test on it and it shows as danger - so you know the break depth is there, and the rest of the pin is safe. fantastic!
--- this pick has two tests on it, and it shows as safe. You can freely advance to either depth, but not any further without risking your pick
--- this pick has two tests on it, and it shows as danger. you don't know which depth is the break! if you have a big pick that can push three you can skip both, or if you have a tiny pick that tests just one depth you can puzzle out which of the two is dangerous. or you can push one blind and take the fifty-fifty. Sometimes you gotta do what you gotta do.
-
-- TEST is really important to understand, so let's play around a little bit. here's a practice lock and some picks. Press the "RESET" button to hide all the depths and jump back to the beginning, and "REVEAL" to show all the depths. play around about until you get the hang of it, and then let me know.
-- show "reset", "reveal", and "continue" buttons
-
-10. push also tests depths you jump over - be careful if you jump over a break
-- pick this lock without breaking any picks
 
 
 

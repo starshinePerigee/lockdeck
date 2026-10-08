@@ -1429,7 +1429,7 @@ func do_step() -> void:
 				22:
 					highlight(Rect2(Vector2(210, 216), Vector2(94, 48)))
 					show_box(
-						"If you had a pick that pushed four, you'd be set. Since break depth is "
+						"If you had a pick that pushed four, you'd be set.\n\nSince break depth is "
 						+ "in one of the three depths marked dangerous, you know it can't be here.",
 						PIN_X,
 						PIN_Y
@@ -1473,9 +1473,11 @@ func do_step() -> void:
 					await_break = 1
 					await_unlock = 2
 				28:
+					core.tutorial_lock(true)
 					show_box("I thought you were better than that. Moving on...")
 					advance()
 				29:
+					core.tutorial_lock(true)
 					await_break = 0
 					await_unlock = 0
 					empty_cards()
