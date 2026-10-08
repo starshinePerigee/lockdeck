@@ -1364,7 +1364,7 @@ func do_step() -> void:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
 						"The pick you just played had two test icons, so it tested the first two "
-						+ "depths in this pin. Since both those depths were safe, the worst case is "
+						+ "depths in this pin. Since  "
 						+ "safe.\n\n"
 						+ "That's what these green \"ok\" marks indicate. These depths are definitely ok to activate.",
 						PIN_X,

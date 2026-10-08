@@ -17,7 +17,7 @@ extends VBoxContainer
 				tests_as_text = "Revealed at start"
 				tests_as_color = Color("83dbce")
 			Depths.DangerLevel.CLEAR:
-				tests_as_text = "clear"
+				tests_as_text = "safe"
 				tests_as_color = Pin.HINT_COLORS[PinSpec.RevealLevel.CLEAR]
 			Depths.DangerLevel.INTERESTING:
 				tests_as_text = "caution"
