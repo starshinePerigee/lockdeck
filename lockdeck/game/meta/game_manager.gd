@@ -30,7 +30,7 @@ func begin_tutorial() -> void:
 	game = GameSpec.new()
 	game.tutorial_mode = true
 	game.stage = 1  # needed to show the display correctly
-	game.stage = 11  # TODO
+	game.stage = 16  # TODO
 	game.current_deck = []
 	game.save()
 	$BetweenLocks.set_text("first")

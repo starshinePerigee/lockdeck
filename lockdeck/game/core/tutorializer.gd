@@ -423,6 +423,29 @@ static var CHALLENGE_11 := StateSpec.new(
 )
 
 
+static var THREE_DEPTH_DECK := LockDeck.from_template_array(
+	[
+		DepthTemplates.BREAK,
+		DepthTemplates.SPIKE,
+		DepthTemplates.BOUNCE
+	]
+)
+
+static var TUTORIAL_5 := StateSpec.new(
+	AllCardsSpec.new(
+		[]
+	),
+	LockSpec.new([PinSpec.from_depth_array([
+		Depths.EMPTY,
+		Depths.BOUNCE,
+		Depths.EMPTY,
+		Depths.WARN,
+		Depths.EMPTY,
+		Depths.BOUNCE,
+		Depths.BREAK,
+	])], THREE_DEPTH_DECK)
+) 
+
 
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
@@ -444,6 +467,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_9, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_10, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_11, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(TUTORIAL, 4, 0, TUTORIAL_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 ]
 
 func tutorialize(level_: int) -> void:
@@ -1528,8 +1552,7 @@ func do_step() -> void:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
 						"They're not necessarily empty depths (warning tests as safe, for one) "
-						+ "but you'll always be happy to land on a safe depth.\n\nWhen you hover over a depth, "
-						+ "the \"tests as\" in the upper right corner tells you how loud they are.",
+						+ "but you'll always be happy to land on a safe depth.",
 						PIN_X,
 						PIN_Y
 					)
@@ -1795,7 +1818,97 @@ func do_step() -> void:
 					show_box("And don't break my picks!")
 				61:
 					core.continue_to_next.emit()
-
+		4:
+			match step:
+				0:
+					core.set_discard_disable(true)
+					core.set_countdown_disable(true)
+					show_box("You're making progress. Pretty soon it'll be time to let you go.")
+				1:
+					show_box("Let's mix test up a little bit.")
+				2:
+					core.reveal_lock()
+					highlight(Rect2(Vector2(210, 152), Vector2(94, 48)))
+					show_box("Here's a new depth: \"slip\"", PIN_X, PIN_Y)
+				3:
+					highlight(Rect2(Vector2(210, 152), Vector2(94, 48)))
+					show_box(
+						"Slip is a depth where there's a bit of wobble in the pin, so if you "
+						+ "activate it, the pin'll slip back and make you lose a bunch of progress.",
+						PIN_X,
+						PIN_Y
+					)
+				4:
+					highlight(Rect2(Vector2(210, 152), Vector2(94, 48)))
+					show_box(
+						"However, slip can't actually break your pin. That means it's a new "
+						+ "category, test-wise. It tests as the yellow \"caution\"."
+						,
+						PIN_X,
+						PIN_Y
+					)
+				5:
+					show_box(
+						"Caution depths can inconvenience you, but they'll never break your pick.\n\n"
+						+ "In terms of loudness, they're between safe and danger.",
+						PIN_X,
+						PIN_Y
+					)
+				6:
+					core.get_node("LockBody/CylinderMain").reset_all_pins()
+					draw_cards([PickTemplates.TUTORIAL_TEST_3_FLAT])
+					show_box(
+						"You know the drill. Use these next couple picks and watch what happens.",
+						PIN_X, 
+						PIN_Y,
+						false
+					)
+					await_use = 1
+				7:
+					hide_all()
+					draw_cards([PickTemplates.TUTORIAL_PUSH_2])
+					await_use = 1
+				8:
+					draw_cards([PickTemplates.TUTORIAL_TEST_3_FLAT])
+					await_use = 1
+				9:
+					show_box(
+						"There are all kinds of ways locks mess you up without breaking, and "
+						+ "they mostly test as caution.\n\n"
+						+ "If you're not sure what a depth tests as, hover over it. "
+						+ "The \"tests as\" in the upper right tells you.",
+						PIN_X,
+						PIN_Y
+					)
+				10:
+					show_box("That out of the way, let's get to the real meat for today.")
+				11:
+					await reset_pins([
+						PinSpec.from_depth_array([
+						
+						]),
+						PinSpec.from_depth_array([
+						
+						]),
+						PinSpec.from_depth_array([
+						
+						]),
+					])
+					advance()
+				12:
+					show_box(
+						"So far every pick you've used has only affected a single pick at a time."
+					)
+				13:
+					show_box(
+						"That's only true for some picks. A lot of picks are broader, so they "
+						+ "affect one pin a lot but also touch adjacent pins.\n\n"
+						+ "Other picks affect every pin equally."
+					)
+				14:
+					show_box(
+						""
+					)
 
 
 func advance(n := 1) -> void:
@@ -1824,8 +1937,9 @@ func hide_all() -> void:
 var await_use := 0
 func pick_used(_state: StateSpec) -> void:
 	if await_use:
-		advance(await_use)
+		var a := await_use
 		await_use = 0
+		advance(a)
 
 var await_unlock := 0
 func lock_unlocked() -> void:

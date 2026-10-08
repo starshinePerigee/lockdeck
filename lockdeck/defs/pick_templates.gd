@@ -1086,6 +1086,18 @@ static var TUTORIAL_TEST_1 := PickTemplates.new(
 	"PT",
 )
 
+static var TUTORIAL_TWO_TW_PUSH := PickTemplates.new(
+	
+)
+
+static var TUTORIAL_BASIC_DIAMOND := PickTemplates.new(
+	"half diamond",
+	Families.NONE,
+	Archetypes.THREE_PUSH,
+	Rarities.BASIC,
+	"PT[PPT[PPPT",
+)
+
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [
