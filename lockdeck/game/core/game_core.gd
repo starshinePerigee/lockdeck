@@ -613,7 +613,7 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 			move_cards_from_hand_to_discard([card])
 	
 	if Effects.TEST in card.get_unique_list():
-		$LastTest.update(_result.last_reveal, _result.last_hint)
+		$LastTest.update(_result.last_reveal)
 	else:
 		$LastTest.update()
 		$LastTest.visible = false
@@ -762,7 +762,7 @@ var _already_broken: Array[CardSpec]
 
 ## Loads non-lock parameters from the game spec and restarts the game.
 func load_game(game: GameSpec) -> void:
-	$GameStatus.coins = game.coins
+	$GameStatus.tutorial = game.tutorial_mode
 	$GameStatus.stage = game.current_lock()
 	load_deck(game.current_deck.duplicate())
 	_already_broken = game.broken_picks
