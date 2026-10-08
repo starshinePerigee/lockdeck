@@ -669,7 +669,7 @@ func get_game_state() -> StateSpec:
 		),
 		$LockBody/CountdownMain.count,
 		$LockBody/CountdownMain.break_bag,
-		$LockBody/CylinderMain.hint_id,
+		0,
 		turn_count
 	)
 
@@ -807,7 +807,6 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 	load_lock(state.lock)
 	load_game(game)
 	allow_reset = game.tutorial_mode
-	$LockBody/CylinderMain.hint_id = state.hint_id
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(state.all_cards.deck)
 	$HandMain.remove_all_cards()

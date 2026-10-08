@@ -37,8 +37,6 @@ var results: Array[Results]
 var twist_count: int
 ## holds how much more push is pending in a push action
 var _push_pending: int
-## Holds the checked tracking letters
-@export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## Tracks the current test/reveal hint pointer. Measures positions beyond current position.
@@ -70,17 +68,10 @@ func get_visible(idx: int = 99) -> Depths:
 	return Depths.DEBUG
 
 ## Updates a level's reveal level, setting it to the highest option.
-func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
+func update_visible(idx: int, level: RevealLevel) -> void:
 	var old_reveal := reveals[idx]
 	var new_reveal: RevealLevel = min(old_reveal, level)
 	reveals[idx] = new_reveal
-	
-	if get_revealed(idx):
-		hint_tracks[idx] = ""
-	elif old_reveal != new_reveal:
-		hint_tracks[idx] = hint
-	elif old_reveal == level:
-		hint_tracks[idx] = hint_tracks[idx] + hint 
 
 ## Get if the pin is currently revealed
 func get_revealed(idx: int) -> bool:
@@ -361,7 +352,6 @@ func reveal_position(
 	else:
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
-		hint_tracks[pos] = ""
 
 ## Handle jam and move the pin accordingly
 func push_pin(effect: EffectSpec, safe := false) -> void:
@@ -528,10 +518,10 @@ func get_reveal_level() -> PinSpec.RevealLevel:
 				level = max(level, PinSpec.RevealLevel.INTERESTING)
 	return level
 
-func update_pin_visible(level: PinSpec.RevealLevel, hint: String):
+func update_pin_visible(level: PinSpec.RevealLevel):
 	for i in range(PIN_DEPTH_COUNT):
 		if checked[i]:
-			update_visible(i, level, hint)
+			update_visible(i, level)
 
 ## Gets a ResultsSpec for this pin's current configuration
 func get_result_spec() -> ResultSpec:
@@ -647,9 +637,5 @@ func _init(fill: Depths = Depths.DEBUG):
 	results = []
 	results.resize(PIN_DEPTH_COUNT + 1)
 	results.fill(Results.EMPTY)
-	
-	hint_tracks = []
-	hint_tracks.resize(PIN_DEPTH_COUNT)
-	hint_tracks.fill("ABC")
 
 	reset_pin()

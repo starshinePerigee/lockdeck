@@ -6,7 +6,6 @@ class_name StateSpec
 @export var lock: LockSpec
 @export var countdown: int
 @export var break_bag: Array[bool]
-@export var hint_id: int
 @export var turn_count: int
 
 func reify() -> void:
@@ -20,7 +19,7 @@ func _init(
 	lock_: LockSpec = null,
 	countdown_: = 99,
 	break_bag_: = [],
-	hint_id_: int = -1,
+	_deprecated: int = 0,
 	turn_count_: int = 0,
 ):
 	all_cards = all_cards_
@@ -30,5 +29,4 @@ func _init(
 		break_bag = [false, false, false]
 	else:
 		break_bag = break_bag_
-	hint_id = hint_id_
 	turn_count = turn_count_
