@@ -446,6 +446,25 @@ static var TUTORIAL_5 := StateSpec.new(
 	])], THREE_DEPTH_DECK)
 ) 
 
+static var BIG_SEMISTANDARD: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.TUTORIAL_ONE_TWO_PUSH),
+	CardSpec.from_template(PickTemplates.TUTORIAL_ONE_TWO_PUSH),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_RAKE),
+	CardSpec.from_template(PickTemplates.TUTORIAL_RAKE),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_3_FLAT),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_RAKE),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_RAKE),
+	CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_BULK_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+]
 
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
@@ -1872,6 +1891,7 @@ func do_step() -> void:
 					draw_cards([PickTemplates.TUTORIAL_TEST_3_FLAT])
 					await_use = 1
 				9:
+					core.tutorial_lock(true)
 					show_box(
 						"There are all kinds of ways locks mess you up without breaking, and "
 						+ "they mostly test as caution.\n\n"
@@ -1881,17 +1901,35 @@ func do_step() -> void:
 						PIN_Y
 					)
 				10:
-					show_box("That out of the way, let's get to the real meat for today.")
+					show_box("That out of the way, let's get to today's real meat.")
 				11:
 					await reset_pins([
 						PinSpec.from_depth_array([
-						
+							Depths.WARN,
+							Depths.EMPTY,
+							Depths.BREAK,
+							Depths.EMPTY,
+							Depths.EMPTY,
+							Depths.SPIKE,
+							Depths.EMPTY,
 						]),
 						PinSpec.from_depth_array([
-						
+							Depths.SPIKE,
+							Depths.WARN,
+							Depths.BOUNCE,
+							Depths.EMPTY,
+							Depths.BREAK,
+							Depths.EMPTY,
+							Depths.EMPTY,
 						]),
 						PinSpec.from_depth_array([
-						
+							Depths.EMPTY,
+							Depths.EMPTY,
+							Depths.EMPTY,
+							Depths.SPIKE,
+							Depths.WARN,
+							Depths.BREAK,
+							Depths.BOUNCE,
 						]),
 					])
 					advance()
@@ -1907,8 +1945,105 @@ func do_step() -> void:
 					)
 				14:
 					show_box(
-						""
+						"Let's start with an easy pick."
 					)
+					await draw_cards([PickTemplates.TUTORIAL_ONE_TWO_PUSH])
+				15:
+					highlight(Rect2(Vector2(432, 406), Vector2(60, 60)))
+					show_box("This pick affects two pins at once.")
+				16:
+					highlight(Rect2(Vector2(432, 406), Vector2(60, 60)))
+					show_box(
+						"Do you see this red paint stripe? "
+						+ "It marks the center column of the pick. Whichever pin you play this pick to "
+						+ "will get the effects from this column of icons.\n\n"
+						+ "Don't worry - the stripe is in the same place for every single card."
+					)
+				17:
+					highlight(Rect2(Vector2(462, 412), Vector2(24, 40)).grow(6))
+					show_box(
+						"Now check these tears. Each tear marks space for another column of effects.\n\n"
+						+ "Each card has five columns, three to the left of center and one to the right."
+					)
+				18:
+					show_box(
+						"Picks have shafts and handles that mean it's easier to bump pins near "
+						+ "the entrance of the lock, hence the offset."
+					)
+				19:
+					show_box(
+						"This specific pick is simple enough. Push the target pin two, and the pin to "
+						+ "the left one.\n\nPlease, try it."
+					)
+				20:
+					core.tutorial_lock(false)
+					hide_all()
+					await_use = 1
+				21:
+					core.tutorial_lock(true)
+					show_box("Not too hard, now is it? Let's get some more examples.")
+				22:
+					await draw_cards([PickTemplates.TUTORIAL_RAKE])
+					show_box(
+						"This pick affects every pin in range.\n\n"
+						+ "Hover it over the first and last pin and watch the preview - see how "
+						+ "for the first pin, it doesn't reach the last pin, but for the last pin it still "
+						+ "touches the first.\n\nThen use it, wherever you'd like."
+					)
+				23:
+					core.tutorial_lock(false)
+					hide_all()
+					await_use = 1
+				24:
+					core.tutorial_lock(true)
+					show_box(
+						"Broad rakes like that let you affect a lot of pins at once, "
+						+ "but they're very easy to break becuase they activate so many depths at once."
+					)
+				25:
+					await draw_cards([PickTemplates.TUTORIAL_REVEAL_RAKE])
+					show_box(
+						"This is another rake, but this one only tests.\n\n"
+						+ "When a pick tests multiple pins at once, the same rules apply - all tested depths, "
+						+ "across all pins, are checked together, and you learn the worst case out of all of them.\n\n"
+						+ "Then all the tested depths across all the pins are marked together."
+					)
+				26:
+					show_box("Fire away, but watch the preview icons first.")
+				27:
+					core.tutorial_lock(false)
+					hide_all()
+					await_use = 1
+				28:
+					core.tutorial_lock(true)
+					show_box(
+						"A broad test like that pick might "
+						+ "not tell you that much if you hit a break. It could be anywhere "
+						+ "across any of the pins!\n\n"
+						+ "There might even be multiple breaks within your test."
+					)
+				29:
+					show_box(
+						"Alright, I'm going to give you a handful of picks to try to "
+						+ "pick this lock here. Feel free to play around a bit, learn how everything works.\n\n"
+						+ "If you break a pick, we'll reset everything and you can keep trying again."
+					)
+				30:
+					core.tutorial_lock(false)
+					core.set_discard_disable(false)
+					core.set_countdown_disable(false)
+					empty_cards()
+					core.get_node("LockBody/CylinderMain").reset_all_pins()
+					core.get_node("DeckMain").load_cards(BIG_SEMISTANDARD)
+					core.draw_to_five()
+					await_break = 1
+					await_unlock = 2
+				31:
+					step = 29
+					show_box("No worries. Let's reset and try again.")
+				32:
+					show_box("Nice. TBR TBR")
+
 
 
 func advance(n := 1) -> void:

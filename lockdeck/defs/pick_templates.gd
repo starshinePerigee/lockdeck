@@ -1086,10 +1086,34 @@ static var TUTORIAL_TEST_1 := PickTemplates.new(
 	"PT",
 )
 
-static var TUTORIAL_TWO_TW_PUSH := PickTemplates.new(
-	
+## P[PP
+static var TUTORIAL_ONE_TWO_PUSH := PickTemplates.new(
+	"small diamond",
+	Families.NONE,
+	Archetypes.FINISHER,
+	Rarities.TUTORIAL,
+	"P[PP"
 )
 
+## P[P[P[P]P
+static var TUTORIAL_RAKE := PickTemplates.new(
+	"training rake",
+	Families.NONE,
+	Archetypes.HYBRID_S,
+	Rarities.TUTORIAL,
+	"P[P[P[P]P"
+)
+
+## T[TT[T[TT]T
+static var TUTORIAL_REVEAL_RAKE := PickTemplates.new(
+	"test rake",
+	Families.NONE,
+	Archetypes.GAPS,
+	Rarities.TUTORIAL,
+	"T[TT[T[TT]T"
+)
+
+## PT[PPT[PPPT
 static var TUTORIAL_BASIC_DIAMOND := PickTemplates.new(
 	"half diamond",
 	Families.NONE,
