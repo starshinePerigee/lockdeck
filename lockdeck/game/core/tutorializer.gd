@@ -431,6 +431,13 @@ static var THREE_DEPTH_DECK := LockDeck.from_template_array(
 	]
 )
 
+static var BOUNCE_DECK := LockDeck.from_template_array(
+	[
+		DepthTemplates.BREAK,
+		DepthTemplates.BOUNCE
+	]
+)
+
 static var TUTORIAL_5 := StateSpec.new(
 	AllCardsSpec.new(
 		[]
@@ -463,8 +470,156 @@ static var BIG_SEMISTANDARD: Array[CardSpec] = [
 	CardSpec.from_template(PickTemplates.RAKE_BULK_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
 	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
-	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
 ]
+
+static var BIGGER_JAMLESS: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.TUTORIAL_ONE_TWO_PUSH),
+	CardSpec.from_template(PickTemplates.TUTORIAL_ONE_TWO_PUSH),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_RAKE),
+	CardSpec.from_template(PickTemplates.TUTORIAL_RAKE),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_3_FLAT),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_RAKE),
+	CardSpec.from_template(PickTemplates.TUTORIAL_REVEAL_RAKE),
+	CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_BULK_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_PUSH_3),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_TEST_1),
+	CardSpec.from_template(PickTemplates.TUTORIAL_SINGLE_TEST),
+]
+
+static var CHALLENGE_12 := StateSpec.new(
+	AllCardsSpec.new(BIGGER_JAMLESS),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.WARN,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.BREAK,
+					Depths.SPIKE,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.SPIKE,
+					Depths.WARN,
+					Depths.SPIKE,
+					Depths.EMPTY,
+					Depths.BREAK,
+				]
+			),
+		],
+		SPIKE_DECK
+	)
+)
+
+static var CHALLENGE_13 := StateSpec.new(
+	AllCardsSpec.new(BIGGER_JAMLESS),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.WARN,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.BREAK,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.WARN,
+					Depths.BREAK,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.WARN,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+					Depths.BREAK,
+					Depths.EMPTY,
+					Depths.EMPTY,
+				]
+			),
+		],
+		BOUNCE_DECK
+	)
+)
+
+static var CHALLENGE_14 := StateSpec.new(
+	AllCardsSpec.new(BIGGER_JAMLESS),
+	LockSpec.new(
+		[
+			PinSpec.from_depth_array(
+				[
+					Depths.WARN,
+					Depths.BREAK,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.WARN,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+					Depths.EMPTY,
+					Depths.BREAK,
+					Depths.BOUNCE,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.BOUNCE,
+					Depths.WARN,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.BREAK,
+					Depths.EMPTY,
+					Depths.EMPTY,
+				]
+			),
+			PinSpec.from_depth_array(
+				[
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.EMPTY,
+					Depths.WARN,
+					Depths.EMPTY,
+					Depths.BOUNCE,
+					Depths.BREAK,
+				]
+			),
+		],
+		BOUNCE_DECK
+	)
+)
 
 const TUTORIAL := LevelSpec.Stages.TUTORIAL
 const SPECIFIC := LevelSpec.Stages.SPECIFIC
@@ -487,6 +642,9 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_10, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_11, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(TUTORIAL, 4, 0, TUTORIAL_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_12, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_13, LevelSpec.InterfaceSetup.THREE_QUARTERS),
+	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_14, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 ]
 
 func tutorialize(level_: int) -> void:
@@ -1950,25 +2108,31 @@ func do_step() -> void:
 					await draw_cards([PickTemplates.TUTORIAL_ONE_TWO_PUSH])
 				15:
 					highlight(Rect2(Vector2(432, 406), Vector2(60, 60)))
-					show_box("This pick affects two pins at once.")
+					show_box("This pick affects two pins at once.", 460, 180)
 				16:
-					highlight(Rect2(Vector2(432, 406), Vector2(60, 60)))
+					highlight(Rect2(Vector2(456, 406), Vector2(36, 120)))
 					show_box(
 						"Do you see this red paint stripe? "
 						+ "It marks the center column of the pick. Whichever pin you play this pick to "
 						+ "will get the effects from this column of icons.\n\n"
-						+ "Don't worry - the stripe is in the same place for every single card."
+						+ "Don't worry - the stripe is in the same place for every single card.",
+						460,
+						180
 					)
 				17:
-					highlight(Rect2(Vector2(462, 412), Vector2(24, 40)).grow(6))
+					highlight(Rect2(Vector2(384, 408), Vector2(134.0, 38)))
 					show_box(
 						"Now check these tears. Each tear marks space for another column of effects.\n\n"
-						+ "Each card has five columns, three to the left of center and one to the right."
+						+ "Each card has five columns, three to the left of center and one to the right.",
+						460,
+						180
 					)
 				18:
 					show_box(
 						"Picks have shafts and handles that mean it's easier to bump pins near "
-						+ "the entrance of the lock, hence the offset."
+						+ "the entrance of the lock, hence the offset.",
+						460,
+						180
 					)
 				19:
 					show_box(
@@ -1986,7 +2150,7 @@ func do_step() -> void:
 					await draw_cards([PickTemplates.TUTORIAL_RAKE])
 					show_box(
 						"This pick affects every pin in range.\n\n"
-						+ "Hover it over the first and last pin and watch the preview - see how "
+						+ "Hover it over the first and last pin and watch the preview. See how "
 						+ "for the first pin, it doesn't reach the last pin, but for the last pin it still "
 						+ "touches the first.\n\nThen use it, wherever you'd like."
 					)
@@ -2004,9 +2168,11 @@ func do_step() -> void:
 					await draw_cards([PickTemplates.TUTORIAL_REVEAL_RAKE])
 					show_box(
 						"This is another rake, but this one only tests.\n\n"
-						+ "When a pick tests multiple pins at once, the same rules apply - all tested depths, "
+						+ "When a pick tests multiple pins at once, the same rules apply: all tested depths, "
 						+ "across all pins, are checked together, and you learn the worst case out of all of them.\n\n"
-						+ "Then all the tested depths across all the pins are marked together."
+						+ "Then all the tested depths across all the pins are marked together.",
+						460,
+						140
 					)
 				26:
 					show_box("Fire away, but watch the preview icons first.")
@@ -2026,9 +2192,14 @@ func do_step() -> void:
 					show_box(
 						"Alright, I'm going to give you a handful of picks to try to "
 						+ "pick this lock here. Feel free to play around a bit, learn how everything works.\n\n"
-						+ "If you break a pick, we'll reset everything and you can keep trying again."
+						+ "If you break a pick, we'll reset everything and you can keep trying."
 					)
 				30:
+					show_box(
+						"I'll let you discard and end turn like normal, too. "
+						+ "Don't forget about those options."
+					)
+				31:
 					core.tutorial_lock(false)
 					core.set_discard_disable(false)
 					core.set_countdown_disable(false)
@@ -2038,11 +2209,22 @@ func do_step() -> void:
 					core.draw_to_five()
 					await_break = 1
 					await_unlock = 2
-				31:
-					step = 29
-					show_box("No worries. Let's reset and try again.")
 				32:
-					show_box("Nice. TBR TBR")
+					step = 30
+					show_box("No worries. Let's reset and try again.")
+				33:
+					show_box(
+						"Very good. A couple more locks, then it's time for your final lesson."
+					)
+				34:
+					show_box(
+						"Just a warning - some of these are absolute monsters. That's why I'm giving "
+						+ "you a whole mess of picks.\n\n"
+						+ "Don't be afraid to keep discarding to dig for a specific pick. "
+						+ "You'll figure out your favorites pretty quick."
+					)
+				34:
+					core.continue_to_next.emit()
 
 
 

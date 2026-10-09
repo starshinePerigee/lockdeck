@@ -1,3 +1,11 @@
+s / tutorial / puzzle
+
+
+have a separate save game for puzzle and random.
+introduce new depths over time in puzzle mode
+ 
+
+
 TABLE OF CONTENTS:
 
 

@@ -1122,6 +1122,14 @@ static var TUTORIAL_BASIC_DIAMOND := PickTemplates.new(
 	"PT[PPT[PPPT",
 )
 
+static var TUTORIAL_SINGLE_TEST := PickTemplates.new(
+	"tap",
+	Families.NONE,
+	Archetypes.JUMP_TEST,
+	Rarities.TUTORIAL,
+	"T"
+)
+
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [
