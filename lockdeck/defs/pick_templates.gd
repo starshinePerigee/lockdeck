@@ -1130,6 +1130,47 @@ static var TUTORIAL_SINGLE_TEST := PickTemplates.new(
 	"T"
 )
 
+static var TUTORIAL_SKIP_ONLY := PickTemplates.new(
+	"joke pick",
+	Families.NONE,
+	Archetypes.GAPS,
+	Rarities.TUTORIAL,
+	".",
+	"toothpick",
+)
+
+static var TUTORIAL_SKIP_TEST := PickTemplates.new(
+	"pop reveal",
+	Families.NONE,
+	Archetypes.REVEAL,
+	Rarities.TUTORIAL,
+	"..R",
+)
+
+static var TWO_JAM := PickTemplates.new(
+	"training wrench",
+	Families.NONE,
+	Archetypes.END_TURN,
+	Rarities.TUTORIAL,
+	"JJ"
+)
+
+static var ONE_JAM := PickTemplates.new(
+	"feather wrench",
+	Families.NONE,
+	Archetypes.TRICKS,
+	Rarities.TUTORIAL,
+	"J"
+)
+
+static var TUTORIAL_FINISHER := PickTemplates.new(
+	"quick finisher",
+	Families.NONE,
+	Archetypes.FINISHER,
+	Rarities.TUTORIAL,
+	"PPJJ"
+)
+
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [
