@@ -1,0 +1,47 @@
+There’s a lot of meta stuff in the first tutorial, maybe git it to later? (candle, breaks and repairs, etc)
+(also limit tooltips during tutorial mode!)\
+“It says safe because you’re safe right now. Once you’re on the job, you’ll have a turn limit”
+
+
+Maybe clean up some of the message > do thing combos?
+
+Re-mention that you can click on the “deck” button to see your deck, and the discard
+
+Mention during reveal lesson final pin that sometimes you have to dig for a pick
+
+
+Highlight the test message early, or remove it
+
+Mention test and reveal both don’t activate depths
+
+
+Mention that break can never be the first depth (there has to be a warning first)
+
+
+Right click to close from windows
+
+Highlight reset button on break for puzzles
+
+
+
+Minesweeper style right / left click mousewheel to cycle through marks
+
+You shouldn’t be able to tooltip through a tutorial box
+
+In the three-pin lesson, mention that it’s okay to break. 
+
+
+
+
+In the final “this is how the real world works” lesson, mention sometimes it’s fine to take risks, break picks, etc. 
+
+
+consider - warnings and empties don’t activate
+
+
+special indication for what tested
+
+
+make test really explicit
+1: you use the pick
+2: any depths that are tested and arent revealed 

@@ -898,7 +898,7 @@ func do_step() -> void:
 				0:
 					core.tutorial_lock(true)
 					show_box(
-						"Hey, kid. We caught you trying to pick locks without a licence.\n\n"
+						"Hey, kid. We caught you trying to pick locks without a license.\n\n"
 						+ "The Thieves' Guild doesn't take too kindly to that."
 					)
 				1:
@@ -993,7 +993,7 @@ func do_step() -> void:
 					show_box(
 						"Good work. See how the pin moved up two spaces?\n\n"
 						+ "We call those spaces depths. Each pin has eight depths, plus the base "
-						+ "depth at the top. So you need eight pushes to unlock a lock.",
+						+ "depth at the top. So you need eight pushes to set a pin.",
 						PIN_X,
 						PIN_Y,
 					)
@@ -1201,7 +1201,7 @@ func do_step() -> void:
 				38:
 					show_box(
 						"Notice that any cards you were keeping in your hand also get "
-						+ "shuffled back at end of your turn, but the pick you broke stays broken."
+						+ "shuffled back at the end of your turn, but the pick you broke stays broken."
 					)
 				39:
 					show_box(
@@ -1318,7 +1318,7 @@ func do_step() -> void:
 				7:
 					show_box(
 						"Pay attention to how it's turned grey. "
-						+ "Depths will only activate once per turn - although it's pretty rare when that matters.",
+						+ "Depths will only activate once per turn.",
 						PIN_X,
 						140,
 					)
@@ -1472,7 +1472,7 @@ func do_step() -> void:
 					highlight(core.get_node("DepthButton").get_global_rect().grow(6))
 					show_box(
 						"This button shows you all the depths that could be present in the current lock.",
-						80,
+						180,
 						94,
 						false
 					)
@@ -1481,8 +1481,7 @@ func do_step() -> void:
 				26:
 					show_box(
 						"This practice lock is simple, but real locks will have a lot more depths.\n\n"
-						+ "Don't hesitate to check what depths you're up against, and if you need a refresher on "
-						+ "what a specific depth does you can hover over it in this depths window.\n\n"
+						+ "Don't hesitate to check what you're up against!\n\n"
 						+ "Close the depths reference to continue.",
 						280,
 						220,
@@ -1983,7 +1982,7 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"That test told you \"danger\". One of these three depths is the break.\n\n"
-						+ "You just don't know which one.",
+						+ "You just don't know which one it is.",
 						PIN_X,
 						PIN_Y
 					)
@@ -2064,15 +2063,15 @@ func do_step() -> void:
 				31:
 					advance()
 				32:
-					core.tutorial_lock(false)
 					show_box("Let's demonstrate. Use that pick.", PIN_X, PIN_Y, false)
-					draw_cards([PickTemplates.TUTORIAL_DIAMOND])
-					reset_pins([PinSpec.from_depth_array([
+					await draw_cards([PickTemplates.TUTORIAL_DIAMOND])
+					await reset_pins([PinSpec.from_depth_array([
 						Depths.WARN,
 						Depths.BREAK,
 						Depths.EMPTY,
 						Depths.EMPTY
 					])])
+					core.tutorial_lock(false)
 					await_use = 1
 				33:
 					core.tutorial_lock(true)
@@ -2135,7 +2134,7 @@ func do_step() -> void:
 					)
 				41:
 					show_box(
-						"If you want to check what actually got tested last turn, click \"show previous\" "
+						"If you want to check what actually got tested last turn, click \"prev turn\" "
 						+ "and look for the test icons. Go ahead and do it now.",
 						-1,
 						-1,
@@ -2215,7 +2214,7 @@ func do_step() -> void:
 				56:
 					show_box("Oh, I lied when I said last lesson. One more.")
 				57:
-					show_box("If you break or reveal past the end of a pin, you won't break the pick "
+					show_box("If you test or reveal past the end of a pin, you won't break the pick "
 					+ "the same way you would if you push past the end of a pin.")
 				58:
 					show_box("No demonstration. Test it for yourself if you care.")

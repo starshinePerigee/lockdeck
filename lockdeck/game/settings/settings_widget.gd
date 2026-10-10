@@ -25,9 +25,9 @@ func set_highlight_active_row(setting: bool) -> void:
 	settings.set_highlight_active_row(setting)
 
 static var tooltip_speeds: Dictionary[float, String] = {
-	1.0: "Fast",
+	0.8: "Fast",
 	1.4: "Medium",
-	2.2: "Slow",
+	2.4: "Slow",
 	999999: "Off"
 }
 

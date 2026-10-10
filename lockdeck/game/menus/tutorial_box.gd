@@ -3,7 +3,7 @@ extends PanelContainer
 signal box_clicked
 
 const DEFAULT_X := int((960 - 384) / 2.0)
-const DEFAULT_Y := 128
+const DEFAULT_Y := 92
 
 const FX_SCRAPE := preload("res://assets/fx/card_scrape.ogg")
 const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
@@ -29,7 +29,7 @@ func show_box(
 	
 	can_continue = continuable
 	if continuable:
-		%Continue.text = "Click to continue"
+		%Continue.text = "Click window to continue"
 		_color_label(NORMAL)
 	else:
 		%Continue.text = "Complete task to continue"

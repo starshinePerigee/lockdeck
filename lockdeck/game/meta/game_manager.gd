@@ -30,7 +30,7 @@ func begin_tutorial() -> void:
 	game = GameSpec.new()
 	game.tutorial_mode = true
 	game.stage = 1  # needed to show the display correctly
-	game.stage = 16  # TODO
+#	game.stage = 16  # TODO
 	game.current_deck = []
 	game.save()
 	$BetweenLocks.set_text("first")
@@ -147,6 +147,7 @@ func advance_from_between() -> void:
 				init_tutorial_challenge()
 		LevelSpec.Stages.TUTORIAL:
 			lock_start.emit()
+			heist_start.emit(next_level.tutorial_level)
 			$GameCore.setup_interface(next_level.interface)
 			await load_state(next_level.state)
 			$Tutorializer.tutorialize(next_level.tutorial_level)
