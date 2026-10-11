@@ -814,19 +814,19 @@ static var CHALLENGE_17 := StateSpec.new(
 	)
 )
 
+static var STARTING_DECK: Array[CardSpec] = [
+	CardSpec.from_template(PickTemplates.RAKE_BULK_TEST_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
+	CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
+	CardSpec.from_template(PickTemplates.WRENCH_END_TURN_BASIC),
+]
+
 static var TUTORIAL_7 := StateSpec.new(
-	AllCardsSpec.new(
-		[
-			CardSpec.from_template(PickTemplates.RAKE_BULK_TEST_BASIC),
-			CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
-			CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
-			CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
-			CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
-			CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
-			CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
-			CardSpec.from_template(PickTemplates.WRENCH_END_TURN_BASIC),
-		]
-	),
+	AllCardsSpec.new(),
 	LockSpec.new(
 		[
 			PinSpec.from_depth_array()
@@ -1110,18 +1110,12 @@ func do_step() -> void:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
 					show_box(
 						"This is your trash pile. "
-						+ "If you screw up and break picks, they end up here instead of in your discard.\n\n"
-						+ "Broken picks are gone until you can repair them, which might be a bit and costs money.",
+						+ "If you screw up and break picks, they end up here instead of in your discard.",
 						400,
 						210,
 					)
 				29:
-					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
-					show_box(
-						"Of course, right now we're training, so you don't need to worry about money or repairs just yet.",
-						400,
-						210,
-					)
+					advance()
 				30:
 					highlight(core.get_node("TrashMain").get_global_rect().grow(6))
 					show_box(
@@ -1133,7 +1127,7 @@ func do_step() -> void:
 					)
 				31:
 					show_box(
-						"With these training locks, there's really only one way to break a pick: "
+						"Right now, the only way to break a pick is to "
 						+ "push the pin past its final spot. Slamming a pin like that will break the pick.\n\n"
 						+ "It's not all bad though, you'll still set the pin and can unlock the lock."
 					)
@@ -1204,11 +1198,11 @@ func do_step() -> void:
 						+ "shuffled back at the end of your turn, but the pick you broke stays broken."
 					)
 				39:
-					show_box(
-						"Ending your turn isn't free. Let me get your candle..."
-					)
 					core.set_countdown_disable(true)
 					core.get_node("AnimationPlayer").play("show_countdown")
+					var t := create_tween()
+					t.tween_interval(0.3)
+					t.tween_callback(advance)
 				40:
 					highlight(core.get_node("LockBody/CountdownMain").get_mouse_rect())
 					show_box(
@@ -1219,23 +1213,13 @@ func do_step() -> void:
 					)
 				41:
 					show_box(
-						"We're safe right now, so you have plenty of turns.\n\n"
-						+ "But out in the field, you have exactly three turns per lock."
+						"We're safe right now, so you have as many turns as you need.\n\n"
+						+ "But out in the field, you'll have exactly three turns per lock."
 					)
 				42:
-					show_box(
-						"It pays to be speedy:\n\n"
-						+ "Finish a lock on the first turn and get a bonus.\n\n"
-						+ "Finish a lock on the second turn, all's fine.\n\n"
-						+ "In the third turn, you'll start breaking picks randomly, so wrap it up!\n\n"
-						+ "If you don't finish after the third turn, it's over for you.",
-						-1,
-						64
-					)
+					advance()
 				43:
-					show_box(
-						"You can hover over the candle for a reminder of all the details."
-					)
+					advance()
 				44:
 					core.tutorial_lock(false)
 					show_box(
@@ -1423,7 +1407,7 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"If you really need a specific pick, you can keep discarding until you find it.\n\n"
-						+ "But don't forget to keep an eye on your candle. Each pick discarded is a pick you don't get "
+						+ "But don't forget: each pick discarded is a pick you don't get "
 						+ "to use this turn."
 					)
 				20:
@@ -2648,25 +2632,58 @@ func do_step() -> void:
 		6:
 			match step:
 				0:
-					show_box("Welcome back. No lesson today - just a gift, and a job.")
+					show_box("Welcome back. No lesson today - just some advice, a gift, and a job.")
 				1:
 					show_box(
-						"The gift: your own set of lockpicks. A standard set. Take care of them - or don't."
+						"The advice: things are different out on the job."
 					)
 				2:
+					show_box(
+						"You have to move fast. You only get three turns. If you run out of time, you're done for."
+					)
+				3:
+					show_box(
+						"Plus, on your third turn, your candle runs low and you'll start breaking picks.\n\n"
+						+ "So you really only have two turns."
+					)
+				4:
+					show_box(
+						"Do whatever you can to crack locks before that becomes an issue.\n\n"
+						+ "Take calculated risks. "
+						+ "Break a pick or two to get the last pin set."
+					)
+				5:
+					show_box(
+						"If the guards catch you, all the intact picks in the world won't save you."
+					)
+				6:
+					show_box(
+						"Plus, if you can pick a lock in one turn, there's ten septims in it for you as a bonus."
+					)
+				7:
+					show_box(
+						"Alright - the gift."
+					)
+				8:
+					core.get_node("DiscardMain").add_cards(STARTING_DECK)
+					core.reload_deck()
+					await core.animation_complete
+					show_box(
+						"Your own set of lockpicks."
+					)
+				9:
 					show_box(
 						"From here on out, if you break one, you won't have me to fix them for you for free.\n\n"
 						+ "You'll have to pay to fix them, like everyone else." 
 					)
-				3:
-					show_box("Also starting now - real consequences. Crack the lock in three turns, or else.")
-				4:
+				10:
 					show_box(
-						"We've already cased your first target. There's treasure waiting for you, if you can get it."
+						"And the job. A dumb noble's son with more septims than brains.\n\n"
+						+ "There's treasure waiting for you, if you can get it."
 					)
-				5:
-					show_box("I believe in you. Get to it!")
-				6:
+				11:
+					show_box("I know I'll see you again soon. Get to it!")
+				12:
 					core.continue_to_next.emit()
 
 
