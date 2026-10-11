@@ -237,6 +237,11 @@ func save() -> void:
 	var ret := ResourceSaver.save(self, SAVE_PATH)
 	if ret != OK:
 		push_error("Failed to save! path: %s, error: %d" % [SAVE_PATH, ret])
+	
+	var progression := MetaProgression.instance()
+	if tutorial_mode:
+		if stage > progression.tutorial_level:
+			progression.tutorial_level = stage
 
 static func clear_save() -> void:
 	var bad_spec := GameSpec.new()

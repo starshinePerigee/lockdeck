@@ -20,7 +20,7 @@ offset_bottom = 352.127
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Tutorial
+text = "Puzzle Mode
 "
 alignment = 0
 
@@ -100,12 +100,3 @@ offset_right = 854.0
 offset_bottom = 449.0
 text = "sounds good, let's get started >"
 flat = true
-
-[node name="StartHint" type="Label" parent="."]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 143.0
-offset_right = 141.0
-offset_bottom = 162.0
-theme_type_variation = &"TinyAccentText"
-text = "Start here! ->"

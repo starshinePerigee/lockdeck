@@ -852,6 +852,8 @@ const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
 
 static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(TUTORIAL),  # disregarded - tutorial starts at 1
+	
+	# 1
 	LevelSpec.new(TUTORIAL, 0, 0, TUTORIAL_1, LevelSpec.InterfaceSetup.FULL_EMPTY),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
