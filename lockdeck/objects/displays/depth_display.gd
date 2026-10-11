@@ -33,7 +33,10 @@ func hide_display() -> void:
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if (
+			(event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
+			and event.pressed
+		):
 			hide_display()
 
 const DEPTH_INFO := preload("res://game/strategy/depth_info.tscn")

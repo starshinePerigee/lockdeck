@@ -1,3 +1,24 @@
+THE BIG TEST REFACTOR
+- left click on a depth to add a white check
+- right click on a depth to add a black skull
+(clear on reveal)
+- highlight which depths were actually tested with little test icons
+-- colored waves coming off the left side of the depth (color + count. 2 for safe, 3 for caution, 4 for hard)
+- remove the "tested as" label
+- redo test tutorial
+
+
+THE BIG LEVEL REFACTOR
+core idea: lots of different depths in a level is confusing and hard, and should be saved for the very sickos side.
+
+However, big locks with lots of pins is interesting, even if they're mostly empty. Thus:
+- more empty pins - add additional easy levels, easy 3-pins, etc.
+- less depths all the time (but more copies is fine)
+- a depth should be able to stand on its own (with break)
+- difficulty works by moving from weaknesses > inconveniences > hazards
+
+
+
 reframe "show previous" as look up and emphasize it's for viewing the whole lock first, see previous second
 
 
@@ -20,7 +41,7 @@ so:
 - picks are more expensive
 
 
-more empty pins - add additional easy levels, easy 3-pins, etc.
+
 
 
 make it more obvious on the final level

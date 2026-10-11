@@ -890,6 +890,8 @@ func tutorialize(level_: int) -> void:
 const PIN_X := 320
 const PIN_Y := 166
 
+var double_back := false
+
 func do_step() -> void:
 	print("Tutorial Level %s Step %s" % [level, step])
 	match level:
@@ -1561,12 +1563,21 @@ func do_step() -> void:
 						"Safe from break depths, at least.\n\nAgain - warning only cares about break, "
 						+ "not any of the other hazards."
 					)
+					double_back = true
 				10:
-					show_box(
-						"You can't safely pick these locks right now with your current picks.\n\n"
-						+ "I did say they were trash.\n\n"
-						+ "Give me a moment to give you a new kind of pick."
-					)
+					if double_back:
+						show_box(
+							"That also means that the first depth in a lock can't be a break. "
+							+ "Warning has to fit in somewhere."
+						)
+						step = 9
+						double_back = false
+					else:
+						show_box(
+							"You can't safely pick these locks right now with your current picks.\n\n"
+							+ "I did say they were trash.\n\n"
+							+ "Give me a moment to give you a new kind of pick."
+						)
 				11:
 					core.tutorial_lock(true)
 					reset_pins([PinSpec.from_depth_array(EARLY_WARNING)])
@@ -1598,9 +1609,7 @@ func do_step() -> void:
 				14:
 					core.tutorial_lock(true)
 					show_box(
-						"Unlike push, it doesn't move the pin forward.\n\n"
-						+ "That's good because it means you don't activate a new depth, but bad becasue it doesn't help "
-						+ "pick the lock. Every pick is different!"
+						"Unlike push, it doesn't move the pin forward, and it doesn't activate depths."
 					)
 				15:
 					show_box("Let's give you a more real example...")

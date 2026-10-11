@@ -71,7 +71,7 @@ func _input(event: InputEvent) -> void:
 		visible
 		and can_continue
 		and event is InputEventMouseButton
-		and event.button_index == MOUSE_BUTTON_LEFT
+		and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
 		and get_global_rect().has_point(event.global_position)
 	):
 		if event.pressed:
