@@ -6,6 +6,9 @@ signal continue_to_next
 var current_pos: int = 1
 
 func reset(lock_in_set: int = 0) -> void:
+	$AnimationPlayer.play("RESET")
+	$AnimationPlayer.advance(0)
+	
 	current_pos = lock_in_set
 	$SpeedBonusLabel.visible = false
 	if lock_in_set < 0 or lock_in_set > 4:
@@ -64,4 +67,3 @@ func set_text(text_variation: String) -> void:
 
 func _ready() -> void:
 	pass
-

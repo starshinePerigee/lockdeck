@@ -38,7 +38,9 @@ func begin_tutorial() -> void:
 	$AnimationPlayer.play("first lock")
 
 func begin_new_game(starter_deck: Array[CardSpec]) -> void:
+	print("Starting new game.")
 	$AnimationPlayer.play("RESET")
+	$AnimationPlayer.advance(0)
 	game = GameSpec.new()
 	game.current_deck = starter_deck
 	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
@@ -50,7 +52,11 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	heist_start.emit(1)
 
 func load_saved_game(saved_game: GameSpec):
+	print("Loading saved game.")
 	$AnimationPlayer.play("RESET")
+	$AnimationPlayer.advance(0)
+	$BetweenLocks/AnimationPlayer.play("RESET")
+	$BetweenLocks/AnimationPlayer.advance(0)
 	game = saved_game
 	$StrategyHub.set_game(game)
 	$LootMain.game = game

@@ -5,17 +5,6 @@ Mention during reveal lesson final pin that sometimes you have to dig for a pick
 
 
 
-Mention test and reveal both don’t activate depths
-
-
-Mention that break can never be the first depth (there has to be a warning first)
-
-
-Right click to close from windows
-
-
-
-
 In the three-pin lesson, mention that it’s okay to break. 
 
 
