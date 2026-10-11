@@ -241,7 +241,7 @@ static var BREAK := Depths.new(
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new(
 	"warn", DangerLevel.CLEAR, Effects.EMPTY,
-	"Does nothing if activated, but know that the Break depth is past this one.",
+	"Does nothing on its own, but know that the Break depth is past this one.",
 	1, "warning"
 )
 
@@ -292,6 +292,9 @@ static var GATE_KEY := Depths.new(
 #endregion
 
 static var DO_NOT_EXHAUST: Array[Depths] = [
-#	BASE,
-	FINAL
+	BASE,
+	FINAL,
+	EMPTY,
+	WARN,
+	GATE_KEY,
 ]

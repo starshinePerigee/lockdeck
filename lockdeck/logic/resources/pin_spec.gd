@@ -311,8 +311,14 @@ func activate_and_get_depth(effect: EffectSpec = null) -> Depths:
 	
 	if depth != Depths.EXHAUSTED:
 		on_activate_trigger(pin_position, effect)
-		activated[pin_position] = true
-		update_result(Results.AUTO)
+		if depth not in Depths.DO_NOT_EXHAUST:
+			activated[pin_position] = true
+			update_result(Results.AUTO)
+		else:
+			if reveals[pin_position] == RevealLevel.REVEALED:
+				update_result(Results.SKIP)
+			else:
+				update_result(Results.AUTO)
 	
 	return depth
 

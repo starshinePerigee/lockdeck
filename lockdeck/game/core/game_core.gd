@@ -817,7 +817,7 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 	$DiscardMain.add_cards(state.all_cards.discard)
 	$TrashMain.reset()
 	$TrashMain.add_cards(state.all_cards.trash)
-	$LockBody/CountdownMain.count = state.countdown
+	$LockBody/CountdownMain.set_count(state.countdown)
 	$LockBody/CountdownMain.break_bag = state.break_bag
 	turn_count = state.turn_count
 

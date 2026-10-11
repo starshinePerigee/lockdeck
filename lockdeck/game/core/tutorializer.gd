@@ -1272,7 +1272,7 @@ func do_step() -> void:
 				3:
 					show_box(
 						"Whenever you push a pin, whatever depth you land on will \"activate\".\n\n"
-						+ "Needless to say, when it activates it's probably not throwing you a party."
+						+ "Needless to say, if it activates it's probably not throwing you a party."
 					)
 				4:
 					highlight(
@@ -1521,7 +1521,7 @@ func do_step() -> void:
 					)
 					show_box(
 						"Did you feel that? That's a \"warning\" depth.\n\n"
-						+ "Warning depths do nothing when you activate them, but they tell you the break is "
+						+ "Warning depths do nothing when you land on them, but they tell you the break is "
 						+ "further down the pin. "
 						+ "Every break depth has a warning. Break depths aren't total surprises.",
 						PIN_X,
@@ -1943,7 +1943,7 @@ func do_step() -> void:
 				16:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
-						"They get marked \"ok\", you know they're definitely ok to activate.",
+						"They get marked \"ok\", you know they're definitely ok to land on.",
 						PIN_X,
 						PIN_Y
 					)
@@ -2384,7 +2384,7 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"Broad rakes like that let you affect a lot of pins at once, "
-						+ "but they're very easy to break becuase they activate so many depths at once."
+						+ "but they're very easy to break."
 					)
 				25:
 					await draw_cards([PickTemplates.TUTORIAL_REVEAL_RAKE])
