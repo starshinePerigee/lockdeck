@@ -27,22 +27,20 @@ enum RevealLevel {
 ## Revealed status array.
 @export var reveals: Array[RevealLevel]
 ## Checks if depths have been tested this execution
-@export var checked: Array[bool]
+var checked: Array[bool]
 ## Checks if depths have been activated this turn
 @export var activated: Array[bool]
 ## Holds the results objects for this pin activation
 ## Size is ONE PLUS the size of depths to handle the overrun result
-@export var results: Array[Results]
+var results: Array[Results]
 ## Holds how many twist depths are triggered this execution
-@export var twist_count: int
+var twist_count: int
 ## holds how much more push is pending in a push action
 var _push_pending: int
-## Holds the checked tracking letters
-@export var hint_tracks: Array[String]
 ## Current depth index for the pin. Starts at 0, increases as the pin is picked.
 @export var pin_position: int
 ## Tracks the current test/reveal hint pointer. Measures positions beyond current position.
-@export var sight_pointer: int
+var sight_pointer: int
 ## If the pin has a jam value. Greater than 0 will show the jam indicator.
 @export var jam_count: int
 ## If there is a currently active bomb, what depth it is - otherwise -1
@@ -70,17 +68,10 @@ func get_visible(idx: int = 99) -> Depths:
 	return Depths.DEBUG
 
 ## Updates a level's reveal level, setting it to the highest option.
-func update_visible(idx: int, level: RevealLevel, hint: String) -> void:
+func update_visible(idx: int, level: RevealLevel) -> void:
 	var old_reveal := reveals[idx]
 	var new_reveal: RevealLevel = min(old_reveal, level)
 	reveals[idx] = new_reveal
-	
-	if get_revealed(idx):
-		hint_tracks[idx] = ""
-	elif old_reveal != new_reveal:
-		hint_tracks[idx] = hint
-	elif old_reveal == level:
-		hint_tracks[idx] = hint_tracks[idx] + hint 
 
 ## Get if the pin is currently revealed
 func get_revealed(idx: int) -> bool:
@@ -320,8 +311,14 @@ func activate_and_get_depth(effect: EffectSpec = null) -> Depths:
 	
 	if depth != Depths.EXHAUSTED:
 		on_activate_trigger(pin_position, effect)
-		activated[pin_position] = true
-		update_result(Results.AUTO)
+		if depth not in Depths.DO_NOT_EXHAUST:
+			activated[pin_position] = true
+			update_result(Results.AUTO)
+		else:
+			if reveals[pin_position] == RevealLevel.REVEALED:
+				update_result(Results.SKIP)
+			else:
+				update_result(Results.AUTO)
 	
 	return depth
 
@@ -361,7 +358,6 @@ func reveal_position(
 	else:
 		reveals[pos] = RevealLevel.REVEALED
 		update_result(Results.REVEAL, pos)
-		hint_tracks[pos] = ""
 
 ## Handle jam and move the pin accordingly
 func push_pin(effect: EffectSpec, safe := false) -> void:
@@ -528,10 +524,10 @@ func get_reveal_level() -> PinSpec.RevealLevel:
 				level = max(level, PinSpec.RevealLevel.INTERESTING)
 	return level
 
-func update_pin_visible(level: PinSpec.RevealLevel, hint: String):
+func update_pin_visible(level: PinSpec.RevealLevel):
 	for i in range(PIN_DEPTH_COUNT):
 		if checked[i]:
-			update_visible(i, level, hint)
+			update_visible(i, level)
 
 ## Gets a ResultsSpec for this pin's current configuration
 func get_result_spec() -> ResultSpec:
@@ -605,7 +601,25 @@ func reset_pin() -> void:
 	reset_reveals()
 	reset_exhaustion()
 	end_step()
+
+func reify() -> void:
+	for i in len(depths):
+		depths[i] = Depths.static_registry[depths[i].depth_name]
+	end_step()
+
 #endregion
+
+## Build a pinspec from a depth array. depth_array must not be longer than 7
+static func from_depth_array(depth_array: Array[Depths] = []) -> PinSpec:
+	if len(depth_array) > 7:
+		push_error("Depth array should be only the inner depths of the pin!")
+	
+	var new := PinSpec.new(Depths.EMPTY)
+	for i in len(depth_array):
+		new.depths[i + 1] = depth_array[i]
+	
+	new.reset_pin()
+	return new
 
 func _init(fill: Depths = Depths.DEBUG):
 	depths = []
@@ -629,9 +643,5 @@ func _init(fill: Depths = Depths.DEBUG):
 	results = []
 	results.resize(PIN_DEPTH_COUNT + 1)
 	results.fill(Results.EMPTY)
-	
-	hint_tracks = []
-	hint_tracks.resize(PIN_DEPTH_COUNT)
-	hint_tracks.fill("ABC")
 
 	reset_pin()

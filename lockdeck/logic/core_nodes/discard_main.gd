@@ -9,11 +9,17 @@ signal display_cards(Array)
 
 @export var cards: Array[CardSpec]
 
+@export var disable_discard := false:
+	set(v):
+		disable_discard = v
+		$DropArea/CollisionShape2D.set_deferred("disabled", disable_discard) 
+		$DiscardIcon.visible = show_icon and not disable_discard
+
 @export var show_icon: bool = false:
 	set(v):
 		show_icon = v
 		icon_selected = false
-		$DiscardIcon.visible = show_icon
+		$DiscardIcon.visible = show_icon and not disable_discard
 
 @export var icon_selected: bool = false:
 	set(v):
@@ -33,7 +39,6 @@ func add_cards(dis_cards: Array[CardSpec]) -> void:
 
 func add_card(card: CardSpec) -> void:
 	cards.append(card)
-	redraw()
 
 func remove_card(dis_card: CardSpec) -> Vector2:
 	if dis_card not in cards:
@@ -69,7 +74,8 @@ func update_label(n: int = 0) -> void:
 	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
 
 func update_pile(n: int = 0) -> void:
-	$DiscardLabel.text = "Discard: %s" % (_current_label - n)
+	$CardPile.count = (_current_label - n)
+
 #endregion
 
 func redraw() -> void:

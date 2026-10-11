@@ -66,7 +66,7 @@ static var PUSH := Effects.new(
 static var TEST := Effects.new(
 	"test",
 	(
-		"Tests a depth to help find dangers.\n\n"
+		"Tests an unrevealed depth to help find dangers.\n\n"
 		+ "All tested depths are evaluated together, "
 		+ "and the worst case depth will be "
 		+ "indicated."

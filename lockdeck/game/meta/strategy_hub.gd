@@ -1,5 +1,6 @@
 extends Control
 
+signal final_tutorial
 signal continue_to_next
 
 var _game: GameSpec
@@ -148,12 +149,20 @@ func reset() -> void:
 	shop_widget.load_inventory(PickGenerator.get_shop_spread())
 	break_temporary_picks()
 
+var tutorial_lock := false
+
+func exit_hub() -> void:
+	if tutorial_lock:
+		final_tutorial.emit()
+	else:
+		continue_to_next.emit()
+		GlobalEffects.request(FX_COMPLETE_CHIME)
+
 const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func _ready() -> void:
 	$ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
-	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
-	$ContinueButton.pressed_confirmed.connect(GlobalEffects.request.bind(FX_COMPLETE_CHIME))
+	$ContinueButton.pressed_confirmed.connect(exit_hub)
 	$TabButtonBox/DeckButton.pressed.connect(show_panel.bind($DeckPopover))
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))

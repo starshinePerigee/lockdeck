@@ -1,18 +1,21 @@
 extends Control
+class_name GameCore
 
 signal game_fail
 signal game_win
 signal continue_to_next
 signal continue_to_failure
 signal final_turn
+signal pick_broke
+signal turn_ended
+signal new_state(state_spec: StateSpec)
+signal animation_complete
 
 #region game state variables
-@export var cylinder_count := 4
-@export var deck_count := 10
-@export var hand_size := 3
-@export var countdown_time := 2
+var hand_size := 3
+var starting_countdown_time := 2
 
-var DEBUG_MODE := false
+@onready var DEBUG_MODE := OS.is_debug_build()
 
 var turn_count := -1
 
@@ -73,7 +76,8 @@ var _current_target: Control
 func valid_targets() -> Array[Control]:
 	var targets: Array[Control] = []
 	targets.assign($LockBody/CylinderMain/Cylinders.get_valid_refs())
-	targets.append($DiscardMain)
+	if not $DiscardMain.disable_discard: 
+		targets.append($DiscardMain)
 	return targets
 
 ## returns a list of all mouse hover objects
@@ -136,7 +140,10 @@ func _input(event: InputEvent) -> void:
 		var click: Vector2 = event.global_position
 		
 		# Handle countdown highlight here while we're here
-		if not $LockBody/CountdownMain.get_mouse_rect().has_point(click):
+		if (
+			not $LockBody/CountdownMain.get_mouse_rect().has_point(click)
+			and not tutorial_mode
+		):
 			reset_countdown()
 		
 		if current_state == InputState.ACTIVE_SELECT:
@@ -162,7 +169,7 @@ func _input(event: InputEvent) -> void:
 
 func _do_target() -> void:
 	unhighlight_target(_current_target)
-	if _current_target == $DiscardMain:
+	if _current_target == $DiscardMain and not $DiscardMain.disable_discard:
 		GlobalEffects.request(FX_CARD_DISCARD)
 		discard_pick()
 	elif _current_target is Pin:
@@ -363,31 +370,41 @@ var lock_complete: bool
 
 # Used for card display and over pop over effects
 func dis_en_able_buttons(state: bool = true) -> void:
-		$LockBody/CountdownMain.button_disable = (
-			state 
-			or _lock_input
-			or $LockBody/CountdownMain.count <= 0
-			or lock_complete
-		)
-		$HandMain/Hand.disabled = state or _lock_input
-		$TrashMain.disabled = state
-		$DeckMain/DeckLabel.disabled = state
-		$DiscardMain/DiscardLabel.disabled = state
-		$DepthButton.disabled = state
+	lock_input(state)
+	$TrashMain.disabled = state
+	$DeckMain/DeckLabel.disabled = state
+	$DiscardMain/DiscardLabel.disabled = state
+	$DepthButton.disabled = state
+
+var _tutorial_lock := false
+
+## Used to lock input for tutorials. 
+func tutorial_lock(state: bool) -> void:
+	_tutorial_lock = state
+	lock_input(state)
+
+## Shows a reset button on break
+var allow_reset := false
 
 # Used for when you want to continue interacting with the interface,
 # such as after unlock
 func lock_input(state: bool = true) -> void:
 	_lock_input = state
 	$LockBody/CountdownMain.button_disable = (
-		state 
+		state
+		or _countdown_lock
+		or _tutorial_lock
 		or lock_complete
 		or $LockBody/CountdownMain.count <= 0
 	)
-	$HandMain/Hand.disabled = state or lock_complete
+	$HandMain/Hand.disabled = (
+		state
+		or _tutorial_lock
+		or lock_complete
+	)
 
 func show_failure(state: bool = true) -> void:
-	$FailureButton.visible = state
+	$FailureButton.visible = state and not tutorial_mode
 	if state:
 		$FailureButton.mouse_filter = MOUSE_FILTER_STOP
 	else:
@@ -451,6 +468,8 @@ func move_cards_from_hand_to_discard(cards: Array[CardSpec]) -> void:
 	for card in cards:
 		$HandMain.remove_card(card)
 		$DiscardMain.add_card(card)
+		await $HandMain/Hand.animation_complete
+		$DiscardMain.redraw()
 
 #endregion
 
@@ -519,6 +538,12 @@ func break_pick(card: CardSpec, surprise := false, bomb := false) -> void:
 	
 	if ($HandMain.count() + $DeckMain.count() + $DiscardMain.count()) == 0:
 		game_over()
+	
+	if allow_reset:
+		$ResetButton.visible = true
+		$ResetButton.highlight = true
+	
+	pick_broke.emit()
 
 ## Breaks the rightmost card - used for debug
 func break_from_hand() -> void:
@@ -590,7 +615,7 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 			move_cards_from_hand_to_discard([card])
 	
 	if Effects.TEST in card.get_unique_list():
-		$LastTest.update(_result.last_reveal, _result.last_hint)
+		$LastTest.update(_result.last_reveal)
 	else:
 		$LastTest.update()
 		$LastTest.visible = false
@@ -599,15 +624,12 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		solve_lock()
 	else:
 		await post_pick()
-	print("exit do pick")
 
 const FX_BREAK_CANDLE := preload("res://assets/fx/break_ring.ogg")
 ## Async break sound
 func play_break(sig: Signal) -> void:
-	print("enter pbreak")
 	await sig
 	GlobalEffects.request(FX_BREAK_CANDLE)
-	print("exit pbreak")
 
 ## Perform all the local actions for pick effects
 func post_pick() -> void:
@@ -635,6 +657,24 @@ func post_pick() -> void:
 #endregion
 
 #region game flow
+func get_game_state() -> StateSpec:
+	return StateSpec.new(
+		AllCardsSpec.new(
+			$DeckMain.cards,
+			$HandMain.cards,
+			$DiscardMain.cards,
+			$TrashMain.cards
+		),
+		LockSpec.new(
+			$LockBody/CylinderMain.pins,
+			_lock_deck
+		),
+		$LockBody/CountdownMain.count,
+		$LockBody/CountdownMain.break_bag,
+		0,
+		turn_count
+	)
+
 ## Handle game actions
 func cleanup_step() -> void:
 	draw_to_five()
@@ -645,6 +685,7 @@ func cleanup_step() -> void:
 		break_next = $LockBody/CountdownMain.end_turn()
 	tick_turn_count()
 	update_status_widget()
+	new_state.emit(get_game_state())
 
 ## perform the end of turn step once the player clicks the turn candle (if it's valid)
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
@@ -671,6 +712,7 @@ func end_turn() -> void:
 	await $DeckMain.reload_finish
 	cleanup_step()
 	await $HandMain/Hand.animation_complete
+	turn_ended.emit()
 	set_state(InputState.INACTIVE)
 
 func game_over() -> void:
@@ -684,7 +726,7 @@ func game_over() -> void:
 const FX_UNLOCK_CLICKS := preload("res://assets/fx/lock_unlock_clicks.ogg")
 
 func solve_lock() -> void:
-	$LockBody/ContinueButton.visible = true	
+	$LockBody/ContinueButton.visible = not tutorial_mode	
 	game_win.emit()
 	GlobalEffects.request(FX_UNLOCK_CLICKS)
 	$LockBody/AnimationPlayer.play("unlock")
@@ -700,10 +742,17 @@ func load_deck(deck: Array[CardSpec]) -> void:
 	$DeckMain.clear_all()
 	$DeckMain.load_cards(deck)
 
+## Holds the deck used to generate this lock - used for state updates
+var _lock_deck: LockDeck
+
 ## loads a lock
 func load_lock(lock: LockSpec) -> void:
-	cylinder_count = len(lock.pins)
 	$LockBody/CylinderMain.load_new_lock(lock)
+	if lock.lock_deck:
+		_lock_deck = lock.lock_deck
+	else:
+		_lock_deck = LockDeck.new()
+	$DepthDisplay.update(_lock_deck.get_unique_depths())
 	call_deferred("_set_indicator_box")
 
 func _set_indicator_box() -> void:
@@ -713,11 +762,10 @@ func _set_indicator_box() -> void:
 
 var _already_broken: Array[CardSpec]
 
-## Loads non-lock parameters from the game spec and restarting the game.
+## Loads non-lock parameters from the game spec and restarts the game.
 func load_game(game: GameSpec) -> void:
-	$GameStatus.coins = game.coins
-	$GameStatus.stage = game.lock_number
-	$DepthDisplay.update(game.lockset_deck.get_unique_depths())
+	$GameStatus.tutorial = game.tutorial_mode
+	$GameStatus.stage = game.current_lock()
 	load_deck(game.current_deck.duplicate())
 	_already_broken = game.broken_picks
 	$TrashMain.reset()
@@ -725,12 +773,18 @@ func load_game(game: GameSpec) -> void:
 
 func restart() -> void:
 	lock_complete = false
+	tutorial_mode = false
+	tutorial_lock(false)
 	lock_input(false)
+	allow_reset = false
+	$ResetButton.visible = false
+	set_discard_disable(false)
+	set_countdown_disable(false)
 	show_failure(false)
 	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
-	$LockBody/CountdownMain.set_count(countdown_time)
+	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
 	$Notifications.clear()
@@ -740,7 +794,47 @@ func restart() -> void:
 	# note: you will need to draw cards outside of restart to sync with animation
 	set_state(InputState.INACTIVE)
 
+func setup_interface(setup: LevelSpec.InterfaceSetup = LevelSpec.InterfaceSetup.DEFAULT) -> void:
+	match setup:
+		LevelSpec.InterfaceSetup.DEFAULT:
+			$AnimationPlayer.play("RESET")
+		LevelSpec.InterfaceSetup.FULL_EMPTY:
+			$AnimationPlayer.play("tutorial_start")
+		LevelSpec.InterfaceSetup.HALF_SHOWN:
+			$AnimationPlayer.play("half_visible")
+		LevelSpec.InterfaceSetup.THREE_QUARTERS:
+			$AnimationPlayer.play("three_quarters")
+
+## Loads an in-progress game. Used instead of load_lock / load_game
+func load_in_progress(game: GameSpec, state: StateSpec) -> void:
+	load_lock(state.lock)
+	load_game(game)
+	$DeckMain.clear_all()
+	$DeckMain.load_cards(state.all_cards.deck)
+	$HandMain.remove_all_cards()
+	$HandMain.add_cards(state.all_cards.hand)
+	$DiscardMain.empty_deck()
+	$DiscardMain.add_cards(state.all_cards.discard)
+	$TrashMain.reset()
+	$TrashMain.add_cards(state.all_cards.trash)
+	$LockBody/CountdownMain.set_count(state.countdown)
+	$LockBody/CountdownMain.break_bag = state.break_bag
+	turn_count = state.turn_count
+
+func set_discard_disable(disable: bool) -> void:
+	$DiscardMain.disable_discard = disable
+
+
+var _countdown_lock := false
+
+func set_countdown_disable(disable: bool) -> void:
+	_countdown_lock = disable
+	$LockBody/CountdownMain.button_disable = disable
+
+var tutorial_mode := false
+
 const FX_SUCCESS_CHIME := preload("res://assets/fx/complete_chime.ogg")
+const FX_LOW_CHIME := preload("res://assets/fx/low_chime.ogg")
 
 func _ready() -> void:
 	var settings := GameSettings.instance()
@@ -753,6 +847,8 @@ func _ready() -> void:
 	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
 	$LockBody/ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_SUCCESS_CHIME))
 	$FailureButton.pressed.connect(continue_to_failure.emit)
+	$ResetButton.pressed.connect(continue_to_next.emit)
+	$ResetButton.pressed.connect(GlobalEffects.request.bind(FX_LOW_CHIME))
 
 	$HandMain/Hand.card_selected.connect(pick_selected)
 	$HandMain/Hand.card_tapped.connect(pick_clicked)
@@ -770,6 +866,10 @@ func _ready() -> void:
 	$TrashMain.display_cards.connect(display_cards.bind("Broken picks", false))
 	$DeckMain.display_cards.connect(display_cards.bind("Remaining deck", true))
 	$DiscardMain.display_cards.connect(display_cards.bind("Discard pile", false))
+	
+	$HandMain/Hand.animation_complete.connect(animation_complete.emit)
+	$LockBody/CylinderMain/Cylinders.animation_complete.connect(animation_complete.emit)
+	$DeckMain.reload_finish.connect(animation_complete.emit)
 	
 	$LockBody/IndicatorPick.reset.connect(end_animation)
 	$DeckMain.reload_finish.connect(end_animation)

@@ -97,7 +97,7 @@ static var HIDDEN := Depths.new(
 )
 
 static var MARK_CLEAR := Depths.new(
-	"mark_clear", DangerLevel.INVALID, Effects.DEBUG,
+	"mark_clear", DangerLevel.CLEAR, Effects.DEBUG,
 	"Marked safe. You can push to this depth without worry, although it might be dangerous in other ways.",
 	0, "marked safe"
 )
@@ -147,7 +147,7 @@ static var LUCKY := Depths.new(
 ## Reveals the next safe depth (if one) or sets the pin as clear
 static var HINT := Depths.new(
 	"hint", DangerLevel.CLEAR, Effects.HINT,
-	"A safe depth that also reveals another safe on this pin, if one exists."
+	"A safe depth that also reveals another safe depth on this pin, if one exists."
 )
 
 static var BREATH := Depths.new(
@@ -241,7 +241,7 @@ static var BREAK := Depths.new(
 ## Does nothing except indicates a break is ahead somewhere
 static var WARN := Depths.new(
 	"warn", DangerLevel.CLEAR, Effects.EMPTY,
-	"Does nothing if activated, but know that the Break depth is past this one.",
+	"Does nothing on its own, but know that the Break depth is past this one.",
 	1, "warning"
 )
 
@@ -292,6 +292,8 @@ static var GATE_KEY := Depths.new(
 #endregion
 
 static var DO_NOT_EXHAUST: Array[Depths] = [
-#	BASE,
-	FINAL
+	BASE,
+	FINAL,
+	EMPTY,
+	WARN,
 ]

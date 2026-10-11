@@ -89,7 +89,7 @@ func queue_sound(heavy: bool, font: Loots.EffectFonts):
 			else:
 				sound_queue.append(1)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if len(sound_queue) > 0:
 		sound_queue.sort()
 		var sound_count := 0

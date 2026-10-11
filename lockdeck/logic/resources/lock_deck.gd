@@ -87,6 +87,12 @@ func _init() -> void:
 		deck[difficulty] = []
 		_pointers[difficulty] = -1
 
+static func from_template_array(templates: Array[DepthTemplates]) -> LockDeck:
+	var lock_deck := LockDeck.new()
+	for template in templates:
+		lock_deck.deck[template.difficulty].append(template)
+	return lock_deck
+
 static func _build_base_template_deck(arc: GameArcs) -> LockDeck:
 	var lock_deck := LockDeck.new()
 	for difficulty in DepthTemplates.Difficulty.values():

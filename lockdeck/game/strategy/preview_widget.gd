@@ -7,7 +7,13 @@ func _update_depth_preview(game: GameSpec) -> void:
 		%DepthsVBox.remove_child(child)
 		child.queue_free()
 	
-	var next_depths := game.lockset_deck.get_unique_depths()
+	var lockset_deck: LockDeck
+	if game.lockset_deck:
+		lockset_deck = game.lockset_deck
+	else:
+		lockset_deck = LockDeck.new()
+	
+	var next_depths := lockset_deck.get_unique_depths()
 	
 	var difficulties = DepthTemplates.Difficulty.values()
 	difficulties.erase(DepthTemplates.Difficulty.ESSENTIAL)
@@ -45,8 +51,8 @@ func _update_depth_preview(game: GameSpec) -> void:
 			%DepthsVBox.add_child(next_line)
 
 func update(game: GameSpec) -> void:
-	%HeistLabel.text = "Heist %s" % game.heist_number
-	%PinsLabel.text = "%s pins maximum" % game.get_max_pin_count()
+	%HeistLabel.text = "Heist %s" % game.heist_number()
+	%PinsLabel.text = "%s pins maximum" % game.max_pin_count()
 	_update_depth_preview(game)
 
 func reset(_game: GameSpec) -> void:

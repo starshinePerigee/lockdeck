@@ -32,6 +32,7 @@ enum Archetypes {
 
 static var RARITY_COLORS: Dictionary[Rarities, Color] = {
 	Rarities.DEBUG: Color("ff0089"),
+	Rarities.TUTORIAL: Color("312836"),
 	Rarities.BASIC: Color("918891"),
 	Rarities.GREAT: Color("c7e0e3"),
 	Rarities.TRASH: Color("38423b"),
@@ -42,6 +43,7 @@ static var RARITY_COLORS: Dictionary[Rarities, Color] = {
 
 enum Rarities {
 	DEBUG = -2,  # 5
+	TUTORIAL = -3,
 	BASIC = 2,  # 25
 	GREAT = 4,  # 35
 	TRASH = 0,  # 15
@@ -992,6 +994,183 @@ static var OLD_KEY := PickTemplates.new(
 	"PPP[JJJ]PPP",
 	"old_key"
 )
+#endregion
+
+#region tutorial picks
+
+static var TUTORIAL_PUSH_2 := PickTemplates.new(
+	"training pick",
+	Families.NONE,
+	Archetypes.THREE_PUSH,
+	Rarities.TUTORIAL,
+	"PP",
+)
+
+static var TUTORIAL_PUSH_1 := PickTemplates.new(
+	"small hook",
+	Families.NONE,
+	Archetypes.PRECISE,
+	Rarities.TUTORIAL,
+	"P",
+)
+
+static var TUTORIAL_PUSH_3 := PickTemplates.new(
+	"large hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.TUTORIAL,
+	"PPP",
+)
+
+static var TUTORIAL_REVEAL_2 := PickTemplates.new(
+	"reveal hook",
+	Families.NONE,
+	Archetypes.REVEAL,
+	Rarities.TUTORIAL,
+	"RR",
+)
+
+static var TUTORIAL_REVEAL_1 := PickTemplates.new(
+	"push reveal",
+	Families.NONE,
+	Archetypes.BULK_TEST,
+	Rarities.TUTORIAL,
+	"PR",
+)
+
+static var TUTORIAL_DIAMOND := PickTemplates.new(
+	"training diamond",
+	Families.NONE,
+	Archetypes.DARK,
+	Rarities.TUTORIAL,
+	"PPPT",
+)
+
+static var TUTORIAL_WEIRD_DARK := PickTemplates.new(
+	"show hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.TUTORIAL,
+	"PPRRTT",
+)
+
+static var TUTORIAL_TEST_2 := PickTemplates.new(
+	"test hook",
+	Families.NONE,
+	Archetypes.CLOSE_TEST,
+	Rarities.TUTORIAL,
+	"TT",
+)
+
+static var TUTORIAL_TEST_3_FLAT := PickTemplates.new(
+	"trap hook",
+	Families.HOOK,
+	Archetypes.CLOSE_TEST,
+	Rarities.TUTORIAL,
+	"TTT",
+)
+
+static var TUTORIAL_TEST_3 := PickTemplates.new(
+	"classic hook",
+	Families.NONE,
+	Archetypes.PUSHY,
+	Rarities.BASIC,
+	"PPTTT",
+)
+
+static var TUTORIAL_TEST_1 := PickTemplates.new(
+	"short hook",
+	Families.NONE,
+	Archetypes.PRECISE,
+	Rarities.BASIC,
+	"PT",
+)
+
+## P[PP
+static var TUTORIAL_ONE_TWO_PUSH := PickTemplates.new(
+	"small diamond",
+	Families.NONE,
+	Archetypes.FINISHER,
+	Rarities.TUTORIAL,
+	"P[PP"
+)
+
+## P[P[P[P]P
+static var TUTORIAL_RAKE := PickTemplates.new(
+	"training rake",
+	Families.NONE,
+	Archetypes.HYBRID_S,
+	Rarities.TUTORIAL,
+	"P[P[P[P]P"
+)
+
+## T[TT[T[TT]T
+static var TUTORIAL_REVEAL_RAKE := PickTemplates.new(
+	"test rake",
+	Families.NONE,
+	Archetypes.GAPS,
+	Rarities.TUTORIAL,
+	"T[TT[T[TT]T"
+)
+
+## PT[PPT[PPPT
+static var TUTORIAL_BASIC_DIAMOND := PickTemplates.new(
+	"half diamond",
+	Families.NONE,
+	Archetypes.THREE_PUSH,
+	Rarities.BASIC,
+	"PT[PPT[PPPT",
+)
+
+static var TUTORIAL_SINGLE_TEST := PickTemplates.new(
+	"tap",
+	Families.NONE,
+	Archetypes.JUMP_TEST,
+	Rarities.TUTORIAL,
+	"T"
+)
+
+static var TUTORIAL_SKIP_ONLY := PickTemplates.new(
+	"joke pick",
+	Families.NONE,
+	Archetypes.GAPS,
+	Rarities.TUTORIAL,
+	".",
+	"toothpick",
+)
+
+static var TUTORIAL_SKIP_TEST := PickTemplates.new(
+	"pop reveal",
+	Families.NONE,
+	Archetypes.REVEAL,
+	Rarities.TUTORIAL,
+	"..R",
+)
+
+static var TWO_JAM := PickTemplates.new(
+	"training wrench",
+	Families.NONE,
+	Archetypes.END_TURN,
+	Rarities.TUTORIAL,
+	"JJ"
+)
+
+static var ONE_JAM := PickTemplates.new(
+	"feather wrench",
+	Families.NONE,
+	Archetypes.TRICKS,
+	Rarities.TUTORIAL,
+	"J"
+)
+
+static var TUTORIAL_FINISHER := PickTemplates.new(
+	"quick finisher",
+	Families.NONE,
+	Archetypes.FINISHER,
+	Rarities.TUTORIAL,
+	"PPJJ"
+)
+
 #endregion
 
 static var valid_templates: Array[PickTemplates] = [

@@ -25,9 +25,9 @@ func set_highlight_active_row(setting: bool) -> void:
 	settings.set_highlight_active_row(setting)
 
 static var tooltip_speeds: Dictionary[float, String] = {
-	1.0: "Fast",
+	0.8: "Fast",
 	1.4: "Medium",
-	2.2: "Slow",
+	2.4: "Slow",
 	999999: "Off"
 }
 
@@ -98,7 +98,10 @@ func hide_widget():
 
 func _handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if (
+			(event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
+			and event.pressed
+		):
 			hide_widget()
 
 func request_active_row_tooltip() -> void:
@@ -171,7 +174,7 @@ func _ready() -> void:
 		%FullscreenButton,
 		%DiscreteScale,
 	]:
-		toggle.toggled.connect(func(x): GlobalEffects.request(FX_CLICK))
+		toggle.toggled.connect(func(_x): GlobalEffects.request(FX_CLICK))
 	
 	if get_parent() == get_tree().root:
 		show_widget()
