@@ -3,6 +3,8 @@ extends Control
 ## It also manages demo logic, working with game manager and game spec to step through tutorials.
 class_name Tutorializer
 
+signal tutorial_finished(Array)
+
 # Tutorial logic:
 # on tutorial start, we enter the tutorial state and create a game that's in the tutorial mode.
 # game spec's tutorial level array manages TUTORIAL levelspecs and SPECIFIC levelspecs
@@ -18,7 +20,16 @@ var core: GameCore:
 		core.get_node("PreviousButton").show_previous.connect(prev_preved)
 		core.get_node("PreviousButton").go_back.connect(prev_preved)
 		core.get_node("CardDisplay").closed.connect(display_closed)
-		
+
+var hub: Control:
+	set(v):
+		hub = v
+		hub.get_node("TabButtonBox/DeckButton").pressed.connect(do_hub_deck)
+		hub.get_node("TabButtonBox/RepairButton").pressed.connect(do_hub_repair)
+		hub.get_node("TabButtonBox/ShopButton").pressed.connect(do_hub_shop)
+		hub.get_node("TabButtonBox/PreviewButton").pressed.connect(do_hub_preview)
+		hub.final_tutorial.connect(do_final)
+
 var level: int
 var step: int
 
@@ -845,31 +856,37 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	
+	# 4
 	LevelSpec.new(TUTORIAL, 1, 0, TUTORIAL_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	
+	# 8
 	LevelSpec.new(TUTORIAL, 2, 0, TUTORIAL_3, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_6, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_7, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	
+	# 11
 	LevelSpec.new(TUTORIAL, 3, 0, TUTORIAL_4, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_8, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_9, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_10, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_11, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	
+	# 16
 	LevelSpec.new(TUTORIAL, 4, 0, TUTORIAL_5, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_12, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_13, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_14, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	
+	# 20
 	LevelSpec.new(TUTORIAL, 5, 0, TUTORIAL_6, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_15, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_16, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_17, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	
+	# 24
 	LevelSpec.new(TUTORIAL, 6, 0, TUTORIAL_7, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(LOCK, 1, 1),
 	LevelSpec.new(LOCK, 1, 2),
@@ -880,6 +897,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 func tutorialize(level_: int) -> void:
 	level = level_
 	step = 0
+	no_step = false
 	# DEV SKIP
 #	if level == 3:
 #		step = 32
@@ -1216,7 +1234,7 @@ func do_step() -> void:
 				41:
 					show_box(
 						"We're safe right now, so you have as many turns as you need.\n\n"
-						+ "But out in the field, you'll have exactly three turns per lock."
+						+ "When you're out in the field, you'll have exactly three turns per lock."
 					)
 				42:
 					advance()
@@ -1225,7 +1243,7 @@ func do_step() -> void:
 				44:
 					core.tutorial_lock(false)
 					show_box(
-						"Now click the candle twice to end your turn.",
+						"Click the candle twice to end your turn.",
 						380,
 						100,
 						false
@@ -1346,7 +1364,7 @@ func do_step() -> void:
 					await_unlock = 1
 				12:
 					if core.get_node("TrashMain").count() == 0:
-						show_box("Good job avoiding the spikes and avoiding overshoot.")
+						show_box("Good job avoiding the spikes and overshoot.")
 					else:
 						step = 9
 						show_box(
@@ -1477,18 +1495,17 @@ func do_step() -> void:
 					advance()
 				27:
 					show_box(
-						"Oh, and while we're talking planning - don't forget: "
-						+ "if you need to check what picks are where, "
+						"Oh, and while we're talking planning...\n\ndon't forget that "
 						+ "you can click the deck, discard, and trash buttons to check what all's where.\n\n"
 						+ "Sometimes you'll to check if you still have a two-push coming up or what have you."
 					)
-				27:
+				29:
 					show_box(
 						"The next couple of locks are going to be full of spikes. Like before, pick them without "
 						+ "breaking any picks to continue.\n\n"
 						+ "You'll need to be capable and clever - prove to me you're both."
 					)
-				28:
+				30:
 					core.tutorial_lock(false)
 					core.continue_to_next.emit()
 		2:
@@ -2453,7 +2470,7 @@ func do_step() -> void:
 						+ "Don't be afraid to keep discarding to dig for a specific pick. "
 						+ "You'll figure out your favorites pretty quick."
 					)
-				34:
+				35:
 					core.continue_to_next.emit()
 		5:
 			match step:
@@ -2477,7 +2494,7 @@ func do_step() -> void:
 					)
 				4:
 					await draw_cards([PickTemplates.TUTORIAL_SKIP_TEST])
-					show_box("Normally it's paired with an actual effect, like this.", PIN_X, PIN_Y, false)
+					show_box("Normally it's paired with an actual effect, like this.", PIN_X, PIN_Y)
 				5:
 					show_box(
 						"This lets you skip over a dangerous depth to see what's on the other side.\n\n"
@@ -2535,7 +2552,7 @@ func do_step() -> void:
 					await_use = 1
 				15:
 					show_box(
-						"Hopefully you saw how the second one of those cleared the jam, and then pushed.",
+						"Hopefully you saw how the second one of those cleared the jam, and then tested.",
 						PIN_X,
 						PIN_Y
 					)
@@ -2553,9 +2570,11 @@ func do_step() -> void:
 						false
 					)
 					await_use = 1
+				18:
+					advance()
 				19:
 					core.set_countdown_disable(false)
-					core.get_node("$LockBody/CountdownMain").suggest = true
+					core.get_node("LockBody/CountdownMain").suggest = true
 					await_use = 1
 				20:
 					core.set_countdown_disable(true)
@@ -2563,6 +2582,7 @@ func do_step() -> void:
 					show_box("That's going to let you break down much harder locks.")
 				21:
 					show_box("For this next bit, we'll need a few more pins.")
+					empty_cards()
 					draw_cards([PickTemplates.TUTORIAL_BASIC_DIAMOND])
 					reset_pins([
 						PinSpec.from_depth_array([
@@ -2665,7 +2685,7 @@ func do_step() -> void:
 					)
 				4:
 					show_box(
-						"Do whatever you can to crack locks before that becomes an issue.\n\n"
+						"Do whatever you can to crack locks before time becomes an issue.\n\n"
 						+ "Take risks. Break a pick or two to get the last pin set. "
 						+ "Whatever it takes."
 					)
@@ -2685,6 +2705,7 @@ func do_step() -> void:
 					core.get_node("DiscardMain").add_cards(STARTING_DECK)
 					core.reload_deck()
 					await core.animation_complete
+					
 					show_box(
 						"Your own set of lockpicks."
 					)
@@ -2701,12 +2722,125 @@ func do_step() -> void:
 				11:
 					show_box("I know I'll see you again soon. Get to it!")
 				12:
+					tutorial_finished.emit(STARTING_DECK)
 					core.continue_to_next.emit()
+
+var no_step := false
+
+func do_loot_drop() -> void:
+	no_step = true
+	show_box(
+		"Amazing! Great work. Now's the fun part."
+	)
+	await %TutorialBox.box_clicked
+	show_box(
+		"Everything here is yours! Loot takes two forms:\n\n"
+		+ "Ingots, which you can turn into new picks immediately.\n\n"
+		+ "Cnd coins, which let you repair picks and buy new ones.\n\n"
+		+ "You have to click each ingot to use it, but any unclaimed coins will be claimed automatically "
+		+ "when you press continue.\n\nStill fun to do by hand!"
+	)
+	await %TutorialBox.box_clicked
+	show_box("Do your looting, and we'll talk back at the hideout.")
+
+
+var deck_shown := true
+var repair_shown := true
+var shop_shown := true
+var preview_shown := true
+var final_shown := true
+
+func do_strat_hub() -> void:
+	deck_shown = false
+	repair_shown = false
+	shop_shown = false
+	preview_shown = false
+	final_shown = false
+	hub.get_node("ContinueButton").disabled = true
+	hub.tutorial_lock = true
+	
+	show_box(
+		"This is the hideout, where you can patch up your deck and do a little shopping.\n\n"
+		+ "Click the buttons at the top and I'll explain what they each do."
+	)
+
+func do_hub_deck() -> void:
+	if deck_shown:
+		return
+	deck_shown = true
+	
+	show_box(
+		"This tab is your deck. You can use it to double-check what picks you currently have.\n\n"
+		+ "You can also sell picks you don't want for 10 septims a pop."
+	)
+	
+	check_hub_complete()
+
+func do_hub_repair() -> void:
+	if repair_shown:
+		return
+	repair_shown = true
+	
+	show_box(
+		"This tab lets you repair picks."
+		+ "\n\nEach time you repair a specific pick, it gets more expensive, so try to avoid "
+		+ "breaking a pick over and over."
+	)
+	
+	check_hub_complete()
+
+func do_hub_shop() -> void:
+	if shop_shown:
+		return
+	shop_shown = true
+	
+	show_box(
+		"This is the shop. You buy new picks here.\n\n"
+		+ "Some of these picks are temporary - if you're short on both picks and gold,"
+		+ " they're definitely worth picking up."
+	)
+	
+	check_hub_complete()
+
+func do_hub_preview() -> void:
+	if preview_shown:
+		return
+	
+	show_box(
+		"This shows you all the depths that you might encounter on the next heist."
+	)
+	
+	preview_shown = true
+	check_hub_complete()
+
+func check_hub_complete() -> void:
+	if (
+		deck_shown
+		and repair_shown
+		and shop_shown
+		and preview_shown
+	):
+		hub.get_node("ContinueButton").disabled = false
+
+func do_final() -> void:
+	if final_shown:
+		return
+	final_shown = true
+	
+	show_box(
+		"Alright. That's it then.\n\n"
+		+ "That's everything you need to know. Now, five heists stand between you and riches.\n\n"
+		+ "Good luck and dark night, thief."
+	)
+	await %TutorialBox.box_clicked
+	hub.tutorial_lock = false
+	hub.continue_to_next.emit()
 
 
 func advance(n := 1) -> void:
 	step += n
-	do_step()
+	if not no_step:
+		do_step()
 
 func show_box(
 	text: String,

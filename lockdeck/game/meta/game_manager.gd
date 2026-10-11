@@ -30,9 +30,12 @@ func begin_tutorial() -> void:
 	game = GameSpec.new()
 	game.tutorial_mode = true
 	game.stage = 1  # needed to show the display correctly
-#	game.stage = 16  # TODO
+#	game.stage = 24  # TODO
 	game.current_deck = []
+	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
 	game.save()
+	$StrategyHub.set_game(game)
+	$LootMain.game = game
 	$BetweenLocks.set_text("first")
 	$BetweenLocks/AnimationPlayer.play("go_tutorial")
 	$AnimationPlayer.play("first lock")
@@ -126,6 +129,10 @@ func lock_complete() -> void:
 	$AnimationPlayer.play("lock to between", -12)
 	GlobalEffects.request(FX_LOCK_ROLL_OUT)
 
+func tutorial_finished(new_deck: Array) -> void:
+	game.current_deck.assign(new_deck)
+	game.save()
+
 func advance_from_between() -> void:
 	var next_level: LevelSpec = game.get_next_level()
 	print(
@@ -164,14 +171,18 @@ func next_loot(loot_value: int) -> void:
 	$AnimationPlayer.play("between to loot", -12)
 	GlobalEffects.request(FX_LOOT_ROLL_IN)
 	shop_start.emit()
+	await $AnimationPlayer.animation_finished
+	$Tutorializer.do_loot_drop()
 
 func end_loot() -> void:
 	if game.game_complete():
 		end_game.emit()
 	else:
 		$StrategyHub.reset()
-		$AnimationPlayer.play("loot to strategy")
 		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
+		$AnimationPlayer.play("loot to strategy")
+		await $AnimationPlayer.animation_finished
+		$Tutorializer.do_strat_hub()
 
 func end_strategy() -> void:
 	game.stage += 1
@@ -251,6 +262,8 @@ func _ready() -> void:
 	$MenuMain.reveal_level.connect(reveal_level)
 	$MenuMain.break_three.connect(break_three)
 	$Tutorializer.core = $GameCore
+	$Tutorializer.hub = $StrategyHub
+	$Tutorializer.tutorial_finished.connect(tutorial_finished)
 
 	# if name == "__main__:
 	if get_tree().current_scene == self:

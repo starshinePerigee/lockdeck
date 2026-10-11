@@ -94,8 +94,9 @@ func get_next_level() -> LevelSpec:
 			stage = 4
 		else:
 			var level := Tutorializer.TUTORIAL_SEQUENCE[stage]
-			for pin in level.state.lock.pins:
-				pin.reset_pin()
+			if level.state:
+				for pin in level.state.lock.pins:
+					pin.reset_pin()
 			return level
 	
 	elif in_progress:
@@ -117,6 +118,8 @@ func build_new_lock_deck(difficulty: int) -> void:
 	next_lock_deck = LockGenerator.get_lock_deck(lockset_deck, difficulty_params)
 
 func game_complete() -> bool:
+	if tutorial_mode:
+		return false
 	return stage + 1 >= len(GAME_SEQUENCE)
 
 func current_lock() -> int:
