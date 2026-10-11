@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://2pv2ihci4aa7" path="res://objects/cylinder/cylinders.tscn" id="2_s8kgd"]
 
 [node name="CylinderMain" type="Control"]
-custom_minimum_size = Vector2(464, 608)
+custom_minimum_size = Vector2(528, 512)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 528.0
-offset_bottom = 608.0
+offset_bottom = 512.0
 mouse_filter = 2
 script = ExtResource("1_j3ebm")
 

@@ -40,11 +40,13 @@ func end_turn() -> bool:
 		$Countdown.count = -1
 		return true
 	else:
-		early_lockout = false
 		break_bag.append(true)
 		$Countdown.count = 0
 		return false
 
+func game_over() -> void:
+	$Countdown.game_over = true
+	button_disable = true
 #endregion
 
 #region interface code
@@ -55,10 +57,12 @@ var _is_hovered := false
 	set(v):
 		button_disable = v
 		_draw_label()
+		if button_disable:
+			suggest = false
 
 func _draw_label() -> void:
 	var font_color := Color("#ffffff")
-	if button_disable or early_lockout:
+	if button_disable:
 		font_color = Color("#918891")
 	elif _is_hovered:
 		font_color = Color("#ffbc57")
@@ -78,15 +82,10 @@ func set_hovered(hovered: bool) -> void:
 		$Countdown/Highlight.visible = suggest
 		$Countdown.show_end = suggest
 
-var early_lockout := false:
-	set(v):
-		early_lockout = v
-		_draw_label()
-
 func count_down() -> void:
 	if count <= 0:
+		push_error("Countdown less than 0! Count: %s" % count)
 		break_bag = [true]
-		early_lockout = true
 		return
 	if count == 1:
 		count = 0
@@ -97,21 +96,76 @@ func count_down() -> void:
 
 func set_count(new_count: int) -> void:
 	count = new_count
+	$Countdown.game_over = false
 	$Countdown.count = count
-	early_lockout = false
+	suggest = false
 	reset_odds()
 
+var _pressed := false
+
+const FX_CLICK := preload("res://assets/fx/card_click.ogg")
+
 func handle_press() -> void:
-	if button_disable or early_lockout:
+	if button_disable:
 		return
+	GlobalEffects.request(FX_CLICK)
 	if suggest:
+		_pressed = false
 		countdown_triggered.emit()
 	else:
+		_pressed = true
 		suggest = true
 #endregion
 
+const tooltip_base := (
+	"This is your turn counter. Click to end your turn.\n\n"
+	+ "Ending your turn will shuffle your hand and discard pile back into your deck and "
+	+ "you will draw a new hand.\n\n" 
+	+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
+	+ "starting positions. All depths will reset and can be triggered again.\n\n"
+)
+
+func request_tooltip() -> void:
+	if count <= 0:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Because your light has gone out, you at risk of breaking picks randomly.\n\n"
+				+ "If you do not solve the lock this turn, your game will end."
+			) 
+		)
+	elif count == 1:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Solve the lock this turn, or risk breaking picks and being locked out next turn."
+			) 
+		)
+	elif count == 2:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Solve the lock this turn to receive a 10 coin bonus."
+			) 
+		)
+	else:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "You are currently safe. You may end your turn as many times as you like with no penalties."
+			) 
+		)
+
+func get_mouse_rect() -> Rect2:
+	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 24)
+
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)
+	$Countdown.mouse_entered.connect(request_tooltip)
 	$Countdown.mouse_entered.connect(set_hovered.bind(true))
 	$Countdown.mouse_exited.connect(set_hovered.bind(false))
 	reset_odds()

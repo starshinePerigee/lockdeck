@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://8b6cmkvucovs"]
+
+[ext_resource type="Script" uid="uid://c12p120myjwui" path="res://game/core/tutorializer.gd" id="1_v8nnk"]
+[ext_resource type="PackedScene" uid="uid://bv3lhaiivm41e" path="res://game/menus/tutorial_box.tscn" id="2_ebfag"]
+
+[node name="Tutorializer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_v8nnk")
+
+[node name="HighlightRect" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 3399
+z_as_relative = false
+layout_mode = 0
+mouse_filter = 2
+theme_type_variation = &"HighlightPanel"
+
+[node name="TutorialBox" parent="." instance=ExtResource("2_ebfag")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+
+[node name="Arrows" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 3398
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

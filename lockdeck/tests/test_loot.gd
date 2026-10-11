@@ -32,6 +32,11 @@ func spawn_loot() -> void:
 		loot.loot_hovered.connect(remove.bind(loot))
 	else:
 		loot.loot_clicked.connect(remove.bind(loot))
+	
+	loot.collide_light.connect(sound_queue.append.bind(1))
+	loot.collide_medium.connect(sound_queue.append.bind(2))
+	loot.collide_heavy.connect(sound_queue.append.bind(3))
+
 
 func remove(target: Loot):
 	target.get_that_bag()
@@ -40,6 +45,25 @@ func print_pile(pile: Array[Loots]) -> void:
 	for l in pile:
 		print(l.readable_name)
 
+const FX_WEAK := preload("res://assets/fx/click_weak-001.ogg")
+const FX_MED := preload("res://assets/fx/click_reset-002.ogg")
+const FX_STRONG := preload("res://assets/fx/click_sharp_001.ogg")
+
+var sound_queue: Array[int] = []
+
+func _process(delta: float) -> void:
+	if len(sound_queue) > 0:
+		match sound_queue.max():
+			3:
+				$SoundPlayer.get_stream_playback().play_stream(FX_STRONG)
+			2:
+				$SoundPlayer.get_stream_playback().play_stream(FX_MED, 0, -6)
+			1:
+				$SoundPlayer.get_stream_playback().play_stream(FX_WEAK, 0, -24)
+			_:
+				pass
+		sound_queue.clear()
+
 func _ready() -> void:
 	$Timer.timeout.connect(spawn_loot)
 	pending_loot = LootGenerator.get_standard_loot_with_total_value(total_value)
@@ -47,3 +71,6 @@ func _ready() -> void:
 	print_pile(pending_loot)
 	
 	$Loot.loot_clicked.connect(remove.bind($Loot))
+	$Loot.collide_light.connect(sound_queue.append.bind(1))
+	$Loot.collide_medium.connect(sound_queue.append.bind(2))
+	$Loot.collide_heavy.connect(sound_queue.append.bind(3))

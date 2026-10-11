@@ -1,5 +1,7 @@
 extends Control
 
+@export var tutorial := false
+
 @export var stage: int:
 	set(v):
 		stage = v
@@ -8,14 +10,11 @@ extends Control
 @export var picks: int:
 	set(v):
 		picks = v
-		$VBoxContainer/PickCount.text = "Picks: %s" % picks
-
-@export var coins: int:
-	set(v):
-		coins = v
-		# $VBoxContainer/CoinCount.text = "Coins: %s" % coins
+		if tutorial:
+			$VBoxContainer/PickCount.text = "Tutorial"
+		else:
+			$VBoxContainer/PickCount.text = "Picks: %s" % picks
 
 func _ready() -> void:
 	stage = 0
 	picks = 0
-	coins = 0

@@ -13,17 +13,40 @@ class_name EffectSpec
 ## used for pin execution logic. carries the value of the pin the effect is applied to.
 var realized_pin: int = -1
 
+## used to track the originating depth
+var realized_origin: int = -1:
+	set(v):
+		realized_origin = v
+	get():
+		if realized_origin < 0:
+			push_warning("Reading unrealized origin")
+		return realized_origin
+
 ## used for displaying previous results. Dictionary as a set
 var realized_positions: Dictionary[int, bool]
 
-## track if this effect broke the pick for reasons other than oob
+## track if this effect broke the pick, including as part of oob
 var broke_pick: bool = false
 
-## track if this effect pushed pin out of bounds
-var oobed: bool = false
+func real() -> int:
+	if (len(realized_positions) > 0) and realized_origin < 0:
+		push_error(
+			"Effect only partially realized! %s %s %s" 
+			% [flavor.effect_name, realized_positions, realized_origin]
+		) 
+	return len(realized_positions) > 0
 
-## track if this effect unlocked the current pin
-var unlock_pin: bool = false
+func last() -> int:
+	if realized_positions:
+		return realized_positions.keys().max()
+	else:
+		return -1
+
+func first() -> int:
+	if realized_positions:
+		return realized_positions.keys().min()
+	else:
+		return -1
 
 ## Marks a position as touched by this effect. Can be called with the same value multiple times.
 func add_position(position: int) -> void:
@@ -38,6 +61,9 @@ func add_positions(positions: Array) -> void:
 func set_jammed(position: int) -> void:
 	add_position(position)
 	flavor = Effects.UNJAM
+
+func reify() -> void:
+	flavor = Effects.static_registry[flavor.effect_name]
 
 func _init(flavor_: Effects = Effects.DEBUG, value_: int = 0):
 	flavor = flavor_

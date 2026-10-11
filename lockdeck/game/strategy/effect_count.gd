@@ -2,7 +2,6 @@ extends VBoxContainer
 
 static var _effects_template: Dictionary[String, int] = {
 	"push": 0,
-	"crush": 0,
 	"test": 0,
 	"reveal": 0,
 	"jam": 0

@@ -2,18 +2,15 @@ extends Control
 ## The view for a single pin in the lock, made up of multiple depths.
 class_name Pin
 
-## Emitted if pin is clicked (anywhere)
-signal pin_clicked()
-
-## Emitted if a card enters
-signal card_entered_pin()
-
-## Emitted when a card exits
-signal card_exited_pin()
+signal animation_complete()
 
 ## Vertical height of a depth texture in pixels.
 const DEPTH_VHEIGHT := 32
 const _DEPTH := preload("res://objects/cylinder/depth.tscn")
+
+const PER_DEPTH_DELAY := 0.12
+const PRE_ACTIVATION_DELAY := 0.35
+static var animation_scale := 1.0
 
 ## Reference to each depth object, so adding children doesn't break things.
 var depth_refs: Array[Depth] = []
@@ -25,18 +22,19 @@ static var HINT_COLORS: Dictionary[PinSpec.RevealLevel, Color] = {
 	PinSpec.RevealLevel.DANGEROUS: Color("#f1504b"),
 }
 
-#region display logic
-## If this pin is "locked" - displayed as greyed out.
-@export var pin_locked: bool = false:
-	set(v):
-		pin_locked = v
-		if pin_locked:
-			$Stack.modulate = Color("848484")
-		else:
-			$Stack.modulate = Color("ffffff")
+const BOMB_LIVE := preload("res://assets/pin/its_a_bomb.png")
+const BOMB_DEAD := preload("res://assets/pin/bomb_defused.png")
 
+#region display logic
 var SPRING_SIZE: Vector2
 var SPRING_POSITION: Vector2
+
+func _stack_position(pos: int) -> Vector2:
+	return Vector2(
+		0,
+		DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
+		- DEPTH_VHEIGHT * pos
+	)
 
 ## Current position of the pin. 0 is all the way down, and 8 is all the way up.
 @export var pin_position: int = 0:
@@ -46,18 +44,13 @@ var SPRING_POSITION: Vector2
 		if not is_node_ready():
 			await ready
 		
-		var depth_shift := DEPTH_VHEIGHT * v
-		$Stack.position = Vector2(
-			0,
-			DEPTH_VHEIGHT * (PinSpec.PIN_DEPTH_COUNT - 1)  
-			- depth_shift
-		)
+		$Stack.position = _stack_position(pin_position)
 		
 		# this logic handles skewing the spring as a hack
-		@warning_ignore("integer_division")
-		var pin_shift = depth_shift / 3
-		$Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
-		$Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y - (depth_shift - pin_shift))
+		var depth_shift := DEPTH_VHEIGHT * pin_position
+		var pin_shift := depth_shift / 3.0
+		$Stack/Spring.size = Vector2(SPRING_SIZE.x, SPRING_SIZE.y - pin_shift)
+		$Stack/Spring.position = Vector2(SPRING_POSITION.x, SPRING_POSITION.y + pin_shift)
 
 ## Hides the pin, visually.
 ## I don't remember why I use this instaead of just self.visible?
@@ -73,7 +66,7 @@ var SPRING_POSITION: Vector2
 		$Stack.visible = visible_
 		$JamIndicator.visible = visible_
 		$KeyIndicator.visible = visible_
-		$Spring.visible = visible_
+		$Stack/Spring.visible = visible_
 
 ## The value of the jam indicator, and if one is present. If jam count is less than or equal
 ## to zero, hide the jam indicator.
@@ -89,26 +82,344 @@ var SPRING_POSITION: Vector2
 
 var _key_visible := false
 
-## Load a PinSpec into this pin, setting all parameters.
+func _draw_bomb(defused := false) -> void:
+	if not $Stack/BombIndicator.visible:
+		return
+	if defused:
+		$Stack/BombIndicator/BombIcon.texture = BOMB_DEAD
+	else:
+		$Stack/BombIndicator/BombIcon.texture = BOMB_LIVE
+
+var _tween: Tween
+var _pending_spec: PinSpec
+
+var _mid_pos: int
+
+func _tween_to(pos: int, speed_scale := 1.0) -> void:
+	if _mid_pos == pos:
+		return
+	if pos < 0:
+		_tween.tween_interval(PER_DEPTH_DELAY * animation_scale)
+		return
+	
+	_tween.tween_property(
+		$Stack,
+		"position",
+		_stack_position(pos),
+		PER_DEPTH_DELAY * speed_scale * animation_scale
+	)
+	_mid_pos = pos
+
+func _activate_delay() -> void:
+	_tween.tween_interval(PRE_ACTIVATION_DELAY * animation_scale)
+
+func _reset_trans() -> void:
+	_tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+
+func _tween_reveal(pos: int) -> void:
+	_tween.tween_property(depth_refs[pos], "flavor", _pending_spec.depths[pos], 0)
+
+func _tween_trap(pos: int) -> void:
+	_tween_reveal(pos)
+	var base_pos := _stack_position(pos)
+	if animation_scale < 0.1:
+		return
+	for shake in [
+		Vector2(-2, 1), Vector2(2, -1),
+		Vector2(-2, 1), Vector2(2, -1),
+		Vector2(-2, 1), Vector2(2, -1),
+	]:
+		_tween.tween_property($Stack, "position", base_pos + shake, 0.08)
+
+func _tween_home(spec_pos: int) -> void:
+	_tween_to(
+		spec_pos, 
+		0.8 * abs(_mid_pos - spec_pos) * animation_scale
+	)
+
+var _playback: AudioStreamPlaybackPolyphonic
+
+func _tween_fx(stream: AudioStream) -> void:
+	_tween.tween_callback(_playback.play_stream.bind(stream))
+
+var _break_played: bool
+func _break_fx(stream: AudioStream) -> AudioStream:
+	if _break_played:
+		return FX_TAP
+	else:
+		_break_played = true
+		return stream
+
+func _clear_old(pin_spec: PinSpec) -> void:
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	
+	if _pending_spec:
+		load_spec(_pending_spec)
+	_pending_spec = pin_spec
+	_break_played = false
+
+func animate(
+	pin_spec: PinSpec,
+	effects: Array[EffectSpec]
+) -> void:
+	_clear_old(pin_spec)
+	
+	if jam_count:
+		for effect in effects:
+			if effect.flavor in [Effects.PUSH, Effects.TEST, Effects.REVEAL]:
+				jam_count = 0
+	
+	_mid_pos = pin_position
+	if animation_scale >= 0.1:
+		for effect in effects:
+			_animate_effect(effect, pin_spec)
+		_tween_home(pin_spec.pin_position)
+	_tween.tween_callback(_finish_animation)
+
+## Tests if a given depth is a triggered slip (pop)
+static func _is_triggered_slip(pos: int, pin_spec: PinSpec) -> bool:
+	return (
+		pos > 0 and pos < len(pin_spec.depths) 
+		and pin_spec.depths[pos] == Depths.SLIP
+		and pin_spec.results[pos] == Results.TRIGGERED
+	)  
+
+static func _is_triggered_catch(pin_spec: PinSpec) -> bool:
+	for i in range(pin_spec.PIN_DEPTH_COUNT):
+		if (
+			pin_spec.depths[i] == Depths.CATCH
+			and pin_spec.results[i] == Results.BREAK
+		):
+			return true
+	return false
+
+static func _is_triggered_oob(pos: int, pin_spec: PinSpec) -> bool:
+	return pos == 8 and pin_spec.results[PinSpec.PIN_DEPTH_COUNT] == Results.BREAK
+
+const FX_TAP := preload("res://assets/fx/click_weak-001.ogg")
+const FX_PUSH_SAMPLE := preload("res://assets/fx/click_set-001.ogg")
+const FX_REVEAL_SAMPLE := preload("res://assets/fx/click_sharp_001.ogg")
+const FX_JAM := preload("res://assets/fx/jammed_slide.ogg")
+const FX_UNJAM := preload("res://assets/fx/jammed_clear.ogg")
+const FX_JAM_BLOCK := preload("res://assets/fx/jammed_clicks.ogg")
+const FX_RUFFLE := preload("res://assets/fx/metal_ruffle.ogg")
+const FX_BOUNCE_CLACK := preload("res://assets/fx/bounce_clack.ogg" )
+const FX_BOMB_EXTINGUISH := preload("res://assets/fx/bomb_extinguish.ogg")
+#const FX_THUD_TAP := preload("res://assets/fx/metal_thud_tap.ogg")
+const FX_THUD_TAP := preload("res://assets/fx/coin_clack_8.ogg")
+const FX_UNSLIDE := preload("res://assets/fx/unslide.ogg")
+const FX_SLIP_WOOP := preload("res://assets/fx/slip_woop.ogg")
+const FX_KEY_UNLOCK := preload("res://assets/fx/key_unlock.ogg")
+const FX_HINT_REVEAL := preload("res://assets/fx/hint_reveal.ogg")
+const FX_KEYS_FUMBLE := preload("res://assets/fx/keys_fumble.ogg")
+const FX_BREATH := preload("res://assets/fx/breath.ogg")
+const FX_SLIDE_SHING := preload("res://assets/fx/slide_shing.ogg")
+const FX_UNLOCK := preload("res://assets/fx/unlock_chime.ogg")
+const FX_FALL_CLATTER := preload("res://assets/fx/fall_clatter.ogg")
+
+const FX_BREAK_NORMAL := preload("res://assets/fx/break_jangle.ogg")
+const FX_BREAK_LABYRINTH := preload("res://assets/fx/break_labyrinth.ogg")
+const FX_BREAK_SPIKE := preload("res://assets/fx/break_shing.ogg")
+const FX_BREAK_TRAP := preload("res://assets/fx/break_trap.ogg")
+const FX_BREAK_GATE := preload("res://assets/fx/break_gate.ogg")
+const FX_BREAK_EXPLODE := preload("res://assets/fx/break_explode.ogg")
+const FX_BREAK_SURPRISE := preload("res://assets/fx/break_surprise.ogg")
+const FX_BREAK_CATCH := preload("res://assets/fx/break_catch.ogg")
+const FX_BREAK_OOB := preload("res://assets/fx/break_collide.ogg")
+
+## Animate a specific effect/depth combo. at the end of this, the pin's stack should be
+## showing at the specific depth
+func _animate_effect(effect: EffectSpec, pin_spec: PinSpec):
+	match effect.flavor:
+		Effects.SAFE_PUSH, Effects.BOUNCE, Effects.LUCKY:
+			_tween_to(effect.realized_origin)
+			_tween_reveal(effect.realized_origin)
+			_activate_delay()
+			_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			var pos: int
+			var delay: float
+			match effect.flavor:
+				Effects.SAFE_PUSH:
+					# actually "bounce"
+					delay = PER_DEPTH_DELAY * 1.5 * animation_scale
+					pos = effect.last()
+					_tween_fx(FX_BOUNCE_CLACK)
+				Effects.BOUNCE:
+					# actually "slip"
+					delay = PER_DEPTH_DELAY * 2 * animation_scale
+					pos = effect.first()
+					_tween_fx(FX_SLIDE_SHING)
+				Effects.LUCKY:
+					delay = (
+						PER_DEPTH_DELAY
+						* (PinSpec.PIN_DEPTH_COUNT - effect.realized_origin)
+						* animation_scale
+					)
+					pos = PinSpec.PIN_DEPTH_COUNT
+					_tween_fx(FX_UNSLIDE)
+			_tween.tween_property($Stack, "position", _stack_position(pos), delay)
+			_mid_pos = pos
+			_reset_trans()
+		Effects.PUSH, Effects.TEST:
+			for depth in effect.realized_positions.keys():
+				var speed_scale: float
+				var callback: Callable
+				var end := false
+				if _is_triggered_slip(depth, pin_spec):
+					speed_scale = 1.4
+					callback = _playback.play_stream.bind(FX_SLIP_WOOP)
+					_tween_reveal(depth)
+					end = true
+				elif _is_triggered_oob(depth, pin_spec):
+					speed_scale = 0.9
+					callback = _playback.play_stream.bind(_break_fx(FX_BREAK_OOB))
+					end = true
+				elif effect.flavor == Effects.TEST:
+					speed_scale = 1.0
+					callback = $FX/TestPlayer.play
+				else:
+					speed_scale = 1.2
+					callback = $FX/PushPlayer.play
+				_tween_to(depth, speed_scale)
+				_tween.tween_callback(callback)
+				
+				if depth >= len(depth_refs) or depth < 0:
+					continue
+				
+				if end:
+					continue
+				
+				match depth_refs[depth].flavor:
+					Depths.HIDDEN:
+						_tween.tween_property(depth_refs[depth], "flavor", Depths.MARK_PENDING, 0)
+					Depths.TRAP:
+						if effect.flavor == Effects.TEST:
+							_tween_fx(_break_fx(FX_BREAK_TRAP))
+							_tween_trap(depth)
+					Depths.GATE_LOCKED:
+						if effect.flavor == Effects.PUSH:
+							_tween_fx(_break_fx(FX_BREAK_GATE))
+							_tween_trap(depth)
+		
+		Effects.SKIP:
+			_tween_to(effect.last(), 0.5)
+			_tween.tween_callback($FX/SkipPlayer.play)
+		Effects.JAM:
+			_tween_to(effect.last(), abs(_mid_pos - effect.last()))
+			if _is_triggered_catch(pin_spec):
+				_tween_fx(_break_fx(FX_BREAK_CATCH))
+			else:
+				_tween_fx(FX_JAM)
+			for shake in [-3, 3, 0]:
+				_tween.tween_property($Stack, "position:x", shake, 0.05)
+		Effects.UNJAM:
+			var base_pos := _stack_position(_mid_pos)
+			_tween_fx(FX_JAM_BLOCK)
+			for __ in effect.value:
+				for shake in [Vector2(-1, -6), Vector2(1, -10)]:
+					_tween.tween_property($Stack, "position", base_pos + shake, 0.06)
+			_tween.tween_property($Stack, "position", base_pos, 0.08)
+		Effects.REVEAL:
+			for depth in effect.realized_positions.keys():
+				_tween_to(depth)
+				_tween_reveal(depth)
+				if pin_spec.depths[depth] == Depths.LABYRINTH:
+					_tween_fx(_break_fx(FX_BREAK_LABYRINTH))
+					_tween_trap(depth)
+				else:
+					_tween.tween_callback($FX/RevealPlayer.play)
+		Effects.HINT:
+			_tween_home(pin_spec.pin_position)
+			_tween_reveal(_mid_pos)
+			_tween_fx(FX_HINT_REVEAL)
+			_tween.tween_interval((PRE_ACTIVATION_DELAY + 0.1) * animation_scale)
+		Effects.UNLOCK:
+			_tween_fx(FX_UNLOCK)
+		Effects.EMPTY:
+			_tween_home(pin_spec.pin_position)
+			_tween_fx(FX_THUD_TAP)
+		Effects.BOMB_DETONATED:
+			_tween_fx(FX_BREAK_EXPLODE)
+			_tween_trap(effect.realized_origin)
+		_:
+			_tween_home(pin_spec.pin_position)
+			_tween_reveal(_mid_pos)
+			var effect_fx: AudioStream
+			if effect.realized_origin < 0:
+				push_error("Unrealized default effect???")
+			match pin_spec.depths[effect.realized_origin]:
+				Depths.BOMB:
+					effect_fx = FX_BOMB_EXTINGUISH
+				Depths.BREAK:
+					effect_fx = _break_fx(FX_BREAK_NORMAL)
+				Depths.SURPRISE:
+					effect_fx = _break_fx(FX_BREAK_SURPRISE)
+				Depths.SPIKE:
+					effect_fx = _break_fx(FX_BREAK_SPIKE)
+				Depths.GATE_KEY:
+					effect_fx = FX_KEY_UNLOCK
+				Depths.BREATH:
+					effect_fx = FX_BREATH
+				Depths.FUMBLE:
+					effect_fx = FX_KEYS_FUMBLE
+				_:
+					effect_fx = FX_RUFFLE
+			_tween_fx(effect_fx)
+			_activate_delay()
+			if effect.real():
+				_tween_to(effect.last())
+
+func animate_fall(pin_spec: PinSpec) -> void:
+	_clear_old(pin_spec)
+	
+	if jam_count > 0:
+		_tween_fx(FX_JAM_BLOCK)
+		for shake in [-3, 3, -3, 3, 0]:
+			_tween.tween_property($Stack, "position:x", shake, 0.05)
+	elif pin_position <= 0:
+		_tween_fx(FX_TAP)
+	else:
+		_tween_fx(FX_FALL_CLATTER)
+	
+	_tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_tween_home(pin_spec.pin_position)
+	_tween.tween_callback(_finish_animation)
+
+const FX_BOMB_IGNITE := preload("res://assets/fx/bomb_ignite.ogg")
+
+func _finish_animation() -> void:
+	if _pending_spec.bomb_pos >= 0:
+		_playback.play_stream(FX_BOMB_IGNITE)
+	load_spec(_pending_spec)
+	_pending_spec = null
+	animation_complete.emit()
+
+func direct_load(pin_spec: PinSpec) -> void:
+	load_spec(pin_spec)
+	animation_complete.emit()
+
+## Load a PinSpec into this pin, setting all parameters directly without animation.
 func load_spec(pin_spec: PinSpec) -> void:
 	if depth_refs.is_empty():
 		return
-		
+	
 	for i in min(PinSpec.PIN_DEPTH_COUNT, len(depth_refs)):
 		depth_refs[i].flavor = pin_spec.get_visible(i)
-		var reveal_level := pin_spec.reveals[i]
-		if reveal_level in [
-			PinSpec.RevealLevel.DANGEROUS,
-			PinSpec.RevealLevel.INTERESTING,
-			PinSpec.RevealLevel.CLEAR
-		]:
-			depth_refs[i].set_hints(pin_spec.hint_tracks[i], HINT_COLORS[reveal_level])
-		else:
-			depth_refs[i].set_hints("")
+		depth_refs[i].exhausted = pin_spec.activated[i]
 		depth_refs[i].result = Results.EMPTY
 	
 	pin_position = pin_spec.pin_position
 	jam_count = pin_spec.jam_count
+	
+	if pin_spec.bomb_pos >= 0:
+		$Stack/BombIndicator.visible = true
+		$Stack/BombIndicator.position.y = DEPTH_VHEIGHT * pin_spec.bomb_pos
+	else:
+		$Stack/BombIndicator.visible = false
+	_draw_bomb()
+	
 	_key_visible = pin_spec.is_solved()
 	$KeyIndicator.visible = _key_visible
 
@@ -123,71 +434,42 @@ func load_results(results: ResultSpec) -> void:
 		len(depth_refs) in results.results
 		and results.results[len(depth_refs)] == Results.BREAK
 	)
+	_draw_bomb(results.bomb_defused)
 
 func clear_results() -> void:
 	for depth in depth_refs:
 		depth.result = Results.EMPTY
 		depth.show_jam_result = false
 	$Stack/BreakResult.visible = false
-
-func load_previouses(effects: Array[EffectSpec]) -> void:
-	var offset := 0
-	for i in len(effects):
-		var effect := effects[i]
-		if effect.flavor in [Effects.EMPTY, Effects.BLANK]:
-			continue
-		for d in effect.realized_positions.keys():
-			if d < len(depth_refs):
-				depth_refs[d].add_previous_icon(offset, effect.flavor)
-		offset += 1
-
-func load_activations(activations: Array[bool]) -> void:
-	for i in len(activations):
-		depth_refs[i].exhausted = activations[i]
-
-func clear_previouses() -> void:
-	for depth in depth_refs:
-		depth.clear_previous_icons()
-		depth.exhausted = false
-
-## Show all the previously loaded previous icons
-func set_previouses_visibility(show_previous: bool) -> void:
-	for depth in depth_refs:
-		depth.show_previous = show_previous
-		depth.show_exhausted = show_previous
-	if show_previous:
-		$JamIndicator.visible = false
-		$KeyIndicator.visible = false
-	else:
-		$JamIndicator.visible = jam_count > 0
-		$KeyIndicator.visible = _key_visible
-
+	_draw_bomb()
 #endregion
 
-#region input logic
-## Handle mouse clicks
-func _handle_input(event: InputEvent) -> void:
-	if not visible_:
-		return
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			pin_clicked.emit()
+func get_drop_area() -> Area2D:
+	return $DropArea
 
-func _handle_enter_exit(area: Area2D, entered: bool) -> void:
-	if not visible_:
-		return
-	var parent := area.get_parent()
-	if parent is PickCard:
-		if entered:
-			card_entered_pin.emit()
-		else:
-			card_exited_pin.emit()
+func get_mouse_rect() -> Rect2:
+	return get_global_rect()
 
-#endregion
+func core_highlight() -> void:
+	pass
+
+func core_unhighlight() -> void:
+	pass
+
+func core_hover() -> void:
+	pass
+
+func core_unhover() -> void:
+	pass
+
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed
 
 func _ready() -> void:
-	SPRING_POSITION = $Spring.position
-	SPRING_SIZE = $Spring.size
+	SPRING_POSITION = $Stack/Spring.position
+	SPRING_SIZE = $Stack/Spring.size
+
+	_playback = $FX/PolyPlayer.get_stream_playback()
 
 	depth_refs = []
 	for i in PinSpec.PIN_DEPTH_COUNT:
@@ -199,8 +481,9 @@ func _ready() -> void:
 		depth_refs.append(next_depth)
 		$Stack/Depths.add_child(next_depth)
 	
-	gui_input.connect(_handle_input)
-	$DropArea.area_entered.connect(_handle_enter_exit.bind(true))
-	$DropArea.area_exited.connect(_handle_enter_exit.bind(false))
-	
 	load_spec(PinSpec.new())
+	
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)
+	

@@ -1,4 +1,0 @@
-- basic meta (ingots and repairs)
-- basic theme with panels
-- music
-- sound

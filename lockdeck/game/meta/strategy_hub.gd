@@ -1,12 +1,15 @@
 extends Control
 
+signal final_tutorial
 signal continue_to_next
 
 var _game: GameSpec
 
+# These are necessary (vs %static names) as it is leaving the current scene
 @onready var deck_widget: DeckWidget = $DeckPopover.get_inside_node()
 @onready var repair_widget: RepairWidget = $RepairPopover.get_inside_node()
 @onready var shop_widget: ShopWidget = $ShopPopover.get_inside_node()
+@onready var preview_widget: Control = $PreviewPopover.get_inside_node()
 
 const Y_OFFSET := 64 - 16
 @onready var HIDDEN_Y: int = get_viewport().size.y + Y_OFFSET
@@ -18,6 +21,12 @@ func set_game(game: GameSpec) -> void:
 	update_info()
 
 # This could be consolidated... but we're on the perimiter of this game, so nah
+
+const FX_COIN_SPEND := preload("res://assets/fx/coins_many.ogg")
+const FX_REPAIR := preload("res://assets/fx/repair_hits.ogg")
+const FX_REPAIR_ALL := preload("res://assets/fx/repair_hits_many.ogg")
+const FX_COIN_GET := preload("res://assets/fx/coin_claim.ogg")
+const FX_TRASH := preload("res://assets/fx/hand_discard.ogg")
 
 func do_buy(card: CardSpec) -> void:
 	var buy_cost := card.get_buy_cost()
@@ -31,6 +40,7 @@ func do_buy(card: CardSpec) -> void:
 		_game.spend_coins(buy_cost)
 	_game.add_pick(card)
 	shop_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_COIN_SPEND)
 	update_info()
 
 func do_repair(card: CardSpec) -> void:
@@ -46,13 +56,14 @@ func do_repair(card: CardSpec) -> void:
 	_game.repair_pick(card)
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_REPAIR, -15)
 	update_info()
 
 func do_repair_all() -> void:
 	var repair_cost := 0
 	for card in _game.broken_picks:
 		repair_cost += card.get_repair_cost()
-	if repair_cost >= _game.coins:
+	if repair_cost > _game.coins:
 		push_error(
 			"Tried to repair all with total cost %s and coins %s! Setting coins to 0."
 			% [repair_cost, _game.coins]
@@ -68,21 +79,30 @@ func do_repair_all() -> void:
 	
 	repair_widget.load_cards(_game.broken_picks)
 	repair_widget.set_coins(_game.coins)
+	GlobalEffects.request(FX_REPAIR_ALL, -15)
 	update_info()
 
 func do_remove_forever(card: CardSpec) -> void:
 	_game.remove_broken_pick_forever(card)
 	repair_widget.load_cards(_game.broken_picks)
+	repair_widget.load_trash(_game.removed_forever_picks)
+	GlobalEffects.request(FX_TRASH)
 	update_info()
 
 func do_sell(card: CardSpec) -> void:
 	_game.remove_real_pick_forever(card)
-	_game.add_coins(5)
+	_game.add_coins(10)
 	deck_widget.load_cards(_game.current_deck)
+	GlobalEffects.request(FX_COIN_GET)
 	update_info()
+
+const FX_ROLL_IN := preload("res://assets/fx/slide_in.ogg")
+const FX_ROLL_OUT := preload("res://assets/fx/slide_out.ogg")
+const FX_COMPLETE_CHIME := preload("res://assets/fx/single_chime.ogg")
 
 func show_panel(new_panel: StrategyPopover) -> void:
 	if current_panel != null:
+		GlobalEffects.request(FX_ROLL_OUT)
 		var exit_tween := create_tween()
 		exit_tween.set_trans(Tween.TRANS_CUBIC)
 		exit_tween.tween_property(current_panel, "position:y", HIDDEN_Y, 0.4)
@@ -96,32 +116,57 @@ func show_panel(new_panel: StrategyPopover) -> void:
 		var enter_tween := create_tween()
 		if current_panel != null:
 			enter_tween.tween_interval(0.2)
+		enter_tween.tween_callback(GlobalEffects.request.bind(FX_ROLL_IN))
 		enter_tween.set_trans(Tween.TRANS_CUBIC)
-		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.4)
+		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.5)
 		current_panel = new_panel
 
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
-	$NextDepths.update(_game)
+	preview_widget.update(_game)
 	$EffectCount.update_counts(_game.current_deck)
 	var hand_full := len(_game.current_deck) > 20
 	$ContinueButton.disabled = hand_full
 	$ContinueButton/FullTexture.visible = hand_full
 
+func break_temporary_picks() -> void:
+	var to_break: Array[CardSpec] = []
+	for pick in _game.current_deck:
+		if pick.ability == Abilities.TEMPORARY:
+			to_break.append(pick)
+	_game.break_picks(to_break)
+	for pick in _game.broken_picks.duplicate():
+		if pick.ability == Abilities.TEMPORARY:
+			_game.remove_broken_pick_forever(pick)
+
 func reset() -> void:
 	update_info()
 	
-	for popover in [$DeckPopover, $RepairPopover, $ShopPopover]:
+	for popover in [$DeckPopover, $RepairPopover, $ShopPopover, $PreviewPopover]:
 		popover.position.y = HIDDEN_Y
 	current_panel = null
 	
-	shop_widget.load_inventory(PickGenerator.get_many_base_cards(4))
+	shop_widget.load_inventory(PickGenerator.get_shop_spread())
+	break_temporary_picks()
+
+var tutorial_lock := false
+
+func exit_hub() -> void:
+	if tutorial_lock:
+		final_tutorial.emit()
+	else:
+		continue_to_next.emit()
+		GlobalEffects.request(FX_COMPLETE_CHIME)
+
+const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func _ready() -> void:
-	$ContinueButton.pressed_confirmed.connect(continue_to_next.emit)
+	$ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
+	$ContinueButton.pressed_confirmed.connect(exit_hub)
 	$TabButtonBox/DeckButton.pressed.connect(show_panel.bind($DeckPopover))
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))
+	$TabButtonBox/PreviewButton.pressed.connect(show_panel.bind($PreviewPopover))
 	
 	deck_widget.card_sold.connect(do_sell)
 	repair_widget.repair_pick.connect(do_repair)

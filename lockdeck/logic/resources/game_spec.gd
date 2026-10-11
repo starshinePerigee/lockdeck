@@ -2,17 +2,42 @@
 ## GameSpec tracks the status of the current game - decks, coins, etc.
 class_name GameSpec
 
+const SAVE_PATH := "user://game_save.tres"
+
+## Used to "clear" a current save
+@export var invalid_save := false
+@export var last_card_spec_id := 100
+
 ## Current coin count
 @export var coins: int = 0
 
-## Current lock. ONE INDEXED
-@export var lock_number: int = 1
+## The current stage.
+## Each time you clear a stage, game manager indexes this by one, and then pulls the next one 
+@export var stage: int = 0
+
+## True to progress through tutorial stages. Once tutorial completes, this sets false
+## and stage sets to the pick-up point
+@export var tutorial_mode := false
 
 ## Holds the full set of live cards
 @export var current_deck: Array[CardSpec]
 
 ## Holds every broken card
 @export var broken_picks: Array[CardSpec]
+
+## Holds picks removed forever
+@export var removed_forever_picks: Array[CardSpec]
+
+@export var current_arc: LockDeck.GameArcs 
+
+## Holds the current lockset deck
+@export var lockset_deck: LockDeck
+
+## Holds the deck for the next lock
+@export var next_lock_deck: LockDeck
+
+## Saves the current in-progess game
+@export var in_progress: StateSpec
 
 func add_coins(count: int) -> void:
 	coins += count
@@ -23,47 +48,131 @@ func spend_coins(count: int) -> void:
 func add_pick(pick: CardSpec) -> void:
 	current_deck.append(pick)
 
-## Marks a lock as complete, updating the difficulty
-func complete_lock() -> void:
-	lock_number += 1
+const LOCK := LevelSpec.Stages.LOCK
+const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
+const VICTORY := LevelSpec.Stages.VICTORY
 
-static var LOCK_SEQUENCE := [
-	1, 1, 2,
-	2, 2, 3,
-	3, 3, 4,
-	4, 4, 5,
-	5, 6, 7,
-	8, 9, 10
+static var LOOT_SEQUENCE: Array[int] = [50, 75, 100, 125, 150, 160, 170, 180]
+
+static var GAME_SEQUENCE: Array[LevelSpec] = [
+	LevelSpec.new(LOCK, 1, 1),
+	LevelSpec.new(LOCK, 1, 2),
+	LevelSpec.new(LOCK, 2, 1),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[0], LockDeck.GameArcs.MID),
+	
+	LevelSpec.new(LOCK, 2, 2),
+	LevelSpec.new(LOCK, 2, 3),
+	LevelSpec.new(LOCK, 3, 2),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1], LockDeck.GameArcs.MID),
+	
+	LevelSpec.new(LOCK, 3, 3),
+	LevelSpec.new(LOCK, 3, 4),
+	LevelSpec.new(LOCK, 4, 3),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2], LockDeck.GameArcs.LATE),
+	
+	LevelSpec.new(LOCK, 3, 4),
+	LevelSpec.new(LOCK, 4, 4),
+	LevelSpec.new(LOCK, 5, 3),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3], LockDeck.GameArcs.LATE),
+	
+	LevelSpec.new(LOCK, 4, 5),
+	LevelSpec.new(LOCK, 4, 6),
+	LevelSpec.new(LOCK, 5, 4),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4], LockDeck.GameArcs.LATE),
+	
+	LevelSpec.new(LOCK, 5, 5),
+	LevelSpec.new(LOCK, 5, 6),
+	LevelSpec.new(LOCK, 5, 7),
+	LevelSpec.new(VICTORY),
 ]
 
-#static var LOOT_AMOUNTS := [50, 75, 100, 125, 150, 160, 170, 180]
-static var LOOT_AMOUNTS := [20, 30, 40, 50, 60, 65, 70, 75, 80]
+func get_next_level() -> LevelSpec:
+	if tutorial_mode:
+		if stage >= len(Tutorializer.TUTORIAL_SEQUENCE):
+			# we've solved the tutorial
+			tutorial_mode = false
+			stage = 4
+		else:
+			var level := Tutorializer.TUTORIAL_SEQUENCE[stage]
+			if level.state:
+				for pin in level.state.lock.pins:
+					pin.reset_pin()
+			return level
+	
+	elif in_progress:
+		return LevelSpec.new(
+			LevelSpec.Stages.SPECIFIC,
+			0,
+			0,
+			in_progress
+		)
+	
+	return GAME_SEQUENCE[stage]
 
+func build_new_lockset_deck(arc: LockDeck.GameArcs) -> void:
+	lockset_deck = LockGenerator.get_lockset_deck(arc)
 
-## Gets the current difficulty
-func get_difficulty() -> int:
-	return LOCK_SEQUENCE[lock_number - 1]
-
-## Gets the current heist - 1 indexed
-func get_heist() -> int:
-	@warning_ignore("integer_division")
-	return int((lock_number - 1) / 3) + 1
-
-func get_loot_value() -> int:
-	var base_value: int = LOOT_AMOUNTS[get_heist() - 1]
-	return int(randf_range(base_value * 0.8, base_value * 1.2))
-
-var _current_strat_floor := 4
-
-func heist_complete() -> bool:
-	if lock_number != _current_strat_floor:
-		return false
-	_current_strat_floor += 3
-	return true
+func build_new_lock_deck(difficulty: int) -> void:
+	var difficulty_params := LockGenerator.get_difficulty_parameters(difficulty, lockset_deck)
+	print(difficulty_params.as_str())
+	next_lock_deck = LockGenerator.get_lock_deck(lockset_deck, difficulty_params)
 
 func game_complete() -> bool:
-	# > not >= becuase lock number is 1-indexed
-	return lock_number > len(LOCK_SEQUENCE)
+	if tutorial_mode:
+		return false
+	return stage + 1 >= len(GAME_SEQUENCE)
+
+func current_lock() -> int:
+	if tutorial_mode:
+		return stage 
+	
+	var lock_count := 0
+	
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if level.stage == LOCK:
+			lock_count += 1
+	
+	return lock_count 
+
+func heist_number() -> int:
+	if tutorial_mode:
+		return 0
+	
+	var heist_count := 1
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if level.stage == LOOT_STRAT:
+			heist_count += 1
+	
+	return heist_count
+
+func lock_in_heist() -> int:
+	if tutorial_mode:
+		return stage
+	
+	var lock_count := 0
+	var clear_next := false
+	for level in GAME_SEQUENCE.slice(0, stage + 1):
+		if clear_next:
+			lock_count = 0
+		if level.stage == LOCK:
+			lock_count += 1
+		elif level.stage == LOOT_STRAT:
+			clear_next = true
+	
+	return lock_count
+
+func max_pin_count() -> int:
+	if tutorial_mode:
+		return 2
+	
+	var pin_count := 0
+	
+	for level in GAME_SEQUENCE.slice(stage + 1, -1):
+		if level.stage != LOCK:
+			break
+		pin_count = max(pin_count, level.pin_count)
+	return pin_count
+
 
 ## Updates the broken_picks deck, removing the picks from the deck.
 func break_picks(picks: Array[CardSpec]) -> void:
@@ -89,7 +198,7 @@ func repair_pick(pick: CardSpec) -> void:
 	broken_picks.erase(pick)
 	pick.repair_count += 1
 
-## Removes a pick from the broken picks collection
+## Removes a pick from the broken picks collection, but keeps it
 func remove_broken_pick_forever(pick: CardSpec) -> void:
 	if pick not in broken_picks:
 		push_error(
@@ -97,6 +206,7 @@ func remove_broken_pick_forever(pick: CardSpec) -> void:
 			% [pick.pick_name, pick.unique_id]
 		)
 		return
+	removed_forever_picks.append(pick)
 	broken_picks.erase(pick)
 
 func remove_real_pick_forever(pick: CardSpec) -> void:
@@ -110,16 +220,61 @@ func remove_real_pick_forever(pick: CardSpec) -> void:
 
 static func get_in_progress_game() -> GameSpec:
 	var game := GameSpec.new()
+	game.stage = 5
 	game.coins = 28
 	game.current_deck = DeckTemplates.STANDARD.deck_gen.call()
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
 	game.broken_picks = PickGenerator.get_many_base_cards(7)
+	game.removed_forever_picks = PickGenerator.get_many_base_cards(2)
+	game.build_new_lockset_deck(LockDeck.GameArcs.MID)
+	game.build_new_lock_deck(4)
 	for i in len(game.broken_picks):
 		game.broken_picks[i].repair_count = i
-	game.lock_number = 4
 	return game
+
+func save() -> void:
+	last_card_spec_id = CardSpec.last_id
+	var ret := ResourceSaver.save(self, SAVE_PATH)
+	if ret != OK:
+		push_error("Failed to save! path: %s, error: %d" % [SAVE_PATH, ret])
+
+static func clear_save() -> void:
+	var bad_spec := GameSpec.new()
+	bad_spec.invalid_save = true
+	bad_spec.save()
+
+## Loads a save game, or returns null if one does not exist.
+static func load_save() -> GameSpec:
+	if not ResourceLoader.exists(SAVE_PATH):
+		return null
+	
+	var load_res: Resource = ResourceLoader.load(
+		SAVE_PATH, "GameSpec", ResourceLoader.CACHE_MODE_IGNORE
+	)
+
+	if load_res is GameSpec:
+		if load_res.invalid_save:
+			return null
+		else:
+			CardSpec.last_id = load_res.last_card_spec_id
+			return load_res
+	else:
+		clear_save()
+		return null
+
+func reify() -> void:
+	for deck in [current_deck, broken_picks, removed_forever_picks]:
+		if deck:
+			for card in deck:
+				card.reify()
+	for deck in [lockset_deck, next_lock_deck]:
+		if deck:
+			deck.reify()
+	if in_progress:
+		in_progress.reify()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_deck = []
 	broken_picks = []
+	removed_forever_picks = []

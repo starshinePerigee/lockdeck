@@ -9,37 +9,6 @@ extends Control
 ## Used for simulation purposes
 var _shadow_pins: Array[PinSpec]
 
-## Holds the current turn number
-static var turn_number := -1
-
-## Holds the current hint id (integer corresponding to ascii)
-var _hint_id := -1
-
-## Bump hint_id to the next letter
-func increment_hint() -> int:
-	# pre-A (65)
-	if _hint_id < 0:
-		_hint_id = 65
-	# A-Z (65-89)
-	elif _hint_id >= 65 and _hint_id < 90:
-		_hint_id += 1
-	# Z (90) to 1 (97)
-	elif _hint_id == 90:
-		_hint_id = 49
-	# 1-9 (49-57)
-	elif _hint_id >= 49 and _hint_id < 57:
-		_hint_id += 1
-	# 9 (57) to a (97)
-	elif _hint_id == 57:
-		_hint_id = 97
-	# a-z (97-121)
-	elif _hint_id >= 97 and _hint_id < 122:
-		_hint_id += 1
-	# # (35)
-	else:
-		_hint_id = 35
-	return _hint_id
-
 ## Resets all pins to their initial position
 func reset_all_pins() -> void:
 	for pin in pins:
@@ -54,20 +23,20 @@ func load_new_lock(new_lock: LockSpec) -> void:
 		_shadow_pins.append(PinSpec.new())
 		pins[i].shadow_clone(_shadow_pins[i])
 	$Cylinders.set_pin_specs(new_lock.pins)
-	turn_number = 0
-	_hint_id = -1
 
 ## Tells cylinder_main to draw a preview. Should not have game effects.
-func preview(card: CardSpec, index: int) -> void:
+func preview(card: CardSpec, index: int) -> EndStepSpec:
 	for i in len(pins):
 		pins[i].reset_shadow(_shadow_pins[i])
 	
-	execute(card, index, true)
+	var end_step := execute(card, index, true)
 	
-	var results: Array[ResultSpec] = []
-	for pin in _shadow_pins:
-		results.append(pin.get_result_spec())
-	$Cylinders.set_results(results)
+	show_preview(end_step)
+	return end_step
+
+## Loads a preview
+func show_preview(end_step: EndStepSpec) -> void:
+	$Cylinders.set_results(end_step.results)
 
 ## Removes the current preview.
 func cancel_preview() -> void:
@@ -78,22 +47,9 @@ func get_current_drag_target() -> int:
 	return $Cylinders.current_active_pin()
 
 #region pick execution logic
-## Loads a CardSpec, turning it into a dictionary of live duplicated effects
-## and loading them into the relevant pins
-func load_card(
-	card: CardSpec,
-	card_index: int,
-	target_pins: Array[PinSpec]
-) -> void:
-	for k in card.effects.keys():
-		var pin_index: int = card_index - k
-		if pin_index >= 0 and pin_index < len(pins):
-			for e in card.effects[k]:
-				var new_e := EffectSpec.new(e.flavor, e.value)
-				target_pins[pin_index].pending_effects.append(new_e)
-
 ## Applies the cardspec at the specified index.
-func execute(card: CardSpec, card_index: int, shadow := false) -> EndStepSpec:
+func execute(card: CardSpec, card_position: int, shadow := false) -> EndStepSpec:
+	# setup
 	var target_pins := _shadow_pins
 	if not shadow:
 		target_pins = pins
@@ -101,28 +57,42 @@ func execute(card: CardSpec, card_index: int, shadow := false) -> EndStepSpec:
 	for pin in target_pins:
 		pin.end_step()
 	
-	load_card(card, card_index, target_pins)
-	
 	var result := EndStepSpec.new()
 	
+	# execute the card's effects
 	for pin_index in range(len(target_pins) - 1, -1, -1):
-		if len(target_pins[pin_index].pending_effects) > 0:
-			# print(
-			# 	"Executing pin %s with %s effects" 
-			# 	% [pin_index, len(pins[pin_index].pending_effects)]
-			# )
-			var executed_effects := target_pins[pin_index].execute()
-			for effect in executed_effects:
-				effect.realized_pin = pin_index
-				if effect.broke_pick:
-					result.pick_broke = true
-			result.effects[pin_index] = executed_effects
-			result.activations[pin_index] = pins[pin_index].activated
+		var pin := target_pins[pin_index]
+		var card_index = card_position - pin_index
+		var effects: Array[EffectSpec] = []
+		
+		if card_index in card.effects.keys():
+			for e in card.effects[card_index]:
+				var new_e := EffectSpec.new(e.flavor, e.value)
+				effects.append(new_e)
+		
+#		print(
+#			"Executing pin %s with %s effects (shadow: %s)" 
+#			% [pin_index, len(effects), shadow]
+#		)
+		effects.append_array(pin.execute(effects))
+
+		for effect in effects:
+			result.record_effect(effect, pin_index)
+	
+	# activate every pin
+	for pin_index in len(target_pins):
+		var effect := target_pins[pin_index].activate()
+		if effect.flavor != Effects.EMPTY or pin_index in result.effects.keys():
+			result.record_effect(effect, pin_index)
+	
+	# clean up and record
+	for pin in target_pins:
+		result.results.append(pin.get_result_spec())
+		result.picks_twisted += pin.twist_count
 	
 	result.lock_solved = lock_solved()
 	if not shadow:
-		result.last_hint = update_visibility()
-		$Cylinders.set_pin_specs(pins)
+		update_visibility(result)
 		for i in len(pins):
 			pins[i].shadow_clone(_shadow_pins[i])
 	return result
@@ -133,24 +103,17 @@ func lock_solved() -> bool:
 			return false
 	return true
 
-func update_visibility() -> String:
+func update_visibility(result: EndStepSpec):
 	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		new_level = max(new_level, pin.get_reveal_level())
 	if new_level == PinSpec.RevealLevel.REVEALED:
-		# we didn't hint anything
-		return ""
-	increment_hint()
+		# we didn't hint anything, leave endstepspec as the defaults
+		return
 	for pin in pins:
-		pin.update_pin_visible(new_level, String.chr(_hint_id))
-	return String.chr(_hint_id)
-
-func update_turn_number() -> int:
-	if turn_number < 0:
-		push_error("Failed to init turn number!")
-		turn_number = 0
-	turn_number += 1
-	return turn_number
+		pin.update_pin_visible(new_level)
+	
+	result.last_reveal = new_level
 
 #endregion
 
@@ -163,9 +126,5 @@ func redraw_pins() -> void:
 ## to their default state or whatever mechanic I wind up deciding.
 func handle_fall() -> void:
 	for pin in pins:
-		if pin.is_jammed():
-			pin.clear_jam() 
-		else:
-			pin.advance_pin(0, 0)
-		pin.end_step()
-	$Cylinders.set_pin_specs(pins)
+		pin.end_turn_and_fall()
+	$Cylinders.animate_fall(pins)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c33xyxumep28r"]
+[gd_scene load_steps=2 format=3 uid="uid://c33xyxumep28r"]
 
 [ext_resource type="Script" uid="uid://gbt5cfkb6n6d" path="res://game/strategy/deck_widget.gd" id="1_5qisc"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="2_dph8c"]
 
 [node name="DeckWidget" type="VBoxContainer"]
 anchors_preset = 15
@@ -14,10 +13,11 @@ size_flags_vertical = 3
 script = ExtResource("1_5qisc")
 
 [node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-theme = ExtResource("2_dph8c")
-text = "Click to sell"
-horizontal_alignment = 1
+theme_type_variation = &"SmallText"
+text = "Click to sell        "
+horizontal_alignment = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

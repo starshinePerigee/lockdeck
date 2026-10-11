@@ -15,11 +15,19 @@ func set_highlight(highlighted: bool) -> void:
 	if highlighted:
 		var s: int = get_theme_constant("outline_size")
 		add_theme_constant_override("outline_size", s * 2)
-		add_theme_color_override("font_outline_color", Color("e3773d"))
+		add_theme_color_override("font_outline_color", Color("ffbc57"))
+		add_theme_color_override("font_color", Color("09090f"))
+		add_theme_color_override("font_focus_color", Color("09090f"))
+		add_theme_color_override("font_hover_color", Color("09090f"))
+		add_theme_color_override("font_hover_pressed_color", Color("09090f"))
 		text = confirm_text
 	else:
 		remove_theme_constant_override("outline_size")
 		remove_theme_color_override("font_outline_color")
+		remove_theme_color_override("font_color")
+		remove_theme_color_override("font_focus_color")
+		remove_theme_color_override("font_hover_color")
+		remove_theme_color_override("font_hover_pressed_color")
 		text = base_text
 
 var highlight := false:

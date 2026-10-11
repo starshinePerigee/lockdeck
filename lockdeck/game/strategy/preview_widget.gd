@@ -1,0 +1,64 @@
+extends VBoxContainer
+
+const DEPTH_INFO := preload("res://game/strategy/depth_info.tscn")
+
+func _update_depth_preview(game: GameSpec) -> void:
+	for child in %DepthsVBox.get_children():
+		%DepthsVBox.remove_child(child)
+		child.queue_free()
+	
+	var lockset_deck: LockDeck
+	if game.lockset_deck:
+		lockset_deck = game.lockset_deck
+	else:
+		lockset_deck = LockDeck.new()
+	
+	var next_depths := lockset_deck.get_unique_depths()
+	
+	var difficulties = DepthTemplates.Difficulty.values()
+	difficulties.erase(DepthTemplates.Difficulty.ESSENTIAL)
+	difficulties.append(DepthTemplates.Difficulty.ESSENTIAL)
+	
+	var add_separator := false
+	for difficulty in difficulties:
+		if (
+			difficulty not in next_depths
+			or len(next_depths[difficulty]) == 0
+		):
+			continue
+		
+		var label := Label.new()
+		label.theme_type_variation = "SmallText"
+		
+		match difficulty:
+			DepthTemplates.Difficulty.ESSENTIAL:
+				label.text = "Always:"
+			DepthTemplates.Difficulty.CRITICAL:
+				label.text = "Hazards:"
+			DepthTemplates.Difficulty.ANNOYING:
+				label.text = "Complications:"
+			DepthTemplates.Difficulty.HELPFUL:
+				label.text = "Weaknesses:"
+		
+		if add_separator:
+			%DepthsVBox.add_child(HSeparator.new())
+		add_separator = true
+		%DepthsVBox.add_child(label)
+		
+		for depth in next_depths[difficulty]:
+			var next_line := DEPTH_INFO.instantiate()
+			next_line.depth = depth
+			%DepthsVBox.add_child(next_line)
+
+func update(game: GameSpec) -> void:
+	%HeistLabel.text = "Heist %s" % game.heist_number()
+	%PinsLabel.text = "%s pins maximum" % game.max_pin_count()
+	_update_depth_preview(game)
+
+func reset(_game: GameSpec) -> void:
+	$ScrollContainer.scroll_vertical = 0
+
+func _ready() -> void:
+	if get_tree().current_scene == self:
+		var game := GameSpec.get_in_progress_game()
+		update(game)

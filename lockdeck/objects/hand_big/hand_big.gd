@@ -1,123 +1,200 @@
 extends Control
 # The view for the hand and all the cards in it
 
-signal card_selected(card_index: int)
-signal card_deselected(card_index: int)
-signal card_untapped()
-signal card_dragged(card_area: Area2D, card_index: int)
-signal card_definitive_dragged()
-signal card_dropped(card_area: Area2D, card_index: int)
+## Raised when a card is clicked or a drag starts
+signal card_selected(card: CardSpec)
+
+signal card_tapped(space: CardSpace)
+signal card_dragged(space: CardSpace)
+signal card_dropped(space: CardSpace)
+
+signal animation_complete()
 
 const CARD_SPACE := preload("res://objects/card/card_space.tscn")
 # starts at "1 card"
-const SIZE_SCALE := [0, 25, 20, 15, 10, 0, -5, -10, -15, -20, -25, -30]
+const CARD_WIDTH := 128
+const SIZE_SCALE := [0, 25, 15, 0, -10, -25, -40, -52, -60, -66, -70, -73, -75]
 const HIDE_OFFSET := 102
+const HIDE_DURATION := 0.23
+const CARD_SPEED_PX_PER_SEC := 1200
+static var animation_scale := 1.0
 
-var current_card: int = -1
+# set these from main
+var deck_pos := Vector2(0, 500)
+var discard_pos := Vector2(1000, 500)
 
-## gets the current space based on current card
-func get_space() -> CardSpace:
-	return $Hand.get_children()[current_card]
+## Disables meaningful card interactions
+var disabled := false:
+	set(v):
+		disabled = v
+		for child in $Hand.get_children():
+			child.disabled = disabled
 
-func _dis_en_able_card(card_index: int, enable: bool) -> void:
-	var space := $Hand.get_child(card_index)
-	
-	var filter := Control.MOUSE_FILTER_IGNORE
-	if enable:
-		filter = Control.MOUSE_FILTER_STOP
-	
-	space.mouse_filter = filter
-	space.get_node("PickCard").mouse_filter = filter
+var _tween: Tween = null
 
-## Disable all card activations
-func disable_all() -> void:
-	for i in len($Hand.get_children()):
-		_dis_en_able_card(i, false)
-
-## Lock out all other card spaces while dragging
-func _disable_others(card_index: int) -> void:
-	for i in len($Hand.get_children()):
-		if i != card_index:
-			_dis_en_able_card(i, false)
-
-## Re-enable all other cards
-func enable_all() -> void:
-	for i in len($Hand.get_children()):
-		_dis_en_able_card(i, true)
-
-## Set the current card to card_index
-func card_select(card_index: int) -> void:
-	if current_card != card_index:
-		card_deselect()
-		current_card = card_index
-		card_selected.emit(card_index)
-
-## Clear the current card
-func card_deselect() -> void:
-	if current_card >= 0:
-		get_space().clear_selected()
-		card_deselected.emit(current_card)
-		current_card = -1
-
-## Handle a card being clicked
-func card_tap(card_index: int) -> void:
-	if card_index == current_card:
-		get_space().clear_selected()
-		card_deselect()
-		card_untapped.emit()
-	else:
-		card_select(card_index)
-		get_space().set_selected()
-
-## Handle a card being dragged
-func card_pick_up(card_area: Area2D, card_index: int) -> void:
-	card_dragged.emit(card_area, card_index)
-	card_select(card_index)
-	get_space().clear_selected()
-	get_space().z_boost = true
-	_disable_others(card_index)
-
-## Handle a dragged card being dropped
-func card_drop(card_area: Area2D, card_index: int) -> void:
-	card_dropped.emit(card_area, card_index)
-	card_deselect()
-	enable_all()
+func _tween_to(new_pos: int) -> void:
+	if _tween:
+		_tween.kill()
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_tween.tween_property($Hand, "position:y", new_pos, HIDE_DURATION * animation_scale)
 
 ## Hides (moves out of the way) the hand
 func hide_hand() -> void:
-	$Hand.position = Vector2(0, HIDE_OFFSET)
+	_tween_to(HIDE_OFFSET)
 
 func unhide_hand() -> void:
-	$Hand.position = Vector2(0, 0)
+	_tween_to(0)
+
+## holds the card space ref in order
+var spaces: Array[CardSpace] = []
+
+func live_specs() -> Array[CardSpec]:
+	var specs: Array[CardSpec] = []
+	specs.assign(spaces.map(func(x): return x.card_spec))
+	return specs
+
+## Moves the card to a central neutral space after being played
+## The intent is that this tween will be interrupted naturally once execution finishes 
+func activate_space(space: CardSpace, x_pos_global: float) -> void:
+	var target_vector := Vector2(x_pos_global - 40, 340)
+	space.tween_to_vector(target_vector, 0.5)
+
+var _open_awaits: int
+
+func _pseudo_await() -> void:
+	_open_awaits -= 1
+	if _open_awaits == 0:
+		if _timeout_tween:
+			_timeout_tween.kill()
+		animation_complete.emit()
+
+func _animation_timeout() -> void:
+	push_error("Animation timed out!")
+	animation_complete.emit()
+
+const FX_HAND_DISCARD_COMPLETE := preload("res://assets/fx/hand_discard_complete.ogg")
+const FX_HAND_DRAW_START := preload("res://assets/fx/hand_draw_start.ogg")
+const FX_HAND_DRAW_END := preload("res://assets/fx/hand_draw_end.ogg")
+
+func _remove_space(space: CardSpace, sub_scale: float, instant := false) -> void:
+	if space in spaces:
+		spaces.erase(space)
+	else:
+		push_error("Hand space refs lost track of child!")
+	
+	if instant:
+		$Hand.remove_child(space)
+		space.queue_free()
+		return
+	
+	var card_pos: Vector2 = space.find_child("PickCard").global_position
+	var duration: float = (
+		card_pos.distance_to(discard_pos)
+		/ (CARD_SPEED_PX_PER_SEC * 2)
+		+ 0.14
+	)
+	var tween := space.tween_to(discard_pos.x, duration * sub_scale)
+	if space in $Hand.get_children():
+		_open_awaits += 1
+		tween.tween_callback(_pseudo_await)
+		tween.tween_callback($Hand.remove_child.bind(space))
+	else:
+		push_error("Hand parent lost track of ref!")
+	
+	tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DISCARD_COMPLETE))
+	tween.tween_callback(space.queue_free)
+	space.arc_to(discard_pos.y, 150, duration * sub_scale)
+
+func _add_space(spec: CardSpec) -> CardSpace:
+	var space := CARD_SPACE.instantiate()
+	space.card_spec = spec
+	space.has_card = true
+	$Hand.add_child(space)
+	space.disabled = disabled
+	
+	space.card_tapped.connect(card_selected.emit.bind(spec))
+	space.card_picked_up.connect(card_selected.emit.bind(spec))
+	space.card_tapped.connect(card_tapped.emit.bind(space))
+	space.card_picked_up.connect(card_dragged.emit.bind(space))
+	space.card_dropped.connect(card_dropped.emit.bind(space))
+	
+	space.position = Vector2()
+	spaces.append(space)
+	return space
+
+var _timeout_tween: Tween
 
 ## Forces full redraw
-func redraw(cards: Array[CardSpec]) -> void:
-	for child in $Hand.get_children():
-		$Hand.remove_child(child)
-		child.queue_free()
+func redraw(cards: Array[CardSpec], instant := false) -> void:
+	var sub_scale: float
+	if instant:
+		sub_scale = 0.0
+	else:
+		sub_scale = animation_scale
 	
-	for i in len(cards):
-		var spec := cards[i]
-		if spec == null:
-			continue
-		
-		# TODO: probably need a factory method to prevent the double-init
-		var space := CARD_SPACE.instantiate()
-		space.card_spec = spec
-		space.has_card = true
-		$Hand.add_child(space)
-		space.card_tapped.connect(card_tap.bind(i))
-		space.card_picked_up.connect(card_pick_up.bind(i))
-		space.drag_definitive.connect(card_definitive_dragged.emit)
-		space.card_dropped.connect(card_drop.bind(i))
-
-	var sep_index := clampi(
-		$Hand.get_child_count() - 1,
-		0,
-		len(SIZE_SCALE) - 1
-	)
+	_open_awaits = 1
+	if _timeout_tween:
+		_timeout_tween.kill()
+	_timeout_tween = create_tween()
+	_timeout_tween.tween_callback(_pseudo_await)
+	_timeout_tween.tween_interval(2.0 * sub_scale + 1.0)
+	_timeout_tween.tween_callback(_animation_timeout)
+	
+	for card in cards.duplicate():
+		if not(card):
+			push_error("Null card spec passed to hand?")
+			cards.erase(card)
+	
+	for space in spaces.duplicate():
+		if space.card_spec not in cards:
+			_remove_space(space, sub_scale, instant)
+	
+	var specs := live_specs()
+	for card in cards:
+		if card not in specs:
+			_add_space(card)
+	
+	# we gotta do this shit manually for dumb godot reasons
+	var sep_index := clampi(len(cards) - 1, 0,len(SIZE_SCALE) - 1)
 	var separation: int = SIZE_SCALE[sep_index]
-	$Hand.add_theme_constant_override("separation", separation)
+	var space_delta := CARD_WIDTH + separation
+	var total_size := len(cards) * space_delta
+	var start_pos := ((size.x - total_size) - 64) / 2
+	
+	var tween: Tween
+	var cards_drawn := 0
+	for i in len(spaces):
+		spaces[i].z_index = 100 * i + 10
+		var end_pos := start_pos + ((CARD_WIDTH + separation) * i)
+		var duration := end_pos / CARD_SPEED_PX_PER_SEC * sub_scale
+		tween = spaces[i].tween_to(end_pos, duration)
+		_open_awaits += 1
+		
+		if spaces[i].position == Vector2.ZERO:
+			var sound_duration := 0.04 * cards_drawn
+			if sound_duration < duration and not instant:
+				var sound_tween := create_tween()
+				sound_tween.tween_interval(sound_duration)
+				sound_tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DRAW_START))
+			spaces[i].arc_to(0, 10, duration)
+			if not instant:
+				tween.tween_callback(GlobalEffects.request.bind(FX_HAND_DRAW_END))
+			cards_drawn += 1
+		
+		tween.tween_callback(_pseudo_await)
 
-func ready() -> void:
+func get_spaces() -> Array[CardSpace]:
+	return spaces
+
+func animation_speed_changed(speed: float) -> void:
+	animation_scale = speed / 2 + 0.5
+
+func _ready() -> void:
+	var settings := GameSettings.instance()
+	animation_speed_changed(settings.animation_speed)
+	settings.animation_speed_changed.connect(animation_speed_changed)
+	
 	redraw([])
+	if get_tree().current_scene == self:
+		redraw(PickGenerator.get_many_base_cards(7))

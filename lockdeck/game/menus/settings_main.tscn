@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0shtp3l3acc8"]
+
+[ext_resource type="Script" uid="uid://to3a5bba3frg" path="res://game/menus/settings_main.gd" id="1_q1ut8"]
+[ext_resource type="PackedScene" uid="uid://dkq3il3r6ml37" path="res://game/settings/settings_widget.tscn" id="3_25mxc"]
+
+[node name="SettingsMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_q1ut8")
+
+[node name="SettingsWidget" parent="." instance=ExtResource("3_25mxc")]
+layout_mode = 1

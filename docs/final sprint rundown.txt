@@ -1,11 +1,27 @@
-- build out rough meta elements
-	any future playtesting will now serve dual purpose and you need to calibrate your internal sense of balance
-- core game expansion (strategy sprint)
-	new depths, depth template building
-- animation sprint
-- meta expansion (artifacts, other meta)
-- sound
-- animation sprint 2
+x core game expansion (strategy sprint)
+x basic economy sprint
+x next depths and depth deck flow
+x saving and loading
+x settings
+x ambience and music
+x input sprint (fix the input bugs frfr)
+x final major assets (picks, home screen, load screen, loot chest, between locks)
+x animation sprint (push effects, card draw and flow, sound effects 1)
 - tutorial
-- balance pass
-- final polish
+- knucklebones and new victory
+- post game screen
+- balance pass 1
+- final polish 1
+
+---
+
+- meta 0 (unlocking new depths, furthest progress label, reset progress / reset tutorials menu)
+- strat hub update
+- pick modifiers (gems)
+- potions 
+- boss locks
+- pick effects (jewelry / artifacts?)
+- animation sprint 2 (drawing on, opening animation, broken pick pop, new break counter)
+- balance pass 2
+- final polish 2
+- meta expansion 2 (artifacts, metagame)

@@ -1,0 +1,9 @@
+- jam ani and unjam ani
+- jam pushed ani
+- bomb ani
+- unlock ani
+- pin rise and set
+- candle flicker
+
+- all pins use the same base color, and icons get drawn on as an animation
+- depth effect animation

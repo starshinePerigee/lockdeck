@@ -8,6 +8,9 @@ class_name ResultSpec
 ## The depth to show the jam icon at
 @export var jam_depth: int
 
+@export var bomb_defused: bool
+
 func _init():
 	jam_depth = -1
 	results = {}
+	bomb_defused = false

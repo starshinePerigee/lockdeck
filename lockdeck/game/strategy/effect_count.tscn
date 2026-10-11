@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7lelt4l4x7xq"]
+[gd_scene load_steps=6 format=3 uid="uid://b7lelt4l4x7xq"]
 
 [ext_resource type="Script" uid="uid://du7ulidj2mv6" path="res://game/strategy/effect_count.gd" id="1_2pd4w"]
 [ext_resource type="Texture2D" uid="uid://b4umxa7lobfu1" path="res://assets/effects/icon_push.png" id="1_t34xj"]
-[ext_resource type="Texture2D" uid="uid://b07yp3221ixlb" path="res://assets/effects/icon_crush.png" id="2_2pd4w"]
 [ext_resource type="Texture2D" uid="uid://wye0kkasayvx" path="res://assets/effects/icon_test.png" id="3_d48is"]
 [ext_resource type="Texture2D" uid="uid://dk2jmcwo4q7ib" path="res://assets/effects/icon_reveal.png" id="4_717e1"]
 [ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="5_ug5td"]
@@ -27,17 +26,6 @@ texture = ExtResource("1_t34xj")
 [node name="Label" type="Label" parent="Push"]
 layout_mode = 2
 text = "Push: 32"
-
-[node name="Crush" type="HBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Crush"]
-layout_mode = 2
-texture = ExtResource("2_2pd4w")
-
-[node name="Label" type="Label" parent="Crush"]
-layout_mode = 2
-text = "Crush: 11"
 
 [node name="Test" type="HBoxContainer" parent="."]
 layout_mode = 2

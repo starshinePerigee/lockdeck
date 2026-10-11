@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://baek5vgdxl62k"]
+
+[ext_resource type="Script" uid="uid://cclgivpmfqb0y" path="res://game/strategy/preview_widget.gd" id="1_4rk4y"]
+
+[node name="PreviewWidget" type="VBoxContainer"]
+offset_right = 960.0
+offset_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4rk4y")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="HeistLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Heist 5"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PinsLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Maximum pins: 5"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NextDepthsWidget" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/NextDepthsWidget"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="ScrollContainer/NextDepthsWidget/HBoxContainer"]
+layout_mode = 2
+text = "Possible next depths"
+
+[node name="Reminder" type="Label" parent="ScrollContainer/NextDepthsWidget/HBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_type_variation = &"TinyAccentText"
+text = "(hover for more info)"
+vertical_alignment = 2
+
+[node name="DepthsVBox" type="VBoxContainer" parent="ScrollContainer/NextDepthsWidget"]
+unique_name_in_owner = true
+layout_mode = 2

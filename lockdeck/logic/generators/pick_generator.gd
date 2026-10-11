@@ -1,8 +1,5 @@
 class_name PickGenerator
 
-static func get_debug_spec() -> CardSpec:
-	return CardSpec.from_template(PickTemplates.DEBUG)
-
 static func get_random_base_card() -> CardSpec:
 	var template: PickTemplates = PickTemplates.valid_templates.pick_random()
 	var spec := CardSpec.from_template(template)
@@ -14,26 +11,64 @@ static func get_many_base_cards(n: int) -> Array[CardSpec]:
 		cards.append(get_random_base_card())
 	return cards
 
-# TODO: deprecate and remove
-static var STANDARD_TEST_CARDS: Array[PickTemplates] = [
-	PickTemplates.DIAMOND,
-	PickTemplates.HOOK,
-	PickTemplates.SNAKE,
-	PickTemplates.RAKE,
-	PickTemplates.BALL,
-	PickTemplates.LEVER,
-	PickTemplates.FORK,
-	PickTemplates.PROBE,
-	PickTemplates.SNAKE,
-	PickTemplates.DIAMOND,
-	PickTemplates.FORK,
-	PickTemplates.HOOK,
-	PickTemplates.SNAKE,
-	PickTemplates.BALL,
-	PickTemplates.DIAMOND,
-]
+static func get_card_with_rarity(rarity: PickTemplates.Rarities) -> CardSpec:
+	return CardSpec.from_template(
+		PickTemplates.rarity_catalog[rarity].pick_random()
+	)
 
-static func get_standard_test_hand(n: int) -> Array[CardSpec]:
-	var cards: Array[CardSpec] = []
-	cards.assign(STANDARD_TEST_CARDS.slice(0, n).map(CardSpec.from_template))
-	return cards
+static func get_temporary_cards(count: int) -> Array[CardSpec]:
+	var new_cards: Array[CardSpec] = []
+	
+	PickTemplates.temporary_picks.shuffle()
+	for i in count:
+		new_cards.append(CardSpec.from_template(PickTemplates.temporary_picks[i]))
+	
+	for card in new_cards:
+		card.ability = Abilities.TEMPORARY
+	
+	return new_cards
+
+static func get_rarity_set_with_template_value(
+	count: int, 
+	template_value: int
+) -> Array[PickTemplates.Rarities]:
+	var rarity_set: Array[PickTemplates.Rarities] = []
+	var final_delta := -999_999
+	var iterations := 0
+	var set_value := 0
+	while iterations < 3:
+		iterations += 1
+		var new_rarity_set: Array[PickTemplates.Rarities] = []
+		for j in count:
+			new_rarity_set.append(PickTemplates.rarity_catalog.keys().pick_random())
+		set_value = new_rarity_set.reduce(func(sum, r): return sum + r, 0)
+		var current_delta := set_value - template_value
+		if abs(current_delta) < abs(final_delta):
+			final_delta = current_delta
+			rarity_set = new_rarity_set
+		if current_delta == 0:
+			break
+	
+#	print(
+#		"Generated rarity set %s with value %s from count %s and value %s after %s iterations"
+#		% [rarity_set, set_value, count, template_value, iterations]
+#	)
+	return rarity_set
+
+## Gets n cards with total template value (trash=0, great=4, etc)
+static func get_n_cards_with_template_value(
+	count: int,
+	template_value: int
+) -> Array[CardSpec]:
+	var new_cards: Array[CardSpec] = []
+	for rarity in get_rarity_set_with_template_value(count, template_value):
+		new_cards.append(get_card_with_rarity(rarity))
+	return new_cards
+
+static func get_shop_spread() -> Array[CardSpec]:
+	var new_cards: Array[CardSpec] = get_temporary_cards(3)
+	
+	for rarity in PickTemplates.rarity_catalog.keys():
+		new_cards.append(get_card_with_rarity(rarity))
+	
+	return new_cards

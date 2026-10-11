@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://d0f0ix5c40gi1"]
+
+[ext_resource type="Texture2D" uid="uid://dtohpx15ij12o" path="res://assets/interface/hscroll_shade.png" id="1_kc5xu"]
+
+[resource]
+texture = ExtResource("1_kc5xu")
+texture_margin_left = 10.0
+texture_margin_top = 1.0
+texture_margin_right = 8.0
+texture_margin_bottom = 1.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

@@ -9,43 +9,74 @@ class_name CardSpec
 @export var effects: Dictionary[int, Array]
 ## Human readable name in lowercase
 @export var pick_name: String
-## Text description - currently flavor. Should be vestigial but I am a sucker
+## Text description
 @export var description: String
-# you haven't earned flavortext yet
-## The pick art resource for this card.
-@export var texture: Resource
+## The original template used to create this pick
+@export var template: PickTemplates
 ## How many times this pick has been repaired
 @export var repair_count := 0
+## Base shop value for this pick
+@export var shop_value := 0
+## Pick ability
+@export var ability := Abilities.NONE
 
 ## Unique ID used for tracking specific cards
-var unique_id: int
+@export var unique_id: int
 
 static var last_id := 100
 
 func get_buy_cost() -> int:
-	return 20
+	return shop_value
 
 func get_repair_cost() -> int:
-	return 10 + repair_count * 5
+	return 20 + repair_count * 10
 
-static func from_template(template: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
+static func from_template(source: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
-		template.pick_name,
-		template.description,
-		template.texture,
-		template.effects
+		source,
+		source.pick_name,
+		"",
+		source.effects,
+		source.rarity
 	)
 
+func get_unique_list() -> Array[Effects]:
+	var list: Array[Effects] = []
+	for key in effects.keys():
+		for effect in effects[key]:
+			if effect.flavor not in list:
+				list.append(effect.flavor as Effects)
+	return list
+
+func reify() -> void:
+	ability = Abilities.static_registry[ability.description]
+	template = PickTemplates.static_registry[template.pick_name]
+	for key in effects.keys():
+		for spec in effects[key]:
+			spec.reify()
+	if unique_id > last_id:
+		push_warning(
+			"High unique ID when reifying card spec: unique %s vs last %s"
+			% [unique_id, last_id]
+		)
+
 func _init(
-	pick_name_: String,
-	description_: String,
-	texture_: Resource,
-	effects_: Dictionary[int, Array]
+	template_: PickTemplates = null,
+	pick_name_: String = "NULL",
+	description_: String = "",
+	effects_: Dictionary[int, Array] = {},
+	rarity: int = -2
 ):
 	unique_id = last_id
 	last_id += 1
 	
+	template = template_
 	pick_name = pick_name_
 	description = description_
-	texture = texture_
 	effects.assign(effects_)
+	shop_value = 15 + 5 * rarity
+
+static var DEBUG: CardSpec
+
+static func _static_init() -> void:
+	DEBUG = CardSpec.from_template(PickTemplates.DEBUG)

@@ -3,23 +3,67 @@ extends Control
 
 signal continue_to_next
 
-# TODO:
-# this should be pictoral representations, as you progress you unlock / open lock icons
-# [ ] > [] > [BOSS] > loot
+var current_pos: int = 1
 
-func first_animate() -> void:
+func reset(lock_in_set: int = 0) -> void:
+	$AnimationPlayer.play("RESET")
+	$AnimationPlayer.advance(0)
+	
+	current_pos = lock_in_set
 	$SpeedBonusLabel.visible = false
-	var timer := get_tree().create_timer(0.6)
-	timer.timeout.connect(continue_to_next.emit)
+	if lock_in_set < 0 or lock_in_set > 4:
+		lock_in_set = 0
+	
+	$AnimationPlayer.play("go_%s" % lock_in_set, -1, 1000)
+	_has_played = false
+
+const FX_COIN_GET := preload("res://assets/fx/coin_claim.ogg")
+const FX_GUST := preload("res://assets/fx/wind_gust.ogg")
+const FX_DRAW_X := preload("res://assets/fx/draw_scratch.ogg")
+var _has_played := false
+
+func play_chime():
+	if _has_played:
+		GlobalEffects.request(FX_DRAW_X)
+	else:
+		# horrible hack to the logic on betweens
+		_has_played = true
+	var tween := create_tween()
+	tween.tween_interval(0.32)
+	tween.tween_callback(GlobalEffects.request.bind(FX_GUST))
 
 func animate() -> void:
 	$SpeedBonusLabel/DisplayCoin.reset()
-	var timer := get_tree().create_timer(0.4)
+	var timer: SceneTreeTimer
+	
+	# use $TutorialText.visible as a proxy for tutorial mode
+	if $TutorialText.visible:
+		timer = get_tree().create_timer(0.2)
+	else:
+		timer = get_tree().create_timer(1.1)
 	timer.timeout.connect(continue_to_next.emit)
+	
 	if $SpeedBonusLabel.visible:
-		get_tree().create_timer(0.3).timeout.connect($SpeedBonusLabel/DisplayCoin.claim_coin)
-		get_tree().create_timer(2).timeout.connect($SpeedBonusLabel/DisplayCoin.reset)
+		var claim_tween := create_tween()
+		claim_tween.tween_interval(0.3667)
+		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.claim_coin)
+		claim_tween.tween_callback(GlobalEffects.request.bind(FX_COIN_GET, -6))
+		claim_tween.tween_interval(2)
+		claim_tween.tween_callback($SpeedBonusLabel/DisplayCoin.reset)
+	
+	if not $TutorialText.visible:
+		current_pos += 1
+		$AnimationPlayer.play("go_%s" % current_pos)
+
+const TUTORIAL_TEXTS := {
+	"first": preload("res://assets/menus/tutorial_text_listen.png"),
+	"challenge": preload("res://assets/menus/tutorial_text_challenge.png"),
+	"retry": preload("res://assets/menus/tutorial_text_fail.png"),
+	"complete": preload("res://assets/menus/tutorial_text_complete.png")
+}
+
+func set_text(text_variation: String) -> void:
+	$TutorialText.texture = TUTORIAL_TEXTS[text_variation]
 
 func _ready() -> void:
 	pass
-

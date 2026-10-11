@@ -3,26 +3,23 @@ extends TextureRect
 ## Note that despite being used for empty spaces, this always has a child PickCard - just hidden.
 class_name CardSpace
 
-## Card is present and clicked (could be tap, could be drag)
-signal card_clicked()
 ## Card is tapped (clicked and relesaed within short distance)
 signal card_tapped()
 ## Drag started
-signal card_picked_up(Area2D)
-## Drag is significant
-signal drag_definitive()
+signal card_picked_up()
 ## Drag eneded
-signal card_dropped(Area2D)
+signal card_dropped()
+signal animation_complete()
 
-enum DragState {
-	NOT,
-	DRAG,
-	SUPERDRAG
-}
+const HIDE_DURATION := 0.23
 
-var _dragging := DragState.NOT
+var _dragging := false
 var _active := false
 var mouse_start_position := Vector2()
+var disabled := false:
+	set(v):
+		disabled = v
+		$PickCard.disabled = disabled
 
 const TEXTURE_OPEN := preload("res://assets/card/space.png")
 const TEXTURE_CLOSED := preload("res://assets/card/blocked.png")
@@ -42,7 +39,7 @@ const HIGHLIGHT_OFFSET := 64
 		closed = v
 		_set_texture()
 
-## True if there is a card in this space, and if that card should be drawn
+## True if there is a card in this space, and if that card should be shown
 @export var has_card: bool = false:
 	set(v):
 		has_card = v
@@ -53,29 +50,103 @@ const HIGHLIGHT_OFFSET := 64
 		highlighted = v
 		_set_texture()
 
+var _selected := false
+
+var _card_tween: Tween = null
+func _card_tween_to(new_pos: int) -> void:
+	if _card_tween:
+		_card_tween.kill()
+	_card_tween = $PickCard.create_tween()
+	_card_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_card_tween.tween_property($PickCard, "position:y", new_pos, HIDE_DURATION)
+
 ## Draw highlight and pop card
 func set_selected() -> void:
-	$HighlightRect.z_index = 90
-	$HighlightRect.position = Vector2(-5, -5 - HIGHLIGHT_OFFSET)
-	$HighlightRect.visible = true
-	$PickCard.position = Vector2(0, -HIGHLIGHT_OFFSET)
+	_selected = true
+	_card_tween_to(-HIGHLIGHT_OFFSET)
+	$PickCard.tooltippable = false
 	z_boost = true
 
 ## Unpop card
 func clear_selected() -> void:
-	$HighlightRect.z_index = -10
-	$HighlightRect.position = Vector2(-5, -5)
-	$HighlightRect.visible = false
-	$PickCard.position = Vector2(0, 0)
+	_selected = false
+	_card_tween_to(0)
+	$PickCard.tooltippable = true
 	z_boost = false
+
+func tween_to_vector(new_pos: Vector2, duration: float) -> void:
+	var x_tween := _source_tween(true)
+	x_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, duration)
+	x_tween.tween_callback(animation_complete.emit)
+	# avoid the hand rising back up affecting this card
+	# (arc to discard will kill this tween)
+	x_tween.tween_property(self, "global_position:x", new_pos.x, 5.0)
+	
+	var y_tween := _source_tween(false)
+	y_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, duration)
+	y_tween.tween_property(self, "global_position:y", new_pos.y, 5.0)
+
+## Build a tween or pass it forward
+func _source_tween(is_x: bool) -> Tween:
+	position += $PickCard.position
+	$PickCard.position = Vector2.ZERO
+	
+	if is_x:
+		if _x_tween:
+			_x_tween.kill()
+		_x_tween = create_tween()
+		return _x_tween
+	else:
+		if _y_tween:
+			_y_tween.kill()
+		_y_tween = create_tween()
+		return _y_tween
+
+var _x_tween: Tween
+## Travel to a given  x position
+func tween_to(new_x: float, duration: float) -> Tween:
+	var tween := _source_tween(true)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "position:x", new_x, duration)
+	tween.tween_callback(animation_complete.emit)
+	return tween
+
+var _y_tween: Tween
+## Arc through a fixed height above 0 to a given y posistion
+func arc_to(new_y: float, arc_height: int, duration: float) -> Tween:
+	var tween := _source_tween(false)
+	
+	var arc_peak := -arc_height
+	if arc_height > 50:
+		if position.y < arc_peak:
+			# if we're above the requested arc peak
+			arc_peak = int(position.y - 30)
+		arc_peak -= randi_range(0, 40)
+	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", arc_peak, duration / 2)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "position:y", new_y, duration / 2)
+	
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position:y", 0, HIDE_DURATION)
+	return tween
+
+func break_pick() -> void:
+	if has_card:
+		$PickCard.break_pick()
 
 @export var z_boost: bool:
 	set(v):
+		if z_boost == v:
+			return
+		
 		z_boost = v
-		if z_boost:
-			z_index = 200
-		else:
-			z_index = 0
+		if z_boost and z_index < 2000:
+			z_index += 2000
+		elif z_index > 2000:
+			z_index -= 2000
 
 @export var card_spec: CardSpec: 
 	set(v):
@@ -87,30 +158,42 @@ func clear_selected() -> void:
 
 func _start_click():
 	if has_card:
+		_cancel_snapback = false
 		_active = true
-		card_clicked.emit()
 		if draggable:
 			mouse_start_position = get_local_mouse_position()
 
 func _end_click():
 	if _active:
-		if _dragging == DragState.NOT:
+		if not _dragging:
 			card_tapped.emit()
 		else:
-			card_dropped.emit($PickCard/Area2D)
+			z_boost = false
+			card_dropped.emit()
 			call_deferred("snapback")
 	_active = false
-	_dragging = DragState.NOT
+	_dragging = false
 
-func snapback():
-	$PickCard.position = Vector2()
+var _cancel_snapback := false
+
+func cancel_snapback() -> void:
+	_cancel_snapback = true
+
+func snapback() -> void:
+	if _cancel_snapback:
+		return
+	var tween := create_tween()
+	var distance: float = Vector2().distance_to($PickCard.position)
+	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property($PickCard, "position", Vector2(), distance * 0.001)
+	$PickCard.tooltippable = true
+	$PickCard.force_normal = false
 
 func _set_texture():
 	if not is_node_ready():
 		await ready
 
 	$PickCard.visible = has_card
-	$HighlightRect.visible = highlighted
 	if has_card and false:  # trying leaving the outline out
 		texture = TEXTURE_EMPTY
 	elif closed:
@@ -121,15 +204,14 @@ func _set_texture():
 func _process(_delta: float) -> void:
 	if _active:
 		var curr_mouse_position := get_local_mouse_position()
-		if _dragging == DragState.NOT and draggable:
+		if not _dragging and draggable:
 			if curr_mouse_position.distance_to(mouse_start_position) >= DRAG_DISTANCE:
-				_dragging = DragState.DRAG
-				card_picked_up.emit($PickCard/Area2D)
-		if _dragging == DragState.DRAG:
-			if curr_mouse_position.distance_to(mouse_start_position) >= SUPER_DRAG_DISTANCE:
-				_dragging = DragState.SUPERDRAG
-				drag_definitive.emit()
-		if _dragging != DragState.NOT:
+				_dragging = true
+				z_boost = true
+				$PickCard.tooltippable = false
+				$PickCard.force_normal = true
+				card_picked_up.emit()
+		else:
 			$PickCard.set_position(
 				get_local_mouse_position() - mouse_start_position
 			)
@@ -137,8 +219,26 @@ func _process(_delta: float) -> void:
 func _ready():
 	$PickCard.button_down.connect(_start_click)
 	$PickCard.button_up.connect(_end_click)	
+		
 	_set_texture()
 	clear_selected()
+	
+	if get_tree().current_scene == self:
+		card_spec = CardSpec.DEBUG
 
-func get_area() -> Area2D:
-	return $Area2D
+func get_mouse_rect() -> Rect2:
+	return $PickCard.get_global_rect()
+
+const FX_CARD_HOVER := preload("res://assets/fx/hand_hover.ogg")
+
+func core_hover() -> void:
+	z_boost = true
+	get_parent().move_child(self, -1)
+	GlobalEffects.request(FX_CARD_HOVER)
+
+func core_unhover() -> void:
+	if not _selected:
+		z_boost = false
+
+func get_card_area() -> Area2D:
+	return $PickCard/Area2D

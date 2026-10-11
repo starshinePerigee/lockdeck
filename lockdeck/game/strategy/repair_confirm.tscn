@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq7g3xofh8k0l"]
+[gd_scene load_steps=3 format=3 uid="uid://bq7g3xofh8k0l"]
 
 [ext_resource type="Script" uid="uid://cyhy8m33tb753" path="res://game/strategy/repair_confirm.gd" id="1_wnkby"]
-[ext_resource type="Theme" uid="uid://bh06f62di434m" path="res://assets/themes/tiny_accent.tres" id="2_5aj3m"]
 [ext_resource type="PackedScene" uid="uid://3tt7yy0bstia" path="res://objects/card/pick_card.tscn" id="2_dajq8"]
-[ext_resource type="Theme" uid="uid://dq03343spsslh" path="res://assets/themes/basic_button.tres" id="2_wnkby"]
 
 [node name="RepairConfirm" type="Control"]
 layout_mode = 3
@@ -62,11 +60,11 @@ text = "Repair cost: 990"
 [node name="RepairButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme = ExtResource("2_wnkby")
+theme_type_variation = &"BoxButton"
 text = "Repair?"
 
 [node name="CloseLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_5aj3m")
+theme_type_variation = &"TinyAccentText"
 text = "Click or tap outside the window to cancel."
 horizontal_alignment = 1

@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://otfojrutumql"]
+
+[ext_resource type="Script" path="res://game/menus/credits.gd" id="1_xqijp"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xqijp")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 115.0
+offset_right = 539.0
+offset_bottom = 181.0
+text = "code / design / game / art by feather
+
+music by Chris Hitchcock"
+
+[node name="AttributionsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 227.0
+offset_right = 431.0
+offset_bottom = 260.0
+theme_type_variation = &"PlainButton"
+text = "attributions (external link) >"
+alignment = 0
+
+[node name="ReturnButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 416.0
+offset_right = 247.0
+offset_bottom = 449.0
+text = "< return to menu"
+
+[node name="WHEEL" type="Label" parent="."]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 307.0
+offset_right = 533.0
+offset_bottom = 333.0
+text = "originally created for WHEELJAM 2"
