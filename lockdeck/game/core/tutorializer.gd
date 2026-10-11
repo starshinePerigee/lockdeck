@@ -1477,6 +1477,13 @@ func do_step() -> void:
 					advance()
 				27:
 					show_box(
+						"Oh, and while we're talking planning - don't forget: "
+						+ "if you need to check what picks are where, "
+						+ "you can click the deck, discard, and trash buttons to check what all's where.\n\n"
+						+ "Sometimes you'll to check if you still have a two-push coming up or what have you."
+					)
+				27:
+					show_box(
 						"The next couple of locks are going to be full of spikes. Like before, pick them without "
 						+ "breaking any picks to continue.\n\n"
 						+ "You'll need to be capable and clever - prove to me you're both."
@@ -1830,7 +1837,8 @@ func do_step() -> void:
 						"It's probably best to see for yourself.\n\n"
 						+ "I've given you some picks to play around with. Solve this without "
 						+ "breaking a pick and I'll let you go.\n\n"
-						+ "Don't forget you can end your turn to reset the pin and your picks.",
+						+ "Don't forget you can end your turn to reset the pin and your picks, "
+						+ "and sometimes you'll need to discard a ton of picks to dig for the one you need.",
 						PIN_X,
 						PIN_Y - 50,
 					)
@@ -2359,7 +2367,7 @@ func do_step() -> void:
 				19:
 					show_box(
 						"This specific pick is simple enough. Push the target pin two, and the pin to "
-						+ "the left one.\n\nPlease, try it."
+						+ "the left one.\n\nPlease, try it. Don't worry if you break it."
 					)
 				20:
 					core.tutorial_lock(false)
@@ -2374,7 +2382,7 @@ func do_step() -> void:
 						"This pick affects every pin in range.\n\n"
 						+ "Hover it over the first and last pin and watch the preview. See how "
 						+ "for the first pin, it doesn't reach the last pin, but for the last pin it still "
-						+ "touches the first.\n\nThen use it, wherever you'd like."
+						+ "touches the first.\n\nThen use it, wherever you'd like. Again, no worries if it breaks."
 					)
 				23:
 					core.tutorial_lock(false)
@@ -2658,8 +2666,8 @@ func do_step() -> void:
 				4:
 					show_box(
 						"Do whatever you can to crack locks before that becomes an issue.\n\n"
-						+ "Take calculated risks. "
-						+ "Break a pick or two to get the last pin set."
+						+ "Take risks. Break a pick or two to get the last pin set. "
+						+ "Whatever it takes."
 					)
 				5:
 					show_box(

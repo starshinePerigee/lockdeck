@@ -1,33 +1,5 @@
 
-Re-mention that you can click on the “deck” button to see your deck, and the discard
-
-Mention during reveal lesson final pin that sometimes you have to dig for a pick
-
-
-
-In the three-pin lesson, mention that it’s okay to break. 
-
-
-
-
-In the final “this is how the real world works” lesson, mention sometimes it’s fine to take risks, break picks, etc. 
-
-
-consider - warnings and empties don’t activate
-
-
-
-
-
 make test really explicit
 1: you use the pick
 2: any depths that are tested and arent revealed 
-
-
-
-
----
-
-
-
 

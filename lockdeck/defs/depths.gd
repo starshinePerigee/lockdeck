@@ -296,5 +296,4 @@ static var DO_NOT_EXHAUST: Array[Depths] = [
 	FINAL,
 	EMPTY,
 	WARN,
-	GATE_KEY,
 ]
