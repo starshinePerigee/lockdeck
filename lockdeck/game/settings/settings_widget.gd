@@ -9,6 +9,8 @@ signal music_hovered_start()
 signal music_hovered_end()
 signal effects_hovered_start()
 signal effects_hovered_end()
+signal reset_meta()
+signal unlock_meta()
 
 
 func set_fullscreen(setting: bool) -> void:
@@ -91,6 +93,7 @@ func show_widget():
 	visible = true
 	z_index = 3410
 	opened.emit()
+	reset_meta_buttons()
 
 func hide_widget():
 	visible = false
@@ -126,6 +129,42 @@ func request_discrete_tooltip() -> void:
 		)
 	)
 
+func request_meta_reset_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		func(): return %ResetMetaButton.get_global_rect().grow(4.0),
+		(
+			"Resets all meta-progression, re-locking all unlocked depths and decks."
+		)
+	)
+
+func meta_reset() -> void:
+	reset_meta.emit()
+	%ResetMetaButton.disabled = true
+	%ResetMetaButton.text = "Meta-progression reset!"
+	%ResetMetaButton.base_text = "Meta-progression reset!"
+
+func request_meta_unlock_tooltip() -> void:
+	TooltipManager.request_tooltip(
+		func(): return %ResetMetaButton.get_global_rect().grow(4.0),
+		(
+			"Unlocks all meta-progression, making all decks immediately available and unlocks all depths."
+		)
+	)
+
+func meta_unlock() -> void:
+	unlock_meta.emit()
+	%UnlockMetaButton.disabled = true
+	%UnlockMetaButton.text = "Meta-progression unlocked!"
+	%UnlockMetaButton.base_text = "Meta-progression unlocked!"
+
+func reset_meta_buttons() -> void:
+	%ResetMetaButton.disabled = false
+	%ResetMetaButton.text = "Reset progress"
+	%ResetMetaButton.base_text = "Reset progress"
+	%UnlockMetaButton.disabled = false
+	%UnlockMetaButton.text = "Unlock everything"
+	%UnlockMetaButton.base_text = "Unlock everything"
+
 const FX_CLICK := preload("res://assets/fx/shell_click.ogg")
 
 func _ready() -> void:
@@ -134,6 +173,8 @@ func _ready() -> void:
 	%ActiveRowToggle.mouse_entered.connect(request_active_row_tooltip)
 	%FullscreenButton.mouse_entered.connect(request_fullscreen_tooltip)
 	%DiscreteScale.mouse_entered.connect(request_discrete_tooltip)
+	%ResetMetaButton.mouse_entered.connect(request_meta_reset_tooltip)
+	%UnlockMetaButton.mouse_entered.connect(request_meta_unlock_tooltip)
 	
 	var settings := GameSettings.instance()
 	update_tooltip_button(settings.tooltip_speed)
@@ -162,10 +203,14 @@ func _ready() -> void:
 	%EffectSlider.setting_updated.connect(set_effect_volume)
 	%EffectSlider.hovered_start.connect(effects_hovered_start.emit)
 	%EffectSlider.hovered_stop.connect(effects_hovered_end.emit)
+	%ResetMetaButton.pressed_confirmed.connect(meta_reset)
+	%UnlockMetaButton.pressed_confirmed.connect(meta_unlock)
 	
 	for button in [
 		%TooltipSpeedButton,
 		%AnimationSpeedButton,
+		%ResetMetaButton,
+		%UnlockMetaButton,
 	]:
 		button.pressed.connect(GlobalEffects.request.bind(FX_CLICK))
 	
