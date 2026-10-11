@@ -38,20 +38,23 @@ func set_next_stage(stage: int) -> void:
 		%Info.text = STAGE_DESCRIPTIONS[stage]
 	else:
 		%Info.text = "Stage %s" % stage
+	if next_stage in buttons:
+		buttons[next_stage].button_pressed = false
 	next_stage = stage
 
 func on_enter() -> void:
-	var i := 1
 	var stage := MetaProgression.instance().tutorial_level
-	for vstack in %ButtonColumns.get_children():
-		for button in vstack.get_children():
-			if button is Button:
-				if i > stage:
-					button.disabled = true
-			i += 1
+	for i in buttons:
+		if i == stage:
+			buttons[i].button_pressed = true
+			set_next_stage(i)
+		elif i > stage:
+			buttons[i].disabled = true
 
 func start_tutorial() -> void:
 	tutorial_start.emit(next_stage)
+
+var buttons: Dictionary[int, Button] = {}
 
 func _ready() -> void:
 	var i := 1
@@ -60,6 +63,7 @@ func _ready() -> void:
 			if button is Button:
 				button.text = str(i)
 				button.pressed.connect(set_next_stage.bind(i))
+				buttons[i] = button
 			i += 1
 	
 	if get_tree().current_scene == self:

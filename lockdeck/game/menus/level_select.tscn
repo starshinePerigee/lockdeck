@@ -24,18 +24,21 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "1"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer1"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "2"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer1"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "3"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ButtonColumns"]
@@ -45,24 +48,28 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "4"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer2"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "5"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer2"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "6"
 
 [node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer2"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "7"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="ButtonColumns"]
@@ -72,18 +79,21 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "8"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer3"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "9"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer3"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "10
 "
 
@@ -94,30 +104,35 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "11"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer4"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "12"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer4"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "13"
 
 [node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer4"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "14"
 
 [node name="Button5" type="Button" parent="ButtonColumns/VBoxContainer4"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "15"
 
 [node name="VBoxContainer5" type="VBoxContainer" parent="ButtonColumns"]
@@ -127,24 +142,28 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "16"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer5"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "17"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer5"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "18"
 
 [node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer5"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "19"
 
 [node name="VBoxContainer6" type="VBoxContainer" parent="ButtonColumns"]
@@ -154,24 +173,28 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "20"
 
 [node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer6"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "21"
 
 [node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer6"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "22"
 
 [node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer6"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "23"
 
 [node name="VBoxContainer7" type="VBoxContainer" parent="ButtonColumns"]
@@ -181,6 +204,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_type_variation = &"BoxButton"
+toggle_mode = true
 text = "24"
 
 [node name="Panel" type="PanelContainer" parent="."]
