@@ -117,28 +117,51 @@ func handle_press() -> void:
 		suggest = true
 #endregion
 
+const tooltip_base := (
+	"This is your turn counter. Click to end your turn.\n\n"
+	+ "Ending your turn will shuffle your hand and discard pile back into your deck and "
+	+ "you will draw a new hand.\n\n" 
+	+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
+	+ "starting positions. All depths will reset and can be triggered again.\n\n"
+)
+
 func request_tooltip() -> void:
-	if button_disable or _pressed:
-		return
-	
-	TooltipManager.request_tooltip(
-		get_mouse_rect,
-		(
-			"This is your turn counter. Click to end your turn.\n\n"
-			+ "If you run out of picks, or need one from your discard, "
-			+ "ending your turn will shuffle your hand and discard pile back into your deck and "
-			+ "you will draw a new hand.\n\n" 
-			+ "Ending your turn will also reset all non-jammed pins, moving them back to their "
-			+ "starting positions. All depths will reset and can be triggered again.\n\n"
-			+ "If you solve the lock in one turn, you'll earn a 10 gold speed bonus.\n\n"
-			+ "After two turns, your light will go out and you will have a chance to break each pick "
-			+ "when you use it.\n\n"
-			+ "After three turns, you will be locked out and your game will end."
-		) 
-	)
+	if count <= 0:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Because your light has gone out, you at risk of breaking picks randomly.\n\n"
+				+ "If you do not solve the lock this turn, your game will end."
+			) 
+		)
+	elif count == 1:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Solve the lock this turn, or risk breaking picks and being locked out next turn."
+			) 
+		)
+	elif count == 2:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "Solve the lock this turn to receive a 10 coin bonus."
+			) 
+		)
+	else:
+		TooltipManager.request_tooltip(
+			get_mouse_rect,
+			(
+				tooltip_base
+				+ "You are currently safe. You may end your turn as many times as you like with no penalties."
+			) 
+		)
 
 func get_mouse_rect() -> Rect2:
-	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 18)
+	return $Countdown.get_global_rect().grow_side(Side.SIDE_BOTTOM, 24)
 
 func _ready() -> void:
 	$Countdown.candle_clicked.connect(handle_press)

@@ -541,6 +541,7 @@ func break_pick(card: CardSpec, surprise := false, bomb := false) -> void:
 	
 	if allow_reset:
 		$ResetButton.visible = true
+		$ResetButton.highlight = true
 	
 	pick_broke.emit()
 

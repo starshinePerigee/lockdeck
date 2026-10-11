@@ -20,11 +20,15 @@ Mention that break can never be the first depth (there has to be a warning first
 
 Right click to close from windows
 
-Highlight reset button on break for puzzles
 
 
 
 Minesweeper style right / left click mousewheel to cycle through marks
+(marks are on the top right side of the depth. right click black skull, left click white check)
+
+special indication for what tested
+(little wave icon coming off the left side)
+
 
 You shouldn’t be able to tooltip through a tutorial box
 
@@ -39,7 +43,7 @@ In the final “this is how the real world works” lesson, mention sometimes it
 consider - warnings and empties don’t activate
 
 
-special indication for what tested
+
 
 
 make test really explicit

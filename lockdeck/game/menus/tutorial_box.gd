@@ -62,6 +62,13 @@ func _end_press() -> void:
 func _input(event: InputEvent) -> void:
 	if (
 		visible
+		and event is InputEventMouse
+		and get_global_rect().has_point(event.global_position)
+	):
+		TooltipManager.request_tooltip_close()
+	
+	if (
+		visible
 		and can_continue
 		and event is InputEventMouseButton
 		and event.button_index == MOUSE_BUTTON_LEFT
