@@ -2,4 +2,3 @@
 make test really explicit
 1: you use the pick
 2: any depths that are tested and arent revealed 
-
