@@ -1,3 +1,12 @@
+s / tutorial / puzzle
+
+have a separate save game for puzzle and random.
+introduce new depths over time in puzzle mode
+ 
+- story
+- level select
+
+
 THE BIG TEST REFACTOR
 - left click on a depth to add a white check
 - right click on a depth to add a black skull
