@@ -1,14 +1,18 @@
 extends Control
 
 signal start_game(cards: Array[CardSpec])
-signal start_tutorial
+signal tutorial_start(int)
+signal show_level_select
 signal return_to_menu
 
 var current_deck: DeckTemplates
 
 func do_start() -> void:
 	if current_deck == DeckTemplates.TUTORIAL:
-		start_tutorial.emit()
+		if MetaProgression.instance().tutorial_level > 0:
+			show_level_select.emit()
+		else:
+			tutorial_start.emit(0)
 		return
 	
 	var specs: Array[CardSpec] = []

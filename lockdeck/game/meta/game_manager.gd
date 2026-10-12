@@ -25,12 +25,13 @@ func break_three() -> void:
 # Note: "first lock" and any of the "x to between" animations on GameManager's AnimationPlayer
 # call between.animate on completion, but animation is skipped if between is in tutorial mode.
 
-func begin_tutorial() -> void:
+func begin_tutorial(level := 0) -> void:
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.tutorial_mode = true
-	game.stage = 1  # needed to show the display correctly
-#	game.stage = 24  # TODO
+	if level < 1:
+		level = 1
+	game.stage = level  # needed to show the display correctly
 	game.current_deck = []
 	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
 	game.save()

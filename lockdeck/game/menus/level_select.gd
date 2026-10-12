@@ -1,8 +1,7 @@
 extends Control
 
 signal tutorial_start(int)
-
-# TODO: keep pressed until unpressed
+signal return_to_deck_select()
 
 static var STAGE_DESCRIPTIONS: Dictionary[int, String] = {
 	1: "Start story mode from the beginning, learning the very basics.",
@@ -20,7 +19,7 @@ static var STAGE_DESCRIPTIONS: Dictionary[int, String] = {
 	13: "Test puzzle #2",
 	14: "Test puzzle #3",
 	15: "Test puzzle #4",
-	16: "Bounce depths, caution marks, and more testing.",
+	16: "Bounce depths, caution marks, and more test.",
 	17: "Test puzzle #5",
 	18: "Test puzzle #6",
 	19: "Test puzzle #7",
@@ -66,8 +65,10 @@ func _ready() -> void:
 				buttons[i] = button
 			i += 1
 	
+	%GoButton.pressed.connect(start_tutorial)
+	$ReturnButton.pressed.connect(return_to_deck_select.emit)
+	
 	if get_tree().current_scene == self:
-		MetaProgression.instance().tutorial_level = 14
+		MetaProgression.instance().tutorial_level = 0
 		MetaProgression.save()
 		on_enter()
-	%GoButton.pressed.connect(start_tutorial)

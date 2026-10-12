@@ -208,6 +208,7 @@ toggle_mode = true
 text = "24"
 
 [node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
 offset_left = 495.0
 offset_top = 199.0
 offset_right = 879.0
@@ -233,6 +234,7 @@ shortcut_keys_enabled = false
 
 [node name="GoButton" type="Button" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 479.0
 offset_top = 320.0
 offset_right = 919.0
@@ -241,8 +243,16 @@ text = "let's pick it up from there >"
 flat = true
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 offset_left = 154.0
 offset_top = 98.0
 offset_right = 340.0
 offset_bottom = 124.0
 text = "Choose a level:"
+
+[node name="ReturnButton" type="Button" parent="."]
+offset_left = 69.0
+offset_top = 416.0
+offset_right = 241.0
+offset_bottom = 449.0
+text = "< return to menu"
