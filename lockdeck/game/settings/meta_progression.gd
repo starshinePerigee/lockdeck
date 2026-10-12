@@ -15,6 +15,15 @@ static func instance(force: bool = false) -> MetaProgression:
 		_instance = _load_from_disk()
 	return _instance
 
+static func reset_meta() -> void:
+	instance().depth_level = 0
+	instance().most_recently_seen_stage = 0
+	save()
+
+static func unlock_all() -> void:
+	instance().depth_level = 50
+	instance().tutorial_level = 50
+
 static func save() -> void:
 	var ret := ResourceSaver.save(instance(), SAVE_PATH)
 	if ret != OK:

@@ -9,8 +9,6 @@ signal music_hovered_start()
 signal music_hovered_end()
 signal effects_hovered_start()
 signal effects_hovered_end()
-signal reset_meta()
-signal unlock_meta()
 
 
 func set_fullscreen(setting: bool) -> void:
@@ -138,7 +136,7 @@ func request_meta_reset_tooltip() -> void:
 	)
 
 func meta_reset() -> void:
-	reset_meta.emit()
+	MetaProgression.reset_meta()
 	%ResetMetaButton.disabled = true
 	%ResetMetaButton.text = "Meta-progression reset!"
 	%ResetMetaButton.base_text = "Meta-progression reset!"
@@ -152,7 +150,7 @@ func request_meta_unlock_tooltip() -> void:
 	)
 
 func meta_unlock() -> void:
-	unlock_meta.emit()
+	MetaProgression.unlock_all()
 	%UnlockMetaButton.disabled = true
 	%UnlockMetaButton.text = "Meta-progression unlocked!"
 	%UnlockMetaButton.base_text = "Meta-progression unlocked!"
