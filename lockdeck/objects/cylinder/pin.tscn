@@ -136,7 +136,7 @@ offset_bottom = 40.0
 texture = ExtResource("6_gcv1p")
 
 [node name="KeyIndicator" type="TextureRect" parent="."]
-z_index = 3
+z_index = 4
 layout_mode = 0
 offset_left = -16.0
 offset_top = 224.0
@@ -148,9 +148,9 @@ texture = ExtResource("5_agct7")
 z_index = 3
 layout_mode = 0
 offset_left = -16.0
-offset_top = 266.0
+offset_top = 242.0
 offset_right = 96.0
-offset_bottom = 314.0
+offset_bottom = 290.0
 texture = ExtResource("4_agct7")
 
 [node name="JamCount" type="Label" parent="JamIndicator"]
