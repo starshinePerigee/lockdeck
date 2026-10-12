@@ -2725,6 +2725,7 @@ func do_step() -> void:
 					show_box("I know I'll see you again soon. Get to it!")
 				12:
 					tutorial_finished.emit(STARTING_DECK)
+					MetaProgression.deck_unlock(1)
 					core.continue_to_next.emit()
 
 var no_step := false

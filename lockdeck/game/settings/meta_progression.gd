@@ -5,6 +5,7 @@ class_name MetaProgression
 @export var tutorial_level := 0
 @export var depth_level := 0
 @export var most_recently_seen_stage := 0
+@export var deck_unlock_level := 0
 
 const SAVE_PATH := "user://meta_progression.tres"
 
@@ -18,11 +19,17 @@ static func instance(force: bool = false) -> MetaProgression:
 static func reset_meta() -> void:
 	instance().depth_level = 0
 	instance().most_recently_seen_stage = 0
+	instance().deck_unlock_level = 1
 	save()
 
 static func unlock_all() -> void:
 	instance().depth_level = 50
 	instance().tutorial_level = 50
+	instance().deck_unlock_level = 6
+	save()
+
+static func deck_unlock(level: int) -> void:
+	instance().deck_unlock_level = max(instance().deck_unlock_level, level)
 
 static func save() -> void:
 	var ret := ResourceSaver.save(instance(), SAVE_PATH)

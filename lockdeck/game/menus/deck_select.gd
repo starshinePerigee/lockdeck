@@ -29,6 +29,12 @@ func select_deck(template: DeckTemplates) -> void:
 
 func reset() -> void:
 	current_deck = null
+	
+	var deck_unlock := MetaProgression.instance().deck_unlock_level
+	for i in $VBoxContainer.get_child_count():
+		$VBoxContainer.get_child(i).disabled = i > deck_unlock
+	$UnlockGuide.visible = deck_unlock < 5
+	
 	%Info.text = "Select a deck."
 	%GoButton.visible = false
 

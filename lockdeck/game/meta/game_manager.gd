@@ -174,6 +174,10 @@ func advance_from_between() -> void:
 			$Tutorializer.do_step()
 
 func next_loot(loot_value: int) -> void:
+	# amazing hacks happening here:
+	var unlock_level: int = GameSpec.LOOT_SEQUENCE.find(loot_value)
+	MetaProgression.deck_unlock(unlock_level)
+
 	$LootMain.do_loot(loot_value)
 	$AnimationPlayer.play("between to loot", -12)
 	GlobalEffects.request(FX_LOOT_ROLL_IN)
@@ -208,6 +212,7 @@ func end_strategy() -> void:
 
 func do_victory() -> void:
 	GameSpec.clear_save()
+	MetaProgression.deck_unlock(5)
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 	victory_start.emit()

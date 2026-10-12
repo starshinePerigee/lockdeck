@@ -2,7 +2,4 @@ clicking a volume slider and holding the mouse down while going away from hover 
 
 i think slip over the end breaks your pick
 
-loading a game at lock 3 plays the go_4 animation on between
-- also loading on loot_strat shows a totally wrong one?
-
 solving the game on the final locked out is still broken

@@ -100,3 +100,14 @@ offset_right = 854.0
 offset_bottom = 449.0
 text = "sounds good, let's get started >"
 flat = true
+
+[node name="UnlockGuide" type="Label" parent="."]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 355.0
+offset_right = 315.0
+offset_bottom = 381.0
+theme_type_variation = &"TinyAccentText"
+theme_override_constants/line_spacing = -2
+text = "Complete more heists in a run to unlock additional decks."
+autowrap_mode = 2

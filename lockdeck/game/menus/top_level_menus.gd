@@ -3,6 +3,7 @@ extends Control
 
 
 func show_deck_select() -> void:
+	$DeckSelect.reset()
 	$AnimationPlayer.play("go_deck_select")
 
 func deck_select_to_title() -> void:

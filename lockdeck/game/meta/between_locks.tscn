@@ -587,6 +587,7 @@ offset_bottom = 128.0
 texture = ExtResource("6_fqa36")
 
 [node name="Unlock3" type="TextureRect" parent="Unlocks"]
+visible = false
 layout_mode = 0
 offset_left = 322.0
 offset_right = 450.0
@@ -595,9 +596,9 @@ texture = ExtResource("6_fqa36")
 
 [node name="CurrentPos" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 655.0
+offset_left = 498.0
 offset_top = 218.0
-offset_right = 783.0
+offset_right = 626.0
 offset_bottom = 346.0
 texture = ExtResource("7_ks8ci")
 
