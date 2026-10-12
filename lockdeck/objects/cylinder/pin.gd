@@ -159,6 +159,9 @@ func _clear_old(pin_spec: PinSpec) -> void:
 		load_spec(_pending_spec)
 	_pending_spec = pin_spec
 	_break_played = false
+	
+	for depth in depth_refs:
+		depth.test_result = PinSpec.RevealLevel.REVEALED
 
 func animate(
 	pin_spec: PinSpec,
