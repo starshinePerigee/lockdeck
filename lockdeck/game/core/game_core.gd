@@ -603,6 +603,9 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 		play_break($LockBody/CylinderMain/Cylinders.animation_complete)
 	await $LockBody/CylinderMain/Cylinders.animation_complete
 	
+	if _result.lock_solved:
+		lock_complete = true
+	
 	if _result.pick_broke or break_next:
 		if break_instead:
 			break_pick(break_instead, false, _result.bomb_exploded)
@@ -714,6 +717,9 @@ func end_turn() -> void:
 	set_state(InputState.INACTIVE)
 
 func game_over() -> void:
+	if lock_complete:
+		return
+	
 	print("Game over.")
 	$Notifications.notify(Notifications.FAILURE)
 	$LockBody/CountdownMain.game_over()
