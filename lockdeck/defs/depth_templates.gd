@@ -292,7 +292,7 @@ static var UNLOCK_ORDER: Array[DepthTemplates] = [
 	BREATH, # draw cards
 	CATCH,  # break if jam past
 	SLIP_2,  # advance if pushed over
-	TWIST,  # discard when tested
 	SURPRISE,  # break no warning
+	TWIST,  # discard when tested
 	EMPTY,
 ]

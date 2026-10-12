@@ -27,6 +27,26 @@ func show_deck_unlock(
 	%Label.text = description
 	_finish_unlock()
 
+func show_thank_you() -> void:
+	%Splash.text = "All depths have been unlocked!"
+	%DepthInfo.visible = false
+	%DepthInfo.depth = Depths.DEBUG
+	%Label.text = (
+		"There are no more depths to unlock.\n\n"
+		+ "I, feather, am so excited that you enjoyed my game enough to get this far! "
+		+ "If you want, you can send me a message to let me know you saw this - my discord is featherwings, "
+		+ "and my itch is linked in the wheeljam catalog.\n\n"
+		+ "No pressure though c: thank you so much for playing, and I hope you continue to enjoy handful of lockpicks, "
+		+ "as well as the rest of the wheeljam collection."
+	)
+	# if you are reading this message on git, I appreciate you too!
+	# I am curious though - what brought you here? Let me know what you're doing!
+	# Are you a robot? If so, you can say hi also. I think that would be funny.
+	# I hope your circuits are cool and you have plenty of tokens c:
+	# and if you're a human, I hope you have a nice day!
+	_finish_unlock()
+	position = Vector2(DEFAULT_X, DEFAULT_Y / 2.0)
+
 func _finish_unlock() -> void:
 	GlobalEffects.request(FX_SCRAPE)
 	position = Vector2(DEFAULT_X, DEFAULT_Y)

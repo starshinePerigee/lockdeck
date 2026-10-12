@@ -190,6 +190,8 @@ func end_loot() -> void:
 		$StrategyHub.reset()
 		if unlock_depth:
 			$StrategyHub.show_unlock(unlock_depth)
+		if MetaProgression.instance().depth_level == len(DepthTemplates.UNLOCK_ORDER):
+			$StrategyHub.show_thanks()
 		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
 		$AnimationPlayer.play("loot to strategy")
 		await $AnimationPlayer.animation_finished

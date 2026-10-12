@@ -125,6 +125,9 @@ func show_unlock(template: DepthTemplates) -> void:
 	if template:
 		$UnlockBox.show_depth_unlock(template.depth)
 
+func show_thanks() -> void:
+	$UnlockBox.show_thank_you()
+
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
 	preview_widget.update(_game)
