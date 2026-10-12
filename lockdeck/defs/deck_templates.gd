@@ -44,12 +44,14 @@ static var STANDARD := DeckTemplates.new(
 	func(): return _spec_templates([
 		PickTemplates.RAKE_BULK_TEST_BASIC,
 		PickTemplates.RAKE_HYBRID_S_BASIC,
+		PickTemplates.RAKE_BULK_PUSH_BASIC,
 		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
 		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
 		PickTemplates.DIAMOND_REVEAL_BASIC,
 		PickTemplates.HOOK_PUSHY_BASIC,
 		PickTemplates.HOOK_PUSHY_BASIC,
-		PickTemplates.WRENCH_END_TURN_BASIC
+		PickTemplates.WRENCH_END_TURN_BASIC,
+		PickTemplates.HOOK_PRECISE_BASIC,
 	])
 )
 
@@ -63,11 +65,13 @@ static var POWERFUL := DeckTemplates.new(
 		PickTemplates.RAKE_BULK_PUSH_BASIC,
 		PickTemplates.RAKE_BULK_PUSH_BASIC,
 		PickTemplates.RAKE_GAPS_BASIC,
+		PickTemplates.RAKE_GAPS_BASIC,
 		PickTemplates.RAKE_BULK_TEST_BASIC,
 		PickTemplates.RAKE_HYBRID_S_BASIC,
 		PickTemplates.HOOK_PUSHY_BASIC,
 		PickTemplates.DIAMOND_DARK_BASIC,
-		PickTemplates.WRENCH_ISOLATION_BASIC
+		PickTemplates.WRENCH_ISOLATION_BASIC,
+		PickTemplates.WRENCH_TRICKS_BASIC,
 	])
 )
 
@@ -79,12 +83,14 @@ static var CAREFUL := DeckTemplates.new(
 	),
 	func(): return _spec_templates([
 		PickTemplates.RAKE_GAPS_BASIC,
+		PickTemplates.RAKE_HYBRID_S_BASIC,
 		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
 		PickTemplates.DIAMOND_FINISHER_BASIC,
 		PickTemplates.HOOK_PRECISE_BASIC,
 		PickTemplates.HOOK_PRECISE_BASIC,
 		PickTemplates.HOOK_PUSHY_BASIC,
 		PickTemplates.HOOK_PUSHY_BASIC,
+		PickTemplates.HOOK_JUMP_TEST_BASIC,
 		PickTemplates.HOOK_CLOSE_TEST_BASIC,
 		PickTemplates.WRENCH_TRICKS_BASIC,
 	])
@@ -94,7 +100,7 @@ static var TRICKY := DeckTemplates.new(
 	"Clever",
 	(
 		"Careful manipulation of jam will let you turn your heavy rakes and diamonds into surgical instruments."
-		+ "\n\nYou only have four of them, so don't be reckless!"
+		+ "\n\nYou only have five of them, so don't be reckless!"
 	),
 	func(): return _spec_templates([
 		PickTemplates.HOOK_JUMP_TEST_BASIC,
@@ -102,6 +108,8 @@ static var TRICKY := DeckTemplates.new(
 		PickTemplates.WRENCH_ISOLATION_BASIC,
 		PickTemplates.WRENCH_TRICKS_BASIC,
 		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_THREE_PUSH_BASIC,
+		PickTemplates.DIAMOND_FINISHER_BASIC,
 		PickTemplates.DIAMOND_DARK_BASIC,
 		PickTemplates.RAKE_BULK_PUSH_BASIC,
 		PickTemplates.RAKE_BULK_PUSH_BASIC

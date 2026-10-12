@@ -19,7 +19,8 @@ class_name DepthTemplates
 #	4	1	2	2	3	4
 #	5	1	2	3	4	5
 
-@export var duplicates_per_pin: int
+## Notifies to avoid duplicating this depth no matter what
+@export var do_not_duplicate := false
 
 ## overrides the above and will always place this many depths. 0 to disregard (default)
 @export var absolute_limit: int
@@ -46,7 +47,7 @@ func _init(
 	difficulty_: Difficulty = Difficulty.EMPTY,
 	weight_: int = 0,
 	per_five: int = 5,
-	per_pin: int = 1,
+	max_one := false,
 	minor: Depths = null
 ):
 	depth = depth_
@@ -54,7 +55,7 @@ func _init(
 	difficulty = difficulty_
 	absolute_limit = 0
 	depths_per_five = per_five
-	duplicates_per_pin = per_pin
+	do_not_duplicate = max_one
 	weight = weight_
 
 ## Returns how many pins to apply this depth to.
@@ -84,7 +85,7 @@ static var BREAK := DepthTemplates.new(
 	Difficulty.ESSENTIAL,
 	1,
 	5,
-	1,
+	true,
 	Depths.WARN
 )
 
@@ -95,7 +96,6 @@ static var EMPTY := DepthTemplates.new(
 	Difficulty.HELPFUL,
 	3,
 	3,
-	2,
 )
 
 static var UNLOCK := DepthTemplates.new(
@@ -103,13 +103,12 @@ static var UNLOCK := DepthTemplates.new(
 	Difficulty.HELPFUL,
 	1,
 	2,
-	1
+	true,
 )
 
 static var BREATH := DepthTemplates.new(
 	Depths.BREATH,
 	Difficulty.HELPFUL,
-	2,
 	2,
 	2,
 )
@@ -119,7 +118,6 @@ static var HINT := DepthTemplates.new(
 	Difficulty.HELPFUL,
 	2,
 	4,
-	2,
 )
 
 #endregion
@@ -131,7 +129,6 @@ static var PUSH := DepthTemplates.new(
 	Difficulty.ANNOYING,
 	3,
 	4,
-	4,
 )
 
 static var JAM := DepthTemplates.new(
@@ -139,13 +136,11 @@ static var JAM := DepthTemplates.new(
 	Difficulty.ANNOYING,
 	3,
 	3,
-	4,
 )
 
 static var BOUNCE := DepthTemplates.new(
 	Depths.BOUNCE,
 	Difficulty.ANNOYING,
-	3,
 	3,
 	3,
 )
@@ -155,7 +150,6 @@ static var FUMBLE := DepthTemplates.new(
 	Difficulty.ANNOYING,
 	2,
 	2,
-	3,
 )
 
 static var TWIST := DepthTemplates.new(
@@ -163,15 +157,14 @@ static var TWIST := DepthTemplates.new(
 	Difficulty.ANNOYING,
 	2,
 	2,
-	3,
 )
 
 static var SLIP_2 := DepthTemplates.new(
 	Depths.SLIP,
 	Difficulty.ANNOYING,
 	2,
-	1,
-	3,
+	2,
+	false,
 	Depths.SLIP
 )
 
@@ -183,15 +176,13 @@ static var SPIKE := DepthTemplates.new(
 	Depths.SPIKE,
 	Difficulty.CRITICAL,
 	4,
-	4,
-	2,
+	3,
 )
 
 static var TRAP := DepthTemplates.new(
 	Depths.TRAP,
 	Difficulty.CRITICAL,
 	4,
-	3,
 	3,
 )
 
@@ -200,7 +191,6 @@ static var LABYRINTH := DepthTemplates.new(
 	Difficulty.CRITICAL,
 	3,
 	2,
-	3,
 )
 
 static var GATE := DepthTemplates.new(
@@ -208,7 +198,7 @@ static var GATE := DepthTemplates.new(
 	Difficulty.CRITICAL,
 	3,
 	3,
-	1,
+	true,
 	Depths.GATE_KEY
 )
 
@@ -217,7 +207,7 @@ static var CATCH := DepthTemplates.new(
 	Difficulty.CRITICAL,
 	3,
 	3,
-	2,
+	true,
 )
 
 static var SURPRISE := DepthTemplates.new(
@@ -225,7 +215,6 @@ static var SURPRISE := DepthTemplates.new(
 	Difficulty.CRITICAL,
 	2,
 	1,
-	2,
 )
 
 static var BOMB := DepthTemplates.new(
@@ -233,7 +222,6 @@ static var BOMB := DepthTemplates.new(
 	Difficulty.CRITICAL,
 	4,
 	2,
-	3,
 )
 
 #endregion
@@ -294,5 +282,4 @@ static var UNLOCK_ORDER: Array[DepthTemplates] = [
 	SLIP_2,  # advance if pushed over
 	SURPRISE,  # break no warning
 	TWIST,  # discard when tested
-	EMPTY,
 ]

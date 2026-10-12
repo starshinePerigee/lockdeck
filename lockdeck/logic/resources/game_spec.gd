@@ -50,37 +50,57 @@ const LOCK := LevelSpec.Stages.LOCK
 const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
 const VICTORY := LevelSpec.Stages.VICTORY
 
-static var LOOT_SEQUENCE: Array[int] = [50, 75, 100, 125, 150, 160, 170, 180]
+static var LOOT_SEQUENCE: Array[int] = [60, 90, 120, 140, 150, 160, 170, 180]
+
+#	0: DifficultyArray.new(0, 0, 1, 0, 1),
+#	1: DifficultyArray.new(0, 1, 0, 0, 1),
+#	2: DifficultyArray.new(1, 0, 0, 0, 1),
+#	3: DifficultyArray.new(1, 0, 1, 1, 1),
+#	4: DifficultyArray.new(1, 1, 0, 1, 1),
+#	5: DifficultyArray.new(1, 1, 1, 1, 2),
+#	6: DifficultyArray.new(2, 1, 0, 1, 1),
+#	7: DifficultyArray.new(2, 0, 1, 1, 2),
+#	8: DifficultyArray.new(2, 1, 0, 2, 1),
+#	9: DifficultyArray.new(2, 2, 1, 1, 2),
+#	10: DifficultyArray.new(2, 2, 0, 1, 3),
+#	11:	DifficultyArray.new(2, 2, 1, 2, 4),
+#	12:	DifficultyArray.new(2, 3, 1, 2, 5),
 
 static var GAME_SEQUENCE: Array[LevelSpec] = [
+	# 0
 	LevelSpec.new(LOCK, 1, 1),
-	LevelSpec.new(LOCK, 1, 2),
 	LevelSpec.new(LOCK, 2, 1),
+	LevelSpec.new(LOCK, 3, 0),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[0]),
 	
-	LevelSpec.new(LOCK, 2, 2),
+	# 4
 	LevelSpec.new(LOCK, 2, 3),
-	LevelSpec.new(LOCK, 3, 2),
+	LevelSpec.new(LOCK, 3, 4),
+	LevelSpec.new(LOCK, 4, 2),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1]),
 	
-	LevelSpec.new(LOCK, 3, 3),
-	LevelSpec.new(LOCK, 3, 4),
-	LevelSpec.new(LOCK, 4, 3),
+	# 8
+	LevelSpec.new(LOCK, 3, 5),
+	LevelSpec.new(LOCK, 4, 4),
+	LevelSpec.new(LOCK, 4, 6),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2]),
 	
-	LevelSpec.new(LOCK, 3, 4),
-	LevelSpec.new(LOCK, 4, 4),
-	LevelSpec.new(LOCK, 5, 3),
+	# 12
+	LevelSpec.new(LOCK, 3, 9),
+	LevelSpec.new(LOCK, 4, 7),
+	LevelSpec.new(LOCK, 5, 6),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3]),
 	
-	LevelSpec.new(LOCK, 4, 5),
-	LevelSpec.new(LOCK, 4, 6),
-	LevelSpec.new(LOCK, 5, 4),
+	# 16
+	LevelSpec.new(LOCK, 4, 8),
+	LevelSpec.new(LOCK, 4, 9),
+	LevelSpec.new(LOCK, 5, 7),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4]),
 	
-	LevelSpec.new(LOCK, 5, 5),
-	LevelSpec.new(LOCK, 5, 6),
-	LevelSpec.new(LOCK, 5, 7),
+	# 20
+	LevelSpec.new(LOCK, 5, 10),
+	LevelSpec.new(LOCK, 5, 11),
+	LevelSpec.new(LOCK, 5, 12),
 	LevelSpec.new(VICTORY),
 ]
 
@@ -122,7 +142,7 @@ func build_new_lockset_deck() -> DepthTemplates:
 	MetaProgression.instance().most_recently_seen_stage = stage
 	MetaProgression.save()
 	
-	lockset_deck = LockGenerator.get_lockset_deck(unlocked_depth)
+	lockset_deck = LockGenerator.get_lockset_deck(heist_number(), unlocked_depth)
 	return unlocked_depth
 
 func build_new_lock_deck(difficulty: int) -> void:

@@ -3,13 +3,9 @@ class_name LockGenerator
 
 # Here is the process for building a lock
 
-# 0: build a catalog of weighted copies of every depth in base_template_deck_catalog
+# 0: build a catalog of weighted copies of every depth currently unlocked
 
-# 1: build your "lockset deck", a sub-deck of depths that is used to build each 
-# lock in a heist.
-# 1a: get a DifficultyArray (a list of how many of each difficulty should be present)
-# for the future lockset deck based on the current arc. This difficulty array 
-# 1b: draw from the arc-catalog until you have the required number of depths for your lockset deck
+# 1: build your "lockset deck", a sub-deck of depths that is used to build each lock in a heist.
 
 # 2: draw your lock deck from the lockset deck
 # 2a: get a DifficultyArray based on the current lock difficulty (separate from it's arc)
@@ -29,6 +25,7 @@ class DifficultyArray:
 	var annoying: int
 	var helpful: int
 	var empty: int
+	var density: int  # density doubles danger (if present) and annoying (if not)
 	var max_critical: int
 	var max_annoying: int
 	var max_helpful: int
@@ -38,19 +35,21 @@ class DifficultyArray:
 		critical_: int, 
 		annoying_: int, 
 		helpful_: int, 
+		density_: int = 0,
 		bumps_: int = 0,
 	) -> void:
 		critical = critical_
 		annoying = annoying_
 		helpful = helpful_
-		empty = TOTAL_TEMPLATES - (critical + annoying + helpful)
+		density = density_
+		empty = TOTAL_TEMPLATES - (critical + annoying + helpful + density)
 		bumps_todo = bumps_
 		max_critical = 10
 		max_annoying = 10
 		max_helpful = 10
 	
 	func copy() -> DifficultyArray:
-		return DifficultyArray.new(critical, annoying, helpful, bumps_todo)
+		return DifficultyArray.new(critical, annoying, helpful, density, bumps_todo)
 	
 	func set_limit_from_source(source: DifficultyArray) -> void:
 		max_critical = source.critical
@@ -63,7 +62,7 @@ class DifficultyArray:
 		max_helpful = len(source.deck[DepthTemplates.Difficulty.HELPFUL])
 	
 	func try_bump() -> bool:
-		match randi_range(0, 3):
+		match randi_range(0, 8):
 			0:
 				if helpful > 0:
 					helpful -= 1
@@ -79,11 +78,17 @@ class DifficultyArray:
 					annoying -= 1
 					critical += 1
 					return true
-			3:
-				# lucky!
-#				if helpful == 0 and empty > 0:
-#					helpful += 1
-#					empty -= 1
+			3, 4:
+				if empty > 0 and (critical > 0 or annoying > 0):
+					empty -= 1
+					density += 1
+					return true
+			5:
+				if helpful == 0 and empty > 0:
+					empty -= 1
+					helpful += 1
+					return true
+			_:
 				return true
 		return false
 	
@@ -99,8 +104,8 @@ class DifficultyArray:
 	
 	func as_str() -> String:
 		return (
-			"crit: %s / %s, annoy: %s / %s, help: %s / %s, empty: %s (bump: %s)"
-			% [critical, max_critical, annoying, max_annoying, helpful, max_helpful, empty, bumps_todo]
+			"crit: %s / %s, annoy: %s / %s, help: %s / %s, dens: %s, empty: %s (bump: %s)"
+			% [critical, max_critical, annoying, max_annoying, helpful, max_helpful, density, empty, bumps_todo]
 		)
 
 #static var arc_deck_parameters: Dictionary[LockDeck.GameArcs, DifficultyArray] = {
@@ -114,31 +119,39 @@ class DifficultyArray:
 ## Pulls a number of depth templates from the total list, returning a smaller
 ## collection that can be used to build locks. This collection will have at least
 ## the target hazard and count.
-static func get_lockset_deck(mandatory: DepthTemplates = null) -> LockDeck:
+static func get_lockset_deck(heist: int = 0, mandatory: DepthTemplates = null) -> LockDeck:
 	var base_deck := LockDeck.base_template_deck()
-	var parameters := DifficultyArray.new(2, 3, 2)
+	var parameters: DifficultyArray
+	if heist <= 2:
+		parameters = DifficultyArray.new(1, 1, 1)
+	elif heist <= 4:
+		parameters = DifficultyArray.new(2, 2, 2)
+	else:
+		parameters = DifficultyArray.new(3, 3, 3)
+	
 	return LockDeck.build_deck(
 		base_deck,
 		parameters.critical,
 		parameters.annoying, 
 		parameters.helpful,
+		0,
 		mandatory
 	)
 
 static var difficulty_parameters: Dictionary[int, DifficultyArray] = {
-	0: DifficultyArray.new(0, 1, 1, 0),
-	1: DifficultyArray.new(0, 1, 1, 1),
-	2: DifficultyArray.new(1, 0, 1, 1),
-	3: DifficultyArray.new(1, 1, 1, 1),
-	4: DifficultyArray.new(1, 1, 2, 3),
-	5: DifficultyArray.new(1, 2, 2, 3),
-	6: DifficultyArray.new(1, 2, 2, 4),
-	7: DifficultyArray.new(2, 2, 3, 4),
-	8: DifficultyArray.new(2, 2, 3, 5),
-	9: DifficultyArray.new(2, 2, 3, 6),
-	10: DifficultyArray.new(2, 3, 3, 6),
-	11: DifficultyArray.new(3, 2, 3, 6),
-	12: DifficultyArray.new(3, 3, 3, 6),
+	0: DifficultyArray.new(0, 0, 1, 0, 1),
+	1: DifficultyArray.new(0, 1, 0, 0, 1),
+	2: DifficultyArray.new(1, 0, 0, 0, 1),
+	3: DifficultyArray.new(1, 0, 1, 1, 1),
+	4: DifficultyArray.new(1, 1, 0, 1, 1),
+	5: DifficultyArray.new(1, 1, 0, 1, 2),
+	6: DifficultyArray.new(2, 1, 0, 1, 1),
+	7: DifficultyArray.new(2, 0, 1, 1, 2),
+	8: DifficultyArray.new(2, 1, 0, 2, 1),
+	9: DifficultyArray.new(2, 2, 1, 1, 2),
+	10: DifficultyArray.new(2, 2, 0, 1, 3),
+	11:	DifficultyArray.new(2, 2, 1, 2, 4),
+	12:	DifficultyArray.new(2, 3, 1, 2, 5),
 }
 
 ## Gets a static DifficultyArray from the predefined list (or extended, if needed)
@@ -172,7 +185,8 @@ static func get_lock_deck(
 		lockset_deck,
 		difficulties.critical,
 		difficulties.annoying, 
-		difficulties.helpful
+		difficulties.helpful,
+		difficulties.density,
 	)
 
 ## Generate a lock_spec given a lock deck and a pin count
@@ -212,7 +226,7 @@ static func build_lock(
 				pins[target].depths[pos] = template.depth
 			
 			placed += 1
-			if placed > template.pin_count(pin_count):
+			if placed >= template.pin_count(pin_count):
 				break
 	
 	for pin in pins:
@@ -229,7 +243,7 @@ static func get_next_level(
 		pin_count = min(difficulty, 5)
 	
 	print("\n        Generating new lock")
-	var lockset_deck := get_lockset_deck()
+	var lockset_deck := get_lockset_deck(int((difficulty + 1) / 2.0))
 	var parameters := get_difficulty_parameter(difficulty)
 	parameters.do_bumps()
 	print(parameters.as_str())

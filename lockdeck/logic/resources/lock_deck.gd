@@ -5,6 +5,9 @@ class_name LockDeck
 ## All the cards in a Difficulty: Array[DepthTemplate) dictionary
 @export var deck: Dictionary[DepthTemplates.Difficulty, Array]
 
+## modifier that doubles up the worst templates in a deck
+@export var densities: int
+
 ## used to track your position in the deck while you are drawing cards
 ## (decks are not shuffled between each card draw; only once exhausted)
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
@@ -70,6 +73,7 @@ func _init() -> void:
 	for difficulty in DepthTemplates.Difficulty.values():
 		deck[difficulty] = []
 		_pointers[difficulty] = -1
+	densities = 0
 
 static func from_template_array(templates: Array[DepthTemplates]) -> LockDeck:
 	var lock_deck := LockDeck.new()
@@ -101,6 +105,7 @@ static func build_deck(
 	critical: int,
 	annoying: int,
 	helpful: int,
+	density: int,
 	mandatory: DepthTemplates = null
 ) -> LockDeck:
 	var new_deck := LockDeck.new()
@@ -129,10 +134,16 @@ static func build_deck(
 		new_draw = source_deck.draw(DepthTemplates.Difficulty.CRITICAL)
 		if new_draw:
 			new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(new_draw)
+			if density > 0 and not new_draw.do_not_duplicate:
+				new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(new_draw)
+				density -= 1
 	for __ in annoying:
 		new_draw = source_deck.draw(DepthTemplates.Difficulty.ANNOYING)
 		if new_draw:
 			new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(new_draw)
+			if density > 0 and not new_draw.do_not_duplicate:
+				new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(new_draw)
+				density -= 1
 	for __ in helpful:
 		new_draw = source_deck.draw(DepthTemplates.Difficulty.HELPFUL)
 		if new_draw:
