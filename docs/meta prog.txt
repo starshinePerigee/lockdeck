@@ -1,5 +1,12 @@
-tutorial level select
-level select only if you play tutorial twice
-depth unlocking
 new level gen
-start with fullscreen
+
+
+
+THE BIG LEVEL REFACTOR
+core idea: lots of different depths in a level is confusing and hard, and should be saved for the very sickos side.
+
+However, big locks with lots of pins is interesting, even if they're mostly empty. Thus:
+- more empty pins - add additional easy levels, easy 3-pins, etc.
+- less depths all the time (but more copies is fine)
+- a depth should be able to stand on its own (with break)
+- difficulty works by moving from weaknesses > inconveniences > hazards
