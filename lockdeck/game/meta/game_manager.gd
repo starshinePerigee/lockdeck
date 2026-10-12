@@ -33,7 +33,7 @@ func begin_tutorial(level := 0) -> void:
 		level = 1
 	game.stage = level  # needed to show the display correctly
 	game.current_deck = []
-	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.build_new_lockset_deck()
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
@@ -47,7 +47,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$AnimationPlayer.advance(0)
 	game = GameSpec.new()
 	game.current_deck = starter_deck
-	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.build_new_lockset_deck()
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
@@ -147,7 +147,7 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
 		LevelSpec.Stages.LOOT_STRAT:
-			game.build_new_lockset_deck(next_level.arc)
+			game.build_new_lockset_deck()
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()

@@ -96,7 +96,6 @@ func gen_new_lock() -> void:
 	var difficulty := int($Difficulty/Input.text)
 	var lock := LockGenerator.get_next_level(
 		difficulty,
-		LockDeck.GameArcs.MID,
 		5
 	)
 	
@@ -106,6 +105,12 @@ func gen_new_lock() -> void:
 	
 	$CylinderMain.load_new_lock(lock)
 	reveal_all()
+
+func update_unlock() -> void:
+	var new_level: int = int($Difficulty/Input2.text)
+	MetaProgression.instance().depth_level = new_level
+	MetaProgression.save()
+	print("Set unlock to %s" % new_level)
 
 var _cursoring: int = -1
 func _process(_delta: float) -> void:
@@ -141,3 +146,4 @@ func _ready() -> void:
 	$FallButton.pressed.connect($CylinderMain.handle_fall)
 	$DemoButton.pressed.connect(set_testpos)
 	$RevealButton.pressed.connect(reveal_all)
+	$Difficulty/Input2.text_changed.connect(update_unlock)

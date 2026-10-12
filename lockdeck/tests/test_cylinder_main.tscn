@@ -82,6 +82,7 @@ offset_top = 223.0
 offset_right = 136.0
 offset_bottom = 256.0
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+button_pressed = true
 text = "reveal:"
 
 [node name="CardSpace" parent="." instance=ExtResource("3_3xowv")]
@@ -129,7 +130,6 @@ offset_top = 212.0
 offset_right = 345.0
 offset_bottom = 238.0
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-button_pressed = true
 text = "Test pins: "
 
 [node name="Button" type="Button" parent="Difficulty"]
@@ -140,6 +140,19 @@ offset_right = 327.0
 offset_bottom = 292.0
 theme_type_variation = &"BoxButton"
 text = "regenerate"
+
+[node name="Label2" type="Label" parent="Difficulty"]
+offset_left = 211.0
+offset_top = 395.0
+offset_right = 309.0
+offset_bottom = 421.0
+text = "Unlock:"
+
+[node name="Input2" type="TextEdit" parent="Difficulty"]
+offset_left = 288.0
+offset_top = 391.0
+offset_right = 359.0
+offset_bottom = 438.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -1000

@@ -893,7 +893,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(LOCK, 1, 1),
 	LevelSpec.new(LOCK, 1, 2),
 	LevelSpec.new(LOCK, 2, 1),
-	LevelSpec.new(LOOT_STRAT, 100, LockDeck.GameArcs.MID),
+	LevelSpec.new(LOOT_STRAT, 100),
 ]
 
 func tutorialize(level_: int) -> void:

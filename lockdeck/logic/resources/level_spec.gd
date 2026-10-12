@@ -24,8 +24,6 @@ var pin_count: int = 1
 var difficulty: int = 0
 ## How much loot to generate
 var loot: int = 0
-## The next lockset deck to load
-var arc: LockDeck.GameArcs
 ## tutorial level
 var tutorial_level: int = 0
 var state: StateSpec = null
@@ -48,7 +46,6 @@ func _init(
 			difficulty = difficulty_
 		Stages.LOOT_STRAT:
 			loot = count_
-			arc = difficulty_ as LockDeck.GameArcs
 		Stages.VICTORY:
 			pass
 		Stages.TUTORIAL:
