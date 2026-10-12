@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://q31qkhtsbldq"]
+
+[ext_resource type="Script" uid="uid://b7xo0vyjixp0y" path="res://game/strategy/unlock_box.gd" id="1_xp8oc"]
+[ext_resource type="PackedScene" uid="uid://bmwdqtf170j2u" path="res://game/strategy/depth_info.tscn" id="2_bgg7i"]
+
+[node name="UnlockBox" type="PanelContainer"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_type_variation = &"PaperPanelContainer"
+script = ExtResource("1_xp8oc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Splash" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardBig"
+text = "New Depth Unlocked!"
+horizontal_alignment = 1
+
+[node name="DepthInfo" parent="VBoxContainer" instance=ExtResource("2_bgg7i")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" parent="VBoxContainer/DepthInfo" index="1"]
+theme_type_variation = &"CardBig"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+theme_type_variation = &"CardBig"
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia magna eu velit feugiat, vel condimentum ex iaculis. Morbi tincidunt id neque eu accumsan. "
+autowrap_mode = 2
+
+[node name="Continue" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"CardText"
+text = "Click window to continue"
+horizontal_alignment = 1
+
+[editable path="VBoxContainer/DepthInfo"]

@@ -147,7 +147,6 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
 		LevelSpec.Stages.LOOT_STRAT:
-			game.build_new_lockset_deck()
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
@@ -173,17 +172,22 @@ func next_loot(loot_value: int) -> void:
 	GlobalEffects.request(FX_LOOT_ROLL_IN)
 	shop_start.emit()
 	await $AnimationPlayer.animation_finished
-	$Tutorializer.do_loot_drop()
+	if game.tutorial_mode:
+		$Tutorializer.do_loot_drop()
 
 func end_loot() -> void:
 	if game.game_complete():
 		end_game.emit()
 	else:
+		var unlock_depth := game.build_new_lockset_deck()
 		$StrategyHub.reset()
+		if unlock_depth:
+			$StrategyHub.show_unlock(unlock_depth)
 		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
 		$AnimationPlayer.play("loot to strategy")
 		await $AnimationPlayer.animation_finished
-		$Tutorializer.do_strat_hub()
+		if game.tutorial_mode:
+			$Tutorializer.do_strat_hub()
 
 func end_strategy() -> void:
 	game.stage += 1

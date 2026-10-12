@@ -274,8 +274,6 @@ static func _static_init() -> void:
 static var STARTING_TEMPLATES: Array[DepthTemplates] = [
 	BREAK,
 	
-	EMPTY,
-	
 	BOUNCE, # move back four
 	
 	SPIKE
@@ -296,4 +294,5 @@ static var UNLOCK_ORDER: Array[DepthTemplates] = [
 	SLIP_2,  # advance if pushed over
 	TWIST,  # discard when tested
 	SURPRISE,  # break no warning
+	EMPTY,
 ]

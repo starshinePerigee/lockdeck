@@ -10,6 +10,9 @@ class_name LockDeck
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
 
 func draw(difficulty: DepthTemplates.Difficulty) -> DepthTemplates:
+	if len(deck[difficulty]) == 0:
+		return null
+	
 	_pointers[difficulty] += 1
 	if _pointers[difficulty] >= len(deck[difficulty]):
 		deck[difficulty].shuffle()
@@ -121,17 +124,17 @@ static func build_deck(
 				pass
 		new_deck.deck[mandatory.difficulty].append(mandatory)
 	
+	var new_draw: DepthTemplates
 	for __ in critical:
-		new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(
-			source_deck.draw(DepthTemplates.Difficulty.CRITICAL)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.CRITICAL)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(new_draw)
 	for __ in annoying:
-		new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(
-			source_deck.draw(DepthTemplates.Difficulty.ANNOYING)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.ANNOYING)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(new_draw)
 	for __ in helpful:
-		new_deck.deck[DepthTemplates.Difficulty.HELPFUL].append(
-			source_deck.draw(DepthTemplates.Difficulty.HELPFUL)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.HELPFUL)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.HELPFUL].append(new_draw)
 	return new_deck
-

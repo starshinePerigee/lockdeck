@@ -114,7 +114,7 @@ class DifficultyArray:
 ## Pulls a number of depth templates from the total list, returning a smaller
 ## collection that can be used to build locks. This collection will have at least
 ## the target hazard and count.
-static func get_lockset_deck() -> LockDeck:
+static func get_lockset_deck(mandatory: DepthTemplates = null) -> LockDeck:
 	var base_deck := LockDeck.base_template_deck()
 	var parameters := DifficultyArray.new(2, 3, 2)
 	return LockDeck.build_deck(
@@ -122,6 +122,7 @@ static func get_lockset_deck() -> LockDeck:
 		parameters.critical,
 		parameters.annoying, 
 		parameters.helpful,
+		mandatory
 	)
 
 static var difficulty_parameters: Dictionary[int, DifficultyArray] = {

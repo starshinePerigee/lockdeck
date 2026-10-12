@@ -107,8 +107,23 @@ func get_next_level() -> LevelSpec:
 	
 	return GAME_SEQUENCE[stage]
 
-func build_new_lockset_deck() -> void:
-	lockset_deck = LockGenerator.get_lockset_deck()
+func build_new_lockset_deck() -> DepthTemplates:
+	var unlocked_depth: DepthTemplates = null
+	if not tutorial_mode and stage > 1:
+		var unlock_level := MetaProgression.instance().depth_level
+		
+		if unlock_level < len(DepthTemplates.UNLOCK_ORDER):
+			unlocked_depth = DepthTemplates.UNLOCK_ORDER[unlock_level]
+		
+		if stage != MetaProgression.instance().most_recently_seen_stage:
+			MetaProgression.instance().depth_level += 1
+			print("Updating metaprogression depth level to %s" % MetaProgression.instance().depth_level)
+	
+	MetaProgression.instance().most_recently_seen_stage = stage
+	MetaProgression.save()
+	
+	lockset_deck = LockGenerator.get_lockset_deck(unlocked_depth)
+	return unlocked_depth
 
 func build_new_lock_deck(difficulty: int) -> void:
 	var difficulty_params := LockGenerator.get_difficulty_parameters(difficulty, lockset_deck)

@@ -4,6 +4,7 @@ class_name MetaProgression
 
 @export var tutorial_level := 0
 @export var depth_level := 0
+@export var most_recently_seen_stage := 0
 
 const SAVE_PATH := "user://meta_progression.tres"
 
