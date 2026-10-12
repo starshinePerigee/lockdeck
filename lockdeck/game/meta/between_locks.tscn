@@ -516,7 +516,7 @@ offset_left = 373.0
 offset_top = 408.0
 offset_right = 629.0
 offset_bottom = 434.0
-text = "Speed bonus! +5 gold"
+text = "Speed bonus! +10 gold"
 
 [node name="DisplayCoin" parent="SpeedBonusLabel" instance=ExtResource("3_fmoul")]
 layout_mode = 1
@@ -596,9 +596,9 @@ texture = ExtResource("6_fqa36")
 
 [node name="CurrentPos" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 498.0
+offset_left = 16.0
 offset_top = 218.0
-offset_right = 626.0
+offset_right = 144.0
 offset_bottom = 346.0
 texture = ExtResource("7_ks8ci")
 
