@@ -163,14 +163,11 @@ func lock_in_heist() -> int:
 		return stage
 	
 	var lock_count := 0
-	var clear_next := false
 	for level in GAME_SEQUENCE.slice(0, stage + 1):
-		if clear_next:
-			lock_count = 0
 		if level.stage == LOCK:
 			lock_count += 1
 		elif level.stage == LOOT_STRAT:
-			clear_next = true
+			lock_count = 0
 	
 	return lock_count
 

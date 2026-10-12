@@ -307,8 +307,6 @@ const FX_ROLL_OUT := preload("res://assets/fx/menu_roll_out.ogg")
 
 func set_state(state: InputState) -> void:
 	if current_state == state:
-		if DEBUG_MODE:
-			print("Already in state %s" % InputState.find_key(state))
 		return
 	
 	if DEBUG_MODE:

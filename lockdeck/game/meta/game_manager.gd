@@ -65,16 +65,23 @@ func load_saved_game(saved_game: GameSpec):
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
-	print("Loading lock in heist: %s" % game.lock_in_heist())
-	$BetweenLocks.reset(game.lock_in_heist() - 1)
+	
 	if game.tutorial_mode:
 		if game.get_next_level().stage == LevelSpec.Stages.SPECIFIC:
 			$BetweenLocks.set_text("challenge")
 		else:
 			$BetweenLocks.set_text("first")
 		$BetweenLocks/AnimationPlayer.play("go_tutorial")
+	elif game.get_next_level().stage == LevelSpec.Stages.LOOT_STRAT:
+		print("Loading loot_strat")
+		$BetweenLocks.reset(3)
+		shop_start.emit() 
+	else:
+		print("Loading lock in heist: %s" % game.lock_in_heist())
+		$BetweenLocks.reset(game.lock_in_heist() - 1)
+		heist_start.emit(game.heist_number())
+	
 	$AnimationPlayer.play("first lock")
-	heist_start.emit(game.heist_number())
 
 const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
 const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")

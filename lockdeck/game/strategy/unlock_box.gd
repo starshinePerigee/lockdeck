@@ -15,14 +15,13 @@ func show_depth_unlock(
 	%DepthInfo.visible = true
 	%DepthInfo.depth = depth
 	%Label.text = depth.description
-	print("HIT")
 	_finish_unlock()
 
 func show_deck_unlock(
 	deck_name: String,
 	description: String
 ) -> void:
-	%Splash.text = "New Deck Unlocked!"
+	%Splash.text = "New Deck Unlocked: %s!" % deck_name.capitalize()
 	%DepthInfo.visible = false
 	%DepthInfo.depth = Depths.DEBUG
 	%Label.text = description
@@ -55,12 +54,12 @@ func _do_press() -> void:
 
 func _end_press() -> void:
 	close()
+	box_clicked.emit()
 	GlobalEffects.request(FX_CLICK)
 
 func close() -> void:
 	if visible:
 		hide()
-		box_clicked.emit()
 
 func _input(event: InputEvent) -> void:
 	if (
