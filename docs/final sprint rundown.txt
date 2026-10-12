@@ -7,7 +7,7 @@ x ambience and music
 x input sprint (fix the input bugs frfr)
 x final major assets (picks, home screen, load screen, loot chest, between locks)
 x animation sprint (push effects, card draw and flow, sound effects 1)
-- tutorial
+x tutorial
 - knucklebones and new victory
 - post game screen
 - balance pass 1
@@ -15,7 +15,7 @@ x animation sprint (push effects, card draw and flow, sound effects 1)
 
 ---
 
-- meta 0 (unlocking new depths, furthest progress label, reset progress / reset tutorials menu)
+x meta 0 (unlocking new depths, furthest progress label, reset progress / reset tutorials menu)
 - strat hub update
 - pick modifiers (gems)
 - potions 
