@@ -68,6 +68,7 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 				pin_refs[i].animate.bind(
 					pins[i], 
 					effects_typed, 
+					end_step.results[i].test_results
 				)
 			)
 			_tween.tween_interval(0.07 * animation_scale)

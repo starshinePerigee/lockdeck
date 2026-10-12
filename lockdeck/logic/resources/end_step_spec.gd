@@ -11,7 +11,6 @@ class_name EndStepSpec
 @export var picks_twisted := 0
 @export var turn_number := -1
 @export var last_reveal := PinSpec.RevealLevel.REVEALED
-@export var last_hint := ""
 
 ## Holds all effects as a Dictionary[pin position, Array[EffectSpec))
 @export var effects: Dictionary[int, Array]
@@ -43,15 +42,9 @@ func record_effect(effect: EffectSpec, realized_pin: int) -> void:
 		effects[realized_pin].append(effect)
 
 func print() -> void:
-	var hint_str: String
-	if last_hint:
-		hint_str = "hint %s" % last_hint
-	else:
-		hint_str = "no hint"
-	
 	print(
-		"Results for turn %s (%s)"
-		% [turn_number, hint_str]
+		"Results for turn %s"
+		% [turn_number]
 	)
 	
 	for k in effects.keys():

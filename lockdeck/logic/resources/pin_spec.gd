@@ -537,6 +537,9 @@ func get_result_spec() -> ResultSpec:
 		if Results.gt(results[i], Results.EMPTY):
 			has_results = true
 			result_spec.results[i] = results[i]
+		if results[i] == Results.HINT:
+			# gets updated in cylinder main
+			result_spec.test_results[i] = RevealLevel.UNKNOWN
 	if jam_count > 0 and has_results:
 		result_spec.jam_depth = pin_position
 	result_spec.bomb_defused = _bomb_defused

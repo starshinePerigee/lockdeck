@@ -927,7 +927,7 @@ offset_bottom = -119.0
 offset_left = 1.0
 offset_top = -1.0
 offset_right = 529.0
-offset_bottom = 607.0
+offset_bottom = 511.0
 
 [node name="IndicatorPick" parent="LockBody" instance=ExtResource("9_i4qfg")]
 layout_mode = 0

@@ -29,6 +29,27 @@ const PREV_SPACING := 12
 		else:
 			$DepthTexture.material = material_normal
 
+const TESTRESULT_CLEAR := preload("res://assets/pin/testresult_safe.png")
+const TESTRESULT_INTERESTING := preload("res://assets/pin/testresult_caution.png")
+const TESTRESULT_DANGEROUS := preload("res://assets/pin/testresult_danger.png")
+const TESTRESULT_NONE := preload("res://assets/pin/testresult_nothing.png")
+
+@export var test_result: PinSpec.RevealLevel = PinSpec.RevealLevel.UNKNOWN:
+	set(v):
+		test_result = v
+		match test_result:
+			PinSpec.RevealLevel.CLEAR:
+				$TestResult.texture = TESTRESULT_CLEAR
+			PinSpec.RevealLevel.INTERESTING:
+				$TestResult.texture = TESTRESULT_INTERESTING
+			PinSpec.RevealLevel.DANGEROUS:
+				$TestResult.texture = TESTRESULT_DANGEROUS
+			PinSpec.RevealLevel.UNKNOWN:
+				$TestResult.texture = TESTRESULT_NONE
+			PinSpec.RevealLevel.REVEALED:
+				$TestResult.texture = TESTRESULT_NONE
+		$TestResult.visible = test_result != PinSpec.RevealLevel.REVEALED
+
 func _redraw() -> void:
 	if not is_node_ready():
 		await ready
