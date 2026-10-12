@@ -1,0 +1,5 @@
+tutorial level select
+level select only if you play tutorial twice
+depth unlocking
+new level gen
+start with fullscreen

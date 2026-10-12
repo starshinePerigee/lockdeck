@@ -75,6 +75,7 @@ base_text = "Quit"
 confirm_text = "Really Quit?"
 
 [node name="Version" type="Label" parent="."]
+layout_mode = 0
 offset_left = 1.0
 offset_top = 527.0
 offset_right = 57.0

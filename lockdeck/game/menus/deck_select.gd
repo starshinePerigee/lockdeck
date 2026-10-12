@@ -1,14 +1,18 @@
 extends Control
 
 signal start_game(cards: Array[CardSpec])
-signal start_tutorial
+signal tutorial_start(int)
+signal show_level_select
 signal return_to_menu
 
 var current_deck: DeckTemplates
 
 func do_start() -> void:
 	if current_deck == DeckTemplates.TUTORIAL:
-		start_tutorial.emit()
+		if MetaProgression.instance().tutorial_level > 0:
+			show_level_select.emit()
+		else:
+			tutorial_start.emit(0)
 		return
 	
 	var specs: Array[CardSpec] = []
@@ -25,6 +29,12 @@ func select_deck(template: DeckTemplates) -> void:
 
 func reset() -> void:
 	current_deck = null
+	
+	var deck_unlock := MetaProgression.instance().deck_unlock_level
+	for i in $VBoxContainer.get_child_count():
+		$VBoxContainer.get_child(i).disabled = i > deck_unlock
+	$UnlockGuide.visible = deck_unlock < 5
+	
 	%Info.text = "Select a deck."
 	%GoButton.visible = false
 

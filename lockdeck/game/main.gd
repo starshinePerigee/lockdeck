@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v1.0.1"
+var VERSION_NUMBER := "v1.0.2"
 
 var _saved_game: GameSpec
 
@@ -22,10 +22,13 @@ func start_game(starter_deck: Array[CardSpec]) -> void:
 	$TopLevelMenus/AnimationPlayer.play("start_game")
 	$GameManager.begin_new_game(starter_deck)
 
-func start_tutorial() -> void:
+func start_tutorial(level: int, from_select: bool) -> void:
 	$GameManager.visible = true
-	$TopLevelMenus/AnimationPlayer.play("start_game")
-	$GameManager.begin_tutorial()
+	if from_select:
+		$TopLevelMenus/AnimationPlayer.play("start_from_levels")
+	else:
+		$TopLevelMenus/AnimationPlayer.play("start_game")
+	$GameManager.begin_tutorial(level)
 
 const FX_RETURN_CHIME := preload("res://assets/fx/low_chime.ogg")
 
@@ -74,7 +77,8 @@ func _ready() -> void:
 	$GameManager/MenuMain.return_to_title.connect(return_to_title)
 	$GameManager/MenuMain.return_to_title.connect($BgmMain.title_screen)
 	$TopLevelMenus/DeckSelect.start_game.connect(start_game)
-	$TopLevelMenus/DeckSelect.start_tutorial.connect(start_tutorial)
+	$TopLevelMenus/DeckSelect.tutorial_start.connect(start_tutorial.bind(false))
+	$TopLevelMenus/LevelSelect.tutorial_start.connect(start_tutorial.bind(true))
 	$TopLevelMenus/Title.load_game.connect(load_saved_game)
 	$TopLevelMenus/AnimationPlayer.play("RESET")
 	

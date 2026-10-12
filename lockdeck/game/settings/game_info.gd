@@ -14,7 +14,7 @@ static func instance(force: bool = false) -> GameInfo:
 		_instance = _load_from_disk()
 	return _instance
 
-static func save():
+static func save() -> void:
 	var ret := ResourceSaver.save(instance(), SAVE_PATH)
 	if ret != OK:
 		push_error("Failed to save! path: %s, error: %d" % [SAVE_PATH, ret])

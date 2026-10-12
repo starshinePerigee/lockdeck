@@ -25,14 +25,15 @@ func break_three() -> void:
 # Note: "first lock" and any of the "x to between" animations on GameManager's AnimationPlayer
 # call between.animate on completion, but animation is skipped if between is in tutorial mode.
 
-func begin_tutorial() -> void:
+func begin_tutorial(level := 0) -> void:
 	$AnimationPlayer.play("RESET")
 	game = GameSpec.new()
 	game.tutorial_mode = true
-	game.stage = 1  # needed to show the display correctly
-#	game.stage = 24  # TODO
+	if level < 1:
+		level = 1
+	game.stage = level  # needed to show the display correctly
 	game.current_deck = []
-	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.build_new_lockset_deck()
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
@@ -46,7 +47,7 @@ func begin_new_game(starter_deck: Array[CardSpec]) -> void:
 	$AnimationPlayer.advance(0)
 	game = GameSpec.new()
 	game.current_deck = starter_deck
-	game.build_new_lockset_deck(LockDeck.GameArcs.EARLY)
+	game.build_new_lockset_deck()
 	game.save()
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
@@ -64,16 +65,23 @@ func load_saved_game(saved_game: GameSpec):
 	$StrategyHub.set_game(game)
 	$LootMain.game = game
 	$BetweenLocks/SpeedBonusLabel.visible = false
-	print("Loading lock in heist: %s" % game.lock_in_heist())
-	$BetweenLocks.reset(game.lock_in_heist() - 1)
+	
 	if game.tutorial_mode:
 		if game.get_next_level().stage == LevelSpec.Stages.SPECIFIC:
 			$BetweenLocks.set_text("challenge")
 		else:
 			$BetweenLocks.set_text("first")
 		$BetweenLocks/AnimationPlayer.play("go_tutorial")
+	elif game.get_next_level().stage == LevelSpec.Stages.LOOT_STRAT:
+		print("Loading loot_strat")
+		$BetweenLocks.reset(3)
+		shop_start.emit() 
+	else:
+		print("Loading lock in heist: %s" % game.lock_in_heist())
+		$BetweenLocks.reset(game.lock_in_heist() - 1)
+		heist_start.emit(game.heist_number())
+	
 	$AnimationPlayer.play("first lock")
-	heist_start.emit(game.heist_number())
 
 const FX_LOCK_ROLL_IN := preload("res://assets/fx/lock_roll_in.ogg")
 const FX_LOCK_ROLL_OUT := preload("res://assets/fx/lock_roll_out.ogg")
@@ -146,7 +154,6 @@ func advance_from_between() -> void:
 		LevelSpec.Stages.VICTORY:
 			do_victory()
 		LevelSpec.Stages.LOOT_STRAT:
-			game.build_new_lockset_deck(next_level.arc)
 			next_loot(next_level.loot)
 		LevelSpec.Stages.LOCK:
 			lock_start.emit()
@@ -167,22 +174,33 @@ func advance_from_between() -> void:
 			$Tutorializer.do_step()
 
 func next_loot(loot_value: int) -> void:
+	# amazing hacks happening here:
+	var unlock_level: int = GameSpec.LOOT_SEQUENCE.find(loot_value)
+	MetaProgression.deck_unlock(unlock_level)
+
 	$LootMain.do_loot(loot_value)
 	$AnimationPlayer.play("between to loot", -12)
 	GlobalEffects.request(FX_LOOT_ROLL_IN)
 	shop_start.emit()
 	await $AnimationPlayer.animation_finished
-	$Tutorializer.do_loot_drop()
+	if game.tutorial_mode:
+		$Tutorializer.do_loot_drop()
 
 func end_loot() -> void:
 	if game.game_complete():
 		end_game.emit()
 	else:
+		var unlock_depth := game.build_new_lockset_deck()
 		$StrategyHub.reset()
+		if unlock_depth:
+			$StrategyHub.show_unlock(unlock_depth)
+		if MetaProgression.instance().depth_level == len(DepthTemplates.UNLOCK_ORDER):
+			$StrategyHub.show_thanks()
 		GlobalEffects.request(FX_LOOT_ROLL_OUT, -6)
 		$AnimationPlayer.play("loot to strategy")
 		await $AnimationPlayer.animation_finished
-		$Tutorializer.do_strat_hub()
+		if game.tutorial_mode:
+			$Tutorializer.do_strat_hub()
 
 func end_strategy() -> void:
 	game.stage += 1
@@ -194,6 +212,7 @@ func end_strategy() -> void:
 
 func do_victory() -> void:
 	GameSpec.clear_save()
+	MetaProgression.deck_unlock(5)
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 	victory_start.emit()

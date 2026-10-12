@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://t14tg1tt2anv"]
+[gd_scene load_steps=12 format=3 uid="uid://t14tg1tt2anv"]
 
 [ext_resource type="Script" uid="uid://c25vwhryx8ej1" path="res://game/meta/strategy_hub.gd" id="2_1r8dw"]
 [ext_resource type="PackedScene" uid="uid://b7lelt4l4x7xq" path="res://game/strategy/effect_count.tscn" id="3_ig3c4"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b5e53sip1353w" path="res://game/strategy/shop_widget.tscn" id="9_f7am3"]
 [ext_resource type="PackedScene" uid="uid://1gm4g3xdvbqn" path="res://game/strategy/repair_widget.tscn" id="9_snyf0"]
 [ext_resource type="PackedScene" uid="uid://baek5vgdxl62k" path="res://game/strategy/preview_widget.tscn" id="10_snyf0"]
+[ext_resource type="PackedScene" uid="uid://q31qkhtsbldq" path="res://game/strategy/unlock_box.tscn" id="11_f7am3"]
 
 [node name="StrategyHub" type="Control"]
 layout_mode = 3
@@ -175,3 +176,7 @@ title = "Next Heist"
 [node name="PreviewWidget" parent="PreviewPopover" instance=ExtResource("10_snyf0")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="UnlockBox" parent="." instance=ExtResource("11_f7am3")]
+visible = false
+layout_mode = 0

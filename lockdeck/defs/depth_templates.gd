@@ -19,6 +19,8 @@ class_name DepthTemplates
 #	4	1	2	2	3	4
 #	5	1	2	3	4	5
 
+@export var duplicates_per_pin: int
+
 ## overrides the above and will always place this many depths. 0 to disregard (default)
 @export var absolute_limit: int
 
@@ -31,12 +33,8 @@ enum Difficulty {
 }
 
 @export var difficulty: Difficulty
-## How frequently to include this depth for early (1-3 pin) locks
-@export var early_weight: int
-## How frequently to include this depth for midgame (4 and early 5 pin) locks
-@export var mid_weight: int
-## How frequently to include this depth in extended endgame locks
-@export var late_weight: int
+## How frequently to include this depth
+@export var weight: int
 
 func reify() -> void:
 	depth = Depths.static_registry[depth.depth_name]
@@ -46,8 +44,9 @@ func reify() -> void:
 func _init(
 	depth_: Depths = Depths.DEBUG,
 	difficulty_: Difficulty = Difficulty.EMPTY,
-	weights: Array[int] = [0, 0, 0],
+	weight_: int = 0,
 	per_five: int = 5,
+	per_pin: int = 1,
 	minor: Depths = null
 ):
 	depth = depth_
@@ -55,9 +54,8 @@ func _init(
 	difficulty = difficulty_
 	absolute_limit = 0
 	depths_per_five = per_five
-	early_weight = weights[0]
-	mid_weight = weights[1]
-	late_weight = weights[2]
+	duplicates_per_pin = per_pin
+	weight = weight_
 
 ## Returns how many pins to apply this depth to.
 func pin_count(pins: int) -> int:
@@ -84,8 +82,9 @@ func as_str() -> String:
 static var BREAK := DepthTemplates.new(
 	Depths.BREAK,
 	Difficulty.ESSENTIAL,
-	[1, 1, 1],
+	1,
 	5,
+	1,
 	Depths.WARN
 )
 
@@ -94,29 +93,33 @@ static var BREAK := DepthTemplates.new(
 static var EMPTY := DepthTemplates.new(
 	Depths.EMPTY,
 	Difficulty.HELPFUL,
-	[0, 1, 3],
 	3,
+	3,
+	2,
 )
 
 static var UNLOCK := DepthTemplates.new(
 	Depths.LUCKY,
 	Difficulty.HELPFUL,
-	[0, 2, 1],
-	2
+	1,
+	2,
+	1
 )
 
 static var BREATH := DepthTemplates.new(
 	Depths.BREATH,
 	Difficulty.HELPFUL,
-	[1, 1, 3],
-	2
+	2,
+	2,
+	2,
 )
 
 static var HINT := DepthTemplates.new(
 	Depths.HINT,
 	Difficulty.HELPFUL,
-	[2, 2, 2],
+	2,
 	4,
+	2,
 )
 
 #endregion
@@ -126,51 +129,50 @@ static var HINT := DepthTemplates.new(
 static var PUSH := DepthTemplates.new(
 	Depths.PUSH,
 	Difficulty.ANNOYING,
-	[4, 3, 3],
-	4
+	3,
+	4,
+	4,
 )
 
 static var JAM := DepthTemplates.new(
 	Depths.JAM,
 	Difficulty.ANNOYING,
-	[2, 3, 4],
 	3,
+	3,
+	4,
 )
 
 static var BOUNCE := DepthTemplates.new(
 	Depths.BOUNCE,
 	Difficulty.ANNOYING,
-	[3, 2, 2],
-	3
+	3,
+	3,
+	3,
 )
 
 static var FUMBLE := DepthTemplates.new(
 	Depths.FUMBLE,
 	Difficulty.ANNOYING,
-	[1, 2, 2],
-	2
+	2,
+	2,
+	3,
 )
 
 static var TWIST := DepthTemplates.new(
 	Depths.TWIST,
 	Difficulty.ANNOYING,
-	[0, 0, 3],
-	2
+	2,
+	2,
+	3,
 )
 
 static var SLIP_2 := DepthTemplates.new(
 	Depths.SLIP,
 	Difficulty.ANNOYING,
-	[0, 1, 1],
+	2,
 	1,
-	Depths.SLIP
-)
-
-static var SLIP_1 := DepthTemplates.new(
-	Depths.SLIP,
-	Difficulty.ANNOYING,
-	[0, 1, 1],
 	3,
+	Depths.SLIP
 )
 
 #endregion
@@ -180,51 +182,58 @@ static var SLIP_1 := DepthTemplates.new(
 static var SPIKE := DepthTemplates.new(
 	Depths.SPIKE,
 	Difficulty.CRITICAL,
-	[2, 2, 2],
-	4
+	4,
+	4,
+	2,
 )
 
 static var TRAP := DepthTemplates.new(
 	Depths.TRAP,
 	Difficulty.CRITICAL,
-	[1, 2, 2],
-	3
+	4,
+	3,
+	3,
 )
 
 static var LABYRINTH := DepthTemplates.new(
 	Depths.LABYRINTH,
 	Difficulty.CRITICAL,
-	[0, 1, 2],
-	2
+	3,
+	2,
+	3,
 )
 
 static var GATE := DepthTemplates.new(
 	Depths.GATE_LOCKED,
 	Difficulty.CRITICAL,
-	[1, 1, 1],
 	3,
+	3,
+	1,
 	Depths.GATE_KEY
 )
 
 static var CATCH := DepthTemplates.new(
 	Depths.CATCH,
 	Difficulty.CRITICAL,
-	[0, 1, 3],
-	3
+	3,
+	3,
+	2,
 )
 
 static var SURPRISE := DepthTemplates.new(
 	Depths.SURPRISE,
 	Difficulty.CRITICAL,
-	[0, 1, 2],
-	1
+	2,
+	1,
+	2,
 )
 
 static var BOMB := DepthTemplates.new(
 	Depths.BOMB,
 	Difficulty.CRITICAL,
-	[1, 2, 3],
-	2
+	4,
+	2,
+	3,
 )
 
 #endregion
@@ -242,7 +251,6 @@ static var ALL_TEMPLATES: Array[DepthTemplates] = [
 	BOUNCE,
 	FUMBLE,
 	TWIST,
-	SLIP_1,
 	SLIP_2,
 	
 	SPIKE,
@@ -262,3 +270,29 @@ static func _static_init() -> void:
 	
 	for dt in ALL_TEMPLATES:
 		template_catalog[dt.difficulty].append(dt)
+
+static var STARTING_TEMPLATES: Array[DepthTemplates] = [
+	BREAK,
+	
+	BOUNCE, # move back four
+	
+	SPIKE
+]
+
+static var UNLOCK_ORDER: Array[DepthTemplates] = [
+	JAM,  # apply jam
+	HINT,  # reveal safe
+	TRAP,  # visible, break if tested
+	PUSH,  # advance 2
+	GATE,  # visible, find key to unlock
+	UNLOCK, # solve pin
+	FUMBLE,  # discard hand
+	BOMB,  # timed push past or break
+	LABYRINTH,  # break if revealed
+	BREATH, # draw cards
+	CATCH,  # break if jam past
+	SLIP_2,  # advance if pushed over
+	SURPRISE,  # break no warning
+	TWIST,  # discard when tested
+	EMPTY,
+]

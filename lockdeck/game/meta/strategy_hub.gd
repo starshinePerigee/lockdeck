@@ -121,6 +121,13 @@ func show_panel(new_panel: StrategyPopover) -> void:
 		enter_tween.tween_property(new_panel, "position:y", Y_OFFSET, 0.5)
 		current_panel = new_panel
 
+func show_unlock(template: DepthTemplates) -> void:
+	if template:
+		$UnlockBox.show_depth_unlock(template.depth)
+
+func show_thanks() -> void:
+	$UnlockBox.show_thank_you()
+
 func update_info() -> void:
 	$MetaInfo.redraw(_game)
 	preview_widget.update(_game)
@@ -167,6 +174,15 @@ func _ready() -> void:
 	$TabButtonBox/RepairButton.pressed.connect(show_panel.bind($RepairPopover))
 	$TabButtonBox/ShopButton.pressed.connect(show_panel.bind($ShopPopover))
 	$TabButtonBox/PreviewButton.pressed.connect(show_panel.bind($PreviewPopover))
+	
+	for button in [
+		$TabButtonBox/DeckButton,
+		$TabButtonBox/RepairButton,
+		$TabButtonBox/ShopButton,
+		$TabButtonBox/PreviewButton,
+		$ContinueButton
+	]:
+		button.pressed.connect($UnlockBox.close)
 	
 	deck_widget.card_sold.connect(do_sell)
 	repair_widget.repair_pick.connect(do_repair)

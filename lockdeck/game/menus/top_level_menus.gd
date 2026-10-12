@@ -3,10 +3,18 @@ extends Control
 
 
 func show_deck_select() -> void:
+	$DeckSelect.reset()
 	$AnimationPlayer.play("go_deck_select")
 
 func deck_select_to_title() -> void:
 	$AnimationPlayer.play_backwards("go_deck_select")
+
+func show_level_select() -> void:
+	$LevelSelect.on_enter()
+	$AnimationPlayer.play("go_level_select")
+
+func level_select_to_deck() -> void:
+	$AnimationPlayer.play_backwards("go_level_select")
 
 func show_credits() -> void:
 	$AnimationPlayer.play("go_credits")
@@ -25,13 +33,17 @@ func _ready() -> void:
 	$Title.credits.connect(show_credits)
 	$Credits/ReturnButton.pressed.connect(credits_to_title)
 	$DeckSelect/ReturnButton.pressed.connect(deck_select_to_title)
+	$DeckSelect.show_level_select.connect(show_level_select)
+	$LevelSelect/ReturnButton.pressed.connect(level_select_to_deck)
 	
 	var swipe_buttons := [
 		$Title/NewGameButton, 
 		$Title/CreditsButton, 
 		$Credits/ReturnButton, 
 		$DeckSelect/ReturnButton,
-		$DeckSelect/GoButton
+		$DeckSelect/GoButton,
+		$LevelSelect/ReturnButton,
+		$LevelSelect/GoButton,
 	]
 	for swipe_button in swipe_buttons:
 		swipe_button.pressed.connect(GlobalEffects.request.bind(FX_SWIPE))

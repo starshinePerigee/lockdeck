@@ -1,0 +1,258 @@
+[gd_scene load_steps=2 format=3 uid="uid://byixy0x6v0yob"]
+
+[ext_resource type="Script" uid="uid://bm5bai64njy0y" path="res://game/menus/level_select.gd" id="1_ewtxj"]
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 960.0
+offset_bottom = 540.0
+script = ExtResource("1_ewtxj")
+
+[node name="ButtonColumns" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 97.0
+offset_top = 148.0
+offset_right = 137.0
+offset_bottom = 188.0
+
+[node name="VBoxContainer1" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "1"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "2"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "3"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "4"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "5"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "6"
+
+[node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "7"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "8"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "9"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "10
+"
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "11"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "12"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "13"
+
+[node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "14"
+
+[node name="Button5" type="Button" parent="ButtonColumns/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "15"
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer5"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "16"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer5"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "17"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer5"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "18"
+
+[node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer5"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "19"
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer6"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "20"
+
+[node name="Button2" type="Button" parent="ButtonColumns/VBoxContainer6"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "21"
+
+[node name="Button3" type="Button" parent="ButtonColumns/VBoxContainer6"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "22"
+
+[node name="Button4" type="Button" parent="ButtonColumns/VBoxContainer6"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "23"
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="ButtonColumns"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="ButtonColumns/VBoxContainer7"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_type_variation = &"BoxButton"
+toggle_mode = true
+text = "24"
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 199.0
+offset_right = 879.0
+offset_bottom = 307.0
+theme_type_variation = &"PaperPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Info" type="RichTextLabel" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+scroll_active = false
+autowrap_mode = 2
+shortcut_keys_enabled = false
+
+[node name="GoButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 479.0
+offset_top = 320.0
+offset_right = 919.0
+offset_bottom = 353.0
+text = "let's pick it up from there >"
+flat = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 98.0
+offset_right = 340.0
+offset_bottom = 124.0
+text = "Choose a level:"
+
+[node name="ReturnButton" type="Button" parent="."]
+offset_left = 69.0
+offset_top = 416.0
+offset_right = 241.0
+offset_bottom = 449.0
+text = "< return to menu"

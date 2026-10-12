@@ -852,6 +852,8 @@ const LOOT_STRAT := LevelSpec.Stages.LOOT_STRAT
 
 static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(TUTORIAL),  # disregarded - tutorial starts at 1
+	
+	# 1
 	LevelSpec.new(TUTORIAL, 0, 0, TUTORIAL_1, LevelSpec.InterfaceSetup.FULL_EMPTY),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_1, LevelSpec.InterfaceSetup.HALF_SHOWN),
 	LevelSpec.new(SPECIFIC, 0, 0, CHALLENGE_2, LevelSpec.InterfaceSetup.HALF_SHOWN),
@@ -891,7 +893,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(LOCK, 1, 1),
 	LevelSpec.new(LOCK, 1, 2),
 	LevelSpec.new(LOCK, 2, 1),
-	LevelSpec.new(LOOT_STRAT, 100, LockDeck.GameArcs.MID),
+	LevelSpec.new(LOOT_STRAT, 100),
 ]
 
 func tutorialize(level_: int) -> void:
@@ -2723,6 +2725,7 @@ func do_step() -> void:
 					show_box("I know I'll see you again soon. Get to it!")
 				12:
 					tutorial_finished.emit(STARTING_DECK)
+					MetaProgression.deck_unlock(1)
 					core.continue_to_next.emit()
 
 var no_step := false

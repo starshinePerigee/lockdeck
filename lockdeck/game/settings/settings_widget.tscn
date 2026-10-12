@@ -67,7 +67,7 @@ layout_mode = 2
 [node name="TooltipSpeedButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"PlainButton"
+theme_type_variation = &"BoxButton"
 text = "Tooltip speed: Medium"
 
 [node name="Control" type="Control" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
@@ -77,7 +77,7 @@ layout_mode = 2
 [node name="AnimationSpeedButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"PlainButton"
+theme_type_variation = &"BoxButton"
 text = "Animation speed: Fast"
 
 [node name="ActiveRowToggle" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder" instance=ExtResource("2_86042")]
@@ -131,34 +131,35 @@ texture_disabled = ExtResource("9_p82ga")
 sound_name = "Effects"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="ResetTutorialButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
+[node name="ResetMetaButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-theme_type_variation = &"PlainButton"
-text = "Reset Tutorial"
+theme_type_variation = &"BoxButton"
+text = "Reset Progress"
 autowrap_mode = 2
 script = ExtResource("10_ia2ei")
-base_text = "Reset Tutorial"
-confirm_text = "This will erase all your tutorial data. Are you sure?"
+base_text = "Reset progress"
+confirm_text = "This will reset all meta-progression. Are you sure?"
 metadata/_custom_type_script = "uid://dfck3u724ea4f"
 
-[node name="ClearTutorialButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
+[node name="UnlockMetaButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-theme_type_variation = &"PlainButton"
-text = "Clear Tutorial"
-autowrap_mode = 1
+theme_type_variation = &"BoxButton"
+text = "Unlock Everything"
+autowrap_mode = 2
 script = ExtResource("10_ia2ei")
-base_text = "Clear Tutorial"
-confirm_text = "This will erase all your tutorial data. Are you sure?"
+base_text = "Unlock everything"
+confirm_text = "This will unlock all meta-progression. Are you sure?"
 metadata/_custom_type_script = "uid://dfck3u724ea4f"
+
+[node name="Control3" type="Control" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/ButtonHolder"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
 
 [node name="Label2" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2

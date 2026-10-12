@@ -23,11 +23,10 @@ func _init(
 	deck_gen = deck_gen_
 
 static var TUTORIAL := DeckTemplates.new(
-	"Tutorial",
+	"Puzzle Mode",
 	(
-		"Learn how to play Handful of Lockpicks."
-		+ "\n\nSelecting this deck will enable tutorial mode, which will walk you through "
-		+ "the game's basic mechanics."
+		"Get shown the ropes of Handful of Lockpicks and solve a series "
+		+ "of preset puzzle challenges where failure doesn't mean starting over."
 	),
 	func(): return _spec_templates([
 		PickTemplates.HOOK_PRECISE_BASIC,

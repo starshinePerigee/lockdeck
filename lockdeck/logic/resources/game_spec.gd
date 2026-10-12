@@ -28,8 +28,6 @@ const SAVE_PATH := "user://game_save.tres"
 ## Holds picks removed forever
 @export var removed_forever_picks: Array[CardSpec]
 
-@export var current_arc: LockDeck.GameArcs 
-
 ## Holds the current lockset deck
 @export var lockset_deck: LockDeck
 
@@ -58,27 +56,27 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(LOCK, 1, 1),
 	LevelSpec.new(LOCK, 1, 2),
 	LevelSpec.new(LOCK, 2, 1),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[0], LockDeck.GameArcs.MID),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[0]),
 	
 	LevelSpec.new(LOCK, 2, 2),
 	LevelSpec.new(LOCK, 2, 3),
 	LevelSpec.new(LOCK, 3, 2),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1], LockDeck.GameArcs.MID),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1]),
 	
 	LevelSpec.new(LOCK, 3, 3),
 	LevelSpec.new(LOCK, 3, 4),
 	LevelSpec.new(LOCK, 4, 3),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2], LockDeck.GameArcs.LATE),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2]),
 	
 	LevelSpec.new(LOCK, 3, 4),
 	LevelSpec.new(LOCK, 4, 4),
 	LevelSpec.new(LOCK, 5, 3),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3], LockDeck.GameArcs.LATE),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3]),
 	
 	LevelSpec.new(LOCK, 4, 5),
 	LevelSpec.new(LOCK, 4, 6),
 	LevelSpec.new(LOCK, 5, 4),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4], LockDeck.GameArcs.LATE),
+	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4]),
 	
 	LevelSpec.new(LOCK, 5, 5),
 	LevelSpec.new(LOCK, 5, 6),
@@ -109,8 +107,23 @@ func get_next_level() -> LevelSpec:
 	
 	return GAME_SEQUENCE[stage]
 
-func build_new_lockset_deck(arc: LockDeck.GameArcs) -> void:
-	lockset_deck = LockGenerator.get_lockset_deck(arc)
+func build_new_lockset_deck() -> DepthTemplates:
+	var unlocked_depth: DepthTemplates = null
+	if not tutorial_mode and stage > 1:
+		var unlock_level := MetaProgression.instance().depth_level
+		
+		if unlock_level < len(DepthTemplates.UNLOCK_ORDER):
+			unlocked_depth = DepthTemplates.UNLOCK_ORDER[unlock_level]
+		
+		if stage != MetaProgression.instance().most_recently_seen_stage:
+			MetaProgression.instance().depth_level += 1
+			print("Updating metaprogression depth level to %s" % MetaProgression.instance().depth_level)
+	
+	MetaProgression.instance().most_recently_seen_stage = stage
+	MetaProgression.save()
+	
+	lockset_deck = LockGenerator.get_lockset_deck(unlocked_depth)
+	return unlocked_depth
 
 func build_new_lock_deck(difficulty: int) -> void:
 	var difficulty_params := LockGenerator.get_difficulty_parameters(difficulty, lockset_deck)
@@ -150,14 +163,11 @@ func lock_in_heist() -> int:
 		return stage
 	
 	var lock_count := 0
-	var clear_next := false
 	for level in GAME_SEQUENCE.slice(0, stage + 1):
-		if clear_next:
-			lock_count = 0
 		if level.stage == LOCK:
 			lock_count += 1
 		elif level.stage == LOOT_STRAT:
-			clear_next = true
+			lock_count = 0
 	
 	return lock_count
 
@@ -226,7 +236,7 @@ static func get_in_progress_game() -> GameSpec:
 	game.current_deck.append_array(PickGenerator.get_many_base_cards(3))
 	game.broken_picks = PickGenerator.get_many_base_cards(7)
 	game.removed_forever_picks = PickGenerator.get_many_base_cards(2)
-	game.build_new_lockset_deck(LockDeck.GameArcs.MID)
+	game.build_new_lockset_deck()
 	game.build_new_lock_deck(4)
 	for i in len(game.broken_picks):
 		game.broken_picks[i].repair_count = i
@@ -237,6 +247,11 @@ func save() -> void:
 	var ret := ResourceSaver.save(self, SAVE_PATH)
 	if ret != OK:
 		push_error("Failed to save! path: %s, error: %d" % [SAVE_PATH, ret])
+	
+	var progression := MetaProgression.instance()
+	if tutorial_mode:
+		if stage > progression.tutorial_level:
+			progression.tutorial_level = stage
 
 static func clear_save() -> void:
 	var bad_spec := GameSpec.new()

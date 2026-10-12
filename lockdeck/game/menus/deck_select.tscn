@@ -20,7 +20,7 @@ offset_bottom = 352.127
 
 [node name="Tutorial" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Tutorial
+text = "Puzzle Mode
 "
 alignment = 0
 
@@ -101,11 +101,13 @@ offset_bottom = 449.0
 text = "sounds good, let's get started >"
 flat = true
 
-[node name="StartHint" type="Label" parent="."]
+[node name="UnlockGuide" type="Label" parent="."]
 layout_mode = 0
-offset_left = 69.0
-offset_top = 143.0
-offset_right = 141.0
-offset_bottom = 162.0
+offset_left = 146.0
+offset_top = 355.0
+offset_right = 315.0
+offset_bottom = 381.0
 theme_type_variation = &"TinyAccentText"
-text = "Start here! ->"
+theme_override_constants/line_spacing = -2
+text = "Complete more heists in a run to unlock additional decks."
+autowrap_mode = 2

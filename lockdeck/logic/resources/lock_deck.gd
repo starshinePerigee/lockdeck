@@ -9,14 +9,10 @@ class_name LockDeck
 ## (decks are not shuffled between each card draw; only once exhausted)
 var _pointers: Dictionary[DepthTemplates.Difficulty, int]
 
-enum GameArcs {
-	INVALID = -1,
-	EARLY = 0,
-	MID = 1,
-	LATE = 2
-}
-
 func draw(difficulty: DepthTemplates.Difficulty) -> DepthTemplates:
+	if len(deck[difficulty]) == 0:
+		return null
+	
 	_pointers[difficulty] += 1
 	if _pointers[difficulty] >= len(deck[difficulty]):
 		deck[difficulty].shuffle()
@@ -64,18 +60,6 @@ func draw_all() -> Array[DepthTemplates]:
 	
 	return drawn_templates
 
-static func get_template_weight(template: DepthTemplates, arc: GameArcs) -> int:
-	match arc:
-		GameArcs.EARLY:
-			return template.early_weight
-		GameArcs.MID:
-			return template.mid_weight
-		GameArcs.LATE:
-			return template.late_weight
-	return 0
-
-static var base_template_deck_catalog: Dictionary[GameArcs, LockDeck]
-
 func reify() -> void:
 	for key in deck.keys():
 		for template in deck[key]:
@@ -93,19 +77,31 @@ static func from_template_array(templates: Array[DepthTemplates]) -> LockDeck:
 		lock_deck.deck[template.difficulty].append(template)
 	return lock_deck
 
-static func _build_base_template_deck(arc: GameArcs) -> LockDeck:
+## Builds the current global template deck based on current progress
+static func base_template_deck() -> LockDeck:
+	var unlocked: Array[DepthTemplates] = []
+	unlocked.append_array(DepthTemplates.STARTING_TEMPLATES)
+	unlocked.append_array(
+		DepthTemplates.UNLOCK_ORDER.slice(
+			0,
+			MetaProgression.instance().depth_level
+		)
+	)
+	
 	var lock_deck := LockDeck.new()
 	for difficulty in DepthTemplates.Difficulty.values():
 		for depth_template in DepthTemplates.template_catalog[difficulty]:
-			for __ in get_template_weight(depth_template, arc):
-				lock_deck.deck[difficulty].append(depth_template)
+			if depth_template in unlocked:
+				for __ in depth_template.weight:
+					lock_deck.deck[difficulty].append(depth_template)
 	return lock_deck
 
 static func build_deck(
 	source_deck: LockDeck,
 	critical: int,
 	annoying: int,
-	helpful: int
+	helpful: int,
+	mandatory: DepthTemplates = null
 ) -> LockDeck:
 	var new_deck := LockDeck.new()
 	
@@ -116,20 +112,29 @@ static func build_deck(
 		DepthTemplates.Difficulty.ESSENTIAL
 	]
 	
+	if mandatory:
+		match mandatory.difficulty:
+			DepthTemplates.Difficulty.CRITICAL:
+				critical = max(0, critical - 1)
+			DepthTemplates.Difficulty.ANNOYING:
+				annoying = max(0, annoying - 1)
+			DepthTemplates.Difficulty.HELPFUL:
+				helpful = max(0, helpful - 1)
+			_:
+				pass
+		new_deck.deck[mandatory.difficulty].append(mandatory)
+	
+	var new_draw: DepthTemplates
 	for __ in critical:
-		new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(
-			source_deck.draw(DepthTemplates.Difficulty.CRITICAL)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.CRITICAL)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.CRITICAL].append(new_draw)
 	for __ in annoying:
-		new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(
-			source_deck.draw(DepthTemplates.Difficulty.ANNOYING)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.ANNOYING)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.ANNOYING].append(new_draw)
 	for __ in helpful:
-		new_deck.deck[DepthTemplates.Difficulty.HELPFUL].append(
-			source_deck.draw(DepthTemplates.Difficulty.HELPFUL)
-		)
+		new_draw = source_deck.draw(DepthTemplates.Difficulty.HELPFUL)
+		if new_draw:
+			new_deck.deck[DepthTemplates.Difficulty.HELPFUL].append(new_draw)
 	return new_deck
-
-static func _static_init() -> void:
-	for arc in GameArcs.values():
-		base_template_deck_catalog[arc] = _build_base_template_deck(arc)

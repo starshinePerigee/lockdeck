@@ -19,6 +19,9 @@ static func save():
 
 static func reset() -> GameSettings:
 	_instance = GameSettings.new()
+	if OS.has_feature("web"):
+		_instance.fullscreen = false
+		_instance.discrete_scale = true
 	save()
 	return _instance
 
@@ -66,7 +69,7 @@ func set_fullscreen(setting: bool = true) -> void:
 
 
 signal discrete_scale_changed(bool)
-@export var discrete_scale: bool = true
+@export var discrete_scale: bool = false
 
 func set_discrete_scale(setting: bool = true) -> void:
 	discrete_scale = setting
