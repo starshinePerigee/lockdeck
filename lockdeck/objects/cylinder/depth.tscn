@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://br6rlbw57vk25"]
+[gd_scene load_steps=9 format=3 uid="uid://br6rlbw57vk25"]
 
 [ext_resource type="Texture2D" uid="uid://dufy74tlb6o2c" path="res://assets/depths/depth_hidden.png" id="1_pxkuq"]
 [ext_resource type="Script" uid="uid://dede4agib6hm6" path="res://objects/cylinder/depth.gd" id="1_t3uj8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dmngqshk6j878" path="res://assets/results/result_debug.png" id="3_f3om4"]
 [ext_resource type="Texture2D" uid="uid://hpuarn7m5rv8" path="res://assets/effects/icon_jam.png" id="4_hntsp"]
 [ext_resource type="Texture2D" uid="uid://c6bfjto1tfbee" path="res://assets/pin/testresult_nothing.png" id="6_vll73"]
+[ext_resource type="Texture2D" uid="uid://bnelgkuu2dequ" path="res://assets/pin/manualmark_good.png" id="7_yg7va"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hntsp"]
 shader = ExtResource("2_f08qc")
@@ -58,3 +59,11 @@ offset_top = -16.0
 offset_right = 8.0
 offset_bottom = 16.0
 texture = ExtResource("6_vll73")
+
+[node name="ManualMark" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 56.0
+offset_right = 80.0
+offset_bottom = 24.0
+texture = ExtResource("7_yg7va")

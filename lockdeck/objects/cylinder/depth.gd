@@ -29,6 +29,20 @@ const PREV_SPACING := 12
 		else:
 			$DepthTexture.material = material_normal
 
+enum ManualMarkState {
+	UNMARKED,
+	GOOD,
+	BAD
+}
+
+@export var manual_mark: ManualMarkState = ManualMarkState.UNMARKED:
+	set(v):
+		if flavor not in Depths.MARKS:
+			manual_mark = ManualMarkState.UNMARKED
+		else:
+			manual_mark = v
+		
+
 const TESTRESULT_CLEAR := preload("res://assets/pin/testresult_safe.png")
 const TESTRESULT_INTERESTING := preload("res://assets/pin/testresult_caution.png")
 const TESTRESULT_DANGEROUS := preload("res://assets/pin/testresult_danger.png")
@@ -56,7 +70,20 @@ func _redraw() -> void:
 		
 	$DepthTexture.texture = flavor.texture
 	$DepthTexture.size = $DepthTexture.texture.get_size()
+	
 	size = $DepthTexture.size
+
+
+func _input(event: InputEvent) -> void:
+	if (
+		visible
+		and event is InputEventMouseButton
+		and event.pressed
+		and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
+		and get_global_rect().has_point(event.global_position)
+		and flavor in Depths.MARKS
+	):
+		pass
 
 const TOOLTIP := preload("res://objects/displays/depth_tooltip.tscn")
 
