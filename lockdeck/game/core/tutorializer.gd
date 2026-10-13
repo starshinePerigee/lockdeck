@@ -893,7 +893,7 @@ static var TUTORIAL_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(TUTORIAL, 6, 0, TUTORIAL_7, LevelSpec.InterfaceSetup.THREE_QUARTERS),
 	LevelSpec.new(LOCK, 1, 1),
 	LevelSpec.new(LOCK, 1, 2),
-	LevelSpec.new(LOCK, 2, 1),
+	LevelSpec.new(LOCK, 2, 2),
 	LevelSpec.new(LOOT_STRAT, 100),
 ]
 
