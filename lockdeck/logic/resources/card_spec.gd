@@ -28,9 +28,6 @@ static var last_id := 100
 func get_buy_cost() -> int:
 	return shop_value
 
-func get_repair_cost() -> int:
-	return 20 + repair_count * 10
-
 static func from_template(source: PickTemplates = PickTemplates.DEBUG) -> CardSpec:
 	return CardSpec.new(
 		source,
@@ -74,7 +71,7 @@ func _init(
 	pick_name = pick_name_
 	description = description_
 	effects.assign(effects_)
-	shop_value = 15 + 5 * rarity
+	shop_value = 20 + 10 * rarity
 
 static var DEBUG: CardSpec
 

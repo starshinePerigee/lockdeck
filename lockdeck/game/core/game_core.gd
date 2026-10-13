@@ -783,6 +783,7 @@ func restart() -> void:
 	set_countdown_disable(false)
 	show_failure(false)
 	$LockBody/ContinueButton.visible = false
+	$LockBody/ContinueButton.disabled = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
@@ -824,12 +825,18 @@ func load_in_progress(game: GameSpec, state: StateSpec) -> void:
 func set_discard_disable(disable: bool) -> void:
 	$DiscardMain.disable_discard = disable
 
-
 var _countdown_lock := false
 
 func set_countdown_disable(disable: bool) -> void:
 	_countdown_lock = disable
 	$LockBody/CountdownMain.button_disable = disable
+
+func emit_next() -> void:
+	if $LockBody/ContinueButton.disabled:
+		return
+	continue_to_next.emit()
+	GlobalEffects.request(FX_SUCCESS_CHIME)
+	$LockBody/ContinueButton.disabled = true
 
 var tutorial_mode := false
 
@@ -844,8 +851,7 @@ func _ready() -> void:
 	$HandMain/Hand.discard_pos = $DiscardMain.position
 	$DeckMain.discard_pos = $DiscardMain.position - $DeckMain.position
 	
-	$LockBody/ContinueButton.pressed.connect(continue_to_next.emit)
-	$LockBody/ContinueButton.pressed.connect(GlobalEffects.request.bind(FX_SUCCESS_CHIME))
+	$LockBody/ContinueButton.pressed.connect(emit_next)
 	$FailureButton.pressed.connect(continue_to_failure.emit)
 	$ResetButton.pressed.connect(continue_to_next.emit)
 	$ResetButton.pressed.connect(GlobalEffects.request.bind(FX_LOW_CHIME))

@@ -11,6 +11,9 @@ const SAVE_PATH := "user://game_save.tres"
 ## Current coin count
 @export var coins: int = 0
 
+## Repair count
+@export var repair_count := 0
+
 ## The current stage.
 ## Each time you clear a stage, game manager indexes this by one, and then pulls the next one 
 @export var stage: int = 0
@@ -81,19 +84,19 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 	
 	# 8
 	LevelSpec.new(LOCK, 2, 5),
-	LevelSpec.new(LOCK, 3, 4),
 	LevelSpec.new(LOCK, 3, 6),
+	LevelSpec.new(LOCK, 4, 4),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2]),
 	
 	# 12
-	LevelSpec.new(LOCK, 2, 9),
 	LevelSpec.new(LOCK, 3, 7),
-	LevelSpec.new(LOCK, 4, 6),
+	LevelSpec.new(LOCK, 4, 5),
+	LevelSpec.new(LOCK, 3, 11),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3]),
 	
 	# 16
-	LevelSpec.new(LOCK, 4, 5),
 	LevelSpec.new(LOCK, 4, 7),
+	LevelSpec.new(LOCK, 4, 9),
 	LevelSpec.new(LOCK, 5, 5),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4]),
 	
@@ -222,6 +225,9 @@ func break_picks(picks: Array[CardSpec]) -> void:
 			)
 	broken_picks.append_array(picks)
 
+func repair_cost() -> int:
+	return 10 + 10 * repair_count
+
 ## Moves a pick from broken to active. Does not check for validity (deck size or money)
 func repair_pick(pick: CardSpec) -> void:
 	if pick not in broken_picks:
@@ -233,6 +239,7 @@ func repair_pick(pick: CardSpec) -> void:
 	current_deck.append(pick)
 	broken_picks.erase(pick)
 	pick.repair_count += 1
+	repair_count += 1
 
 ## Removes a pick from the broken picks collection, but keeps it
 func remove_broken_pick_forever(pick: CardSpec) -> void:

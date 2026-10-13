@@ -32,7 +32,7 @@ func show_thank_you() -> void:
 	%DepthInfo.visible = false
 	%DepthInfo.depth = Depths.DEBUG
 	%Label.text = (
-		"There are no more depths to unlock.\n\n"
+		"You have seen everything there is to see!.\n\n"
 		+ "I, feather, am so excited that you enjoyed my game enough to get this far! "
 		+ "If you want, you can send me a message to let me know you saw this - my discord is featherwings, "
 		+ "and my itch is linked in the wheeljam catalog.\n\n"

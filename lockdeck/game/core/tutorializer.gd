@@ -830,7 +830,6 @@ static var STARTING_DECK: Array[CardSpec] = [
 	CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
 	CardSpec.from_template(PickTemplates.RAKE_BULK_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
-	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
 	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
 	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
@@ -2818,8 +2817,8 @@ func do_hub_repair() -> void:
 	
 	show_box(
 		"This tab lets you repair picks."
-		+ "\n\nEach time you repair a specific pick, it gets more expensive, so try to avoid "
-		+ "breaking a pick over and over."
+		+ "\n\nEach time you repair a specific pick, repairs get permanently more expensive, so try to avoid "
+		+ "it as much as possible."
 	)
 	
 	check_hub_complete()

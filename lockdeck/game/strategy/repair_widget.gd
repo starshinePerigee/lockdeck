@@ -2,21 +2,17 @@ extends VBoxContainer
 class_name RepairWidget
 
 signal repair_pick(CardSpec)
-signal repair_all()
 signal remove_pick_forever(CardSpec)
 
 var _coins := 0
+var _repair_cost := 0
 
-func set_coins(coins: int) -> void:
+func set_coins(coins: int, repair_cost: int) -> void:
 	_coins = coins
-	var total_cost := 0
+	_repair_cost = repair_cost
 	for button in %CardGrid.get_children():
 		if button is MoneyButton:
-			var repair_cost: int = button.card.get_repair_cost()
-			button.disabled = repair_cost > _coins
-			total_cost += repair_cost
-	%RepairAllButton.base_text = "Repair all: %s g" % total_cost
-	%RepairAllButton.disabled = total_cost > _coins
+			button.disabled = _repair_cost > _coins
 
 static var ALL_FONT_COLORS := [
 	"font_color",
@@ -46,10 +42,10 @@ func _set_button_removal(removal: bool) -> void:
 				button.label = ""
 				button.confirm_label = "Remove?"
 			else:
-				button.label = "[ %s ]" % button.card.get_repair_cost()
-				button.confirm_label = "Repair for %s?" % button.card.get_repair_cost()
+				button.label = "[ %s ]" % _repair_cost
+				button.confirm_label = "Repair for %s?" % _repair_cost
 	if not removal:
-		set_coins(_coins)
+		set_coins(_coins, _repair_cost)
 
 func toggle_remove_forever() -> void:
 	remove_forever_mode = not remove_forever_mode
@@ -64,11 +60,11 @@ func load_cards(cards: Array[CardSpec]) -> void:
 	for card in cards:
 		var card_button := MoneyButton.build_from_spec(
 			card,
-			"[ %s ]" % card.get_repair_cost()
+			"[ %s ]" % _repair_cost
 		)
 		card_button.pressed_confirmed.connect(do_signal.bind(card))
 		%CardGrid.add_child(card_button)
-	set_coins(_coins)
+	set_coins(_coins, _repair_cost)
 	remove_forever_mode = remove_forever_mode
 
 func load_trash(cards: Array[CardSpec]) -> void:
@@ -83,6 +79,9 @@ func load_trash(cards: Array[CardSpec]) -> void:
 		print("adding %s" % card)
 		%GoneGrid.add_child(pick_card) 
 
+func load_label(repair_count: int) -> void:
+	%CountLabel.text = "Repair count: %s" % repair_count
+
 func do_signal(card: CardSpec) -> void:
 	if remove_forever_mode:
 		remove_pick_forever.emit(card)
@@ -91,14 +90,14 @@ func do_signal(card: CardSpec) -> void:
 
 func reset(game: GameSpec) -> void:
 	remove_forever_mode = false
+	load_label(game.repair_count)
+	set_coins(game.coins, game.repair_cost())
 	load_cards(game.broken_picks)
 	load_trash(game.removed_forever_picks)
-	set_coins(game.coins)
 	$ScrollContainer.scroll_vertical = 0
 
 func _ready() -> void:
 	%ModeButton.pressed.connect(toggle_remove_forever)
-	%RepairAllButton.pressed_confirmed.connect(repair_all.emit)
 
 	if get_tree().current_scene == self:
 		reset(GameSpec.get_in_progress_game())

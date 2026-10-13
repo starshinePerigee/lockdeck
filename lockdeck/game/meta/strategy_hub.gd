@@ -44,7 +44,7 @@ func do_buy(card: CardSpec) -> void:
 	update_info()
 
 func do_repair(card: CardSpec) -> void:
-	var repair_cost := card.get_repair_cost()
+	var repair_cost := _game.repair_cost()
 	if repair_cost > _game.coins:
 		push_error(
 			"Tried to repair pick with cost %s and coins %s! Setting coins to 0."
@@ -54,32 +54,13 @@ func do_repair(card: CardSpec) -> void:
 	else:
 		_game.spend_coins(repair_cost)
 	_game.repair_pick(card)
+	repair_widget.load_label(_game.repair_count)
+	repair_widget.set_coins(_game.coins, _game.repair_cost())
 	repair_widget.load_cards(_game.broken_picks)
-	repair_widget.set_coins(_game.coins)
-	GlobalEffects.request(FX_REPAIR, -15)
-	update_info()
-
-func do_repair_all() -> void:
-	var repair_cost := 0
-	for card in _game.broken_picks:
-		repair_cost += card.get_repair_cost()
-	if repair_cost > _game.coins:
-		push_error(
-			"Tried to repair all with total cost %s and coins %s! Setting coins to 0."
-			% [repair_cost, _game.coins]
-		)
-		_game.coins = 0
+	if repair_cost < 40:
+		GlobalEffects.request(FX_REPAIR, -15)
 	else:
-		_game.spend_coins(repair_cost)
-	
-	# needed to avoid modifying array while in loop
-	var picks_to_repair: Array[CardSpec] = _game.broken_picks.duplicate()
-	for pick in picks_to_repair:
-		_game.repair_pick(pick)
-	
-	repair_widget.load_cards(_game.broken_picks)
-	repair_widget.set_coins(_game.coins)
-	GlobalEffects.request(FX_REPAIR_ALL, -15)
+		GlobalEffects.request(FX_REPAIR_ALL, -15)
 	update_info()
 
 func do_remove_forever(card: CardSpec) -> void:
@@ -187,7 +168,6 @@ func _ready() -> void:
 	deck_widget.card_sold.connect(do_sell)
 	repair_widget.repair_pick.connect(do_repair)
 	repair_widget.remove_pick_forever.connect(do_remove_forever)
-	repair_widget.repair_all.connect(do_repair_all)
 	shop_widget.card_bought.connect(do_buy)
 	
 	if get_parent() == get_tree().root:
