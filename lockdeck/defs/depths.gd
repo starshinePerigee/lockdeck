@@ -293,7 +293,6 @@ static var GATE_KEY := Depths.new(
 
 static var DO_NOT_EXHAUST: Array[Depths] = [
 	BASE,
-	FINAL,
 	EMPTY,
 	WARN,
 ]

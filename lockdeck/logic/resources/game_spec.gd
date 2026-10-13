@@ -272,6 +272,7 @@ func save() -> void:
 	if tutorial_mode:
 		if stage > progression.tutorial_level:
 			progression.tutorial_level = stage
+			MetaProgression.save()
 
 static func clear_save() -> void:
 	var bad_spec := GameSpec.new()

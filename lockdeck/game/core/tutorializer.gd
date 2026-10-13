@@ -1184,7 +1184,7 @@ func do_step() -> void:
 						step = 30
 						show_box(
 							"Good work avoiding breaking the pick, but I need you to learn what "
-							+ "it feels like. Try again, and make sure you don't accidentally unlock the lock "
+							+ "it feels like.\n\nTry again, and make sure you don't accidentally unlock the lock "
 							+ "without overshooting it this time."
 						)
 				34:
@@ -1497,10 +1497,12 @@ func do_step() -> void:
 					advance()
 				27:
 					show_box(
-						"Oh, and while we're talking planning...\n\ndon't forget that "
+						"Oh, and while we're talking planning...\n\nDon't forget that "
 						+ "you can click the deck, discard, and trash buttons to check what all's where.\n\n"
-						+ "Sometimes you'll to check if you still have a two-push coming up or what have you."
+						+ "Sometimes you need to check if you still have a two-push coming up or what have you."
 					)
+				28:
+					advance()
 				29:
 					show_box(
 						"The next couple of locks are going to be full of spikes. Like before, pick them without "
@@ -1522,7 +1524,7 @@ func do_step() -> void:
 					)
 				1:
 					show_box(
-						"Somewhere in this pin is a \"Break\" depth. Like spikes, if you "
+						"Somewhere in this pin is a \"break\" depth. Like spikes, if you "
 						+ "activate it it breaks your pick. Unlike spikes, they don't advertise themselves.",
 						PIN_X,
 						PIN_Y
@@ -1577,13 +1579,12 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"There you go! The break depth.\n\nThe problem with warning depths is they only tell you that a "
-						+ "break is somewhere below them.",
-					)
-				8:
-					show_box(
-						"That's not super useful, since every pin has a break depth!\n\n"
+						+ "break is somewhere below them.\n\n"
+						+ "That's not super useful, since every pin has a break depth!\n\n"
 						+ "But until you meet your warning, know that you're safe.",
 					)
+				8:
+					advance()
 				9:
 					show_box(
 						"Safe from break depths, at least.\n\nAgain - warning only cares about break, "
@@ -1716,7 +1717,7 @@ func do_step() -> void:
 						if template == PickTemplates.TUTORIAL_REVEAL_2:
 							step = 15
 							show_box(
-								"Reveal picks are valuable, and you kind of wasted that one?\n\n"
+								"Reveal picks are valuable, and you kind of wasted that one.\n\n"
 								+ "There's always a warning before a break, and you haven't found the warning yet, "
 								+ "so you know the very next depth has to be safe."
 							)
@@ -1853,11 +1854,10 @@ func do_step() -> void:
 					] as Array[CardSpec])
 					core.draw_to_five()
 					show_box(
-						"It's probably best to see for yourself.\n\n"
-						+ "I've given you some picks to play around with. Solve this without "
+						"I've given you some picks to play around with. Solve this without "
 						+ "breaking a pick and I'll let you go.\n\n"
 						+ "Don't forget you can end your turn to reset the pin and your picks, "
-						+ "and sometimes you'll need to discard a ton of picks to dig for the one you need.",
+						+ "and sometimes you'll need to discard several picks to dig for the one you need.",
 						PIN_X,
 						PIN_Y - 50,
 					)
@@ -2753,6 +2753,7 @@ func do_step() -> void:
 				12:
 					tutorial_finished.emit(STARTING_DECK)
 					MetaProgression.deck_unlock(1)
+					MetaProgression.save()
 					core.continue_to_next.emit()
 
 var no_step := false

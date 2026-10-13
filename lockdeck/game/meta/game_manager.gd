@@ -177,6 +177,7 @@ func next_loot(loot_value: int) -> void:
 	# amazing hacks happening here:
 	var unlock_level: int = GameSpec.LOOT_SEQUENCE.find(loot_value)
 	MetaProgression.deck_unlock(unlock_level)
+	MetaProgression.save()
 
 	$LootMain.do_loot(loot_value)
 	$AnimationPlayer.play("between to loot", -12)
