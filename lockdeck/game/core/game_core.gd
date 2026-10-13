@@ -773,6 +773,7 @@ func load_game(game: GameSpec) -> void:
 
 func restart() -> void:
 	lock_complete = false
+	break_next = false
 	tutorial_mode = false
 	tutorial_lock(false)
 	lock_input(false)

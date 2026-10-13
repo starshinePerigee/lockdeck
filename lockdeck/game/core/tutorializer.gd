@@ -2771,7 +2771,7 @@ func do_loot_drop() -> void:
 	show_box(
 		"Everything here is yours! Loot takes two forms:\n\n"
 		+ "Ingots, which you can turn into new picks immediately.\n\n"
-		+ "Cnd coins, which let you repair picks and buy new ones.\n\n"
+		+ "And coins, which let you repair picks and buy new ones.\n\n"
 		+ "You have to click each ingot to use it, but any unclaimed coins will be claimed automatically "
 		+ "when you press continue.\n\nStill fun to do by hand!"
 	)
@@ -2864,7 +2864,7 @@ func do_final() -> void:
 	
 	show_box(
 		"Alright. That's it then.\n\n"
-		+ "That's everything you need to know. Now, five heists stand between you and riches.\n\n"
+		+ "That's everything you need to know. Now, six heists stand between you and infinite riches.\n\n"
 		+ "Good luck and dark night, thief."
 	)
 	await %TutorialBox.box_clicked

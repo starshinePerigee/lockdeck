@@ -100,7 +100,7 @@ func lock_complete() -> void:
 	else:
 		$BetweenLocks/SpeedBonusLabel.visible = false
 	
-	if game.tutorial_mode:
+	if game.tutorial_mode and game.stage <= 24:
 		# Tutorial mode continuation logic
 		# determine if we're continuing:
 		var retry := false
@@ -214,6 +214,7 @@ func end_strategy() -> void:
 func do_victory() -> void:
 	GameSpec.clear_save()
 	MetaProgression.deck_unlock(5)
+	MetaProgression.save()
 	$LootMain.do_victory(game.coins)
 	$AnimationPlayer.play("between to loot")
 	victory_start.emit()
