@@ -58,6 +58,7 @@ func live_specs() -> Array[CardSpec]:
 ## The intent is that this tween will be interrupted naturally once execution finishes 
 func activate_space(space: CardSpace, x_pos_global: float) -> void:
 	var target_vector := Vector2(x_pos_global - 40, 340)
+	space.hide_frame = true
 	space.tween_to_vector(target_vector, 0.5)
 
 var _open_awaits: int

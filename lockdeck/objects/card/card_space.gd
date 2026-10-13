@@ -45,6 +45,11 @@ const HIGHLIGHT_OFFSET := 64
 		has_card = v
 		_set_texture()
 
+@export var hide_frame: bool = false:
+	set(v):
+		hide_frame = v
+		_set_texture()
+
 @export var highlighted: bool = false:
 	set(v):
 		highlighted = v
@@ -194,7 +199,7 @@ func _set_texture():
 		await ready
 
 	$PickCard.visible = has_card
-	if has_card and false:  # trying leaving the outline out
+	if has_card and hide_frame:
 		texture = TEXTURE_EMPTY
 	elif closed:
 		texture = TEXTURE_CLOSED
