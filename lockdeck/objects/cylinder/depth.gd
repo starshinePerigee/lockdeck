@@ -35,6 +35,9 @@ enum ManualMarkState {
 	BAD
 }
 
+const MARK_BAD := preload("res://assets/pin/manualmark_bad.png")
+const MARK_GOOD := preload("res://assets/pin/manualmark_good.png")
+
 @export var manual_mark: ManualMarkState = ManualMarkState.UNMARKED:
 	set(v):
 		if flavor not in Depths.MARKS:
@@ -42,6 +45,15 @@ enum ManualMarkState {
 		else:
 			manual_mark = v
 		
+		match manual_mark:
+			ManualMarkState.UNMARKED:
+				$ManualMark.visible = false
+			ManualMarkState.GOOD:
+				$ManualMark.texture = MARK_GOOD
+				$ManualMark.visible = true
+			ManualMarkState.BAD:
+				$ManualMark.texture = MARK_BAD
+				$ManualMark.visible = true
 
 const TESTRESULT_CLEAR := preload("res://assets/pin/testresult_safe.png")
 const TESTRESULT_INTERESTING := preload("res://assets/pin/testresult_caution.png")
@@ -70,20 +82,28 @@ func _redraw() -> void:
 		
 	$DepthTexture.texture = flavor.texture
 	$DepthTexture.size = $DepthTexture.texture.get_size()
-	
+	manual_mark = manual_mark
 	size = $DepthTexture.size
 
 
-func _input(event: InputEvent) -> void:
+func _gui_input(event: InputEvent) -> void:
 	if (
-		visible
-		and event is InputEventMouseButton
+		event is InputEventMouseButton
 		and event.pressed
 		and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
 		and get_global_rect().has_point(event.global_position)
 		and flavor in Depths.MARKS
 	):
-		pass
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if manual_mark == ManualMarkState.GOOD:
+				manual_mark = ManualMarkState.UNMARKED
+			else:
+				manual_mark = ManualMarkState.GOOD
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if manual_mark == ManualMarkState.BAD:
+				manual_mark = ManualMarkState.UNMARKED
+			else:
+				manual_mark = ManualMarkState.BAD
 
 const TOOLTIP := preload("res://objects/displays/depth_tooltip.tscn")
 

@@ -303,4 +303,5 @@ static var MARKS: Array[Depths] = [
 	MARK_CLEAR,
 	MARK_INTERESTING,
 	MARK_DANGEROUS,
+	HIDDEN
 ]
