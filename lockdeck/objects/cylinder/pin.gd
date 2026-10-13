@@ -393,7 +393,7 @@ func animate_fall(pin_spec: PinSpec) -> void:
 
 const FX_BOMB_IGNITE := preload("res://assets/fx/bomb_ignite.ogg")
 
-func _finish_animation(test_results: Dictionary[int, PinSpec.RevealLevel]) -> void:
+func _finish_animation(test_results: Dictionary[int, PinSpec.RevealLevel] = {}) -> void:
 	if _pending_spec.bomb_pos >= 0:
 		_playback.play_stream(FX_BOMB_IGNITE)
 	load_spec(_pending_spec, test_results)
