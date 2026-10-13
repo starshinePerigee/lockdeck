@@ -159,10 +159,14 @@ func _clear_old(pin_spec: PinSpec) -> void:
 		load_spec(_pending_spec)
 	_pending_spec = pin_spec
 	_break_played = false
+	
+	for depth in depth_refs:
+		depth.test_result = PinSpec.RevealLevel.REVEALED
 
 func animate(
 	pin_spec: PinSpec,
-	effects: Array[EffectSpec]
+	effects: Array[EffectSpec],
+	test_results: Dictionary[int, PinSpec.RevealLevel] 
 ) -> void:
 	_clear_old(pin_spec)
 	
@@ -176,7 +180,7 @@ func animate(
 		for effect in effects:
 			_animate_effect(effect, pin_spec)
 		_tween_home(pin_spec.pin_position)
-	_tween.tween_callback(_finish_animation)
+	_tween.tween_callback(_finish_animation.bind(test_results))
 
 ## Tests if a given depth is a triggered slip (pop)
 static func _is_triggered_slip(pos: int, pin_spec: PinSpec) -> bool:
@@ -389,19 +393,25 @@ func animate_fall(pin_spec: PinSpec) -> void:
 
 const FX_BOMB_IGNITE := preload("res://assets/fx/bomb_ignite.ogg")
 
-func _finish_animation() -> void:
+func _finish_animation(test_results: Dictionary[int, PinSpec.RevealLevel] = {}) -> void:
 	if _pending_spec.bomb_pos >= 0:
 		_playback.play_stream(FX_BOMB_IGNITE)
-	load_spec(_pending_spec)
+	load_spec(_pending_spec, test_results)
 	_pending_spec = null
 	animation_complete.emit()
 
-func direct_load(pin_spec: PinSpec) -> void:
-	load_spec(pin_spec)
+func direct_load(
+	pin_spec: PinSpec,
+	test_results: Dictionary[int, PinSpec.RevealLevel] = {}
+) -> void:
+	load_spec(pin_spec, test_results)
 	animation_complete.emit()
 
 ## Load a PinSpec into this pin, setting all parameters directly without animation.
-func load_spec(pin_spec: PinSpec) -> void:
+func load_spec(
+	pin_spec: PinSpec,
+	test_results: Dictionary[int, PinSpec.RevealLevel] = {}
+) -> void:
 	if depth_refs.is_empty():
 		return
 	
@@ -419,6 +429,12 @@ func load_spec(pin_spec: PinSpec) -> void:
 	else:
 		$Stack/BombIndicator.visible = false
 	_draw_bomb()
+	
+	for i in len(depth_refs):
+		if i in test_results.keys():
+			depth_refs[i].test_result = test_results[i]
+		else:
+			depth_refs[i].test_result = PinSpec.RevealLevel.REVEALED
 	
 	_key_visible = pin_spec.is_solved()
 	$KeyIndicator.visible = _key_visible

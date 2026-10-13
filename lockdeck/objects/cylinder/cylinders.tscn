@@ -8,7 +8,7 @@ clip_contents = true
 custom_minimum_size = Vector2(560, 776)
 layout_mode = 3
 anchors_preset = 0
-offset_left = -16.0
+offset_left = -32.0
 offset_top = -136.0
 offset_right = 544.0
 offset_bottom = 640.0
@@ -18,10 +18,10 @@ script = ExtResource("1_3tpfd")
 [node name="CylinderHBox" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(464, 560)
 layout_mode = 0
-offset_left = 16.0
+offset_left = 32.0
 offset_top = 136.0
-offset_right = 544.0
-offset_bottom = 664.0
+offset_right = 560.0
+offset_bottom = 696.0
 mouse_filter = 2
 theme_override_constants/separation = 32
 

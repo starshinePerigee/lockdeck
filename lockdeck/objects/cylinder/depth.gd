@@ -29,13 +29,83 @@ const PREV_SPACING := 12
 		else:
 			$DepthTexture.material = material_normal
 
+enum ManualMarkState {
+	UNMARKED,
+	GOOD,
+	BAD
+}
+
+const MARK_BAD := preload("res://assets/pin/manualmark_bad.png")
+const MARK_GOOD := preload("res://assets/pin/manualmark_good.png")
+
+@export var manual_mark: ManualMarkState = ManualMarkState.UNMARKED:
+	set(v):
+		if flavor not in Depths.MARKS:
+			manual_mark = ManualMarkState.UNMARKED
+		else:
+			manual_mark = v
+		
+		match manual_mark:
+			ManualMarkState.UNMARKED:
+				$ManualMark.visible = false
+			ManualMarkState.GOOD:
+				$ManualMark.texture = MARK_GOOD
+				$ManualMark.visible = true
+			ManualMarkState.BAD:
+				$ManualMark.texture = MARK_BAD
+				$ManualMark.visible = true
+
+const TESTRESULT_CLEAR := preload("res://assets/pin/testresult_safe.png")
+const TESTRESULT_INTERESTING := preload("res://assets/pin/testresult_caution.png")
+const TESTRESULT_DANGEROUS := preload("res://assets/pin/testresult_danger.png")
+const TESTRESULT_NONE := preload("res://assets/pin/testresult_nothing.png")
+
+@export var test_result: PinSpec.RevealLevel = PinSpec.RevealLevel.UNKNOWN:
+	set(v):
+		test_result = v
+		match test_result:
+			PinSpec.RevealLevel.CLEAR:
+				$TestResult.texture = TESTRESULT_CLEAR
+			PinSpec.RevealLevel.INTERESTING:
+				$TestResult.texture = TESTRESULT_INTERESTING
+			PinSpec.RevealLevel.DANGEROUS:
+				$TestResult.texture = TESTRESULT_DANGEROUS
+			PinSpec.RevealLevel.UNKNOWN:
+				$TestResult.texture = TESTRESULT_NONE
+			PinSpec.RevealLevel.REVEALED:
+				$TestResult.texture = TESTRESULT_NONE
+		$TestResult.visible = test_result != PinSpec.RevealLevel.REVEALED
+
 func _redraw() -> void:
 	if not is_node_ready():
 		await ready
 		
 	$DepthTexture.texture = flavor.texture
 	$DepthTexture.size = $DepthTexture.texture.get_size()
+	manual_mark = manual_mark
 	size = $DepthTexture.size
+
+var manual_lock := false
+
+func _gui_input(event: InputEvent) -> void:
+	if (
+		not manual_lock
+		and event is InputEventMouseButton
+		and event.pressed
+		and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
+		and get_global_rect().has_point(event.global_position)
+		and flavor in Depths.MARKS
+	):
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if manual_mark == ManualMarkState.GOOD:
+				manual_mark = ManualMarkState.UNMARKED
+			else:
+				manual_mark = ManualMarkState.GOOD
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if manual_mark == ManualMarkState.BAD:
+				manual_mark = ManualMarkState.UNMARKED
+			else:
+				manual_mark = ManualMarkState.BAD
 
 const TOOLTIP := preload("res://objects/displays/depth_tooltip.tscn")
 

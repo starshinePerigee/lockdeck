@@ -297,3 +297,11 @@ static var DO_NOT_EXHAUST: Array[Depths] = [
 	EMPTY,
 	WARN,
 ]
+
+static var MARKS: Array[Depths] = [
+	MARK_PENDING,
+	MARK_CLEAR,
+	MARK_INTERESTING,
+	MARK_DANGEROUS,
+	HIDDEN
+]

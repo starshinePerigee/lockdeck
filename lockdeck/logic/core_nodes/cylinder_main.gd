@@ -103,7 +103,7 @@ func lock_solved() -> bool:
 			return false
 	return true
 
-func update_visibility(result: EndStepSpec):
+func update_visibility(result: EndStepSpec) -> void:
 	var new_level := PinSpec.RevealLevel.REVEALED
 	for pin in pins:
 		new_level = max(new_level, pin.get_reveal_level())
@@ -114,6 +114,9 @@ func update_visibility(result: EndStepSpec):
 		pin.update_pin_visible(new_level)
 	
 	result.last_reveal = new_level
+	for pin_result in result.results:
+		for k in pin_result.test_results.keys():
+			pin_result.test_results[k] = new_level
 
 #endregion
 

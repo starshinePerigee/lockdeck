@@ -49,6 +49,8 @@ func on_enter() -> void:
 			set_next_stage(i)
 		elif i > stage:
 			buttons[i].disabled = true
+	if stage >= len(buttons):
+		%Info.text = "Choose a stage to replay."
 
 func start_tutorial() -> void:
 	tutorial_start.emit(next_stage)

@@ -330,6 +330,7 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
 			$LockBody/CylinderMain.cancel_preview()
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(false)
 			reset_countdown()
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
@@ -340,11 +341,13 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			reset_countdown()
 			$DiscardMain.show_icon = true
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 		InputState.ACTIVE_DRAG:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			reset_countdown()
 			$DiscardMain.show_icon = true
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 		InputState.VIEW_ALL:
 			create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
 				$LockBody,
@@ -363,6 +366,7 @@ func set_state(state: InputState) -> void:
 		InputState.CARD_DISPLAY:
 			$HandMain/Hand.hide_hand()
 			dis_en_able_buttons()
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 
 var lock_complete: bool
 
@@ -553,7 +557,6 @@ func break_from_hand() -> void:
 	discard_pick()
 
 func discard_pick() -> void:
-	$LastTest.visible = false
 	await do_pick(
 		_NULL_PICK,
 		0,
@@ -614,12 +617,6 @@ func do_pick(card: CardSpec, cylinder: int, break_instead: CardSpec = null) -> v
 	else:
 		if card != _NULL_PICK:
 			move_cards_from_hand_to_discard([card])
-	
-	if Effects.TEST in card.get_unique_list():
-		$LastTest.update(_result.last_reveal)
-	else:
-		$LastTest.update()
-		$LastTest.visible = false
 	
 	if _result.lock_solved:
 		solve_lock()
@@ -692,7 +689,6 @@ func cleanup_step() -> void:
 ## Like discard, end turn also trips the null pick, although it'll break from deck instead
 func end_turn() -> void:
 	$Notifications.clear()
-	$LastTest.visible = false
 	
 	var all_cards: Array[CardSpec]
 	all_cards.append_array($DeckMain.cards)
@@ -785,14 +781,12 @@ func restart() -> void:
 	set_discard_disable(false)
 	set_countdown_disable(false)
 	show_failure(false)
-	$LastTest.visible = false
 	$LockBody/ContinueButton.visible = false
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
 	turn_count = 0
 	$Notifications.clear()
-	$LastTest.visible = false
 	tick_turn_count()
 	update_status_widget()
 	# note: you will need to draw cards outside of restart to sync with animation

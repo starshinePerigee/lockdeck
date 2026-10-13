@@ -41,6 +41,11 @@ func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
 
+func set_manual_lock(locked := false) -> void:
+	for pin in pin_refs:
+		for depth in pin.depth_refs:
+			depth.manual_lock = locked
+
 const FX_TWIST := preload("res://assets/fx/slide_twist.ogg")
 
 var _tween: Tween
@@ -68,6 +73,7 @@ func animate_pins(pins: Array[PinSpec], end_step: EndStepSpec):
 				pin_refs[i].animate.bind(
 					pins[i], 
 					effects_typed, 
+					end_step.results[i].test_results
 				)
 			)
 			_tween.tween_interval(0.07 * animation_scale)
