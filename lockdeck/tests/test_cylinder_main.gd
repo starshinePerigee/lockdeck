@@ -96,7 +96,7 @@ func gen_new_lock() -> void:
 	var difficulty := int($Difficulty/Input.text)
 	var lock := LockGenerator.get_next_level(
 		difficulty,
-		5
+		int($Difficulty/PinsCount.selected + 1)
 	)
 	
 	if $Difficulty/DoTest.button_pressed:

@@ -531,7 +531,7 @@ static var DIAMOND_REVEAL_GREAT := PickTemplates.new(
 	Families.DIAMOND,
 	Archetypes.REVEAL,
 	Rarities.GREAT,
-	"PRT[P.RT[PP.RRT"
+	"PR[P.RT[PP.RRT"
 )
 
 ## P[RT]P

@@ -63,11 +63,7 @@ static var LOOT_SEQUENCE: Array[int] = [60, 90, 120, 140, 160, 180, 190, 200]
 #	5: DifficultyArray.new(1, 1, 1, 1, 2),
 #	6: DifficultyArray.new(2, 1, 0, 1, 1),
 #	7: DifficultyArray.new(2, 0, 1, 1, 2),
-#	8: DifficultyArray.new(2, 1, 0, 2, 1),
-#	9: DifficultyArray.new(2, 2, 1, 1, 2),
-#	10: DifficultyArray.new(2, 2, 0, 1, 3),
-#	11:	DifficultyArray.new(2, 2, 1, 2, 4),
-#	12:	DifficultyArray.new(2, 3, 1, 2, 5),
+#	8: DifficultyArray.new(2, 2, 1, 1, 3),
 
 static var GAME_SEQUENCE: Array[LevelSpec] = [
 	# 0
@@ -83,33 +79,27 @@ static var GAME_SEQUENCE: Array[LevelSpec] = [
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[1]),
 	
 	# 8
-	LevelSpec.new(LOCK, 2, 5),
-	LevelSpec.new(LOCK, 3, 6),
-	LevelSpec.new(LOCK, 4, 4),
+	LevelSpec.new(LOCK, 2, 6),
+	LevelSpec.new(LOCK, 3, 4),
+	LevelSpec.new(LOCK, 4, 3),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[2]),
 	
 	# 12
-	LevelSpec.new(LOCK, 3, 7),
+	LevelSpec.new(LOCK, 3, 5),
+	LevelSpec.new(LOCK, 4, 3),
 	LevelSpec.new(LOCK, 4, 5),
-	LevelSpec.new(LOCK, 3, 11),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[3]),
 	
 	# 16
-	LevelSpec.new(LOCK, 4, 7),
-	LevelSpec.new(LOCK, 4, 9),
+	LevelSpec.new(LOCK, 4, 4),
+	LevelSpec.new(LOCK, 5, 2),
 	LevelSpec.new(LOCK, 5, 5),
 	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[4]),
 	
 	# 20
-	LevelSpec.new(LOCK, 4, 9),
+	LevelSpec.new(LOCK, 5, 5),
+	LevelSpec.new(LOCK, 5, 7),
 	LevelSpec.new(LOCK, 5, 8),
-	LevelSpec.new(LOCK, 5, 10),
-	LevelSpec.new(LOOT_STRAT, LOOT_SEQUENCE[5]),
-	
-	# 24
-	LevelSpec.new(LOCK, 5, 10),
-	LevelSpec.new(LOCK, 5, 11),
-	LevelSpec.new(LOCK, 5, 12),
 	LevelSpec.new(VICTORY),
 ]
 

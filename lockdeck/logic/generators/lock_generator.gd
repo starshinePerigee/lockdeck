@@ -144,14 +144,10 @@ static var difficulty_parameters: Dictionary[int, DifficultyArray] = {
 	2: DifficultyArray.new(1, 0, 0, 0, 1),
 	3: DifficultyArray.new(1, 0, 1, 1, 1),
 	4: DifficultyArray.new(1, 1, 0, 1, 1),
-	5: DifficultyArray.new(1, 1, 0, 1, 2),
+	5: DifficultyArray.new(1, 1, 1, 1, 2),
 	6: DifficultyArray.new(2, 1, 0, 1, 1),
-	7: DifficultyArray.new(2, 0, 1, 1, 2),
-	8: DifficultyArray.new(2, 1, 0, 2, 1),
-	9: DifficultyArray.new(2, 2, 1, 1, 2),
-	10: DifficultyArray.new(2, 2, 0, 1, 3),
-	11:	DifficultyArray.new(2, 2, 1, 2, 4),
-	12:	DifficultyArray.new(2, 3, 1, 2, 5),
+	7: DifficultyArray.new(2, 0, 1, 2, 2),
+	8: DifficultyArray.new(2, 2, 1, 1, 3),
 }
 
 ## Gets a static DifficultyArray from the predefined list (or extended, if needed)

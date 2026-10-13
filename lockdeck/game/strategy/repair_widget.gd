@@ -76,7 +76,6 @@ func load_trash(cards: Array[CardSpec]) -> void:
 	
 	for card in cards:
 		var pick_card := PickCard.build_from_spec(card)
-		print("adding %s" % card)
 		%GoneGrid.add_child(pick_card) 
 
 func load_label(repair_count: int) -> void:

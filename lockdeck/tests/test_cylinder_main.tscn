@@ -141,7 +141,27 @@ offset_bottom = 292.0
 theme_type_variation = &"BoxButton"
 text = "regenerate"
 
+[node name="PinsCount" type="OptionButton" parent="Difficulty"]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 154.0
+offset_right = 353.0
+offset_bottom = 180.0
+selected = 4
+item_count = 5
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+
 [node name="Label2" type="Label" parent="Difficulty"]
+visible = false
 layout_mode = 0
 offset_left = 211.0
 offset_top = 395.0
@@ -150,6 +170,7 @@ offset_bottom = 421.0
 text = "Unlock:"
 
 [node name="Input2" type="TextEdit" parent="Difficulty"]
+visible = false
 layout_mode = 0
 offset_left = 288.0
 offset_top = 391.0
