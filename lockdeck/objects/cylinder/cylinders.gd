@@ -46,6 +46,11 @@ func set_manual_lock(locked := false) -> void:
 		for depth in pin.depth_refs:
 			depth.manual_lock = locked
 
+func clear_marks() -> void:
+	for pin in pin_refs:
+		for depth in pin.depth_refs:
+			depth.manual_mark = Depth.ManualMarkState.UNMARKED
+
 const FX_TWIST := preload("res://assets/fx/slide_twist.ogg")
 
 var _tween: Tween

@@ -828,12 +828,14 @@ static var CHALLENGE_17 := StateSpec.new(
 static var STARTING_DECK: Array[CardSpec] = [
 	CardSpec.from_template(PickTemplates.RAKE_BULK_TEST_BASIC),
 	CardSpec.from_template(PickTemplates.RAKE_HYBRID_S_BASIC),
+	CardSpec.from_template(PickTemplates.RAKE_BULK_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.DIAMOND_THREE_PUSH_BASIC),
 	CardSpec.from_template(PickTemplates.DIAMOND_REVEAL_BASIC),
 	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
 	CardSpec.from_template(PickTemplates.HOOK_PUSHY_BASIC),
 	CardSpec.from_template(PickTemplates.WRENCH_END_TURN_BASIC),
+	CardSpec.from_template(PickTemplates.TUTORIAL_WEIRD_DARK),
 ]
 
 static var TUTORIAL_7 := StateSpec.new(
@@ -1041,7 +1043,7 @@ func do_step() -> void:
 					core.tutorial_lock(true)
 					show_box(
 						"Nice work.\n\n"
-						+ "Don't sweat the green 'ok', the little wave icons, " 
+						+ "Don't sweat the green 'ok', the little sound icons, " 
 						+ "or anything else that hasn't been explained yet. "
 						+ "Lockpicking is complicated - we'll get there. You just gotta take it step by step."
 					)
@@ -1761,7 +1763,7 @@ func do_step() -> void:
 						if template == PickTemplates.TUTORIAL_REVEAL_2:
 							show_box(
 								"Correct.\n\nNow that you can't be sure what's ahead, it was finally time "
-								+ "to use that reveal pick. Now you know where the break is."
+								+ "to use that reveal pick. And look - it showed you where the break is."
 							)
 						else:
 							step = 15
@@ -1940,8 +1942,8 @@ func do_step() -> void:
 				11:
 					core.tutorial_lock(true)
 					show_box(
-						"When you test a pin, you're listening for what's coming. "
-						+ "Test tells you the level of danger across every depth tested."
+						"When you test a pin, you're listening for what's coming.\n\n"
+						+ "Essentially, test tells you the level of danger across every depth tested."
 					)
 				12:
 					advance()
@@ -1953,7 +1955,7 @@ func do_step() -> void:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
 						"Let's look at what you just did.\n\nThe pick you just played tested the first two "
-						+ "depths in this pin. Together, it sounded \"safe\". "
+						+ "depths in this pin. Together, they tested \"safe\". "
 						+ "That means nothing bad is in either of those depths.",
 						PIN_X,
 						PIN_Y
@@ -1961,14 +1963,14 @@ func do_step() -> void:
 				16:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
-						"They get marked \"ok\", you know they're definitely ok to land on.",
+						"They get marked \"ok\", and you can tell they're definitely ok to land on.",
 						PIN_X,
 						PIN_Y
 					)
 				17:
 					highlight(Rect2(Vector2(210, 120), Vector2(94, 80)))
 					show_box(
-						"They're not necessarily empty depths (warning tests as safe, for instance) "
+						"They're not necessarily empty depths  - warning tests as safe, for instance - "
 						+ "but you'll always be happy to land on a safe depth.",
 						PIN_X,
 						PIN_Y
@@ -2254,8 +2256,9 @@ func do_step() -> void:
 				60:
 					show_box(
 						"Alright, that was a lot. I need you to understood test.\n\n"
+						+ "Let's review. "
 						+ "One: gather all the tested pins that aren't revealed yet. "
-						+ "Two: listen for danger across all the ones you gathered. "
+						+ "Two: listen for danger across all the depths you gathered. "
 						+ "Three: mark up the depths as best as you can."
 					)
 				61:
@@ -2398,7 +2401,7 @@ func do_step() -> void:
 				17:
 					highlight(Rect2(Vector2(384, 408), Vector2(134.0, 38)))
 					show_box(
-						"Now check these tears. Each tear marks space for another column of effects.\n\n"
+						"Now check these rips. Between each tear is space for another column of effects.\n\n"
 						+ "Each card has five columns, three to the left of center and one to the right.",
 						460,
 						180
@@ -2406,14 +2409,14 @@ func do_step() -> void:
 				18:
 					show_box(
 						"Picks have shafts and handles that mean it's easier to bump pins near "
-						+ "the entrance of the lock, hence the offset.",
+						+ "the entrance of the lock, so picks tend to have more effects on the left side.",
 						460,
 						180
 					)
 				19:
 					show_box(
 						"This specific pick is simple enough. Push the target pin two, and the pin to "
-						+ "the left one.\n\nPlease, try it. Don't worry if you break it."
+						+ "the left one.\n\nTry it. Don't worry if you break it."
 					)
 				20:
 					core.tutorial_lock(false)
@@ -2672,6 +2675,7 @@ func do_step() -> void:
 					await_use = 2
 				29:
 					step = 20
+					core.tutorial_lock(true)
 					show_box(
 						"You need to play a jam on two pins. Make sure you don't land on any spikes.\n\n"
 						+ "Let's go back a bit."
@@ -2698,7 +2702,7 @@ func do_step() -> void:
 		6:
 			match step:
 				0:
-					show_box("Welcome back. No lesson today - just some advice, a gift, and a job.")
+					show_box("You made it! That's the last test. I don't have any more lessons - just some final advice, a gift, and a job.")
 				1:
 					show_box(
 						"The advice: things are different out on the job."
@@ -2728,7 +2732,7 @@ func do_step() -> void:
 					)
 				7:
 					show_box(
-						"Alright - the gift."
+						"Okay - the gift."
 					)
 				8:
 					core.get_node("DiscardMain").add_cards(STARTING_DECK)

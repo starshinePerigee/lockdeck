@@ -785,6 +785,7 @@ func restart() -> void:
 	$LockBody/AnimationPlayer.play("RESET")
 	$LockBody/CountdownMain.set_count(starting_countdown_time)
 	$LockBody/CountdownMain.reset_odds()
+	$LockBody/CylinderMain/Cylinders.clear_marks()
 	turn_count = 0
 	$Notifications.clear()
 	tick_turn_count()
