@@ -1,6 +1,6 @@
 x loot and strat hub tutorials
 x test refactor (icons, clicks)
-- refactor test tutorial
+x refactor test tutorial
 x unlocking depths and basic meta
 - final run-throughs
 - final playtests

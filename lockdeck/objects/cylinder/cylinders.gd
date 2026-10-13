@@ -41,6 +41,11 @@ func clear_results() -> void:
 	for pin in pin_refs:
 		pin.clear_results()
 
+func set_manual_lock(locked := false) -> void:
+	for pin in pin_refs:
+		for depth in pin.depth_refs:
+			depth.manual_lock = locked
+
 const FX_TWIST := preload("res://assets/fx/slide_twist.ogg")
 
 var _tween: Tween

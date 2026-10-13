@@ -85,10 +85,12 @@ func _redraw() -> void:
 	manual_mark = manual_mark
 	size = $DepthTexture.size
 
+var manual_lock := false
 
 func _gui_input(event: InputEvent) -> void:
 	if (
-		event is InputEventMouseButton
+		not manual_lock
+		and event is InputEventMouseButton
 		and event.pressed
 		and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT)
 		and get_global_rect().has_point(event.global_position)

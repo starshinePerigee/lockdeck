@@ -330,6 +330,7 @@ func set_state(state: InputState) -> void:
 			$PreviousButton.show_see_prev = true
 			$DiscardMain.show_icon = false
 			$LockBody/CylinderMain.cancel_preview()
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(false)
 			reset_countdown()
 			dis_en_able_buttons(false)
 			$DiscardMain.show_icon = false
@@ -340,11 +341,13 @@ func set_state(state: InputState) -> void:
 			$HandMain/Hand.hide_hand()
 			reset_countdown()
 			$DiscardMain.show_icon = true
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 		InputState.ACTIVE_DRAG:
 			$LockBody/IndicatorPick.go_stow()
 			$HandMain/Hand.hide_hand()
 			reset_countdown()
 			$DiscardMain.show_icon = true
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 		InputState.VIEW_ALL:
 			create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).tween_property(
 				$LockBody,
@@ -363,6 +366,7 @@ func set_state(state: InputState) -> void:
 		InputState.CARD_DISPLAY:
 			$HandMain/Hand.hide_hand()
 			dis_en_able_buttons()
+			$LockBody/CylinderMain/Cylinders.set_manual_lock(true)
 
 var lock_complete: bool
 
