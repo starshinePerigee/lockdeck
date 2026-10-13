@@ -1,3 +1,0 @@
-redo previous turn - match the two-color outline with states
-
-candle gets an outline to indicate it's a button?
