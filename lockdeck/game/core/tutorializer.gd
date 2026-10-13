@@ -1042,7 +1042,7 @@ func do_step() -> void:
 					show_box(
 						"Nice work.\n\n"
 						+ "Don't sweat the green 'ok', the little wave icons, " 
-						+ "or any other icons that haven't been explained yet. "
+						+ "or anything else that hasn't been explained yet. "
 						+ "Lockpicking is complicated - we'll get there. You just gotta take it step by step."
 					)
 				16:

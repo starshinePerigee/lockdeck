@@ -11,6 +11,7 @@ func notify(notif: Notifications):
 	var next := TextureRect.new()
 	next.texture = notif.texture
 	next.custom_minimum_size = Vector2(512, 64)
+	next.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(next)
 
 func clear():

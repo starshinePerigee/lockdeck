@@ -11,7 +11,7 @@ extends Control
 	set(v):
 		picks = v
 		if tutorial:
-			$VBoxContainer/PickCount.text = "Tutorial"
+			$VBoxContainer/PickCount.text = "Puzzle Mode"
 		else:
 			$VBoxContainer/PickCount.text = "Picks: %s" % picks
 

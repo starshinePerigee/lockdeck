@@ -142,6 +142,7 @@ offset_left = -16.0
 offset_top = 224.0
 offset_right = 96.0
 offset_bottom = 272.0
+mouse_filter = 2
 texture = ExtResource("5_agct7")
 
 [node name="JamIndicator" type="TextureRect" parent="."]
@@ -151,6 +152,7 @@ offset_left = -16.0
 offset_top = 242.0
 offset_right = 96.0
 offset_bottom = 290.0
+mouse_filter = 2
 texture = ExtResource("4_agct7")
 
 [node name="JamCount" type="Label" parent="JamIndicator"]

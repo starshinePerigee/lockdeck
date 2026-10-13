@@ -1,7 +1,7 @@
 extends Control
 ## This is the top level entrypoint for Handful of Lockpicks
 
-var VERSION_NUMBER := "v1.2.4"
+var VERSION_NUMBER := "v1.2.5"
 
 var _saved_game: GameSpec
 
